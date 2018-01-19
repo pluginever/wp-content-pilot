@@ -1,0 +1,26 @@
+{
+  "name": "pluginever/wp-content-pilot",
+  "description": "The plugin posts high quality Articles. Amazon, Ebay, BestBuy, Walmart Products Youtube, Vimeo Videos as well as Images from Flicker and from others platforms based on your keywords.",
+  "keywords": ["wordpress", "plugin", "Auto poster", "WP Content Pilot"],
+  "homepage": "https://pluginever.com",
+  "type": "wordpress-plugin",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "MD Sultan Nasir Uddin",
+      "email": "manikdrmc@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0",
+    "marcl/amazonproductapi": "^3.0",
+    "php-curl-class/php-curl-class": "^8.0",
+    "paquettg/php-html-parser": "^1.7",
+    "andreskrey/readability.php": "1.1.0"
+  },
+  "autoload" : {
+    "psr-4" : {
+      "Pluginever\\WPCP\\": "includes/"
+    }
+  }
+}
