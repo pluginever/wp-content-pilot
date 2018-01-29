@@ -1,6 +1,7 @@
 <?php
 
 namespace Pluginever\WPCP;
+
 class Install {
 
     public function __construct() {

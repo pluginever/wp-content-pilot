@@ -12,6 +12,9 @@ class Admin {
      */
     public function __construct() {
         $this->action( 'admin_enqueue_scripts', 'load_assets' );
+        $this->includes();
+        $this->instantiate();
+
     }
 
     /**
@@ -28,6 +31,15 @@ class Admin {
         wp_localize_script( 'wp-content-pilot', 'jsobject', [ 'ajaxurl' => admin_url( 'admin-ajax.php' ) ] );
         wp_enqueue_style( 'wp-content-pilot' );
         wp_enqueue_script( 'wp-content-pilot' );
+    }
+
+    public function includes() {
+        require WPCP_INCLUDES . '/admin/metabox/class-metabox.php';
+    }
+
+    public function instantiate() {
+        new \Pluginever\Framework\Metabox();
+        new Metabox();
     }
 
 

@@ -182,6 +182,9 @@ class Wp_Content_Pilot {
     private function includes() {
         require WPCP_VENDOR_DIR . '/autoload.php';
         require WPCP_INCLUDES . '/functions.php';
+        require WPCP_INCLUDES . '/function-helper.php';
+        require WPCP_INCLUDES . '/campaign-functions.php';
+        require WPCP_INCLUDES . '/module-categories.php';
     }
 
     /**
@@ -193,10 +196,11 @@ class Wp_Content_Pilot {
      */
     private function instantiate() {
         new \Pluginever\WPCP\Core\Cron();
-        new \Pluginever\WPCP\Install();
-        new \Pluginever\WPCP\Upgrades();
-        new \Pluginever\WPCP\Core\Campaign();
+//        new \Pluginever\WPCP\Install();
+//        new \Pluginever\WPCP\Upgrades();
+        new \Pluginever\WPCP\Core\CPT();
         new \Pluginever\WPCP\Admin\Admin();
+        new \Pluginever\WPCP\Core\Processor();
 
         $this->container['modules'] = new \Pluginever\WPCP\Module\Module();
     }
