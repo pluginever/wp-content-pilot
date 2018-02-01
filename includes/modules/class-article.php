@@ -6,14 +6,17 @@ use andreskrey\Readability\Configuration;
 use andreskrey\Readability\ParseException;
 use andreskrey\Readability\Readability;
 use Pluginever\WPCP\Core\Item;
+use Pluginever\WPCP\Traits\Hooker;
 
 class Article extends Item {
+    use Hooker;
 
     /**
      * Article constructor.
      */
-    public function __construct() {
-        $this->campaign_type = 'articles';
+    public function setup() {
+        $this->action( 'wpcp_fetched_links', 'wpcp_article_skip_base_domain_url' );
+        //$this->action( 'wpcp_post_content', 'html_treatment', 10, 2 );
     }
 
 
@@ -21,9 +24,9 @@ class Article extends Item {
 
         $page = $this->get_page_number( 0 );
 
-        $request = $this->setup_request();
+        $request = $this->setup_request( 'https://www.bing.com' );
 
-        $request->get( 'https://www.bing.com/search', array(
+        $request->get( 'search', array(
             'q'     => $this->keyword,
             'count' => 10,
             'loc'   => 'en',
@@ -44,9 +47,10 @@ class Article extends Item {
     }
 
     function fetch_post( $link ) {
+
         //search for live  site
         $request = $this->setup_request();
-        $request->get( $link );
+        $request->get( $link->url );
 
         $response = wpcp_is_valid_response( $request );
 
@@ -59,6 +63,8 @@ class Article extends Item {
         try {
             $readability->parse( $response );
         } catch ( ParseException $e ) {
+            wpcp_log( 'critical', $e->getMessage() );
+
             return new \WP_Error( $e->getCode(), $e->getMessage() );
         }
 
@@ -76,7 +82,53 @@ class Article extends Item {
 
     }
 
-    function setup() {
-        // TODO: Implement setup() method.
+
+    /*HOOKED FUNCTIONS*/
+    /**
+     * Remove posts if its home page of a site
+     * @since 1.0.0
+     *
+     * @param $links
+     *
+     * @return mixed
+     *
+     */
+    public function wpcp_article_skip_base_domain_url( $links ) {
+        if ( empty( wpcp_get_post_meta( $this->campaign_id, '_skip_base_domain', true ) ) ) {
+            return $links;
+        }
+
+        foreach ( $links as $key => $link ) {
+            $url_parts = wp_parse_url( $link );
+
+            if ( strlen( $url_parts['path'] ) < 5 ) {
+                unset( $links[ $key ] );
+            }
+        }
+
+        return $links;
     }
+
+
+    /**
+     * Check for relative links and fix those
+     * @since 1.0.0
+     *
+     * @param $content
+     * @param $article
+     *
+     * @return mixed
+     *
+     */
+    public function html_treatment( $content, $article ) {
+        if ( empty( get_post_meta( $this->campaign_id, '_parse_html' ) ) ) {
+            return $content;
+        }
+        //$content = wpcp_html_remove_bad_tags( $content );
+        $content = wpcp_html_fix_links( $content, $article['host'], true );
+
+        return $content;
+    }
+
+
 }

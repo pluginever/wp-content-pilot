@@ -28,7 +28,7 @@ class Module {
             'article' => [
                 'title'       => __( 'Article', 'wpcp' ),
                 'description' => __( 'Scraps articles with the predefined keywords', 'wpcp' ),
-                'supports'    => array( 'title', 'author', 'image', 'images', 'content', 'excerpt' ),
+                'supports'    => array( 'title', 'image', 'images', 'content', 'excerpt' ),
                 'callback'    => 'Pluginever\WPCP\Module\Article',
             ],
             'feed'    => [
@@ -81,13 +81,6 @@ class Module {
                     'channel_title'
                 ),
                 'callback'    => 'Pluginever\WPCP\Module\Youtube',
-            ],
-            'amazon' => [
-                'title'       => __( 'AMAZON', 'wpcp' ),
-                'description' => __( 'Scraps youtube video and contents using the predefined keywords', 'wpcp' ),
-                'supports'    => array(
-                ),
-                'callback'    => 'Pluginever\WPCP\Module\Amazon',
             ],
         ];
 

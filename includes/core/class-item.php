@@ -40,9 +40,9 @@ abstract class Item {
      * @since 1.0.0
      */
     public function run() {
-        $caller = basename(str_replace('\\', '/', get_called_class()));
-        $this->campaign_type = strtolower($caller);
-        $link = $this->get_link();
+        $caller              = basename( str_replace( '\\', '/', get_called_class() ) );
+        $this->campaign_type = strtolower( $caller );
+        $link                = $this->get_link();
 
         if ( ! $link ) {
             $links = $this->fetch_links();
@@ -53,18 +53,18 @@ abstract class Item {
             //hook here for any link to subtract
             $links = apply_filters( 'wpcp_fetched_links', $links, $this->campaign_id, $this->campaign_type );
 
-            if( empty( $links )){
+            if ( empty( $links ) ) {
                 return new \WP_Error( 'no-links-found', __( 'Could not retrieve any valid links', 'content-pilot' ) );
             }
 
-//            //check the result
-//            $str_links = implode(' ', $links);
-//            if ( $this->is_result_like_last_time( $str_links ) ) {
-//                $msg = __( 'result is same as last time', 'wpcp' );
-//                wpcp_log( 'log', $msg );
-//
-//                return new \WP_Error( 'no-new-result', $msg );
-//            }
+            //check the result
+            $str_links = implode( ' ', $links );
+            if ( $this->is_result_like_last_time( $str_links ) ) {
+                $msg = __( 'result is same as last time', 'wpcp' );
+                wpcp_log( 'log', $msg );
+
+                return new \WP_Error( 'no-new-result', $msg );
+            }
 
 
             $inserted = $this->inset_links( $links );
@@ -76,15 +76,21 @@ abstract class Item {
                 return new \WP_Error( 'no-valid-links-found', __( 'Could not retrieve any valid links', 'content-pilot' ) );
             }
         }
+        wpcp_log( 'dev', sprintf( __( 'Fetching post from %s', 'wpcp' ), $link->url ) );
 
-
+        do_action( 'wpcp_before_using_link', $link );
         $post = $this->fetch_post( $link );
         if ( is_wp_error( $post ) ) {
             return $post;
         }
+        do_action( 'wpcp_after_using_link', $link );
 
-       // return array_merge( $this->post, $post );
+        $this->post['url']    = $link->url;
+        $this->post['source'] = $link->url;
+        $this->post['host']   = wpcp_get_host( $link->url );
+        $this->post['link']   = $link;
 
+        return array_merge( $this->post, $post );
     }
 
     /**
@@ -158,7 +164,7 @@ abstract class Item {
      *
      */
     public function get_page_number( $default = 0 ) {
-        $page = get_post_meta( $this->campaign_id,  $this->get_uid('page-number'), true );
+        $page = get_post_meta( $this->campaign_id, $this->get_uid( 'page-number' ), true );
 
         return ! empty( $page ) ? $page : $default;
     }
@@ -171,8 +177,8 @@ abstract class Item {
      * @param $number
      *
      */
-    public function set_page_number($number){
-        update_post_meta( $this->campaign_id, "page-" . $this->get_uid('page-number'), $number );
+    public function set_page_number( $number ) {
+        update_post_meta( $this->campaign_id, "page-" . $this->get_uid( 'page-number' ), $number );
     }
 
     /**
@@ -217,10 +223,10 @@ abstract class Item {
         return $counter;
     }
 
-    protected function get_caller_class(){
-        $caller_class = get_called_class();
-        $caller_class_arr = explode("\\", $caller_class);
-        var_dump($caller_class_arr);
+    protected function get_caller_class() {
+        $caller_class     = get_called_class();
+        $caller_class_arr = explode( "\\", $caller_class );
+        var_dump( $caller_class_arr );
 //        $this->campaign_type = $called_class_arr[(count($called_class_arr)-1)];
     }
 

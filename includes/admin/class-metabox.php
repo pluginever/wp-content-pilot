@@ -16,15 +16,20 @@ class Metabox {
         //settings fields
         $this->filter( 'wpcp_campaign_settings_fields', 'add_campaign_settings_fields' );
 
+        //default main fields
+        $this->filter( 'wpcp_module_main_fields', 'add_default_main_fields', 99 );
+
         //default additional fields
         $this->filter( 'wpcp_module_additional_fields', 'add_default_additional_fields', 99 );
 
+
         //feed
         $this->filter( 'wpcp_module_main_fields', 'add_feed_main_fields' );
-        $this->filter( 'wpcp_module_main_fields', 'add_default_main_fields', 99 );
+
 
         //article
         $this->filter( 'wpcp_module_main_fields', 'add_article_main_fields' );
+        $this->filter( 'wpcp_module_additional_fields', 'add_article_additional_fields' );
 
         //youtube
         $this->filter( 'wpcp_module_main_fields', 'add_youtube_main_fields' );
@@ -226,7 +231,7 @@ class Metabox {
                 'type'  => 'checkbox',
                 'name'  => '_strip_links',
                 'label' => ' ',
-                'title' => __( 'Strip all links found in the article', 'wpcp' ),
+                'title' => __( 'Remove hyperlinks found in the article', 'wpcp' ),
             ],
             [
                 'type'  => 'checkbox',
@@ -348,7 +353,18 @@ class Metabox {
                     'depend_value' => 'feed',
                     'depend_cond'  => '==',
                 ]
-            ]
+            ],
+            [
+                'type'      => 'checkbox',
+                'name'      => '_parse_html',
+                'label'     => 'Parse HTML',
+                'tooltip'   => __( 'Post process html to fix broken links, image paths. NOTE: Takes longer time to process.', 'wpcp' ),
+                'condition' => [
+                    'depend_on'    => '_campaign_type',
+                    'depend_value' => 'feed',
+                    'depend_cond'  => '==',
+                ]
+            ],
         ];
 
         return array_merge( $fields, $add_fields );
@@ -368,10 +384,41 @@ class Metabox {
                     'depend_cond'  => '!=',
                 ]
             ],
+            [
+                'type'      => 'checkbox',
+                'name'      => '_parse_html',
+                'label'     => 'Parse HTML',
+                'tooltip'   => __( 'Post process html to fix broken links, image paths. NOTE: Takes longer time to process.', 'wpcp' ),
+                'condition' => [
+                    'depend_on'    => '_campaign_type',
+                    'depend_value' => 'article',
+                    'depend_cond'  => '==',
+                ]
+            ],
         ];
 
         return array_merge( $fields, $add_fields );
     }
+
+    function add_article_additional_fields( $fields ) {
+        $add_fields = [
+            [
+                'type'      => 'checkbox',
+                'name'      => '_skip_base_domain',
+                'label'     => ' ',
+                'title'     => 'Skip Fetching post from base domain',
+                'condition' => [
+                    'depend_on'    => '_campaign_type',
+                    'depend_value' => 'article',
+                    'depend_cond'  => '==',
+                ]
+            ],
+        ];
+
+        return array_merge( $fields, $add_fields );
+    }
+
+
 
     public function add_youtube_main_fields( $fields ) {
         $add_fields = [

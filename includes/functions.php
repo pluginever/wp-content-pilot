@@ -4,6 +4,99 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+function wpcp_run_campaign( $campaign_id ) {
+    $can_run = wpcp_campaign_can_run( $campaign_id );
+    if ( is_wp_error( $can_run ) ) {
+        wpcp_log( 'critical', $can_run->get_error_message() );
+
+        return $can_run;
+    }
+
+    $keyword       = wpcp_setup_keyword( $campaign_id );
+    $campaign_type = get_post_meta( $campaign_id, '_campaign_type', true );
+    $campaign      = new \Pluginever\WPCP\Core\Campaign( $campaign_id, $campaign_type, $keyword );
+    $result        = $campaign->run();
+    if ( is_wp_error( $result ) ) {
+        wpcp_log( 'critical', $result->get_error_message() );
+
+        return $result;
+    }
+
+    return $result;
+}
+
+/**
+ * Checks if campaign is valid or not
+ *
+ * @since 1.0.0
+ *
+ * @param $campaign_id
+ *
+ * @return bool|\WP_Error
+ *
+ */
+function wpcp_campaign_can_run( $campaign_id ) {
+    if ( 'publish' !== get_post_status( $campaign_id ) ) {
+        return new \WP_Error( 'invalid-campaign-id', __( 'Campaign is not exist or not publish.', 'wpcp' ) );
+    }
+
+    if ( '1' !== get_post_meta( $campaign_id, '_active', true ) ) {
+        return new \WP_Error( 'invalid-campaign-status', __( 'Campaign is not active this wont run.', 'wpcp' ) );
+    }
+
+    $campaign_type = get_post_meta( $campaign_id, '_campaign_type', true );
+    if ( empty( $campaign_type ) ) {
+        return new \WP_Error( 'invalid-campaign-type', __( 'Campaign type is not set. Campaign won\'t run', 'wpcp' ) );
+    }
+
+    $keywords = get_post_meta( $campaign_id, '_keywords', true );
+    if ( empty( trim( $keywords ) ) ) {
+        $keywords = __( 'Keywords', 'wpcp' );
+        if ( $campaign_type == 'feed' ) {
+            $keywords = __( 'Feed links', 'wpcp' );
+        }
+
+        return new \WP_Error( 'campaign-' . $keywords . '-invalid', __( "Campaign {$keywords} is not set. Campaign won't run", 'wpcp' ) );
+    }
+
+    return true;
+}
+
+/**
+ * Select keyword for the campaign
+ *
+ * @since 1.0.0
+ *
+ * @return string|boolean
+ */
+function wpcp_setup_keyword( $campaign_id ) {
+    $campaign_type = get_post_meta( $campaign_id, '_campaign_type', true );
+
+    if ( $campaign_type == 'feed' ) {
+        $meta = get_post_meta( $campaign_id, '_feed_links', true );
+    } else {
+        $meta = get_post_meta( $campaign_id, '_keywords', true );
+    }
+
+    $keywords = (array) wpcp_string_to_array( $meta, PHP_EOL, array( 'trim' ) );
+    if ( empty( $keywords ) ) {
+        return false;
+    }
+
+    $last_keyword = get_post_meta( $campaign_id, '_last_keyword', true );
+
+    if ( ! empty( $last_keyword ) && count( $keywords ) > 1 ) {
+        if ( ( $key = array_search( $last_keyword, $keywords ) ) !== false ) {
+            unset( $keywords[ $key ] );
+        }
+    }
+
+    $keyword_key      = array_rand( $keywords, 1 );
+    $selected_keyword = $keywords[ $keyword_key ];
+
+    return apply_filters( 'wpcp_campaign_selected_keyword', $selected_keyword, $campaign_id, $campaign_type );
+}
+
 /**
  * Logger for the plugin
  *
@@ -67,6 +160,27 @@ function wpcp_insert_link( array $data ) {
     $id = $wpdb->insert(
         $table,
         $data
+    );
+
+    return $id;
+}
+
+/**
+ * Update link in wpcp_links table
+ *
+ * @param null $id
+ * @param array $data
+ *
+ * @return false|int|null
+ */
+function wpcp_update_link( $id = null, array $data ) {
+    global $wpdb;
+    $table = $wpdb->prefix . 'wpcp_links';
+
+    $id = $wpdb->update(
+        $table,
+        $data,
+        [ 'id' => $id ]
     );
 
     return $id;
@@ -150,7 +264,368 @@ function wpcp_parse_date_time( $date_time, $date = true, $time = true, $timestam
  * @return mixed
  *
  */
-function wpcp_get_modules(){
+function wpcp_get_modules() {
     $wpcp = wp_content_pilot();
+
     return $wpcp->modules->get_modules();
+}
+
+/**
+ * Set up requst
+ * @since 1.0.0
+ *
+ * @param $campaign_type
+ * @param null $url
+ *
+ * @return \Curl\Curl
+ *
+ */
+function wpcp_setup_request( $campaign_type, $url = null, $campaign_id ) {
+    if ( $url !== null ) {
+        $curl = new \Curl\Curl( $url );
+    } else {
+        $curl = new \Curl\Curl();
+    }
+    $curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
+    $curl->setOpt( CURLOPT_TIMEOUT, 30 );
+    $curl->setOpt( CURLOPT_RETURNTRANSFER, true );
+
+    return apply_filters( 'content_pilot_setup_request', $curl, $campaign_id, $campaign_type );
+}
+
+/**
+ * Check the response
+ *
+ * @since 1.0.0
+ *
+ * @param \Curl\Curl $request
+ *
+ * @return null|\WP_Error
+ *
+ */
+function wpcp_is_valid_response( \Curl\Curl $request ) {
+    if ( empty( $request ) ) {
+        return new WP_Error( 'nothing-in-response', __( 'Nothing in the response object', 'content-pilot' ) );
+    }
+
+    if ( $request->error ) {
+        return new WP_Error( $request->errorCode, $request->curlErrorMessage );
+    }
+
+    return $request->response;
+}
+
+/**
+ * Get the links from a html documents
+ *
+ * @since 1.0.0
+ *
+ * @param $html
+ *
+ * @return array|\WP_Error
+ */
+function wpcp_get_html_links( $html ) {
+    //b_results
+    $dom = new \PHPHtmlParser\Dom();
+    $dom->setOptions( [
+        'enforceEncoding' => true,
+        'cleanupInput'    => true,
+    ] );
+    $dom->load( $html );
+
+    $links = $dom->find( '#b_results a' );
+
+    if ( empty( $links ) ) {
+        return new WP_Error( 'no-links-found', __( 'Could not retrieve any links', 'content-pilot' ) );
+    }
+
+    $links          = apply_filters( 'content_pilot_search_links', $links );
+    $accepted_links = array();
+    foreach ( $links as $link ) {
+        $a = $link->getAttribute( 'href' );
+
+        if ( wp_http_validate_url( $a ) ) {
+            $accepted_links[] = $a;
+        }
+    }
+
+    return $accepted_links;
+}
+
+
+/**
+ * Convert a string to array
+ *
+ * @since 1.0.0
+ *
+ * @param $string
+ * @param string $separator
+ * @param array $callbacks
+ *
+ * @return array
+ */
+function wpcp_string_to_array( $string, $separator = ',', $callbacks = array() ) {
+    $default   = array(
+        'trim',
+    );
+    $callbacks = wp_parse_args( $callbacks, $default );
+    $parts     = explode( $separator, $string );
+
+    if ( ! empty( $callbacks ) ) {
+        foreach ( $callbacks as $callback ) {
+            $parts = array_map( $callback, $parts );
+        }
+    }
+
+    return $parts;
+}
+
+
+/**
+ * Mark campaign as disabled
+ *
+ * @param $camp_id
+ */
+function wpcp_disable_campaign( $camp_id ) {
+    do_action( 'wpcp_disable_campaign', $camp_id );
+    update_post_meta( $camp_id, '_wpcp_active', 0 );
+}
+
+/**
+ * Disable any keyword
+ *
+ * @since 1.0.0
+ *
+ * @param $keyword
+ * @param string $meta_value
+ */
+function wpcp_disable_keyword( $campaign_id, $keyword, $meta_value = 'keywords' ) {
+    do_action( 'wpcp_disable_keyword', $campaign_id, $keyword );
+
+    $keywords_string = wpcp_get_post_meta( $campaign_id, '_wpcp_keywords', '' );
+    $parts           = wpcp_string_to_array( $keywords_string, PHP_EOL, array( 'trim' ) );
+    $key             = array_search( $keyword, $parts );
+
+    if ( $key !== false ) {
+        unset( $parts[ $key ] );
+    }
+
+    update_post_meta( $campaign_id, $meta_value, implode( PHP_EOL, $parts ) );
+
+    $disabled_keywords   = (array) wpcp_get_post_meta( $campaign_id, '_wpcp_disabled_keywords', '' );
+    $disabled_keywords[] = $keyword;
+    $disabled_keywords   = array_filter( $disabled_keywords );
+    update_post_meta( $campaign_id, '_wpcp_disabled_keywords', $disabled_keywords );
+
+}
+
+/**
+ * Sanitize links from string
+ * @since 1.0.0
+ *
+ * @param $string_links
+ *
+ * @return string
+ *
+ */
+function wpcp_sanitize_feed_links( $string_links ) {
+    $links           = explode( PHP_EOL, $string_links );
+    $sanitized_links = [];
+
+    foreach ( $links as $link ) {
+        $sl = trim( $link );
+        if ( filter_var( $link, FILTER_VALIDATE_URL ) === false ) {
+            continue;
+        }
+
+        $sanitized_links[] = $sl;
+    }
+
+    return implode( PHP_EOL, $sanitized_links );
+}
+
+/**
+ * sanitize keywords
+ * @since 1.0.0
+ *
+ * @param $string_keywords
+ *
+ * @return string
+ *
+ */
+function wpcp_sanitize_keywords( $string_keywords ) {
+    $words = explode( ',', $string_keywords );
+    $words = array_map( 'trim', $words );
+    $words = array_map( 'sanitize_text_field', $words );
+
+    return implode( ',', $words );
+}
+
+/**
+ * Get all the authors
+ *
+ * @since 1.0.0
+ *
+ * @return array
+ *
+ */
+function wpcp_get_authors() {
+    $result = [];
+    $users  = get_users( [ 'who' => 'authors' ] );
+    foreach ( $users as $user ) {
+        $result[ $user->ID ] = "{$user->display_name} ({$user->user_email})";
+    }
+
+    return $result;
+}
+
+/**
+ * Get list of supported post types
+ *
+ * @since 1.0.0
+ * @return array
+ */
+function wpcp_get_post_types() {
+
+    $supported_post_types = array(
+        'post' => 'Post',
+        'page' => 'Page',
+    );
+
+    return apply_filters( 'wpcp_get_post_types', $supported_post_types );
+}
+
+/**
+ * Campaaign schedule options
+ * @since 1.0.0
+ *
+ * @return array
+ *
+ */
+function wpcp_get_campaign_schedule_options() {
+    $options = [];
+    for ( $i = 1; $i <= 24; $i ++ ) {
+        $time             = $i * HOUR_IN_SECONDS;
+        $options[ $time ] = sprintf( _n( '%s Hour', '%s Hours', $i, 'wpcp' ), $i );;
+    }
+
+
+    return apply_filters( 'wpcp_get_campaign_schedule_options', $options );
+}
+
+/**
+ * Return main part of the url eg exmaple.com  from https://www.example.com
+ *
+ * @param $url
+ *
+ * @return mixed
+ */
+function wpcp_get_host( $url, $base_domain = false ) {
+    $parseUrl = parse_url( trim( esc_url_raw( $url ) ) );
+
+    if ( $base_domain ) {
+        $host = trim( $parseUrl['host'] ? $parseUrl['host'] : array_shift( explode( '/', $parseUrl['path'], 2 ) ) );
+    } else {
+        $scheme = !isset($parseUrl['scheme'])? 'http' : $parseUrl['scheme'] ;
+        return $scheme."://".$parseUrl['host'];
+    }
+
+    return $host;
+}
+
+
+function wpcp_convert_rel_2_abs_url( $rel_url, $host ) {
+    //return if already absolute URL
+    if ( parse_url( $rel_url, PHP_URL_SCHEME ) != '' ) {
+        return $rel_url;
+    }
+
+    $default    = [
+        'scheme' => 'http',
+        'host'   => '',
+        'path'   => '',
+    ];
+    $host_parts = wp_parse_args(parse_url( $host ), $default);
+
+    //queries and anchors
+    if ( $rel_url[0] == '#' || $rel_url[0] == '?' ) {
+        return $host . $rel_url;
+    }
+
+    //remove non-directory element from path
+    $path = preg_replace( '#/[^/]*$#', '', $host_parts['path'] );
+
+    //destroy path if relative url points to root
+    if ( $rel_url[0] == '/' ) {
+        $path = '';
+    }
+
+    //dirty absolute URL
+    $abs = "{$host_parts['host']}$path/$rel_url";
+
+    //replace '//' or '/./' or '/foo/../' with '/'
+    $re = array( '#(/\.?/)#', '#/(?!\.\.)[^/]+/\.\./#' );
+    for ( $n = 1; $n > 0; $abs = preg_replace( $re, '/', $abs, - 1, $n ) ) {
+    }
+
+    //absolute URL is ready!
+    return $host_parts['scheme'] . '://' . $abs;
+}
+
+
+/**
+ * Upload Image
+ *
+ * @param $url
+ *
+ * @return bool|int|WP_Error
+ */
+function wpcp_upload_image( $url ) {
+
+    $get     = wp_remote_get( $url );
+    $headers = wp_remote_retrieve_headers( $get );
+    $type    = isset( $headers['content-type'] ) ? $headers['content-type'] : null;
+    wpcp_log( 'dev', $type );
+    if ( is_wp_error( $get ) || ! isset( $type ) || ( ! in_array( $type, [ 'image/png', 'image/jpeg' ] ) ) ) {
+        wpcp_log( 'dev', "failed $url" );
+
+        return false;
+    }
+
+    $mirror = wp_upload_bits( basename( $url ), '', wp_remote_retrieve_body( $get ) );
+
+    $attachment = array(
+        'post_title'     => basename( $url ),
+        'post_mime_type' => $type
+    );
+
+    $attach_id = wp_insert_attachment( $attachment, $mirror['file'] );
+
+    require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+    $attach_data = wp_generate_attachment_metadata( $attach_id, $mirror['file'] );
+    wp_update_attachment_metadata( $attach_id, $attach_data );
+
+    return $attach_id;
+}
+
+/**
+ *
+ * @since 1.0.0
+ *
+ * @param $image_url
+ * @param $post_id
+ *
+ * @return bool|int|WP_Error
+ */
+function wpcp_set_featured_image_from_link( $image_url, $post_id ) {
+    $attach_id = wpcp_upload_image( $image_url );
+    if ( $attach_id ) {
+        update_post_meta( $post_id, '_thumbnail_id', $attach_id );
+
+        return $attach_id;
+    }
+
+    return false;
+
 }

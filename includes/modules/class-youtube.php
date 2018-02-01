@@ -115,7 +115,7 @@ class Youtube extends Item {
 
         $tags = @isset( $response_body->snippet->tags ) ? @$response_body->snippet->tags : [];
 
-        $duration = wpcp_convert_youtube_duration( $response_body->contentDetails->duration );
+        $duration = self::wpcp_convert_youtube_duration( $response_body->contentDetails->duration );
 
         $image = $this->get_large_thumbnail( $response_body->snippet->thumbnails );
 
@@ -152,6 +152,34 @@ class Youtube extends Item {
         $thumb       = $thumbnails[ $large_index ];
 
         return $thumb->url;
+    }
+
+
+    public static function wpcp_convert_youtube_duration( $youtube_time ) {
+        preg_match_all( '/(\d+)/', $youtube_time, $parts );
+
+        // Put in zeros if we have less than 3 numbers.
+        if ( count( $parts[0] ) == 1 ) {
+            array_unshift( $parts[0], "0", "0" );
+        } elseif ( count( $parts[0] ) == 2 ) {
+            array_unshift( $parts[0], "0" );
+        }
+
+        $sec_init         = $parts[0][2];
+        $seconds          = $sec_init % 60;
+        $seconds_overflow = floor( $sec_init / 60 );
+
+        $min_init         = $parts[0][1] + $seconds_overflow;
+        $minutes          = ( $min_init ) % 60;
+        $minutes_overflow = floor( ( $min_init ) / 60 );
+
+        $hours = $parts[0][0] + $minutes_overflow;
+
+        if ( $hours != 0 ) {
+            return $hours . ':' . $minutes . ':' . $seconds;
+        } else {
+            return $minutes . ':' . $seconds;
+        }
     }
 
 }
