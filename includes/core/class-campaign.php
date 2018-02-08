@@ -78,15 +78,16 @@ class Campaign {
 
         //check error
         if ( is_wp_error( $is_error ) ) {
+            wpcp_disable_campaign($this->campaign_id);
             return $is_error;
         }
 
         //run the module
-        $article = $instance->run();
+        $article = apply_filters('wpcp_article_before_post_insert', $instance->run() , $this->campaign_id, $this->keyword);
+
         if ( is_wp_error( $article ) ) {
             return $article;
         }
-
 
         $inserted = $this->insert_post( $article );
 
@@ -132,7 +133,7 @@ class Campaign {
             return $post_id;
         }
 
-        do_action( 'wpcp_after_post_publish', $post_id, $article, $this->campaign_id, $this->keyword );
+        do_action( 'wpcp_after_post_publish', $post_id, $this->campaign_id, $this->keyword );
 
         return $post_id;
     }

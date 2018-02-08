@@ -1,0 +1,537 @@
+# Copyright (C) 2018 PluginEver
+# This file is distributed under the GPLv2+.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Content Pilot 1.0.0\n"
+"Report-Msgid-Bugs-To: http://pluginever.com/support/\n"
+"POT-Creation-Date: 2018-02-07 17:53:06+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <support@pluginever.com>\n"
+"X-Generator: grunt-wp-i18n1.0.1\n"
+
+#: includes/admin/class-admin.php:55
+msgid "Campaign Log"
+msgstr ""
+
+#: includes/admin/class-metabox.php:52
+msgid "Campaign Settings"
+msgstr ""
+
+#: includes/admin/class-metabox.php:68
+msgid "Campaign Options"
+msgstr ""
+
+#: includes/admin/class-metabox.php:87
+msgid "Campaign Type"
+msgstr ""
+
+#: includes/admin/class-metabox.php:89
+msgid "Select campaign type"
+msgstr ""
+
+#: includes/admin/class-metabox.php:108
+msgid "Additional Settings"
+msgstr ""
+
+#: includes/admin/class-metabox.php:127
+msgid "Post Settings"
+msgstr ""
+
+#: includes/admin/class-metabox.php:148
+msgid "Advanced Settings"
+msgstr ""
+
+#: includes/admin/class-metabox.php:165 includes/core/class-cpt.php:71
+msgid "Active"
+msgstr ""
+
+#: includes/admin/class-metabox.php:166
+msgid "Yes"
+msgstr ""
+
+#: includes/admin/class-metabox.php:171
+msgid "Campaign Target"
+msgstr ""
+
+#: includes/admin/class-metabox.php:179
+msgid "Frequency (Every)"
+msgstr ""
+
+#: includes/admin/class-metabox.php:181
+msgid "The campaign will run every X hour until the campaign target reach."
+msgstr ""
+
+#: includes/admin/class-metabox.php:194
+msgid "Min Words"
+msgstr ""
+
+#: includes/admin/class-metabox.php:195
+msgid ""
+"if grabbed post content less than following words then post will be "
+"ignored. Default 0"
+msgstr ""
+
+#: includes/admin/class-metabox.php:201
+msgid "Content Type"
+msgstr ""
+
+#: includes/admin/class-metabox.php:203
+msgid ""
+"If content type is HTML then HTML content will be posted otherwise normal "
+"text will be posted."
+msgstr ""
+
+#: includes/admin/class-metabox.php:205
+msgid "HTML"
+msgstr ""
+
+#: includes/admin/class-metabox.php:206
+msgid "Plain Text"
+msgstr ""
+
+#: includes/admin/class-metabox.php:220
+msgid "Use first image as featured image"
+msgstr ""
+
+#: includes/admin/class-metabox.php:226
+msgid "Remove all images from the article"
+msgstr ""
+
+#: includes/admin/class-metabox.php:232
+msgid "Use summary as excerpt"
+msgstr ""
+
+#: includes/admin/class-metabox.php:238
+msgid "Remove hyperlinks found in the article"
+msgstr ""
+
+#: includes/admin/class-metabox.php:244
+msgid "Skip post if no image found in the article"
+msgstr ""
+
+#: includes/admin/class-metabox.php:250
+msgid "Skip post if language is not english"
+msgstr ""
+
+#: includes/admin/class-metabox.php:256
+msgid "Skip post with duplicate title"
+msgstr ""
+
+#: includes/admin/class-metabox.php:268
+msgid "Post Title"
+msgstr ""
+
+#: includes/admin/class-metabox.php:275
+msgid "Post Template"
+msgstr ""
+
+#: includes/admin/class-metabox.php:280
+msgid "Supported Tags:%s"
+msgstr ""
+
+#: includes/admin/class-metabox.php:285
+msgid "Post Type"
+msgstr ""
+
+#: includes/admin/class-metabox.php:292
+msgid "Post Author"
+msgstr ""
+
+#: includes/admin/class-metabox.php:299
+msgid "Post Status"
+msgstr ""
+
+#: includes/admin/class-metabox.php:318
+msgid "Limit Title"
+msgstr ""
+
+#: includes/admin/class-metabox.php:321
+msgid ""
+"If you want to limit the title to x characters, input the number above. "
+"Default full title."
+msgstr ""
+
+#: includes/admin/class-metabox.php:325
+msgid "Limit Content"
+msgstr ""
+
+#: includes/admin/class-metabox.php:328
+msgid ""
+"If you want to limit the post content to x characters, input the number "
+"above. Default full content."
+msgstr ""
+
+#: includes/admin/class-metabox.php:341
+msgid "Put links from where you grab the posts. Single links per line."
+msgstr ""
+
+#: includes/admin/class-metabox.php:354
+msgid ""
+"If you are putting the exact feed links then set force feed otherwise feed "
+"link will be auto discovered."
+msgstr ""
+
+#: includes/admin/class-metabox.php:383
+msgid "Put keywords using those the post will be grabbed. Separate words by comma."
+msgstr ""
+
+#: includes/admin/class-metabox.php:395
+msgid ""
+"Post process html to fix broken links, image paths. NOTE: Takes longer time "
+"to process."
+msgstr ""
+
+#: includes/admin/class-metabox.php:433
+msgid ""
+"Use global search for all result or use specific channel if you want to "
+"limit to that channel."
+msgstr ""
+
+#: includes/admin/class-metabox.php:448
+msgid ""
+"eg. channel id is UCIQOOX3ReApm-KTZ66eMVzQ for "
+"https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ"
+msgstr ""
+
+#: includes/admin/class-settings.php:20
+msgid "WP Content Pilot Settings"
+msgstr ""
+
+#: includes/admin/class-settings.php:39
+msgid "Article Settings"
+msgstr ""
+
+#: includes/admin/class-settings.php:46
+msgid "Banned Hosts"
+msgstr ""
+
+#: includes/admin/class-settings.php:55
+msgid "Youtube Settings"
+msgstr ""
+
+#: includes/admin/class-settings.php:62
+msgid "Youtube API key"
+msgstr ""
+
+#: includes/admin/class-settings.php:85
+msgid "Flicker Settings"
+msgstr ""
+
+#: includes/admin/class-settings.php:91
+msgid "Flicker API key"
+msgstr ""
+
+#: includes/admin/class-settings.php:114
+msgid ""
+"Articles from the above hosts will be rejected.<br> put single url/host per "
+"line."
+msgstr ""
+
+#: includes/admin/log-list-table.php:31
+msgid "No log found"
+msgstr ""
+
+#: includes/admin/log-list-table.php:76
+msgid "Campaign"
+msgstr ""
+
+#: includes/admin/log-list-table.php:77 includes/admin/log-list-table.php:78
+msgid "Keyword"
+msgstr ""
+
+#: includes/admin/log-list-table.php:79
+msgid "Message"
+msgstr ""
+
+#: includes/admin/log-list-table.php:80
+msgid "Date"
+msgstr ""
+
+#: includes/admin/metabox/class-metabox.php:114
+msgid "Example Metabox"
+msgstr ""
+
+#: includes/core/class-campaign.php:60
+msgid "Could not find the module for the campaign type"
+msgstr ""
+
+#: includes/core/class-cpt.php:16
+msgid "Campaigns"
+msgstr ""
+
+#: includes/core/class-cpt.php:17
+msgid "All Campaigns"
+msgstr ""
+
+#: includes/core/class-cpt.php:19
+msgid "New campaign"
+msgstr ""
+
+#: includes/core/class-cpt.php:20
+msgid "Add New Campaign"
+msgstr ""
+
+#: includes/core/class-cpt.php:21
+msgid "Edit Campaign"
+msgstr ""
+
+#: includes/core/class-cpt.php:22
+msgid "New Campaign"
+msgstr ""
+
+#: includes/core/class-cpt.php:23
+msgid "View Campaign"
+msgstr ""
+
+#: includes/core/class-cpt.php:24
+msgid "Search Campaigns"
+msgstr ""
+
+#: includes/core/class-cpt.php:25
+msgid "No Campaigns found"
+msgstr ""
+
+#: includes/core/class-cpt.php:26
+msgid "No Campaigns found in Trash"
+msgstr ""
+
+#: includes/core/class-cpt.php:27
+msgid "Parent Campaign:"
+msgstr ""
+
+#: includes/core/class-cpt.php:34
+msgid "Campaigns of Wordpress Content Pilot"
+msgstr ""
+
+#: includes/core/class-cpt.php:57
+msgid "Status"
+msgstr ""
+
+#: includes/core/class-cpt.php:58
+msgid "Type"
+msgstr ""
+
+#: includes/core/class-cpt.php:59
+msgid "Target"
+msgstr ""
+
+#: includes/core/class-cpt.php:60
+msgid "Frequency"
+msgstr ""
+
+#: includes/core/class-cpt.php:61
+msgid "Last Run"
+msgstr ""
+
+#: includes/core/class-cpt.php:73
+msgid "Disabled"
+msgstr ""
+
+#: includes/core/class-cron.php:20
+msgid "Once a Minute"
+msgstr ""
+
+#: includes/core/class-item.php:57 includes/core/class-item.php:76
+msgid "Could not retrieve any valid links"
+msgstr ""
+
+#: includes/core/class-item.php:63 includes/modules/class-feed.php:65
+msgid "result is same as last time"
+msgstr ""
+
+#: includes/core/class-item.php:79
+msgid "Fetching post from %s"
+msgstr ""
+
+#: includes/function-actions.php:47
+msgid "Automatic campaign failed."
+msgstr ""
+
+#: includes/functions.php:42
+msgid "Campaign is not exist or not publish."
+msgstr ""
+
+#: includes/functions.php:46
+msgid "Campaign is not active this wont run."
+msgstr ""
+
+#: includes/functions.php:51
+msgid "Campaign type is not set. Campaign won't run"
+msgstr ""
+
+#: includes/functions.php:61
+msgid "Keywords"
+msgstr ""
+
+#: includes/functions.php:63
+msgid "Feed links"
+msgstr ""
+
+#: includes/functions.php:345
+msgid "Nothing in the response object"
+msgstr ""
+
+#: includes/functions.php:376
+msgid "Could not retrieve any links"
+msgstr ""
+
+#: includes/functions.php:546
+msgid "%s Hour"
+msgid_plural "%s Hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/modules/class-feed.php:76
+msgid "Could not find any post so disabling url"
+msgstr ""
+
+#: includes/modules/class-flickr.php:14
+msgid "Flickr API is not set. Please configure Flickr settings."
+msgstr ""
+
+#: includes/modules/class-flickr.php:48 includes/modules/class-youtube.php:62
+msgid "Could not find any links"
+msgstr ""
+
+#: includes/modules/class-flickr.php:99
+msgid "Image"
+msgstr ""
+
+#: includes/modules/class-flickr.php:100
+msgid "Author"
+msgstr ""
+
+#: includes/modules/class-flickr.php:101 includes/modules/class-youtube.php:132
+msgid "Description"
+msgstr ""
+
+#: includes/modules/class-flickr.php:102
+msgid "Views"
+msgstr ""
+
+#: includes/modules/class-flickr.php:103 includes/modules/class-youtube.php:133
+msgid "tags"
+msgstr ""
+
+#: includes/modules/class-modules.php:29
+msgid "Article"
+msgstr ""
+
+#: includes/modules/class-modules.php:30
+msgid "Scraps articles with the predefined keywords"
+msgstr ""
+
+#: includes/modules/class-modules.php:35
+msgid "Feed"
+msgstr ""
+
+#: includes/modules/class-modules.php:36
+msgid "Scraps articles from the feed urls"
+msgstr ""
+
+#: includes/modules/class-modules.php:41
+msgid "Flickr"
+msgstr ""
+
+#: includes/modules/class-modules.php:42
+msgid "Scraps photo and contents by the predefined keywords"
+msgstr ""
+
+#: includes/modules/class-modules.php:49
+msgid "Youtube"
+msgstr ""
+
+#: includes/modules/class-modules.php:50
+msgid "Scraps youtube video and contents using the predefined keywords"
+msgstr ""
+
+#: includes/modules/class-vimeo.php:16
+msgid "Vimeo token is not set. Please configure vimeo settings."
+msgstr ""
+
+#: includes/modules/class-youtube.php:21
+msgid "Youtube api is not configured. Please configure youtube settings."
+msgstr ""
+
+#: includes/modules/class-youtube.php:129
+msgid "Video"
+msgstr ""
+
+#: includes/modules/class-youtube.php:130
+msgid "Channel"
+msgstr ""
+
+#: includes/modules/class-youtube.php:131
+msgid "Duration"
+msgstr ""
+
+#: wp-content-pilot.php:278
+msgid "Your installed PHP Version is: "
+msgstr ""
+
+#: wp-content-pilot.php:279
+msgid "The <strong>WP Content Pilot</strong> plugin requires PHP version <strong>"
+msgstr ""
+
+#: wp-content-pilot.php:279
+msgid "</strong> or greater."
+msgstr ""
+
+#: wp-content-pilot.php:299
+msgid "<h1>An Error Occurred</h1>"
+msgstr ""
+
+#: wp-content-pilot.php:300
+msgid "<h2>Your installed PHP Version is: "
+msgstr ""
+
+#: wp-content-pilot.php:301
+msgid ""
+"<p>The <strong>WP Content Pilot</strong> plugin requires PHP version "
+"<strong>"
+msgstr ""
+
+#: wp-content-pilot.php:301
+msgid "</strong> or greater"
+msgstr ""
+
+#: wp-content-pilot.php:302
+msgid "<p>The version of your PHP is "
+msgstr ""
+
+#: wp-content-pilot.php:302
+msgid "unsupported and old"
+msgstr ""
+
+#: wp-content-pilot.php:303
+msgid ""
+"You should update your PHP software or contact your host regarding this "
+"matter.</p>"
+msgstr ""
+
+#: wp-content-pilot.php:305
+msgid "Plugin Activation Error"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WP Content Pilot"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://pluginever.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"The plugin posts high quality Articles. Amazon, Ebay, BestBuy, Walmart "
+"Products Youtube, Vimeo Videos as well as Images from Flicker and from "
+"others platforms based on your keywords."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "PluginEver"
+msgstr ""

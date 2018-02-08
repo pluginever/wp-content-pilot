@@ -73,8 +73,9 @@ class Article extends Item {
             'title'     => $readability->getTitle(),
             'except'    => $readability->getExcerpt(),
             'content'   => $readability->getContent(),
-            'image'     => $readability->getImage(),
-            'images'    => $readability->getImages(),
+            'image_url' => $readability->getImage(),
+            'image'     => wpcp_html_make_image_tag( $readability->getImage() ),
+            'images'    => wpcp_html_make_image_tag( $readability->getImages() ),
             'direction' => $readability->getDirection(),
         ];
 

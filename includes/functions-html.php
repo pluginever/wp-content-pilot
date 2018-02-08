@@ -15,8 +15,8 @@ function wpcp_html_make_dom( $html ) {
         $dom = new \PHPHtmlParser\Dom();
         $dom->setOptions( [
             'preserveLineBreaks' => false,
-            'enforceEncoding' => true,
-            'cleanupInput'    => true,
+            'enforceEncoding'    => true,
+            'cleanupInput'       => true,
         ] );
         $dom->load( $html );
 
@@ -295,3 +295,27 @@ function wpcp_html_remove_images( $html ) {
     return preg_replace( '#<img.*?>.*?>#i', '', $html );
 }
 
+/**
+ * @since 1.0.0
+ *
+ * @param $sources
+ * @param null $campaign_id
+ *
+ * @return string
+ *
+ */
+function wpcp_html_make_image_tag( $sources ) {
+    $html        = '';
+    $css_classes = apply_filters( 'wpcp_template_image_classes', [ 'wpcp-image', 'attachment-thumbnail' ] );
+    $classes     = implode( ' ', $css_classes );
+
+    if ( is_array( $sources ) ) {
+        foreach ( $sources as $source ) {
+            $html .= "<img src='{$source}' class='$classes' /> ";
+        }
+    } else {
+        $html .= "<img src='{$sources}' class='$classes' /> ";
+    }
+
+    return $html;
+}

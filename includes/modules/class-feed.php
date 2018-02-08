@@ -8,8 +8,7 @@ use andreskrey\Readability\ParseException;
 use andreskrey\Readability\Readability;
 
 class Feed extends Item {
-    public function __construct() {
-        $this->campaign_type = 'articles';
+    public function setup() {
         add_action( 'wp_feed_options', array( $this, 'set_feed_options' ) );
         add_action( 'http_response', array( $this, 'trim_feed_content' ) );
 
@@ -108,13 +107,13 @@ class Feed extends Item {
         }
 
 
-        return apply_filters( 'wpcp_fetched_links', $links, $this->campaign_id, $this->campaign_type );
+        return $links;
 
     }
 
     function fetch_post( $link ) {
         $request = $this->setup_request();
-        $request->get( $link );
+        $request->get( $link->url );
 
         $response = wpcp_is_valid_response( $request );
 
@@ -128,7 +127,8 @@ class Feed extends Item {
             $readability->parse( $response );
         } catch ( ParseException $e ) {
             $msg = $e->getMessage();
-            wpcp_log('log', $msg);
+            wpcp_log( 'log', $msg );
+
             return new \WP_Error( 'post-parse-failed', $msg );
         }
 
@@ -137,16 +137,14 @@ class Feed extends Item {
             'title'     => $readability->getTitle(),
             'except'    => $readability->getExcerpt(),
             'content'   => $readability->getContent(),
-            'image'     => $readability->getImage(),
-            'images'    => $readability->getImages(),
+            'image_url' => $readability->getImage(),
+            'image'     => wpcp_html_make_image_tag( $readability->getImage() ),
+            'images'    => wpcp_html_make_image_tag( $readability->getImages() ),
             'direction' => $readability->getDirection(),
         ];
 
         return $post;
     }
 
-    function setup() {
-        // TODO: Implement setup() method.
-    }
 }
 

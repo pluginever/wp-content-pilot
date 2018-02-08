@@ -8,7 +8,7 @@ class Flickr extends Item {
     protected $api;
 
     function setup() {
-        $api = wpcp_get_settings( 'flickr_api', '41e9c750fc20be6fe068c9adbcc12d87' );
+        $api = wpcp_get_settings( 'flickr_api' );
 
         if ( empty( $api ) ) {
             $msg = __( 'Flickr API is not set. Please configure Flickr settings.', 'wpcp' );
@@ -86,28 +86,49 @@ class Flickr extends Item {
         if ( is_wp_error( $response ) ) {
             return $response;
         }
-        $content = @$response->photo->description->_content;
+        $description = @$response->photo->description->_content;
 
         $tags = [];
         if ( isset( $response->photo->tags->tag ) ) {
             $tags = wp_list_pluck( $response->photo->tags->tag, 'raw' );
         }
-        $image = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}.jpg";
+        $image_url = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}.jpg";
+        $tags_html = implode( ', ', $tags );
+
+        $contents = [
+            __( 'Image', 'wpcp' )       => wpcp_html_make_image_tag( $image_url ),
+            __( 'Author', 'wpcp' )      => "<a href='https://www.flickr.com/photos/{$response->photo->owner->nsid}/'>{$response->photo->owner->username}</a>",
+            __( 'Description', 'wpcp' ) => $description,
+            __( 'Views', 'wpcp' )       => $response->photo->views,
+            __( 'tags', 'wpcp' )        => $tags_html,
+        ];
+
+        $html = '';
+        foreach ( $contents as $label => $content ) {
+            $html .= "<strong>{$label}:</strong><br>";
+            $html .= "{$content}<br>";
+        }
 
         $post = [
-            'published'    => wpcp_parse_date_time( $response->photo->dates->posted, true, true, true ),
-            'author'       => $response->photo->owner->username,
-            'author_url'   => "https://www.flickr.com/photos/{$response->photo->owner->nsid}/",
-            'title'        => $response->photo->title->_content,
-            'content'      => $content,
-            'image'        => $image,
-            'images'       => (array) $image,
-            'tags'         => $tags,
-            'views'        => $response->photo->views,
-            'user_id'      => $response->photo->owner->nsid,
-            'image_thumb'  => "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_t.jpg",
-            'image_medium' => "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_c.jpg",
-            'image_large'  => "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_k.jpg",
+            'published'        => wpcp_parse_date_time( $response->photo->dates->posted, true, true, true ),
+            'author'           => $response->photo->owner->username,
+            'author_url'       => "https://www.flickr.com/photos/{$response->photo->owner->nsid}/",
+            'title'            => $response->photo->title->_content,
+            'description'      => $description,
+            'content'          => $html,
+            'image_url'        => $image_url,
+            'image'            => wpcp_html_make_image_tag( $image_url ),
+            'images'           => wpcp_html_make_image_tag( $image_url ),
+            'tags_raw'         => $tags,
+            'tags'             => implode( ' ', $tags ),
+            'views'            => $response->photo->views,
+            'user_id'          => $response->photo->owner->nsid,
+            'image_thumb_url'  => "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_t.jpg",
+            'image_thumb'      => wpcp_html_make_image_tag( "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_t.jpg" ),
+            'image_medium_url' => "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_c.jpg",
+            'image_medium'     => wpcp_html_make_image_tag("https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_c.jpg"),
+            'image_large_url'  => "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_k.jpg",
+            'image_large'      => wpcp_html_make_image_tag( "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_k.jpg" ),
         ];
 
         return $post;

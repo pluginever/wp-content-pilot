@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Content Pilot
  * Plugin URI:  http://pluginever.com
- * Description: The plugin posts high quality Articles. Amazon, Ebay, BestBuy, Walmart Products Youtube, Vimeo Videos as well as Images from Flicker and from others platforms based on your keywords.
+ * Description: Automatically posts articles, images, videos from various sources based on selected the keywords.
  * Version:     1.0.0
  * Author:      PluginEver
  * Author URI:  http://pluginever.com
@@ -198,8 +198,8 @@ class Wp_Content_Pilot {
      */
     private function instantiate() {
         new \Pluginever\WPCP\Core\Cron();
-//        new \Pluginever\WPCP\Install();
-//        new \Pluginever\WPCP\Upgrades();
+        new \Pluginever\WPCP\Install();
+        new \Pluginever\WPCP\Upgrades();
         new \Pluginever\WPCP\Core\CPT();
         new \Pluginever\WPCP\Admin\Admin();
         new \Pluginever\WPCP\Core\Ajax();

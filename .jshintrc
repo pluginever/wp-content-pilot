@@ -10,11 +10,12 @@
   "undef": true,
   "unused": true,
   "browser": true,
-  "passfail": false,  // Stop on first error.
+  "passfail": false,
+  // Stop on first error.
   "devel": true,
   "esnext": true,
-
   "globals": {
+    "ajaxurl": true,
     "jQuery": false,
     "$": false,
     "JSON": false,

@@ -1,11 +1,10 @@
 /**
- * WP Content Pilot
+ * WP Content Pilot - v1.0.0 - 2018-02-03
  * http://pluginever.com
  *
- * Copyright (c) 2018 PluginEver
- * Licensed under the GPLv2+ license.
+ * Copyright (c) 2018;
+ * Licensed GPLv2+
  */
-
 /*jslint browser: true */
 /*global jQuery:false */
 

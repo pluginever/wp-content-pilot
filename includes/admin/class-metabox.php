@@ -54,6 +54,7 @@ class Metabox {
             'context'      => 'side',
             'priority'     => 'high',
             'lazy_loading' => 'true',
+            'class'        => 'wpcp',
             'fields'       => array()
         );
 
@@ -68,6 +69,7 @@ class Metabox {
             'screen'       => 'wp_content_pilot',
             'context'      => 'normal',
             'priority'     => 'high',
+            'class'        => 'wpcp',
             'lazy_loading' => 'true',
             'fields'       => array()
         );
@@ -82,7 +84,7 @@ class Metabox {
             array(
                 'type'     => 'select',
                 'name'     => '_campaign_type',
-                'label'    => 'Campaign Type',
+                'label'    => __('Campaign Type', 'wpcp'),
                 'value'    => 'feed',
                 'tooltip'  => __( 'Select campaign type', 'wpcp' ),
                 'sanitize' => 'sanitize_key',
@@ -103,7 +105,7 @@ class Metabox {
                 'type'          => 'title',
                 'name'          => '_additional_fields',
                 'wrapper_class' => 'additional_fields',
-                'label'         => 'Additional Settings',
+                'label'         => __('Additional Settings', 'wpcp'),
             )
         );
 
@@ -127,6 +129,7 @@ class Metabox {
             'context'      => 'normal',
             'priority'     => 'high',
             'lazy_loading' => 'true',
+            'class'        => 'wpcp',
             'fields'       => array()
         );
 
@@ -147,6 +150,7 @@ class Metabox {
             'context'      => 'normal',
             'priority'     => 'high',
             'lazy_loading' => 'true',
+            'class'        => 'wpcp',
             'fields'       => array()
         );
 
@@ -159,7 +163,7 @@ class Metabox {
             [
                 'type'  => 'checkbox',
                 'label' => __( 'Active', 'wpcp' ),
-                'title' => 'Yes',
+                'title' => __('Yes', 'wpcp'),
                 'name'  => '_active',
             ],
             [
@@ -174,7 +178,7 @@ class Metabox {
                 'type'    => 'select',
                 'label'   => __( 'Frequency (Every)', 'wpcp' ),
                 'name'    => '_frequency',
-                'help' => __( 'The campaign will run every X hour until the campaign target reach.', 'wpcp' ),
+                'help'    => __( 'The campaign will run every X hour until the campaign target reach.', 'wpcp' ),
                 'options' => wpcp_get_campaign_schedule_options()
             ]
         ];
@@ -187,19 +191,19 @@ class Metabox {
             [
                 'type'     => 'number',
                 'name'     => '_min_words',
-                'label'    => 'Min Words',
+                'label'    => __('Min Words', 'wpcp'),
                 'tooltip'  => __( 'if grabbed post content less than following words then post will be ignored. Default 0', 'wpcp' ),
                 'sanitize' => 'intval',
             ],
             [
                 'type'    => 'radio',
                 'name'    => '_content_type',
-                'label'   => 'Content Type',
+                'label'   => __('Content Type', 'wpcp'),
                 'value'   => 'html',
                 'tooltip' => __( 'If content type is HTML then HTML content will be posted otherwise normal text will be posted.', 'wpcp' ),
                 'options' => array(
-                    'html' => 'HTML',
-                    'text' => 'Plain Text',
+                    'html' => __('HTML', 'wpcp'),
+                    'text' => __('Plain Text', 'wpcp'),
                 )
             ]
         ];
@@ -260,35 +264,35 @@ class Metabox {
     public function add_default_post_settings_fields( $fields ) {
         $add_fields = [
             [
-                'type'  => 'text',
-                'label' => __( 'Post Title', 'wpcp' ),
-                'name'  => '_post_title',
-                'required'  => 'true',
-                'value' => '{original_title}',
+                'type'     => 'text',
+                'label'    => __( 'Post Title', 'wpcp' ),
+                'name'     => '_post_title',
+                'required' => 'true',
+                'value'    => '{title}',
             ],
             [
-                'type'  => 'textarea',
-                'label' => __( 'Post Template', 'wpcp' ),
-                'name'  => '_post_template',
-                'class' => 'min-h-150',
-                'value' => '{content}',
-                'required'  => 'true',
-                'help'  => 'Supported Tags:',
+                'type'     => 'textarea',
+                'label'    => __( 'Post Template', 'wpcp' ),
+                'name'     => '_post_template',
+                'class'    => 'min-h-150',
+                'value'    => '{content} <br> <a href="{source}" target="_blank">Source</a> ',
+                'required' => 'true',
+                'help'     => sprintf(__('Supported Tags:%s', 'wpcp'), '<div class="wpcp-supported-tags"></div>'),
             ],
             [
-                'type'    => 'select',
-                'name'    => '_post_type',
-                'label'   => __( 'Post Type', 'wpcp' ),
-                'value'   => 'post',
-                'required'  => 'true',
-                'options' => wpcp_get_post_types()
+                'type'     => 'select',
+                'name'     => '_post_type',
+                'label'    => __( 'Post Type', 'wpcp' ),
+                'value'    => 'post',
+                'required' => 'true',
+                'options'  => wpcp_get_post_types()
             ],
             [
-                'type'    => 'select',
-                'label'   => __( 'Post Author', 'wpcp' ),
-                'name'    => '_post_author',
-                'required'  => 'true',
-                'options' => wpcp_get_authors()
+                'type'     => 'select',
+                'label'    => __( 'Post Author', 'wpcp' ),
+                'name'     => '_post_author',
+                'required' => 'true',
+                'options'  => wpcp_get_authors()
             ],
             [
                 'type'    => 'select',
@@ -334,7 +338,8 @@ class Metabox {
                 'type'      => 'textarea',
                 'name'      => '_feed_links',
                 'label'     => 'Feed Links',
-                'tooltip'   => __( 'Put links from where you grab the posts. Single links per line.', 'wpcp' ),
+                'tooltip'   => __( 'Put links from where you grab the posts.', 'wpcp' ),
+                'help'  => __('Separate url by comma.', 'wpcp'),
                 'sanitize'  => 'wpcp_sanitize_feed_links',
                 'condition' => [
                     'depend_on'    => '_campaign_type',
@@ -354,17 +359,6 @@ class Metabox {
                     'depend_cond'  => '==',
                 ]
             ],
-            [
-                'type'      => 'checkbox',
-                'name'      => '_parse_html',
-                'label'     => 'Parse HTML',
-                'tooltip'   => __( 'Post process html to fix broken links, image paths. NOTE: Takes longer time to process.', 'wpcp' ),
-                'condition' => [
-                    'depend_on'    => '_campaign_type',
-                    'depend_value' => 'feed',
-                    'depend_cond'  => '==',
-                ]
-            ],
         ];
 
         return array_merge( $fields, $add_fields );
@@ -376,23 +370,13 @@ class Metabox {
                 'type'      => 'textarea',
                 'name'      => '_keywords',
                 'label'     => 'Keywords',
-                'tooltip'   => __( 'Put keywords using those the post will be grabbed. Separate words by comma.', 'wpcp' ),
+                'tooltip'   => __( 'Put keywords using those the post will be grabbed.', 'wpcp' ),
+                'help'  => __('Separate keywords by comma.', 'wpcp'),
                 'sanitize'  => 'wpcp_sanitize_keywords',
                 'condition' => [
                     'depend_on'    => '_campaign_type',
                     'depend_value' => 'feed',
                     'depend_cond'  => '!=',
-                ]
-            ],
-            [
-                'type'      => 'checkbox',
-                'name'      => '_parse_html',
-                'label'     => 'Parse HTML',
-                'tooltip'   => __( 'Post process html to fix broken links, image paths. NOTE: Takes longer time to process.', 'wpcp' ),
-                'condition' => [
-                    'depend_on'    => '_campaign_type',
-                    'depend_value' => 'article',
-                    'depend_cond'  => '==',
                 ]
             ],
         ];
@@ -406,6 +390,7 @@ class Metabox {
                 'type'      => 'checkbox',
                 'name'      => '_skip_base_domain',
                 'label'     => ' ',
+                'class'     => 'special',
                 'title'     => 'Skip Fetching post from base domain',
                 'condition' => [
                     'depend_on'    => '_campaign_type',
@@ -417,7 +402,6 @@ class Metabox {
 
         return array_merge( $fields, $add_fields );
     }
-
 
 
     public function add_youtube_main_fields( $fields ) {
@@ -504,6 +488,7 @@ class Metabox {
                 'name'      => '_youtube_autoplay',
                 'label'     => ' ',
                 'title'     => 'Auto play video',
+                'class'     => 'special',
                 'condition' => [
                     'depend_on'    => '_campaign_type',
                     'depend_value' => 'youtube',
@@ -514,6 +499,7 @@ class Metabox {
                 'type'      => 'checkbox',
                 'name'      => '_youtube_disable_suggestion',
                 'label'     => ' ',
+                'class'     => 'special',
                 'title'     => 'Disable Suggestion at the end of video',
                 'condition' => [
                     'depend_on'    => '_campaign_type',
@@ -525,6 +511,7 @@ class Metabox {
                 'type'      => 'checkbox',
                 'name'      => '_youtube_hide_logo',
                 'label'     => ' ',
+                'class'     => 'special',
                 'title'     => 'Hide Youtube logo',
                 'condition' => [
                     'depend_on'    => '_campaign_type',

@@ -5,10 +5,10 @@
  * Copyright (c) 2018 PluginEver
  * Licensed under the GPLv2+ license.
  */
-
 .wpcp .special {
-    border: 1px solid orange !important;
-}
+  border: 1px solid orange !important; }
+
 .wpcp-supported-tags code {
-    line-height: 2em;
-}
+  line-height: 2em; }
+
+/*# sourceMappingURL=wp-content-pilot.css.map */

@@ -3,8 +3,10 @@
 namespace Pluginever\WPCP\Module;
 
 use Pluginever\WPCP\Core\Item;
+use Pluginever\WPCP\Traits\Hooker;
 
 class Youtube extends Item {
+    use Hooker;
     /**
      * Youtube api key
      *
@@ -13,7 +15,7 @@ class Youtube extends Item {
     protected $youtube_api;
 
     function setup() {
-        $youtube_api = wpcp_get_settings( 'youtube_api', 'AIzaSyC98M8WDqskLTtK8w90uhqY6NLjppuLfsw' );
+        $youtube_api = wpcp_get_settings( 'youtube_api' );
 
         if ( empty( $youtube_api ) ) {
             $msg = __( 'Youtube api is not configured. Please configure youtube settings.', 'wpcp' );
@@ -117,16 +119,37 @@ class Youtube extends Item {
 
         $duration = self::wpcp_convert_youtube_duration( $response_body->contentDetails->duration );
 
-        $image = $this->get_large_thumbnail( $response_body->snippet->thumbnails );
+        $image_url = $this->get_large_thumbnail( $response_body->snippet->thumbnails );
+
+        $tags_html = implode( ', ', $tags );
+
+        $description = $response_body->snippet->description;
+
+        $contents = [
+            __( 'Video', 'wpcp' )       => $short_code,
+            __( 'Channel', 'wpcp' )      => "<a href='https://www.youtube.com/channel/{$response_body->snippet->channelId}'>{$response_body->snippet->channelTitle}</a>",
+            __( 'Duration', 'wpcp' )    => $duration,
+            __( 'Description', 'wpcp' ) => $description,
+            __( 'tags', 'wpcp' )        => $tags_html,
+        ];
+
+        $html = '';
+        foreach ( $contents as $label => $content ) {
+            $html .= "<strong>{$label}:</strong><br>";
+            $html .= "{$content}<br>";
+        }
+
 
         $post = [
             'author'          => '',
             'published'       => wpcp_parse_date_time( $response_body->snippet->publishedAt ),
             'title'           => (string) $response_body->snippet->title,
-            'content'         => $response_body->snippet->description,
-            'image'           => $image,
-            'images'          => (array) $image,
-            'tags'            => $tags,
+            'content'         => $html,
+            'image_url'       => $image_url,
+            'image'           => wpcp_html_make_image_tag( $image_url ),
+            'images'          => wpcp_html_make_image_tag( $image_url ),
+            'tags_raw'        => $tags,
+            'tags'            => $tags_html,
             'video'           => $embed,
             'video_url'       => $video_watch_url,
             'video_shortcode' => $short_code,

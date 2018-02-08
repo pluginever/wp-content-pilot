@@ -17,10 +17,10 @@ function wpcp_run_campaign( $campaign_id ) {
     $campaign      = new \Pluginever\WPCP\Core\Campaign( $campaign_id, $campaign_type, $keyword );
     $result        = $campaign->run();
     if ( is_wp_error( $result ) ) {
-        wpcp_log( 'critical', $result->get_error_message() );
-
         return $result;
     }
+
+    wpcp_log('log', __("Post Insertion was success Post ID: {$result}", 'wpcp'));
 
     return $result;
 }
@@ -49,7 +49,12 @@ function wpcp_campaign_can_run( $campaign_id ) {
         return new \WP_Error( 'invalid-campaign-type', __( 'Campaign type is not set. Campaign won\'t run', 'wpcp' ) );
     }
 
-    $keywords = get_post_meta( $campaign_id, '_keywords', true );
+    if ( $campaign_type == 'feed' ) {
+        $keywords = get_post_meta( $campaign_id, '_feed_links', true );
+    } else {
+        $keywords = get_post_meta( $campaign_id, '_keywords', true );
+    }
+
     if ( empty( trim( $keywords ) ) ) {
         $keywords = __( 'Keywords', 'wpcp' );
         if ( $campaign_type == 'feed' ) {
@@ -78,7 +83,7 @@ function wpcp_setup_keyword( $campaign_id ) {
         $meta = get_post_meta( $campaign_id, '_keywords', true );
     }
 
-    $keywords = (array) wpcp_string_to_array( $meta, PHP_EOL, array( 'trim' ) );
+    $keywords = (array) wpcp_string_to_array( $meta, ',', array( 'trim' ) );
     if ( empty( $keywords ) ) {
         return false;
     }
@@ -103,15 +108,17 @@ function wpcp_setup_keyword( $campaign_id ) {
  * @since    1.0.0
  *
  * @param  $log_level
+ * dev - when the development
+ * log - normal log
+ * critical - error/failed
+ *
  * @param  $message
  *
  * @return  string
  */
 function wpcp_log( $log_level = "log", $message ) {
+    $log_level = strtolower( $log_level );
 
-    if ( WP_DEBUG !== true ) {
-        return;
-    }
     if ( is_array( $message ) || is_object( $message ) ) {
         $message = print_r( $message, true );
     }
@@ -120,11 +127,33 @@ function wpcp_log( $log_level = "log", $message ) {
         define( 'WPCP_LOG_FILE', WP_CONTENT_DIR . '/debug.log' );
     }
 
-    if ( ! file_exists( WPCP_LOG_FILE ) ) {
-        @touch( WPCP_LOG_FILE );
+    if ( in_array( $log_level, array( 'log', 'critical' ) ) ) {
+        $camp_id = isset( wp_content_pilot()->campaign_id ) ? wp_content_pilot()->campaign_id : null;
+        $keyword = isset( wp_content_pilot()->keyword ) ? wp_content_pilot()->keyword : null;
+        $message = strip_tags( $message );
+        $level   = $log_level;
+
+        global $wpdb;
+        $wpdb->insert(
+            "{$wpdb->prefix}wpcp_logs",
+            array(
+                'camp_id'   => $camp_id,
+                'keyword'   => $keyword,
+                'log_level' => $level,
+                'message'   => addslashes( $message ),
+            )
+        );
+
     }
 
-    return error_log( date( "Y-m-d\tH:i:s" ) . "\t\t" . ucwords( $log_level ) . "\t\t" . strip_tags( $message ) . "\n", 3, WPCP_LOG_FILE );
+    if ( WP_DEBUG == true ) {
+        if ( ! file_exists( WPCP_LOG_FILE ) ) {
+            @touch( WPCP_LOG_FILE );
+        }
+
+        return error_log( date( "Y-m-d\tH:i:s" ) . "\t\t" . ucwords( $log_level ) . "\t\t" . strip_tags( $message ) . "\n", 3, WPCP_LOG_FILE );
+    }
+
 }
 
 
@@ -156,7 +185,7 @@ function wpcp_insert_link( array $data ) {
         return false;
     }
 
-    $wpdb->show_errors();
+    //$wpdb->show_errors();
     $id = $wpdb->insert(
         $table,
         $data
@@ -223,6 +252,12 @@ function wpcp_get_settings( $field, $default = false ) {
     }
 
     return $default;
+}
+
+function wpcp_update_settings($field, $data){
+    $settings = get_option( 'wpcp_settings' );
+    $settings[$field] = $data;
+    update_option('wpcp_settings', $settings);
 }
 
 /**
@@ -388,7 +423,7 @@ function wpcp_string_to_array( $string, $separator = ',', $callbacks = array() )
  */
 function wpcp_disable_campaign( $camp_id ) {
     do_action( 'wpcp_disable_campaign', $camp_id );
-    update_post_meta( $camp_id, '_wpcp_active', 0 );
+    update_post_meta( $camp_id, '_active', 0 );
 }
 
 /**
@@ -526,8 +561,9 @@ function wpcp_get_host( $url, $base_domain = false ) {
     if ( $base_domain ) {
         $host = trim( $parseUrl['host'] ? $parseUrl['host'] : array_shift( explode( '/', $parseUrl['path'], 2 ) ) );
     } else {
-        $scheme = !isset($parseUrl['scheme'])? 'http' : $parseUrl['scheme'] ;
-        return $scheme."://".$parseUrl['host'];
+        $scheme = ! isset( $parseUrl['scheme'] ) ? 'http' : $parseUrl['scheme'];
+
+        return $scheme . "://" . $parseUrl['host'];
     }
 
     return $host;
@@ -545,7 +581,7 @@ function wpcp_convert_rel_2_abs_url( $rel_url, $host ) {
         'host'   => '',
         'path'   => '',
     ];
-    $host_parts = wp_parse_args(parse_url( $host ), $default);
+    $host_parts = wp_parse_args( parse_url( $host ), $default );
 
     //queries and anchors
     if ( $rel_url[0] == '#' || $rel_url[0] == '?' ) {
@@ -628,4 +664,51 @@ function wpcp_set_featured_image_from_link( $image_url, $post_id ) {
 
     return false;
 
+}
+
+/**
+ * Search for template tags from the supplied contents
+ * and replace by contents
+ *
+ * @since 1.0.0
+ *
+ * @param $template
+ * @param $article
+ * @param $campaign_id
+ * @param $keyword
+ *
+ * @return mixed
+ *
+ */
+function wpcp_parse_template_tags( $template, $article, $campaign_id ) {
+    $cache_key     = md5( "wpcp_template_tags_{$campaign_id}" );
+    $template_tags = wp_cache_get( $cache_key );
+    if ( false == $template_tags ) {
+        wpcp_log( 'dev', 'have not cached' );
+        unset( $article['link'] );
+        $template_tags = [];
+        foreach ( $article as $tag => $content ) {
+
+            $template_tags[ '{' . $tag . '}' ] = ! is_string( $content ) ? serialize( $content ) : $content;
+        }
+        $template_tags = apply_filters( 'wpcp_parse_template_tags', $template_tags, $article, $campaign_id );
+        wp_cache_set( $cache_key, $template_tags );
+    }
+
+    $tags     = array_keys( $template_tags );
+    $contents = array_values( $template_tags );
+
+    return str_replace( $tags, $contents, $template );
+}
+
+
+function wpcp_get_module_supported_tags( $module ) {
+    $modules = wpcp_get_modules();
+    if ( isset( $modules[ $module ] ) ) {
+        $selected = $modules[ $module ];
+
+        return $selected['supports'];
+    }
+
+    return [];
 }
