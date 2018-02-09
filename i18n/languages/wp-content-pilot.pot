@@ -1,10 +1,10 @@
-# Copyright (C) 2018 PluginEver
+# Copyright (C) 2018 manikmist09
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Content Pilot 1.0.0\n"
 "Report-Msgid-Bugs-To: http://pluginever.com/support/\n"
-"POT-Creation-Date: 2018-02-07 17:53:06+00:00\n"
+"POT-Creation-Date: 2018-02-09 19:38:30+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,8 +13,12 @@ msgstr ""
 "Language-Team: LANGUAGE <support@pluginever.com>\n"
 "X-Generator: grunt-wp-i18n1.0.1\n"
 
-#: includes/admin/class-admin.php:55
+#: includes/admin/class-admin.php:76
 msgid "Campaign Log"
+msgstr ""
+
+#: includes/admin/class-admin.php:76
+msgid "Clear Logs"
 msgstr ""
 
 #: includes/admin/class-metabox.php:52
@@ -45,7 +49,7 @@ msgstr ""
 msgid "Advanced Settings"
 msgstr ""
 
-#: includes/admin/class-metabox.php:165 includes/core/class-cpt.php:71
+#: includes/admin/class-metabox.php:165 includes/core/class-cpt.php:72
 msgid "Active"
 msgstr ""
 
@@ -166,32 +170,34 @@ msgid ""
 msgstr ""
 
 #: includes/admin/class-metabox.php:341
-msgid "Put links from where you grab the posts. Single links per line."
+msgid "Put links from where you grab the posts."
 msgstr ""
 
-#: includes/admin/class-metabox.php:354
+#: includes/admin/class-metabox.php:342
+msgid "Separate url by comma."
+msgstr ""
+
+#: includes/admin/class-metabox.php:355
 msgid ""
 "If you are putting the exact feed links then set force feed otherwise feed "
 "link will be auto discovered."
 msgstr ""
 
-#: includes/admin/class-metabox.php:383
-msgid "Put keywords using those the post will be grabbed. Separate words by comma."
+#: includes/admin/class-metabox.php:373
+msgid "Put keywords using those the post will be grabbed."
 msgstr ""
 
-#: includes/admin/class-metabox.php:395
-msgid ""
-"Post process html to fix broken links, image paths. NOTE: Takes longer time "
-"to process."
+#: includes/admin/class-metabox.php:374
+msgid "Separate keywords by comma."
 msgstr ""
 
-#: includes/admin/class-metabox.php:433
+#: includes/admin/class-metabox.php:413
 msgid ""
 "Use global search for all result or use specific channel if you want to "
 "limit to that channel."
 msgstr ""
 
-#: includes/admin/class-metabox.php:448
+#: includes/admin/class-metabox.php:428
 msgid ""
 "eg. channel id is UCIQOOX3ReApm-KTZ66eMVzQ for "
 "https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ"
@@ -235,19 +241,19 @@ msgstr ""
 msgid "No log found"
 msgstr ""
 
-#: includes/admin/log-list-table.php:76
+#: includes/admin/log-list-table.php:78
 msgid "Campaign"
 msgstr ""
 
-#: includes/admin/log-list-table.php:77 includes/admin/log-list-table.php:78
+#: includes/admin/log-list-table.php:79 includes/admin/log-list-table.php:80
 msgid "Keyword"
 msgstr ""
 
-#: includes/admin/log-list-table.php:79
+#: includes/admin/log-list-table.php:81
 msgid "Message"
 msgstr ""
 
-#: includes/admin/log-list-table.php:80
+#: includes/admin/log-list-table.php:82
 msgid "Date"
 msgstr ""
 
@@ -307,32 +313,70 @@ msgstr ""
 msgid "Campaigns of Wordpress Content Pilot"
 msgstr ""
 
-#: includes/core/class-cpt.php:57
+#: includes/core/class-cpt.php:58
 msgid "Status"
 msgstr ""
 
-#: includes/core/class-cpt.php:58
+#: includes/core/class-cpt.php:59
 msgid "Type"
 msgstr ""
 
-#: includes/core/class-cpt.php:59
+#: includes/core/class-cpt.php:60
 msgid "Target"
 msgstr ""
 
-#: includes/core/class-cpt.php:60
+#: includes/core/class-cpt.php:61
 msgid "Frequency"
 msgstr ""
 
-#: includes/core/class-cpt.php:61
+#: includes/core/class-cpt.php:62
 msgid "Last Run"
 msgstr ""
 
-#: includes/core/class-cpt.php:73
+#: includes/core/class-cpt.php:74
 msgid "Disabled"
 msgstr ""
 
 #: includes/core/class-cron.php:20
 msgid "Once a Minute"
+msgstr ""
+
+#: includes/core/class-insights.php:279
+msgid ""
+"Want to help make <strong>%s</strong> even more awesome? Allow Pluginever "
+"to collect non-sensitive diagnostic data and usage information."
+msgstr ""
+
+#: includes/core/class-insights.php:284
+msgid "what we collect"
+msgstr ""
+
+#: includes/core/class-insights.php:290
+msgid "Allow"
+msgstr ""
+
+#: includes/core/class-insights.php:291
+msgid "No thanks"
+msgstr ""
+
+#: includes/core/class-insights.php:468
+msgid "Once Weekly"
+msgstr ""
+
+#: includes/core/class-insights.php:604
+msgid "If you have a moment, please let us know why you are deactivating:"
+msgstr ""
+
+#: includes/core/class-insights.php:618
+msgid "I rather wouldn't say"
+msgstr ""
+
+#: includes/core/class-insights.php:619
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: includes/core/class-insights.php:620
+msgid "Canel"
 msgstr ""
 
 #: includes/core/class-item.php:57 includes/core/class-item.php:76
@@ -347,39 +391,62 @@ msgstr ""
 msgid "Fetching post from %s"
 msgstr ""
 
+#: includes/core/class-tracker.php:12
+msgid ""
+"Want to help make <strong>WP Content Pilot</strong> even more awesome? "
+"Allow PluginEver to collect non-sensitive diagnostic data and usage "
+"information."
+msgstr ""
+
 #: includes/function-actions.php:47
 msgid "Automatic campaign failed."
 msgstr ""
 
-#: includes/functions.php:42
+#: includes/function-filters.php:375
+msgid "Post is rejected due to less content. Required %d Found %d"
+msgstr ""
+
+#: includes/function-filters.php:383
+msgid "Post is rejected because could not find any image in the post."
+msgstr ""
+
+#: includes/function-filters.php:389
+msgid "Post is rejected because language is not english."
+msgstr ""
+
+#: includes/function-filters.php:398
+msgid "Post is rejected because post with same title exit."
+msgstr ""
+
+#: includes/functions.php:40
 msgid "Campaign is not exist or not publish."
 msgstr ""
 
-#: includes/functions.php:46
+#: includes/functions.php:44
 msgid "Campaign is not active this wont run."
 msgstr ""
 
-#: includes/functions.php:51
+#: includes/functions.php:49
 msgid "Campaign type is not set. Campaign won't run"
 msgstr ""
 
-#: includes/functions.php:61
+#: includes/functions.php:59
 msgid "Keywords"
 msgstr ""
 
-#: includes/functions.php:63
+#: includes/functions.php:61
 msgid "Feed links"
 msgstr ""
 
-#: includes/functions.php:345
+#: includes/functions.php:343
 msgid "Nothing in the response object"
 msgstr ""
 
-#: includes/functions.php:376
+#: includes/functions.php:374
 msgid "Could not retrieve any links"
 msgstr ""
 
-#: includes/functions.php:546
+#: includes/functions.php:544
 msgid "%s Hour"
 msgid_plural "%s Hours"
 msgstr[0] ""
@@ -469,51 +536,51 @@ msgstr ""
 msgid "Duration"
 msgstr ""
 
-#: wp-content-pilot.php:278
+#: wp-content-pilot.php:279
 msgid "Your installed PHP Version is: "
 msgstr ""
 
-#: wp-content-pilot.php:279
+#: wp-content-pilot.php:280
 msgid "The <strong>WP Content Pilot</strong> plugin requires PHP version <strong>"
 msgstr ""
 
-#: wp-content-pilot.php:279
+#: wp-content-pilot.php:280
 msgid "</strong> or greater."
 msgstr ""
 
-#: wp-content-pilot.php:299
+#: wp-content-pilot.php:300
 msgid "<h1>An Error Occurred</h1>"
 msgstr ""
 
-#: wp-content-pilot.php:300
+#: wp-content-pilot.php:301
 msgid "<h2>Your installed PHP Version is: "
 msgstr ""
 
-#: wp-content-pilot.php:301
+#: wp-content-pilot.php:302
 msgid ""
 "<p>The <strong>WP Content Pilot</strong> plugin requires PHP version "
 "<strong>"
 msgstr ""
 
-#: wp-content-pilot.php:301
+#: wp-content-pilot.php:302
 msgid "</strong> or greater"
 msgstr ""
 
-#: wp-content-pilot.php:302
+#: wp-content-pilot.php:303
 msgid "<p>The version of your PHP is "
 msgstr ""
 
-#: wp-content-pilot.php:302
+#: wp-content-pilot.php:303
 msgid "unsupported and old"
 msgstr ""
 
-#: wp-content-pilot.php:303
+#: wp-content-pilot.php:304
 msgid ""
 "You should update your PHP software or contact your host regarding this "
 "matter.</p>"
 msgstr ""
 
-#: wp-content-pilot.php:305
+#: wp-content-pilot.php:306
 msgid "Plugin Activation Error"
 msgstr ""
 
@@ -521,17 +588,20 @@ msgstr ""
 msgid "WP Content Pilot"
 msgstr ""
 
-#. Author URI of the plugin/theme
+#. Plugin URI of the plugin/theme
 msgid "http://pluginever.com"
 msgstr ""
 
 #. Description of the plugin/theme
 msgid ""
-"The plugin posts high quality Articles. Amazon, Ebay, BestBuy, Walmart "
-"Products Youtube, Vimeo Videos as well as Images from Flicker and from "
-"others platforms based on your keywords."
+"Automatically posts articles, images, videos from various sources based on "
+"selected the keywords."
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "PluginEver"
+msgid "manikmist09"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://manik.me"
 msgstr ""

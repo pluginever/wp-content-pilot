@@ -2,11 +2,10 @@
 /**
  * Plugin Name: WP Content Pilot
  * Plugin URI:  http://pluginever.com
- * Description: Automatically posts articles, images, videos from various sources based on selected the keywords.
+ * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
  * Version:     1.0.0
- * Author:      PluginEver
+ * Author:      pluginever
  * Author URI:  http://pluginever.com
- * Donate link: http://pluginever.com
  * License:     GPLv2+
  * Text Domain: wpcp
  * Domain Path: /languages
@@ -187,6 +186,7 @@ class Wp_Content_Pilot {
         require WPCP_INCLUDES . '/function-filters.php';
         require WPCP_INCLUDES . '/actions-filters.php';
         require WPCP_INCLUDES . '/module-categories.php';
+        require WPCP_INCLUDES . '/core/class-insights.php';
     }
 
     /**
@@ -203,6 +203,7 @@ class Wp_Content_Pilot {
         new \Pluginever\WPCP\Core\CPT();
         new \Pluginever\WPCP\Admin\Admin();
         new \Pluginever\WPCP\Core\Ajax();
+        new \Pluginever\WPCP\Core\Tracker();
 
         $this->container['modules'] = new \Pluginever\WPCP\Module\Module();
     }

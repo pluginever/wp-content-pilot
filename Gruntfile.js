@@ -194,6 +194,8 @@ module.exports = function(grunt) {
                 '!plugin-deploy.sh',
                 '!export.sh',
                 '!config.codekit',
+                '!package-lock.json',
+                '!phpcs.xml.dist',
                 '!nbproject/*',
                 '!tests/**',
                 '!.csscomb.json',
