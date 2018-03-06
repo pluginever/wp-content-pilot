@@ -1,159 +1,128 @@
 <?php
+
 namespace Pluginever\WPCP\Admin;
 
-class Settings{
-    private $settings;
+use Pluginever\WPCP\Core\Ever_WP_Settings_API;
+
+class Settings {
+    private $settings_api;
+
     function __construct() {
-        $this->settings = get_option('wpcp_settings');
-        add_action( 'admin_menu', array($this, 'admin_menu') );
-        add_action( 'admin_init', array($this, 'wpcp_settings_init') );
+        $this->settings_api = new Ever_WP_Settings_API();
+        add_action( 'admin_init', array( $this, 'admin_init' ) );
+        add_action( 'admin_menu', array( $this, 'admin_menu' ) );
     }
+
+    function admin_init() {
+        //set the settings
+        $this->settings_api->set_sections( $this->get_settings_sections() );
+        $this->settings_api->set_fields( $this->get_settings_fields() );
+        //initialize settings
+        $this->settings_api->admin_init();
+    }
+
     function admin_menu() {
-        add_submenu_page( 'edit.php?post_type=wp_content_pilot', 'Settings', 'Settings', 'manage_options', 'wpcp-settings', array($this, 'setting_page') );
+        add_submenu_page( 'edit.php?post_type=wp_content_pilot', 'Settings', 'Settings', 'manage_options', 'wpcp-settings', array(
+            $this,
+            'settings_page'
+        ) );
     }
 
-    public function setting_page(){
-        ?>
-        <div class="wrap plvr-settings plvr">
-            <form action='options.php' method='post'>
-
-                <h2><?php _e('WP Content Pilot Settings', 'wpcp');?></h2>
-
-                <?php
-                settings_fields( 'wpcp_settings' );
-                do_settings_sections( 'wpcp_settings' );
-                submit_button();
-                ?>
-
-            </form>
-        </div>
-        <?php
-    }
-
-    public function wpcp_settings_init(){
-        //white listing
-        register_setting( 'wpcp_settings', 'wpcp_settings' );
-        //article
-        add_settings_section(
-            'wpcp_article_section',
-            __( 'Article Settings', 'wpcp' ),
-            array($this, 'wpcp_article_section_callback'),
-            'wpcp_settings'
+    function get_settings_sections() {
+        $sections = array(
+            array(
+                'id'    => 'wpcp_settings_article',
+                'title' => __( 'Article Settings', 'wpcp' )
+            ),
+            array(
+                'id'    => 'wpcp_settings_youtube',
+                'title' => __( 'Youtube Settings', 'wpcp' )
+            ),
+            array(
+                'id'    => 'wpcp_settings_flickr',
+                'title' => __( 'Flickr Settings', 'wpcp' )
+            ),
+            array(
+                'id'    => 'wpcp_settings_envato',
+                'title' => __( 'Envato Settings', 'wpcp' )
+            )
         );
 
-        add_settings_field(
-            'article_api',
-            __( 'Banned Hosts', 'wpcp' ),
-            array( $this, 'article_api_field'),
-            'wpcp_settings',
-            'wpcp_article_section'
+        return apply_filters( 'wpcp_settings_sections', $sections );
+    }
+
+    /**
+     * Returns all the settings fields
+     *
+     * @return array settings fields
+     */
+    function get_settings_fields() {
+        $settings_fields = array(
+            'wpcp_settings_article' => array(
+                array(
+                    'name'        => 'banned_hosts',
+                    'label'       => __( 'Banned Hosts', 'wpcp' ),
+                    'desc'        => __( 'Articles from the above hosts will be rejected. put single url/host per line.', 'wpcp' ),
+                    'placeholder' => __( "example.com \n example1.com", 'wpcp' ),
+                    'type'        => 'textarea',
+                ),
+            ),
+            'wpcp_settings_youtube'       => array(
+                array(
+                    'name'    => 'api_key',
+                    'label'   => __( 'Youtube API Key', 'wpcp' ),
+                    'desc'    => __( 'Youtube campaigns wont run without settings this.', 'wpcp' ),
+                    'type'    => 'text',
+                    'default' => ''
+                ),
+            ),
+            'wpcp_settings_flickr'       => array(
+                array(
+                    'name'    => 'api_key',
+                    'label'   => __( 'Flickr API Key', 'wpcp' ),
+                    'desc'    => __( 'Flickr campaigns wont run without settings this.', 'wpcp' ),
+                    'type'    => 'text',
+                    'default' => ''
+                ),
+            ),
+            'wpcp_settings_envato'       => array(
+                array(
+                    'name'    => 'api_key',
+                    'label'   => __( 'Youtube API Key', 'wpcp' ),
+                    'desc'    => __( 'Youtube campaigns wont run without settings this.', 'wpcp' ),
+                    'type'    => 'text',
+                    'default' => ''
+                ),
+            )
         );
 
-        //youtube
-        add_settings_section(
-            'wpcp_youtube_section',
-            __( 'Youtube Settings', 'wpcp' ),
-            array($this, 'wpcp_youtube_section_callback'),
-            'wpcp_settings'
-        );
-
-        add_settings_field(
-            'youtube_api',
-            __( 'Youtube API key', 'wpcp' ),
-            array( $this, 'youtube_api_field'),
-            'wpcp_settings',
-            'wpcp_youtube_section'
-        );
-        //vemio
-//        add_settings_section(
-//            'wpcp_vimeo_section',
-//            __( 'Vimeo Settings', 'wpcp' ),
-//            array($this, 'wpcp_vimeo_section_callback'),
-//            'wpcp_settings'
-//        );
-//        add_settings_field(
-//            'vimeo_token',
-//            __( 'Vimeo Token', 'wpcp' ),
-//            array( $this, 'vimeo_token_field'),
-//            'wpcp_settings',
-//            'wpcp_vimeo_section'
-//        );
-
-        //flicker
-        add_settings_section(
-            'wpcp_flicker_section',
-            __( 'Flicker Settings', 'wpcp' ),
-            array($this, 'wpcp_flicker_section_callback'),
-            'wpcp_settings'
-        );
-        add_settings_field(
-            'flicker_api_key',
-            __( 'Flicker API key', 'wpcp' ),
-            array( $this, 'flicker_api_key_field'),
-            'wpcp_settings',
-            'wpcp_flicker_section'
-        );
-//        add_settings_field(
-//            'flicker_api_secret',
-//            __( 'Flicker API Secret', 'wpcp' ),
-//            array( $this, 'flicker_api_secret_field'),
-//            'wpcp_settings',
-//            'wpcp_flicker_section'
-//        );
-
+        return apply_filters( 'wpcp_settings_fields', $settings_fields );
     }
 
-    function wpcp_article_section_callback(){
-
-    }
-
-    function article_api_field(  ) {
+    function settings_page() {
         ?>
-        <textarea name='wpcp_settings[article_banned_host]' id="wpcp_settings[article_banned_host]" cols="30" rows="10"><?php echo $this->get_settings('article_banned_host'); ?>
-        </textarea>
-        <p class="description"><?php _e('Articles from the above hosts will be rejected.<br> put single url/host per line.', 'wpcp');?></p>
         <?php
+        echo '<div class="wrap">';
+        echo sprintf( "<h2>%s</h2>", __( 'WP Content Pilot Settings', 'wpcp' ) );
+        $this->settings_api->show_settings();
+        echo '</div>';
     }
 
-
-    function wpcp_youtube_section_callback(){
-
-    }
-
-    function youtube_api_field(  ) {
-        ?>
-        <input type='text' name='wpcp_settings[youtube_api]' value='<?php echo $this->get_settings('youtube_api'); ?>'>
-        <?php
-    }
-
-    function wpcp_vimeo_section_callback(){}
-    function vimeo_token_field() {
-        ?>
-        <input type='text' name='wpcp_settings[vimeo_token]' value='<?php echo $this->get_settings('vimeo_token'); ?>'>
-        <?php
-    }
-
-    function wpcp_flicker_section_callback(){}
-    function flicker_api_key_field() {
-        ?>
-        <input type='text' name='wpcp_settings[flicker_api_key_field]' value='<?php echo $this->get_settings('flicker_api_key_field'); ?>'>
-        <?php
-    }
-    function flicker_api_secret_field() {
-        ?>
-        <input type='text' name='wpcp_settings[flicker_api_secret]' value='<?php echo $this->get_settings('flicker_api_secret'); ?>'>
-        <?php
-    }
-
-
-    function get_settings($key){
-        if( !empty($this->settings[$key])){
-            return $this->settings[$key];
+    /**
+     * Get all the pages
+     *
+     * @return array page names with key value pairs
+     */
+    function get_pages() {
+        $pages         = get_pages();
+        $pages_options = array();
+        if ( $pages ) {
+            foreach ( $pages as $page ) {
+                $pages_options[ $page->ID ] = $page->post_title;
+            }
         }
-        return '';
+
+        return $pages_options;
     }
-
-
 }
-
 

@@ -90,7 +90,7 @@ class Install {
                 'google',
                 'bing',
             );
-            wpcp_update_settings('article_banned_host', implode(PHP_EOL, $hosts));
+            wpcp_update_settings('wpcp_settings_article', implode(PHP_EOL, $hosts));
         }
     }
     /**

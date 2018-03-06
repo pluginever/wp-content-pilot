@@ -13,7 +13,7 @@ class Upgrades {
      * @var array
      */
     private static $upgrades = array(
-        // '1.0'    => 'updates/update-1.0.php',
+         '1.0'    => 'updates/update-1.0.php',
     );
 
     /**
