@@ -81,18 +81,20 @@ class Install {
 
     }
 
-    public function populate(){
-        $banned_hosts = wpcp_get_settings('article_banned_host');
-        if( empty($banned_hosts)){
+    public function populate() {
+        $article_settings = wpcp_get_settings( 'wpcp_settings_article' );
+        if ( empty( $article_settings['banned_hosts'] ) ) {
             $hosts = array(
                 'wikipedia',
                 'youtube',
                 'google',
                 'bing',
             );
-            wpcp_update_settings('wpcp_settings_article', implode(PHP_EOL, $hosts));
+            $article_settings['banned_hosts'] = implode( PHP_EOL, $hosts );
+            update_option( 'wpcp_settings_article', $article_settings );
         }
     }
+
     /**
      * Create cron jobs
      *

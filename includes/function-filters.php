@@ -327,8 +327,18 @@ function wpcp_post_title_as_template( $title, $article, $campaign_id ) {
     return $title;
 }
 
+/**
+ * Rejects article from the banned hosts for article campaign
+ *
+ * @since 1.0.0
+ *
+ * @param $links
+ *
+ * @return mixed
+ *
+ */
 function wpcp_reject_banned_hosts( $links ) {
-    $banned_hosts = wpcp_get_settings( 'article_banned_host' );
+    $banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article', [] );
     if ( ! empty( $banned_hosts ) ) {
         $banned_hosts = wpcp_string_to_array( $banned_hosts, PHP_EOL );
 

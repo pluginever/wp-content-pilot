@@ -67,7 +67,7 @@ class Settings {
                     'type'        => 'textarea',
                 ),
             ),
-            'wpcp_settings_youtube'       => array(
+            'wpcp_settings_youtube' => array(
                 array(
                     'name'    => 'api_key',
                     'label'   => __( 'Youtube API Key', 'wpcp' ),
@@ -76,7 +76,7 @@ class Settings {
                     'default' => ''
                 ),
             ),
-            'wpcp_settings_flickr'       => array(
+            'wpcp_settings_flickr'  => array(
                 array(
                     'name'    => 'api_key',
                     'label'   => __( 'Flickr API Key', 'wpcp' ),
@@ -85,11 +85,18 @@ class Settings {
                     'default' => ''
                 ),
             ),
-            'wpcp_settings_envato'       => array(
+            'wpcp_settings_envato'  => array(
                 array(
-                    'name'    => 'api_key',
-                    'label'   => __( 'Youtube API Key', 'wpcp' ),
-                    'desc'    => __( 'Youtube campaigns wont run without settings this.', 'wpcp' ),
+                    'name'    => 'token',
+                    'label'   => __( 'Envato Token', 'wpcp' ),
+                    'desc'    => __( 'Check this tutorial <a href="https://www.pluginever.com/docs/wp-content-pilot/how-to-create-envato-token/" target="_blank">Here</a> to get your token.', 'wpcp' ),
+                    'type'    => 'text',
+                    'default' => ''
+                ),
+                array(
+                    'name'    => 'user_name',
+                    'label'   => __( 'Envato Username', 'wpcp' ),
+                    'desc'    => __( 'Your username (Affiliate ID) for affiliate integration. e.g. "pluginever"' ),
                     'type'    => 'text',
                     'default' => ''
                 ),

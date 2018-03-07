@@ -35,6 +35,9 @@ class Metabox {
         $this->filter( 'wpcp_module_main_fields', 'add_youtube_main_fields' );
         $this->filter( 'wpcp_module_additional_fields', 'add_youtube_additional_fields' );
 
+        //envato
+        $this->filter( 'wpcp_module_main_fields', 'add_envato_main_fields' );
+
         //post settings
         $this->filter( 'wpcp_post_settings_fields', 'add_default_post_settings_fields' );
 
@@ -84,7 +87,7 @@ class Metabox {
             array(
                 'type'     => 'select',
                 'name'     => '_campaign_type',
-                'label'    => __('Campaign Type', 'wpcp'),
+                'label'    => __( 'Campaign Type', 'wpcp' ),
                 'value'    => 'feed',
                 'tooltip'  => __( 'Select campaign type', 'wpcp' ),
                 'sanitize' => 'sanitize_key',
@@ -105,7 +108,7 @@ class Metabox {
                 'type'          => 'title',
                 'name'          => '_additional_fields',
                 'wrapper_class' => 'additional_fields',
-                'label'         => __('Additional Settings', 'wpcp'),
+                'label'         => __( 'Additional Settings', 'wpcp' ),
             )
         );
 
@@ -159,11 +162,12 @@ class Metabox {
     }
 
     public function add_campaign_settings_fields( $fields ) {
+        global $post;
         $add_fields = [
             [
                 'type'  => 'checkbox',
                 'label' => __( 'Active', 'wpcp' ),
-                'title' => __('Yes', 'wpcp'),
+                'title' => __( 'Yes', 'wpcp' ),
                 'name'  => '_active',
             ],
             [
@@ -180,6 +184,12 @@ class Metabox {
                 'name'    => '_frequency',
                 'help'    => __( 'The campaign will run every X hour until the campaign target reach.', 'wpcp' ),
                 'options' => wpcp_get_campaign_schedule_options()
+            ],
+            [
+                'type'    => 'title',
+                'label'   => __( 'Test Run', 'wpcp' ),
+                'name'    => '_dry_run',
+                'help'    => sprintf('<a href="%s" data-campaign_id="test" id="wpcp-test-run">Run</a>', '#'),
             ]
         ];
 
@@ -191,19 +201,19 @@ class Metabox {
             [
                 'type'     => 'number',
                 'name'     => '_min_words',
-                'label'    => __('Min Words', 'wpcp'),
+                'label'    => __( 'Min Words', 'wpcp' ),
                 'tooltip'  => __( 'if grabbed post content less than following words then post will be ignored. Default 0', 'wpcp' ),
                 'sanitize' => 'intval',
             ],
             [
                 'type'    => 'radio',
                 'name'    => '_content_type',
-                'label'   => __('Content Type', 'wpcp'),
+                'label'   => __( 'Content Type', 'wpcp' ),
                 'value'   => 'html',
                 'tooltip' => __( 'If content type is HTML then HTML content will be posted otherwise normal text will be posted.', 'wpcp' ),
                 'options' => array(
-                    'html' => __('HTML', 'wpcp'),
-                    'text' => __('Plain Text', 'wpcp'),
+                    'html' => __( 'HTML', 'wpcp' ),
+                    'text' => __( 'Plain Text', 'wpcp' ),
                 )
             ]
         ];
@@ -277,7 +287,7 @@ class Metabox {
                 'class'    => 'min-h-150',
                 'value'    => '{content} <br> <a href="{source}" target="_blank">Source</a> ',
                 'required' => 'true',
-                'help'     => sprintf(__('Supported Tags:%s', 'wpcp'), '<div class="wpcp-supported-tags"></div>'),
+                'help'     => sprintf( __( 'Supported Tags:%s', 'wpcp' ), '<div class="wpcp-supported-tags"></div>' ),
             ],
             [
                 'type'     => 'select',
@@ -339,7 +349,7 @@ class Metabox {
                 'name'      => '_feed_links',
                 'label'     => 'Feed Links',
                 'tooltip'   => __( 'Put links from where you grab the posts.', 'wpcp' ),
-                'help'  => __('Separate url by comma.', 'wpcp'),
+                'help'      => __( 'Separate url by comma.', 'wpcp' ),
                 'sanitize'  => 'wpcp_sanitize_feed_links',
                 'condition' => [
                     'depend_on'    => '_campaign_type',
@@ -371,7 +381,7 @@ class Metabox {
                 'name'      => '_keywords',
                 'label'     => 'Keywords',
                 'tooltip'   => __( 'Put keywords using those the post will be grabbed.', 'wpcp' ),
-                'help'  => __('Separate keywords by comma.', 'wpcp'),
+                'help'      => __( 'Separate keywords by comma.', 'wpcp' ),
                 'sanitize'  => 'wpcp_sanitize_keywords',
                 'condition' => [
                     'depend_on'    => '_campaign_type',
@@ -516,6 +526,91 @@ class Metabox {
                 'condition' => [
                     'depend_on'    => '_campaign_type',
                     'depend_value' => 'youtube',
+                    'depend_cond'  => '==',
+                ]
+            ],
+        ];
+
+        return array_merge( $fields, $add_fields );
+    }
+
+    /**
+     * Envato fields
+     *
+     * @since 1.0.1
+     *
+     * @param $fields
+     *
+     * @return array
+     *
+     */
+    function add_envato_main_fields( $fields ) {
+        $add_fields = [
+            [
+                'type'      => 'select',
+                'name'      => '_platform',
+                'label'     => 'Platform',
+                'options'   => [
+                    'themeforest.net'  => 'ThemeForest',
+                    'codecanyon.net'   => 'CodeCanyon',
+                    'photodune.net'    => 'PhotoDune',
+                    'videohive.net'    => 'VideoHive',
+                    'graphicrever.net' => 'GraphicsRever',
+                    '3docean.net'      => '3DOcean',
+                ],
+                'tooltip'   => __( 'Select envato platform', 'wpcp' ),
+                'condition' => [
+                    'depend_on'    => '_campaign_type',
+                    'depend_value' => 'envato',
+                    'depend_cond'  => '==',
+                ]
+            ],
+            [
+                'type'      => 'text',
+                'name'      => '_price_range',
+                'label'     => 'Price Range',
+                'tooltip'   => __( 'You can define price range to filter the search.', 'wpcp' ),
+                'help'      => __( 'seperate min max price with (|). e.g. 20|100', 'wpcp' ),
+                'condition' => [
+                    'depend_on'    => '_campaign_type',
+                    'depend_value' => 'envato',
+                    'depend_cond'  => '==',
+                ]
+            ],
+            [
+                'type'      => 'select',
+                'name'      => '_envato_sort_by',
+                'label'     => 'Sort By',
+                'options'   => [
+                    'following' => 'Following',
+                    'relevance' => 'Relevance',
+                    'rating'    => 'Rating',
+                    'sales'     => 'Sales',
+                    'price'     => 'Price',
+                    'date'      => 'Date',
+                    'updated'   => 'Updated',
+                    'name'      => 'Name',
+                    'Trending'  => 'Trending',
+                ],
+                'tooltip'   => __( 'Select sort by for order the search result.', 'wpcp' ),
+                'condition' => [
+                    'depend_on'    => '_campaign_type',
+                    'depend_value' => 'envato',
+                    'depend_cond'  => '==',
+                ]
+            ],
+            [
+                'type'      => 'select',
+                'name'      => '_envato_sort_direction',
+                'label'     => 'Sort Direction',
+                'options'   => [
+                    'asc'  => 'ASC',
+                    'desc' => 'DESC',
+                ],
+                'tooltip'   => __( 'Select sort direction for the search result.', 'wpcp' ),
+                'condition' => [
+                    'depend_on'    => '_campaign_type',
+                    'depend_value' => 'envato',
                     'depend_cond'  => '==',
                 ]
             ],

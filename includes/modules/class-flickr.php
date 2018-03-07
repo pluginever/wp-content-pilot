@@ -6,9 +6,11 @@ use Pluginever\WPCP\Core\Item;
 
 class Flickr extends Item {
     protected $api;
+    protected $settings;
 
     function setup() {
-        $api = wpcp_get_settings( 'flickr_api' );
+        $this->settings = get_option('wpcp_settings_flickr', []);
+        $api = $this->settings['api_key'];
 
         if ( empty( $api ) ) {
             $msg = __( 'Flickr API is not set. Please configure Flickr settings.', 'wpcp' );
@@ -75,6 +77,16 @@ class Flickr extends Item {
         return $links;
     }
 
+    /**
+     * Fetch post
+     *
+     * @since 1.0.0
+     *
+     * @param $link
+     *
+     * @return array|mixed|null|\WP_Error
+     *
+     */
     function fetch_post( $link ) {
         $request = $this->setup_request();
         $url     = str_replace( 'API_KEY', $this->api, $link->url );
@@ -126,7 +138,7 @@ class Flickr extends Item {
             'image_thumb_url'  => "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_t.jpg",
             'image_thumb'      => wpcp_html_make_image_tag( "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_t.jpg" ),
             'image_medium_url' => "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_c.jpg",
-            'image_medium'     => wpcp_html_make_image_tag("https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_c.jpg"),
+            'image_medium'     => wpcp_html_make_image_tag( "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_c.jpg" ),
             'image_large_url'  => "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_k.jpg",
             'image_large'      => wpcp_html_make_image_tag( "https://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_k.jpg" ),
         ];

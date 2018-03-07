@@ -12,10 +12,12 @@ class Youtube extends Item {
      *
      * @var string
      */
+    protected $settings;
     protected $youtube_api;
 
     function setup() {
-        $youtube_api = wpcp_get_settings( 'youtube_api' );
+        $this->settings = get_option('wpcp_settings_youtube', []);
+        $youtube_api = $this->settings['api_key'];
 
         if ( empty( $youtube_api ) ) {
             $msg = __( 'Youtube api is not configured. Please configure youtube settings.', 'wpcp' );

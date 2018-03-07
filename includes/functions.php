@@ -20,7 +20,7 @@ function wpcp_run_campaign( $campaign_id ) {
         return $result;
     }
 
-    wpcp_log('log', __("Post Insertion was success Post ID: {$result}", 'wpcp'));
+    wpcp_log( 'log', __( "Post Insertion was success Post ID: {$result}", 'wpcp' ) );
 
     return $result;
 }
@@ -238,26 +238,30 @@ function wpcp_get_post_meta( $post_id, $meta_name, $default = null ) {
 
 /**
  * Get plugin settings
- * @since 1.0.0
  *
+ * @since 1.0.0
+ * @since 1.0.1 section has been added
+ *
+ * @param $section
  * @param        $field
  * @param bool $default
  *
- * @return bool|string
+ * @return string|array|bool
  */
-function wpcp_get_settings( $field, $default = false ) {
-    $settings = get_option( 'wpcp_settings' );
+function wpcp_get_settings( $field, $section = 'wpcp_settings', $default = false ) {
+    $settings = get_option( $section );
+
     if ( isset( $settings[ $field ] ) && ! empty( $settings[ $field ] ) ) {
-        return trim( $settings[ $field ] );
+        return is_array($settings[ $field ]) ? array_map('trim', $settings[ $field ]): trim( $settings[ $field ] );
     }
 
     return $default;
 }
 
-function wpcp_update_settings($field, $data){
-    $settings = get_option( 'wpcp_settings' );
-    $settings[$field] = $data;
-    update_option('wpcp_settings', $settings);
+function wpcp_update_settings( $field, $data ) {
+    $settings           = get_option( 'wpcp_settings' );
+    $settings[ $field ] = $data;
+    update_option( 'wpcp_settings', $settings );
 }
 
 /**

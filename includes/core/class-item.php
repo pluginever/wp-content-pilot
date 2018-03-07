@@ -54,11 +54,12 @@ abstract class Item {
             $links = apply_filters( 'wpcp_fetched_links', $links, $this->campaign_id, $this->campaign_type );
 
             if ( empty( $links ) ) {
-                return new \WP_Error( 'no-links-found', __( 'Could not retrieve any valid links', 'content-pilot' ) );
+                return new \WP_Error( 'no-links-found', __( 'Could not retrieve any valid links', 'wpcp' ) );
             }
 
             //check the result
             $str_links = implode( ' ', $links );
+
             if ( $this->is_result_like_last_time( $str_links ) ) {
                 $msg = __( 'result is same as last time', 'wpcp' );
                 wpcp_log( 'log', $msg );
@@ -83,13 +84,25 @@ abstract class Item {
         if ( is_wp_error( $post ) ) {
             return $post;
         }
+
         do_action( 'wpcp_after_using_link', $link );
 
-        $this->post['url']    = $link->url;
-        $this->post['source'] = $link->url;
-        $this->post['host']   = wpcp_get_host( $link->url );
-        $this->post['link']   = $link;
+        if( empty($this->post['url'])){
+            $this->post['url']    = $link->url;
+        }
 
+        if( empty($this->post['source'])){
+            $this->post['source']    = $link->source;
+        }
+
+        if( empty($this->post['host'])){
+            $this->post['host']    = $link->host;
+        }
+
+        if( empty($this->post['link'])){
+            $this->post['link']    = $link->link;
+        }
+        var_dump(array_merge( $this->post, $post ));
         return array_merge( $this->post, $post );
     }
 

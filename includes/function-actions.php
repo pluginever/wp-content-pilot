@@ -5,7 +5,7 @@
  */
 function wpcp_run_automatic_campaign() {
     global $wpdb;
-    $sql   = "select * from {$wpdb->posts} p  left join {$wpdb->postmeta} m on p.id = m.post_id having m.meta_key = '_active' AND m.meta_value = '1'";
+    $sql   = "select * from {$wpdb->posts} p  left join {$wpdb->postmeta} m on p.id = m.post_id having m.meta_key = '_active' AND p.post_status = 'publish' AND m.meta_value = '1'";
     $posts = $wpdb->get_results( $sql );
 
     if ( ! $posts ) {

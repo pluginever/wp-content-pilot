@@ -32,6 +32,7 @@ class Vimeo extends Item {
         // TODO: Implement fetch_post() method.
     }
 
+
     public function add_token( $curl, $campaign_id ) {
         if ( $campaign_id !== $this->campaign_id ) {
             return;
