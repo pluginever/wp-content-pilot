@@ -201,6 +201,7 @@ class Wp_Content_Pilot {
         new \Pluginever\WPCP\Install();
         new \Pluginever\WPCP\Upgrades();
         new \Pluginever\WPCP\Core\CPT();
+        new \Pluginever\WPCP\Core\Help();
         new \Pluginever\WPCP\Admin\Admin();
         new \Pluginever\WPCP\Core\Ajax();
         new \Pluginever\WPCP\Core\Tracker();

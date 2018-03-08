@@ -54,7 +54,7 @@ class Feed extends Item {
 
 
     function fetch_links() {
-        $host = parse_url( $this->keyword, PHP_URL_HOST );
+        //$host = parse_url( $this->keyword, PHP_URL_HOST );
         include_once( ABSPATH . WPINC . '/feed.php' );
 
         $rss = fetch_feed( $this->keyword );
@@ -62,7 +62,7 @@ class Feed extends Item {
             return $rss;
         }
         if ( $this->is_result_like_last_time( $rss ) ) {
-            $msg = __( 'result is same as last time', 'wpcp' );
+            $msg = __( sprintf('Could not discover any new post to for the url . Please try letter.', $this->keyword), 'wpcp' );
             wpcp_log( 'log', $msg );
 
             return new \WP_Error( 'no-new-result', $msg );

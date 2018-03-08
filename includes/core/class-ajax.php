@@ -9,6 +9,7 @@ class Ajax {
 
     public function __construct() {
         $this->action( 'wp_ajax_wpcp_get_template_tags', 'get_template_tags' );
+        $this->action( 'wp_ajax_wpcp_run_test_campaign', 'run_test_campaign' );
     }
 
     public function get_template_tags() {
@@ -17,8 +18,36 @@ class Ajax {
         }
         $campaign_type = esc_attr( $_REQUEST['data']['type'] );
 
-        $tags = wpcp_get_module_supported_tags($campaign_type);
+        $tags = wpcp_get_module_supported_tags( $campaign_type );
 
-        wp_send_json_success($tags);
+        wp_send_json_success( $tags );
+    }
+
+
+    public function run_test_campaign() {
+        error_log( print_r( $_POST, true ) );
+
+        if ( empty( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'wpcp' ) ) {
+            wp_send_json_error( [ 'message' => __( 'No Cheating!', 'wpcp' ) ] );
+        }
+
+        if ( empty( $_POST['campaign_id'] ) ) {
+            wp_send_json_error( [ 'message' => __( 'No campaign id in request. Please try again.', 'wpcp' ) ] );
+        }
+
+        $campaign_id = intval( $_POST['campaign_id'] );
+        $post_id      = wpcp_run_campaign( $campaign_id );
+
+        if( is_wp_error( $post_id )){
+            wp_send_json_error(['message' => $post_id->get_error_message()]);
+        }
+
+        $title = get_the_title( $post_id );
+        $permalink = get_the_permalink($post_id);
+        $keyword = wp_content_pilot()->keyword;
+        wp_send_json_success( [
+            'message' => __(sprintf('Campaign was successfully posted the article "%s" for the keyword: %s. Do you want to visit the article? ', $title, $keyword), 'wpcp'),
+            'permalink' => $permalink,
+        ] );
     }
 }

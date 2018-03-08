@@ -45,7 +45,7 @@ function wpcp_run_automatic_campaign() {
 
         if ( is_wp_error( $campaign ) ) {
             wpcp_log( 'dev', __( 'Automatic campaign failed.', 'wpcp' ) );
-            wpcp_log('critical', $campaign->get_error_message());
+            wpcp_log( 'critical', $campaign->get_error_message() );
         }
     }
 
@@ -70,6 +70,7 @@ function update_campaign_status( $post_id, $campaign_id, $keyword ) {
     update_post_meta( $campaign_id, '_campaign_id', $campaign_id );
     update_option( 'wpcp_last_campaign', $campaign_id );
     update_option( 'wpcp_last_post', $post_id );
+
 }
 
 /**
@@ -121,8 +122,8 @@ function wpcp_maybe_set_featured_image( $post_id, $article, $campaign_id ) {
  * @param $keyword
  *
  */
-function wpcp_log_disable_keyword($campaign_id, $keyword ){
-    wpcp_log('log', __("Keyword: {$keyword} has been removed.", 'wpcp'));
+function wpcp_log_disable_keyword( $campaign_id, $keyword ) {
+    wpcp_log( 'log', __( "Keyword: {$keyword} has been removed.", 'wpcp' ) );
 }
 
 /**
@@ -131,7 +132,28 @@ function wpcp_log_disable_keyword($campaign_id, $keyword ){
  * @param $campaign_id
  *
  */
-function wpcp_log_campaign_disable($campaign_id ){
-    $title = get_the_title($campaign_id);
-    wpcp_log('log', __($title.' Campaign has been disabled', 'wpcp'));
+function wpcp_log_campaign_disable( $campaign_id ) {
+    $title = get_the_title( $campaign_id );
+    wpcp_log( 'log', __( $title . ' Campaign has been disabled', 'wpcp' ) );
+}
+
+/**
+ * Handle campaign activation/de-activation
+ *
+ * @since 1.0.1
+ *
+ * @param $new_status
+ * @param $old_status
+ * @param $post \WP_Post
+ *
+ */
+function wpcp_handle_campaign_post_status( $new_status, $old_status, $post ) {
+    if ( $post->post_status == 'wp_content_pilot' ) {
+        error_log( 'run update wp_content_pilot' );
+        if ( $new_status == 'publish' ) {
+            update_post_meta( $post->ID, '_active', '1' );
+        } else {
+            update_post_meta( $post->ID, '_active', '0' );
+        }
+    }
 }

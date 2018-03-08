@@ -7,6 +7,6 @@ class menu{
     }
 
     public function admin_menu(){
-
     }
+
 }

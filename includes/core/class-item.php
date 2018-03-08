@@ -61,7 +61,7 @@ abstract class Item {
             $str_links = implode( ' ', $links );
 
             if ( $this->is_result_like_last_time( $str_links ) ) {
-                $msg = __( 'result is same as last time', 'wpcp' );
+                $msg = __( sprintf('Could not discover any new links to grab contents for the keyword "%s". Please try letter.', $this->keyword), 'wpcp' );
                 wpcp_log( 'log', $msg );
 
                 return new \WP_Error( 'no-new-result', $msg );
@@ -92,17 +92,17 @@ abstract class Item {
         }
 
         if( empty($this->post['source'])){
-            $this->post['source']    = $link->source;
+            $this->post['source']    = $this->post['url'];
         }
 
         if( empty($this->post['host'])){
-            $this->post['host']    = $link->host;
+            $this->post['host']    = wpcp_get_host($this->post['url']);
         }
 
         if( empty($this->post['link'])){
-            $this->post['link']    = $link->link;
+            $this->post['link']    = $link->url;
         }
-        var_dump(array_merge( $this->post, $post ));
+
         return array_merge( $this->post, $post );
     }
 

@@ -30,13 +30,19 @@ class Admin {
         $suffix = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? '' : '.min';
         wp_register_style( 'wp-content-pilot', WPCP_ASSETS . "/css/wp-content-pilot{$suffix}.css", [], date( 'i' ) );
         wp_register_script( 'wp-content-pilot', WPCP_ASSETS . "/js/wp-content-pilot{$suffix}.js", [ 'jquery' ], date( 'i' ), true );
-        wp_localize_script( 'wp-content-pilot', 'jsobject', [ 'ajaxurl' => admin_url( 'admin-ajax.php' ) ] );
+        wp_localize_script( 'wp-content-pilot', 'wpcp', [
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'nonce'   => wp_create_nonce( 'wpcp' )
+        ] );
         wp_enqueue_style( 'wp-content-pilot' );
         wp_enqueue_script( 'wp-content-pilot' );
     }
 
-    public function admin_menu(){
-        add_submenu_page( 'edit.php?post_type=wp_content_pilot', 'Logs', 'Logs', 'manage_options', 'wpcp-logs', array($this, 'logs_page') );
+    public function admin_menu() {
+        add_submenu_page( 'edit.php?post_type=wp_content_pilot', 'Logs', 'Logs', 'manage_options', 'wpcp-logs', array(
+            $this,
+            'logs_page'
+        ) );
     }
 
     public function includes() {
@@ -50,30 +56,32 @@ class Admin {
         new Settings();
     }
 
-    public function remove_logs(){
-        if(isset($_GET['remove_logs']) && $_GET['remove_logs'] == '1'){
-            if(!current_user_can('manage_options')){
+    public function remove_logs() {
+        if ( isset( $_GET['remove_logs'] ) && $_GET['remove_logs'] == '1' ) {
+            if ( ! current_user_can( 'manage_options' ) ) {
                 return;
             }
 
-            if (!isset($_GET['wpcp_nonce']) || !wp_verify_nonce($_GET['wpcp_nonce'], 'wpcp_remove_logs')) {
+            if ( ! isset( $_GET['wpcp_nonce'] ) || ! wp_verify_nonce( $_GET['wpcp_nonce'], 'wpcp_remove_logs' ) ) {
                 return;
             }
 
             global $wpdb;
             $sql = "truncate {$wpdb->prefix}wpcp_logs;";
-            $wpdb->query($sql);
-            $page_url  = admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
-            $page_url = remove_query_arg(array('wpcp_nonce', 'remove_logs'), $page_url);
-            wp_safe_redirect($page_url);
+            $wpdb->query( $sql );
+            $page_url = admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
+            $page_url = remove_query_arg( array( 'wpcp_nonce', 'remove_logs' ), $page_url );
+            wp_safe_redirect( $page_url );
         }
     }
 
-    function logs_page(){
-        $log_remove_url = wp_nonce_url(admin_url('edit.php?post_type=wp_content_pilot&page=wpcp-logs'), 'wpcp_remove_logs', 'wpcp_nonce');
+    function logs_page() {
+        $log_remove_url = wp_nonce_url( admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-logs' ), 'wpcp_remove_logs', 'wpcp_nonce' );
         ?>
         <div class="wrap">
-            <h2><?php _e( 'Campaign Log', 'wpcp' ); ?>  <a href="<?php echo esc_url($log_remove_url."&remove_logs=1"); ?>" class="button button-seconday"><?php _e('Clear Logs', 'wpcp');?></a>
+            <h2><?php _e( 'Campaign Log', 'wpcp' ); ?> <a
+                    href="<?php echo esc_url( $log_remove_url . "&remove_logs=1" ); ?>"
+                    class="button button-seconday"><?php _e( 'Clear Logs', 'wpcp' ); ?></a>
             </h2>
 
             <form method="post">

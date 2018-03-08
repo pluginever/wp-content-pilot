@@ -22,7 +22,6 @@ class Envato extends Item {
      */
     function setup() {
         $this->settings = get_option( 'wpcp_settings_envato', [] );
-        var_dump( $this->settings );
         $token     = $this->settings['token'];
         $user_name = $this->settings['user_name'];
 
@@ -75,7 +74,7 @@ class Envato extends Item {
         }
 
         $query = add_query_arg( $query_args, 'https://api.envato.com/v1/discovery/search/search/item' );
-        var_dump( $query );
+
         $request = $this->setup_request();
 
         $request->get( esc_url_raw( $query ) );

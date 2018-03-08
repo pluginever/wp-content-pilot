@@ -4,12 +4,16 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function wpcp_run_campaign( $campaign_id ) {
+function wpcp_run_campaign( $campaign_id, $force = false ) {
     $can_run = wpcp_campaign_can_run( $campaign_id );
     if ( is_wp_error( $can_run ) ) {
         wpcp_log( 'critical', $can_run->get_error_message() );
 
         return $can_run;
+    }
+
+    if( $force and !defined('WPCP_FORCE_CAMPAIGN')){
+        define('WPCP_FORCE_CAMPAIGN', true );
     }
 
     $keyword       = wpcp_setup_keyword( $campaign_id );

@@ -188,8 +188,8 @@ class Metabox {
             [
                 'type'    => 'title',
                 'label'   => __( 'Test Run', 'wpcp' ),
-                'name'    => '_dry_run',
-                'help'    => sprintf('<a href="%s" data-campaign_id="test" id="wpcp-test-run">Run</a>', '#'),
+                'name'    => '_test_run',
+                'help'    => '<a href="#" id="wpcp-test-run" class="button button-small button-secondary">Run Now</a>',
             ]
         ];
 
