@@ -25,8 +25,6 @@ class Ajax {
 
 
     public function run_test_campaign() {
-        error_log( print_r( $_POST, true ) );
-
         if ( empty( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'wpcp' ) ) {
             wp_send_json_error( [ 'message' => __( 'No Cheating!', 'wpcp' ) ] );
         }
