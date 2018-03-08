@@ -1,6 +1,6 @@
-=== WP Content Pilot ===
-Contributors: manikmist09
-Tags: content pilot, auto post, feeds, flicker, youtube, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
+=== WP Content Pilot - Autoblog & Affiliate Marketing Plugin ===
+Contributors: pluginever
+Tags: autoblog, curatator, content pilot, auto post, feeds, flicker, youtube, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
 Requires at least: 4.4
 Tested up to: 4.9.4
 Requires PHP: 5.6
@@ -12,11 +12,21 @@ WP Content Pilot automatically posts contents from various sources based on the 
 
 == Description ==
 
-WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
+WP Content Pilot is an autoblogging and content curation plugin that allows you to create high-quality WordPress blog posts automatically.
+You just have to set the keywords or targeted feed urls and WP Content Pilot will automatically posts contents from various sources until it meets the target that you set.
+It will keeps posting articles even while you are asleep.
+
+== How It Works ==
+1. Set keywords or feed links
+2. Select campaign type ( Feed, Article, Envato, Flickr & Youtube)
+3. Set run frequency and target
+4. WP Content Pilot will automatically search for the keyword, grab the article and will set your affiliate ID.
 
 It can post quality targeted articles,  Feeds posts, Youtube Videos, and Flickr images. More are coming....
 
 Just install the plugin and configure it as per your requirements and the plugin will work just like your assistant for posting contents on your site at a scheduled time.
+
+>[Documentation ](https://www.pluginever.com/docs/wp-content-pilot/)
 
 = Features: =
 * Support 4 types of campaign Feed, Article, Youtube, and Flickr.
@@ -35,6 +45,7 @@ Just install the plugin and configure it as per your requirements and the plugin
 
 
 Currently, the plugin supports 4 types of campaign and we are working to increase the number of sources. It supports:-
+
 * Article
 * Feed
 * Youtube Videos
@@ -47,6 +58,11 @@ This will search the best possible and readable articles around the web based on
 = Feed =
 
 This type campaign will keep track of the defined feed links and whenever a new post is found it will automatically start posting content from that site to your site.
+
+= Envato =
+
+Using Envato campaign you can easily make money withtout spending any peny for the article writter. It will grab items from envato platforms set your affiliate ID.
+
 
 = Youtube =
 

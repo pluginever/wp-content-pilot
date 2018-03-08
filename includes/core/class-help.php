@@ -56,7 +56,7 @@ class Help {
         <div class="wrap">
 
             <h2>WP Content Pilot - Help </h2>
-            
+
             <div class="ever-help-page">
                 <?php foreach ( $blocks as $block ): ?>
                     <div class="help-block">
