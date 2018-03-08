@@ -149,7 +149,6 @@ function wpcp_log_campaign_disable( $campaign_id ) {
  */
 function wpcp_handle_campaign_post_status( $new_status, $old_status, $post ) {
     if ( $post->post_status == 'wp_content_pilot' ) {
-        error_log( 'run update wp_content_pilot' );
         if ( $new_status == 'publish' ) {
             update_post_meta( $post->ID, '_active', '1' );
         } else {

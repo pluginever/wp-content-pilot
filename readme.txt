@@ -1,6 +1,6 @@
 === WP Content Pilot - Autoblog & Affiliate Marketing Plugin ===
-Contributors: pluginever
-Tags: autoblog, curatator, content pilot, auto post, feeds, flicker, youtube, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
+Contributors: pluginever,manikmist09
+Tags: autoblog, curatator, content pilot, auto post, feeds, flicker, youtube, envato, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
 Requires at least: 4.4
 Tested up to: 4.9.4
 Requires PHP: 5.6
@@ -124,6 +124,11 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+
+= v1.0.1 -> March 09, 2018 =
+* [Enhance] Add Envato for affiliate marketing
+* [Enhance] Add test campaign feature
+* [Enhance] New Settings Page design
 
 = v1.0.0 -> Feb 09, 2018 =
 * Beta release
