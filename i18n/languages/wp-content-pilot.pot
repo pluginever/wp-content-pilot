@@ -1,240 +1,301 @@
-# Copyright (C) 2018 manikmist09
+# Copyright (C) 2018 pluginever
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.0.0\n"
+"Project-Id-Version: WP Content Pilot 1.0.1\n"
 "Report-Msgid-Bugs-To: http://pluginever.com/support/\n"
-"POT-Creation-Date: 2018-02-09 19:38:30+00:00\n"
+"POT-Creation-Date: 2018-03-08 19:27:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <support@pluginever.com>\n"
-"X-Generator: grunt-wp-i18n1.0.1\n"
+"X-Generator: grunt-wp-i18n1.0.2\n"
 
-#: includes/admin/class-admin.php:76
+#: includes/admin/class-admin.php:82
 msgid "Campaign Log"
 msgstr ""
 
-#: includes/admin/class-admin.php:76
+#: includes/admin/class-admin.php:84
 msgid "Clear Logs"
 msgstr ""
 
-#: includes/admin/class-metabox.php:52
+#: includes/admin/class-metabox.php:55
 msgid "Campaign Settings"
 msgstr ""
 
-#: includes/admin/class-metabox.php:68
+#: includes/admin/class-metabox.php:71
 msgid "Campaign Options"
 msgstr ""
 
-#: includes/admin/class-metabox.php:87
+#: includes/admin/class-metabox.php:90
 msgid "Campaign Type"
 msgstr ""
 
-#: includes/admin/class-metabox.php:89
+#: includes/admin/class-metabox.php:92
 msgid "Select campaign type"
 msgstr ""
 
-#: includes/admin/class-metabox.php:108
+#: includes/admin/class-metabox.php:111
 msgid "Additional Settings"
 msgstr ""
 
-#: includes/admin/class-metabox.php:127
+#: includes/admin/class-metabox.php:130
 msgid "Post Settings"
 msgstr ""
 
-#: includes/admin/class-metabox.php:148
+#: includes/admin/class-metabox.php:151
 msgid "Advanced Settings"
 msgstr ""
 
-#: includes/admin/class-metabox.php:165 includes/core/class-cpt.php:72
+#: includes/admin/class-metabox.php:169 includes/core/class-cpt.php:72
 msgid "Active"
 msgstr ""
 
-#: includes/admin/class-metabox.php:166
+#: includes/admin/class-metabox.php:170
 msgid "Yes"
 msgstr ""
 
-#: includes/admin/class-metabox.php:171
+#: includes/admin/class-metabox.php:175
 msgid "Campaign Target"
 msgstr ""
 
-#: includes/admin/class-metabox.php:179
+#: includes/admin/class-metabox.php:183
 msgid "Frequency (Every)"
 msgstr ""
 
-#: includes/admin/class-metabox.php:181
+#: includes/admin/class-metabox.php:185
 msgid "The campaign will run every X hour until the campaign target reach."
 msgstr ""
 
-#: includes/admin/class-metabox.php:194
+#: includes/admin/class-metabox.php:190
+msgid "Test Run"
+msgstr ""
+
+#: includes/admin/class-metabox.php:204
 msgid "Min Words"
 msgstr ""
 
-#: includes/admin/class-metabox.php:195
+#: includes/admin/class-metabox.php:205
 msgid ""
 "if grabbed post content less than following words then post will be "
 "ignored. Default 0"
 msgstr ""
 
-#: includes/admin/class-metabox.php:201
+#: includes/admin/class-metabox.php:211
 msgid "Content Type"
 msgstr ""
 
-#: includes/admin/class-metabox.php:203
+#: includes/admin/class-metabox.php:213
 msgid ""
 "If content type is HTML then HTML content will be posted otherwise normal "
 "text will be posted."
 msgstr ""
 
-#: includes/admin/class-metabox.php:205
+#: includes/admin/class-metabox.php:215
 msgid "HTML"
 msgstr ""
 
-#: includes/admin/class-metabox.php:206
+#: includes/admin/class-metabox.php:216
 msgid "Plain Text"
 msgstr ""
 
-#: includes/admin/class-metabox.php:220
+#: includes/admin/class-metabox.php:230
 msgid "Use first image as featured image"
 msgstr ""
 
-#: includes/admin/class-metabox.php:226
+#: includes/admin/class-metabox.php:236
 msgid "Remove all images from the article"
 msgstr ""
 
-#: includes/admin/class-metabox.php:232
+#: includes/admin/class-metabox.php:242
 msgid "Use summary as excerpt"
 msgstr ""
 
-#: includes/admin/class-metabox.php:238
+#: includes/admin/class-metabox.php:248
 msgid "Remove hyperlinks found in the article"
 msgstr ""
 
-#: includes/admin/class-metabox.php:244
+#: includes/admin/class-metabox.php:254
 msgid "Skip post if no image found in the article"
 msgstr ""
 
-#: includes/admin/class-metabox.php:250
+#: includes/admin/class-metabox.php:260
 msgid "Skip post if language is not english"
 msgstr ""
 
-#: includes/admin/class-metabox.php:256
+#: includes/admin/class-metabox.php:266
 msgid "Skip post with duplicate title"
 msgstr ""
 
-#: includes/admin/class-metabox.php:268
+#: includes/admin/class-metabox.php:278
 msgid "Post Title"
 msgstr ""
 
-#: includes/admin/class-metabox.php:275
+#: includes/admin/class-metabox.php:285
 msgid "Post Template"
 msgstr ""
 
-#: includes/admin/class-metabox.php:280
+#: includes/admin/class-metabox.php:290
 msgid "Supported Tags:%s"
 msgstr ""
 
-#: includes/admin/class-metabox.php:285
+#: includes/admin/class-metabox.php:295
 msgid "Post Type"
 msgstr ""
 
-#: includes/admin/class-metabox.php:292
+#: includes/admin/class-metabox.php:302
 msgid "Post Author"
 msgstr ""
 
-#: includes/admin/class-metabox.php:299
+#: includes/admin/class-metabox.php:309
 msgid "Post Status"
 msgstr ""
 
-#: includes/admin/class-metabox.php:318
+#: includes/admin/class-metabox.php:328
 msgid "Limit Title"
 msgstr ""
 
-#: includes/admin/class-metabox.php:321
+#: includes/admin/class-metabox.php:331
 msgid ""
 "If you want to limit the title to x characters, input the number above. "
 "Default full title."
 msgstr ""
 
-#: includes/admin/class-metabox.php:325
+#: includes/admin/class-metabox.php:335
 msgid "Limit Content"
 msgstr ""
 
-#: includes/admin/class-metabox.php:328
+#: includes/admin/class-metabox.php:338
 msgid ""
 "If you want to limit the post content to x characters, input the number "
 "above. Default full content."
 msgstr ""
 
-#: includes/admin/class-metabox.php:341
+#: includes/admin/class-metabox.php:351
 msgid "Put links from where you grab the posts."
 msgstr ""
 
-#: includes/admin/class-metabox.php:342
+#: includes/admin/class-metabox.php:352
 msgid "Separate url by comma."
 msgstr ""
 
-#: includes/admin/class-metabox.php:355
+#: includes/admin/class-metabox.php:365
 msgid ""
 "If you are putting the exact feed links then set force feed otherwise feed "
 "link will be auto discovered."
 msgstr ""
 
-#: includes/admin/class-metabox.php:373
+#: includes/admin/class-metabox.php:383
 msgid "Put keywords using those the post will be grabbed."
 msgstr ""
 
-#: includes/admin/class-metabox.php:374
+#: includes/admin/class-metabox.php:384
 msgid "Separate keywords by comma."
 msgstr ""
 
-#: includes/admin/class-metabox.php:413
+#: includes/admin/class-metabox.php:423
 msgid ""
 "Use global search for all result or use specific channel if you want to "
 "limit to that channel."
 msgstr ""
 
-#: includes/admin/class-metabox.php:428
+#: includes/admin/class-metabox.php:438
 msgid ""
 "eg. channel id is UCIQOOX3ReApm-KTZ66eMVzQ for "
 "https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ"
 msgstr ""
 
-#: includes/admin/class-settings.php:20
-msgid "WP Content Pilot Settings"
+#: includes/admin/class-metabox.php:561
+msgid "Select envato platform"
 msgstr ""
 
-#: includes/admin/class-settings.php:39
+#: includes/admin/class-metabox.php:572
+msgid "You can define price range to filter the search."
+msgstr ""
+
+#: includes/admin/class-metabox.php:573
+msgid "seperate min max price with (|). e.g. 20|100"
+msgstr ""
+
+#: includes/admin/class-metabox.php:595
+msgid "Select sort by for order the search result."
+msgstr ""
+
+#: includes/admin/class-metabox.php:610
+msgid "Select sort direction for the search result."
+msgstr ""
+
+#: includes/admin/class-settings.php:35
 msgid "Article Settings"
 msgstr ""
 
-#: includes/admin/class-settings.php:46
-msgid "Banned Hosts"
-msgstr ""
-
-#: includes/admin/class-settings.php:55
+#: includes/admin/class-settings.php:39
 msgid "Youtube Settings"
 msgstr ""
 
-#: includes/admin/class-settings.php:62
-msgid "Youtube API key"
+#: includes/admin/class-settings.php:43
+msgid "Flickr Settings"
 msgstr ""
 
-#: includes/admin/class-settings.php:85
-msgid "Flicker Settings"
+#: includes/admin/class-settings.php:47
+msgid "Envato Settings"
+msgstr ""
+
+#: includes/admin/class-settings.php:64
+msgid "Banned Hosts"
+msgstr ""
+
+#: includes/admin/class-settings.php:65
+msgid ""
+"Articles from the above hosts will be rejected. put single url/host per "
+"line."
+msgstr ""
+
+#: includes/admin/class-settings.php:66
+msgid ""
+"example.com \n"
+" example1.com"
+msgstr ""
+
+#: includes/admin/class-settings.php:73
+msgid "Youtube API Key"
+msgstr ""
+
+#: includes/admin/class-settings.php:74
+msgid "Youtube campaigns wont run without settings this."
+msgstr ""
+
+#: includes/admin/class-settings.php:82
+msgid "Flickr API Key"
+msgstr ""
+
+#: includes/admin/class-settings.php:83
+msgid "Flickr campaigns wont run without settings this."
 msgstr ""
 
 #: includes/admin/class-settings.php:91
-msgid "Flicker API key"
+msgid "Envato Token"
 msgstr ""
 
-#: includes/admin/class-settings.php:114
+#: includes/admin/class-settings.php:92
 msgid ""
-"Articles from the above hosts will be rejected.<br> put single url/host per "
-"line."
+"Check this tutorial <a "
+"href=\"https://www.pluginever.com/docs/wp-content-pilot/how-to-create-"
+"envato-token/\" target=\"_blank\">Here</a> to get your token."
+msgstr ""
+
+#: includes/admin/class-settings.php:98
+msgid "Envato Username"
+msgstr ""
+
+#: includes/admin/class-settings.php:99
+msgid "Your username (Affiliate ID) for affiliate integration. e.g. \"pluginever\""
+msgstr ""
+
+#: includes/admin/class-settings.php:113
+msgid "WP Content Pilot Settings"
 msgstr ""
 
 #: includes/admin/log-list-table.php:31
@@ -257,8 +318,16 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: includes/admin/metabox/class-metabox.php:114
+#: includes/admin/metabox/class-metabox.php:124
 msgid "Example Metabox"
+msgstr ""
+
+#: includes/core/class-ajax.php:29
+msgid "No Cheating!"
+msgstr ""
+
+#: includes/core/class-ajax.php:33
+msgid "No campaign id in request. Please try again."
 msgstr ""
 
 #: includes/core/class-campaign.php:60
@@ -341,6 +410,66 @@ msgstr ""
 msgid "Once a Minute"
 msgstr ""
 
+#: includes/core/class-help.php:83
+msgid "Looking for Something?"
+msgstr ""
+
+#: includes/core/class-help.php:84
+msgid "We have detailed documentation on every aspects of WP Content Pilot."
+msgstr ""
+
+#: includes/core/class-help.php:86
+msgid "Visit the Plugin Documentation"
+msgstr ""
+
+#: includes/core/class-help.php:90
+msgid "Need Any Assistance?"
+msgstr ""
+
+#: includes/core/class-help.php:91
+msgid "Our EXPERT Support Team is always ready to Help you out."
+msgstr ""
+
+#: includes/core/class-help.php:93
+msgid "Contact Support"
+msgstr ""
+
+#: includes/core/class-help.php:97
+msgid "Found Any Bugs?"
+msgstr ""
+
+#: includes/core/class-help.php:98
+msgid "OReport any Bug that you Discovered, Get Instant Solutions."
+msgstr ""
+
+#: includes/core/class-help.php:100
+msgid "Report to Github"
+msgstr ""
+
+#: includes/core/class-help.php:104
+msgid "Require Customization?"
+msgstr ""
+
+#: includes/core/class-help.php:105
+msgid "We would Love to hear your Integration and Customization Ideas."
+msgstr ""
+
+#: includes/core/class-help.php:107
+msgid "Contact Our Services"
+msgstr ""
+
+#: includes/core/class-help.php:111
+msgid "Like The Plugin?"
+msgstr ""
+
+#: includes/core/class-help.php:112
+msgid "Your Review is very important to us as it helps us to grow more."
+msgstr ""
+
+#: includes/core/class-help.php:114
+msgid "Review Us on WP.org"
+msgstr ""
+
 #: includes/core/class-insights.php:279
 msgid ""
 "Want to help make <strong>%s</strong> even more awesome? Allow Pluginever "
@@ -379,16 +508,16 @@ msgstr ""
 msgid "Canel"
 msgstr ""
 
-#: includes/core/class-item.php:57 includes/core/class-item.php:76
+#: includes/core/class-item.php:57 includes/core/class-item.php:77
 msgid "Could not retrieve any valid links"
 msgstr ""
 
-#: includes/core/class-item.php:63 includes/modules/class-feed.php:65
-msgid "result is same as last time"
+#: includes/core/class-item.php:80
+msgid "Fetching post from %s"
 msgstr ""
 
-#: includes/core/class-item.php:79
-msgid "Fetching post from %s"
+#: includes/core/class-settings.php:355
+msgid "Choose File"
 msgstr ""
 
 #: includes/core/class-tracker.php:12
@@ -402,86 +531,116 @@ msgstr ""
 msgid "Automatic campaign failed."
 msgstr ""
 
-#: includes/function-filters.php:375
+#: includes/function-filters.php:385
 msgid "Post is rejected due to less content. Required %d Found %d"
 msgstr ""
 
-#: includes/function-filters.php:383
+#: includes/function-filters.php:393
 msgid "Post is rejected because could not find any image in the post."
 msgstr ""
 
-#: includes/function-filters.php:389
+#: includes/function-filters.php:399
 msgid "Post is rejected because language is not english."
 msgstr ""
 
-#: includes/function-filters.php:398
+#: includes/function-filters.php:408
 msgid "Post is rejected because post with same title exit."
 msgstr ""
 
-#: includes/functions.php:40
+#: includes/functions.php:44
 msgid "Campaign is not exist or not publish."
 msgstr ""
 
-#: includes/functions.php:44
+#: includes/functions.php:48
 msgid "Campaign is not active this wont run."
 msgstr ""
 
-#: includes/functions.php:49
+#: includes/functions.php:53
 msgid "Campaign type is not set. Campaign won't run"
 msgstr ""
 
-#: includes/functions.php:59
+#: includes/functions.php:63
 msgid "Keywords"
 msgstr ""
 
-#: includes/functions.php:61
+#: includes/functions.php:65
 msgid "Feed links"
 msgstr ""
 
-#: includes/functions.php:343
+#: includes/functions.php:351
 msgid "Nothing in the response object"
 msgstr ""
 
-#: includes/functions.php:374
+#: includes/functions.php:382
 msgid "Could not retrieve any links"
 msgstr ""
 
-#: includes/functions.php:544
+#: includes/functions.php:552
 msgid "%s Hour"
 msgid_plural "%s Hours"
 msgstr[0] ""
 msgstr[1] ""
 
+#: includes/modules/class-envato.php:29 includes/modules/class-flickr.php:16
+msgid "Flickr API is not set. Please configure Flickr settings."
+msgstr ""
+
+#: includes/modules/class-envato.php:164 includes/modules/class-flickr.php:111
+msgid "Image"
+msgstr ""
+
+#: includes/modules/class-envato.php:165 includes/modules/class-flickr.php:112
+msgid "Author"
+msgstr ""
+
+#: includes/modules/class-envato.php:166 includes/modules/class-flickr.php:113
+#: includes/modules/class-youtube.php:134
+msgid "Description"
+msgstr ""
+
+#: includes/modules/class-envato.php:167
+msgid "Price"
+msgstr ""
+
+#: includes/modules/class-envato.php:168
+msgid "Rating"
+msgstr ""
+
+#: includes/modules/class-envato.php:169 includes/modules/class-flickr.php:115
+#: includes/modules/class-youtube.php:135
+msgid "tags"
+msgstr ""
+
+#: includes/modules/class-envato.php:170
+msgid "categories"
+msgstr ""
+
+#: includes/modules/class-envato.php:171
+msgid "Total Sales"
+msgstr ""
+
+#: includes/modules/class-envato.php:172
+msgid "Live demo"
+msgstr ""
+
+#: includes/modules/class-envato.php:173
+msgid "Attributes"
+msgstr ""
+
+#: includes/modules/class-envato.php:174
+msgid "Buy Now"
+msgstr ""
+
 #: includes/modules/class-feed.php:76
 msgid "Could not find any post so disabling url"
 msgstr ""
 
-#: includes/modules/class-flickr.php:14
-msgid "Flickr API is not set. Please configure Flickr settings."
-msgstr ""
-
-#: includes/modules/class-flickr.php:48 includes/modules/class-youtube.php:62
+#: includes/modules/class-flickr.php:50 includes/modules/class-youtube.php:64
 msgid "Could not find any links"
 msgstr ""
 
-#: includes/modules/class-flickr.php:99
-msgid "Image"
-msgstr ""
-
-#: includes/modules/class-flickr.php:100
-msgid "Author"
-msgstr ""
-
-#: includes/modules/class-flickr.php:101 includes/modules/class-youtube.php:132
-msgid "Description"
-msgstr ""
-
-#: includes/modules/class-flickr.php:102
+#: includes/modules/class-flickr.php:114
 msgid "Views"
-msgstr ""
-
-#: includes/modules/class-flickr.php:103 includes/modules/class-youtube.php:133
-msgid "tags"
 msgstr ""
 
 #: includes/modules/class-modules.php:29
@@ -504,83 +663,87 @@ msgstr ""
 msgid "Flickr"
 msgstr ""
 
-#: includes/modules/class-modules.php:42
+#: includes/modules/class-modules.php:42 includes/modules/class-modules.php:92
 msgid "Scraps photo and contents by the predefined keywords"
 msgstr ""
 
-#: includes/modules/class-modules.php:49
+#: includes/modules/class-modules.php:66
 msgid "Youtube"
 msgstr ""
 
-#: includes/modules/class-modules.php:50
+#: includes/modules/class-modules.php:67
 msgid "Scraps youtube video and contents using the predefined keywords"
+msgstr ""
+
+#: includes/modules/class-modules.php:91
+msgid "Envato"
 msgstr ""
 
 #: includes/modules/class-vimeo.php:16
 msgid "Vimeo token is not set. Please configure vimeo settings."
 msgstr ""
 
-#: includes/modules/class-youtube.php:21
+#: includes/modules/class-youtube.php:23
 msgid "Youtube api is not configured. Please configure youtube settings."
 msgstr ""
 
-#: includes/modules/class-youtube.php:129
+#: includes/modules/class-youtube.php:131
 msgid "Video"
 msgstr ""
 
-#: includes/modules/class-youtube.php:130
+#: includes/modules/class-youtube.php:132
 msgid "Channel"
 msgstr ""
 
-#: includes/modules/class-youtube.php:131
+#: includes/modules/class-youtube.php:133
 msgid "Duration"
 msgstr ""
 
-#: wp-content-pilot.php:279
+#: wp-content-pilot.php:280
 msgid "Your installed PHP Version is: "
 msgstr ""
 
-#: wp-content-pilot.php:280
+#: wp-content-pilot.php:281
 msgid "The <strong>WP Content Pilot</strong> plugin requires PHP version <strong>"
 msgstr ""
 
-#: wp-content-pilot.php:280
+#: wp-content-pilot.php:281
 msgid "</strong> or greater."
 msgstr ""
 
-#: wp-content-pilot.php:300
+#: wp-content-pilot.php:301
 msgid "<h1>An Error Occurred</h1>"
 msgstr ""
 
-#: wp-content-pilot.php:301
+#: wp-content-pilot.php:302
 msgid "<h2>Your installed PHP Version is: "
 msgstr ""
 
-#: wp-content-pilot.php:302
+#: wp-content-pilot.php:303
 msgid ""
 "<p>The <strong>WP Content Pilot</strong> plugin requires PHP version "
 "<strong>"
 msgstr ""
 
-#: wp-content-pilot.php:302
+#: wp-content-pilot.php:303
 msgid "</strong> or greater"
 msgstr ""
 
-#: wp-content-pilot.php:303
+#: wp-content-pilot.php:304
 msgid "<p>The version of your PHP is "
 msgstr ""
 
-#: wp-content-pilot.php:303
+#: wp-content-pilot.php:304
 msgid "unsupported and old"
 msgstr ""
 
-#: wp-content-pilot.php:304
+#: wp-content-pilot.php:305
 msgid ""
 "You should update your PHP software or contact your host regarding this "
 "matter.</p>"
 msgstr ""
 
-#: wp-content-pilot.php:306
+#: wp-content-pilot.php:307
 msgid "Plugin Activation Error"
 msgstr ""
 
@@ -589,19 +752,19 @@ msgid "WP Content Pilot"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://pluginever.com"
+msgid "http://pluginever.com/plugins/wp-content-pilot"
 msgstr ""
 
 #. Description of the plugin/theme
 msgid ""
-"Automatically posts articles, images, videos from various sources based on "
-"selected the keywords."
+"WP Content Pilot automatically posts contents from various sources based on "
+"the predefined keywords."
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "manikmist09"
+msgid "pluginever"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://manik.me"
+msgid "http://pluginever.com"
 msgstr ""
