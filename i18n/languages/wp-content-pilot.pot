@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Content Pilot 1.0.1\n"
 "Report-Msgid-Bugs-To: http://pluginever.com/support/\n"
-"POT-Creation-Date: 2018-03-08 19:18:20+00:00\n"
+"POT-Creation-Date: 2018-03-08 19:27:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -322,11 +322,11 @@ msgstr ""
 msgid "Example Metabox"
 msgstr ""
 
-#: includes/core/class-ajax.php:31
+#: includes/core/class-ajax.php:29
 msgid "No Cheating!"
 msgstr ""
 
-#: includes/core/class-ajax.php:35
+#: includes/core/class-ajax.php:33
 msgid "No campaign id in request. Please try again."
 msgstr ""
 
