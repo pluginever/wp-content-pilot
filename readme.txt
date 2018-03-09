@@ -16,6 +16,10 @@ WP Content Pilot is an autoblogging and content curation plugin that allows you 
 You just have to set the keywords or targeted feed urls and WP Content Pilot will automatically posts contents from various sources until it meets the target that you set.
 It will keeps posting articles even while you are asleep.
 
+
+http://www.youtube.com/watch?v=YHXrPzLKVlM
+
+
 == How It Works ==
 1. Set keywords or feed links
 2. Select campaign type ( Feed, Article, Envato, Flickr & Youtube)
