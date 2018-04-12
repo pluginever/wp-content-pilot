@@ -5,30 +5,35 @@ namespace Pluginever\WPCP\Core;
 abstract class Item {
     /**
      * The campaign id
+     *
      * @var integer
      */
     public $campaign_id;
 
     /**
      * The campaign keyword
+     *
      * @var string
      */
     public $keyword;
 
     /**
      * Type of campaign
+     *
      * @var string
      */
     protected $campaign_type;
 
     /**
      * url from garbing the post
+     *
      * @var string
      */
     protected $final_url;
 
     /**
      * The post
+     *
      * @var array
      */
     protected $post = array();
@@ -43,7 +48,10 @@ abstract class Item {
         $caller              = basename( str_replace( '\\', '/', get_called_class() ) );
         $this->campaign_type = strtolower( $caller );
         $link                = $this->get_link();
-
+        wpcp_log( 'dev', '========FROM ITEM=====' );
+        wpcp_log( 'dev', $caller );
+        wpcp_log( 'dev', $this->campaign_type );
+        wpcp_log( 'dev', $link );
         if ( ! $link ) {
             $links = $this->fetch_links();
             if ( is_wp_error( $links ) ) {
@@ -61,7 +69,7 @@ abstract class Item {
             $str_links = implode( ' ', $links );
 
             if ( $this->is_result_like_last_time( $str_links ) ) {
-                $msg = __( sprintf('Could not discover any new links to grab contents for the keyword "%s". Please try letter.', $this->keyword), 'wpcp' );
+                $msg = __( sprintf( 'Could not discover any new links to grab contents for the keyword "%s". Please try letter.', $this->keyword ), 'wpcp' );
                 wpcp_log( 'log', $msg );
 
                 return new \WP_Error( 'no-new-result', $msg );
@@ -87,23 +95,69 @@ abstract class Item {
 
         do_action( 'wpcp_after_using_link', $link );
 
-        if( empty($this->post['url'])){
-            $this->post['url']    = $link->url;
+        if ( empty( $this->post['url'] ) ) {
+            $this->post['url'] = $link->url;
         }
 
-        if( empty($this->post['source'])){
-            $this->post['source']    = $this->post['url'];
+        if ( empty( $this->post['source'] ) ) {
+            $this->post['source'] = $this->post['url'];
         }
 
-        if( empty($this->post['host'])){
-            $this->post['host']    = wpcp_get_host($this->post['url']);
+        if ( empty( $this->post['host'] ) ) {
+            $this->post['host'] = wpcp_get_host( $this->post['url'] );
         }
 
-        if( empty($this->post['link'])){
-            $this->post['link']    = $link->url;
+        if ( empty( $this->post['link'] ) ) {
+            $this->post['link'] = $link->url;
         }
 
         return array_merge( $this->post, $post );
+    }
+
+
+    public function bing_search( $keywords, $page = 0, $result_group = 'channel.item' ) {
+
+        $request = $this->setup_request( 'https://www.bing.com' );
+        $request->get( 'search', array(
+            'q'      => $keywords,
+            'count'  => 100,
+            'loc'    => 'en',
+            'format' => 'rss',
+            'first'  => ( $page * 10 ),
+        ) );
+
+        $response = wpcp_is_valid_response( $request );
+        $request->close();
+
+        if ( ! $response ) {
+            return [];
+
+        }
+
+        if ( ! $response instanceof \SimpleXMLElement ) {
+            $response = simplexml_load_string( $response );
+        }
+
+        $deJson    = json_encode( $response );
+        $xml_array = json_decode( $deJson, true );
+        if ( ! $xml_array ) {
+            return [];
+        }
+
+        $response_array = $xml_array;
+
+        $result_group_arr = explode( '.', $result_group );
+        foreach ( $result_group_arr as $key ) {
+            if ( empty( $response_array[ $key ] ) ) {
+                return [];
+                break;
+            }
+            $response_array = $response_array[ $key ];
+
+        }
+
+        return $response_array;
+
     }
 
     /**
@@ -196,6 +250,7 @@ abstract class Item {
 
     /**
      * create the request object
+     *
      * @since 1.0.0
      *
      * @param null $url
@@ -209,6 +264,7 @@ abstract class Item {
 
     /**
      * Insert links
+     *
      * @since 1.0.0
      *
      * @param $links
@@ -239,7 +295,6 @@ abstract class Item {
     protected function get_caller_class() {
         $caller_class     = get_called_class();
         $caller_class_arr = explode( "\\", $caller_class );
-        var_dump( $caller_class_arr );
 //        $this->campaign_type = $called_class_arr[(count($called_class_arr)-1)];
     }
 

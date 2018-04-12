@@ -198,6 +198,18 @@ class Metabox {
 
     public function add_default_main_fields( $fields ) {
         $add_fields = [
+
+            [
+                'type'    => 'radio',
+                'name'    => '_keywords_type',
+                'label'   => __( 'Keyword Type', 'wpcp' ),
+                'value'   => 'exact',
+                'tooltip' => __( 'Exact keyword will search for exact whole keywords and for anywords it will search for any of the words from keyword', 'wpcp' ),
+                'options' => array(
+                    'exact' => __( 'Exact Words', 'wpcp' ),
+                    'anyone' => __( 'Any Words', 'wpcp' ),
+                )
+            ],
             [
                 'type'     => 'number',
                 'name'     => '_min_words',
@@ -388,7 +400,7 @@ class Metabox {
                     'depend_value' => 'feed',
                     'depend_cond'  => '!=',
                 ]
-            ],
+            ]
         ];
 
         return array_merge( $fields, $add_fields );
