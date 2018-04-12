@@ -21,8 +21,7 @@
     "php-curl-class/php-curl-class": "^8.0",
     "paquettg/php-html-parser": "^1.7",
     "andreskrey/readability.php": "1.1.0",
-    "exeu/apai-io": "~2.0",
-    "marcl/amazonproductapi": "^3.0"
+    "exeu/apai-io": "~2.0"
   },
   "autoload": {
     "psr-4": {

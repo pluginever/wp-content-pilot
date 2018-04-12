@@ -12,7 +12,7 @@
 function wpcp_set_content_html_or_text( $content, $article, $campaign_id ) {
     wpcp_log( 'Dev', 'wpcp_set_content_html_or_text' );
     if ( 'html' != wpcp_get_post_meta( $campaign_id, '_content_type', 'html' ) ) {
-        $content = strip_tags( $content );
+        $content = wp_strip_all_tags( $content, true  );
     }
 
     return $content;
@@ -81,79 +81,27 @@ function wpcp_remove_unauthorized_html( $content, $article, $campaign_id ) {
             'width'  => true,
         ),
         'p'          => array(
-            'align'    => true,
-            'dir'      => true,
-            'lang'     => true,
             'xml:lang' => true,
         ),
         'table'      => array(
-            'align'       => true,
-            'bgcolor'     => true,
-            'border'      => true,
-            'cellpadding' => true,
-            'cellspacing' => true,
-            'dir'         => true,
-            'rules'       => true,
-            'summary'     => true,
-            'width'       => true,
+
         ),
         'tbody'      => array(
-            'align'   => true,
-            'char'    => true,
-            'charoff' => true,
-            'valign'  => true,
+
         ),
         'td'         => array(
-            'abbr'    => true,
-            'align'   => true,
-            'axis'    => true,
-            'bgcolor' => true,
-            'char'    => true,
-            'charoff' => true,
-            'colspan' => true,
-            'dir'     => true,
-            'headers' => true,
-            'height'  => true,
-            'nowrap'  => true,
-            'rowspan' => true,
-            'scope'   => true,
-            'valign'  => true,
-            'width'   => true,
+
         ),
         'tfoot'      => array(
-            'align'   => true,
-            'char'    => true,
-            'charoff' => true,
-            'valign'  => true,
+
         ),
         'th'         => array(
-            'abbr'    => true,
-            'align'   => true,
-            'axis'    => true,
-            'bgcolor' => true,
-            'char'    => true,
-            'charoff' => true,
-            'colspan' => true,
-            'headers' => true,
-            'height'  => true,
-            'nowrap'  => true,
-            'rowspan' => true,
-            'scope'   => true,
-            'valign'  => true,
-            'width'   => true,
         ),
         'thead'      => array(
-            'align'   => true,
-            'char'    => true,
-            'charoff' => true,
-            'valign'  => true,
+
         ),
         'tr'         => array(
-            'align'   => true,
-            'bgcolor' => true,
-            'char'    => true,
-            'charoff' => true,
-            'valign'  => true,
+
         ),
         'u'          => array(),
         'ul'         => array(
@@ -173,9 +121,9 @@ function wpcp_remove_unauthorized_html( $content, $article, $campaign_id ) {
         )
     ];
 
-    $allowed_tags = apply_filters( 'wpcp_allowed_html_tags', $default_allowed_tags, $article, $campaign_id );
+    //$allowed_tags = apply_filters( 'wpcp_allowed_html_tags', $default_allowed_tags, $article, $campaign_id );
 
-    return wp_kses( $content, $allowed_tags );
+    return wp_kses( $content, $default_allowed_tags );
 }
 
 /**
@@ -309,19 +257,39 @@ function wpcp_set_post_excerpt( $excerpt, $article, $campaign_id ) {
     return $excerpt;
 }
 
+/**
+ * Replace content template with tags
+ * @since 1.0.0
+ *
+ * @param $content
+ * @param $article
+ * @param $campaign_id
+ *
+ * @return mixed
+ */
 function wpcp_post_content_as_template( $content, $article, $campaign_id ) {
+    wpcp_log('dev', 'wpcp_post_content_as_template');
     $template = wpcp_get_post_meta( $campaign_id, '_post_template', '' );
     if ( ! empty( $template ) ) {
-        return wpcp_parse_template_tags( $template, $article, $campaign_id );
+        $parsed_content =  wpcp_parse_template_tags( $template, $article, $campaign_id);
+        return str_replace('{content}', $content, $parsed_content);
     }
 
     return $content;
 }
 
+/**
+ * @param $title
+ * @param $article
+ * @param $campaign_id
+ *
+ * @return mixed
+ */
 function wpcp_post_title_as_template( $title, $article, $campaign_id ) {
     $template = wpcp_get_post_meta( $campaign_id, '_post_title', '' );
     if ( ! empty( $template ) ) {
-        return wpcp_parse_template_tags( $template, $article, $campaign_id );
+        $parsed_content =  wpcp_parse_template_tags( $template, $article, $campaign_id );
+        return str_replace('{title}', $title, $parsed_content);
     }
 
     return $title;

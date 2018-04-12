@@ -20,6 +20,10 @@ window.Wp_Content_Pilot = (function (window, document, $, undefined) {
         app.update_template_tags();
         $('#_campaign_type').on('change', app.update_template_tags);
         $('#wpcp-test-run').on('click', app.run_test_campaign);
+
+        if( $('#publish').attr('value') !== 'Update'){
+            $('#wpcp-test-run').closest('.help').html('<span style="color: red">Please publish the campaign first to start a test.</span>');
+        }
     };
 
     app.update_template_tags = function () {
@@ -68,15 +72,21 @@ window.Wp_Content_Pilot = (function (window, document, $, undefined) {
                 nonce: wpcp.nonce
             },
             function (response) {
-                console.log(response.data);
+                btn.text('Test Again');
+                btn.removeAttr('disabled');
+
                 if (response.success === true &&
                     response.data.permalink !== undefined &&
                     response.data.message !== ''
                 ) {
+
                     var visit = confirm(response.data.message);
                     if (visit === true) {
                         btn.css('color', 'green');
-                        window.location.href = response.data.permalink;
+                        window.open(
+                            response.data.permalink,
+                            '_blank'
+                        );
                     }
 
                     return false;
@@ -85,13 +95,11 @@ window.Wp_Content_Pilot = (function (window, document, $, undefined) {
 
                 if (!response.success  &&   response.data.message !== undefined && response.data.message !== '') {
                     console.log('1');
-                    btn.text('failed. Please try again.');
                     btn.css('color', 'red');
                     alert(response.data.message);
                     return false;
                 } else {
                     console.log('2');
-                    btn.text('failed. Please try again.');
                     btn.css('color', 'red');
                     alert('Test Failed. Please change or add more keywords then Update and try again.');
                     return false;

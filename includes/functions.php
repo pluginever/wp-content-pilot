@@ -83,25 +83,39 @@ function wpcp_setup_keyword( $campaign_id ) {
 
     if ( $campaign_type == 'feed' ) {
         $meta = get_post_meta( $campaign_id, '_feed_links', true );
+
+        $last_keyword = get_post_meta( $campaign_id, '_last_keyword', true );
+
+        if ( ! empty( $last_keyword ) && count( $keywords ) > 1 ) {
+            if ( ( $key = array_search( $last_keyword, $keywords ) ) !== false ) {
+                unset( $keywords[ $key ] );
+            }
+        }
+
+        $keyword_key      = array_rand( $keywords, 1 );
+        $selected_keyword = $keywords[ $keyword_key ];
+
+
     } else {
         $meta = get_post_meta( $campaign_id, '_keywords', true );
-    }
 
-    $keywords = (array) wpcp_string_to_array( $meta, ',', array( 'trim' ) );
-    if ( empty( $keywords ) ) {
-        return false;
-    }
+        $keywords_type = wpcp_get_post_meta( $campaign_id, '_keywords_type', 'exact' );
 
-    $last_keyword = get_post_meta( $campaign_id, '_last_keyword', true );
+        if( $keywords_type == 'exact'){
+            $selected_keyword = "\" $meta \"";
+        }else{
 
-    if ( ! empty( $last_keyword ) && count( $keywords ) > 1 ) {
-        if ( ( $key = array_search( $last_keyword, $keywords ) ) !== false ) {
-            unset( $keywords[ $key ] );
+            $keywords = (array) wpcp_string_to_array( $meta, ',', array( 'trim' ) );
+            if ( empty( $keywords ) ) {
+                return false;
+            }
+
+            $selected_keyword = implode(' OR ', $keywords);
+
         }
+
     }
 
-    $keyword_key      = array_rand( $keywords, 1 );
-    $selected_keyword = $keywords[ $keyword_key ];
 
     return apply_filters( 'wpcp_campaign_selected_keyword', $selected_keyword, $campaign_id, $campaign_type );
 }
@@ -679,23 +693,33 @@ function wpcp_set_featured_image_from_link( $image_url, $post_id ) {
  * and replace by contents
  *
  * @since 1.0.0
+ * @since 1.0.1
+ * $skips array is added to skip replacing any template tags
  *
  * @param $template
  * @param $article
  * @param $campaign_id
  * @param $keyword
+ * @param $skips
  *
  * @return mixed
  *
  */
-function wpcp_parse_template_tags( $template, $article, $campaign_id ) {
+function wpcp_parse_template_tags( $template, $article, $campaign_id, $skips = ['content', 'title'] ) {
+    wpcp_log('dev', 'wpcp_parse_template_tags');
     $cache_key     = md5( "wpcp_template_tags_{$campaign_id}" );
     $template_tags = wp_cache_get( $cache_key );
     if ( false == $template_tags ) {
         wpcp_log( 'dev', 'have not cached' );
+        wpcp_log( 'dev', 'Skipping tags ' );
+        wpcp_log( 'dev', $skips );
         unset( $article['link'] );
         $template_tags = [];
         foreach ( $article as $tag => $content ) {
+
+            if( in_array($tag, $skips)){
+                continue;
+            }
 
             $template_tags[ '{' . $tag . '}' ] = ! is_string( $content ) ? serialize( $content ) : $content;
         }
@@ -706,6 +730,8 @@ function wpcp_parse_template_tags( $template, $article, $campaign_id ) {
     $tags     = array_keys( $template_tags );
     $contents = array_values( $template_tags );
 
+    wpcp_log('dev', '-------Tags to replace------');
+    wpcp_log('dev', $tags);
     return str_replace( $tags, $contents, $template );
 }
 
