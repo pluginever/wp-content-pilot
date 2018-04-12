@@ -128,6 +128,10 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.0.2 -> April 12, 2018 =
+* [Enhance] Keywords searching system updated
+* [Enhance] keywords type exact or anyword add
+* [Fix]     Post status change does not update campaign status
 
 = v1.0.1 -> March 09, 2018 =
 * [Enhance] Add Envato for affiliate marketing
