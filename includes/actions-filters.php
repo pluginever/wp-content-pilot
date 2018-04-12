@@ -18,11 +18,11 @@ add_filter('wpcp_article_before_post_insert', 'wpcp_test_article_acceptance', 10
 
 //content filter
 add_filter( 'wpcp_post_content', 'wpcp_set_content_html_or_text', 10, 3 );
-add_filter( 'wpcp_post_content', 'wpcp_remove_unauthorized_html', 10, 3 );
-add_filter( 'wpcp_post_content', 'wpcp_maybe_remove_hyperlinks', 10, 3 );
-add_filter( 'wpcp_post_content', 'wpcp_maybe_remove_images', 10, 3 );
-add_filter( 'wpcp_post_content', 'wpcp_maybe_fix_links', 10, 3 );
-add_filter( 'wpcp_post_content', 'wpcp_post_content_as_template', 999, 3 );
+add_filter( 'wpcp_post_content', 'wpcp_remove_unauthorized_html', 20, 3 );
+add_filter( 'wpcp_post_content', 'wpcp_maybe_remove_hyperlinks', 30, 3 );
+add_filter( 'wpcp_post_content', 'wpcp_maybe_remove_images', 40, 3 );
+add_filter( 'wpcp_post_content', 'wpcp_maybe_fix_links', 50, 3 );
+add_filter( 'wpcp_post_content', 'wpcp_post_content_as_template', 99, 3 );
 
 
 //title

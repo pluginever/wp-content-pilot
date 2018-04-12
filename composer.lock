@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "852ce9d4807e8ea707da2b697040a729",
+    "content-hash": "cfe0d62b9c9a5d6aec6c07a92132efce",
     "packages": [
         {
             "name": "andreskrey/readability.php",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/andreskrey/readability.php.git",
-                "reference": "21b201c6542d2e23201fdd3cacc94f2fa76c9a9e"
+                "reference": "2b136b3b15f5d0bf62288a0499cd99ac270f974d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/andreskrey/readability.php/zipball/21b201c6542d2e23201fdd3cacc94f2fa76c9a9e",
-                "reference": "21b201c6542d2e23201fdd3cacc94f2fa76c9a9e",
+                "url": "https://api.github.com/repos/andreskrey/readability.php/zipball/2b136b3b15f5d0bf62288a0499cd99ac270f974d",
+                "reference": "2b136b3b15f5d0bf62288a0499cd99ac270f974d",
                 "shasum": ""
             },
             "require": {
@@ -60,16 +60,16 @@
         },
         {
             "name": "exeu/apai-io",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Exeu/apai-io.git",
-                "reference": "fb171b5654c8a24a075976fc927f488a2ea0c15b"
+                "reference": "ba5bb754f59f744e927a3bdf4b339fa2a0afb44f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Exeu/apai-io/zipball/fb171b5654c8a24a075976fc927f488a2ea0c15b",
-                "reference": "fb171b5654c8a24a075976fc927f488a2ea0c15b",
+                "url": "https://api.github.com/repos/Exeu/apai-io/zipball/ba5bb754f59f744e927a3bdf4b339fa2a0afb44f",
+                "reference": "ba5bb754f59f744e927a3bdf4b339fa2a0afb44f",
                 "shasum": ""
             },
             "require": {
@@ -110,20 +110,20 @@
                 "products",
                 "rest"
             ],
-            "time": "2017-02-24T10:12:27+00:00"
+            "time": "2018-02-12T10:44:56+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.3.0",
+            "version": "6.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699"
+                "reference": "68d0ea14d5a3f42a20e87632a5f84931e2709c90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
-                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/68d0ea14d5a3f42a20e87632a5f84931e2709c90",
+                "reference": "68d0ea14d5a3f42a20e87632a5f84931e2709c90",
                 "shasum": ""
             },
             "require": {
@@ -133,7 +133,7 @@
             },
             "require-dev": {
                 "ext-curl": "*",
-                "phpunit/phpunit": "^4.0 || ^5.0",
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4",
                 "psr/log": "^1.0"
             },
             "suggest": {
@@ -142,7 +142,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.2-dev"
+                    "dev-master": "6.3-dev"
                 }
             },
             "autoload": {
@@ -175,7 +175,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-06-22T18:50:49+00:00"
+            "time": "2018-03-26T16:33:04+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -294,50 +294,6 @@
             "time": "2017-03-20T17:10:46+00:00"
         },
         {
-            "name": "marcl/amazonproductapi",
-            "version": "3.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MarcL/AmazonProductAPI.git",
-                "reference": "987f5d9487076ff623291985b81eecbe3b077c29"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MarcL/AmazonProductAPI/zipball/987f5d9487076ff623291985b81eecbe3b077c29",
-                "reference": "987f5d9487076ff623291985b81eecbe3b077c29",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "6.1.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MarcL\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marc Littlemore",
-                    "email": "marc@marclittlemore.com",
-                    "homepage": "http://www.marclittlemore.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP library to perform product lookup and searches using the Amazon Product API.",
-            "homepage": "https://github.com/MarcL/AmazonProductAPI/",
-            "keywords": [
-                "amazon",
-                "api",
-                "product"
-            ],
-            "time": "2017-11-06T22:28:16+00:00"
-        },
-        {
             "name": "paquettg/php-html-parser",
             "version": "1.7.0",
             "source": {
@@ -434,16 +390,16 @@
         },
         {
             "name": "php-curl-class/php-curl-class",
-            "version": "8.0.1",
+            "version": "8.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-curl-class/php-curl-class.git",
-                "reference": "bdfe1fcca0c32562050c84e01e3a4cbdc31e22fd"
+                "reference": "75597b28c454acd9767e6182371376916cdb8531"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/bdfe1fcca0c32562050c84e01e3a4cbdc31e22fd",
-                "reference": "bdfe1fcca0c32562050c84e01e3a4cbdc31e22fd",
+                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/75597b28c454acd9767e6182371376916cdb8531",
+                "reference": "75597b28c454acd9767e6182371376916cdb8531",
                 "shasum": ""
             },
             "require": {
@@ -487,7 +443,7 @@
                 "web service",
                 "xml"
             ],
-            "time": "2018-01-27T15:40:39+00:00"
+            "time": "2018-04-09T08:28:13+00:00"
         },
         {
             "name": "psr/http-message",

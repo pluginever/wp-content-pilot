@@ -16,34 +16,34 @@ class Article extends Item {
      */
     public function setup() {
         $this->action( 'wpcp_fetched_links', 'wpcp_article_skip_base_domain_url' );
-        //$this->action( 'wpcp_post_content', 'html_treatment', 10, 2 );
+//        $this->action( 'wpcp_post_content', 'html_treatment', 10, 2 );
     }
 
 
     function fetch_links() {
-
         $page = $this->get_page_number( 0 );
 
-        $request = $this->setup_request( 'https://www.bing.com' );
 
-        $request->get( 'search', array(
-            'q'     => $this->keyword,
-            'count' => 10,
-            'loc'   => 'en',
-            'first' => ( $page * 10 ),
-        ) );
+        if( ! $page ){
+            for ($page = 0 ; $page <= 10; $page++){
 
-        $response = wpcp_is_valid_response( $request );
+                $links = $this->bing_search($this->keyword, $page);
 
-        if ( is_wp_error( $response ) ) {
-            return $response;
+                if( !empty( $links ) ){
+                    break;
+                }
+            }
+        }else{
+            $links =  $this->bing_search($this->keyword, $page);
+            if( empty( $links )){
+                $links =  $this->bing_search($this->keyword, $page + 1);
+            }
         }
 
-        $links = wpcp_get_html_links( $response );
-        $request->close();
+
         $this->set_page_number( $page + 1 );
 
-        return $links;
+        return wp_list_pluck($links, 'link', 'pubDate');
     }
 
     function fetch_post( $link ) {
@@ -130,6 +130,5 @@ class Article extends Item {
 
         return $content;
     }
-
 
 }
