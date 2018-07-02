@@ -86,6 +86,12 @@ function wpcp_setup_keyword( $campaign_id ) {
 
         $last_keyword = get_post_meta( $campaign_id, '_last_keyword', true );
 
+        $keywords = (array) wpcp_string_to_array( $meta, ',', array( 'trim' ) );
+
+        if ( empty( $keywords ) ) {
+            return false;
+        }
+
         if ( ! empty( $last_keyword ) && count( $keywords ) > 1 ) {
             if ( ( $key = array_search( $last_keyword, $keywords ) ) !== false ) {
                 unset( $keywords[ $key ] );
