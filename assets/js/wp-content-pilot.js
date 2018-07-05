@@ -1,5 +1,5 @@
 /**
- * WP Content Pilot - v1.0.1 - 2018-04-12
+ * WP Content Pilot - v1.0.2 - 2018-07-05
  * http://pluginever.com
  *
  * Copyright (c) 2018;
@@ -15,14 +15,9 @@ window.Wp_Content_Pilot = (function (window, document, $, undefined) {
     var app = {};
 
     app.init = function () {
-        console.log('init');
         app.update_template_tags();
         $('#_campaign_type').on('change', app.update_template_tags);
         $('#wpcp-test-run').on('click', app.run_test_campaign);
-
-        if( $('#publish').attr('value') !== 'Update'){
-            $('#wpcp-test-run').closest('.help').html('<span style="color: red">Please publish the campaign first to start a test.</span>');
-        }
     };
 
     app.update_template_tags = function () {

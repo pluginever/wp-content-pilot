@@ -248,7 +248,7 @@ module.exports = function(grunt) {
 
     // Default task.
 
-    grunt.registerTask( 'default', ['jshint', 'concat', 'uglify', 'sass', 'cssmin', 'imagemin', 'notify:server'] );
+    grunt.registerTask( 'default', ['jshint', 'concat', 'uglify', 'sass', 'cssmin', 'imagemin'] );
 
 
     grunt.registerTask('release', ['makepot', 'zip']);

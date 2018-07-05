@@ -27,7 +27,7 @@ class Admin {
      * @return void
      */
     function load_assets() {
-        $suffix = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? '' : '.min';
+        $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
         wp_register_style( 'wp-content-pilot', WPCP_ASSETS . "/css/wp-content-pilot{$suffix}.css", [], date( 'i' ) );
         wp_register_script( 'wp-content-pilot', WPCP_ASSETS . "/js/wp-content-pilot{$suffix}.js", [ 'jquery' ], date( 'i' ), true );
         wp_localize_script( 'wp-content-pilot', 'wpcp', [

@@ -163,6 +163,23 @@ class Metabox {
 
     public function add_campaign_settings_fields( $fields ) {
         global $post;
+
+        $test_run_help = sprintf(
+            '<span style="color: red">%s</span>',
+            __( 'Please publish the campaign first to start a test.', 'wpcp' )
+        );
+
+        if ( ! empty( $_GET['post'] ) ) {
+            $post = get_post( $_GET['post'] );
+
+            if ( 'publish' === $post->post_status ) {
+                $test_run_help = sprintf(
+                    '<a href="#" id="wpcp-test-run" class="button button-small button-secondary">%s</a>',
+                    __( 'Run Now', 'wpcp' )
+                );
+            }
+        }
+
         $add_fields = [
             [
                 'type'  => 'checkbox',
@@ -189,7 +206,7 @@ class Metabox {
                 'type'    => 'title',
                 'label'   => __( 'Test Run', 'wpcp' ),
                 'name'    => '_test_run',
-                'help'    => '<a href="#" id="wpcp-test-run" class="button button-small button-secondary">Run Now</a>',
+                'help'    => $test_run_help
             ]
         ];
 
