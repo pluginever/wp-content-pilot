@@ -299,7 +299,16 @@ class Metabox {
         return array_merge( $fields, $add_fields );
     }
 
-
+    /**
+     * Add default post settings fields
+     *
+     * @since 1.0.0
+     * @since 1.0.3 Add _post_categories field
+     *
+     * @param array $fields
+     *
+     * @return array
+     */
     public function add_default_post_settings_fields( $fields ) {
         $add_fields = [
             [
@@ -325,6 +334,22 @@ class Metabox {
                 'value'    => 'post',
                 'required' => 'true',
                 'options'  => wpcp_get_post_types()
+            ],
+            [
+                'type'      => 'select',
+                'multiple'  => true,
+                'select2'   => true,
+                'name'      => '_post_categories',
+                'label'     => __( 'Post Categories', 'wpcp' ),
+                'value'     => 1,
+                'required'  => 'true',
+                'help'      => __( 'Select one or more categories', 'wpcp' ),
+                'options'   => wpcp_get_post_categories(),
+                'condition' => [
+                    'depend_on'    => '_post_type',
+                    'depend_value' => 'post',
+                    'depend_cond'  => '==',
+                ]
             ],
             [
                 'type'     => 'select',

@@ -6,6 +6,7 @@ add_action( 'wpcp_after_using_link', 'wpcp_mark_link_as_success' );
 
 add_action('wpcp_after_post_publish', 'wpcp_maybe_set_featured_image', 10, 3);
 add_action( 'wpcp_after_post_publish', 'update_campaign_status', 10, 3 );
+add_action( 'wpcp_after_post_publish', 'wpcp_set_post_categories', 10, 4 );
 
 
 add_action('wpcp_disable_campaign', 'wpcp_log_campaign_disable', 10);

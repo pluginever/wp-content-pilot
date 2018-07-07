@@ -559,6 +559,24 @@ function wpcp_get_post_types() {
 }
 
 /**
+ * Get post categories
+ *
+ * @since 1.0.3
+ * @return array
+ */
+function wpcp_get_post_categories() {
+
+    $args = [
+        'taxonomy' => 'category',
+        'hide_empty' => false
+    ];
+
+    $categories = get_terms( $args );
+
+    return wp_list_pluck( $categories, 'name', 'term_id' );
+}
+
+/**
  * Campaaign schedule options
  * @since 1.0.0
  *

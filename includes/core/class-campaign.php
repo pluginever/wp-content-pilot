@@ -113,7 +113,15 @@ class Campaign {
         $post_meta    = apply_filters( 'wpcp_post_meta', [], $this->campaign_id, $this->keyword );
         $post_tax     = apply_filters( 'wpcp_post_taxonomy', [], $this->campaign_id, $this->keyword );
         $post_time    = apply_filters( 'wpcp_post_time', date( 'Y-m-d H:i:s', current_time( 'timestamp' ) ), $this->campaign_id, $this->keyword );
-        $post_id      = wp_insert_post( [
+
+        /**
+         * Filter to manipulate postarr param before insert a post
+         *
+         * @since 1.0.3
+         *
+         * @param array
+         */
+        $postarr = apply_filters( 'wpcp_insert_post_postarr', [
             'post_title'    => $title,
             'post_author'   => $post_author,
             'post_excerpt'  => $post_excerpt,
@@ -124,7 +132,9 @@ class Campaign {
             'post_content'  => $post_content,
             'meta_input'    => $post_meta,
             'tax_input'     => $post_tax,
-        ], true );
+        ] );
+
+        $post_id = wp_insert_post( $postarr, true );
 
         if ( is_wp_error( $post_id ) ) {
             wpcp_log( 'critical', __( 'Post insertion failed Reason: ' . $post_id->get_error_message() ) );
@@ -133,7 +143,7 @@ class Campaign {
             return $post_id;
         }
 
-        do_action( 'wpcp_after_post_publish', $post_id, $this->campaign_id, $this->keyword );
+        do_action( 'wpcp_after_post_publish', $post_id, $this->campaign_id, $this->keyword, $postarr );
 
         return $post_id;
     }
