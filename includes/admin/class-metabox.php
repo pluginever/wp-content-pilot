@@ -250,6 +250,16 @@ class Metabox {
         return array_merge( $fields, $add_fields );
     }
 
+    /**
+     * Set additional settings
+     *
+     * @since 1.0.0
+     * @since 1.0.3 Add _comment_status and _ping_status options
+     *
+     * @param array $fields
+     *
+     * @return array
+     */
     public function add_default_additional_fields( $fields ) {
         $add_fields = [
             [
@@ -293,6 +303,18 @@ class Metabox {
                 'name'  => '_skip_duplicate_title',
                 'label' => ' ',
                 'title' => __( 'Skip post with duplicate title', 'wpcp' ),
+            ],
+            [
+                'type'  => 'checkbox',
+                'name'  => '_comment_status',
+                'label' => ' ',
+                'title' => __( 'Allow comments', 'wpcp' ),
+            ],
+            [
+                'type'  => 'checkbox',
+                'name'  => '_ping_status',
+                'label' => ' ',
+                'title' => __( 'Allow Pingbacks', 'wpcp' ),
             ],
         ];
 

@@ -34,6 +34,8 @@ add_filter('wpcp_post_type', 'wpcp_set_post_type', 10, 3);
 add_filter('wpcp_post_status', 'wpcp_set_post_status', 10, 3);
 add_filter('wpcp_post_author', 'wpcp_set_post_author', 10, 3);
 add_filter('wpcp_post_excerpt', 'wpcp_set_post_excerpt', 10, 3);
+add_filter('wpcp_post_comment_status', 'wpcp_set_comment_status', 10, 3);
+add_filter('wpcp_post_ping_status', 'wpcp_set_ping_status', 10, 3);
 
 
 //settings

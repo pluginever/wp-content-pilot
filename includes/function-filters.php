@@ -258,6 +258,44 @@ function wpcp_set_post_excerpt( $excerpt, $campaign_id, $keyword ) {
 }
 
 /**
+ * Set post comment status
+ *
+ * @since 1.0.3
+ *
+ * @param string $status
+ * @param int    $campaign_id
+ * @param string $keyword
+ *
+ * @return string
+ */
+function wpcp_set_comment_status( $status, $campaign_id, $keyword ) {
+    if ( '1' !== wpcp_get_post_meta( $campaign_id, '_comment_status', '0' ) ) {
+        return $status;
+    }
+
+    return 'open';
+}
+
+/**
+ * Set post ping status
+ *
+ * @since 1.0.3
+ *
+ * @param string $status
+ * @param int    $campaign_id
+ * @param string $keyword
+ *
+ * @return string
+ */
+function wpcp_set_ping_status( $status, $campaign_id, $keyword ) {
+    if ( '1' !== wpcp_get_post_meta( $campaign_id, '_ping_status', '0' ) ) {
+        return $status;
+    }
+
+    return 'open';
+}
+
+/**
  * Replace content template with tags
  * @since 1.0.0
  *

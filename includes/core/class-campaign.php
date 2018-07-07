@@ -101,18 +101,20 @@ class Campaign {
 
     protected function insert_post( $article ) {
         do_action( 'wpcp_before_post_insert', $article, $this->campaign_id, $this->keyword );
-        $title        = apply_filters( 'wpcp_post_title', $article['title'], $article, $this->campaign_id );
-        $post_content = apply_filters( 'wpcp_post_content', $article['content'], $article, $this->campaign_id );
-        $summary      = wp_trim_words( $article['content'], 55 );
-        $summary      = preg_replace( '/\[embed.+embed\]/', '', strip_tags( $summary ) );
-        $post_excerpt = apply_filters( 'wpcp_post_excerpt', $summary, $this->campaign_id, $this->keyword );
-        $author_id    = get_post_field( 'post_author', $this->campaign_id );
-        $post_author  = apply_filters( 'wpcp_post_author', $author_id, $this->campaign_id, $this->keyword );
-        $post_type    = apply_filters( 'wpcp_post_type', 'post', $this->campaign_id, $this->keyword );
-        $post_status  = apply_filters( 'wpcp_post_status', 'publish', $this->campaign_id, $this->keyword );
-        $post_meta    = apply_filters( 'wpcp_post_meta', [], $this->campaign_id, $this->keyword );
-        $post_tax     = apply_filters( 'wpcp_post_taxonomy', [], $this->campaign_id, $this->keyword );
-        $post_time    = apply_filters( 'wpcp_post_time', date( 'Y-m-d H:i:s', current_time( 'timestamp' ) ), $this->campaign_id, $this->keyword );
+        $title          = apply_filters( 'wpcp_post_title', $article['title'], $article, $this->campaign_id );
+        $post_content   = apply_filters( 'wpcp_post_content', $article['content'], $article, $this->campaign_id );
+        $summary        = wp_trim_words( $article['content'], 55 );
+        $summary        = preg_replace( '/\[embed.+embed\]/', '', strip_tags( $summary ) );
+        $post_excerpt   = apply_filters( 'wpcp_post_excerpt', $summary, $this->campaign_id, $this->keyword );
+        $author_id      = get_post_field( 'post_author', $this->campaign_id );
+        $post_author    = apply_filters( 'wpcp_post_author', $author_id, $this->campaign_id, $this->keyword );
+        $post_type      = apply_filters( 'wpcp_post_type', 'post', $this->campaign_id, $this->keyword );
+        $post_status    = apply_filters( 'wpcp_post_status', 'publish', $this->campaign_id, $this->keyword );
+        $post_meta      = apply_filters( 'wpcp_post_meta', [], $this->campaign_id, $this->keyword );
+        $post_tax       = apply_filters( 'wpcp_post_taxonomy', [], $this->campaign_id, $this->keyword );
+        $post_time      = apply_filters( 'wpcp_post_time', date( 'Y-m-d H:i:s', current_time( 'timestamp' ) ), $this->campaign_id, $this->keyword );
+        $comment_status = apply_filters( 'wpcp_post_comment_status', get_default_comment_status( $post_type ), $this->campaign_id, $this->keyword );
+        $ping_status    = apply_filters( 'wpcp_post_ping_status', get_default_comment_status( $post_type, 'pingback' ), $this->campaign_id, $this->keyword );
 
         /**
          * Filter to manipulate postarr param before insert a post
@@ -122,16 +124,18 @@ class Campaign {
          * @param array
          */
         $postarr = apply_filters( 'wpcp_insert_post_postarr', [
-            'post_title'    => $title,
-            'post_author'   => $post_author,
-            'post_excerpt'  => $post_excerpt,
-            'post_type'     => $post_type,
-            'post_status'   => $post_status,
-            'post_date'     => $post_time,
-            'post_date_gmt' => get_gmt_from_date( $post_time ),
-            'post_content'  => $post_content,
-            'meta_input'    => $post_meta,
-            'tax_input'     => $post_tax,
+            'post_title'     => $title,
+            'post_author'    => $post_author,
+            'post_excerpt'   => $post_excerpt,
+            'post_type'      => $post_type,
+            'post_status'    => $post_status,
+            'post_date'      => $post_time,
+            'post_date_gmt'  => get_gmt_from_date( $post_time ),
+            'post_content'   => $post_content,
+            'meta_input'     => $post_meta,
+            'tax_input'      => $post_tax,
+            'comment_status' => $comment_status,
+            'ping_status'    => $ping_status,
         ] );
 
         $post_id = wp_insert_post( $postarr, true );
