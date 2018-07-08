@@ -1,5 +1,5 @@
 /**
- * WP Content Pilot - v1.0.1 - 2018-04-12
+ * WP Content Pilot - v1.0.3 - 2018-07-08
  * http://pluginever.com
  *
  * Copyright (c) 2018;
@@ -15,7 +15,6 @@ window.Wp_Content_Pilot = (function (window, document, $, undefined) {
     var app = {};
 
     app.init = function () {
-        console.log('init');
         app.update_template_tags();
         $('#_campaign_type').on('change', app.update_template_tags);
         $('#wpcp-test-run').on('click', app.run_test_campaign);

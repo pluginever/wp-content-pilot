@@ -16,7 +16,6 @@ window.Wp_Content_Pilot = (function (window, document, $, undefined) {
     var app = {};
 
     app.init = function () {
-        console.log('init');
         app.update_template_tags();
         $('#_campaign_type').on('change', app.update_template_tags);
         $('#wpcp-test-run').on('click', app.run_test_campaign);

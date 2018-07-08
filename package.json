@@ -2,7 +2,7 @@
   "name": "wp-content-pilot",
   "title": "WP Content Pilot",
   "description": "The plugin posts high quality Articles. Amazon, Ebay, BestBuy, Walmart Products Youtube, Vimeo Videos as well as Images from Flicker and from others platforms based on your keywords.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "http://pluginever.com",
   "author": {
     "name": "PluginEver",
@@ -10,7 +10,7 @@
     "url": "http://pluginever.com"
   },
   "devDependencies": {
-    "grunt": "^1.0.1",
+    "grunt": "^1.0.3",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-compress": "^1.4.3",
     "grunt-contrib-concat": "^1.0.1",
@@ -18,14 +18,14 @@
     "grunt-contrib-cssmin": "^2.2.0",
     "grunt-contrib-imagemin": "^2.0.1",
     "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt-contrib-nodeunit": "^2.0.0",
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-uglify": "^3.0.1",
-    "grunt-contrib-watch": "^1.0.0",
+    "grunt-contrib-watch": "^1.1.0",
     "grunt-livereload": "^0.1.3",
     "grunt-notify": "^0.4.5",
     "grunt-phpcs": "^0.4.0",
-    "grunt-wp-i18n": "^1.0.0",
+    "grunt-wp-i18n": "^1.0.2",
     "jshint-stylish": "^2.2.1"
   },
   "keywords": []

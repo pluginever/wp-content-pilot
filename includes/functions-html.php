@@ -14,7 +14,7 @@ function wpcp_html_make_dom( $html ) {
     if ( ! $html instanceof PHPHtmlParser\Dom ) {
         $dom = new \PHPHtmlParser\Dom();
         $dom->setOptions( [
-            'preserveLineBreaks' => false,
+            'preserveLineBreaks' => true,
             'enforceEncoding'    => true,
             'cleanupInput'       => true,
         ] );

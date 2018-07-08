@@ -70,7 +70,30 @@ function update_campaign_status( $post_id, $campaign_id, $keyword ) {
     update_post_meta( $campaign_id, '_campaign_id', $campaign_id );
     update_option( 'wpcp_last_campaign', $campaign_id );
     update_option( 'wpcp_last_post', $post_id );
+}
 
+/**
+ * Set post categories
+ *
+ * @since 1.0.3
+ *
+ * @param int    $post_id
+ * @param int    $campaign_id
+ * @param string $keyword
+ * @param array  $postarr
+ *
+ * @return void
+ */
+function wpcp_set_post_categories( $post_id, $campaign_id, $keyword, $postarr ) {
+    if ( 'post' !== $postarr['post_type'] ) {
+        return;
+    }
+
+    $categories = wpcp_get_post_meta( $campaign_id, '_post_categories', [] );
+
+    if ( ! empty( $categories ) ) {
+        wp_set_post_categories( $post_id, $categories );
+    }
 }
 
 /**

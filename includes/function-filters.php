@@ -186,13 +186,13 @@ function wpcp_maybe_fix_links( $content, $article, $campaign_id ) {
  * @since 1.0.0
  *
  * @param $post_type
- * @param $article
  * @param $campaign_id
+ * @param $article
  *
  * @return mixed|null
  *
  */
-function wpcp_set_post_type( $post_type, $article, $campaign_id ) {
+function wpcp_set_post_type( $post_type, $campaign_id, $keyword ) {
     $new_type = wpcp_get_post_meta( $campaign_id, '_post_type', '0' );
     if ( ! empty( $new_type ) ) {
         return $new_type;
@@ -205,13 +205,13 @@ function wpcp_set_post_type( $post_type, $article, $campaign_id ) {
  * @since 1.0.0
  *
  * @param $status
- * @param $article
  * @param $campaign_id
+ * @param $article
  *
  * @return mixed|null
  *
  */
-function wpcp_set_post_status( $status, $article, $campaign_id ) {
+function wpcp_set_post_status( $status, $campaign_id, $keyword ) {
     $new_status = wpcp_get_post_meta( $campaign_id, '_post_status', '0' );
     if ( ! empty( $new_status ) ) {
         return $new_status;
@@ -224,13 +224,13 @@ function wpcp_set_post_status( $status, $article, $campaign_id ) {
  * @since 1.0.0
  *
  * @param $author
- * @param $article
  * @param $campaign_id
+ * @param $article
  *
  * @return mixed|null
  *
  */
-function wpcp_set_post_author( $author, $article, $campaign_id ) {
+function wpcp_set_post_author( $author, $campaign_id, $keyword ) {
     $new_author = wpcp_get_post_meta( $campaign_id, '_post_author', '0' );
     if ( ! empty( $new_author ) ) {
         return $new_author;
@@ -243,18 +243,56 @@ function wpcp_set_post_author( $author, $article, $campaign_id ) {
  * @since 1.0.0
  *
  * @param $excerpt
- * @param $article
  * @param $campaign_id
+ * @param $article
  *
  * @return string
  *
  */
-function wpcp_set_post_excerpt( $excerpt, $article, $campaign_id ) {
+function wpcp_set_post_excerpt( $excerpt, $campaign_id, $keyword ) {
     if ( '1' !== wpcp_get_post_meta( $campaign_id, '_excerpt', '0' ) ) {
         $excerpt = '';
     }
 
     return $excerpt;
+}
+
+/**
+ * Set post comment status
+ *
+ * @since 1.0.3
+ *
+ * @param string $status
+ * @param int    $campaign_id
+ * @param string $keyword
+ *
+ * @return string
+ */
+function wpcp_set_comment_status( $status, $campaign_id, $keyword ) {
+    if ( '1' !== wpcp_get_post_meta( $campaign_id, '_comment_status', '0' ) ) {
+        return $status;
+    }
+
+    return 'open';
+}
+
+/**
+ * Set post ping status
+ *
+ * @since 1.0.3
+ *
+ * @param string $status
+ * @param int    $campaign_id
+ * @param string $keyword
+ *
+ * @return string
+ */
+function wpcp_set_ping_status( $status, $campaign_id, $keyword ) {
+    if ( '1' !== wpcp_get_post_meta( $campaign_id, '_ping_status', '0' ) ) {
+        return $status;
+    }
+
+    return 'open';
 }
 
 /**

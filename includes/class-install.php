@@ -51,9 +51,9 @@ class Install {
             "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}wpcp_links` (
                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
                 `camp_id` int(11) NOT NULL,
-                `url` varchar(255) NOT NULL,
-                `keyword` varchar(255) DEFAULT NULL,
-                `camp_type` varchar(255) DEFAULT NULL,
+                `url` varchar(191) NOT NULL,
+                `keyword` varchar(191) DEFAULT NULL,
+                `camp_type` varchar(191) DEFAULT NULL,
                 `status` tinyint(1) unsigned DEFAULT '0',
                 `identifier` TEXT DEFAULT NULL,
                 `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
