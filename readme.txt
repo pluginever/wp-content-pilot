@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: autoblog, curatator, content pilot, auto post, feeds, flicker, youtube, envato, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
 Requires at least: 4.4
-Tested up to: 4.9.4
+Tested up to: 4.9.7
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -15,6 +15,11 @@ WP Content Pilot automatically posts contents from various sources based on the 
 WP Content Pilot is an autoblogging and content curation plugin that allows you to create high-quality WordPress blog posts automatically.
 You just have to set the keywords or targeted feed urls and WP Content Pilot will automatically posts contents from various sources until it meets the target that you set.
 It will keeps posting articles even while you are asleep.
+
+== Live Demo ==
+Checkout out the live demo of WP Content Pilot.
+**Username:** demo **Password:** demo
+[Live Demo](http://wpcp.pluginever.com/wp-admin)
 
 
 http://www.youtube.com/watch?v=YHXrPzLKVlM
@@ -128,6 +133,13 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.0.3 -> July 8, 2018 =
+* [Feature]  Allow Comment
+* [Feature] Allow Ping back
+* [Enhance]  Beautify HTML
+* [Fix] Author not saving
+* [Fix] Searching post links
+
 = v1.0.2 -> April 12, 2018 =
 * [Enhance] Keywords searching system updated
 * [Enhance] keywords type exact or anyword add
