@@ -231,7 +231,7 @@ abstract class Item {
      *
      */
     public function get_page_number( $default = 0 ) {
-        $page = get_post_meta( $this->campaign_id, $this->get_uid( 'page-number' ), true );
+        $page = get_post_meta( $this->campaign_id, "page-" . $this->get_uid( 'page-number' ), true );
 
         return ! empty( $page ) ? $page : $default;
     }
