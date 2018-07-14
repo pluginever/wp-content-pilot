@@ -7,7 +7,7 @@ class Module {
     /**
      * Hold the modules
      *
-     * @var
+     * @var array
      */
     protected $modules;
 
@@ -15,6 +15,8 @@ class Module {
      * Module constructor.
      */
     public function __construct() {
+        do_action( 'wp_content_pilot_instantiating_modules' );
+
         $this->init_modules();
     }
 
@@ -24,7 +26,7 @@ class Module {
      * @return void
      */
     public function init_modules() {
-        $this->modules = [
+        $modules = [
             'article' => [
                 'title'       => __( 'Article', 'wpcp' ),
                 'description' => __( 'Scraps articles with the predefined keywords', 'wpcp' ),
@@ -122,6 +124,7 @@ class Module {
             ],
         ];
 
+        $this->modules = apply_filters( 'wpcp_modules', $modules );
     }
 
     /**
@@ -130,7 +133,7 @@ class Module {
      * @return array
      */
     public function get_modules() {
-        return apply_filters( 'wpcp_get_modules', $this->modules );
+        return $this->modules;
     }
 
     /**
@@ -147,5 +150,4 @@ class Module {
 
         return false;
     }
-
 }
