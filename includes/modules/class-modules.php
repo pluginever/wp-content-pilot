@@ -15,8 +15,6 @@ class Module {
      * Module constructor.
      */
     public function __construct() {
-        do_action( 'wp_content_pilot_instantiating_modules' );
-
         $this->init_modules();
     }
 
