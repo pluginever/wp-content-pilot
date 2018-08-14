@@ -237,7 +237,7 @@ abstract class Item {
     }
 
     /**
-     * set the page number
+     * set the page number from where next query will be
      *
      * @since 1.0.0
      *
@@ -295,7 +295,7 @@ abstract class Item {
     protected function get_caller_class() {
         $caller_class     = get_called_class();
         $caller_class_arr = explode( "\\", $caller_class );
-//        $this->campaign_type = $called_class_arr[(count($called_class_arr)-1)];
+        $this->campaign_type = $caller_class_arr[(count($caller_class_arr)-1)];
     }
 
     /**
