@@ -1,6 +1,7 @@
 <?php
 /**
  * Run automatic campaign
+ *
  * @since 1.0.0
  */
 function wpcp_run_automatic_campaign() {
@@ -179,4 +180,41 @@ function wpcp_handle_campaign_post_status( $new_status, $old_status, $post ) {
             update_post_meta( $post->ID, '_active', '0' );
         }
     }
+}
+
+/**
+ * Limit the title length
+ *
+ * @since 1.0.4
+ *
+ * @param $post_id
+ * @param $campaign_id
+ *
+ * @return bool
+ */
+function wpcp_limit_title_length( $post_id, $campaign_id ) {
+    $limit_to_length = wpcp_get_post_meta( $campaign_id, '_title_limit', 0 );
+    wpcp_log('dev_log', 'Running title limit');
+    wpcp_log('log', $limit_to_length);
+    if ( empty( $limit_to_length ) ) {
+        return false;
+    }
+    $title = get_the_title( $post_id );
+    wpcp_log('log', $title);
+    if ( strlen( $title ) < $limit_to_length ) {
+        return false;
+    }
+
+    $updated_title = substr( $title, 0, $limit_to_length );
+    wpcp_log('log', $updated_title);
+    $result = wp_update_post( array(
+        'ID'         => $post_id,
+        'post_title' => $updated_title,
+    ), true );
+
+    if( is_wp_error($result)){
+        wpcp_log('critical', __("could not update title because {$result->get_error_message()}"));
+        return false;
+    }
+    return true;
 }

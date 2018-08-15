@@ -12,6 +12,8 @@ add_action( 'wpcp_after_post_publish', 'wpcp_set_post_categories', 10, 4 );
 add_action('wpcp_disable_campaign', 'wpcp_log_campaign_disable', 10);
 add_action('wpcp_disable_keyword', 'wpcp_log_keyword_disable', 10, 2);
 
+//action after inserting post
+add_action('wpcp_after_post_publish', 'wpcp_limit_title_length', 10, 2);
 
 /*FILTER*/
 //rejection filter

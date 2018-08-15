@@ -220,7 +220,7 @@ class Metabox {
                 'type'    => 'radio',
                 'name'    => '_keywords_type',
                 'label'   => __( 'Keyword Type', 'wpcp' ),
-                'value'   => 'exact',
+                'value'   => 'anyone',
                 'tooltip' => __( 'Exact keyword will search for exact whole keywords and for anywords it will search for any of the words from keyword', 'wpcp' ),
                 'options' => array(
                     'exact' => __( 'Exact Words', 'wpcp' ),
