@@ -24,7 +24,7 @@ function wpcp_run_campaign( $campaign_id, $force = false ) {
         return $result;
     }
 
-    wpcp_log( 'log', __( "Post Insertion was success Post ID: {$result}", 'wpcp' ) );
+    wpcp_log( 'log', __( "Post Insertion was success Post ID: {x}", 'wpcp' ) );
 
     return $result;
 }
@@ -282,6 +282,14 @@ function wpcp_get_settings( $field, $section = 'wpcp_settings', $default = false
     return $default;
 }
 
+/**
+ * Update settings
+ *
+ * @since 1.0.0
+ *
+ * @param $field
+ * @param $data
+ */
 function wpcp_update_settings( $field, $data ) {
     $settings           = get_option( 'wpcp_settings' );
     $settings[ $field ] = $data;
@@ -744,9 +752,9 @@ function wpcp_parse_template_tags( $template, $article, $campaign_id, $skips = [
             if( in_array($tag, $skips)){
                 continue;
             }
-
-            $template_tags[ '{' . $tag . '}' ] = ! is_string( $content ) ? serialize( $content ) : $content;
+            $template_tags[ '{' . $tag . '}' ] = is_array( $content ) ? serialize( $content ) : $content;
         }
+
         $template_tags = apply_filters( 'wpcp_parse_template_tags', $template_tags, $article, $campaign_id );
         wp_cache_set( $cache_key, $template_tags );
     }

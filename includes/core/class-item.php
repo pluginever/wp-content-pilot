@@ -135,6 +135,7 @@ abstract class Item {
         }
 
         if ( ! $response instanceof \SimpleXMLElement ) {
+            wpcp_log( 'log', $response );
             $response = simplexml_load_string( $response );
         }
 
@@ -161,6 +162,16 @@ abstract class Item {
     }
 
     /**
+     * Sets search page limit
+     *
+     * @return int
+     */
+    protected function get_search_page_limit() {
+
+        return apply_filters( 'wpcp_search_page_limit', 50, $this->campaign_id );
+    }
+
+    /**
      * Get new link
      *
      * @since 1.0.0
@@ -175,7 +186,9 @@ abstract class Item {
             $this->campaign_id,
             $this->campaign_type
         );
-        $result = $wpdb->get_row( $sql );
+        //$result = $wpdb->get_row( $sql );
+        $result = $wpdb->get_row( "select * from {$table} where id='34'" );
+
 
         if ( empty( $result ) ) {
             return false;
@@ -293,9 +306,9 @@ abstract class Item {
     }
 
     protected function get_caller_class() {
-        $caller_class     = get_called_class();
-        $caller_class_arr = explode( "\\", $caller_class );
-        $this->campaign_type = $caller_class_arr[(count($caller_class_arr)-1)];
+        $caller_class        = get_called_class();
+        $caller_class_arr    = explode( "\\", $caller_class );
+        $this->campaign_type = $caller_class_arr[ ( count( $caller_class_arr ) - 1 ) ];
     }
 
     /**

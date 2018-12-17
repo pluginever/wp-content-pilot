@@ -136,7 +136,7 @@ class Campaign {
             'tax_input'      => $post_tax,
             'comment_status' => $comment_status,
             'ping_status'    => $ping_status,
-        ] );
+        ],$article, $this->campaign_id );
 
         $post_id = wp_insert_post( $postarr, true );
 
