@@ -149,7 +149,7 @@ class Campaign {
 
         update_post_meta( $post_id, '_wpcp_campaign_generated_post', $this->campaign_id );
 
-        do_action( 'wpcp_after_post_publish', $post_id, $this->campaign_id, $this->keyword, $postarr );
+        do_action( 'wpcp_after_post_publish', $post_id, $this->campaign_id, $this->keyword, $postarr, $article );
 
         return $post_id;
     }

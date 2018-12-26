@@ -41,6 +41,7 @@ function wpcp_html_make_dom( $html ) {
  *
  */
 function wpcp_html_fix_links( $html, $host, $return_html = false, $article = [], $campaign_id = null ) {
+    return $html;
     wpcp_log( 'dev', 'wpcp_html_fix_links' );
     $html  = wpcp_html_make_dom( $html );
     $nodes = $html->find( 'a[href], img[src], iframe[src]' );

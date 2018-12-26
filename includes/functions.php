@@ -671,7 +671,8 @@ function wpcp_convert_rel_2_abs_url( $rel_url, $host ) {
  * @return bool|int|WP_Error
  */
 function wpcp_upload_image( $url ) {
-
+    $url = explode( '?', esc_url_raw( $url ) );
+    $url = $url[0];
     $get     = wp_remote_get( $url );
     $headers = wp_remote_retrieve_headers( $get );
     $type    = isset( $headers['content-type'] ) ? $headers['content-type'] : null;
@@ -683,7 +684,6 @@ function wpcp_upload_image( $url ) {
     }
 
     $mirror = wp_upload_bits( basename( $url ), '', wp_remote_retrieve_body( $get ) );
-
     $attachment = array(
         'post_title'     => basename( $url ),
         'post_mime_type' => $type
