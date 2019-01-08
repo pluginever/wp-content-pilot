@@ -157,6 +157,7 @@ function wpcp_maybe_remove_hyperlinks( $content, $article, $campaign_id ) {
  *
  */
 function wpcp_maybe_remove_images( $content, $article, $campaign_id ) {
+    error_log('wpcp_maybe_remove_images');
     if ( ! empty( wpcp_get_post_meta( $campaign_id, '_remove_images', '0' ) ) ) {
         wpcp_log( 'Dev', 'wpcp_maybe_remove_images' );
 

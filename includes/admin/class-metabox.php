@@ -363,8 +363,6 @@ class Metabox {
                 'select2'   => true,
                 'name'      => '_post_categories',
                 'label'     => __( 'Post Categories', 'wpcp' ),
-                'value'     => 1,
-                'required'  => 'true',
                 'help'      => __( 'Select one or more categories', 'wpcp' ),
                 'options'   => wpcp_get_post_categories(),
                 'condition' => [

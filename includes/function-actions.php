@@ -130,7 +130,7 @@ function wpcp_mark_link_as_success( $link ) {
  * @param $campaign_id
  *
  */
-function wpcp_maybe_set_featured_image( $post_id, $article, $campaign_id ) {
+function wpcp_maybe_set_featured_image( $post_id, $campaign_id, $keyword, $postarr, $article )  {
     if ( empty( wpcp_get_post_meta( $campaign_id, '_set_featured_image' ) ) || empty( $article['image_url'] ) ) {
         return;
     }
