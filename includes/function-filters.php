@@ -144,10 +144,8 @@ function wpcp_maybe_remove_hyperlinks( $content, $article, $campaign_id ) {
  *
  */
 function wpcp_maybe_remove_images( $content, $article, $campaign_id ) {
-    error_log( 'wpcp_maybe_remove_images' );
-    if ( ! empty( wpcp_get_post_meta( $campaign_id, '_remove_images', '0' ) ) ) {
-        wpcp_log( 'Dev', 'wpcp_maybe_remove_images' );
 
+    if ( ! empty( wpcp_get_post_meta( $campaign_id, '_remove_images', '0' ) ) ) {
         return wpcp_html_remove_images( $content );
     }
 
@@ -420,34 +418,9 @@ function wpcp_test_article_acceptance( $article, $campaign_id, $keyword ) {
  * @return array
  */
 function wpcp_campaign_fix_urls_from_article_data( $article ) {
+    $article['content'] = wpcp_fix_image_link( $article['content'], $article['host'] );
 
-    if ( ! empty( $article['content'] ) ) {
-        preg_match_all( '/< *img[^>]*src *= *["\']?([^"\']*)/i', $article['content'], $matches );
-        $process = true;
-        if ( ! empty( $matches[1] ) ) {
-            foreach ( $matches[1] as $src ) {
-                if ( filter_var( $src, FILTER_VALIDATE_URL ) && wpcp_is_absolute_link( $src ) ) {
-                    continue;
-                }
-
-                if ( ! $process ) {
-                    return $article;
-                }
-                //fix url with appending
-                $new_src = wpcp_convert_rel_2_abs_url( $src, $article['host'] );
-                $request = wp_remote_head( $new_src );
-                $type    = wp_remote_retrieve_header( $request, 'content-type' );
-
-                if(!$type){
-                    continue;
-                }
-
-                $article['content'] = str_replace( $src, $new_src, $article['content'] );
-            }
-        }
-    }
-
-    $article['content']= preg_replace('~>\s+<~', '><', $article['content']);
+    $article['content'] = preg_replace( '~>\s+<~', '><', $article['content'] );
 
     return $article;
 }

@@ -31,11 +31,11 @@ function wpcp_html_make_dom( $html ) {
  *
  * @since 1.0.0
  *
- * @param $html
- * @param $host
- * @param bool $return_html
+ * @param       $html
+ * @param       $host
+ * @param bool  $return_html
  * @param array $article
- * @param null $campaign_id
+ * @param null  $campaign_id
  *
  * @return string|\PHPHtmlParser\Dom
  *
@@ -90,9 +90,10 @@ function wpcp_html_fix_links( $html, $host, $return_html = false, $article = [],
 
 /**
  * Remove any bad tag exists in html
+ *
  * @since 1.0.0
  *
- * @param $html
+ * @param      $html
  * @param bool $return_html
  *
  * @return mixed|\PHPHtmlParser\Dom
@@ -246,6 +247,7 @@ function wpcp_html_remove_bad_tags( $html, $return_html = false ) {
 
 /**
  * Get all links
+ *
  * @since 1.0.0
  *
  * @param $html
@@ -265,7 +267,7 @@ function wpcp_html_get_all_links( $html ) {
  *
  * @since 1.0.0
  *
- * @param $html
+ * @param      $html
  * @param bool $keep_text
  *
  * @return null|string|string[]
@@ -299,7 +301,7 @@ function wpcp_html_remove_images( $html ) {
 /**
  * @since 1.0.0
  *
- * @param $sources
+ * @param      $sources
  * @param null $campaign_id
  *
  * @return string
@@ -319,4 +321,63 @@ function wpcp_html_make_image_tag( $sources ) {
     }
 
     return $html;
+}
+
+/**
+ * fix all relative links to absolute
+ *
+ * @since 1.0.0
+ *
+ * @param $content
+ * @param $host
+ *
+ * @return mixed
+ */
+function wpcp_fix_image_link( $content, $host ) {
+    if ( ! empty( $content ) ) {
+        preg_match_all( '/< *img[^>]*src *= *["\']?([^"\']*)/i', $content, $matches );
+        $process = true;
+        if ( ! empty( $matches[1] ) ) {
+            foreach ( $matches[1] as $src ) {
+                if ( filter_var( $src, FILTER_VALIDATE_URL ) ) {
+                    continue;
+                }
+
+                if ( ! $process ) {
+                    return $content;
+                }
+                //fix url with appending
+                $new_src = wpcp_convert_rel_2_abs_url( $src, $host );
+                $request = wp_remote_head( $new_src );
+                $type    = wp_remote_retrieve_header( $request, 'content-type' );
+
+                if ( ! $type ) {
+                    continue;
+                }
+
+                $content = str_replace( $src, $new_src, $content );
+            }
+        }
+    }
+
+    return $content;
+}
+
+/**
+ * get all image tags
+ *
+ *
+ * @since 1.0.0
+ *
+ * @param $content
+ *
+ * @return array
+ */
+function wpcp_get_all_image_urls( $content ) {
+    preg_match_all( '/< *img[^>]*src *= *["\']?([^"\']*)/i', $content, $matches );
+    if ( ! empty( $matches[1] ) ) {
+        return $matches[1];
+    }
+
+    return array();
 }

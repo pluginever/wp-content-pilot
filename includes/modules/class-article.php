@@ -23,26 +23,26 @@ class Article extends Item {
         $page = $this->get_page_number( 0 );
 
 
-        if( ! $page ){
-            for ($page = 0 ; $page <= 10; $page++){
+        if ( ! $page ) {
+            for ( $page = 0; $page <= 10; $page ++ ) {
 
-                $links = $this->bing_search($this->keyword, $page);
+                $links = $this->bing_search( $this->keyword, $page );
 
-                if( !empty( $links ) ){
+                if ( ! empty( $links ) ) {
                     break;
                 }
             }
-        }else{
-            $links =  $this->bing_search($this->keyword, $page);
-            if( empty( $links )){
-                $links =  $this->bing_search($this->keyword, $page + 1);
+        } else {
+            $links = $this->bing_search( $this->keyword, $page );
+            if ( empty( $links ) ) {
+                $links = $this->bing_search( $this->keyword, $page + 1 );
             }
         }
 
 
         $this->set_page_number( $page + 1 );
 
-        return wp_list_pluck($links, 'link', 'pubDate');
+        return wp_list_pluck( $links, 'link', 'pubDate' );
     }
 
     function fetch_post( $link ) {
@@ -67,16 +67,33 @@ class Article extends Item {
             return new \WP_Error( $e->getCode(), $e->getMessage() );
         }
 
+        $author  = $readability->getAuthor();
+        $title   = $readability->getTitle();
+        $excerpt = $readability->getExcerpt();
+        $content = $readability->getContent();
+        $image   = $readability->getImage();
+        $images  = $readability->getImages();
+        $content = wpcp_fix_image_link( $content, wpcp_get_host( $link->url ) );
+        if ( empty( $image ) ) {
+            $images_links = wpcp_get_all_image_urls( $content );
+            if ( ! empty( $images_links ) ) {
+                $image  = $images_links[0];
+                $images = $images_links;
+            }
+
+        }
+
         $post = [
-            'author'    => $readability->getAuthor(),
-            'title'     => $readability->getTitle(),
-            'except'    => $readability->getExcerpt(),
-            'content'   => $readability->getContent(),
-            'image_url' => $readability->getImage(),
-            'image'     => wpcp_html_make_image_tag( $readability->getImage() ),
-            'images'    => wpcp_html_make_image_tag( $readability->getImages() ),
+            'author'    => $author,
+            'title'     => $title,
+            'except'    => $excerpt,
+            'content'   => $content,
+            'image_url' => $image,
+            'image'     => wpcp_html_make_image_tag( $image ),
+            'images'    => wpcp_html_make_image_tag( $images ),
             'direction' => $readability->getDirection(),
         ];
+
 
         return $post;
 
@@ -86,6 +103,7 @@ class Article extends Item {
     /*HOOKED FUNCTIONS*/
     /**
      * Remove posts if its home page of a site
+     *
      * @since 1.0.0
      *
      * @param $links
