@@ -24,7 +24,7 @@ function wpcp_run_campaign( $campaign_id, $force = false ) {
         return $result;
     }
 
-    wpcp_log( 'log', __( "Post Insertion was success Post ID: {x}", 'wpcp' ) );
+    wpcp_log( 'log', __( "Post Insertion was success Post ID: {x}", 'wp-content-pilot' ) );
 
     return $result;
 }
@@ -41,16 +41,16 @@ function wpcp_run_campaign( $campaign_id, $force = false ) {
  */
 function wpcp_campaign_can_run( $campaign_id ) {
     if ( 'publish' !== get_post_status( $campaign_id ) ) {
-        return new \WP_Error( 'invalid-campaign-id', __( 'Campaign is not exist or not publish.', 'wpcp' ) );
+        return new \WP_Error( 'invalid-campaign-id', __( 'Campaign is not exist or not publish.', 'wp-content-pilot' ) );
     }
 
     if ( '1' !== get_post_meta( $campaign_id, '_active', true ) ) {
-        return new \WP_Error( 'invalid-campaign-status', __( 'Campaign is not active this wont run.', 'wpcp' ) );
+        return new \WP_Error( 'invalid-campaign-status', __( 'Campaign is not active this wont run.', 'wp-content-pilot' ) );
     }
 
     $campaign_type = get_post_meta( $campaign_id, '_campaign_type', true );
     if ( empty( $campaign_type ) ) {
-        return new \WP_Error( 'invalid-campaign-type', __( 'Campaign type is not set. Campaign won\'t run', 'wpcp' ) );
+        return new \WP_Error( 'invalid-campaign-type', __( 'Campaign type is not set. Campaign won\'t run', 'wp-content-pilot' ) );
     }
 
     if ( $campaign_type == 'feed' ) {
@@ -60,12 +60,12 @@ function wpcp_campaign_can_run( $campaign_id ) {
     }
 
     if ( empty( trim( $keywords ) ) ) {
-        $keywords = __( 'Keywords', 'wpcp' );
+        $keywords = __( 'Keywords', 'wp-content-pilot' );
         if ( $campaign_type == 'feed' ) {
-            $keywords = __( 'Feed links', 'wpcp' );
+            $keywords = __( 'Feed links', 'wp-content-pilot' );
         }
 
-        return new \WP_Error( 'campaign-' . $keywords . '-invalid', __( "Campaign {$keywords} is not set. Campaign won't run", 'wpcp' ) );
+        return new \WP_Error( 'campaign-' . $keywords . '-invalid', __( "Campaign {$keywords} is not set. Campaign won't run", 'wp-content-pilot' ) );
     }
 
     return true;
@@ -595,7 +595,7 @@ function wpcp_get_campaign_schedule_options() {
     $options = [];
     for ( $i = 1; $i <= 24; $i ++ ) {
         $time             = $i * HOUR_IN_SECONDS;
-        $options[ $time ] = sprintf( _n( '%s Hour', '%s Hours', $i, 'wpcp' ), $i );;
+        $options[ $time ] = sprintf( _n( '%s Hour', '%s Hours', $i, 'wp-content-pilot' ), $i );;
     }
 
 

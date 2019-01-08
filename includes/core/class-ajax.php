@@ -25,12 +25,12 @@ class Ajax {
 
 
     public function run_test_campaign() {
-        if ( empty( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'wpcp' ) ) {
-            wp_send_json_error( [ 'message' => __( 'No Cheating!', 'wpcp' ) ] );
+        if ( empty( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'wp-content-pilot' ) ) {
+            wp_send_json_error( [ 'message' => __( 'No Cheating!', 'wp-content-pilot' ) ] );
         }
 
         if ( empty( $_POST['campaign_id'] ) ) {
-            wp_send_json_error( [ 'message' => __( 'No campaign id in request. Please try again.', 'wpcp' ) ] );
+            wp_send_json_error( [ 'message' => __( 'No campaign id in request. Please try again.', 'wp-content-pilot' ) ] );
         }
 
         $campaign_id = intval( $_POST['campaign_id'] );
@@ -44,7 +44,7 @@ class Ajax {
         $permalink = get_the_permalink($post_id);
         $keyword = wp_content_pilot()->keyword;
         wp_send_json_success( [
-            'message' => __(sprintf('Campaign was successfully posted the article "%s" for the keyword: %s. Do you want to visit the article? ', $title, $keyword), 'wpcp'),
+            'message' => __(sprintf('Campaign was successfully posted the article "%s" for the keyword: %s. Do you want to visit the article? ', $title, $keyword), 'wp-content-pilot'),
             'permalink' => $permalink,
         ] );
     }

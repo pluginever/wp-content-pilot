@@ -32,7 +32,7 @@ class Admin {
         wp_register_script( 'wp-content-pilot', WPCP_ASSETS . "/js/wp-content-pilot{$suffix}.js", [ 'jquery' ], date( 'i' ), true );
         wp_localize_script( 'wp-content-pilot', 'wpcp', [
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
-            'nonce'   => wp_create_nonce( 'wpcp' )
+            'nonce'   => wp_create_nonce( 'wp-content-pilot' )
         ] );
         wp_enqueue_style( 'wp-content-pilot' );
         wp_enqueue_script( 'wp-content-pilot' );
@@ -79,9 +79,9 @@ class Admin {
         $log_remove_url = wp_nonce_url( admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-logs' ), 'wpcp_remove_logs', 'wpcp_nonce' );
         ?>
         <div class="wrap">
-            <h2><?php _e( 'Campaign Log', 'wpcp' ); ?> <a
+            <h2><?php _e( 'Campaign Log', 'wp-content-pilot' ); ?> <a
                     href="<?php echo esc_url( $log_remove_url . "&remove_logs=1" ); ?>"
-                    class="button button-seconday"><?php _e( 'Clear Logs', 'wpcp' ); ?></a>
+                    class="button button-seconday"><?php _e( 'Clear Logs', 'wp-content-pilot' ); ?></a>
             </h2>
 
             <form method="post">

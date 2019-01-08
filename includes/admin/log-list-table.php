@@ -28,7 +28,7 @@ class Log_List_Table extends \WP_List_Table {
      * @return void
      */
     function no_items() {
-        _e( 'No log found', 'wpcp' );
+        _e( 'No log found', 'wp-content-pilot' );
     }
 
     /**
@@ -75,11 +75,11 @@ class Log_List_Table extends \WP_List_Table {
      */
     function get_columns() {
         $columns = array(
-            'camp_id'      => __( 'Campaign', 'wpcp' ),
-            'level'      => __( 'Keyword', 'wpcp' ),
-            'keyword'      => __( 'Keyword', 'wpcp' ),
-            'message'      => __( 'Message', 'wpcp' ),
-            'date'      => __( 'Date', 'wpcp' ),
+            'camp_id'      => __( 'Campaign', 'wp-content-pilot' ),
+            'level'      => __( 'Keyword', 'wp-content-pilot' ),
+            'keyword'      => __( 'Keyword', 'wp-content-pilot' ),
+            'message'      => __( 'Message', 'wp-content-pilot' ),
+            'date'      => __( 'Date', 'wp-content-pilot' ),
 
         );
 
@@ -120,13 +120,13 @@ class Log_List_Table extends \WP_List_Table {
 
         global $wpdb;
         $cache_key = 'wpcp-log-all';
-        $items     = wp_cache_get( $cache_key, 'wpcp' );
+        $items     = wp_cache_get( $cache_key, 'wp-content-pilot' );
 
         if ( false === $items ) {
             $prepare = $wpdb->prepare('SELECT * FROM wp_wpcp_logs ORDER BY `created_at` DESC LIMIT %d, %d', $args['offset'],$args['limit'] );
 
             $items = $wpdb->get_results( $prepare );
-            wp_cache_set( $cache_key, $items, 'wpcp' );
+            wp_cache_set( $cache_key, $items, 'wp-content-pilot' );
         }
 
         return $items;

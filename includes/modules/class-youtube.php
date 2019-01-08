@@ -20,7 +20,7 @@ class Youtube extends Item {
         $youtube_api = $this->settings['api_key'];
 
         if ( empty( $youtube_api ) ) {
-            $msg = __( 'Youtube api is not configured. Please configure youtube settings.', 'wpcp' );
+            $msg = __( 'Youtube api is not configured. Please configure youtube settings.', 'wp-content-pilot' );
             wpcp_log( 'critical', $msg );
 
             return new \WP_Error( 'invalid-youtube-settings', $msg );
@@ -61,7 +61,7 @@ class Youtube extends Item {
         }
 
         if ( empty( $response->items ) ) {
-            $msg = __( 'Could not find any links', 'wpcp' );
+            $msg = __( 'Could not find any links', 'wp-content-pilot' );
             wpcp_log( 'log', $msg );
 
             return new \WP_Error( 'no-links-in-response', $msg );
@@ -128,11 +128,11 @@ class Youtube extends Item {
         $description = $response_body->snippet->description;
 
         $contents = [
-            __( 'Video', 'wpcp' )       => $short_code,
-            __( 'Channel', 'wpcp' )      => "<a href='https://www.youtube.com/channel/{$response_body->snippet->channelId}'>{$response_body->snippet->channelTitle}</a>",
-            __( 'Duration', 'wpcp' )    => $duration,
-            __( 'Description', 'wpcp' ) => $description,
-            __( 'tags', 'wpcp' )        => $tags_html,
+            __( 'Video', 'wp-content-pilot' )       => $short_code,
+            __( 'Channel', 'wp-content-pilot' )      => "<a href='https://www.youtube.com/channel/{$response_body->snippet->channelId}'>{$response_body->snippet->channelTitle}</a>",
+            __( 'Duration', 'wp-content-pilot' )    => $duration,
+            __( 'Description', 'wp-content-pilot' ) => $description,
+            __( 'tags', 'wp-content-pilot' )        => $tags_html,
         ];
 
         $html = '';

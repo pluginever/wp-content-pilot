@@ -62,14 +62,14 @@ abstract class Item {
             $links = apply_filters( 'wpcp_fetched_links', $links, $this->campaign_id, $this->campaign_type );
 
             if ( empty( $links ) ) {
-                return new \WP_Error( 'no-links-found', __( 'Could not retrieve any valid links', 'wpcp' ) );
+                return new \WP_Error( 'no-links-found', __( 'Could not retrieve any valid links', 'wp-content-pilot' ) );
             }
 
             //check the result
             $str_links = implode( ' ', $links );
 
             if ( $this->is_result_like_last_time( $str_links ) ) {
-                $msg = __( sprintf( 'Could not discover any new links to grab contents for the keyword "%s". Please try letter.', $this->keyword ), 'wpcp' );
+                $msg = __( sprintf( 'Could not discover any new links to grab contents for the keyword "%s". Please try letter.', $this->keyword ), 'wp-content-pilot' );
                 wpcp_log( 'log', $msg );
 
                 return new \WP_Error( 'no-new-result', $msg );
@@ -78,14 +78,14 @@ abstract class Item {
 
             $inserted = $this->inset_links( $links );
 
-            wpcp_log( 'log', __( sprintf( 'Total %d links inserted', $inserted ), 'wpcp' ) );
+            wpcp_log( 'log', __( sprintf( 'Total %d links inserted', $inserted ), 'wp-content-pilot' ) );
 
             $link = $this->get_link();
             if ( ! $link ) {
                 return new \WP_Error( 'no-valid-links-found', __( 'Could not retrieve any valid links', 'content-pilot' ) );
             }
         }
-        wpcp_log( 'dev', sprintf( __( 'Fetching post from %s', 'wpcp' ), $link->url ) );
+        wpcp_log( 'dev', sprintf( __( 'Fetching post from %s', 'wp-content-pilot' ), $link->url ) );
 
         do_action( 'wpcp_before_using_link', $link );
         $post = $this->fetch_post( $link );

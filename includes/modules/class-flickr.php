@@ -13,7 +13,7 @@ class Flickr extends Item {
         $api = $this->settings['api_key'];
 
         if ( empty( $api ) ) {
-            $msg = __( 'Flickr API is not set. Please configure Flickr settings.', 'wpcp' );
+            $msg = __( 'Flickr API is not set. Please configure Flickr settings.', 'wp-content-pilot' );
             wpcp_log( 'critical', $msg );
 
             return new \WP_Error( 'invalid-flickr-settings', $msg );
@@ -47,7 +47,7 @@ class Flickr extends Item {
         }
 
         if ( empty( $response->photos->photo ) ) {
-            $msg = __( 'Could not find any links', 'wpcp' );
+            $msg = __( 'Could not find any links', 'wp-content-pilot' );
             wpcp_log( 'log', $msg );
 
             return new \WP_Error( 'no-links-in-response', $msg );
@@ -108,11 +108,11 @@ class Flickr extends Item {
         $tags_html = implode( ', ', $tags );
 
         $contents = [
-            __( 'Image', 'wpcp' )       => wpcp_html_make_image_tag( $image_url ),
-            __( 'Author', 'wpcp' )      => "<a href='https://www.flickr.com/photos/{$response->photo->owner->nsid}/'>{$response->photo->owner->username}</a>",
-            __( 'Description', 'wpcp' ) => $description,
-            __( 'Views', 'wpcp' )       => $response->photo->views,
-            __( 'tags', 'wpcp' )        => $tags_html,
+            __( 'Image', 'wp-content-pilot' )       => wpcp_html_make_image_tag( $image_url ),
+            __( 'Author', 'wp-content-pilot' )      => "<a href='https://www.flickr.com/photos/{$response->photo->owner->nsid}/'>{$response->photo->owner->username}</a>",
+            __( 'Description', 'wp-content-pilot' ) => $description,
+            __( 'Views', 'wp-content-pilot' )       => $response->photo->views,
+            __( 'tags', 'wp-content-pilot' )        => $tags_html,
         ];
 
         $html = '';

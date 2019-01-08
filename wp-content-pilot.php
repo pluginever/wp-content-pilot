@@ -7,7 +7,7 @@
  * Author:      pluginever
  * Author URI:  http://pluginever.com
  * License:     GPLv2+
- * Text Domain: wpcp
+ * Text Domain: wp-content-pilot
  * Domain Path: /languages
  */
 
@@ -277,8 +277,8 @@ class Wp_Content_Pilot {
             return;
         }
 
-        $error = __( 'Your installed PHP Version is: ', 'wpcp' ) . PHP_VERSION . '. ';
-        $error .= __( 'The <strong>WP Content Pilot</strong> plugin requires PHP version <strong>', 'wpcp' ) . $this->min_php . __( '</strong> or greater.', 'wp_content_pilot' );
+        $error = __( 'Your installed PHP Version is: ', 'wp-content-pilot' ) . PHP_VERSION . '. ';
+        $error .= __( 'The <strong>WP Content Pilot</strong> plugin requires PHP version <strong>', 'wp-content-pilot' ) . $this->min_php . __( '</strong> or greater.', 'wp_content_pilot' );
         ?>
         <div class="error">
             <p><?php printf( $error ); ?></p>
@@ -298,13 +298,13 @@ class Wp_Content_Pilot {
 
         deactivate_plugins( plugin_basename( __FILE__ ) );
 
-        $error = __( '<h1>An Error Occurred</h1>', 'wpcp' );
-        $error .= __( '<h2>Your installed PHP Version is: ', 'wpcp' ) . PHP_VERSION . '</h2>';
-        $error .= __( '<p>The <strong>WP Content Pilot</strong> plugin requires PHP version <strong>', 'wp_content_pilot' ) . $this->min_php . __( '</strong> or greater', 'wpcp' );
-        $error .= __( '<p>The version of your PHP is ', 'wpcp' ) . '<a href="http://php.net/supported-versions.php" target="_blank"><strong>' . __( 'unsupported and old', 'wpcp' ) . '</strong></a>.';
-        $error .= __( 'You should update your PHP software or contact your host regarding this matter.</p>', 'wpcp' );
+        $error = __( '<h1>An Error Occurred</h1>', 'wp-content-pilot' );
+        $error .= __( '<h2>Your installed PHP Version is: ', 'wp-content-pilot' ) . PHP_VERSION . '</h2>';
+        $error .= __( '<p>The <strong>WP Content Pilot</strong> plugin requires PHP version <strong>', 'wp_content_pilot' ) . $this->min_php . __( '</strong> or greater', 'wp-content-pilot' );
+        $error .= __( '<p>The version of your PHP is ', 'wp-content-pilot' ) . '<a href="http://php.net/supported-versions.php" target="_blank"><strong>' . __( 'unsupported and old', 'wp-content-pilot' ) . '</strong></a>.';
+        $error .= __( 'You should update your PHP software or contact your host regarding this matter.</p>', 'wp-content-pilot' );
 
-        wp_die( $error, __( 'Plugin Activation Error', 'wpcp' ), array( 'back_link' => true ) );
+        wp_die( $error, __( 'Plugin Activation Error', 'wp-content-pilot' ), array( 'back_link' => true ) );
     }
 
     /**

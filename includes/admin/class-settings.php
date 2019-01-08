@@ -32,19 +32,19 @@ class Settings {
         $sections = array(
             array(
                 'id'    => 'wpcp_settings_article',
-                'title' => __( 'Article Settings', 'wpcp' )
+                'title' => __( 'Article Settings', 'wp-content-pilot' )
             ),
             array(
                 'id'    => 'wpcp_settings_youtube',
-                'title' => __( 'Youtube Settings', 'wpcp' )
+                'title' => __( 'Youtube Settings', 'wp-content-pilot' )
             ),
             array(
                 'id'    => 'wpcp_settings_flickr',
-                'title' => __( 'Flickr Settings', 'wpcp' )
+                'title' => __( 'Flickr Settings', 'wp-content-pilot' )
             ),
             array(
                 'id'    => 'wpcp_settings_envato',
-                'title' => __( 'Envato Settings', 'wpcp' )
+                'title' => __( 'Envato Settings', 'wp-content-pilot' )
             )
         );
 
@@ -61,17 +61,17 @@ class Settings {
             'wpcp_settings_article' => array(
                 array(
                     'name'        => 'banned_hosts',
-                    'label'       => __( 'Banned Hosts', 'wpcp' ),
-                    'desc'        => __( 'Articles from the above hosts will be rejected. put single url/host per line.', 'wpcp' ),
-                    'placeholder' => __( "example.com \n example1.com", 'wpcp' ),
+                    'label'       => __( 'Banned Hosts', 'wp-content-pilot' ),
+                    'desc'        => __( 'Articles from the above hosts will be rejected. put single url/host per line.', 'wp-content-pilot' ),
+                    'placeholder' => __( "example.com \n example1.com", 'wp-content-pilot' ),
                     'type'        => 'textarea',
                 ),
             ),
             'wpcp_settings_youtube' => array(
                 array(
                     'name'    => 'api_key',
-                    'label'   => __( 'Youtube API Key', 'wpcp' ),
-                    'desc'    => __( 'Youtube campaigns wont run without settings this.', 'wpcp' ),
+                    'label'   => __( 'Youtube API Key', 'wp-content-pilot' ),
+                    'desc'    => __( 'Youtube campaigns wont run without settings this.', 'wp-content-pilot' ),
                     'type'    => 'text',
                     'default' => ''
                 ),
@@ -79,8 +79,8 @@ class Settings {
             'wpcp_settings_flickr'  => array(
                 array(
                     'name'    => 'api_key',
-                    'label'   => __( 'Flickr API Key', 'wpcp' ),
-                    'desc'    => __( 'Flickr campaigns wont run without settings this.', 'wpcp' ),
+                    'label'   => __( 'Flickr API Key', 'wp-content-pilot' ),
+                    'desc'    => __( 'Flickr campaigns wont run without settings this.', 'wp-content-pilot' ),
                     'type'    => 'text',
                     'default' => ''
                 ),
@@ -88,14 +88,14 @@ class Settings {
             'wpcp_settings_envato'  => array(
                 array(
                     'name'    => 'token',
-                    'label'   => __( 'Envato Token', 'wpcp' ),
-                    'desc'    => __( 'Check this tutorial <a href="https://www.pluginever.com/docs/wp-content-pilot/how-to-create-envato-token/" target="_blank">Here</a> to get your token.', 'wpcp' ),
+                    'label'   => __( 'Envato Token', 'wp-content-pilot' ),
+                    'desc'    => __( 'Check this tutorial <a href="https://www.pluginever.com/docs/wp-content-pilot/how-to-create-envato-token/" target="_blank">Here</a> to get your token.', 'wp-content-pilot' ),
                     'type'    => 'text',
                     'default' => ''
                 ),
                 array(
                     'name'    => 'user_name',
-                    'label'   => __( 'Envato Username', 'wpcp' ),
+                    'label'   => __( 'Envato Username', 'wp-content-pilot' ),
                     'desc'    => __( 'Your username (Affiliate ID) for affiliate integration. e.g. "pluginever"' ),
                     'type'    => 'text',
                     'default' => ''
@@ -110,7 +110,7 @@ class Settings {
         ?>
         <?php
         echo '<div class="wrap">';
-        echo sprintf( "<h2>%s</h2>", __( 'WP Content Pilot Settings', 'wpcp' ) );
+        echo sprintf( "<h2>%s</h2>", __( 'WP Content Pilot Settings', 'wp-content-pilot' ) );
         $this->settings_api->show_settings();
         echo '</div>';
     }

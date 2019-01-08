@@ -52,12 +52,12 @@ class Metabox {
     public function register_campaign_settings_metabox() {
         $metabox = new \Pluginever\Framework\Metabox( 'wpcp_campaign_settings_metabox' );
         $config  = array(
-            'title'        => __( 'Campaign Settings', 'wpcp' ),
+            'title'        => __( 'Campaign Settings', 'wp-content-pilot' ),
             'screen'       => 'wp_content_pilot',
             'context'      => 'side',
             'priority'     => 'high',
             'lazy_loading' => 'true',
-            'class'        => 'wpcp',
+            'class'        => 'wp-content-pilot',
             'fields'       => array()
         );
 
@@ -68,11 +68,11 @@ class Metabox {
     public function register_campaign_options_metabox() {
         $metabox = new \Pluginever\Framework\Metabox( 'wpcp_campaign_options_metabox' );
         $config  = array(
-            'title'        => __( 'Campaign Options', 'wpcp' ),
+            'title'        => __( 'Campaign Options', 'wp-content-pilot' ),
             'screen'       => 'wp_content_pilot',
             'context'      => 'normal',
             'priority'     => 'high',
-            'class'        => 'wpcp',
+            'class'        => 'wp-content-pilot',
             'lazy_loading' => 'true',
             'fields'       => array()
         );
@@ -87,9 +87,9 @@ class Metabox {
             array(
                 'type'     => 'select',
                 'name'     => '_campaign_type',
-                'label'    => __( 'Campaign Type', 'wpcp' ),
+                'label'    => __( 'Campaign Type', 'wp-content-pilot' ),
                 'value'    => 'feed',
-                'tooltip'  => __( 'Select campaign type', 'wpcp' ),
+                'tooltip'  => __( 'Select campaign type', 'wp-content-pilot' ),
                 'sanitize' => 'sanitize_key',
                 'required' => 'true',
                 'options'  => $modules
@@ -108,7 +108,7 @@ class Metabox {
                 'type'          => 'title',
                 'name'          => '_additional_fields',
                 'wrapper_class' => 'additional_fields',
-                'label'         => __( 'Additional Settings', 'wpcp' ),
+                'label'         => __( 'Additional Settings', 'wp-content-pilot' ),
             )
         );
 
@@ -127,12 +127,12 @@ class Metabox {
     public function register_post_settings_metabox() {
         $metabox = new \Pluginever\Framework\Metabox( 'wpcp_post_settings_metabox' );
         $config  = array(
-            'title'        => __( 'Post Settings', 'wpcp' ),
+            'title'        => __( 'Post Settings', 'wp-content-pilot' ),
             'screen'       => 'wp_content_pilot',
             'context'      => 'normal',
             'priority'     => 'high',
             'lazy_loading' => 'true',
-            'class'        => 'wpcp',
+            'class'        => 'wp-content-pilot',
             'fields'       => array()
         );
 
@@ -148,12 +148,12 @@ class Metabox {
     public function register_advanced_settings_metabox() {
         $metabox = new \Pluginever\Framework\Metabox( 'wpcp_advanced_settings_metabox' );
         $config  = array(
-            'title'        => __( 'Advanced Settings', 'wpcp' ),
+            'title'        => __( 'Advanced Settings', 'wp-content-pilot' ),
             'screen'       => 'wp_content_pilot',
             'context'      => 'normal',
             'priority'     => 'high',
             'lazy_loading' => 'true',
-            'class'        => 'wpcp',
+            'class'        => 'wp-content-pilot',
             'fields'       => array()
         );
 
@@ -166,7 +166,7 @@ class Metabox {
 
         $test_run_help = sprintf(
             '<span style="color: red">%s</span>',
-            __( 'Please publish the campaign first to start a test.', 'wpcp' )
+            __( 'Please publish the campaign first to start a test.', 'wp-content-pilot' )
         );
 
         if ( ! empty( $_GET['post'] ) ) {
@@ -175,7 +175,7 @@ class Metabox {
             if ( 'publish' === $post->post_status ) {
                 $test_run_help = sprintf(
                     '<a href="#" id="wpcp-test-run" class="button button-small button-secondary">%s</a>',
-                    __( 'Run Now', 'wpcp' )
+                    __( 'Run Now', 'wp-content-pilot' )
                 );
             }
         }
@@ -183,13 +183,13 @@ class Metabox {
         $add_fields = [
             [
                 'type'  => 'checkbox',
-                'label' => __( 'Active', 'wpcp' ),
-                'title' => __( 'Yes', 'wpcp' ),
+                'label' => __( 'Active', 'wp-content-pilot' ),
+                'title' => __( 'Yes', 'wp-content-pilot' ),
                 'name'  => '_active',
             ],
             [
                 'type'        => 'number',
-                'label'       => __( 'Campaign Target', 'wpcp' ),
+                'label'       => __( 'Campaign Target', 'wp-content-pilot' ),
                 'name'        => '_campaign_target',
                 'sanitize'    => 'intval',
                 'required'    => 'true',
@@ -197,14 +197,14 @@ class Metabox {
             ],
             [
                 'type'    => 'select',
-                'label'   => __( 'Frequency (Every)', 'wpcp' ),
+                'label'   => __( 'Frequency (Every)', 'wp-content-pilot' ),
                 'name'    => '_frequency',
-                'help'    => __( 'The campaign will run every X hour until the campaign target reach.', 'wpcp' ),
+                'help'    => __( 'The campaign will run every X hour until the campaign target reach.', 'wp-content-pilot' ),
                 'options' => wpcp_get_campaign_schedule_options()
             ],
             [
                 'type'    => 'title',
-                'label'   => __( 'Test Run', 'wpcp' ),
+                'label'   => __( 'Test Run', 'wp-content-pilot' ),
                 'name'    => '_test_run',
                 'help'    => $test_run_help
             ]
@@ -219,30 +219,30 @@ class Metabox {
             [
                 'type'    => 'radio',
                 'name'    => '_keywords_type',
-                'label'   => __( 'Keyword Type', 'wpcp' ),
+                'label'   => __( 'Keyword Type', 'wp-content-pilot' ),
                 'value'   => 'anyone',
-                'tooltip' => __( 'Exact keyword will search for exact whole keywords and for anywords it will search for any of the words from keyword', 'wpcp' ),
+                'tooltip' => __( 'Exact keyword will search for exact whole keywords and for anywords it will search for any of the words from keyword', 'wp-content-pilot' ),
                 'options' => array(
-                    'exact' => __( 'Exact Words', 'wpcp' ),
-                    'anyone' => __( 'Any Words', 'wpcp' ),
+                    'exact' => __( 'Exact Words', 'wp-content-pilot' ),
+                    'anyone' => __( 'Any Words', 'wp-content-pilot' ),
                 )
             ],
             [
                 'type'     => 'number',
                 'name'     => '_min_words',
-                'label'    => __( 'Min Words', 'wpcp' ),
-                'tooltip'  => __( 'if grabbed post content less than following words then post will be ignored. Default 0', 'wpcp' ),
+                'label'    => __( 'Min Words', 'wp-content-pilot' ),
+                'tooltip'  => __( 'if grabbed post content less than following words then post will be ignored. Default 0', 'wp-content-pilot' ),
                 'sanitize' => 'intval',
             ],
             [
                 'type'    => 'radio',
                 'name'    => '_content_type',
-                'label'   => __( 'Content Type', 'wpcp' ),
+                'label'   => __( 'Content Type', 'wp-content-pilot' ),
                 'value'   => 'html',
-                'tooltip' => __( 'If content type is HTML then HTML content will be posted otherwise normal text will be posted.', 'wpcp' ),
+                'tooltip' => __( 'If content type is HTML then HTML content will be posted otherwise normal text will be posted.', 'wp-content-pilot' ),
                 'options' => array(
-                    'html' => __( 'HTML', 'wpcp' ),
-                    'text' => __( 'Plain Text', 'wpcp' ),
+                    'html' => __( 'HTML', 'wp-content-pilot' ),
+                    'text' => __( 'Plain Text', 'wp-content-pilot' ),
                 )
             ]
         ];
@@ -266,55 +266,55 @@ class Metabox {
                 'type'  => 'checkbox',
                 'name'  => '_set_featured_image',
                 'label' => ' ',
-                'title' => __( 'Use first image as featured image', 'wpcp' ),
+                'title' => __( 'Use first image as featured image', 'wp-content-pilot' ),
             ],
             [
                 'type'  => 'checkbox',
                 'name'  => '_remove_images',
                 'label' => ' ',
-                'title' => __( 'Remove all images from the article', 'wpcp' ),
+                'title' => __( 'Remove all images from the article', 'wp-content-pilot' ),
             ],
             [
                 'type'  => 'checkbox',
                 'name'  => '_excerpt',
                 'label' => ' ',
-                'title' => __( 'Use summary as excerpt', 'wpcp' ),
+                'title' => __( 'Use summary as excerpt', 'wp-content-pilot' ),
             ],
             [
                 'type'  => 'checkbox',
                 'name'  => '_strip_links',
                 'label' => ' ',
-                'title' => __( 'Remove hyperlinks found in the article', 'wpcp' ),
+                'title' => __( 'Remove hyperlinks found in the article', 'wp-content-pilot' ),
             ],
             [
                 'type'  => 'checkbox',
                 'name'  => '_skip_no_image',
                 'label' => ' ',
-                'title' => __( 'Skip post if no image found in the article', 'wpcp' ),
+                'title' => __( 'Skip post if no image found in the article', 'wp-content-pilot' ),
             ],
             [
                 'type'  => 'checkbox',
                 'name'  => '_skip_not_eng',
                 'label' => ' ',
-                'title' => __( 'Skip post if language is not english', 'wpcp' ),
+                'title' => __( 'Skip post if language is not english', 'wp-content-pilot' ),
             ],
             [
                 'type'  => 'checkbox',
                 'name'  => '_skip_duplicate_title',
                 'label' => ' ',
-                'title' => __( 'Skip post with duplicate title', 'wpcp' ),
+                'title' => __( 'Skip post with duplicate title', 'wp-content-pilot' ),
             ],
             [
                 'type'  => 'checkbox',
                 'name'  => '_comment_status',
                 'label' => ' ',
-                'title' => __( 'Allow comments', 'wpcp' ),
+                'title' => __( 'Allow comments', 'wp-content-pilot' ),
             ],
             [
                 'type'  => 'checkbox',
                 'name'  => '_ping_status',
                 'label' => ' ',
-                'title' => __( 'Allow Pingbacks', 'wpcp' ),
+                'title' => __( 'Allow Pingbacks', 'wp-content-pilot' ),
             ],
         ];
 
@@ -335,24 +335,24 @@ class Metabox {
         $add_fields = [
             [
                 'type'     => 'text',
-                'label'    => __( 'Post Title', 'wpcp' ),
+                'label'    => __( 'Post Title', 'wp-content-pilot' ),
                 'name'     => '_post_title',
                 'required' => 'true',
                 'value'    => '{title}',
             ],
             [
                 'type'     => 'textarea',
-                'label'    => __( 'Post Template', 'wpcp' ),
+                'label'    => __( 'Post Template', 'wp-content-pilot' ),
                 'name'     => '_post_template',
                 'class'    => 'min-h-150',
                 'value'    => '{content} <br> <a href="{source}" target="_blank">Source</a> ',
                 'required' => 'true',
-                'help'     => sprintf( __( 'Supported Tags:%s', 'wpcp' ), '<div class="wpcp-supported-tags"></div>' ),
+                'help'     => sprintf( __( 'Supported Tags:%s', 'wp-content-pilot' ), '<div class="wpcp-supported-tags"></div>' ),
             ],
             [
                 'type'     => 'select',
                 'name'     => '_post_type',
-                'label'    => __( 'Post Type', 'wpcp' ),
+                'label'    => __( 'Post Type', 'wp-content-pilot' ),
                 'value'    => 'post',
                 'required' => 'true',
                 'options'  => wpcp_get_post_types()
@@ -362,8 +362,8 @@ class Metabox {
                 'multiple'  => true,
                 'select2'   => true,
                 'name'      => '_post_categories',
-                'label'     => __( 'Post Categories', 'wpcp' ),
-                'help'      => __( 'Select one or more categories', 'wpcp' ),
+                'label'     => __( 'Post Categories', 'wp-content-pilot' ),
+                'help'      => __( 'Select one or more categories', 'wp-content-pilot' ),
                 'options'   => wpcp_get_post_categories(),
                 'condition' => [
                     'depend_on'    => '_post_type',
@@ -373,14 +373,14 @@ class Metabox {
             ],
             [
                 'type'     => 'select',
-                'label'    => __( 'Post Author', 'wpcp' ),
+                'label'    => __( 'Post Author', 'wp-content-pilot' ),
                 'name'     => '_post_author',
                 'required' => 'true',
                 'options'  => wpcp_get_authors()
             ],
             [
                 'type'    => 'select',
-                'label'   => __( 'Post Status', 'wpcp' ),
+                'label'   => __( 'Post Status', 'wp-content-pilot' ),
                 'name'    => '_post_status',
                 'value'   => 'publish',
                 'options' => array(
@@ -399,17 +399,17 @@ class Metabox {
         $add_fields = [
             [
                 'type'    => 'number',
-                'label'   => __( 'Limit Title', 'wpcp' ),
+                'label'   => __( 'Limit Title', 'wp-content-pilot' ),
                 'name'    => '_title_limit',
                 'value'   => '',
-                'tooltip' => __( 'If you want to limit the title to x characters, input the number above. Default full title.', 'wpcp' )
+                'tooltip' => __( 'If you want to limit the title to x characters, input the number above. Default full title.', 'wp-content-pilot' )
             ],
             [
                 'type'    => 'number',
-                'label'   => __( 'Limit Content', 'wpcp' ),
+                'label'   => __( 'Limit Content', 'wp-content-pilot' ),
                 'name'    => '_content_limit',
                 'value'   => '',
-                'tooltip' => __( 'If you want to limit the post content to x characters, input the number above. Default full content.', 'wpcp' )
+                'tooltip' => __( 'If you want to limit the post content to x characters, input the number above. Default full content.', 'wp-content-pilot' )
             ]
         ];
 
@@ -422,8 +422,8 @@ class Metabox {
                 'type'      => 'textarea',
                 'name'      => '_feed_links',
                 'label'     => 'Feed Links',
-                'tooltip'   => __( 'Put links from where you grab the posts.', 'wpcp' ),
-                'help'      => __( 'Separate url by comma.', 'wpcp' ),
+                'tooltip'   => __( 'Put links from where you grab the posts.', 'wp-content-pilot' ),
+                'help'      => __( 'Separate url by comma.', 'wp-content-pilot' ),
                 'sanitize'  => 'wpcp_sanitize_feed_links',
                 'condition' => [
                     'depend_on'    => '_campaign_type',
@@ -436,7 +436,7 @@ class Metabox {
                 'name'      => '_force_feed',
                 'label'     => 'Force Feed',
                 'title'     => 'Yes',
-                'tooltip'   => __( 'If you are putting the exact feed links then set force feed otherwise feed link will be auto discovered.', 'wpcp' ),
+                'tooltip'   => __( 'If you are putting the exact feed links then set force feed otherwise feed link will be auto discovered.', 'wp-content-pilot' ),
                 'condition' => [
                     'depend_on'    => '_campaign_type',
                     'depend_value' => 'feed',
@@ -454,8 +454,8 @@ class Metabox {
                 'type'      => 'textarea',
                 'name'      => '_keywords',
                 'label'     => 'Keywords',
-                'tooltip'   => __( 'Put keywords using those the post will be grabbed.', 'wpcp' ),
-                'help'      => __( 'Separate keywords by comma.', 'wpcp' ),
+                'tooltip'   => __( 'Put keywords using those the post will be grabbed.', 'wp-content-pilot' ),
+                'help'      => __( 'Separate keywords by comma.', 'wp-content-pilot' ),
                 'sanitize'  => 'wpcp_sanitize_keywords',
                 'condition' => [
                     'depend_on'    => '_campaign_type',
@@ -494,7 +494,7 @@ class Metabox {
                 'type'      => 'select',
                 'name'      => '_youtube_search_type',
                 'label'     => 'Search Type',
-                'tooltip'   => __( 'Use global search for all result or use specific channel if you want to limit to that channel.', 'wpcp' ),
+                'tooltip'   => __( 'Use global search for all result or use specific channel if you want to limit to that channel.', 'wp-content-pilot' ),
                 'options'   => array(
                     'global'  => 'Global',
                     'channel' => 'From Specific Channel',
@@ -509,7 +509,7 @@ class Metabox {
                 'type'      => 'url',
                 'name'      => '_youtube_channel_id',
                 'label'     => 'Channel ID',
-                'tooltip'   => __( 'eg. channel id is UCIQOOX3ReApm-KTZ66eMVzQ for https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ', 'wpcp' ),
+                'tooltip'   => __( 'eg. channel id is UCIQOOX3ReApm-KTZ66eMVzQ for https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
                 'condition' => [
                     'depend_on'    => '_youtube_search_type',
                     'depend_value' => 'channel',
@@ -632,7 +632,7 @@ class Metabox {
                     'graphicrever.net' => 'GraphicsRever',
                     '3docean.net'      => '3DOcean',
                 ],
-                'tooltip'   => __( 'Select envato platform', 'wpcp' ),
+                'tooltip'   => __( 'Select envato platform', 'wp-content-pilot' ),
                 'condition' => [
                     'depend_on'    => '_campaign_type',
                     'depend_value' => 'envato',
@@ -643,8 +643,8 @@ class Metabox {
                 'type'      => 'text',
                 'name'      => '_price_range',
                 'label'     => 'Price Range',
-                'tooltip'   => __( 'You can define price range to filter the search.', 'wpcp' ),
-                'help'      => __( 'seperate min max price with (|). e.g. 20|100', 'wpcp' ),
+                'tooltip'   => __( 'You can define price range to filter the search.', 'wp-content-pilot' ),
+                'help'      => __( 'seperate min max price with (|). e.g. 20|100', 'wp-content-pilot' ),
                 'condition' => [
                     'depend_on'    => '_campaign_type',
                     'depend_value' => 'envato',
@@ -666,7 +666,7 @@ class Metabox {
                     'name'      => 'Name',
                     'Trending'  => 'Trending',
                 ],
-                'tooltip'   => __( 'Select sort by for order the search result.', 'wpcp' ),
+                'tooltip'   => __( 'Select sort by for order the search result.', 'wp-content-pilot' ),
                 'condition' => [
                     'depend_on'    => '_campaign_type',
                     'depend_value' => 'envato',
@@ -681,7 +681,7 @@ class Metabox {
                     'asc'  => 'ASC',
                     'desc' => 'DESC',
                 ],
-                'tooltip'   => __( 'Select sort direction for the search result.', 'wpcp' ),
+                'tooltip'   => __( 'Select sort direction for the search result.', 'wp-content-pilot' ),
                 'condition' => [
                     'depend_on'    => '_campaign_type',
                     'depend_value' => 'envato',

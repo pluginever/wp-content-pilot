@@ -377,7 +377,7 @@ function wpcp_test_article_acceptance( $article, $campaign_id, $keyword ) {
     if ( ! empty( $is_required_length ) ) {
         $words_count = str_word_count( $article['content'] );
         if ( $words_count < $is_required_length ) {
-            return new WP_Error( 'lack-of-content', sprintf( __( "Post is rejected due to less content. Required %d Found %d", 'wpcp' ), $is_required_length, $words_count ) );
+            return new WP_Error( 'lack-of-content', sprintf( __( "Post is rejected due to less content. Required %d Found %d", 'wp-content-pilot' ), $is_required_length, $words_count ) );
         }
     }
 
@@ -385,13 +385,13 @@ function wpcp_test_article_acceptance( $article, $campaign_id, $keyword ) {
     //skip post wihtout images
     $is_required_img = wpcp_get_post_meta( $campaign_id, '_skip_no_image', 0 );
     if ( ! empty( $is_required_img ) && empty( $article['image'] ) ) {
-        return new WP_Error( 'no-image-found', __( 'Post is rejected because could not find any image in the post.', 'wpcp' ) );
+        return new WP_Error( 'no-image-found', __( 'Post is rejected because could not find any image in the post.', 'wp-content-pilot' ) );
     }
 
     //skip post if not eng
     $is_skip_non_english = wpcp_get_post_meta( $campaign_id, '_skip_not_eng', 0 );
     if ( $is_skip_non_english && ! preg_match( '/[^A-Za-z0-9]/', $article['content'] ) ) {
-        return new WP_Error( 'invalid-language', __( 'Post is rejected because language is not english.', 'wpcp' ) );
+        return new WP_Error( 'invalid-language', __( 'Post is rejected because language is not english.', 'wp-content-pilot' ) );
     }
 
     //skip if duplicate title
@@ -400,7 +400,7 @@ function wpcp_test_article_acceptance( $article, $campaign_id, $keyword ) {
         $post_type    = wpcp_get_post_meta( $campaign_id, '_post_type', 0 );
         $is_duplicate = get_page_by_title( $article['title'], OBJECT, $post_type );
         if ( $is_duplicate ) {
-            return new WP_Error( 'duplicate-post', __( 'Post is rejected because post with same title exit.', 'wpcp' ) );
+            return new WP_Error( 'duplicate-post', __( 'Post is rejected because post with same title exit.', 'wp-content-pilot' ) );
         }
     }
 

@@ -13,25 +13,25 @@ class CPT{
 
     public function register_custom_posts(){
         $labels = array(
-            'name'               => __( 'Campaigns', 'wpcp' ),
-            'all_items'          => __( 'All Campaigns', 'wpcp' ),
+            'name'               => __( 'Campaigns', 'wp-content-pilot' ),
+            'all_items'          => __( 'All Campaigns', 'wp-content-pilot' ),
             'singular_name'      => 'wp_content_pilot',
-            'add_new'            => __( 'New campaign', 'wpcp' ),
-            'add_new_item'       => __( 'Add New Campaign', 'wpcp' ),
-            'edit_item'          => __( 'Edit Campaign', 'wpcp' ),
-            'new_item'           => __( 'New Campaign', 'wpcp' ),
-            'view_item'          => __( 'View Campaign', 'wpcp' ),
-            'search_items'       => __( 'Search Campaigns', 'wpcp' ),
-            'not_found'          => __( 'No Campaigns found', 'wpcp' ),
-            'not_found_in_trash' => __( 'No Campaigns found in Trash', 'wpcp' ),
-            'parent_item_colon'  => __( 'Parent Campaign:', 'wpcp' ),
+            'add_new'            => __( 'New campaign', 'wp-content-pilot' ),
+            'add_new_item'       => __( 'Add New Campaign', 'wp-content-pilot' ),
+            'edit_item'          => __( 'Edit Campaign', 'wp-content-pilot' ),
+            'new_item'           => __( 'New Campaign', 'wp-content-pilot' ),
+            'view_item'          => __( 'View Campaign', 'wp-content-pilot' ),
+            'search_items'       => __( 'Search Campaigns', 'wp-content-pilot' ),
+            'not_found'          => __( 'No Campaigns found', 'wp-content-pilot' ),
+            'not_found_in_trash' => __( 'No Campaigns found in Trash', 'wp-content-pilot' ),
+            'parent_item_colon'  => __( 'Parent Campaign:', 'wp-content-pilot' ),
             'menu_name'          => 'WP Content Pilot',
         );
 
         $args = array(
             'labels'              => $labels,
             'hierarchical'        => false,
-            'description'         => __( 'Campaigns of Wordpress Content Pilot', 'wpcp' ),
+            'description'         => __( 'Campaigns of Wordpress Content Pilot', 'wp-content-pilot' ),
             'supports'            => array( 'title' ),
             'public'              => false,
             'show_ui'             => true,
@@ -55,11 +55,11 @@ class CPT{
 
     function wp_content_pilot_columns( $columns ) {
         unset( $columns['date'] );
-        $columns['status']    = __( 'Status', 'wpcp' );
-        $columns['type']      = __( 'Type', 'wpcp' );
-        $columns['target']      = __( 'Target', 'wpcp' );
-        $columns['frequency'] = __( 'Frequency', 'wpcp' );
-        $columns['last_run']  = __( 'Last Run', 'wpcp' );
+        $columns['status']    = __( 'Status', 'wp-content-pilot' );
+        $columns['type']      = __( 'Type', 'wp-content-pilot' );
+        $columns['target']      = __( 'Target', 'wp-content-pilot' );
+        $columns['frequency'] = __( 'Frequency', 'wp-content-pilot' );
+        $columns['last_run']  = __( 'Last Run', 'wp-content-pilot' );
 
         return $columns;
     }
@@ -69,9 +69,9 @@ class CPT{
             case 'status':
                 $active = wpcp_get_post_meta($post_ID, '_active', 0);
                 if($active == '1'){
-                    echo '<span style="background: green;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">'.__('Active', 'wpcp').'</span>';
+                    echo '<span style="background: green;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">'.__('Active', 'wp-content-pilot').'</span>';
                 }else{
-                    echo '<span style="background: red;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">'.__('Disabled', 'wpcp').'</span>';
+                    echo '<span style="background: red;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">'.__('Disabled', 'wp-content-pilot').'</span>';
                 }
                 break;
             case 'type':

@@ -57,7 +57,7 @@ class Campaign {
 
         $module = $wpcp->modules->get_module( $this->campaign_type );
         if ( ! $module ) {
-            $msg = __( 'Could not find the module for the campaign type', 'wpcp' );
+            $msg = __( 'Could not find the module for the campaign type', 'wp-content-pilot' );
             wpcp_log( 'critical', $msg );
 
             return new \WP_Error( 'invalid-campaign-type', $msg );

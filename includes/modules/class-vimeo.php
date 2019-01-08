@@ -13,7 +13,7 @@ class Vimeo extends Item {
         $token = wpcp_get_settings( 'vimeo_token', '' );
 
         if ( empty( $token ) ) {
-            $msg = __( 'Vimeo token is not set. Please configure vimeo settings.', 'wpcp' );
+            $msg = __( 'Vimeo token is not set. Please configure vimeo settings.', 'wp-content-pilot' );
             wpcp_log( 'critical', $msg );
 
             return new \WP_Error( 'invalid-vimeo-settings', $msg );
