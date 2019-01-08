@@ -7,7 +7,7 @@
  * Author:      pluginever
  * Author URI:  http://pluginever.com
  * License:     GPLv2+
- * Text Domain: wpcp
+ * Text Domain: wp-content-pilot
  * Domain Path: /languages
  */
 
@@ -40,6 +40,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 class Wp_Content_Pilot {
+    /**
+     * @var object
+     *
+     */
+    private static $instance;
+
 
     /**
      * Add-on Version
@@ -63,11 +69,6 @@ class Wp_Content_Pilot {
      */
     private $container = array();
 
-    /**
-     * @var object
-     *
-     */
-    private static $instance;
 
     /**
      * Constructor for the class
@@ -187,6 +188,9 @@ class Wp_Content_Pilot {
         require WPCP_INCLUDES . '/actions-filters.php';
         require WPCP_INCLUDES . '/module-categories.php';
         require WPCP_INCLUDES . '/core/class-insights.php';
+
+        //v2
+        require WPCP_INCLUDES . '/class-menu.php';
     }
 
     /**
@@ -207,6 +211,9 @@ class Wp_Content_Pilot {
         new \Pluginever\WPCP\Core\Tracker();
 
         $this->container['modules'] = new \Pluginever\WPCP\Module\Module();
+
+        //v2
+        new \Pluginever\WPCP\Menu();
     }
 
     /**

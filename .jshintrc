@@ -1,27 +1,27 @@
 {
-  "boss": true,
-  "curly": true,
-  "eqeqeq": true,
-  "eqnull": true,
-  "expr": true,
-  "noarg": true,
-  "onevar": true,
-  "trailing": true,
-  "undef": true,
-  "unused": true,
-  "browser": true,
-  "passfail": false,
-  // Stop on first error.
-  "devel": true,
-  "esnext": true,
-  "globals": {
-    "ajaxurl": true,
-    "jQuery": false,
-    "$": false,
-    "JSON": false,
-    "wp": false,
-    "Vue": false,
-    "swal": false,
-    "erpMailpoetGlobal": false
-  }
+	"boss": true,
+	"curly": true,
+	"eqeqeq": true,
+	"eqnull": true,
+	"es3": true,
+	"expr": true,
+	"immed": true,
+	"noarg": true,
+	"onevar": true,
+	"quotmark": "single",
+	"trailing": true,
+	"undef": true,
+	"unused": true,
+	"node": true,
+
+	"browser": true,
+
+	"globals": {
+		"_": false,
+		"Backbone": false,
+		"jQuery": false,
+		"JSON": false,
+		"wp": false,
+		"wp_ever_hrm":false
+	}
 }

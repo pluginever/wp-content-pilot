@@ -1,5 +1,4 @@
-module.exports = function(grunt) {
-    var pkg = grunt.file.readJSON('package.json');
+module.exports = function (grunt) {
     var bannerTemplate = '/**\n' +
         ' * <%= pkg.title %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
         ' * <%= pkg.homepage %>\n' +
@@ -12,246 +11,334 @@ module.exports = function(grunt) {
         ' * <%= pkg.title %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> | <%= pkg.homepage %> | Copyright (c) <%= grunt.template.today("yyyy") %>; | Licensed GPLv2+\n' +
         ' */\n';
 
+    var pkg = grunt.file.readJSON('package.json');
+
     // Project configuration
     grunt.initConfig({
-
-    pkg: grunt.file.readJSON('package.json'),
-
-    concat: {
-        options: {
-            stripBanners: true,
-            banner: bannerTemplate
+        // Setting folder templates.
+        dirs: {
+            css: 'assets/css',
+            fonts: 'assets/fonts',
+            images: 'assets/images',
+            js: 'assets/js'
         },
-            wp_content_pilot: {
-                src: [
-                    'assets/js/vendor/*.js',
-                    'assets/js/src/wp-content-pilot.js',
-                ],
-                    dest: 'assets/js/wp-content-pilot.js'
-            }
-        },
-    // jshint
-    jshint: {
-        options: {
-            jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
-        },
-        main: [
-            'assets/js/src/*.js',
-        ]
-    },
 
-    uglify: {
-        all: {
-            files: {
-                'assets/js/wp-content-pilot.min.js': ['assets/js/wp-content-pilot.js']
-            },
+        // JavaScript linting with JSHint.
+        jshint: {
             options: {
-                banner: compactBannerTemplate,
-                mangle: false
+                jshintrc: '.jshintrc'
             },
-            compress: {
-                drop_console: true
-            }
-        }
-    },
-
-        sass:   {
-            all: {
-                files: {
-                    'assets/css/wp-content-pilot.css': 'assets/css/sass/wp-content-pilot.scss'
-                }
-            }
+            all: [
+                'Gruntfile.js',
+                '<%= dirs.js %>/*/*.js',
+                '!<%= dirs.js %>/*/*.min.js'
+            ]
         },
 
-
-        cssmin: {
+        // Sass linting with Stylelint.
+        stylelint: {
             options: {
-                banner: bannerTemplate
+                configFile: '.stylelintrc'
             },
-            minify: {
-                expand: true,
-
-                cwd: 'assets/css/',
-                src: ['wp-content-pilot.css'],
-
-                dest: 'assets/css/',
-                ext: '.min.css'
-            }
+            all: [
+                '<%= dirs.css %>/*.scss'
+            ]
         },
-        imagemin: {
-            static: {
-                options: {
-                    optimizationLevel: 3,
-                        svgoPlugins: [{removeViewBox: false}],
-                        use: [] // Example plugin usage
+
+        // Minify .js files.
+        uglify: {
+            options: {
+                ie8: true,
+                parse: {
+                    strict: false
                 },
-                files: {
+                output: {
+                    comments: /@license|@preserve|^!/
                 }
             },
-            dynamic: {
+            files: {
                 files: [{
                     expand: true,
-                    cwd: 'assets/images/src/',
-                    src: ['**/*.{png,jpg,gif,svg}'],
-                    dest: 'assets/images/'
+                    cwd: '<%= dirs.js %>/',
+                    src: [
+                        '*.js',
+                        '!*.min.js'
+                    ],
+                    dest: '<%= dirs.js %>/',
+                    ext: '.min.js'
+                }]
+            },
+            vendor: {
+                files: {
+                    // '<%= dirs.js %>/file.min.js': ['<%= dirs.js %>/file.js'],
+                }
+            }
+        },
+
+        // Compile all .scss files.
+        sass: {
+            compile: {
+                options: {
+                    sourceMap: 'none'
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= dirs.css %>/',
+                    src: ['*.scss'],
+                    dest: '<%= dirs.css %>/',
+                    ext: '.css'
                 }]
             }
         },
 
-        watch:  {
-             options: {
-                livereload: true,
-            },
-
-            sass: {
-                files: ['assets/css/sass/*.scss'],
-                tasks: ['sass', 'cssmin'],
-                options: {
-                    debounceDelay: 500
-                }
-            },
-
-            scripts: {
-                files: ['assets/js/src/**/*.js', 'assets/js/vendor/**/*.js'],
-                tasks: ['jshint', 'concat', 'uglify'],
-                options: {
-                    debounceDelay: 500
+        // Concatenate files.
+        concat: {
+            admin: {
+                files: {
+                    // '<%= dirs.css %>/admin.css' : ['<%= dirs.css %>/select2.css', '<%= dirs.css %>/admin.css'],
+                    // '<%= dirs.css %>/admin-rtl.css' : ['<%= dirs.css %>/select2.css', '<%= dirs.css %>/admin-rtl.css']
                 }
             }
         },
 
-        /**
-         * check WP Coding standards
-         * https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards
-         */
-        phpcs: {
-            application: {
-                dir: [
-                    '**/*.php',
-                    '!**/node_modules/**'
+        // Watch changes for assets.
+        watch: {
+            css: {
+                files: ['<%= dirs.css %>/*.scss'],
+                tasks: ['sass', 'postcss', 'cssmin', 'concat']
+            },
+            js: {
+                files: [
+                    '<%= dirs.js %>/*js',
+                    '!<%= dirs.js %>/*.min.js'
+                ],
+                tasks: ['jshint', 'uglify']
+            }
+        },
+
+        // Generate POT files.
+        makepot: {
+            options: {
+                type: 'wp-plugin',
+                domainPath: 'i18n/languages',
+                potHeaders: {
+                    'language-team': 'LANGUAGE <EMAIL@ADDRESS>'
+                }
+            },
+            dist: {
+                options: {
+                    potFilename: 'wp-ever-hrm.pot',
+                    exclude: [
+                        'apigen/.*',
+                        'vendor/.*',
+                        'tests/.*',
+                        'tmp/.*'
+                    ]
+                }
+            }
+        },
+
+        // Check textdomain errors.
+        checktextdomain: {
+            options: {
+                text_domain: 'wp-ever-hrm',
+                keywords: [
+                    '__:1,2d',
+                    '_e:1,2d',
+                    '_x:1,2c,3d',
+                    'esc_html__:1,2d',
+                    'esc_html_e:1,2d',
+                    'esc_html_x:1,2c,3d',
+                    'esc_attr__:1,2d',
+                    'esc_attr_e:1,2d',
+                    'esc_attr_x:1,2c,3d',
+                    '_ex:1,2c,3d',
+                    '_n:1,2,4d',
+                    '_nx:1,2,4c,5d',
+                    '_n_noop:1,2,3d',
+                    '_nx_noop:1,2,3c,4d'
                 ]
             },
+            files: {
+                src: [
+                    '**/*.php',               // Include all files
+                    '!apigen/**',             // Exclude apigen/
+                    '!includes/libraries/**', // Exclude libraries/
+                    '!node_modules/**',       // Exclude node_modules/
+                    '!tests/**',              // Exclude tests/
+                    '!vendor/**',             // Exclude vendor/
+                    '!tmp/**'                 // Exclude tmp/
+                ],
+                expand: true
+            }
+        },
+
+        // PHP Code Sniffer.
+        phpcs: {
             options: {
-                bin: '~/phpcs/scripts/phpcs',
-                standard: 'WordPress'
+                bin: 'vendor/bin/phpcs'
+            },
+            dist: {
+                src: [
+                    '**/*.php',                                                  // Include all files
+                    '!includes/libraries/**',                                    // Exclude libraries/
+                    '!node_modules/**',                                          // Exclude node_modules/
+                    '!tests/cli/**',                                             // Exclude tests/cli/
+                    '!tmp/**',                                                   // Exclude tmp/
+                    '!vendor/**'                                                 // Exclude vendor/
+                ]
             }
         },
-           // Generate POT files.
-        makepot: {
-            target: {
-                options: {
-                    exclude: ['build/.*', 'node_modules/*', 'assets/*'],
-                        domainPath: '/i18n/languages/', // Where to save the POT file.
-                        potFilename: 'wp-content-pilot.pot', // Name of the POT file.
-                        type: 'wp-plugin', // Type of project (wp-plugin or wp-theme).
-                        potHeaders: {
-                        'report-msgid-bugs-to': 'http://pluginever.com/support/',
-                            'language-team': 'LANGUAGE <support@pluginever.com>'
-                    }
-                }
+
+        // Autoprefixer.
+        postcss: {
+            options: {
+                processors: [
+                    require('autoprefixer')({
+                        browsers: [
+                            '> 0.1%',
+                            'ie 8',
+                            'ie 9'
+                        ]
+                    })
+                ]
+            },
+            dist: {
+                src: [
+                    '<%= dirs.css %>/*.css'
+                ]
             }
         },
-            // Clean up build directory
+
+        // Clean up build directory
         clean: {
             main: ['build/']
         },
-          copy: {
-        main: {
-            src: [
-                '**',
-                '!node_modules/**',
-                '!**/js/src/**',
-                '!**/css/src/**',
-                '!**/js/vendor/**',
-                '!**/css/vendor/**',
-                '!**/images/src/**',
-                '!**/sass/**',
-                '!**/tests/**',
-                '!**/test/**',
-                '!**/samples/**',
-                '!**/docs/**',
-                '!build/**',
-                '!**/*.md',
-                '!**/*.map',
-                '!**/package.map',
-                '!**/package-lock.map',
-                '!**/Gruntfile.map',
-                '!**/composer.json',
-                '!**/LICENSE',
-                '!**/*.sh',
-                '!.idea/**',
-                '!bin/**',
-                '!.git/**',
-                '!Gruntfile.js',
-                '!package.json',
-                '!composer.json',
-                '!composer.lock',
-                '!debug.log',
-                '!.gitignore',
-                '!.gitmodules',
-                '!npm-debug.log',
-                '!plugin-deploy.sh',
-                '!export.sh',
-                '!config.codekit',
-                '!package-lock.json',
-                '!phpcs.xml.dist',
-                '!nbproject/*',
-                '!tests/**',
-                '!.csscomb.json',
-                '!.editorconfig',
-                '!.jshintrc',
-                '!.tmp'
-            ],
+
+        //Copy
+        copy: {
+            main: {
+                src: [
+                    '**',
+                    '!node_modules/**',
+                    '!**/js/src/**',
+                    '!**/css/src/**',
+                    '!**/js/vendor/**',
+                    '!**/css/vendor/**',
+                    '!**/css/*.scss',
+                    '!**/images/src/**',
+                    '!**/sass/**',
+                    '!build/**',
+                    '!**/*.md',
+                    '!**/*.map',
+                    '!**/*.sh',
+                    '!.idea/**',
+                    '!bin/**',
+                    '!.git/**',
+                    '!Gruntfile.js',
+                    '!package.json',
+                    '!composer.json',
+                    '!composer.lock',
+                    '!package-lock.json',
+                    '!debug.log',
+                    '!none',
+                    '!.gitignore',
+                    '!.gitmodules',
+                    '!phpcs.xml.dist',
+                    '!npm-debug.log',
+                    '!plugin-deploy.sh',
+                    '!export.sh',
+                    '!config.codekit',
+                    '!nbproject/*',
+                    '!tests/**',
+                    '!.csscomb.json',
+                    '!.editorconfig',
+                    '!.jshintrc',
+                    '!.tmp'
+                ],
                 dest: 'build/'
-        }
-    },
-      compress: {
-        main: {
-            options: {
-                mode: 'zip',
-                    archive: './build/wp-content-pilot-' + pkg.version + '.zip'
-            },
-            expand: true,
+            }
+        },
+
+        //compress
+        compress: {
+            main: {
+                options: {
+                    mode: 'zip',
+                    archive: './build/' + pkg.name + '-v' + pkg.version + '.zip'
+                },
+                expand: true,
                 cwd: 'build/',
                 src: ['**/*'],
-                dest: 'wp-content-pilot'
-        }
-    },
-    server: {
-        options: {
-            message: 'Server is ready!'
-        }
-    }
+                dest: pkg.name
+            }
+        },
 
+    });
 
-
-});
-
-// Load other tasks
+    // Load NPM tasks to be used here.
+    grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-phpcs');
+    grunt.loadNpmTasks('grunt-postcss');
+    grunt.loadNpmTasks('grunt-stylelint');
+    grunt.loadNpmTasks('grunt-wp-i18n');
+    grunt.loadNpmTasks('grunt-checktextdomain');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
-    grunt.loadNpmTasks('grunt-notify');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks( 'grunt-wp-i18n' );
-    grunt.loadNpmTasks('grunt-contrib-compress');
-
-    grunt.loadNpmTasks('grunt-contrib-sass');
-
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-prompt');
 
-    grunt.loadNpmTasks('grunt-phpcs');
+    // Register tasks.
+    grunt.registerTask('default', [
+        'js',
+        'css',
+        'i18n'
+    ]);
 
-    // Default task.
+    grunt.registerTask('js', [
+        'jshint',
+        'uglify:admin',
+        'uglify:frontend'
+    ]);
 
-    grunt.registerTask( 'default', ['jshint', 'concat', 'uglify', 'sass', 'cssmin', 'imagemin'] );
+    grunt.registerTask('css', [
+        'sass',
+        'postcss',
+        'cssmin',
+        'concat'
+    ]);
 
+    // Only an alias to 'default' task.
+    grunt.registerTask('dev', [
+        'default'
+    ]);
 
-    grunt.registerTask('release', ['makepot', 'zip']);
-    grunt.registerTask('zip', ['clean', 'copy', 'compress']);
-    grunt.util.linefeed = '\n';
+    grunt.registerTask('i18n', [
+        'checktextdomain',
+        'makepot'
+    ]);
+
+    grunt.registerTask('release',
+        [
+            'default',
+            'i18n'
+        ]);
+
+    grunt.registerTask('build',
+        [
+            'clean',
+            'zip'
+        ]);
+
+    grunt.registerTask('zip',
+        [
+            'clean',
+            'copy',
+            'compress'
+        ]);
 };
