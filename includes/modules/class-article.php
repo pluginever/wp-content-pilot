@@ -16,7 +16,6 @@ class Article extends Item {
      */
     public function setup() {
         $this->action( 'wpcp_fetched_links', 'wpcp_article_skip_base_domain_url' );
-//        $this->action( 'wpcp_post_content', 'html_treatment', 10, 2 );
     }
 
 
@@ -110,25 +109,5 @@ class Article extends Item {
         return $links;
     }
 
-
-    /**
-     * Check for relative links and fix those
-     * @since 1.0.0
-     *
-     * @param $content
-     * @param $article
-     *
-     * @return mixed
-     *
-     */
-    public function html_treatment( $content, $article ) {
-        if ( empty( get_post_meta( $this->campaign_id, '_parse_html' ) ) ) {
-            return $content;
-        }
-        //$content = wpcp_html_remove_bad_tags( $content );
-        $content = wpcp_html_fix_links( $content, $article['host'], true );
-
-        return $content;
-    }
 
 }

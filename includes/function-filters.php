@@ -12,7 +12,7 @@
 function wpcp_set_content_html_or_text( $content, $article, $campaign_id ) {
     wpcp_log( 'Dev', 'wpcp_set_content_html_or_text' );
     if ( 'html' != wpcp_get_post_meta( $campaign_id, '_content_type', 'html' ) ) {
-        $content = wp_strip_all_tags( $content, true  );
+        $content = wp_strip_all_tags( $content, true );
     }
 
     return $content;
@@ -83,26 +83,13 @@ function wpcp_remove_unauthorized_html( $content, $article, $campaign_id ) {
         'p'          => array(
             'xml:lang' => true,
         ),
-        'table'      => array(
-
-        ),
-        'tbody'      => array(
-
-        ),
-        'td'         => array(
-
-        ),
-        'tfoot'      => array(
-
-        ),
-        'th'         => array(
-        ),
-        'thead'      => array(
-
-        ),
-        'tr'         => array(
-
-        ),
+        'table'      => array(),
+        'tbody'      => array(),
+        'td'         => array(),
+        'tfoot'      => array(),
+        'th'         => array(),
+        'thead'      => array(),
+        'tr'         => array(),
         'u'          => array(),
         'ul'         => array(
             'type' => true,
@@ -157,7 +144,7 @@ function wpcp_maybe_remove_hyperlinks( $content, $article, $campaign_id ) {
  *
  */
 function wpcp_maybe_remove_images( $content, $article, $campaign_id ) {
-    error_log('wpcp_maybe_remove_images');
+    error_log( 'wpcp_maybe_remove_images' );
     if ( ! empty( wpcp_get_post_meta( $campaign_id, '_remove_images', '0' ) ) ) {
         wpcp_log( 'Dev', 'wpcp_maybe_remove_images' );
 
@@ -298,6 +285,7 @@ function wpcp_set_ping_status( $status, $campaign_id, $keyword ) {
 
 /**
  * Replace content template with tags
+ *
  * @since 1.0.0
  *
  * @param $content
@@ -307,11 +295,12 @@ function wpcp_set_ping_status( $status, $campaign_id, $keyword ) {
  * @return mixed
  */
 function wpcp_post_content_as_template( $content, $article, $campaign_id ) {
-    wpcp_log('dev', 'wpcp_post_content_as_template');
+    wpcp_log( 'dev', 'wpcp_post_content_as_template' );
     $template = wpcp_get_post_meta( $campaign_id, '_post_template', '' );
     if ( ! empty( $template ) ) {
-        $parsed_content =  wpcp_parse_template_tags( $template, $article, $campaign_id);
-        return str_replace('{content}', $content, $parsed_content);
+        $parsed_content = wpcp_parse_template_tags( $template, $article, $campaign_id );
+
+        return str_replace( '{content}', $content, $parsed_content );
     }
 
     return $content;
@@ -327,8 +316,9 @@ function wpcp_post_content_as_template( $content, $article, $campaign_id ) {
 function wpcp_post_title_as_template( $title, $article, $campaign_id ) {
     $template = wpcp_get_post_meta( $campaign_id, '_post_title', '' );
     if ( ! empty( $template ) ) {
-        $parsed_content =  wpcp_parse_template_tags( $template, $article, $campaign_id );
-        return str_replace('{title}', $title, $parsed_content);
+        $parsed_content = wpcp_parse_template_tags( $template, $article, $campaign_id );
+
+        return str_replace( '{title}', $title, $parsed_content );
     }
 
     return $title;
@@ -380,7 +370,7 @@ function wpcp_reject_banned_hosts( $links ) {
  *
  */
 function wpcp_test_article_acceptance( $article, $campaign_id, $keyword ) {
-    if ( ! is_array( $article ) || empty( $article ) || is_wp_error($article) ) {
+    if ( ! is_array( $article ) || empty( $article ) || is_wp_error( $article ) ) {
         return $article;
     }
 
@@ -413,6 +403,47 @@ function wpcp_test_article_acceptance( $article, $campaign_id, $keyword ) {
         $is_duplicate = get_page_by_title( $article['title'], OBJECT, $post_type );
         if ( $is_duplicate ) {
             return new WP_Error( 'duplicate-post', __( 'Post is rejected because post with same title exit.', 'wpcp' ) );
+        }
+    }
+
+    return $article;
+}
+
+/**
+ * Fix any relative image links in the post content
+ *
+ *
+ * @since 1.0.0
+ *
+ * @param $article
+ *
+ * @return array
+ */
+function wpcp_campaign_fix_urls_from_article_data( $article ) {
+
+    if ( ! empty( $article['content'] ) ) {
+        preg_match_all( '/< *img[^>]*src *= *["\']?([^"\']*)/i', $article['content'], $matches );
+        $process = true;
+        if ( ! empty( $matches[1] ) ) {
+            foreach ( $matches[1] as $src ) {
+                if ( filter_var( $src, FILTER_VALIDATE_URL ) && wpcp_is_absolute_link( $src ) ) {
+                    continue;
+                }
+
+                if ( ! $process ) {
+                    return $article;
+                }
+                //fix url with appending
+                $new_src = wpcp_convert_rel_2_abs_url( $src, $article['host'] );
+                $request = wp_remote_head( $new_src );
+                $type    = wp_remote_retrieve_header( $request, 'content-type' );
+
+                if(!$type){
+                    continue;
+                }
+
+                $article['content'] = str_replace( $src, $new_src, $article['content'] );
+            }
         }
     }
 

@@ -110,8 +110,9 @@ abstract class Item {
         if ( empty( $this->post['link'] ) ) {
             $this->post['link'] = $link->url;
         }
+        $post = array_merge( $this->post, $post );
 
-        return array_merge( $this->post, $post );
+        return apply_filters( 'wpcp_campaign_row_article_data', $post, $this->campaign_id, $this->campaign_type );
     }
 
 
@@ -180,14 +181,14 @@ abstract class Item {
      */
     protected function get_link() {
         global $wpdb;
-        $table  = $wpdb->prefix . 'wpcp_links';
-        $sql    = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = '0'",
+        $table = $wpdb->prefix . 'wpcp_links';
+        $sql   = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = '0'",
             $this->keyword,
             $this->campaign_id,
             $this->campaign_type
         );
-        //$result = $wpdb->get_row( $sql );
-        $result = $wpdb->get_row( "select * from {$table} where id='34'" );
+//        $result = $wpdb->get_row( $sql );
+        $result = $wpdb->get_row( "select * from {$table} where id='52'" );
 
 
         if ( empty( $result ) ) {

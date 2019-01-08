@@ -17,6 +17,9 @@ add_action('wpcp_after_post_publish', 'wpcp_limit_title_length', 10, 2);
 add_action('wpcp_after_post_publish', 'wpcp_limit_content_length', 10, 2);
 
 /*FILTER*/
+add_filter('wpcp_campaign_row_article_data', 'wpcp_campaign_fix_urls_from_article_data', 10, 1);
+
+
 //rejection filter
 add_filter('wpcp_article_before_post_insert', 'wpcp_test_article_acceptance', 10, 3);
 
