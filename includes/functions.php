@@ -351,7 +351,7 @@ function wpcp_get_modules() {
  * @return \Curl\Curl
  *
  */
-function wpcp_setup_request( $campaign_type, $url = null, $campaign_id ) {
+function wpcp_setup_request( $campaign_type, $url = null, $campaign_id= null) {
     if ( $url !== null ) {
         $curl = new \Curl\Curl( $url );
     } else {
