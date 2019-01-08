@@ -130,7 +130,9 @@ function wpcp_mark_link_as_success( $link ) {
  * @param $campaign_id
  *
  */
-function wpcp_maybe_set_featured_image( $post_id, $campaign_id, $keyword, $postarr, $article )  {
+function wpcp_maybe_set_featured_image( $post_id, $campaign_id, $keyword, $postarr, $article ) {
+    error_log( 'wpcp_maybe_set_featured_image' );
+    error_log( empty( $article ) );
     if ( empty( wpcp_get_post_meta( $campaign_id, '_set_featured_image' ) ) || empty( $article['image_url'] ) ) {
         return;
     }
@@ -233,7 +235,7 @@ function wpcp_limit_content_length( $post_id, $campaign_id ) {
         return false;
     }
 
-    $post = get_post($post_id);
+    $post = get_post( $post_id );
 
     $content = $post->post_content;
 
@@ -242,8 +244,8 @@ function wpcp_limit_content_length( $post_id, $campaign_id ) {
     }
 
     $updated_content = substr( $content, 0, $limit_to_length );
-    $result        = wp_update_post( array(
-        'ID'         => $post_id,
+    $result          = wp_update_post( array(
+        'ID'           => $post_id,
         'post_content' => $updated_content,
     ), true );
 

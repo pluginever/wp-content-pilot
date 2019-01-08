@@ -447,5 +447,7 @@ function wpcp_campaign_fix_urls_from_article_data( $article ) {
         }
     }
 
+    $article['content']= preg_replace('~>\s+<~', '><', $article['content']);
+
     return $article;
 }
