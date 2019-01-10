@@ -41,6 +41,7 @@ class WPCP_Feed {
 		if ( $campaign_type == 'feeds' ) {
 			$attr['label'] = __( 'Feed Links', 'wp-content-pilot' );
 			$attr['name']  = '_feed_links';
+			$attr['desc']  = __('Input feed links separate by comma', 'wp-content-pilot');
 		}
 
 		return $attr;
@@ -64,7 +65,7 @@ class WPCP_Feed {
 			'required'         => true,
 			'double_columns'   => true,
 			'selected'         => 'no',
-			'desc'             => __( 'Select Campaign type, depending your need', 'wp-content-pilot' ),
+			'desc'             => __( 'If you are putting exact feed link then set this to yes, otherwise feed links will be auto discovered', 'wp-content-pilot' ),
 		) );
 
 	}

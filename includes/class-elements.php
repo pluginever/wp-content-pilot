@@ -113,7 +113,7 @@ class WPCP_Elements {
 	public function select( $args ) {
 		$defaults = array(
 			'options'          => array(),
-			'name'             => null,
+			'name'             => '',
 			'class'            => '',
 			'id'               => '',
 			'label'            => '',
@@ -512,16 +512,17 @@ class WPCP_Elements {
 	 */
 	public function checkboxes( $args ) {
 		$defaults = array(
-			'name'     => 'checkbox',
-			'value'    => null,
-			'label'    => null,
-			'desc'     => null,
-			'class'    => '',
-			'disabled' => false,
-			'readonly' => false,
-			'options'  => array(),
-			'data'     => array(),
-			'attrs'    => array(),
+			'name'          => 'checkbox',
+			'value'         => null,
+			'label'         => null,
+			'desc'          => null,
+			'class'         => '',
+			'wrapper_class' => '',
+			'disabled'      => false,
+			'readonly'      => false,
+			'options'       => array(),
+			'data'          => array(),
+			'attrs'         => array(),
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -537,16 +538,34 @@ class WPCP_Elements {
 			$args['attrs']['required'] = 'required';
 		}
 
+		$args['wrapper_class'] .= ' ever-form-group';
+
+		if ( $args['double_columns'] ) {
+			$args['wrapper_class'] = ' ever-row';
+		}
+
 		$output = '';
 
-		$output .= '<div class="ever-form-group ' . wpcp_sanitize_key( $args['name'] ) . '_field">';
+		$output .= '<div class="' . sanitize_html_class( $args['wrapper_class'] ) . ' ' . wpcp_sanitize_key( $args['name'] ) . '_field">';
 
 		if ( ! empty( $args['label'] ) ) {
 			$label = wp_kses_post( $args['label'] );
 			if ( $args['required'] == true ) {
 				$label .= ' <span class="ever-required-field">*</span>';
 			}
-			$output .= '<label for="' . $args['id'] . '" class="ever-label">' . $label . '</label>';
+
+			if ( $args['double_columns'] ) {
+				$output .= '<div class="ever-col-3"><label for="' . $args['id'] . '" class="ever-label">' . $label . '</label></div>';
+			}
+
+			if ( ! $args['double_columns'] ) {
+				$output .= '<label for="' . $args['id'] . '" class="ever-label">' . $label . '</label>';
+			}
+		}
+
+		if ( $args['double_columns'] ) {
+			$output .= '<div class="ever-col-1">:</div>';
+			$output .= '<div class="ever-col-8">';
 		}
 
 		$attributes = '';
@@ -567,9 +586,11 @@ class WPCP_Elements {
 		}
 
 		$output .= '</div>';
+		$output .= '</div>';
 
 		return $output;
 	}
+	//!!aponK@an!!
 
 	/**
 	 * HTMl radio buttons
@@ -607,16 +628,30 @@ class WPCP_Elements {
 			$args['attrs']['required'] = 'required';
 		}
 
+
+		$args['wrapper_class'] .= ' ever-form-group';
+		if ( $args['double_columns'] ) {
+			$args['wrapper_class'] = ' ever-row';
+		}
+
+
 		$output = '';
 
-		$output .= '<div class="ever-form-group ' . wpcp_sanitize_key( $args['name'] ) . '_field">';
+		$output .= '<div class=" ' . sanitize_html_class( $args['wrapper_class'] ) . ' ' . wpcp_sanitize_key( $args['name'] ) . '_field">';
 
 		if ( ! empty( $args['label'] ) ) {
 			$label = wp_kses_post( $args['label'] );
 			if ( $args['required'] == true ) {
 				$label .= ' <span class="ever-required-field">*</span>';
 			}
-			$output .= '<label for="' . $args['id'] . '" class="ever-label">' . $label . '</label>';
+
+			if ( $args['double_columns'] ) {
+				$output .= '<div class="ever-col-3"><label for="' . $args['id'] . '" class="ever-label">' . $label . '</label></div>';
+			}
+
+			if ( ! $args['double_columns'] ) {
+				$output .= '<label for="' . $args['id'] . '" class="ever-label">' . $label . '</label>';
+			}
 		}
 
 		$attributes = '';
