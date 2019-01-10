@@ -1,41 +1,47 @@
 <?php
-
-namespace Pluginever\WPCP;
+namespace Pluginever\ContentPilot;
 
 class Install {
-
+    /**
+     * Install constructor.
+     */
     public function __construct() {
-        register_activation_hook( WPCP_FILE, array( $this, 'activate' ) );
-        register_deactivation_hook( WPCP_FILE, array( $this, 'deactivate' ) );
+//        add_action( 'init', array( __CLASS__, 'install' ) );
+//        add_filter( 'cron_schedules', array( __CLASS__, 'cron_schedules' ) );
     }
 
-    public function activate() {
-        $current_db_version   = get_option( 'wpcp_db_version', null );
-        $current_wpcp_version = get_option( 'wpcp_version', null );
-        $this->create_tables();
-        $this->populate();
-        $this->create_cron_jobs();
+    public static function install() {
 
-        //save db version
-        if ( is_null( $current_wpcp_version ) ) {
-            update_option( 'wpcp_version', WPCP_VERSION );
+        if ( ! is_blog_installed() ) {
+            return;
         }
 
-        //save db version
-        if ( is_null( $current_db_version ) ) {
-            update_option( 'wpcp_db_version', '1.00' );
+        // Check if we are not already running this routine.
+        if ( 'yes' === get_transient( 'content_pilots_installing' ) ) {
+            return;
         }
+
+        self::create_options();
+        self::create_tables();
+        self::create_roles();
+        self::create_cron_jobs();
+        
+        delete_transient( 'content_pilots_installing' );
+    }
+
+    /**
+     * Save option data
+     */
+    public static function create_options() {
+        //save db version
+        update_option( 'wpcp_version', WPCP_VERSION );
 
         //save install date
-        if ( false == get_option( 'wpcp_install_date' ) ) {
-            update_option( 'wpcp_install_date', current_time( 'timestamp' ) );
-        }
-
+        update_option( 'content_pilots_install_date', current_time( 'timestamp' ) );
     }
 
-    public function create_tables() {
+    private static function create_tables() {
         global $wpdb;
-
         $collate = '';
         if ( $wpdb->has_cap( 'collation' ) ) {
             if ( ! empty( $wpdb->charset ) ) {
@@ -44,70 +50,90 @@ class Install {
             if ( ! empty( $wpdb->collate ) ) {
                 $collate .= " COLLATE $wpdb->collate";
             }
-
         }
-
         $table_schema = [
-            "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}wpcp_links` (
+            "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}table` (
                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                `camp_id` int(11) NOT NULL,
-                `url` varchar(191) NOT NULL,
-                `keyword` varchar(191) DEFAULT NULL,
-                `camp_type` varchar(191) DEFAULT NULL,
-                `status` tinyint(1) unsigned DEFAULT '0',
-                `identifier` TEXT DEFAULT NULL,
                 `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
                 `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`),
                   UNIQUE (url)
             ) $collate;",
-
-            "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}wpcp_logs` (
-                `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                `camp_id` int(11) DEFAULT NULL,
-                `keyword` varchar(255) DEFAULT NULL,
-                `log_level` varchar(20) NOT NULL DEFAULT '',
-                `message` varchar(255) DEFAULT NULL,
-                `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-                `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-                PRIMARY KEY (`id`)
-            ) $collate;",
         ];
-
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
         foreach ( $table_schema as $table ) {
             dbDelta( $table );
         }
-
     }
 
-    public function populate() {
-        $article_settings = wpcp_get_settings( 'wpcp_settings_article' );
-        if ( empty( $article_settings['banned_hosts'] ) ) {
-            $hosts = array(
-                'wikipedia',
-                'youtube',
-                'google',
-                'bing',
-            );
-            $article_settings['banned_hosts'] = implode( PHP_EOL, $hosts );
-            update_option( 'wpcp_settings_article', $article_settings );
+    /**
+     * Create roles and capabilities.
+     */
+    private static function create_roles() {
+        global $wp_roles;
+
+        if ( ! class_exists( 'WP_Roles' ) ) {
+            return;
+        }
+
+        if ( ! isset( $wp_roles ) ) {
+            $wp_roles = new \WP_Roles();
+        }
+
+        // Customer role.
+        add_role(
+            'userrole',
+            __( 'User Role', 'wp-content-pilot' ),
+            self::get_caps( 'userrole' )
+        );
+
+        //add all new caps to admin
+        $admin_capabilities = self::get_caps( 'administrator' );
+
+        foreach ( $admin_capabilities as $cap ) {
+            $wp_roles->add_cap( 'administrator', $cap );
         }
     }
 
     /**
-     * Create cron jobs
+     * @param $role
      *
-     * @return void
+     * @return array
      */
-    public function create_cron_jobs() {
-        wp_schedule_event( time(), 'once_a_minute', 'wpcp_per_minute_scheduled_events' );
-        wp_schedule_event( time(), 'daily', 'wpcp_daily_scheduled_events' );
+    private static function get_caps( $role ) {
+        $caps = [
+            'userrole'      => [],
+            'administrator' => [],
+        ];
 
+        return $caps[ $role ];
     }
 
-    public function deactivate() {
-        wp_clear_scheduled_hook( 'wpcp_per_minute_scheduled_events' );
-        wp_clear_scheduled_hook( 'wpcp_daily_scheduled_events' );
+    /**
+     * Add more cron schedules.
+     *
+     * @param  array $schedules List of WP scheduled cron jobs.
+     *
+     * @return array
+     */
+    public static function cron_schedules( $schedules ) {
+        $schedules['monthly'] = array(
+            'interval' => 2635200,
+            'display'  => __( 'Monthly', 'wp-content-pilot' ),
+        );
+
+        return $schedules;
     }
+
+    /**
+     * Create cron jobs (clear them first).
+     */
+    private static function create_cron_jobs() {
+        wp_clear_scheduled_hook( 'content_pilot_daily_cron' );
+        wp_schedule_event( time(), 'daily', 'content_pilot_daily_cron' );
+    }
+
+
 }
+
+new Install();
