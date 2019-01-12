@@ -118,17 +118,28 @@ function wpcp_campaign_type_metabox_callback( $post ) {
 	) );
 }
 
+/**
+ * Campaign options metabox
+ *
+ * @since 1.0.0
+ *
+ * @param $post
+ */
 function wpcp_campaign_options_metabox_callback( $post ) {
-//	echo content_pilot()->elements->checkbox( [
-//		'label' => __( 'Force Feed', 'wp-content-pilot' ),
-//		'name'  => '_force_feed',
-//	] );
 	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
 	$campaign_type = empty( $campaign_type ) ? 'feeds' : $campaign_type;
 	wpcp_campaign_options_metabox_fields( $post->ID, $campaign_type );
 
 }
 
+/**
+ * campaign options metabox fields
+ *
+ * @since 1.0.0
+ *
+ * @param        $post_id
+ * @param string $campaign_type
+ */
 function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'feeds' ) {
 
 	do_action( 'wpcp_before_campaign_keyword_input', $post_id, $campaign_type );
