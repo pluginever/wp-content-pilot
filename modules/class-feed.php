@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WPCP_Feed {
+class WPCP_Feed extends WPCP_Campaign {
 
 	/**
 	 * WPCP_Feed constructor.
@@ -29,7 +29,7 @@ class WPCP_Feed {
 		$modules['feeds'] = [
 			'title'       => __( 'Feed', 'wp-content-pilot' ),
 			'description' => __( 'Scraps articles from the feed urls', 'wp-content-pilot' ),
-			'supports'    => array( 'author', 'title', 'except', 'content', 'image_url', 'image', 'images' ),
+			'supports'    => self::get_template_tags(),
 			'callback'    => __CLASS__,
 		];
 
@@ -37,11 +37,18 @@ class WPCP_Feed {
 	}
 
 
+	public static function get_template_tags() {
+		$tags = array( 'author', 'title', 'except', 'content', 'image_url', 'image', 'images' );
+
+		return $tags;
+	}
+
+
 	public function campaign_keyword_input( $attr, $campaign_type ) {
 		if ( $campaign_type == 'feeds' ) {
 			$attr['label'] = __( 'Feed Links', 'wp-content-pilot' );
 			$attr['name']  = '_feed_links';
-			$attr['desc']  = __('Input feed links separate by comma', 'wp-content-pilot');
+			$attr['desc']  = __( 'Input feed links separate by comma', 'wp-content-pilot' );
 		}
 
 		return $attr;
@@ -68,6 +75,18 @@ class WPCP_Feed {
 			'desc'             => __( 'If you are putting exact feed link then set this to yes, otherwise feed links will be auto discovered', 'wp-content-pilot' ),
 		) );
 
+	}
+
+	public function setup() {
+		// TODO: Implement setup() method.
+	}
+
+	public function discover_links() {
+		// TODO: Implement discover_links() method.
+	}
+
+	public function fetch_post( $link ) {
+		// TODO: Implement fetch_post() method.
 	}
 
 

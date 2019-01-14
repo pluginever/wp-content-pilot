@@ -190,6 +190,7 @@ final class ContentPilot {
 		define( 'WPCP_INCLUDES', WPCP_PATH . '/includes' );
 		define( 'WPCP_MODULES', WPCP_PATH . '/modules' );
 		define( 'WPCP_URL', plugins_url( '', WPCP_FILE ) );
+		define( 'WPCP_VIEWS', WPCP_PATH . '/views' );
 		define( 'WPCP_ASSETS_URL', WPCP_URL . '/assets' );
 		define( 'WPCP_TEMPLATES_DIR', WPCP_PATH . '/templates' );
 	}
@@ -227,6 +228,7 @@ final class ContentPilot {
 		include_once WPCP_INCLUDES . '/class-elements.php';
 
 		include_once WPCP_INCLUDES . '/class-ajax.php';
+		include_once WPCP_INCLUDES . '/class-campaign.php';
 		include_once WPCP_INCLUDES . '/class-module.php';
 		include_once WPCP_MODULES . '/class-feed.php';
 		include_once WPCP_MODULES . '/class-article.php';
