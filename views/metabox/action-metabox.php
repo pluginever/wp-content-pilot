@@ -8,12 +8,13 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 		<?php
 
 		echo content_pilot()->elements->input( array(
-			'label'       => __( 'Campaign Target', 'wp-content-pilot' ),
-			'name'        => '_campaign_target',
-			'type'        => 'number',
-			'placeholder' => '10',
-			'value'       => wpcp_get_post_meta( $post_id, '_campaign_target', 5 ),
-			'required'    => true,
+			'label'          => __( 'Campaign Target', 'wp-content-pilot' ),
+			'name'           => '_campaign_target',
+			'type'           => 'number',
+			'placeholder'    => '10',
+			'value'          => wpcp_get_post_meta( $post_id, '_campaign_target', 5 ),
+			'required'       => true,
+			'double_columns' => false,
 		) );
 
 		echo content_pilot()->elements->select( array(
@@ -22,8 +23,9 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 			'show_option_all'  => '',
 			'show_option_none' => '',
 			'options'          => wpcp_get_campaign_schedule_options(),
-			'selected'       => wpcp_get_post_meta( $post_id, '_campaign_frequency' ),
+			'selected'         => wpcp_get_post_meta( $post_id, '_campaign_frequency' ),
 			'required'         => true,
+			'double_columns'   => false,
 		) );
 
 		echo content_pilot()->elements->select( array(
@@ -36,17 +38,20 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 				'inactive' => __( 'Inactive', 'wp-content-pilot' ),
 			),
 			'required'         => true,
-			'selected'       => wpcp_get_post_meta( $post_id, '_campaign_status' ),
+			'double_columns'   => false,
+			'selected'         => wpcp_get_post_meta( $post_id, '_campaign_status' ),
 		) );
 		?>
 	</div>
 	<div id="major-publishing-actions">
 
-		<div id="delete-action">
-			<a class="submitdelete deletion" href="<?php echo get_delete_post_link( $_REQUEST['post'] ) ?>" title="<?php _e( 'Move to Trash', 'wp-content-pilot' ); ?>">
-				<button type="button" class="button button-link-delete">Trash</button>
-			</a>
-		</div>
+		<?php if ( ! empty( $_REQUEST['post'] ) ) { ?>
+			<div id="delete-action">
+				<a class="submitdelete deletion" href="<?php echo get_delete_post_link( esc_attr( $_REQUEST['post'] ) ) ?>" title="<?php _e( 'Move to Trash', 'wp-content-pilot' ); ?>">
+					<button type="button" class="button button-link-delete"><?php _e( 'Trash', 'wp-content-pilot' ); ?></button>
+				</a>
+			</div>
+		<?php } ?>
 
 		<input type="hidden" name="hidden_post_status" id="hidden_post_status" value="publish"/>
 
@@ -62,7 +67,7 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 				<input name="original_publish" type="hidden" id="original_publish" value="<?php esc_attr_e( 'Update' ) ?>"/>
 				<div class="publishing-action-btn">
 					<a href="#">
-						<button type="button" class="button">Test run</button>
+						<button type="button" class="button"><?php _e( 'Test run', 'wp-content-pilot' ); ?></button>
 					</a>
 					<input name="save" type="submit" class="button button-primary button-large" id="publish" value="<?php esc_attr_e( 'Update Campaign', 'wp-content-pilot' ) ?>"/>
 				</div>

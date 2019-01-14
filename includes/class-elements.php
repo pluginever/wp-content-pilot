@@ -174,10 +174,10 @@ class WPCP_Elements {
 		$args['wrapper_class'] .= ' ever-form-group';
 
 		if ( $args['double_columns'] ) {
-			$args['wrapper_class'] = ' ever-row';
+			$args['wrapper_class'] = ' ever-row ever-form-group';
 		}
 
-		$output .= '<div class="' . sanitize_html_class( $args['wrapper_class'] ) . ' ' . wpcp_sanitize_key( $args['name'] ) . '_field">';
+		$output .= '<div class="' . $args['wrapper_class'] . ' ' . wpcp_sanitize_key( $args['name'] ) . '_field">';
 
 		if ( ! empty( $args['label'] ) ) {
 			$label = wp_kses_post( $args['label'] );
@@ -187,9 +187,7 @@ class WPCP_Elements {
 
 			if ( $args['double_columns'] ) {
 				$output .= '<div class="ever-col-3"><label for="' . $args['id'] . '" class="ever-label">' . $label . '</label></div>';
-			}
-
-			if ( ! $args['double_columns'] ) {
+			}else {
 				$output .= '<label for="' . $args['id'] . '" class="ever-label">' . $label . '</label>';
 			}
 
@@ -279,7 +277,7 @@ class WPCP_Elements {
 			'wrapper_class'  => '',
 			'class'          => 'regular-text',
 			'disabled'       => false,
-			'double_columns' => false,
+			'double_columns' => true,
 			'autocomplete'   => 'false',
 			'data'           => array(),
 			'attrs'          => array(),
@@ -323,6 +321,7 @@ class WPCP_Elements {
 			$args['wrapper_class'] .= ' ever-row';
 		}
 
+
 		$output = '';
 
 		$output .= '<div class="' . $args['wrapper_class'] . ' ' . wpcp_sanitize_key( $args['name'] ) . '_field">';
@@ -332,13 +331,21 @@ class WPCP_Elements {
 			if ( $args['required'] == true ) {
 				$label .= ' <span class="ever-required-field">*</span>';
 			}
-			$output .= '<div class="ever-col-3"><label for="' . $args['id'] . '" class="ever-label">' . $label . '</label></div>';
+
+			if($args['double_columns']){
+				$output .= '<div class="ever-col-3"><label for="' . $args['id'] . '" class="ever-label">' . $label . '</label></div>';
+			}else{
+				$output .= '<label for="' . $args['id'] . '" class="ever-label">' . $label . '</label>';
+			}
 
 
 		}
 
-		$output .= '<div class="ever-col-1">:</div>';
-		$output .= '<div class="ever-col-8">';
+		if($args['double_columns']){
+			$output .= '<div class="ever-col-1">:</div>';
+			$output .= '<div class="ever-col-8">';
+		}
+
 
 		$attributes = '';
 		$attributes .= $this->get_data_attributes( $args['data'] );
@@ -346,7 +353,9 @@ class WPCP_Elements {
 
 		$output .= '<input type="' . esc_attr( $args['type'] ) . '" name="' . esc_attr( $args['name'] ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . esc_attr( $args['value'] ) . '" class="' . $class . '" ' . $attributes . ' />';
 
-		$output .= '</div>';
+		if($args['double_columns']){
+			$output .= '</div>';
+		}
 		$output .= '</div><!-- .ever-form-group-->';
 
 		return $output;
