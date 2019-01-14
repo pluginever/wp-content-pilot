@@ -40,11 +40,13 @@ $action      = empty($_GET['action']) ? '' : esc_attr($_GET['action']);
 	</div>
 	<div id="major-publishing-actions">
 
-		<div id="delete-action">
-			<a class="submitdelete deletion" href="<?php echo get_delete_post_link($_REQUEST['post']) ?>" title="<?php _e('Move to Trash', 'wp-content-pilot'); ?>">
-				<button type="button" class="button button-link-delete">Trash</button>
-			</a>
-		</div>
+		<?php if (!empty($_REQUEST['post'])) { ?>
+			<div id="delete-action">
+				<a class="submitdelete deletion" href="<?php echo get_delete_post_link(esc_attr($_REQUEST['post'])) ?>" title="<?php _e('Move to Trash', 'wp-content-pilot'); ?>">
+					<button type="button" class="button button-link-delete"><?php _e('Trash', 'wp-content-pilot'); ?></button>
+				</a>
+			</div>
+		<?php } ?>
 
 		<input type="hidden" name="hidden_post_status" id="hidden_post_status" value="publish"/>
 
@@ -60,7 +62,7 @@ $action      = empty($_GET['action']) ? '' : esc_attr($_GET['action']);
 				<input name="original_publish" type="hidden" id="original_publish" value="<?php esc_attr_e('Update') ?>"/>
 				<div class="publishing-action-btn">
 					<a href="#">
-						<button type="button" class="button">Test run</button>
+						<button type="button" class="button"><?php _e('Test run', 'wp-content-pilot'); ?></button>
 					</a>
 					<input name="save" type="submit" class="button button-primary button-large" id="publish" value="<?php esc_attr_e('Update Campaign', 'wp-content-pilot') ?>"/>
 				</div>
