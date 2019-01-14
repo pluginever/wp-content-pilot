@@ -227,7 +227,6 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'label'          => __( 'Limit Title', 'wp-content-pilot' ),
 		'type'           => 'number',
 		'name'           => '_title_limit',
-		'required'       => true,
 		'value'          => wpcp_get_post_meta( $post_id, '_title_limit', '' )
 	) );
 
@@ -235,7 +234,6 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'label'          => __( 'Limit Content', 'wp-content-pilot' ),
 		'type'           => 'number',
 		'name'           => '_content_limit',
-		'required'       => true,
 		'value'          => wpcp_get_post_meta( $post_id, '_content_limit', '' )
 	) );
 }

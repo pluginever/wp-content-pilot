@@ -377,7 +377,7 @@ class WPCP_Elements {
 			'value'       => null,
 			'label'       => null,
 			'desc'        => null,
-			'class'       => 'large-text',
+			'class'       => '',
 			'disabled'    => false,
 			'readonly'    => false,
 			'placeholder' => null,
