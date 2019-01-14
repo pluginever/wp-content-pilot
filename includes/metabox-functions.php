@@ -70,6 +70,7 @@ function wpcp_campaign_type_metabox_callback( $post ) {
 		'placeholder'      => '',
 		'show_option_all'  => '',
 		'show_option_none' => '',
+		'double_columns'   => true,
 		'options'          => wpcp_get_modules(),
 		'required'         => true,
 		'selected'         => wpcp_get_post_meta( $post->ID, '_campaign_type', 'feed' ),
