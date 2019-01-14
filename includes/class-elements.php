@@ -269,18 +269,20 @@ class WPCP_Elements {
 	public function input( $args = array() ) {
 
 		$defaults = array(
-			'id'           => '',
-			'name'         => '',
-			'value'        => '',
-			'type'         => 'text',
-			'label'        => '',
-			'desc'         => '',
-			'placeholder'  => '',
-			'class'        => 'regular-text',
-			'disabled'     => false,
-			'autocomplete' => 'false',
-			'data'         => array(),
-			'attrs'        => array(),
+			'id'             => '',
+			'name'           => '',
+			'value'          => '',
+			'type'           => 'text',
+			'label'          => '',
+			'desc'           => '',
+			'placeholder'    => '',
+			'wrapper_class'  => '',
+			'class'          => 'regular-text',
+			'disabled'       => false,
+			'double_columns' => false,
+			'autocomplete'   => 'false',
+			'data'           => array(),
+			'attrs'          => array(),
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -315,18 +317,28 @@ class WPCP_Elements {
 			$args['attrs']['disabled'] = 'disabled';
 		}
 
+		$args['wrapper_class'] .= ' ever-form-group ';
+
+		if ( $args['double_columns'] ) {
+			$args['wrapper_class'] .= ' ever-row';
+		}
 
 		$output = '';
 
-		$output .= '<div class="ever-form-group ' . wpcp_sanitize_key( $args['name'] ) . '_field">';
+		$output .= '<div class="' . $args['wrapper_class'] . ' ' . wpcp_sanitize_key( $args['name'] ) . '_field">';
 
 		if ( ! empty( $args['label'] ) ) {
 			$label = wp_kses_post( $args['label'] );
 			if ( $args['required'] == true ) {
 				$label .= ' <span class="ever-required-field">*</span>';
 			}
-			$output .= '<label for="' . $args['id'] . '" class="ever-label">' . $label . '</label>';
+			$output .= '<div class="ever-col-3"><label for="' . $args['id'] . '" class="ever-label">' . $label . '</label></div>';
+
+
 		}
+
+		$output .= '<div class="ever-col-1">:</div>';
+		$output .= '<div class="ever-col-8">';
 
 		$attributes = '';
 		$attributes .= $this->get_data_attributes( $args['data'] );
@@ -335,6 +347,7 @@ class WPCP_Elements {
 		$output .= '<input type="' . esc_attr( $args['type'] ) . '" name="' . esc_attr( $args['name'] ) . '" id="' . esc_attr( $args['id'] ) . '" value="' . esc_attr( $args['value'] ) . '" class="' . $class . '" ' . $attributes . ' />';
 
 		$output .= '</div>';
+		$output .= '</div><!-- .ever-form-group-->';
 
 		return $output;
 	}
@@ -411,7 +424,7 @@ class WPCP_Elements {
 		$attributes .= $this->get_attributes( $args['attrs'] );
 		$output     .= '<div class="ever-col-1">:</div>';
 		$output     .= '<div class="ever-col-8">';
-		$output     .= '<textarea name="' . esc_attr( $args['name'] ) . '" id="' . esc_attr( $args['id'] ) . '" class="' . $class . '"' . $attributes . '>' . sanitize_textarea_field( $args['value'] ) . '</textarea>';
+		$output     .= '<textarea name="' . esc_attr( $args['name'] ) . '" id="' . esc_attr( $args['id'] ) . '" class="' . $class . '"' . $attributes . '>' . $args['value'] . '</textarea>';
 
 		if ( ! empty( $args['desc'] ) ) {
 			$output .= '<span class="ever-field-description">' . esc_html( $args['desc'] ) . '</span>';

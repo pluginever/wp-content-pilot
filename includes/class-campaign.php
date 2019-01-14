@@ -44,7 +44,7 @@ abstract class WPCP_Campaign {
 
 	abstract function discover_links();
 
-	abstract function fetch_post($link);
+	abstract function fetch_post( $link );
 
 	/**
 	 * setup campaign id
@@ -54,7 +54,8 @@ abstract class WPCP_Campaign {
 	 * @param $campaign_id
 	 */
 	public function set_campaign_id( $campaign_id ) {
-		$this->campaign_id = intval( $campaign_id );
+		$this->campaign_id   = intval( $campaign_id );
+		$this->campaign_type = get_post_type( $campaign_id );
 	}
 
 	/**
@@ -87,6 +88,11 @@ abstract class WPCP_Campaign {
 	 * @return int|\WP_Error
 	 */
 	public function run() {
+		if ( empty( $this->campaign_id ) || empty( $this->keyword ) || empty( $this->campaign_type ) ) {
+			return new WP_Error( 'doing-wrong', __( 'Campaign is not initiated correctly, missing ID||keyword', 'wp-content-pilot' ) );
+		}
+
+
 		$link = $this->get_link();
 		if ( ! $link ) {
 			$links = $this->discover_links();
@@ -103,11 +109,11 @@ abstract class WPCP_Campaign {
 			}
 
 			//check the result
-			$str_links = implode( ' ', $links );
+			$str_links = serialize( $links );
 
 			if ( $this->is_result_like_last_time( $str_links ) ) {
 				$msg = __( sprintf( 'Could not discover any new links to grab contents for the keyword "%s". Please try letter.', $this->keyword ), 'wp-content-pilot' );
-				wpcp_log( $msg,'log' );
+				wpcp_log( $msg, 'log' );
 
 				return new \WP_Error( 'no-new-result', $msg );
 			}
@@ -115,32 +121,85 @@ abstract class WPCP_Campaign {
 
 			$inserted = $this->inset_links( $links );
 
-			wpcp_log(  __( sprintf( 'Total %d links inserted', $inserted ), 'wp-content-pilot' ), 'log' );
+			wpcp_log( __( sprintf( 'Total %d links inserted', $inserted ), 'wp-content-pilot' ), 'log' );
 
 			$link = $this->get_link();
 			if ( ! $link ) {
-				return new \WP_Error( 'no-valid-links-found', __( 'Could not retrieve any valid links', 'content-pilot' ) );
+				return new \WP_Error( 'no-valid-links-found', __( 'Could not retrieve any valid links. Please wait to generate new links.', 'content-pilot' ) );
 			}
 		}
 
 		//set link as failed if run till end then mark as success
-		wpcp_update_link( $link->id, [ 'status' => 3 ] );
+		wpcp_update_link( $link->id, [ 'status' => 'failed' ] );
 
 		$article = $this->fetch_post( $link );
 		if ( is_wp_error( $article ) ) {
 			return $article;
 		}
 
-
-
-
-
-
 		//check for acceptance of the article
 
-		//after posting
+		//post
+		do_action( 'wpcp_before_post_insert', $this->campaign_id, $article, $this->keyword );
 
-		//
+		$content = wpcp_remove_unauthorized_html( $article['content'] );
+		$content = wpcp_remove_empty_tags_recursive( $content );
+
+		$title          = apply_filters( 'wpcp_post_title', $article['title'], $this->campaign_id, $article, $this->keyword );
+		$post_content   = apply_filters( 'wpcp_post_content', $content, $this->campaign_id, $article, $this->keyword );
+		$summary        = wp_trim_words( $article['content'], 55 );
+		$summary        = strip_shortcodes( strip_tags( $summary ) );
+		$post_excerpt   = apply_filters( 'wpcp_post_excerpt', $summary, $this->campaign_id, $article, $this->keyword );
+		$author_id      = get_post_field( 'post_author', $this->campaign_id, $this->keyword );
+		$post_author    = apply_filters( 'wpcp_post_author', $author_id, $this->campaign_id, $article, $this->keyword );
+		$post_type      = apply_filters( 'wpcp_post_type', 'post', $this->campaign_id, $article, $this->keyword );
+		$post_status    = apply_filters( 'wpcp_post_status', 'publish', $this->campaign_id, $article, $this->keyword );
+		$post_meta      = apply_filters( 'wpcp_post_meta', [], $this->campaign_id, $article, $this->keyword );
+		$post_tax       = apply_filters( 'wpcp_post_taxonomy', [], $this->campaign_id, $article, $this->keyword );
+		$post_time      = apply_filters( 'wpcp_post_time', date( 'Y-m-d H:i:s', current_time( 'timestamp' ) ), $this->campaign_id, $article, $this->keyword );
+		$comment_status = apply_filters( 'wpcp_post_comment_status', get_default_comment_status( $post_type ), $this->campaign_id, $article, $this->keyword );
+		$ping_status    = apply_filters( 'wpcp_post_ping_status', get_default_comment_status( $post_type, 'pingback' ), $this->campaign_id, $article, $this->keyword );
+
+		/**
+		 * Filter to manipulate postarr param before insert a post
+		 *
+		 * @since 1.0.3
+		 *
+		 * @param array
+		 */
+		$postarr = apply_filters( 'wpcp_insert_post_postarr', [
+			'post_title'     => $title,
+			'post_author'    => $post_author,
+			'post_excerpt'   => $post_excerpt,
+			'post_type'      => $post_type,
+			'post_status'    => $post_status,
+			'post_date'      => $post_time,
+			'post_date_gmt'  => get_gmt_from_date( $post_time ),
+			'post_content'   => $post_content,
+			'meta_input'     => $post_meta,
+			'tax_input'      => $post_tax,
+			'comment_status' => $comment_status,
+			'ping_status'    => $ping_status,
+		], $this->campaign_id, $article );
+
+		$post_id = wp_insert_post( $postarr, true );
+
+		if ( is_wp_error( $post_id ) ) {
+			wpcp_log( __( 'Post insertion failed Reason: ' . $post_id->get_error_message() ), 'critical' );
+			do_action( 'wpcp_post_insertion_failed', $this->campaign_id, $this->keyword );
+
+			return $post_id;
+		}
+
+		update_post_meta( $post_id, '_wpcp_campaign_generated_post', $this->campaign_id );
+
+		do_action( 'wpcp_after_post_publish', $post_id, $this->campaign_id, $article, $this->keyword );
+
+		//we are here that means the url was success
+		wpcp_update_link( $link->id, [ 'status' => 'success', 'post_id' => $post_id ] );
+
+		return $post_id;
+
 	}
 
 	/**
@@ -153,7 +212,7 @@ abstract class WPCP_Campaign {
 	protected function get_link() {
 		global $wpdb;
 		$table  = $wpdb->prefix . 'wpcp_links';
-		$sql    = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = '0'",
+		$sql    = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = 'ready'",
 			$this->keyword,
 			$this->campaign_id,
 			$this->campaign_type
@@ -190,6 +249,28 @@ abstract class WPCP_Campaign {
 		return false;
 	}
 
+	protected function insert_link( $args ) {
+		$id = wpcp_insert_link( array(
+			'camp_id'     => $this->campaign_id,
+			'post_id'     => empty( $args['post_id'] ) ? null : intval( $args['post_id'] ),
+			'keyword'     => $this->keyword,
+			'camp_type'   => $this->campaign_type,
+			'status'      => empty( $args['status'] ) ? 'fetched' : esc_attr( $args['status'] ),
+			'url'         => $args['url'],
+			'title'       => empty( $args['title'] ) ? null : esc_attr( $args['title'] ),
+			'image'       => empty( $args['image'] ) ? null : esc_attr( $args['image'] ),
+			'content'     => empty( $args['content'] ) ? null : esc_attr( $args['content'] ),
+			'raw_content' => empty( $args['raw_content'] ) ? '' : $args['raw_content'],
+			'score'       => empty( $args['score'] ) ? null : esc_attr( $args['raw_content'] ),
+		) );
+		if ( $id ) {
+			return true;
+		}
+
+		return false;
+	}
+
+
 	/**
 	 * Insert links
 	 *
@@ -202,17 +283,9 @@ abstract class WPCP_Campaign {
 	 */
 	protected function inset_links( $links ) {
 		$counter = 0;
-		foreach ( $links as $indentifier => $link ) {
-			$id = wpcp_insert_link( array(
-				'camp_id'    => $this->campaign_id,
-				'url'        => $link,
-				'keyword'    => $this->keyword,
-				'identifier' => $indentifier,
-				'camp_type'  => $this->campaign_type,
-				'status'     => 0,
-			) );
+		foreach ( $links as $link ) {
 
-			if ( $id ) {
+			if ( $this->insert_link( $link ) ) {
 				$counter ++;
 			}
 		}
