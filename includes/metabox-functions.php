@@ -103,10 +103,14 @@ function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'feeds
 
 	do_action( 'wpcp_before_campaign_keyword_input', $post_id, $campaign_type );
 
+	$keywords = get_post_meta($post_id, '_keywords', true);
+	$keywords = !empty($keywords) ? $keywords : '';
+
 	$keyword_input_args = apply_filters( 'wpcp_campaign_keyword_input_args', array(
 		'label'    => __( 'Keywords', 'wp-content-pilot' ),
 		'name'     => '_keywords',
 		'required' => true,
+		'value' => $keywords
 	), $campaign_type );
 
 	echo apply_filters( 'wpcp_campaign_keyword_input', content_pilot()->elements->textarea( $keyword_input_args ), $campaign_type );
@@ -167,6 +171,7 @@ function wpcp_campaign_advance_settings_metabox_callback( $post ) {
 }
 
 function wpcp_update_campaign_settings( $post_id ) {
+
 	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		return false;
 	}
