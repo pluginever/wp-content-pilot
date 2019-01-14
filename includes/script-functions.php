@@ -15,9 +15,10 @@ function wpcp_load_admin_scripts( $hook ) {
 	$vendor_dir = WPCP_ASSETS_URL . '/vendor/';
 
 	// Use minified libraries if SCRIPT_DEBUG is turned off
-	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '';
 
 	// These have to be global
+
 	wp_register_style( 'jquery-chosen', $vendor_dir . 'chosen/chosen' . $suffix . '.css', array(), WPCP_VERSION );
 	wp_enqueue_style( 'jquery-chosen' );
 
