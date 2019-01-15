@@ -24,6 +24,8 @@ class WPCP_Article extends WPCP_Campaign {
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
 		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
 		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
+
+		add_action( 'wpcp_per_minute_scheduled_events', array( $this, 'fetch_contents' ) );
 	}
 
 	/**
@@ -126,8 +128,15 @@ class WPCP_Article extends WPCP_Campaign {
 		return $links;
 	}
 
+	/**
+	 * Discover new links
+	 *
+	 * since 1.0.0
+	 *
+	 * @return array|mixed|object
+	 */
 	public function discover_links() {
-		$page = $this->get_page_number( 0 );
+		$page  = $this->get_page_number( 0 );
 		$links = array();
 		if ( ! $page ) {
 			for ( $page = 0; $page <= 10; $page ++ ) {
@@ -158,15 +167,51 @@ class WPCP_Article extends WPCP_Campaign {
 				'image'       => '',
 				'raw_content' => $link['description'],
 				'score'       => '0',
-				'date_gmt'    => gmdate( 'Y-m-d H:i:s', strtotime( $link['pubDate'] ) ),
+				'gmt_date'    => gmdate( 'Y-m-d H:i:s', strtotime( $link['pubDate'] ) ),
 				'status'      => 'fetched',
 			);
+
 		}
+
 		return $sanitized_links;
 	}
 
+	public function fetch_contents(){
+		global $wpdb;
+		$links = $wpdb->get_results( $wpdb->prepare( "select * from {$wpdb->prefix}wpcp_links where status=%s AND camp_type=%s order by id asc limit 1", 'fetched', 'article' ) );
+
+		foreach ( $links as $link ) {
+			$request = wpcp_remote_get( $link->url );
+			$body    = wpcp_retrieve_body( $request );
+			wpcp_update_link( $link->id, [ 'status' => 'failed' ] );
+			if ( is_wp_error( $body ) ) {
+				wpcp_update_link( $link->id, [ 'status' => 'failed' ] );
+			}
+
+			$article = wpcp_get_readability( $body, $link->url );
+
+			wpcp_update_link( $link->id, array(
+				'title'       => $article['title'],
+				'content'     => '',
+				'raw_content' => $article['content'],
+				'image'       => $article['image'],
+				'score'       => wpcp_get_read_ability_score( $article['content'] ),
+				'status'      => empty( $article['content'] ) ? 'not_readable' : 'ready',
+			) );
+
+		}
+
+	}
+
+	/**
+	 * fetch post
+	 *
+	 * since 1.0.0
+	 *
+	 * @param $link
+	 */
 	public function fetch_post( $link ) {
-		var_dump($link);
+		var_dump( $link );
 
 	}
 

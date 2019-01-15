@@ -14,54 +14,108 @@ function wpcp_get_modules() {
 	return $modules;
 }
 
+
 /**
- * Set up requst
+ * Make a get request
  *
- * @since 1.0.0
+ * since 1.0.0
  *
- * @param      $campaign_type
- * @param null $url
- * @param null $campaign_id
+ * @param       $url
+ * @param array $args
+ * @param array $options
  *
  * @return \Curl\Curl
- * @throws \ErrorException
  */
-function wpcp_setup_request( $campaign_type, $url = null, $campaign_id = null ) {
-	if ( $url !== null ) {
-		$curl = new \Curl\Curl( $url );
-	} else {
-		$curl = new \Curl\Curl();
-	}
+function wpcp_remote_get( $url, $args = array(), $options = array() ) {
+	return wpcp_remote_request( $url, $args, $options, 'GET' );
+}
 
+/**
+ * Make a post request
+ *
+ * since 1.0.0
+ *
+ * @param       $url
+ * @param array $args
+ * @param array $options
+ *
+ * @return \Curl\Curl
+ */
+function wpcp_remote_post( $url, $args = array(), $options = array() ) {
+	return wpcp_remote_request( $url, $args, $options, 'POST' );
+}
+
+/**
+ * Make a remote request
+ *
+ * since 1.0.0
+ *
+ * @param        $url
+ * @param array  $args
+ * @param array  $options
+ * @param string $type
+ *
+ * @return \Curl\Curl
+ */
+function wpcp_remote_request( $url, $args = array(), $options = array(), $type = 'GET' ) {
+	$curl = new \Curl\Curl( $url );
 	$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
 	$curl->setOpt( CURLOPT_TIMEOUT, 30 );
 	$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
+	$options = apply_filters( 'wpcp_remove_request', $options );
+	if ( ! empty( $options ) ) {
+		foreach ( $options as $param => $value ) {
+			$curl->setOpt( $param, $value );
+		}
+	}
+	switch ( $type ) {
+		case 'POST':
+			$curl->post( null, $args );
+			break;
+		default:
+			$curl->get( null, $args );
+			break;
+	}
 
-	return apply_filters( 'content_pilot_setup_request', $curl, $campaign_id, $campaign_type );
+	return $curl;
 }
 
 /**
- * Check the response
+ * get response headers
+ * since 1.0.0
  *
- * @since 1.0.0
+ * @param  \Curl\Curl $response
+ * @param null        $param
  *
- * @param \Curl\Curl $request
- *
- * @return null|\WP_Error
- *
+ * @return string
  */
-function wpcp_is_valid_response( \Curl\Curl $request ) {
-	if ( empty( $request ) ) {
-		return new WP_Error( 'nothing-in-response', __( 'Nothing in the response object', 'content-pilot' ) );
+function wpcp_remote_headers( $response, $param = null ) {
+	if ( $response->error || ( $param && empty( $response->responseHeaders[ $param ] ) ) ) {
+		return '';
 	}
 
-	if ( $request->error ) {
-		return new WP_Error( $request->errorCode, $request->curlErrorMessage );
+	if ( $param && ! empty( $response->responseHeaders[ $param ] ) ) {
+		return $response->responseHeaders[ $param ];
 	}
 
-	return $request->response;
+	return $response->responseHeaders;
 }
 
+/**
+ *
+ * since 1.0.0
+ *
+ * @param \Curl\Curl $response
+ *
+ * @return \SimpleXMLElement | \WP_Error
+ */
+function wpcp_retrieve_body( $response ) {
+	if ( $response->error ) {
+		return new WP_Error( 'request-failed', $response->errorMessage );
+	}
+
+	return $response->response;
+}
 
 /**
  * Logger for the plugin
@@ -392,6 +446,7 @@ function wpcp_insert_link( array $data ) {
 		'content'     => '',
 		'raw_content' => '',
 		'score'       => '',
+		'gmt_date'    => '',
 	] );
 
 	global $wpdb;
@@ -403,7 +458,7 @@ function wpcp_insert_link( array $data ) {
 		return false;
 	}
 
-
+	var_dump($data);
 	$id = $wpdb->insert(
 		$table,
 		$data
@@ -431,4 +486,65 @@ function wpcp_update_link( $id, array $data ) {
 	);
 
 	return $id;
+}
+
+/**
+ * find readability score
+ *
+ * since 1.0.0
+ * @param $html
+ *
+ * @return float|int
+ */
+function wpcp_get_read_ability_score( $html ) {
+	$textStatistics = new \DaveChild\TextStatistics\TextStatistics();
+
+	return $textStatistics->fleschKincaidReadingEase( $html );
+}
+
+/**
+ * Find readability of a given HTML
+ * since 1.0.0
+ * @param $html
+ * @param $url
+ *
+ * @return array|\WP_Error
+ */
+function wpcp_get_readability( $html, $url ) {
+	$configuration = new \andreskrey\Readability\Configuration( [
+		'fixRelativeURLs' => true,
+		'originalURL'     => $url,
+		// other parameters ... listing below
+	] );
+
+	$readability = new \andreskrey\Readability\Readability( $configuration );
+	try {
+		$readability->parse( $html );
+	} catch ( \andreskrey\Readability\ParseException $e ) {
+		return new WP_Error( 'readability-error', $e->getMessage );
+	}
+	$title   = $readability->getTitle();
+	$content = $readability->getContent();
+	$image   = $readability->getImage();
+	$content = balanceTags( $content, true );
+	$content = ent2ncr( $content );
+	$content = convert_chars( $content );
+	$content = wpcp_remove_empty_tags_recursive( $content );
+	$content = wpcp_remove_unauthorized_html( $content );
+
+	if ( empty( $image ) ) {
+		$images = wpcp_get_all_image_urls( $content );
+		if ( ! empty( $images ) ) {
+			$image = $images[0];
+		}
+	}
+
+
+	$article = [
+		'content' => $content,
+		'title'   => $title,
+		'image'   => $image,
+	];
+
+	return $article;
 }

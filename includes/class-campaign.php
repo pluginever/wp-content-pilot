@@ -55,7 +55,7 @@ abstract class WPCP_Campaign {
 	 */
 	public function set_campaign_id( $campaign_id ) {
 		$this->campaign_id   = intval( $campaign_id );
-		$this->campaign_type = get_post_type( $campaign_id );
+		$this->campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
 	}
 
 	/**
@@ -110,8 +110,8 @@ abstract class WPCP_Campaign {
 
 			//check the result
 
-			$urls = wp_list_pluck($links, 'url');
-			$string_urls = implode(',', $urls);
+			$urls        = wp_list_pluck( $links, 'url' );
+			$string_urls = implode( ',', $urls );
 
 			if ( $this->is_result_like_last_time( $string_urls ) ) {
 				$msg = __( sprintf( 'Could not discover any new links to grab contents for the keyword "%s". Please try letter.', $this->keyword ), 'wp-content-pilot' );
@@ -264,6 +264,7 @@ abstract class WPCP_Campaign {
 			'content'     => empty( $args['content'] ) ? null : esc_attr( $args['content'] ),
 			'raw_content' => empty( $args['raw_content'] ) ? '' : $args['raw_content'],
 			'score'       => empty( $args['score'] ) ? null : esc_attr( $args['raw_content'] ),
+			'gmt_date'    => empty( $args['gmt_date'] ) ? null : esc_attr( $args['gmt_date'] ),
 		) );
 		if ( $id ) {
 			return true;
@@ -340,56 +341,30 @@ abstract class WPCP_Campaign {
 	}
 
 	/**
-	 * setup request
+	 * Search in bing
 	 *
-	 * @since 1.0.0
-	 *
-	 * @param null $url
-	 *
-	 * @return \Curl\Curl
-	 * @throws \ErrorException
-	 */
-	public function setup_request( $url = null ) {
-		return wpcp_setup_request( $this->campaign_type, $url, $this->campaign_id );
-	}
-
-	/**
-	 *
-	 *
-	 * @since 1.0.0
+	 * since 1.0.0
 	 *
 	 * @param        $keywords
 	 * @param int    $page
 	 * @param string $result_group
 	 *
 	 * @return array|mixed|object
-	 * @throws \ErrorException
 	 */
 	public function bing_search( $keywords, $page = 0, $result_group = 'channel.item' ) {
-		try{
-			$request = $this->setup_request( 'https://www.bing.com' );
-		}catch (Exception $e){
-			return new WP_Error('request-error', $e->getMessage());
-		}
-
-		$request->get( 'search', array(
+		$request  = wpcp_remote_get( 'https://www.bing.com/search', array(
 			'q'      => $keywords,
 			'count'  => 100,
 			'loc'    => 'en',
 			'format' => 'rss',
 			'first'  => ( $page * 10 ),
 		) );
+		$response = wpcp_retrieve_body( $request );
 
-		$response = wpcp_is_valid_response( $request );
-		$request->close();
-
-		if ( ! $response ) {
+		if ( is_wp_error( $response ) ) {
 			return [];
-
 		}
-
 		if ( ! $response instanceof \SimpleXMLElement ) {
-			wpcp_log( 'log', $response );
 			$response = simplexml_load_string( $response );
 		}
 
