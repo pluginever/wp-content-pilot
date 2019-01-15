@@ -109,9 +109,11 @@ abstract class WPCP_Campaign {
 			}
 
 			//check the result
-			$str_links = serialize( $links );
 
-			if ( $this->is_result_like_last_time( $str_links ) ) {
+			$urls = wp_list_pluck($links, 'url');
+			$string_urls = implode(',', $urls);
+
+			if ( $this->is_result_like_last_time( $string_urls ) ) {
 				$msg = __( sprintf( 'Could not discover any new links to grab contents for the keyword "%s". Please try letter.', $this->keyword ), 'wp-content-pilot' );
 				wpcp_log( $msg, 'log' );
 
@@ -124,7 +126,7 @@ abstract class WPCP_Campaign {
 			wpcp_log( __( sprintf( 'Total %d links inserted', $inserted ), 'wp-content-pilot' ), 'log' );
 
 			$link = $this->get_link();
-			if ( ! $link ) {
+			if ( $link ) {
 				return new \WP_Error( 'no-valid-links-found', __( 'Could not retrieve any valid links. Please wait to generate new links.', 'content-pilot' ) );
 			}
 		}
@@ -212,7 +214,7 @@ abstract class WPCP_Campaign {
 	protected function get_link() {
 		global $wpdb;
 		$table  = $wpdb->prefix . 'wpcp_links';
-		$sql    = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = 'ready'",
+		$sql    = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = 'fetched'",
 			$this->keyword,
 			$this->campaign_id,
 			$this->campaign_type
@@ -239,12 +241,12 @@ abstract class WPCP_Campaign {
 	 */
 	protected function is_result_like_last_time( $html ) {
 		$hash      = @md5( (string) $html );
-		$last_feed = wpcp_get_post_meta( $this->campaign_id, $this->get_uid( 'last-feed' ), '' );
+		$last_feed = wpcp_get_post_meta( $this->campaign_id, $this->get_uid( 'last-result' ), '' );
 		if ( $hash == $last_feed ) {
 			return true;
 		}
 
-		update_post_meta( $this->campaign_id, $this->get_uid( 'last-feed' ), $hash );
+		update_post_meta( $this->campaign_id, $this->get_uid( 'last-result' ), $hash );
 
 		return false;
 	}
@@ -309,5 +311,108 @@ abstract class WPCP_Campaign {
 		return sanitize_title( $string );
 	}
 
+	/**
+	 * Get last page
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $default
+	 *
+	 * @return int|mixed
+	 *
+	 */
+	public function get_page_number( $default = 0 ) {
+		$page = get_post_meta( $this->campaign_id, "page-" . $this->get_uid( 'page-number' ), true );
+
+		return ! empty( $page ) ? $page : $default;
+	}
+
+	/**
+	 * set the page number from where next query will be
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $number
+	 *
+	 */
+	public function set_page_number( $number ) {
+		update_post_meta( $this->campaign_id, "page-" . $this->get_uid( 'page-number' ), $number );
+	}
+
+	/**
+	 * setup request
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param null $url
+	 *
+	 * @return \Curl\Curl
+	 * @throws \ErrorException
+	 */
+	public function setup_request( $url = null ) {
+		return wpcp_setup_request( $this->campaign_type, $url, $this->campaign_id );
+	}
+
+	/**
+	 *
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param        $keywords
+	 * @param int    $page
+	 * @param string $result_group
+	 *
+	 * @return array|mixed|object
+	 * @throws \ErrorException
+	 */
+	public function bing_search( $keywords, $page = 0, $result_group = 'channel.item' ) {
+		try{
+			$request = $this->setup_request( 'https://www.bing.com' );
+		}catch (Exception $e){
+			return new WP_Error('request-error', $e->getMessage());
+		}
+
+		$request->get( 'search', array(
+			'q'      => $keywords,
+			'count'  => 100,
+			'loc'    => 'en',
+			'format' => 'rss',
+			'first'  => ( $page * 10 ),
+		) );
+
+		$response = wpcp_is_valid_response( $request );
+		$request->close();
+
+		if ( ! $response ) {
+			return [];
+
+		}
+
+		if ( ! $response instanceof \SimpleXMLElement ) {
+			wpcp_log( 'log', $response );
+			$response = simplexml_load_string( $response );
+		}
+
+		$deJson    = json_encode( $response );
+		$xml_array = json_decode( $deJson, true );
+		if ( ! $xml_array ) {
+			return [];
+		}
+
+		$response_array = $xml_array;
+
+		$result_group_arr = explode( '.', $result_group );
+		foreach ( $result_group_arr as $key ) {
+			if ( empty( $response_array[ $key ] ) ) {
+				return [];
+				break;
+			}
+			$response_array = $response_array[ $key ];
+
+		}
+
+		return $response_array;
+
+	}
 
 }

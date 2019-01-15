@@ -222,7 +222,11 @@ final class ContentPilot {
 	 */
 	public function includes() {
 		//core includes
+		include_once WPCP_PATH . '/vendor/autoload.php';
+
 		include_once WPCP_INCLUDES . '/core-functions.php';
+		include_once WPCP_INCLUDES . '/formatting-functions.php';
+		include_once WPCP_INCLUDES . '/action-functions.php';
 		include_once WPCP_INCLUDES . '/class-install.php';
 		include_once WPCP_INCLUDES . '/post-types.php';
 		include_once WPCP_INCLUDES . '/class-elements.php';
@@ -259,6 +263,8 @@ final class ContentPilot {
 		add_action( 'init', array( $this, 'localization_setup' ) );
 
 		//add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
+
+		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ) );
 	}
 
 	/**
@@ -282,6 +288,22 @@ final class ContentPilot {
 	public function plugin_action_links( $links ) {
 		//$links[] = '<a href="' . admin_url( 'admin.php?page=' ) . '">' . __( 'Settings', '' ) . '</a>';
 		return $links;
+	}
+
+	/**
+	 * Add custom cron schedule
+	 *
+	 * @param $schedules
+	 *
+	 * @return mixed
+	 */
+	public function custom_cron_schedules( $schedules ) {
+		$schedules ['once_a_minute'] = array(
+			'interval' => 60,
+			'display'  => __( 'Once a Minute' )
+		);
+
+		return $schedules;
 	}
 
 	/**

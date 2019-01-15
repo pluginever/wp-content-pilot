@@ -14,16 +14,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WPCP_Article {
+class WPCP_Article extends WPCP_Campaign {
 
 	/**
 	 * WPCP_Feed constructor.
 	 */
 	public function __construct() {
+		//campaign settings
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
-		add_filter( 'wpcp_campaign_keyword_input_args', array( $this, 'campaign_keyword_input' ), 10, 2 );
+		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
+		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
 	}
 
+	/**
+	 * Register article module
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $modules
+	 *
+	 * @return mixed
+	 */
 	public function register_module( $modules ) {
 		$modules['article'] = [
 			'title'       => __( 'Article', 'wp-content-pilot' ),
@@ -35,14 +46,128 @@ class WPCP_Article {
 		return $modules;
 	}
 
+	/**
+	 * add extra fields
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $post_id
+	 * @param $campaign_type
+	 *
+	 * @return bool
+	 */
+	public function campaign_option_fields( $post_id, $campaign_type ) {
 
-	public function campaign_keyword_input( $attr, $campaign_type ) {
-//		if ( $campaign_type == 'feeds' ) {
-//			$attr['label'] = __( 'Feed Links', 'wp-content-pilot' );
-//			$attr['name']  = '_feed_links';
-//		}
+		if ( 'article' != $campaign_type ) {
+			return false;
+		}
 
-		return $attr;
+		echo content_pilot()->elements->select( array(
+			'label'            => __( 'Keyword Type', 'wp-content-pilot' ),
+			'name'             => '_keywords_type',
+			'placeholder'      => '',
+			'show_option_all'  => '',
+			'show_option_none' => '',
+			'options'          => array(
+				'any'   => __( 'Any Words', 'wp-content-pilot' ),
+				'exact' => __( 'Exact Word', 'wp-content-pilot' ),
+			),
+			'required'         => true,
+			'double_columns'   => true,
+			'selected'         => wpcp_get_post_meta( $post_id, '_keywords_type', 'any' ),
+		) );
+
+	}
+
+	/**
+	 * update campaign settings postmeta
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $post_id
+	 * @param $posted
+	 */
+	public function update_campaign_settings( $post_id, $posted ) {
+
+		$raw_keywords = empty( $posted['_keywords'] ) ? '' : esc_html( $posted['_keywords'] );
+		$keywords     = wpcp_string_to_array( $raw_keywords, ',', array( 'trim' ) );
+		$str_words    = implode( ',', $keywords );
+
+		update_post_meta( $post_id, '_keywords', $str_words );
+		update_post_meta( $post_id, '_keywords_type', empty( $posted['_keywords_type'] ) ? 'any' : esc_attr( $posted['_keywords_type'] ) );
+	}
+
+	public function setup() {
+		add_filter( 'wpcp_fetched_links', array( $this, 'skip_base_domain' ) );
+	}
+
+	/**
+	 * Skip base domain from fetched urls
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $links
+	 *
+	 * @return array
+	 */
+	public function skip_base_domain( $links ) {
+
+		if ( 'on' != wpcp_get_post_meta( $this->campaign_id, '_skip_base_domain', true ) ) {
+			return $links;
+		}
+
+		foreach ( $links as $key => $link ) {
+			$url_parts = wp_parse_url( $link['url'] );
+			if ( strlen( $url_parts['path'] ) < 5 ) {
+				unset( $links[ $key ] );
+			}
+		}
+
+		return $links;
+	}
+
+	public function discover_links() {
+		$page = $this->get_page_number( 0 );
+		$links = array();
+		if ( ! $page ) {
+			for ( $page = 0; $page <= 10; $page ++ ) {
+				$links = $this->bing_search( $this->keyword, $page );
+				if ( is_wp_error( $links ) ) {
+					return $links;
+				}
+
+				if ( ! empty( $links ) ) {
+					break;
+				}
+			}
+		} else {
+			$links = $this->bing_search( $this->keyword, $page );
+			if ( is_wp_error( $links ) ) {
+				return $links;
+			}
+		}
+		$this->set_page_number( $page + 1 );
+
+		$sanitized_links = array();
+
+		foreach ( $links as $link ) {
+			$sanitized_links[] = array(
+				'title'       => $link['title'],
+				'content'     => $link['description'],
+				'url'         => $link['link'],
+				'image'       => '',
+				'raw_content' => $link['description'],
+				'score'       => '0',
+				'date_gmt'    => gmdate( 'Y-m-d H:i:s', strtotime( $link['pubDate'] ) ),
+				'status'      => 'fetched',
+			);
+		}
+		return $sanitized_links;
+	}
+
+	public function fetch_post( $link ) {
+		var_dump($link);
+
 	}
 
 

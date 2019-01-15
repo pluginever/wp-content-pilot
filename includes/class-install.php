@@ -53,6 +53,7 @@ class WPCP_Install {
                 `content` longtext DEFAULT NULL,
                 `raw_content` longtext DEFAULT NULL,
                 `score` INT(3) DEFAULT 0,
+                `gmt_date` datetime DEFAULT CURRENT_TIMESTAMP,
                 `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
                 `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`),

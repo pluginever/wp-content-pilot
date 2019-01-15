@@ -110,6 +110,7 @@ function wpcp_campaign_options_metabox_fields($post_id, $campaign_type = 'articl
 		'label'    => __('Keywords', 'wp-content-pilot'),
 		'name'     => '_keywords',
 		'required' => true,
+		'desc' => __('Separate keywords by comma.', 'wp-content-pilot'),
 		'value'    => $keywords
 	), $post_id, $campaign_type);
 

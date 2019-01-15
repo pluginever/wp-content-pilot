@@ -55,7 +55,7 @@ class WPCP_Feed extends WPCP_Campaign {
 		if ( $campaign_type == 'feeds' ) {
 			$attr['label'] = __( 'Feed Links', 'wp-content-pilot' );
 			$attr['name']  = '_feed_links';
-			$attr['desc']  = __( 'Input feed links separate by new line, from where you want to grab the posts.', 'wp-content-pilot' );
+			$attr['desc']  = __( 'Input feed links separate comma', 'wp-content-pilot' );
 			$attr['value'] = wpcp_get_post_meta( $post_id, '_feed_links');
 		}
 
