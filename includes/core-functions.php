@@ -458,7 +458,7 @@ function wpcp_insert_link( array $data ) {
 		return false;
 	}
 
-	var_dump($data);
+	var_dump( $data );
 	$id = $wpdb->insert(
 		$table,
 		$data
@@ -492,6 +492,7 @@ function wpcp_update_link( $id, array $data ) {
  * find readability score
  *
  * since 1.0.0
+ *
  * @param $html
  *
  * @return float|int
@@ -505,6 +506,7 @@ function wpcp_get_read_ability_score( $html ) {
 /**
  * Find readability of a given HTML
  * since 1.0.0
+ *
  * @param $html
  * @param $url
  *
@@ -552,13 +554,14 @@ function wpcp_get_readability( $html, $url ) {
 /**
  * Download image from url
  * since 1.0.0
+ *
  * @param $url
  *
  * @return bool|int
  */
 function wpcp_download_image( $url ) {
-	$url = explode( '?', esc_url_raw( $url ) );
-	$url = $url[0];
+	$url     = explode( '?', esc_url_raw( $url ) );
+	$url     = $url[0];
 	$get     = wp_remote_get( $url );
 	$headers = wp_remote_retrieve_headers( $get );
 	$type    = isset( $headers['content-type'] ) ? $headers['content-type'] : null;
@@ -566,7 +569,7 @@ function wpcp_download_image( $url ) {
 		return false;
 	}
 
-	$mirror = wp_upload_bits( basename( $url ), '', wp_remote_retrieve_body( $get ) );
+	$mirror     = wp_upload_bits( basename( $url ), '', wp_remote_retrieve_body( $get ) );
 	$attachment = array(
 		'post_title'     => basename( $url ),
 		'post_mime_type' => $type
@@ -580,4 +583,25 @@ function wpcp_download_image( $url ) {
 	wp_update_attachment_metadata( $attach_id, $attach_data );
 
 	return $attach_id;
+}
+
+/**
+ * Replace template tag with content
+ *
+ * since 1.0.0
+ *
+ * @param       $content
+ * @param array $article
+ *
+ * @return string
+ */
+function wpcp_replace_template_tags( $content, $article = array() ) {
+	$content = str_replace( '{content}', empty( $article['content'] ) ? '' : $article['content'], $content );
+	$content = str_replace( '{title}', empty( $article['title'] ) ? '' : $article['title'], $content );
+	$content = str_replace( '{image_url}', empty( $article['image_url'] ) ? '' : $article['image_url'], $content );
+	$content = str_replace( '{source_url}', empty( $article['source_url'] ) ? '' : $article['source_url'], $content );
+
+	$content = apply_filters( 'wpcp_replace_template_tags', $content, $article );
+
+	return html_entity_decode($content);
 }

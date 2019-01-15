@@ -179,7 +179,7 @@ class WPCP_Article extends WPCP_Campaign {
 	public function fetch_contents() {
 		global $wpdb;
 		$links = $wpdb->get_results( $wpdb->prepare( "select * from {$wpdb->prefix}wpcp_links where status=%s AND camp_type=%s order by id asc limit 1", 'fetched', 'article' ) );
-
+		error_log( 'article fetching links' );
 		foreach ( $links as $link ) {
 			$request = wpcp_remote_get( $link->url );
 			$body    = wpcp_retrieve_body( $request );
@@ -189,11 +189,15 @@ class WPCP_Article extends WPCP_Campaign {
 			}
 
 			$article = wpcp_get_readability( $body, $link->url );
+			if ( is_wp_error( $article ) ) {
+				wpcp_log( $article->get_error_message(), 'readability' );
+				continue;
+			}
 
 			wpcp_update_link( $link->id, array(
 				'title'       => $article['title'],
-				'content'     => '',
-				'raw_content' => trim($article['content']),
+				'content'     => trim( $article['content'] ),
+				'raw_content' => trim( $article['content'] ),
 				'image'       => $article['image'],
 				'score'       => wpcp_get_read_ability_score( $article['content'] ),
 				'status'      => empty( $article['content'] ) ? 'not_readable' : 'ready',
@@ -207,6 +211,7 @@ class WPCP_Article extends WPCP_Campaign {
 	 * fetch post
 	 *
 	 * since 1.0.0
+	 *
 	 * @param $link
 	 *
 	 * @return array
@@ -214,10 +219,12 @@ class WPCP_Article extends WPCP_Campaign {
 	public function get_post( $link ) {
 		$article = array(
 			'title'       => $link->title,
+			'raw_title'   => $link->title,
 			'content'     => $link->content,
 			'raw_content' => $link->raw_content,
 			'image_url'   => $link->image,
-			'date'        => $link->gmt_date,
+			'source_url'  => $link->url,
+			'date'        => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
 			'score'       => $link->score,
 		);
 

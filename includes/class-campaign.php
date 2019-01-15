@@ -126,7 +126,12 @@ abstract class WPCP_Campaign {
 			wpcp_log( __( sprintf( 'Total %d links inserted', $inserted ), 'wp-content-pilot' ), 'log' );
 
 			$link = $this->get_link();
-			if ( $link ) {
+			$fetched_links = $this->get_link('fetched');
+			if ( empty($link) && !empty($fetched_links)) {
+				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'content-pilot' ) );
+			}
+
+			if ( empty($link) ) {
 				return new \WP_Error( 'no-valid-links-found', __( 'Could not retrieve any valid links. Please wait to generate new links.', 'content-pilot' ) );
 			}
 		}
@@ -175,14 +180,12 @@ abstract class WPCP_Campaign {
 		$post_time = current_time( 'mysql' );
 		$summary   = '';
 		$author_id = get_post_field( 'post_author', $this->campaign_id, 'edit' );
-		$content   = $article['raw_content'];
-		$title     = $article['title'];
 
 		/*=========================BEFORE INSERTING POST =========================*/
 		//use original post date
 		$use_original_date = wpcp_get_post_meta( $this->campaign_id, '_use_original_date', 0 );
 		if ( 'on' === $use_original_date && empty( $article['date'] ) ) {
-			$post_time = get_date_from_gmt( $article['date'] );
+			$post_time = $article['date'];
 		}
 
 		//insert post summary
@@ -198,14 +201,14 @@ abstract class WPCP_Campaign {
 		//remove images links
 		$remove_image_links = wpcp_get_post_meta( $this->campaign_id, '_remove_images', 0 );
 		if ( 'on' === $remove_image_links ) {
-			$content = preg_replace( '#<img.*?>.*?>#i', '', $content );
+			$article['content'] = preg_replace( '#<img.*?>.*?>#i', '', $article['content'] );
 		}
 
 		//remove hyper links
 		$remove_hyper_links = wpcp_get_post_meta( $this->campaign_id, '_strip_links', 0 );
 		if ( 'on' === $remove_hyper_links ) {
 			//keep text
-			$content = preg_replace( '#<a.*?>(.*?)</a>#i', '\1', $content );
+			$article['content'] = preg_replace( '#<a.*?>(.*?)</a>#i', '\1', $article['content'] );
 			//remove text
 			/*$content =  preg_replace( '#<a.*?>(.*?)</a>#i', '', $content );*/
 
@@ -213,12 +216,12 @@ abstract class WPCP_Campaign {
 
 		$limit_title = wpcp_get_post_meta( $this->campaign_id, '_title_limit', 0 );
 		if ( ! empty( $limit_title ) && $limit_title > 0 ) {
-			$title = wp_trim_words( $title, $limit_title );
+			$article['title'] = wp_trim_words( $article['title'], $limit_title );
 		}
 
 		$limit_content = wpcp_get_post_meta( $this->campaign_id, '_content_limit', 0 );
 		if ( ! empty( $limit_content ) && $limit_content > 0 ) {
-			$content = wp_trim_words( $content, $limit_content );
+			$article['content'] = wp_trim_words( $article['content'], $limit_content );
 		}
 
 
@@ -226,6 +229,15 @@ abstract class WPCP_Campaign {
 
 
 		//translate template
+		$content_template = wpcp_get_post_meta( $this->campaign_id, '_post_template', '' );
+		if ( ! empty( $content_template ) ) {
+			$content = wpcp_replace_template_tags($content_template, $article);
+		}
+
+		$title_template = wpcp_get_post_meta( $this->campaign_id, '_post_title', '' );
+		if ( ! empty( $title_template ) ) {
+			$title = wpcp_replace_template_tags($title_template, $article);
+		}
 
 
 		//post
@@ -278,12 +290,10 @@ abstract class WPCP_Campaign {
 		$is_set_featured_image = wpcp_get_post_meta( $this->campaign_id, '_set_featured_image', 0 );
 		if ( 'on' === $is_set_featured_image && ! empty( $article['image_url'] ) ) {
 			$attachment_id = wpcp_download_image( $article['image_url'] );
-			var_dump( $attachment_id );
 			if ( $attachment_id ) {
 				update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
 			}
 		}
-
 
 		update_post_meta( $post_id, '_wpcp_campaign_generated_post', $this->campaign_id );
 
@@ -303,16 +313,16 @@ abstract class WPCP_Campaign {
 	 *
 	 * @return object|bool
 	 */
-	protected function get_link() {
+	protected function get_link($type = 'ready') {
 		global $wpdb;
 		$table = $wpdb->prefix . 'wpcp_links';
-		$sql   = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = 'ready'",
+		$sql   = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = '{$type}' limit 1",
 			$this->keyword,
 			$this->campaign_id,
 			$this->campaign_type
 		);
-//		$result = $wpdb->get_row( $sql );
-		$result = $wpdb->get_row( "select * from {$table} where id='63'" );
+		$result = $wpdb->get_row( $sql );
+//		$result = $wpdb->get_row( "select * from {$table} where id='63'" );
 
 		if ( empty( $result ) ) {
 			return false;

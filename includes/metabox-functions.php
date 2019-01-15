@@ -287,6 +287,9 @@ function wpcp_update_campaign_settings( $post_id ) {
 	update_post_meta( $post_id, '_skip_no_image', empty( $posted['_skip_no_image'] ) ? '' : esc_attr( $posted['_skip_no_image'] ) );
 	update_post_meta( $post_id, '_skip_duplicate_title', empty( $posted['_skip_duplicate_title'] ) ? '' : esc_attr( $posted['_skip_duplicate_title'] ) );
 
+	update_post_meta( $post_id, '_post_title', empty( $posted['_post_title'] ) ? '' : esc_attr( $posted['_post_title'] ) );
+	update_post_meta( $post_id, '_post_template', empty( $posted['_post_template'] ) ? '' : esc_attr( $posted['_post_template'] ) );
+
 	update_post_meta( $post_id, '_title_limit', empty( $posted['_title_limit'] ) ? '' : esc_attr( $posted['_title_limit'] ) );
 	update_post_meta( $post_id, '_content_limit', empty( $posted['_content_limit'] ) ? '' : esc_attr( $posted['_content_limit'] ) );
 
