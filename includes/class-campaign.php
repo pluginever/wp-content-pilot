@@ -44,7 +44,7 @@ abstract class WPCP_Campaign {
 
 	abstract function discover_links();
 
-	abstract function fetch_post( $link );
+	abstract function get_post( $link );
 
 	/**
 	 * setup campaign id
@@ -134,31 +134,112 @@ abstract class WPCP_Campaign {
 		//set link as failed if run till end then mark as success
 		wpcp_update_link( $link->id, [ 'status' => 'failed' ] );
 
-		$article = $this->fetch_post( $link );
+		$article = $this->get_post( $link );
 		if ( is_wp_error( $article ) ) {
 			return $article;
 		}
+		/*=========================CHECK FOR ACCEPTANCE=========================*/
 
-		//check for acceptance of the article
+		//minimum content check
+		$is_required_length = wpcp_get_post_meta( $this->campaign_id, '_min_words', 0 );
+		if ( ! empty( $is_required_length ) ) {
+			$words_count = str_word_count( $article['content'] );
+			if ( $words_count < $is_required_length ) {
+				return new WP_Error( 'lack-of-content', sprintf( __( "Post is rejected due to less content. Required %d Found %d", 'wp-content-pilot' ), $is_required_length, $words_count ) );
+			}
+		}
+
+		//duplicate check
+		$is_duplicate_title = wpcp_get_post_meta( $this->campaign_id, '_skip_duplicate_title', 0 );
+		if ( 'on' === $is_duplicate_title ) {
+			$post_type    = wpcp_get_post_meta( $this->campaign_id, '_post_type', 'post' );
+			$is_duplicate = get_page_by_title( $article['title'], OBJECT, $post_type );
+			if ( $is_duplicate ) {
+				return new WP_Error( 'duplicate-post', __( 'Post is rejected because post with same title exit.', 'wp-content-pilot' ) );
+			}
+		}
+
+		//skip post wihtout images
+		$is_required_img = wpcp_get_post_meta( $this->campaign_id, '_skip_no_image', 0 );
+		if ( 'on' === $is_required_img && empty( $article['image_url'] ) ) {
+			return new WP_Error( 'no-image-found', __( 'Post is rejected because could not find any image in the post.', 'wp-content-pilot' ) );
+		}
+
+		//allow 3rd party to hook
+		$passed_acceptance_test = apply_filters( 'wpcp_acceptance_check', true, $this->campaign_id, $article );
+		if ( true !== $passed_acceptance_test ) {
+			return $passed_acceptance_test;
+		}
+
+
+		$post_time = current_time( 'mysql' );
+		$summary   = '';
+		$author_id = get_post_field( 'post_author', $this->campaign_id, 'edit' );
+		$content   = $article['raw_content'];
+		$title     = $article['title'];
+
+		/*=========================BEFORE INSERTING POST =========================*/
+		//use original post date
+		$use_original_date = wpcp_get_post_meta( $this->campaign_id, '_use_original_date', 0 );
+		if ( 'on' === $use_original_date && empty( $article['date'] ) ) {
+			$post_time = get_date_from_gmt( $article['date'] );
+		}
+
+		//insert post summary
+		$use_post_summary = wpcp_get_post_meta( $this->campaign_id, '_excerpt', 0 );
+		if ( 'on' === $use_post_summary && empty( $article['raw_content'] ) ) {
+			$summary = wp_trim_words( $article['raw_content'], 55 );
+			$summary = strip_tags( $summary );
+			$summary = strip_shortcodes( $summary );
+		}
+		//is custom author
+
+
+		//remove images links
+		$remove_image_links = wpcp_get_post_meta( $this->campaign_id, '_remove_images', 0 );
+		if ( 'on' === $remove_image_links ) {
+			$content = preg_replace( '#<img.*?>.*?>#i', '', $content );
+		}
+
+		//remove hyper links
+		$remove_hyper_links = wpcp_get_post_meta( $this->campaign_id, '_strip_links', 0 );
+		if ( 'on' === $remove_hyper_links ) {
+			//keep text
+			$content = preg_replace( '#<a.*?>(.*?)</a>#i', '\1', $content );
+			//remove text
+			/*$content =  preg_replace( '#<a.*?>(.*?)</a>#i', '', $content );*/
+
+		}
+
+		$limit_title = wpcp_get_post_meta( $this->campaign_id, '_title_limit', 0 );
+		if ( ! empty( $limit_title ) && $limit_title > 0 ) {
+			$title = wp_trim_words( $title, $limit_title );
+		}
+
+		$limit_content = wpcp_get_post_meta( $this->campaign_id, '_content_limit', 0 );
+		if ( ! empty( $limit_content ) && $limit_content > 0 ) {
+			$content = wp_trim_words( $content, $limit_content );
+		}
+
+
+		//apply limit
+
+
+		//translate template
+
 
 		//post
 		do_action( 'wpcp_before_post_insert', $this->campaign_id, $article, $this->keyword );
 
-		$content = wpcp_remove_unauthorized_html( $article['content'] );
-		$content = wpcp_remove_empty_tags_recursive( $content );
-
-		$title          = apply_filters( 'wpcp_post_title', $article['title'], $this->campaign_id, $article, $this->keyword );
+		$title          = apply_filters( 'wpcp_post_title', $title, $this->campaign_id, $article, $this->keyword );
 		$post_content   = apply_filters( 'wpcp_post_content', $content, $this->campaign_id, $article, $this->keyword );
-		$summary        = wp_trim_words( $article['content'], 55 );
-		$summary        = strip_shortcodes( strip_tags( $summary ) );
 		$post_excerpt   = apply_filters( 'wpcp_post_excerpt', $summary, $this->campaign_id, $article, $this->keyword );
-		$author_id      = get_post_field( 'post_author', $this->campaign_id, $this->keyword );
 		$post_author    = apply_filters( 'wpcp_post_author', $author_id, $this->campaign_id, $article, $this->keyword );
 		$post_type      = apply_filters( 'wpcp_post_type', 'post', $this->campaign_id, $article, $this->keyword );
 		$post_status    = apply_filters( 'wpcp_post_status', 'publish', $this->campaign_id, $article, $this->keyword );
 		$post_meta      = apply_filters( 'wpcp_post_meta', [], $this->campaign_id, $article, $this->keyword );
 		$post_tax       = apply_filters( 'wpcp_post_taxonomy', [], $this->campaign_id, $article, $this->keyword );
-		$post_time      = apply_filters( 'wpcp_post_time', date( 'Y-m-d H:i:s', current_time( 'timestamp' ) ), $this->campaign_id, $article, $this->keyword );
+		$post_time      = apply_filters( 'wpcp_post_time', $post_time, $this->campaign_id, $article, $this->keyword );
 		$comment_status = apply_filters( 'wpcp_post_comment_status', get_default_comment_status( $post_type ), $this->campaign_id, $article, $this->keyword );
 		$ping_status    = apply_filters( 'wpcp_post_ping_status', get_default_comment_status( $post_type, 'pingback' ), $this->campaign_id, $article, $this->keyword );
 
@@ -187,11 +268,22 @@ abstract class WPCP_Campaign {
 		$post_id = wp_insert_post( $postarr, true );
 
 		if ( is_wp_error( $post_id ) ) {
-			wpcp_log( __( 'Post insertion failed Reason: ' . $post_id->get_error_message() ), 'critical' );
 			do_action( 'wpcp_post_insertion_failed', $this->campaign_id, $this->keyword );
 
 			return $post_id;
 		}
+
+		/*=========================AFTER POST STUFF=========================*/
+		//set featured image
+		$is_set_featured_image = wpcp_get_post_meta( $this->campaign_id, '_set_featured_image', 0 );
+		if ( 'on' === $is_set_featured_image && ! empty( $article['image_url'] ) ) {
+			$attachment_id = wpcp_download_image( $article['image_url'] );
+			var_dump( $attachment_id );
+			if ( $attachment_id ) {
+				update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
+			}
+		}
+
 
 		update_post_meta( $post_id, '_wpcp_campaign_generated_post', $this->campaign_id );
 
@@ -213,13 +305,14 @@ abstract class WPCP_Campaign {
 	 */
 	protected function get_link() {
 		global $wpdb;
-		$table  = $wpdb->prefix . 'wpcp_links';
-		$sql    = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = 'fetched'",
+		$table = $wpdb->prefix . 'wpcp_links';
+		$sql   = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = 'ready'",
 			$this->keyword,
 			$this->campaign_id,
 			$this->campaign_type
 		);
-		$result = $wpdb->get_row( $sql );
+//		$result = $wpdb->get_row( $sql );
+		$result = $wpdb->get_row( "select * from {$table} where id='63'" );
 
 		if ( empty( $result ) ) {
 			return false;

@@ -257,7 +257,7 @@ class WPCP_Feed extends WPCP_Campaign {
 
 	}
 
-	public function fetch_post( $link ) {
+	public function get_post( $link ) {
 
 		$images = wpcp_get_all_image_urls( $link->raw_content );
 

@@ -548,3 +548,36 @@ function wpcp_get_readability( $html, $url ) {
 
 	return $article;
 }
+
+/**
+ * Download image from url
+ * since 1.0.0
+ * @param $url
+ *
+ * @return bool|int
+ */
+function wpcp_download_image( $url ) {
+	$url = explode( '?', esc_url_raw( $url ) );
+	$url = $url[0];
+	$get     = wp_remote_get( $url );
+	$headers = wp_remote_retrieve_headers( $get );
+	$type    = isset( $headers['content-type'] ) ? $headers['content-type'] : null;
+	if ( is_wp_error( $get ) || ! isset( $type ) || ( ! in_array( $type, [ 'image/png', 'image/jpeg' ] ) ) ) {
+		return false;
+	}
+
+	$mirror = wp_upload_bits( basename( $url ), '', wp_remote_retrieve_body( $get ) );
+	$attachment = array(
+		'post_title'     => basename( $url ),
+		'post_mime_type' => $type
+	);
+
+	$attach_id = wp_insert_attachment( $attachment, $mirror['file'] );
+
+	require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+	$attach_data = wp_generate_attachment_metadata( $attach_id, $mirror['file'] );
+	wp_update_attachment_metadata( $attach_id, $attach_data );
+
+	return $attach_id;
+}
