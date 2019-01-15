@@ -22,7 +22,7 @@ class WPCP_Feed extends WPCP_Campaign {
 	public function __construct() {
 		//campaign settings
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
-		add_filter( 'wpcp_campaign_keyword_input_args', array( $this, 'campaign_keyword_input' ), 10, 3 );
+		add_filter( 'wpcp_campaign_keyword_input_args', array( $this, 'campaign_keyword_input' ), 99, 3 );
 		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
 		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
 
@@ -55,7 +55,7 @@ class WPCP_Feed extends WPCP_Campaign {
 		if ( $campaign_type == 'feeds' ) {
 			$attr['label'] = __( 'Feed Links', 'wp-content-pilot' );
 			$attr['name']  = '_feed_links';
-			$attr['desc']  = __( 'Input feed links separate by new line', 'wp-content-pilot' );
+			$attr['desc']  = __( 'Input feed links separate by new line, from where you want to grab the posts.', 'wp-content-pilot' );
 			$attr['value'] = wpcp_get_post_meta( $post_id, '_feed_links');
 		}
 
@@ -86,6 +86,7 @@ class WPCP_Feed extends WPCP_Campaign {
 	}
 
 	public function update_campaign_settings( $post_id, $posted ) {
+
 		$raw_links       = empty( $posted['_feed_links'] ) ? '' : esc_html( $posted['_feed_links'] );
 		$links           = explode( PHP_EOL, $raw_links );
 		$sanitized_links = [];
@@ -103,6 +104,8 @@ class WPCP_Feed extends WPCP_Campaign {
 		$sanitized_links = array_filter($sanitized_links);
 
 		$str_links = implode( PHP_EOL, $sanitized_links );
+
+
 		update_post_meta( $post_id, '_feed_links', $str_links );
 		update_post_meta( $post_id, '_force_feed', empty( $posted['_force_feed'] ) ? 'no' : esc_attr( $posted['_force_feed'] ) );
 	}

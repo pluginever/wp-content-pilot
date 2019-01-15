@@ -739,6 +739,10 @@ class WPCP_Elements {
 
 		$output .= '<input type="' . esc_attr($args['type']) . '" name="' . esc_attr($args['name']) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($args['value']) . '" class="' . $class . '" ' . $attributes . ' />';
 
+		if ($args['desc']) {
+			$output .= '<span class="ever-field-description">'.sanitize_text_field($args['desc']).'</span>';
+		}
+
 		if ($args['double_columns']) {
 			$output .= '</div>';
 		}

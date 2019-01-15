@@ -292,8 +292,8 @@ final class ContentPilot {
 	public function boot() {
 		new WPCP_Install();
 		new WPCP_Ajax();
-		new WPCP_Feed();
 		new WPCP_Article();
+		new WPCP_Feed();
 
 		$this->elements = new WPCP_Elements();
 		$this->modules  = new WPCP_Module();
