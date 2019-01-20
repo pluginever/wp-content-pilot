@@ -778,3 +778,19 @@ function wpcp_get_module_supported_tags( $module ) {
 
     return [];
 }
+
+/**
+ * checks a link weather absolute link or not
+ *
+ * @param $url
+ *
+ * @return bool
+ */
+function wpcp_is_absolute_link( $url ) {
+    $pattern = "/^(?:ftp|https?|feed):\/\/(?:(?:(?:[\w\.\-\+!$&'\(\)*\+,;=]|%[0-9a-f]{2})+:)*
+    (?:[\w\.\-\+%!$&'\(\)*\+,;=]|%[0-9a-f]{2})+yb@)?(?:
+    (?:[a-z0-9\-\.]|%[0-9a-f]{2})+|(?:\[(?:[0-9a-f]{0,4}:)*(?:[0-9a-f]{0,4})\]))(?::[0-9]+)?(?:[\/|\?]
+    (?:[\w#!:\.\?\+=&@$'~*,;\/\(\)\[\]\-]|%[0-9a-f]{2})*)?$/xi";
+
+    return (bool) preg_match( $pattern, $url );
+}

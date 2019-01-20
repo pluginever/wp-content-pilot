@@ -71,8 +71,8 @@ class Article extends Item {
         $title   = $readability->getTitle();
         $excerpt = $readability->getExcerpt();
         $content = $readability->getContent();
-        $image   = $readability->getImage();
-        $images  = $readability->getImages();
+        $image   = '';
+        $images  = array();
         $content = wpcp_fix_image_link( $content, wpcp_get_host( $link->url ) );
         if ( empty( $image ) ) {
             $images_links = wpcp_get_all_image_urls( $content );
@@ -80,7 +80,6 @@ class Article extends Item {
                 $image  = $images_links[0];
                 $images = $images_links;
             }
-
         }
 
         $post = [

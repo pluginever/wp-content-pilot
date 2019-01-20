@@ -59,7 +59,7 @@ module.exports = function(grunt) {
         sass:   {
             all: {
                 files: {
-                    'assets/css/wp-content-pilot.css': 'assets/css/sass/wp-content-pilot.scss'
+                    'assets/css/wp-content-pilot.css': 'assets/css/wp-content-pilot.scss'
                 }
             }
         },

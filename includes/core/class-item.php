@@ -187,8 +187,8 @@ abstract class Item {
             $this->campaign_id,
             $this->campaign_type
         );
-//        $result = $wpdb->get_row( $sql );
-        $result = $wpdb->get_row( "select * from {$table} where id='52'" );
+        $result = $wpdb->get_row( $sql );
+//        $result = $wpdb->get_row( "select * from {$table} where id='80'" );
 
 
         if ( empty( $result ) ) {

@@ -308,6 +308,9 @@ function wpcp_html_remove_images( $html ) {
  *
  */
 function wpcp_html_make_image_tag( $sources ) {
+    if ( empty( $sources ) ) {
+        return '';
+    }
     $html        = '';
     $css_classes = apply_filters( 'wpcp_template_image_classes', [ 'wpcp-image', 'attachment-thumbnail' ] );
     $classes     = implode( ' ', $css_classes );
