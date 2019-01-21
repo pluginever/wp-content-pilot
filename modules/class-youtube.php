@@ -57,7 +57,6 @@ class WPCP_Youtube extends WPCP_Campaign {
 	 */
 	public static function get_template_tags() {
 		return array(
-			'author',
 			'title',
 			'except',
 			'content',
@@ -127,7 +126,6 @@ class WPCP_Youtube extends WPCP_Campaign {
 			'selected' => wpcp_get_post_meta( $post_id, '_youtube_search_orderby', 'relevance' ),
 		) );
 
-
 		echo content_pilot()->elements->select( array(
 			'name'             => '_youtube_search_order',
 			'label'            => __( 'Search Order', 'wp-content-pilot' ),
@@ -171,17 +169,17 @@ class WPCP_Youtube extends WPCP_Campaign {
 	 */
 	public function prepare_contents( $link ) {
 
-		//		if ( 'youtube' != $link->camp_type ) {
-		//			return false;
-		//		}
-		//
-		//		$raw = maybe_unserialize($link->raw_content);
-		//
-		//		wpcp_update_link( $link->id, array(
-		//			'content' => trim( $link->description_html ),
-		//			'score'   => wpcp_get_read_ability_score( isset($raw->description_html)?$raw->description_html: $link->content ),
-		//			'status'  => 'ready',
-		//		) );
+				if ( 'youtube' != $link->camp_type ) {
+					return false;
+				}
+
+				$raw = maybe_unserialize($link->raw_content);
+
+				wpcp_update_link( $link->id, array(
+					'content' => trim( $link->description_html ),
+					'score'   => wpcp_get_read_ability_score( isset($raw->description_html)?$raw->description_html: $link->content ),
+					'status'  => 'ready',
+				) );
 
 	}
 
@@ -189,9 +187,11 @@ class WPCP_Youtube extends WPCP_Campaign {
 
 		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_youtube', '' );
 
+		error_log( $api_key );
+
 		if ( empty( $api_key ) ) {
 
-			$msg = __( 'Youtube API is not set. Please configure Youtube API.', 'wp-content-pilot' );
+			$msg = __( 'Youtube API Key is not set, The campaign won\'t work without API Key.', 'wp-content-pilot' );
 			wpcp_log( $msg );
 
 			return new \WP_Error( 'invalid-api-settings', $msg );
@@ -204,11 +204,76 @@ class WPCP_Youtube extends WPCP_Campaign {
 
 	public function discover_links() {
 
+		$page     = $this->get_page_number( '' );
+		$category = wpcp_get_post_meta( $this->campaign_id, '_youtube_category', 'all' );
+		$orderby  = wpcp_get_post_meta( $this->campaign_id, '_youtube_search_orderby', 'relevance' );
+
+		$query_args = array(
+			'part'              => 'snippet',
+			'type'              => 'video',
+			'key'               => $this->api_key,
+			'maxResults'        => 50,
+			'q'                 => $this->keyword,
+			'category'          => $category,
+			'videoEmbeddable'   => 'true',
+			'videoType'         => 'any',
+			'relevanceLanguage' => 'en',
+			'videoDuration'     => 'any',
+			'order'             => $orderby,
+			'pageToken'         => $page,
+		);
+
+		$request = wpcp_remote_get( 'https://www.googleapis.com/youtube/v3/search', $query_args );
+
+
+		$response = wpcp_retrieve_body( $request );
+
+		if ( is_wp_error( $response ) ) {
+			return array();
+		}
+
+		$items = $response->items;
+
+		$links = [];
+
+		foreach ( $items as $item ) {
+
+			$image = '';
+
+			$url = esc_url( 'https://www.youtube.com/watch?v=' . $item->id->videoId );
+
+
+			$title   = @ ! empty( $item->snippet->title ) ? @sanitize_text_field( $item->snippet->title ) : '';
+			$content = @ ! empty( $item->snippet->description ) ? @esc_html( $item->snippet->description ) : '';
+
+			if ( ! empty( $item->snippet->thumbnails ) && is_array( $item->snippet->thumbnails ) ) {
+				$last_image = end( $item->snippet->thumbnails );
+
+				$image = @ ! empty( $last_image->url ) ? esc_url( $last_image->url ) : '';
+
+			}
+
+
+			$links[] = array(
+				'title'       => $title,
+				'content'     => $content,
+				'url'         => $url,
+				'image'       => $image,
+				'raw_content' => serialize( $item ),
+				'score'       => '0',
+				'gmt_date'    => gmdate( 'Y-m-d H:i:s', strtotime( $item->snippet->publishedAt ) ),
+				'status'      => 'fetched',
+			);
+		}
+
+		$this->set_page_number( $response->nextPageToken );
+
+		return $links;
 
 	}
 
 	public function get_post( $link ) {
-		// TODO: Implement get_post() method.
+
 	}
 
 }

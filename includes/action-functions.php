@@ -85,13 +85,14 @@ function wpcp_handle_campaign_test_run() {
 
 	$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
 
-	$link = wpcp_get_ready_campaign_links( $campaign_id, $campaign_type );
-
-	if ( is_wp_error( $link ) ) {
-		content_pilot()->add_notice( $link->get_error_message(), 'error' );
-		wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
-		exit();
-	}
+//	$link = wpcp_get_ready_campaign_links( $campaign_id, $campaign_type );
+//
+//
+//	if ( is_wp_error( $link ) ) {
+//		content_pilot()->add_notice( $link->get_error_message(), 'error' );
+//		wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
+//		exit();
+//	}
 
 	$campaign = wpcp_run_campaign( $campaign_id );
 

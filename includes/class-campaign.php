@@ -101,6 +101,7 @@ abstract class WPCP_Campaign {
 
 			//check if there is already links but not ready yet
 			$total_fetched_links = $this->count_links('fetched');
+
 			if( $total_fetched_links > 1 ){
 				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'content-pilot' ) );
 			}
