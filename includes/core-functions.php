@@ -26,8 +26,8 @@ function wpcp_get_modules() {
  *
  * @return \Curl\Curl
  */
-function wpcp_remote_get( $url, $args = array(), $options = array() ) {
-	return wpcp_remote_request( $url, $args, $options, 'GET' );
+function wpcp_remote_get( $url, $args = array(), $options = array(), $headers = array() ) {
+	return wpcp_remote_request( $url, $args, $options, $headers, 'GET' );
 }
 
 /**
@@ -41,8 +41,8 @@ function wpcp_remote_get( $url, $args = array(), $options = array() ) {
  *
  * @return \Curl\Curl
  */
-function wpcp_remote_post( $url, $args = array(), $options = array() ) {
-	return wpcp_remote_request( $url, $args, $options, 'POST' );
+function wpcp_remote_post( $url, $args = array(), $options = array(), $headers = array() ) {
+	return wpcp_remote_request( $url, $args, $options, $headers, 'POST' );
 }
 
 /**
@@ -57,15 +57,23 @@ function wpcp_remote_post( $url, $args = array(), $options = array() ) {
  *
  * @return \Curl\Curl
  */
-function wpcp_remote_request( $url, $args = array(), $options = array(), $type = 'GET' ) {
+function wpcp_remote_request( $url, $args = array(), $options = array(), $headers = array(), $type = 'GET' ) {
 	$curl = new \Curl\Curl( $url );
 	$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
 	$curl->setOpt( CURLOPT_TIMEOUT, 30 );
 	$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
-	$options = apply_filters( 'wpcp_remove_request', $options );
+
+	$options = apply_filters( 'wpcp_remote_request_options', $options );
 	if ( ! empty( $options ) ) {
 		foreach ( $options as $param => $value ) {
 			$curl->setOpt( $param, $value );
+		}
+	}
+
+	$headers = apply_filters( 'wpcp_remote_request_headers', $headers );
+	if ( ! empty( $headers ) ) {
+		foreach ( $headers as $param => $value ) {
+			$curl->setHeader( $param, $value );
 		}
 	}
 	switch ( $type ) {
@@ -401,7 +409,7 @@ function wpcp_run_campaign( $campaign_id ) {
 
 	//check error
 	if ( is_wp_error( $is_error ) ) {
-		wpcp_disable_campaign( $this->campaign_id );
+		wpcp_disable_campaign( $campaign_id );
 
 		return $is_error;
 	}
@@ -494,6 +502,7 @@ function wpcp_get_link( $id ) {
 	$table  = $wpdb->prefix . 'wpcp_links';
 	$sql    = $wpdb->prepare( "select * from {$table} where id = %d", $id );
 	$result = $wpdb->get_row( $sql );
+	//$result = array_map( 'maybe_unserialize', $result );
 
 	return $result;
 }

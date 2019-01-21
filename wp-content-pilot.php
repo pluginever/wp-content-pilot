@@ -242,6 +242,7 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/class-module.php';
 		require_once WPCP_MODULES . '/class-feed.php';
 		require_once WPCP_MODULES . '/class-article.php';
+		require_once WPCP_MODULES . '/class-envato.php';
 
 
 		//
@@ -363,6 +364,7 @@ final class ContentPilot {
 		new WPCP_Fetch_Contents();
 		new WPCP_Feed();
 		new WPCP_Article();
+		new WPCP_Envato();
 
 		$this->elements = new WPCP_Elements();
 		$this->modules  = new WPCP_Module();
