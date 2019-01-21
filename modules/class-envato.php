@@ -182,11 +182,11 @@ class WPCP_Envato extends WPCP_Campaign {
 			return false;
 		}
 
-		$raw = maybe_unserialize($link->raw_content);
+		$raw = maybe_unserialize( $link->raw_content );
 
 		wpcp_update_link( $link->id, array(
-			'content' => trim( $link->description_html ),
-			'score'   => wpcp_get_read_ability_score( isset($raw->description_html)?$raw->description_html: $link->content ),
+			'content' => empty($raw->description_html)? $raw->description: trim( $raw->description_html ),
+			'score'   => wpcp_get_read_ability_score( isset( $raw->description_html ) ? $raw->description_html : $link->content ),
 			'status'  => 'ready',
 		) );
 
@@ -276,6 +276,19 @@ class WPCP_Envato extends WPCP_Campaign {
 	}
 
 	public function get_post( $link ) {
-		var_dump( $link );
+		$raw_content = (array) maybe_unserialize($link->raw_content);
+
+		$article = array(
+			'title'       => $link->title,
+			'raw_title'   => $link->title,
+			'content'     => $link->content,
+			'raw_content' => $raw_content['description_html'],
+			'image_url'   => $link->image,
+			'source_url'  => $link->url,
+			'date'        => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
+			'score'       => $link->score,
+		);
+
+		return $article;
 	}
 }
