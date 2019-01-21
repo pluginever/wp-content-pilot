@@ -117,14 +117,14 @@ class WPCP_Youtube extends WPCP_Campaign {
 			'double_columns'   => true,
 
 			'options' => array(
-				'relevance' => 'Relevance',
-				'date'      => 'Date',
-				'title'     => 'Title',
-				'viewCount' => 'View Count',
-				'rating'    => 'Rating',
+				'relevance' => __( 'Relevance', 'wp-content-pilot' ),
+				'date'      => __( 'Date', 'wp-content-pilot' ),
+				'title'     => __( 'Title', 'wp-content-pilot' ),
+				'viewCount' => __( 'View Count', 'wp-content-pilot' ),
+				'rating'    => __( 'Rating', 'wp-content-pilot' ),
 			),
 
-			'selected' => wpcp_get_post_meta( $post_id, '_youtube_search_orderby', '' ),
+			'selected' => wpcp_get_post_meta( $post_id, '_youtube_search_orderby', 'relevance' ),
 		) );
 
 
@@ -144,8 +144,6 @@ class WPCP_Youtube extends WPCP_Campaign {
 		) );
 
 
-
-
 	}
 
 	/**
@@ -157,13 +155,9 @@ class WPCP_Youtube extends WPCP_Campaign {
 	 * @param $posted
 	 */
 	public function update_campaign_settings( $post_id, $posted ) {
-		//		$price_range        = empty( $posted['_price_range'] ) ? '' : sanitize_text_field( $posted['_price_range'] );
-		//		$price_range_ranges = wpcp_string_to_array( $price_range, '|', array( 'trim', 'intval' ) );
-		//		$price_range_ranges = empty( $price_range_ranges ) ? '' : implode( '|', $price_range_ranges );
-		//		update_post_meta( $post_id, '_platform', empty( $posted['_platform'] ) ? 'no' : sanitize_text_field( $posted['_platform'] ) );
-		//		update_post_meta( $post_id, '_price_range', $price_range_ranges );
-		//		update_post_meta( $post_id, '_envato_sort_by', empty( $posted['_envato_sort_by'] ) ? 'no' : sanitize_text_field( $posted['_envato_sort_by'] ) );
-		//		update_post_meta( $post_id, '_envato_sort_direction', empty( $posted['_envato_sort_direction'] ) ? 'no' : sanitize_text_field( $posted['_envato_sort_direction'] ) );
+		update_post_meta( $post_id, '_youtube_category', empty( $posted['_youtube_category'] ) ? 'all' : sanitize_text_field( $posted['_youtube_category'] ) );
+		update_post_meta( $post_id, '_youtube_search_orderby', empty( $posted['_youtube_search_orderby'] ) ? '' : sanitize_key( $posted['_youtube_search_orderby'] ) );
+		update_post_meta( $post_id, '_youtube_search_order', empty( $posted['_youtube_search_order'] ) ? '' : sanitize_key( $posted['_youtube_search_order'] ) );
 	}
 
 	/**
