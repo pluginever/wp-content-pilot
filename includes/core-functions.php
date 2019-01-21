@@ -264,7 +264,8 @@ function wpcp_update_settings( $field, $data ) {
  * @param $camp_id
  */
 function wpcp_disable_campaign( $camp_id ) {
-	wpcp_update_post_meta( $camp_id, 'active', 0 );
+	do_action( 'wpcp_disable_campaign', $camp_id );
+	wpcp_update_post_meta( $camp_id, '_campaign_status', 'inactive' );
 }
 
 /**
@@ -339,11 +340,11 @@ function wpcp_get_keyword( $campaign_id ) {
  *
  */
 function wpcp_campaign_can_run( $campaign_id ) {
-	if ( 'publish' !== get_post_status( $campaign_id ) ) {
-		return new \WP_Error( 'invalid-campaign-id', __( 'Campaign is not exist or not publish.', 'wp-content-pilot' ) );
+	if ( ! get_post( $campaign_id ) ) {
+		return new \WP_Error( 'invalid-campaign-id', __( 'Campaign is not exist.', 'wp-content-pilot' ) );
 	}
 
-	if ( '1' !== get_post_meta( $campaign_id, '_active', true ) ) {
+	if ( 'active' !== get_post_meta( $campaign_id, '_campaign_status', true ) ) {
 		return new \WP_Error( 'invalid-campaign-status', __( 'Campaign is not active this wont run.', 'wp-content-pilot' ) );
 	}
 
@@ -409,19 +410,20 @@ function wpcp_run_campaign( $campaign_id ) {
 
 	$instance->set_keyword( $keyword );
 
-	$instance->set_campaign_type( $module );
+	$instance->set_campaign_type( $campaign_type );
 
 	try {
 		$article = $instance->run();
-
-		if ( is_wp_error( $article ) ) {
-			return $article;
-		}
-		wpcp_log( sprintf( __( "Post Insertion was success Post ID: %s", 'wp-content-pilot' ), $article ), 'log' );
-
 	} catch ( Exception $exception ) {
 		wpcp_log( __( 'Post insertion failed message ' . $exception->getMessage() ), 'critical' );
 	}
+
+	if ( is_wp_error( $article ) ) {
+		return $article;
+	}
+	wpcp_log( sprintf( __( "Post Insertion was success Post ID: %s", 'wp-content-pilot' ), $article ), 'log' );
+
+	return $article;
 
 }
 
@@ -458,7 +460,6 @@ function wpcp_insert_link( array $data ) {
 		return false;
 	}
 
-	var_dump( $data );
 	$id = $wpdb->insert(
 		$table,
 		$data
@@ -486,6 +487,15 @@ function wpcp_update_link( $id, array $data ) {
 	);
 
 	return $id;
+}
+
+function wpcp_get_link( $id ) {
+	global $wpdb;
+	$table  = $wpdb->prefix . 'wpcp_links';
+	$sql    = $wpdb->prepare( "select * from {$table} where id = %d", $id );
+	$result = $wpdb->get_row( $sql );
+
+	return $result;
 }
 
 /**
@@ -523,7 +533,7 @@ function wpcp_get_readability( $html, $url ) {
 	try {
 		$readability->parse( $html );
 	} catch ( \andreskrey\Readability\ParseException $e ) {
-		return new WP_Error( 'readability-error', $e->getMessage );
+		return new WP_Error( 'readability-error', $e->getMessage() );
 	}
 	$title   = $readability->getTitle();
 	$content = $readability->getContent();
@@ -596,6 +606,7 @@ function wpcp_download_image( $url ) {
  * @return string
  */
 function wpcp_replace_template_tags( $content, $article = array() ) {
+
 	$content = str_replace( '{content}', empty( $article['content'] ) ? '' : $article['content'], $content );
 	$content = str_replace( '{title}', empty( $article['title'] ) ? '' : $article['title'], $content );
 	$content = str_replace( '{image_url}', empty( $article['image_url'] ) ? '' : $article['image_url'], $content );
@@ -603,5 +614,30 @@ function wpcp_replace_template_tags( $content, $article = array() ) {
 
 	$content = apply_filters( 'wpcp_replace_template_tags', $content, $article );
 
-	return html_entity_decode($content);
+	return html_entity_decode( $content );
+}
+
+/**
+ * checks for links
+ *
+ * @since 1.0.0
+ *
+ * @param      $campaign_id
+ * @param null $campaign_type
+ *
+ * @return object|\WP_Error
+ */
+function wpcp_get_ready_campaign_links( $campaign_id, $campaign_type = null ) {
+	if ( ! $campaign_type ) {
+		$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
+	}
+	global $wpdb;
+
+	$link = $wpdb->get_row( $wpdb->prepare( "select * from {$wpdb->prefix}wpcp_links where camp_id=%d AND camp_type=%s AND status=%s", $campaign_id, $campaign_type, 'ready' ) );
+
+	if ( empty( $link ) ) {
+		return new WP_Error( 'no-links', __( 'The campaign is not ready yet for testing, please allow some time', 'wp-content-pilot' ) );
+	}
+
+	return $link;
 }

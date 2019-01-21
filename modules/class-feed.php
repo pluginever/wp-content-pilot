@@ -26,14 +26,19 @@ class WPCP_Feed extends WPCP_Campaign {
 		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
 		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
 
+		add_filter( 'wpcp_keyword', array( $this, 'feed_links' ), 10, 2 );
+
 		//campaign actions
 		add_action( 'wp_feed_options', array( $this, 'set_feed_options' ) );
 		add_action( 'http_response', array( $this, 'trim_feed_content' ) );
 		add_action( 'wp_feed_options', array( $this, 'force_feed' ), 10, 1 );
+
+		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
+
 	}
 
 	public function register_module( $modules ) {
-		$modules['feeds'] = [
+		$modules['feed'] = [
 			'title'       => __( 'Feed', 'wp-content-pilot' ),
 			'description' => __( 'Scraps articles from the feed urls', 'wp-content-pilot' ),
 			'supports'    => self::get_template_tags(),
@@ -43,26 +48,52 @@ class WPCP_Feed extends WPCP_Campaign {
 		return $modules;
 	}
 
-
+	/**
+	 * Supported template tags
+	 *
+	 * @since 1.0.0
+	 * @return array
+	 */
 	public static function get_template_tags() {
-		$tags = array( 'author', 'title', 'except', 'content', 'image_url', 'image', 'images' );
+		$tags = array( 'author', 'title', 'except', 'content', 'image_url' );
 
 		return $tags;
 	}
 
 
+	/**
+	 * Filter keyword input to change as links
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $attr
+	 * @param $post_id
+	 * @param $campaign_type
+	 *
+	 * @return mixed
+	 */
 	public function campaign_keyword_input( $attr, $post_id, $campaign_type ) {
-		if ( $campaign_type == 'feeds' ) {
+		if ( $campaign_type == 'feed' ) {
 			$attr['label'] = __( 'Feed Links', 'wp-content-pilot' );
 			$attr['name']  = '_feed_links';
 			$attr['desc']  = __( 'Input feed links separate comma', 'wp-content-pilot' );
-			$attr['value'] = wpcp_get_post_meta( $post_id, '_feed_links');
+			$attr['value'] = wpcp_get_post_meta( $post_id, '_feed_links' );
 		}
 
 		return $attr;
 	}
 
-	public function campaign_option_fields(  $post_id, $campaign_type ) {
+	/**
+	 * Conditionally show meta fields
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $post_id
+	 * @param $campaign_type
+	 *
+	 * @return bool
+	 */
+	public function campaign_option_fields( $post_id, $campaign_type ) {
 		if ( 'feeds' != $campaign_type ) {
 			return false;
 		}
@@ -79,61 +110,46 @@ class WPCP_Feed extends WPCP_Campaign {
 			),
 			'required'         => true,
 			'double_columns'   => true,
-			'selected'         => wpcp_get_post_meta( $post_id, '_force_feed', 'no'),
+			'selected'         => wpcp_get_post_meta( $post_id, '_force_feed', 'no' ),
 			'desc'             => __( 'If you are putting exact feed link then set this to yes, otherwise feed links will be auto discovered', 'wp-content-pilot' ),
 		) );
 
 	}
 
+	/**
+	 * update campaign settings
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $post_id
+	 * @param $posted
+	 */
 	public function update_campaign_settings( $post_id, $posted ) {
-
-		$raw_links       = empty( $posted['_feed_links'] ) ? '' : esc_html( $posted['_feed_links'] );
-		$links           = explode( PHP_EOL, $raw_links );
-		$sanitized_links = [];
-
-		foreach ( $links as $link ) {
-			$sl = trim( $link );
-			if ( filter_var( $link, FILTER_VALIDATE_URL ) === false ) {
-				continue;
-			}
-
-			$sanitized_links[] = $sl;
-		}
-
-		$sanitized_links = array_unique($sanitized_links);
-		$sanitized_links = array_filter($sanitized_links);
-
-		$str_links = implode( PHP_EOL, $sanitized_links );
-
+		$raw_links = empty( $posted['_feed_links'] ) ? '' : esc_html( $posted['_feed_links'] );
+		$links     = wpcp_string_to_array( $raw_links, ',', array( 'trim', 'esc_url' ) );
+		$str_links = implode( ',', $links );
 
 		update_post_meta( $post_id, '_feed_links', $str_links );
 		update_post_meta( $post_id, '_force_feed', empty( $posted['_force_feed'] ) ? 'no' : esc_attr( $posted['_force_feed'] ) );
 	}
 
 	/**
-	 * Sanitize links from string
+	 * fe
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param $string_links
+	 * @param $keywords
+	 * @param $campaign_id
 	 *
-	 * @return string
-	 *
+	 * @return null|string
 	 */
-	public static function sanitize_feed_links( $string_links ) {
-		$links           = explode( PHP_EOL, $string_links );
-		$sanitized_links = [];
-
-		foreach ( $links as $link ) {
-			$sl = trim( $link );
-			if ( filter_var( $link, FILTER_VALIDATE_URL ) === false ) {
-				continue;
-			}
-
-			$sanitized_links[] = $sl;
+	public function feed_links( $keywords, $campaign_id ) {
+		$type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
+		if ( 'feed' === $type ) {
+			return wpcp_get_post_meta( $campaign_id, '_feed_links', '' );
 		}
 
-		return implode( PHP_EOL, $sanitized_links );
+		return $keywords;
 	}
 
 	/**
@@ -174,6 +190,27 @@ class WPCP_Feed extends WPCP_Campaign {
 		if ( 'yes' == wpcp_get_post_meta( $this->campaign_id, '_force_feed', 'no' ) ) {
 			$feed->force_feed( true );
 		}
+	}
+
+	/**
+	 * Hook in background process and prepare contents
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $link
+	 *
+	 * @return bool
+	 */
+	public function prepare_contents( $link ) {
+
+		if ( 'feed' !== $link->camp_type ) {
+			return false;
+		}
+
+		do_action( 'wpcp_feed_content_proceeding', $link, $this );
+		wpcp_update_link( $link->id, array(
+			'status' => 'ready',
+		) );
 	}
 
 
@@ -245,7 +282,7 @@ class WPCP_Feed extends WPCP_Campaign {
 				'image'       => '',
 				'raw_content' => $content,
 				'score'       => '0',
-				'status'      => 'ready',
+				'status'      => 'fetched',
 			);
 
 			$link = apply_filters( 'wpcp_before_insert_feed_link', $link, $this->campaign_id );
@@ -257,19 +294,20 @@ class WPCP_Feed extends WPCP_Campaign {
 
 	}
 
+
 	public function get_post( $link ) {
-
-		$images = wpcp_get_all_image_urls( $link->raw_content );
-
-		$article = [
+		$article = array(
 			'title'       => $link->title,
+			'raw_title'   => $link->title,
 			'content'     => $link->content,
 			'raw_content' => $link->raw_content,
-			'image_url'   => ! empty( $images ) ? '' : $images[0],
-		];
+			'image_url'   => $link->image,
+			'source_url'  => $link->url,
+			'date'        => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
+			'score'       => $link->score,
+		);
 
-
-		return apply_filters( 'wpcp_feed_article', $article, $this->campaign_id );
+		return $article;
 	}
 
 

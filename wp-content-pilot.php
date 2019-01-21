@@ -222,33 +222,39 @@ final class ContentPilot {
 	 */
 	public function includes() {
 		//core includes
-		include_once WPCP_PATH . '/vendor/autoload.php';
+		require_once WPCP_PATH . '/vendor/autoload.php';
 
-		include_once WPCP_INCLUDES . '/core-functions.php';
-		include_once WPCP_INCLUDES . '/formatting-functions.php';
-		include_once WPCP_INCLUDES . '/action-functions.php';
-		include_once WPCP_INCLUDES . '/class-install.php';
-		include_once WPCP_INCLUDES . '/post-types.php';
-		include_once WPCP_INCLUDES . '/class-elements.php';
+		//background processing
+		require_once WPCP_INCLUDES . '/wp-async-request.php';
+		require_once WPCP_INCLUDES . '/wp-background-process.php';
+		require_once WPCP_INCLUDES . '/class-automatic-campaign.php';
+		require_once WPCP_INCLUDES . '/class-fetch-contents.php';
 
-		include_once WPCP_INCLUDES . '/class-ajax.php';
-		include_once WPCP_INCLUDES . '/class-campaign.php';
-		include_once WPCP_INCLUDES . '/class-module.php';
-		include_once WPCP_MODULES . '/class-feed.php';
-		include_once WPCP_MODULES . '/class-article.php';
+		require_once WPCP_INCLUDES . '/core-functions.php';
+		require_once WPCP_INCLUDES . '/formatting-functions.php';
+		require_once WPCP_INCLUDES . '/action-functions.php';
+		require_once WPCP_INCLUDES . '/class-install.php';
+		require_once WPCP_INCLUDES . '/post-types.php';
+		require_once WPCP_INCLUDES . '/class-elements.php';
+
+		require_once WPCP_INCLUDES . '/class-ajax.php';
+		require_once WPCP_INCLUDES . '/class-campaign.php';
+		require_once WPCP_INCLUDES . '/class-module.php';
+		require_once WPCP_MODULES . '/class-feed.php';
+		require_once WPCP_MODULES . '/class-article.php';
 
 
 		//
-		include_once WPCP_INCLUDES . '/script-functions.php';
+		require_once WPCP_INCLUDES . '/script-functions.php';
 
 		//admin includes
 		if ( $this->is_request( 'admin' ) ) {
-			include_once WPCP_INCLUDES . '/metabox-functions.php';
+			require_once WPCP_INCLUDES . '/metabox-functions.php';
 		}
 
 		//frontend includes
 		if ( $this->is_request( 'frontend' ) ) {
-			include_once WPCP_INCLUDES . '/class-frontend.php';
+			require_once WPCP_INCLUDES . '/class-frontend.php';
 		}
 
 	}
@@ -265,6 +271,8 @@ final class ContentPilot {
 		//add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 
 		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ) );
+
+		add_action( 'admin_notices', array( $this, 'show_admin_notice' ) );
 	}
 
 	/**
@@ -306,6 +314,41 @@ final class ContentPilot {
 		return $schedules;
 	}
 
+	public function add_notice( $message, $type = 'success' ) {
+
+		if ( is_string( $message ) &&   is_string( $type ) ) {
+			$notices = get_option( 'wpcp_admin_notifications', [] );
+
+			$notices[] = array(
+				'message' => $message,
+				'type'    => $type
+			);
+
+			update_option( 'wpcp_admin_notifications', $notices );
+		}
+	}
+
+	/**
+	 * Show admin notifications
+	 *
+	 * @since 1.1.0
+	 */
+	public function show_admin_notice() {
+		$notices = get_option( 'wpcp_admin_notifications', [] );
+		if ( empty( $notices ) || ! is_array( $notices ) ) {
+			return;
+		}
+		foreach ( $notices as $notice ) {
+			?>
+			<div class="notice notice-<?php echo sanitize_html_class( $notice['type'] ); ?> is-dismissible">
+				<p><?php echo wp_kses_post( $notice['message'] ); ?></p>
+			</div>
+			<?php
+		}
+
+		delete_option( 'wpcp_admin_notifications' );
+	}
+
 	/**
 	 * Boot the plugin
 	 *
@@ -314,8 +357,10 @@ final class ContentPilot {
 	public function boot() {
 		new WPCP_Install();
 		new WPCP_Ajax();
-		new WPCP_Article();
+		new WPCP_Automatic_Campaign();
+		new WPCP_Fetch_Contents();
 		new WPCP_Feed();
+		new WPCP_Article();
 
 		$this->elements = new WPCP_Elements();
 		$this->modules  = new WPCP_Module();

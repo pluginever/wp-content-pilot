@@ -222,7 +222,7 @@ function wpcp_campaign_settings_metabox_fields( $post_id, $campaign_type ) {
 		'label'    => __( 'Post Template', 'wp-content-pilot' ),
 		'name'     => '_post_template',
 		'required' => true,
-		'value'    => wpcp_get_post_meta( $post_id, '_post_template', '{content} <br> <a href="{source}" target="_blank">Source</a>' )
+		'value'    => wpcp_get_post_meta( $post_id, '_post_template', '{content} <br> <a href="{source_url}" target="_blank">Source</a>' )
 	), $post_id, $campaign_type );
 
 	echo apply_filters( 'wpcp_campaign_template_input', content_pilot()->elements->textarea( $template_input_args ), $post_id, $campaign_type );

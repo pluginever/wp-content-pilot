@@ -76,3 +76,58 @@ function wpcp_change_default_title( $title ) {
 }
 
 add_filter( 'enter_title_here', 'wpcp_change_default_title' );
+function wp_content_pilot_columns( $columns ) {
+	unset( $columns['date'] );
+	$columns['status']    = __( 'Status', 'wp-content-pilot' );
+	$columns['type']      = __( 'Type', 'wp-content-pilot' );
+	$columns['target']      = __( 'Target', 'wp-content-pilot' );
+	$columns['frequency'] = __( 'Frequency', 'wp-content-pilot' );
+	$columns['last_run']  = __( 'Last Run', 'wp-content-pilot' );
+
+	return $columns;
+}
+
+add_action( 'manage_wp_content_pilot_posts_columns', 'wp_content_pilot_columns', 10 );
+
+function wp_content_pilot_column_content($column_name, $post_ID){
+	switch ($column_name){
+		case 'status':
+			$active = wpcp_get_post_meta($post_ID, '_campaign_status', 0);
+			if($active == 'active'){
+				echo '<span style="background: green;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">'.__('Active', 'wp-content-pilot').'</span>';
+			}else{
+				echo '<span style="background: red;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">'.__('Disabled', 'wp-content-pilot').'</span>';
+			}
+			break;
+		case 'type':
+			$campaign_type = wpcp_get_post_meta($post_ID, '_campaign_type');
+			echo ucfirst($campaign_type);
+			break;
+		case 'target':
+			$target = wpcp_get_post_meta($post_ID, '_campaign_target', 0);
+			$completed = wpcp_get_post_meta($post_ID, '_post_count', 0);
+			if( $target && $completed ){
+				echo $completed.'/'.$target;
+			}else{
+				echo $target.'/ - ';
+			}
+			break;
+		case 'frequency':
+			$frenquency = wpcp_get_post_meta($post_ID, '_campaign_frequency', 0);
+			if( $frenquency ){
+				echo 'Every '. $frenquency/3600 . ' Hour(s)';
+			} else{
+				echo ' - ';
+			}
+			break;
+		case 'last_run':
+			$last_run = wpcp_get_post_meta($post_ID, '_last_run', 0);
+			if( $last_run ){
+				echo date_i18n( get_option( 'date_format' ) .' '. get_option('time_format'), $last_run );
+			}else{
+				echo ' - ';
+			}
+			break;
+	}
+}
+add_action('manage_wp_content_pilot_posts_custom_column', 'wp_content_pilot_column_content', 10, 2);

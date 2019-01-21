@@ -24,8 +24,7 @@ class WPCP_Article extends WPCP_Campaign {
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
 		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
 		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
-
-		add_action( 'wpcp_per_minute_scheduled_events', array( $this, 'fetch_contents' ) );
+		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
 	}
 
 	/**
@@ -41,11 +40,21 @@ class WPCP_Article extends WPCP_Campaign {
 		$modules['article'] = [
 			'title'       => __( 'Article', 'wp-content-pilot' ),
 			'description' => __( 'Scraps articles based on links', 'wp-content-pilot' ),
-			'supports'    => array( 'author', 'title', 'except', 'content', 'image_url', 'image', 'images' ),
+			'supports'    => self::get_template_tags(),
 			'callback'    => __CLASS__,
 		];
 
 		return $modules;
+	}
+
+	/**
+	 * Supported template tags
+	 *
+	 * @since 1.0.0
+	 * @return array
+	 */
+	public static function get_template_tags() {
+		return array( 'author', 'title', 'except', 'content', 'image_url');
 	}
 
 	/**
@@ -176,34 +185,48 @@ class WPCP_Article extends WPCP_Campaign {
 		return $sanitized_links;
 	}
 
-	public function fetch_contents() {
-		global $wpdb;
-		$links = $wpdb->get_results( $wpdb->prepare( "select * from {$wpdb->prefix}wpcp_links where status=%s AND camp_type=%s order by id asc limit 1", 'fetched', 'article' ) );
-		error_log( 'article fetching links' );
-		foreach ( $links as $link ) {
-			$request = wpcp_remote_get( $link->url );
-			$body    = wpcp_retrieve_body( $request );
-			wpcp_update_link( $link->id, [ 'status' => 'failed' ] );
-			if ( is_wp_error( $body ) ) {
-				wpcp_update_link( $link->id, [ 'status' => 'failed' ] );
-			}
+	/**
+	 * Hook in background process and prepare contents
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $link
+	 *
+	 * @return bool
+	 */
+	public function prepare_contents( $link ) {
 
-			$article = wpcp_get_readability( $body, $link->url );
-			if ( is_wp_error( $article ) ) {
-				wpcp_log( $article->get_error_message(), 'readability' );
-				continue;
-			}
-
-			wpcp_update_link( $link->id, array(
-				'title'       => $article['title'],
-				'content'     => trim( $article['content'] ),
-				'raw_content' => trim( $article['content'] ),
-				'image'       => $article['image'],
-				'score'       => wpcp_get_read_ability_score( $article['content'] ),
-				'status'      => empty( $article['content'] ) ? 'not_readable' : 'ready',
-			) );
-
+		if ( 'article' !== $link->camp_type ) {
+			return false;
 		}
+
+		wpcp_update_link( $link->id, [ 'status' => 'failed' ] );
+
+		$request = wpcp_remote_get( $link->url );
+		$body    = wpcp_retrieve_body( $request );
+
+		if ( is_wp_error( $body ) ) {
+			wpcp_update_link( $link->id, [ 'status' => 'http_error' ] );
+
+			return false;
+		}
+
+		$article = wpcp_get_readability( $body, $link->url );
+
+		if ( is_wp_error( $article ) ) {
+			wpcp_update_link( $link->id, [ 'status' => 'readability_error' ] );
+
+			return false;
+		}
+
+		wpcp_update_link( $link->id, array(
+			'title'       => $article['title'],
+			'content'     => trim( $article['content'] ),
+			'raw_content' => trim( $article['content'] ),
+			'image'       => $article['image'],
+			'score'       => wpcp_get_read_ability_score( $article['content'] ),
+			'status'      => empty( $article['content'] ) ? 'not_readable' : 'ready',
+		) );
 
 	}
 
@@ -227,7 +250,6 @@ class WPCP_Article extends WPCP_Campaign {
 			'date'        => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
 			'score'       => $link->score,
 		);
-
 
 		return $article;
 	}

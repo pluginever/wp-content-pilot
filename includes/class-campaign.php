@@ -65,7 +65,10 @@ abstract class WPCP_Campaign {
 	 *
 	 * @param $keyword
 	 */
-	public function set_keyword( $keyword ) {
+	public function set_keyword( $keywords ) {
+		$keywords      = strip_tags( $keywords );
+		$keywords      = wpcp_string_to_array( $keywords );
+		$keyword       = $keywords[ array_rand( $keywords ) ];
 		$this->keyword = strip_tags( $keyword );
 	}
 
@@ -95,6 +98,14 @@ abstract class WPCP_Campaign {
 
 		$link = $this->get_link();
 		if ( ! $link ) {
+
+			//check if there is already links but not ready yet
+			$total_fetched_links = $this->count_links('fetched');
+			if( $total_fetched_links > 1 ){
+				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'content-pilot' ) );
+			}
+
+			//otherwise discover few new links
 			$links = $this->discover_links();
 
 			if ( is_wp_error( $links ) ) {
@@ -109,7 +120,6 @@ abstract class WPCP_Campaign {
 			}
 
 			//check the result
-
 			$urls        = wp_list_pluck( $links, 'url' );
 			$string_urls = implode( ',', $urls );
 
@@ -125,13 +135,13 @@ abstract class WPCP_Campaign {
 
 			wpcp_log( __( sprintf( 'Total %d links inserted', $inserted ), 'wp-content-pilot' ), 'log' );
 
-			$link = $this->get_link();
-			$fetched_links = $this->get_link('fetched');
-			if ( empty($link) && !empty($fetched_links)) {
+			$link  = $this->get_link();
+			$total_fetched_links = $this->count_links('fetched');
+			if( $total_fetched_links > 1 ){
 				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'content-pilot' ) );
 			}
 
-			if ( empty($link) ) {
+			if ( empty($total_fetched_links)  && empty( $link ) ) {
 				return new \WP_Error( 'no-valid-links-found', __( 'Could not retrieve any valid links. Please wait to generate new links.', 'content-pilot' ) );
 			}
 		}
@@ -140,6 +150,7 @@ abstract class WPCP_Campaign {
 		wpcp_update_link( $link->id, [ 'status' => 'failed' ] );
 
 		$article = $this->get_post( $link );
+
 		if ( is_wp_error( $article ) ) {
 			return $article;
 		}
@@ -231,12 +242,12 @@ abstract class WPCP_Campaign {
 		//translate template
 		$content_template = wpcp_get_post_meta( $this->campaign_id, '_post_template', '' );
 		if ( ! empty( $content_template ) ) {
-			$content = wpcp_replace_template_tags($content_template, $article);
+			$content = wpcp_replace_template_tags( $content_template, $article );
 		}
 
 		$title_template = wpcp_get_post_meta( $this->campaign_id, '_post_title', '' );
 		if ( ! empty( $title_template ) ) {
-			$title = wpcp_replace_template_tags($title_template, $article);
+			$title = wpcp_replace_template_tags( $title_template, $article );
 		}
 
 
@@ -311,24 +322,47 @@ abstract class WPCP_Campaign {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return object|bool
+	 * @param string $type
+	 *
+	 * @return object|boolean
 	 */
-	protected function get_link($type = 'ready') {
+	protected function get_link( $type = 'ready' ) {
 		global $wpdb;
 		$table = $wpdb->prefix . 'wpcp_links';
-		$sql   = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = '{$type}' limit 1",
+		$sql   = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = %s limit 1",
 			$this->keyword,
 			$this->campaign_id,
-			$this->campaign_type
+			$this->campaign_type,
+			$type
 		);
 		$result = $wpdb->get_row( $sql );
 //		$result = $wpdb->get_row( "select * from {$table} where id='63'" );
-
 		if ( empty( $result ) ) {
 			return false;
 		}
 
 		return $result;
+	}
+
+	/**
+	 * get total links available
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $status
+	 *
+	 * @return null|string
+	 */
+	protected function count_links( $status = 'ready' ){
+		global $wpdb;
+		$table = $wpdb->prefix . 'wpcp_links';
+		$sql   = $wpdb->prepare( "select count(id) from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = %s limit 1",
+			$this->keyword,
+			$this->campaign_id,
+			$this->campaign_type,
+			$status
+		);
+		return $wpdb->get_var($sql);
 	}
 
 

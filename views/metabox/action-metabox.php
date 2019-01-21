@@ -66,9 +66,14 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 			} else { ?>
 				<input name="original_publish" type="hidden" id="original_publish" value="<?php esc_attr_e( 'Update' ) ?>"/>
 				<div class="publishing-action-btn">
-					<a href="#">
-						<button type="button" class="button"><?php _e( 'Test run', 'wp-content-pilot' ); ?></button>
-					</a>
+					<?php
+					$test_run_url = add_query_arg(array(
+						'action' => 'wpcp_campaign_test_run',
+						'campaign_id' => intval($_REQUEST['post']),
+						'nonce' => wp_create_nonce('wpcp_campaign_test_run')
+					),esc_url( admin_url('admin-post.php') ))
+					?>
+					<a href="<?php echo esc_url( $test_run_url ); ?>" class="button"><?php _e( 'Test Run', 'wp-content-pilot' ); ?></a>
 					<input name="save" type="submit" class="button button-primary button-large" id="publish" value="<?php esc_attr_e( 'Update Campaign', 'wp-content-pilot' ) ?>"/>
 				</div>
 				<?php
