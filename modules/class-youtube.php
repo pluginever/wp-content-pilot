@@ -86,14 +86,25 @@ class WPCP_Youtube extends WPCP_Campaign {
 			'placeholder'      => '',
 			'show_option_all'  => '',
 			'show_option_none' => '',
-			'label'            => 'Search Type',
+			'label'            => __( 'Search Type', 'wp-content-pilot' ),
 			'desc'             => __( 'Use global search for all result or use specific channel if you want to limit to that channel.', 'wp-content-pilot' ),
 			'options'          => array(
-				'global'  => 'Global',
-				'channel' => 'From Specific Channel',
+				'global'  => __( 'Global', 'wp-content-pilot' ),
+				'channel' => __( 'From Specific Channel', 'wp-content-pilot' ),
 			),
 			'double_columns'   => true,
 			'selected'         => wpcp_get_post_meta( $post_id, '_youtube_search_type', 'global' ),
+		) );
+
+		echo content_pilot()->elements->select( array(
+			'name'             => '_youtube_category',
+			'placeholder'      => '',
+			'show_option_all'  => '',
+			'show_option_none' => '',
+			'label'            => __( 'Category', 'wp-content-pilot' ),
+			'options'          => wpcp_get_youtube_categories(),
+			'double_columns'   => true,
+			'selected'         => wpcp_get_post_meta( $post_id, '_youtube_category', 'all' ),
 		) );
 
 
