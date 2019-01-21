@@ -81,20 +81,20 @@ class WPCP_Youtube extends WPCP_Campaign {
 			return false;
 		}
 
-		echo content_pilot()->elements->select( array(
-			'name'             => '_youtube_search_type',
-			'placeholder'      => '',
-			'show_option_all'  => '',
-			'show_option_none' => '',
-			'label'            => __( 'Search Type', 'wp-content-pilot' ),
-			'desc'             => __( 'Use global search for all result or use specific channel if you want to limit to that channel.', 'wp-content-pilot' ),
-			'options'          => array(
-				'global'  => __( 'Global', 'wp-content-pilot' ),
-				'channel' => __( 'From Specific Channel', 'wp-content-pilot' ),
-			),
-			'double_columns'   => true,
-			'selected'         => wpcp_get_post_meta( $post_id, '_youtube_search_type', 'global' ),
-		) );
+		//		echo content_pilot()->elements->select( array(
+		//			'name'             => '_youtube_search_type',
+		//			'placeholder'      => '',
+		//			'show_option_all'  => '',
+		//			'show_option_none' => '',
+		//			'label'            => __( 'Search Type', 'wp-content-pilot' ),
+		//			'desc'             => __( 'Use global search for all result or use specific channel if you want to limit to that channel.', 'wp-content-pilot' ),
+		//			'options'          => array(
+		//				'global'  => __( 'Global', 'wp-content-pilot' ),
+		//				'channel' => __( 'From Specific Channel', 'wp-content-pilot' ),
+		//			),
+		//			'double_columns'   => true,
+		//			'selected'         => wpcp_get_post_meta( $post_id, '_youtube_search_type', 'global' ),
+		//		) );
 
 		echo content_pilot()->elements->select( array(
 			'name'             => '_youtube_category',
@@ -106,6 +106,44 @@ class WPCP_Youtube extends WPCP_Campaign {
 			'double_columns'   => true,
 			'selected'         => wpcp_get_post_meta( $post_id, '_youtube_category', 'all' ),
 		) );
+
+		echo content_pilot()->elements->select( array(
+
+			'name'             => '_youtube_search_orderby',
+			'label'            => __( 'Search Order By', 'wp-content-pilot' ),
+			'placeholder'      => '',
+			'show_option_all'  => '',
+			'show_option_none' => '',
+			'double_columns'   => true,
+
+			'options' => array(
+				'relevance' => 'Relevance',
+				'date'      => 'Date',
+				'title'     => 'Title',
+				'viewCount' => 'View Count',
+				'rating'    => 'Rating',
+			),
+
+			'selected' => wpcp_get_post_meta( $post_id, '_youtube_search_orderby', '' ),
+		) );
+
+
+		echo content_pilot()->elements->select( array(
+			'name'             => '_youtube_search_order',
+			'label'            => __( 'Search Order', 'wp-content-pilot' ),
+			'value'            => 'asc',
+			'options'          => array(
+				'asc'  => 'ASC',
+				'desc' => 'DESC',
+			),
+			'placeholder'      => '',
+			'show_option_all'  => '',
+			'show_option_none' => '',
+			'double_columns'   => true,
+			'selected'         => wpcp_get_post_meta( $post_id, '_youtube_search_order', 'asc' ),
+		) );
+
+
 
 
 	}
