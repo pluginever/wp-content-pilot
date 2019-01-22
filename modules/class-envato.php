@@ -277,9 +277,8 @@ class WPCP_Envato extends WPCP_Campaign {
 
 		$response = wpcp_retrieve_body( $request );
 
-
 		if ( is_wp_error( $response ) ) {
-			return array();
+			return $response;
 		}
 
 		$items = $response->matches;

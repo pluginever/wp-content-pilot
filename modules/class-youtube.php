@@ -102,7 +102,7 @@ class WPCP_Youtube extends WPCP_Campaign {
 			'show_option_all'  => '',
 			'show_option_none' => '',
 			'label'            => __( 'Category', 'wp-content-pilot' ),
-			'options'          => wpcp_get_youtube_categories(),
+			'options'          => $this->get_youtube_categories(),
 			'double_columns'   => true,
 			'selected'         => wpcp_get_post_meta( $post_id, '_youtube_category', 'all' ),
 		) );
@@ -186,6 +186,54 @@ class WPCP_Youtube extends WPCP_Campaign {
 			'status'  => 'ready',
 		) );
 
+	}
+
+	/**
+	 * Get all youtube categories
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array
+	 */
+
+	public function get_youtube_categories() {
+		$categories = array(
+			'all' => 'All',
+			'2'   => 'Autos & Vehicles',
+			'1'   => 'Film & Animation',
+			'10'  => 'Music',
+			'15'  => 'Pets & Animals',
+			'17'  => 'Sports',
+			'18'  => 'Short Movies',
+			'19'  => 'Travel & Events',
+			'20'  => 'Gaming',
+			'21'  => 'Videoblogging',
+			'22'  => 'People & Blogs',
+			'23'  => 'Comedy',
+			'24'  => 'Entertainment',
+			'25'  => 'News & Politics',
+			'26'  => 'Howto & Style',
+			'27'  => 'Education',
+			'28'  => 'Science & Technology',
+			'29'  => 'Nonprofits & Activism',
+			'30'  => 'Movies',
+			'31'  => 'Anime/Animation',
+			'32'  => 'Action/Adventure',
+			'33'  => 'Classics',
+			'34'  => 'Comedy',
+			'35'  => 'Documentary',
+			'36'  => 'Drama',
+			'37'  => 'Family',
+			'38'  => 'Foreign',
+			'39'  => 'Horror',
+			'40'  => 'Sci-Fi/Fantasy',
+			'41'  => 'Thriller',
+			'42'  => 'Shorts',
+			'43'  => 'Shows',
+			'44'  => 'Trailers',
+		);
+
+		return $categories;
 	}
 
 	public function setup() {
