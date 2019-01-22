@@ -211,7 +211,7 @@ class WPCP_Envato extends WPCP_Campaign {
 			'author_image'       => esc_url( @$raw->author_image ),
 			'summary'            => esc_html( @$raw->summary ),
 			'tags'               => sanitize_text_field( @$raw->tags ),
-			'description_html'   => esc_url( @$raw->description_html ),
+			'description_html'   => wp_kses_post( @$raw->description_html ),
 			'affiliate_url'      => esc_url( $affiliate_url ),
 		);
 
@@ -311,16 +311,19 @@ class WPCP_Envato extends WPCP_Campaign {
 	public function get_post( $link ) {
 		$raw_content = (array) maybe_unserialize( $link->raw_content );
 
-		$article = array(
-			'title'       => $link->title,
-			'raw_title'   => $link->title,
-			'content'     => $link->content,
-			'raw_content' => $raw_content['description_html'],
-			'image_url'   => $link->image,
-			'source_url'  => $link->url,
-			'date'        => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
-			'score'       => $link->score,
-		);
+		$article = array_merge( array(
+			'title'         => $link->title,
+			'content'       => $link->content,
+			'image_url'     => $link->image,
+			'source_url'    => $link->url,
+			'date'          => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
+			'score'         => $link->score,
+			'campaign_id'   => $link->camp_id,
+			'campaign_type' => $link->camp_type,
+
+			'raw_title'     => $link->title,
+			'raw_content'   => $raw_content['description_html'],
+		), $raw_content );
 
 		return $article;
 	}
