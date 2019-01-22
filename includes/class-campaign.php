@@ -202,8 +202,8 @@ abstract class WPCP_Campaign {
 
 		//insert post summary
 		$use_post_summary = wpcp_get_post_meta( $this->campaign_id, '_excerpt', 0 );
-		if ( 'on' === $use_post_summary && empty( $article['raw_content'] ) ) {
-			$summary = wp_trim_words( $article['raw_content'], 55 );
+		if ( 'on' === $use_post_summary && !empty( $article['content'] ) ) {
+			$summary = wp_trim_words( $article['content'], 55 );
 			$summary = strip_tags( $summary );
 			$summary = strip_shortcodes( $summary );
 		}
