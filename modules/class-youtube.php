@@ -176,6 +176,10 @@ class WPCP_Youtube extends WPCP_Campaign {
 
 		$raw = maybe_unserialize( $link->raw_content );
 
+		$article = array(
+
+		);
+
 		wpcp_update_link( $link->id, array(
 			'content' => trim( $link->description_html ),
 			'score'   => wpcp_get_read_ability_score( isset( $raw->description_html ) ? $raw->description_html : $link->content ),
@@ -243,17 +247,15 @@ class WPCP_Youtube extends WPCP_Campaign {
 
 			$url = esc_url( 'https://www.youtube.com/watch?v=' . $item->id->videoId );
 
-
 			$title   = @ ! empty( $item->snippet->title ) ? @sanitize_text_field( $item->snippet->title ) : '';
 			$content = @ ! empty( $item->snippet->description ) ? @esc_html( $item->snippet->description ) : '';
 
-			if ( ! empty( $item->snippet->thumbnails ) && is_array( $item->snippet->thumbnails ) ) {
+			if ( ! empty( $item->snippet->thumbnails ) && is_object( $item->snippet->thumbnails ) ) {
 				$last_image = end( $item->snippet->thumbnails );
 
 				$image = @ ! empty( $last_image->url ) ? esc_url( $last_image->url ) : '';
 
 			}
-
 
 			$links[] = array(
 				'title'       => $title,
