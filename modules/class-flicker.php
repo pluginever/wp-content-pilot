@@ -23,8 +23,6 @@ class WPCP_Flicker extends WPCP_Campaign {
 	 */
 	public function __construct() {
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
-		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
-		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
 		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
 
 		add_filter( 'wpcp_replace_template_tags', array( $this, 'replace_template_tags' ), 10, 2 );
@@ -57,36 +55,18 @@ class WPCP_Flicker extends WPCP_Campaign {
 	 * @return array
 	 */
 	public static function get_template_tags() {
-		return array();
-	}
-
-	/**
-	 * Conditionally show meta fields
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param $post_id
-	 * @param $campaign_type
-	 *
-	 * @return bool
-	 */
-	public function campaign_option_fields( $post_id, $campaign_type ) {
-
-		if ( 'flicker' != $campaign_type ) {
-			return false;
-		}
-
-	}
-
-	/**
-	 * update campaign settings
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param $post_id
-	 * @param $posted
-	 */
-	public function update_campaign_settings( $post_id, $posted ) {
+		return array(
+			'title'      => __( 'Title', 'wp-content-pilot' ),
+			'content'    => __( 'Content', 'wp-content-pilot' ),
+			'date'       => __( 'Published date', 'wp-content-pilot' ),
+			'image_url'      => __( 'Main image url', 'wp-content-pilot' ),
+			'source_url' => __( 'Source link', 'wp-content-pilot' ),
+			'author'     => __( 'Aurhor Name', 'wp-content-pilot' ),
+			'author_url' => __( 'Author Url', 'wp-content-pilot' ),
+			'tags'       => __( 'Photo Tags', 'wp-content-pilot' ),
+			'views'      => __( 'Photo Views', 'wp-content-pilot' ),
+			'user_id'    => __( 'User Id', 'wp-content-pilot' ),
+		);
 	}
 
 	/**
@@ -104,16 +84,33 @@ class WPCP_Flicker extends WPCP_Campaign {
 			return false;
 		}
 
-		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
+		$request = wpcp_remote_get( $link->url );
 
-		$article = array();
+		$response = wpcp_retrieve_body( $request );
+
+		$title       = $response->photo->title->_content;
+		$description = @$response->photo->description->_content;
+		$tags        = ! empty( $response->photo->tags->tag ) ? implode( ', ', wp_list_pluck( @$response->photo->tags->tag, 'raw' ) ) : '';
+		$image_url   = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}.jpg";
+
+		$article = array(
+			'author'     => $response->photo->owner->username,
+			'author_url' => "https://www.flickr.com/photos/{$response->photo->owner->nsid}/",
+			'tags'       => $tags,
+			'views'      => $response->photo->views,
+			'user_id'    => $response->photo->owner->nsid,
+		);
 
 		wpcp_update_link( $link->id, array(
-			//'content'     => $description,
+			'title'       => $title,
+			'gmt_date'    => gmdate( 'Y-m-d H:i:s', $response->photo->dates->posted ),
+			'content'     => $description,
+			'image'       => $image_url,
 			'raw_content' => serialize( $article ),
-			//'score'       => wpcp_get_read_ability_score( $description ),
+			'score'       => wpcp_get_read_ability_score( $description ),
 			'status'      => 'ready',
 		) );
+
 	}
 
 	/**
@@ -161,16 +158,17 @@ class WPCP_Flicker extends WPCP_Campaign {
 
 	public function discover_links() {
 
-		$total_page_uid = $this->get_uid('total_page');
-		$total_page = wpcp_get_post_meta($this->campaign_id, $total_page_uid, 0);
-		$page     = $this->get_page_number( '1' );
-		$keywords = wpcp_get_post_meta( $this->campaign_id, '_keywords', '' );
-		$per_page = 50;
+		$total_page_uid = $this->get_uid( 'total_page' );
+		$total_page     = wpcp_get_post_meta( $this->campaign_id, $total_page_uid, 0 );
+		$page           = $this->get_page_number( '1' );
+		$keywords       = wpcp_get_post_meta( $this->campaign_id, '_keywords', '' );
+		$per_page       = 50;
 
-		if($page > $total_page && !empty($total_page)){
-			$msg = sprintf(__( 'Maximum page number reached for the keyword %s', 'wp-content-pilot' ), $keywords);
+		if ( $page > $total_page && ! empty( $total_page ) ) {
+			$msg = sprintf( __( 'Maximum page number reached for the keyword %s', 'wp-content-pilot' ), $keywords );
 			wpcp_log( $msg );
-			wpcp_disable_campaign($this->campaign_id);
+			wpcp_disable_campaign( $this->campaign_id );
+
 			return new \WP_Error( 'max-page', $msg );
 		}
 
@@ -197,7 +195,7 @@ class WPCP_Flicker extends WPCP_Campaign {
 
 		if ( empty( $response->photos->photo ) ) {
 
-			$msg = sprintf(__( 'Could not find any result for the keyword %s', 'wp-content-pilot' ), $keywords);
+			$msg = sprintf( __( 'Could not find any result for the keyword %s', 'wp-content-pilot' ), $keywords );
 			wpcp_log( $msg );
 
 			return new \WP_Error( 'no-links-in-response', $msg );
@@ -205,19 +203,35 @@ class WPCP_Flicker extends WPCP_Campaign {
 
 		$items = $response->photos;
 
-		if(empty($total_page)){
-			$total_page = ($items->total / $per_page);
-			update_post_meta($this->campaign_id, $total_page_uid, $total_page);
+		if ( empty( $total_page ) ) {
+			$total_page = ( $items->total / $per_page );
+			update_post_meta( $this->campaign_id, $total_page_uid, $total_page );
 		}
 
 		$links = [];
 
-		foreach ( $items as $item ) {
+		foreach ( $items->photo as $item ) {
 
-			$image = '';
+			$title = ! empty( $item->title ) ? sanitize_text_field( $item->title ) : '';
 
+			$url = esc_url_raw( "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key={$this->api_key}&photo_id={$item->id}&secret={$item->secret}&format=json&nojsoncallback=1}" );
+
+			$links[] = array(
+				'title' => $title,
+				'url'   => $url
+			);
 
 		}
+
+		$next_page = intval( $page ) + 1;
+
+		if ( $next_page == $response->photos->pages ) {
+			wpcp_disable_keyword( $this->campaign_id, $this->keyword );
+		} else {
+			$this->set_page_number( intval( $response->photos->page ) + 1 );
+		}
+
+		return $links;
 
 	}
 

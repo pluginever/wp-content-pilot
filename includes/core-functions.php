@@ -666,3 +666,4 @@ function wpcp_get_ready_campaign_links( $campaign_id, $campaign_type = null ) {
 function wpcp_cent_to_usd( $cent ) {
 	return number_format( ( $cent / 100 ), 2, '.', ' ' );
 }
+
