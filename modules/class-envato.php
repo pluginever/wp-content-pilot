@@ -26,6 +26,8 @@ class WPCP_Envato extends WPCP_Campaign {
 		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
 		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
 		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
+
+		add_filter( 'wpcp_replace_template_tags', array( $this, 'replace_template_tags' ), 10, 2 );
 	}
 
 	/**
@@ -128,8 +130,8 @@ class WPCP_Envato extends WPCP_Campaign {
 			'show_option_all'  => '',
 			'show_option_none' => '',
 			'options'          => array(
-				'following' => __( 'Following', 'wp-content-pilot' ),
 				'relevance' => __( 'Relevance', 'wp-content-pilot' ),
+				'following' => __( 'Following', 'wp-content-pilot' ),
 				'rating'    => __( 'Rating', 'wp-content-pilot' ),
 				'sales'     => __( 'Sales', 'wp-content-pilot' ),
 				'price'     => __( 'Price', 'wp-content-pilot' ),
@@ -140,7 +142,7 @@ class WPCP_Envato extends WPCP_Campaign {
 			),
 			'required'         => false,
 			'double_columns'   => true,
-			'selected'         => wpcp_get_post_meta( $post_id, '_envato_sort_by', 'no' ),
+			'selected'         => wpcp_get_post_meta( $post_id, '_envato_sort_by', 'relevance' ),
 			'desc'             => __( 'Select how the result will be sorted', 'wp-content-pilot' ),
 		) );
 
@@ -226,7 +228,38 @@ class WPCP_Envato extends WPCP_Campaign {
 
 	}
 
+	/**
+	 * Replace additional template tags
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $content
+	 * @param $article
+	 *
+	 * @return mixed
+	 */
+	public function replace_template_tags( $content, $article ) {
 
+		if ( 'envato' !== $article['campaign_type'] ) {
+			return $content;
+		}
+
+		$link        = wpcp_get_link( $article['link_id'] );
+		$raw_content = maybe_unserialize( $link->raw_content );
+
+		foreach ( $raw_content as $tag => $tag_content ) {
+			$content = str_replace( "{{$tag}}", $tag_content, $content );
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Check if everything ok or not
+	 *
+	 * @since 1.0.0
+	 * @return bool|\WP_Error
+	 */
 	public function setup() {
 		$token     = wpcp_get_settings( 'token', 'wpcp_settings_envato', '' );
 		$user_name = wpcp_get_settings( 'user_name', 'wpcp_settings_envato', '' );
@@ -244,7 +277,12 @@ class WPCP_Envato extends WPCP_Campaign {
 		return true;
 	}
 
-
+	/**
+	 *
+	 *
+	 * @since 1.0.0
+	 * @return array|\WP_Error
+	 */
 	public function discover_links() {
 		$page           = $this->get_page_number( '1' );
 		$site           = wpcp_get_post_meta( $this->campaign_id, '_platform', null );
@@ -311,6 +349,15 @@ class WPCP_Envato extends WPCP_Campaign {
 		return $links;
 	}
 
+	/**
+	 * Fetch post finally
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $link
+	 *
+	 * @return array
+	 */
 	public function get_post( $link ) {
 		$article = array(
 			'title'         => $link->title,
