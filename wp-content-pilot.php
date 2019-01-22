@@ -253,6 +253,7 @@ final class ContentPilot {
 		//admin includes
 		if ( $this->is_request( 'admin' ) ) {
 			require_once WPCP_INCLUDES . '/metabox-functions.php';
+			require_once WPCP_INCLUDES . '/class-admin-menu.php';
 			require_once WPCP_INCLUDES . '/class-settings-api.php';
 			require_once WPCP_INCLUDES . '/class-settings.php';
 		}

@@ -18,7 +18,7 @@ class WPCP_Settings {
 	}
 
 	function admin_menu() {
-		add_submenu_page( 'edit.php?post_type=wp_content_pilot', 'Settings', 'Settings', 'manage_options', 'wpcp-settings', array(
+		add_submenu_page( 'edit.php?post_type=wp_content_pilot', __( 'Settings', 'wp-content-pilot' ), __( 'Settings', 'wp-content-pilot' ), 'manage_options', 'wpcp-settings', array(
 			$this,
 			'settings_page'
 		) );
