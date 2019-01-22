@@ -27,6 +27,8 @@ class WPCP_Youtube extends WPCP_Campaign {
 		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
 		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
 		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
+
+		add_filter( 'wpcp_replace_template_tags', array( $this, 'replace_template_tags' ), 10, 2 );
 	}
 
 	/**
@@ -57,11 +59,22 @@ class WPCP_Youtube extends WPCP_Campaign {
 	 */
 	public static function get_template_tags() {
 		return array(
-			'title'      => __( 'Title', 'wp-content-pilot' ),
-			'except'     => __( 'Summary', 'wp-content-pilot' ),
-			'content'    => __( 'Content', 'wp-content-pilot' ),
-			'image_url'  => __( 'Main image url', 'wp-content-pilot' ),
-			'source_url' => __( 'Source link', 'wp-content-pilot' ),
+			'title'          => __( 'Title', 'wp-content-pilot' ),
+			'except'         => __( 'Summary', 'wp-content-pilot' ),
+			'content'        => __( 'Content', 'wp-content-pilot' ),
+			'image_url'      => __( 'Main image url', 'wp-content-pilot' ),
+			'source_url'     => __( 'Source link', 'wp-content-pilot' ),
+			'video_id'       => __( 'Video Id', 'wp-content-pilot' ),
+			'channel_id'     => __( 'Channel Id', 'wp-content-pilot' ),
+			'channel_title'  => __( 'Channel Name', 'wp-content-pilot' ),
+			'tags'           => __( 'Video Tags', 'wp-content-pilot' ),
+			'duration'       => __( 'Video Duration', 'wp-content-pilot' ),
+			'view_count'     => __( 'Total Views', 'wp-content-pilot' ),
+			'like_count'     => __( 'Total Likes', 'wp-content-pilot' ),
+			'dislike_count'  => __( 'Total Dislikes', 'wp-content-pilot' ),
+			'favorite_count' => __( 'Total Favourites', 'wp-content-pilot' ),
+			'comment_count'  => __( 'Total Comments', 'wp-content-pilot' ),
+			'embed_html'     => __( 'HTML Embed Code ', 'wp-content-pilot' ),
 		);
 	}
 
@@ -222,11 +235,15 @@ class WPCP_Youtube extends WPCP_Campaign {
 			return false;
 		}
 
-		$video_id =  $link->raw_content ;
+		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_youtube', '' );
 
-		$url = esc_url_raw( "https://www.googleapis.com/youtube/v3/videos?id={$video_id}&key={$this->api_key}&part=id,snippet,contentDetails,statistics,player" );
+		$video_id = $link->raw_content;
 
-		$request = wpcp_remote_get( $url);
+		$url = esc_url_raw( "https://www.googleapis.com/youtube/v3/videos?id={$video_id}&key={$api_key}&part=id,snippet,contentDetails,statistics,player" );
+
+		error_log($url);
+
+		$request = wpcp_remote_get( $url );
 
 		$response = wpcp_retrieve_body( $request );
 
@@ -234,7 +251,7 @@ class WPCP_Youtube extends WPCP_Campaign {
 			return $response;
 		}
 
-		$item = array_pop($response->items);
+		$item = array_pop( $response->items );
 
 		$description = wp_kses_post( @$item->snippet->description );
 
@@ -243,7 +260,7 @@ class WPCP_Youtube extends WPCP_Campaign {
 			'channel_id'     => sanitize_key( @$item->snippet->channelId ),
 			'channel_title'  => sanitize_text_field( @$item->snippet->channelTitle ),
 			'tags'           => implode( ',', (array) @$item->snippet->tags ),
-			'duration'       => convert_youtube_duration( @$item->contentDetails->duration ),
+			'duration'       => $this->convert_youtube_duration( @$item->contentDetails->duration ),
 			'view_count'     => intval( @$item->statistics->viewCount ),
 			'like_count'     => intval( @$item->statistics->likeCount ),
 			'dislike_count'  => intval( @$item->statistics->dislikeCount ),
@@ -253,12 +270,38 @@ class WPCP_Youtube extends WPCP_Campaign {
 		);
 
 		wpcp_update_link( $link->id, array(
-			'content'     => $description ,
+			'content'     => $description,
 			'raw_content' => serialize( $article ),
 			'score'       => wpcp_get_read_ability_score( $description ),
 			'status'      => 'ready',
 		) );
 
+	}
+
+	/**
+	 * Replace additional template tags
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $content
+	 * @param $article
+	 *
+	 * @return mixed
+	 */
+	public function replace_template_tags( $content, $article ) {
+
+		if ( 'youtube' !== $article['campaign_type'] ) {
+			return $content;
+		}
+
+		$link        = wpcp_get_link( $article['link_id'] );
+		$raw_content = maybe_unserialize( $link->raw_content );
+
+		foreach ( $raw_content as $tag => $tag_content ) {
+			$content = str_replace( "{{$tag}}", $tag_content, $content );
+		}
+
+		return $content;
 	}
 
 	public function setup() {
@@ -347,23 +390,20 @@ class WPCP_Youtube extends WPCP_Campaign {
 	}
 
 	public function get_post( $link ) {
-		
-		$raw_content = (array) maybe_unserialize( $link->raw_content );
 
 		$article = array(
-			'title'       => $link->title,
-			'raw_title'   => $link->title,
-			'content'     => $link->content,
-			'raw_content' => $raw_content['description'],
-			'image_url'   => $link->image,
-			'source_url'  => $link->url,
-			'date'        => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
-			'score'       => $link->score,
+			'title'         => $link->title,
+			'content'       => $link->content,
+			'image_url'     => $link->image,
+			'source_url'    => $link->url,
+			'date'          => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
+			'score'         => $link->score,
+			'campaign_id'   => $link->camp_id,
+			'campaign_type' => $link->camp_type,
+			'link_id'       => $link->id
 		);
 
 		return $article;
-
-
 	}
 
 	public function convert_youtube_duration( $youtube_time ) {
