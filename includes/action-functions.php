@@ -30,15 +30,15 @@ function wpcp_run_automatic_campaign() {
 		$automatic_campaign = new WPCP_Automatic_Campaign();
 
 		foreach ( $campaigns as $campaign_id ) {
-			$last_run     = wpcp_get_post_meta( $campaign_id, '_last_run', '' );
+			$last_run     = wpcp_get_post_meta( $campaign_id, '_last_run', 0 );
 			$frequency    = wpcp_get_post_meta( $campaign_id, '_campaign_frequency', 0 );
 			$target       = wpcp_get_post_meta( $campaign_id, '_campaign_target', 0 );
 			$posted       = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
 			$current_time = current_time( 'timestamp' );
 			$diff         = $current_time - $last_run;
-//			if ( $diff < $frequency ) {
-//				continue;
-//			}
+			if ( $diff < $frequency ) {
+				continue;
+			}
 
 			if ( $posted >= $target ) {
 				wpcp_disable_campaign( $campaign_id );
