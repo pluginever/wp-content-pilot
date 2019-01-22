@@ -146,49 +146,6 @@ class WPCP_Youtube extends WPCP_Campaign {
 	}
 
 	/**
-	 * update campaign settings
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param $post_id
-	 * @param $posted
-	 */
-	public function update_campaign_settings( $post_id, $posted ) {
-		update_post_meta( $post_id, '_youtube_category', empty( $posted['_youtube_category'] ) ? 'all' : sanitize_text_field( $posted['_youtube_category'] ) );
-		update_post_meta( $post_id, '_youtube_search_orderby', empty( $posted['_youtube_search_orderby'] ) ? '' : sanitize_key( $posted['_youtube_search_orderby'] ) );
-		update_post_meta( $post_id, '_youtube_search_order', empty( $posted['_youtube_search_order'] ) ? '' : sanitize_key( $posted['_youtube_search_order'] ) );
-	}
-
-	/**
-	 * Hook in background process and prepare contents
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param $link
-	 *
-	 * @return bool
-	 */
-	public function prepare_contents( $link ) {
-
-		if ( 'youtube' != $link->camp_type ) {
-			return false;
-		}
-
-		$raw = maybe_unserialize( $link->raw_content );
-
-		$article = array(
-
-		);
-
-		wpcp_update_link( $link->id, array(
-			'content' => trim( $link->description_html ),
-			'score'   => wpcp_get_read_ability_score( isset( $raw->description_html ) ? $raw->description_html : $link->content ),
-			'status'  => 'ready',
-		) );
-
-	}
-
-	/**
 	 * Get all youtube categories
 	 *
 	 * @since 1.0.0
@@ -236,11 +193,77 @@ class WPCP_Youtube extends WPCP_Campaign {
 		return $categories;
 	}
 
+	/**
+	 * update campaign settings
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $post_id
+	 * @param $posted
+	 */
+	public function update_campaign_settings( $post_id, $posted ) {
+		update_post_meta( $post_id, '_youtube_category', empty( $posted['_youtube_category'] ) ? 'all' : sanitize_text_field( $posted['_youtube_category'] ) );
+		update_post_meta( $post_id, '_youtube_search_orderby', empty( $posted['_youtube_search_orderby'] ) ? '' : sanitize_key( $posted['_youtube_search_orderby'] ) );
+		update_post_meta( $post_id, '_youtube_search_order', empty( $posted['_youtube_search_order'] ) ? '' : sanitize_key( $posted['_youtube_search_order'] ) );
+	}
+
+	/**
+	 * Hook in background process and prepare contents
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $link
+	 *
+	 * @return bool|\WP_Error
+	 */
+	public function prepare_contents( $link ) {
+
+		if ( 'youtube' != $link->camp_type ) {
+			return false;
+		}
+
+		$video_id =  $link->raw_content ;
+
+		$url = esc_url_raw( "https://www.googleapis.com/youtube/v3/videos?id={$video_id}&key={$this->api_key}&part=id,snippet,contentDetails,statistics,player" );
+
+		$request = wpcp_remote_get( $url);
+
+		$response = wpcp_retrieve_body( $request );
+
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		$item = array_pop($response->items);
+
+		$description = wp_kses_post( @$item->snippet->description );
+
+		$article = array(
+			'video_id'       => sanitize_key( @$item->id ),
+			'channel_id'     => sanitize_key( @$item->snippet->channelId ),
+			'channel_title'  => sanitize_text_field( @$item->snippet->channelTitle ),
+			'tags'           => implode( ',', (array) @$item->snippet->tags ),
+			'duration'       => convert_youtube_duration( @$item->contentDetails->duration ),
+			'view_count'     => intval( @$item->statistics->viewCount ),
+			'like_count'     => intval( @$item->statistics->likeCount ),
+			'dislike_count'  => intval( @$item->statistics->dislikeCount ),
+			'favorite_count' => intval( @$item->statistics->favoriteCount ),
+			'comment_count'  => intval( @$item->statistics->commentCount ),
+			'embed_html'     => @$item->player->embedHtml,
+		);
+
+		wpcp_update_link( $link->id, array(
+			'content'     => $description ,
+			'raw_content' => serialize( $article ),
+			'score'       => wpcp_get_read_ability_score( $description ),
+			'status'      => 'ready',
+		) );
+
+	}
+
 	public function setup() {
 
 		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_youtube', '' );
-
-		error_log( $api_key );
 
 		if ( empty( $api_key ) ) {
 
@@ -310,7 +333,7 @@ class WPCP_Youtube extends WPCP_Campaign {
 				'content'     => $content,
 				'url'         => $url,
 				'image'       => $image,
-				'raw_content' => serialize( $item ),
+				'raw_content' => $item->id->videoId,
 				'score'       => '0',
 				'gmt_date'    => gmdate( 'Y-m-d H:i:s', strtotime( $item->snippet->publishedAt ) ),
 				'status'      => 'fetched',
@@ -324,13 +347,14 @@ class WPCP_Youtube extends WPCP_Campaign {
 	}
 
 	public function get_post( $link ) {
+		
 		$raw_content = (array) maybe_unserialize( $link->raw_content );
 
 		$article = array(
 			'title'       => $link->title,
 			'raw_title'   => $link->title,
 			'content'     => $link->content,
-			'raw_content' => $raw_content['description_html'],
+			'raw_content' => $raw_content['description'],
 			'image_url'   => $link->image,
 			'source_url'  => $link->url,
 			'date'        => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
@@ -340,6 +364,33 @@ class WPCP_Youtube extends WPCP_Campaign {
 		return $article;
 
 
+	}
+
+	public function convert_youtube_duration( $youtube_time ) {
+		preg_match_all( '/(\d+)/', $youtube_time, $parts );
+
+		// Put in zeros if we have less than 3 numbers.
+		if ( count( $parts[0] ) == 1 ) {
+			array_unshift( $parts[0], "0", "0" );
+		} elseif ( count( $parts[0] ) == 2 ) {
+			array_unshift( $parts[0], "0" );
+		}
+
+		$sec_init         = $parts[0][2];
+		$seconds          = $sec_init % 60;
+		$seconds_overflow = floor( $sec_init / 60 );
+
+		$min_init         = $parts[0][1] + $seconds_overflow;
+		$minutes          = ( $min_init ) % 60;
+		$minutes_overflow = floor( ( $min_init ) / 60 );
+
+		$hours = $parts[0][0] + $minutes_overflow;
+
+		if ( $hours != 0 ) {
+			return $hours . ':' . $minutes . ':' . $seconds;
+		} else {
+			return $minutes . ':' . $seconds;
+		}
 	}
 
 }
