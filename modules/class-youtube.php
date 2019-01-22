@@ -241,8 +241,6 @@ class WPCP_Youtube extends WPCP_Campaign {
 
 		$url = esc_url_raw( "https://www.googleapis.com/youtube/v3/videos?id={$video_id}&key={$api_key}&part=id,snippet,contentDetails,statistics,player" );
 
-		error_log($url);
-
 		$request = wpcp_remote_get( $url );
 
 		$response = wpcp_retrieve_body( $request );
