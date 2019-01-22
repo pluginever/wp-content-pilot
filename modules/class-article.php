@@ -246,17 +246,18 @@ class WPCP_Article extends WPCP_Campaign {
 	 * @return array
 	 */
 	public function get_post( $link ) {
-		$article = array(
-			'title'       => $link->title,
-			'raw_title'   => $link->title,
-			'content'     => $link->content,
-			'raw_content' => $link->raw_content,
-			'image_url'   => $link->image,
-			'source_url'  => $link->url,
-			'date'        => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
-			'score'       => $link->score,
-		);
 
+		$article = array(
+			'title'         => $link->title,
+			'content'       => $link->content,
+			'image_url'     => $link->image,
+			'source_url'    => $link->url,
+			'date'          => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
+			'score'         => $link->score,
+			'campaign_id'   => $link->camp_id,
+			'campaign_type' => $link->camp_type,
+			'link_id'       => $link->id
+		);
 		return $article;
 	}
 
