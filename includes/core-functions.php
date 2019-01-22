@@ -403,7 +403,7 @@ function wpcp_run_campaign( $campaign_id ) {
 	$module_class = $module['callback'];
 
 	// $instance \WPCP_Campaign
-	$instance = new $module_class( $campaign_id, $keyword );
+	$instance = new $module_class();
 
 	//set the module
 	$is_error = $instance->setup();

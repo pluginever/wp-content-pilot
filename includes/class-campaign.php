@@ -444,7 +444,7 @@ abstract class WPCP_Campaign {
 	 *
 	 * @return string
 	 */
-	private function get_uid( $string = '' ) {
+	public function get_uid( $string = '' ) {
 		$string = '_wpcp_' . $this->campaign_id . '-' . $this->campaign_type . '-' . $this->keyword . '-' . $string;
 
 		return sanitize_title( $string );

@@ -244,6 +244,7 @@ final class ContentPilot {
 		require_once WPCP_MODULES . '/class-article.php';
 		require_once WPCP_MODULES . '/class-envato.php';
 		require_once WPCP_MODULES . '/class-youtube.php';
+		require_once WPCP_MODULES . '/class-flicker.php';
 
 
 		//
@@ -367,6 +368,7 @@ final class ContentPilot {
 		new WPCP_Article();
 		new WPCP_Envato();
 		new WPCP_Youtube();
+		new WPCP_Flicker();
 
 		$this->elements = new WPCP_Elements();
 		$this->modules  = new WPCP_Module();
