@@ -57,10 +57,10 @@ class WPCP_Youtube extends WPCP_Campaign {
 	 */
 	public static function get_template_tags() {
 		return array(
-			'title'     => __( 'Title', 'wp-content-pilot' ),
-			'except'    => __( 'Summary', 'wp-content-pilot' ),
-			'content'   => __( 'Content', 'wp-content-pilot' ),
-			'image_url' => __( 'Main image url', 'wp-content-pilot' ),
+			'title'      => __( 'Title', 'wp-content-pilot' ),
+			'except'     => __( 'Summary', 'wp-content-pilot' ),
+			'content'    => __( 'Content', 'wp-content-pilot' ),
+			'image_url'  => __( 'Main image url', 'wp-content-pilot' ),
 			'source_url' => __( 'Source link', 'wp-content-pilot' ),
 		);
 	}
@@ -170,17 +170,17 @@ class WPCP_Youtube extends WPCP_Campaign {
 	 */
 	public function prepare_contents( $link ) {
 
-				if ( 'youtube' != $link->camp_type ) {
-					return false;
-				}
+		if ( 'youtube' != $link->camp_type ) {
+			return false;
+		}
 
-				$raw = maybe_unserialize($link->raw_content);
+		$raw = maybe_unserialize( $link->raw_content );
 
-				wpcp_update_link( $link->id, array(
-					'content' => trim( $link->description_html ),
-					'score'   => wpcp_get_read_ability_score( isset($raw->description_html)?$raw->description_html: $link->content ),
-					'status'  => 'ready',
-				) );
+		wpcp_update_link( $link->id, array(
+			'content' => trim( $link->description_html ),
+			'score'   => wpcp_get_read_ability_score( isset( $raw->description_html ) ? $raw->description_html : $link->content ),
+			'status'  => 'ready',
+		) );
 
 	}
 
@@ -274,6 +274,21 @@ class WPCP_Youtube extends WPCP_Campaign {
 	}
 
 	public function get_post( $link ) {
+		$raw_content = (array) maybe_unserialize( $link->raw_content );
+
+		$article = array(
+			'title'       => $link->title,
+			'raw_title'   => $link->title,
+			'content'     => $link->content,
+			'raw_content' => $raw_content['description_html'],
+			'image_url'   => $link->image,
+			'source_url'  => $link->url,
+			'date'        => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
+			'score'       => $link->score,
+		);
+
+		return $article;
+
 
 	}
 
