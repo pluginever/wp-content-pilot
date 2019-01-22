@@ -61,7 +61,8 @@ class WPCP_Envato extends WPCP_Campaign {
 			'content'            => __( 'Content', 'wp-content-pilot' ),
 			'image_url'          => __( 'Main image url', 'wp-content-pilot' ),
 			'source_url'         => __( 'Source link', 'wp-content-pilot' ),
-			'site'               => __( 'envato platform', 'wp-content-pilot' ),
+			'date'               => __( 'Published date', 'wp-content-pilot' ),
+			'site'               => __( 'Envato platform', 'wp-content-pilot' ),
 			'classification'     => __( 'Item classification', 'wp-content-pilot' ),
 			'classification_url' => __( 'Item classification url', 'wp-content-pilot' ),
 			'price'              => __( 'Price USD', 'wp-content-pilot' ),
@@ -270,10 +271,13 @@ class WPCP_Envato extends WPCP_Campaign {
 			$query_args['price_max'] = $max_price;
 		}
 
+
 		$headers = array( 'Authorization' => 'bearer ' . trim( $this->token ) );
 		$request = wpcp_remote_get( 'https://api.envato.com/v1/discovery/search/search/item', $query_args, array(), $headers );
 
 		$response = wpcp_retrieve_body( $request );
+
+
 		if ( is_wp_error( $response ) ) {
 			return array();
 		}
@@ -309,9 +313,7 @@ class WPCP_Envato extends WPCP_Campaign {
 	}
 
 	public function get_post( $link ) {
-		$raw_content = (array) maybe_unserialize( $link->raw_content );
-
-		$article = array_merge( array(
+		$article = array(
 			'title'         => $link->title,
 			'content'       => $link->content,
 			'image_url'     => $link->image,
@@ -320,10 +322,8 @@ class WPCP_Envato extends WPCP_Campaign {
 			'score'         => $link->score,
 			'campaign_id'   => $link->camp_id,
 			'campaign_type' => $link->camp_type,
-
-			'raw_title'     => $link->title,
-			'raw_content'   => $raw_content['description_html'],
-		), $raw_content );
+			'link_id'       => $link->id
+		);
 
 		return $article;
 	}

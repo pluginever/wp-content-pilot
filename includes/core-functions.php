@@ -118,6 +118,7 @@ function wpcp_remote_headers( $response, $param = null ) {
  * @return \SimpleXMLElement | \WP_Error
  */
 function wpcp_retrieve_body( $response ) {
+
 	if ( $response->error ) {
 		return new WP_Error( 'request-failed', $response->errorMessage );
 	}
@@ -617,10 +618,11 @@ function wpcp_download_image( $url ) {
  */
 function wpcp_replace_template_tags( $content, $article = array() ) {
 
-	$content = str_replace( '{content}', empty( $article['content'] ) ? '' : $article['content'], $content );
 	$content = str_replace( '{title}', empty( $article['title'] ) ? '' : $article['title'], $content );
+	$content = str_replace( '{content}', empty( $article['content'] ) ? '' : $article['content'], $content );
 	$content = str_replace( '{image_url}', empty( $article['image_url'] ) ? '' : $article['image_url'], $content );
 	$content = str_replace( '{source_url}', empty( $article['source_url'] ) ? '' : $article['source_url'], $content );
+	$content = str_replace( '{date}', empty( $article['date'] ) ? '' : $article['date'], $content );
 
 	$content = apply_filters( 'wpcp_replace_template_tags', $content, $article );
 
