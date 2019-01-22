@@ -256,6 +256,7 @@ final class ContentPilot {
 			require_once WPCP_INCLUDES . '/class-admin-menu.php';
 			require_once WPCP_INCLUDES . '/class-settings-api.php';
 			require_once WPCP_INCLUDES . '/class-settings.php';
+			require_once WPCP_INCLUDES . '/class-promotion.php';
 		}
 
 		//frontend includes
