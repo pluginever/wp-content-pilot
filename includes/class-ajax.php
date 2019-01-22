@@ -23,6 +23,7 @@ class WPCP_Ajax {
 	 */
 	public function __construct() {
 		add_action( 'wp_ajax_wpcp_get_campaign_options_metabox_content', array( $this, 'campaign_options_metabox_content' ) );
+		add_action( 'wp_ajax_wpcp_get_campaign_template_tags_metabox_content', array( $this, 'campaign_template_tags_metabox_content' ) );
 	}
 
 	public function campaign_options_metabox_content() {
@@ -32,6 +33,19 @@ class WPCP_Ajax {
 		$campaign_type = esc_attr( $_REQUEST['campaign_type'] );
 
 		wpcp_campaign_options_metabox_fields( $post_id, $campaign_type );
+		$html = ob_get_contents();
+		ob_get_clean();
+		wp_send_json_success( $html );
+	}
+
+
+	public function campaign_template_tags_metabox_content() {
+		ob_start();
+
+		$post_id       = intval( $_REQUEST['post_id'] );
+		$campaign_type = esc_attr( $_REQUEST['campaign_type'] );
+
+		wpcp_campaign_template_tags_metabox_fields( $post_id, $campaign_type );
 		$html = ob_get_contents();
 		ob_get_clean();
 		wp_send_json_success( $html );

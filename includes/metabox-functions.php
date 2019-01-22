@@ -25,6 +25,8 @@ function wpcp_register_meta_boxes() {
 	add_meta_box( 'campaign-options', __( 'Campaign Options', 'wp-content-pilot' ), 'wpcp_campaign_options_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'campaign-post-settings', __( 'Post Settings', 'wp-content-pilot' ), 'wpcp_campaign_post_settings_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'campaign-advanced-settings', __( 'Advanced Settings', 'wp-content-pilot' ), 'wpcp_campaign_advance_settings_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
+
+	add_meta_box( 'campaign-template-tags', __( 'Template Tags', 'wp-content-pilot' ), 'wpcp_campaign_template_tags_metabox_callback', 'wp_content_pilot', 'side', 'low' );
 }
 
 add_action( 'add_meta_boxes', 'wpcp_register_meta_boxes', 99 );
@@ -251,6 +253,36 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'value' => wpcp_get_post_meta( $post_id, '_content_limit', '' ),
 		'desc'  => 'Input the number of word to limit content. Default full content.',
 	) );
+}
+
+function wpcp_campaign_template_tags_metabox_callback( $post ) {
+	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
+	$campaign_type = empty( $campaign_type ) ? 'feeds' : $campaign_type;
+	wpcp_campaign_template_tags_metabox_fields( $post->ID, $campaign_type );
+}
+
+function wpcp_campaign_template_tags_metabox_fields( $post_id, $campaign_type ) {
+	$module = content_pilot()->modules->get_module( $campaign_type );
+	if ( empty( $module ) || is_wp_error( $module ) ) {
+		return new WP_Error( 'invalid-module-type', __( 'Invalid module type' ) );
+	}
+
+	$tags = $module['callback']::get_template_tags();
+	?>
+	<table class="fixed striped widefat">
+		<tr>
+			<th><?php _e( 'Tag', 'wp-content-pilot' ); ?></th>
+			<th><?php _e( 'Description', 'wp-content-pilot' ); ?></th>
+		</tr>
+		<?php foreach ( $tags as $tag => $description ): ?>
+			<tr>
+				<td><code>{<?php echo esc_html( $tag ); ?>}</code></td>
+				<td><?php echo esc_html( $description ); ?> </td>
+			</tr>
+		<?php endforeach; ?>
+	</table>
+	<?php
+
 }
 
 function wpcp_update_campaign_settings( $post_id ) {

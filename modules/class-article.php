@@ -54,7 +54,13 @@ class WPCP_Article extends WPCP_Campaign {
 	 * @return array
 	 */
 	public static function get_template_tags() {
-		return array( 'author', 'title', 'except', 'content', 'image_url');
+		return array(
+			'title'     => __( 'Title', 'wp-content-pilot' ),
+			'except'    => __( 'Summary', 'wp-content-pilot' ),
+			'content'   => __( 'Content', 'wp-content-pilot' ),
+			'image_url' => __( 'Main image url', 'wp-content-pilot' ),
+			'source_url' => __( 'Source link', 'wp-content-pilot' ),
+		);
 	}
 
 	/**

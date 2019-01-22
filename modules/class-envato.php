@@ -56,11 +56,23 @@ class WPCP_Envato extends WPCP_Campaign {
 	 */
 	public static function get_template_tags() {
 		return array(
-			'author',
-			'title',
-			'except',
-			'content',
-			'image_url'
+			'title'              => __( 'Title', 'wp-content-pilot' ),
+			'except'             => __( 'Summary', 'wp-content-pilot' ),
+			'content'            => __( 'Content', 'wp-content-pilot' ),
+			'image_url'          => __( 'Main image url', 'wp-content-pilot' ),
+			'source_url'         => __( 'Source link', 'wp-content-pilot' ),
+			'site'               => __( 'envato platform', 'wp-content-pilot' ),
+			'classification'     => __( 'Item classification', 'wp-content-pilot' ),
+			'classification_url' => __( 'Item classification url', 'wp-content-pilot' ),
+			'price'              => __( 'Price USD', 'wp-content-pilot' ),
+			'number_of_sales'    => __( 'Number of sales', 'wp-content-pilot' ),
+			'author_username'    => __( 'Author user name', 'wp-content-pilot' ),
+			'author_url'         => __( 'Author url', 'wp-content-pilot' ),
+			'author_image'       => __( 'Author image url', 'wp-content-pilot' ),
+			'summary'            => __( 'Item summary', 'wp-content-pilot' ),
+			'tags'               => __( 'tags', 'wp-content-pilot' ),
+			'description_html'   => __( 'HTML description', 'wp-content-pilot' ),
+			'affiliate_url'      => __( 'Affiliate URL', 'wp-content-pilot' ),
 		);
 	}
 
@@ -184,10 +196,31 @@ class WPCP_Envato extends WPCP_Campaign {
 
 		$raw = maybe_unserialize( $link->raw_content );
 
+		$affiliate_url = add_query_arg( array(
+			'ref' => $this->user_name
+		), $link->url );
+
+		$article = array(
+			'site'               => sanitize_text_field( @$raw->site ),
+			'classification'     => sanitize_text_field( @$raw->classification ),
+			'classification_url' => sanitize_text_field( @$raw->classification ),
+			'price'              => wpcp_cent_to_usd( @$raw->price_cents ),
+			'number_of_sales'    => intval( @$raw->number_of_sales ),
+			'author_username'    => sanitize_key( @$raw->number_of_sales ),
+			'author_url'         => esc_url( @$raw->author_url ),
+			'author_image'       => esc_url( @$raw->author_image ),
+			'summary'            => esc_html( @$raw->summary ),
+			'tags'               => sanitize_text_field( @$raw->tags ),
+			'description_html'   => esc_url( @$raw->description_html ),
+			'affiliate_url'      => esc_url( $affiliate_url ),
+		);
+
+
 		wpcp_update_link( $link->id, array(
-			'content' => empty($raw->description_html)? $raw->description: trim( $raw->description_html ),
-			'score'   => wpcp_get_read_ability_score( isset( $raw->description_html ) ? $raw->description_html : $link->content ),
-			'status'  => 'ready',
+			'content'     => empty( $raw->description_html ) ? $raw->description : trim( $raw->description_html ),
+			'raw_content' => serialize( $article ),
+			'score'       => wpcp_get_read_ability_score( isset( $raw->description_html ) ? $raw->description_html : $link->content ),
+			'status'      => 'ready',
 		) );
 
 	}
@@ -276,7 +309,7 @@ class WPCP_Envato extends WPCP_Campaign {
 	}
 
 	public function get_post( $link ) {
-		$raw_content = (array) maybe_unserialize($link->raw_content);
+		$raw_content = (array) maybe_unserialize( $link->raw_content );
 
 		$article = array(
 			'title'       => $link->title,

@@ -14,6 +14,7 @@ jQuery(document).ready(function ($, window, document, undefined) {
 		init: function () {
 			$('#_campaign_type').on('change', this.triggerCampaignTypeChange);
 			$('body').bind('campaign_type_changed', this.getCampaignOptions);
+			$('body').bind('campaign_type_changed', this.getCampaignTemplateTags);
 		},
 		triggerCampaignTypeChange: function () {
 			var campaign_type = $(this).val();
@@ -37,6 +38,23 @@ jQuery(document).ready(function ($, window, document, undefined) {
 				},
 				success: function (res) {
 					$('#campaign-options .inside').html(res);
+				},
+				error: function (error) {
+					alert('Something happend wrong');
+					console.log(error);
+				}
+			});
+		},
+		getCampaignTemplateTags: function (e, data) {
+			wp.ajax.send({
+				data: {
+					action: 'wpcp_get_campaign_template_tags_metabox_content',
+					campaign_type: data.type,
+					post_id: data.post_id,
+					nonce: '',
+				},
+				success: function (res) {
+					$('#campaign-template-tags .inside').html(res);
 				},
 				error: function (error) {
 					alert('Something happend wrong');
