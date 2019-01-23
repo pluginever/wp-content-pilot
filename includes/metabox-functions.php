@@ -390,7 +390,7 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'show_option_none' => '',
 		'double_columns'   => true,
 		'options'          => array(
-			'' => __('No Translation', 'wp-content-pilot')
+			'' => __( 'No Translation', 'wp-content-pilot' )
 		),
 		'disabled'         => true,
 		'multiple'         => false,
@@ -400,12 +400,12 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 	) );
 
 	$search_replace_args = apply_filters( 'wpcp_campaign_search_replace_input_args', array(
-		'label'    => __( 'Search Replace', 'wp-content-pilot' ),
-		'name'     => '_search_replace',
-		'required' => false,
-		'disabled' => true,
-		'desc'     => __( 'Separate each search replace words by (|) and separate pairs with comma(,). (PRO)', 'wp-content-pilot' ),
-		'placeholder'     => __( 'Search Word | Replace Word', 'wp-content-pilot' ),
+		'label'       => __( 'Search Replace', 'wp-content-pilot' ),
+		'name'        => '_search_replace',
+		'required'    => false,
+		'disabled'    => true,
+		'desc'        => __( 'Separate each search replace words by (|) and separate pairs with comma(,). (PRO)', 'wp-content-pilot' ),
+		'placeholder' => __( 'Search Word | Replace Word', 'wp-content-pilot' ),
 	), $post_id, $campaign_type );
 
 	echo apply_filters( 'wpcp_campaign_search_replace_input', content_pilot()->elements->textarea( $search_replace_args ), $post_id, $campaign_type );
@@ -414,13 +414,13 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 
 	<div class=" ever-row ever-form-group _translate_to_field">
 		<div class="ever-col-3">
-			<label for="_translate_to" class="ever-label"><?php _e('Meta Fields', 'wp-content-pilot');?></label>
+			<label for="_translate_to" class="ever-label"><?php _e( 'Meta Fields', 'wp-content-pilot' ); ?></label>
 		</div>
 		<div class="ever-col-1">:</div>
 		<div class="ever-col-8">
 
-			<div id="checkout_download_details" class="edd_meta_table_wrap">
-				<table class="widefat edd_repeatable_table" width="100%" cellpadding="0" cellspacing="0">
+			<div id="ever-repeater" class="ever-repeater-wrap">
+				<table class="widefat ever-repeater-table edd_repeatable_table" width="100%" cellpadding="0" cellspacing="0">
 					<thead>
 					<tr>
 						<th style="width: 2%"></th>
@@ -429,35 +429,39 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 						<th style="width: 3%"></th>
 					</tr>
 					</thead>
-					<tbody class="edd-repeatables-wrap">
+					<tbody class="ever-repeatables-wrap edd-repeatables-wrap">
 					<?php
 
-					if( ! empty( $checkout_download_details ) ) :
+					global $post;
 
-						foreach( $checkout_download_details as $key => $value ) :
-							$text         = isset( $value['text'] )         ? $value['text']         : '';
+					$meta_fields = wpcp_get_post_meta($post_id, '_meta_fields', '');
+
+					if ( ! empty( $meta_fields ) ) {
+
+						foreach ( $meta_fields as $key => $value ) :
+							$text = isset( $value['text'] ) ? $value['text'] : '';
 							$price_option = isset( $value['price_option'] ) ? $value['price_option'] : '';
-							$index        = isset( $value['index'] )        ? $value['index']        : $key;
-							$args         = apply_filters( 'checkout_download_detail_row_args', compact( 'text', 'price_option', 'index' ), $value );
+							$index = isset( $value['index'] ) ? $value['index'] : $key;
+							$args = apply_filters( 'checkout_download_detail_row_args', compact( 'text', 'price_option', 'index' ), $value );
 							?>
 							<tr class="edd_variable_prices_wrapper edd_repeatable_row" data-key="<?php echo esc_attr( $key ); ?>">
-								<?php do_action( 'checkout_render_download_detail_row', $key, $args, $post->ID, $index ); ?>
+								<?php do_action( 'wpcp_render_repeat_row', $key, $args, '', $index ); ?>
 							</tr>
 						<?php
 						endforeach;
 
-					else :
+					} else {
 						?>
 						<tr class="edd_variable_prices_wrapper edd_repeatable_row">
-							<?php do_action( 'checkout_render_download_detail_row', 1, array(), $post->ID, 1 ); ?>
+							<?php do_action( 'wpcp_render_repeat_row', 1, array(), $post->ID, 1 ); ?>
 						</tr>
-					<?php
-					endif;
+						<?php
+					}
 					?>
 
 					<tr>
 						<td class="submit" colspan="4" style="float: none; clear:both; background:#fff;">
-							<a class="button-secondary button-small edd_add_repeatable" style="margin: 6px 0;"><?php _e( 'New Meta Field', 'checkout' ); ?></a>
+							<a class="button button-primary ever-new-repeater edd_add_repeatable"><?php _e( 'Add Field', 'checkout' ); ?></a>
 						</td>
 					</tr>
 					</tbody>

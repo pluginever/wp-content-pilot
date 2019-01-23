@@ -279,11 +279,70 @@ input[type="checkbox"].ever-checkbox {
 	outline: none;
 	transition: 0.05s border-color ease-in-out;
 	.chosen-choices{
-		border: 1px solid #ddd;
+		//border: 1px solid #ddd;
+	}
+
+	.chosen-single{
+		border-radius: 0;
+		height: 30px;
+		background: #eee;
+		border: none;
+		box-shadow: none;
+		&>span{
+			margin-top: 3px;
+		}
 	}
 
 	&.chosen-container-active{
-		border-color: #5b9dd9;
-		box-shadow: 0 0 2px rgba( 30, 140, 190, 0.8 );
+		//border-color: #5b9dd9;
+		//box-shadow: 0 0 2px rgba( 30, 140, 190, 0.8 );
+
+		&.chosen-container-single{
+			.chosen-drop{
+				position: relative;
+				border-radius: 0;
+				top: 0;
+			}
+
+			.chosen-single:hover{
+				border: 1px solid #aaa;
+			}
+
+			&.chosen-with-drop{
+				margin-bottom: 100px;
+				.chosen-single{
+					border-radius: 0;
+				}
+			}
+		}
+	}
+
+	.chosen-drop{
+		position: relative;
+		border-radius: 0;
+		top: 0;
+	}
+
+}
+
+#ever-repeater {
+	.ever-remove-row {
+		height: 12px;
+		width: 10px;
+		display: inline-block;
+		background-size: cover;
+		margin: 8px 0 0 -8px;
+		cursor: pointer;
+
+		&:hover {
+			background-position-x: -10px !important;
+		}
+	}
+
+	.ever-new-repeater{
+		margin: 0 30px 10px 0;
+		float: right;
+		padding: 0 5px;
+		font-size: 12px;
 	}
 }

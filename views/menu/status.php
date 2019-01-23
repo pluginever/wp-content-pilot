@@ -140,6 +140,7 @@ $information['required_extensions'] = array(
 	'value' => implode( ', ', $extensions ),
 );
 
+//todo check if wpcp_links and wpcp_logs table exists or not
 
 /**
  * Campagin Information

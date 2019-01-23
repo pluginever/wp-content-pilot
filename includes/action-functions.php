@@ -133,7 +133,7 @@ function wpcp_update_campaign_counter( $post_id, $campaign_id ) {
 add_action( 'wpcp_after_post_publish', 'wpcp_update_campaign_counter', 10, 2 );
 
 
-function checkout_render_download_detail_row( $key, $args = array(), $post_id, $index ) {
+function wpcp_render_repeat_row( $key, $args = array(), $post_id, $index ) {
 
 	$defaults = array(
 		'key'   => null,
@@ -154,9 +154,9 @@ function checkout_render_download_detail_row( $key, $args = array(), $post_id, $
 	</td>
 
 	<td>
-		<a href="#" class="edd_remove_repeatable edd-remove-row" data-type="price" style="background: url(<?php echo admin_url( '/images/xit.gif' ); ?>) no-repeat;">&times;</a>
+		<span class="ever-remove-repeatable ever-remove-row edd-remove-row" style="background: url(<?php echo admin_url( '/images/xit.gif' ); ?>) no-repeat;"></span>
 	</td>
 	<?php
 }
 
-add_action( 'checkout_render_download_detail_row', 'checkout_render_download_detail_row', 10, 4 );
+add_action( 'wpcp_render_repeat_row', 'wpcp_render_repeat_row', 10, 4 );
