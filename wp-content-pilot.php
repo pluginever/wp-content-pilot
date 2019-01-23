@@ -346,10 +346,11 @@ final class ContentPilot {
 
 	/**
 	 * Add notice to database
-	 *
 	 * since 1.0.0
 	 * @param        $message
 	 * @param string $type
+	 *
+	 * @return void
 	 */
 	public function add_notice( $message, $type = 'success' ) {
 			$notices = get_option( 'wpcp_admin_notifications', [] );

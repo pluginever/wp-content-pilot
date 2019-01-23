@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function wpcp_setup_wpcp_post_types() {
 	$campaign_labels = array(
 		'name'                  => _x( 'Campaigns', 'campaign post type name', 'wp-content-pilot' ),
-		'singular_name'         => _x( 'Campaign', 'singular download post type name', 'wp-content-pilot' ),
+		'singular_name'         => _x( 'Campaign', 'singular campaign post type name', 'wp-content-pilot' ),
 		'add_new'               => __( 'Add New', 'wp-content-pilot' ),
 		'add_new_item'          => __( 'Add New Campaign', 'wp-content-pilot' ),
 		'edit_item'             => __( 'Edit Campaign', 'wp-content-pilot' ),
@@ -29,7 +29,7 @@ function wpcp_setup_wpcp_post_types() {
 		'not_found'             => __( 'No Campaigns found', 'wp-content-pilot' ),
 		'not_found_in_trash'    => __( 'No Campaigns found in Trash', 'wp-content-pilot' ),
 		'parent_item_colon'     => '',
-		'menu_name'             => _x( 'Campaigns', 'download post type menu name', 'wp-content-pilot' ),
+		'menu_name'             => _x( 'WP Content Pilot', 'wp content pilot post type menu name', 'wp-content-pilot' ),
 		'attributes'            => __( 'Campaign Attributes', 'wp-content-pilot' ),
 		'filter_items_list'     => __( 'Filter Campaigns list', 'wp-content-pilot' ),
 		'items_list_navigation' => __( 'Campaigns list navigation', 'wp-content-pilot' ),
@@ -50,7 +50,7 @@ function wpcp_setup_wpcp_post_types() {
 		'hierarchical'       => false,
 		'supports'           => array( 'title' ),
 	);
-	register_post_type( 'wp_content_pilot', apply_filters( 'edd_download_post_type_args', $campaign_args ) );
+	register_post_type( 'wp_content_pilot', apply_filters( 'wpcp_campaign_post_type_args', $campaign_args ) );
 
 }
 

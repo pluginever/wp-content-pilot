@@ -399,6 +399,7 @@ function wpcp_run_campaign( $campaign_id ) {
 		return new \WP_Error( 'invalid-campaign-type', $msg );
 	}
 
+
 	//get the module callback
 	$module_class = $module['callback'];
 
@@ -407,6 +408,8 @@ function wpcp_run_campaign( $campaign_id ) {
 
 	//set the module
 	$is_error = $instance->setup();
+
+	wpcp_log('loaded module '. $module_class);
 
 	//check error
 	if ( is_wp_error( $is_error ) ) {
