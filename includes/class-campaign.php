@@ -42,6 +42,12 @@ abstract class WPCP_Campaign {
 
 	abstract function setup();
 
+	/**
+	 * Discover links
+	 *
+	 * @since 1.0.0
+	 * @return array|\WP_Error
+	 */
 	abstract function discover_links();
 
 	abstract function get_post( $link );
@@ -91,29 +97,37 @@ abstract class WPCP_Campaign {
 	 * @return int|\WP_Error
 	 */
 	public function run() {
+		wpcp_log( "Running campaign #ID{$this->campaign_id} Type {$this->campaign_type} Keyword {$this->keyword}" );
 		if ( empty( $this->campaign_id ) || empty( $this->keyword ) || empty( $this->campaign_type ) ) {
+			wpcp_log( 'Campaign is not initiated correctly, missing ID||keyword' );
+
 			return new WP_Error( 'doing-wrong', __( 'Campaign is not initiated correctly, missing ID||keyword', 'wp-content-pilot' ) );
 		}
 
-
+		wpcp_log( 'Looking for link to run campaign' );
 		$link = $this->get_link();
 		if ( ! $link ) {
-
 			//check if there is already links but not ready yet
-			$total_fetched_links = $this->count_links('fetched');
+			$total_fetched_links = $this->count_links( 'fetched' );
 
-			if( $total_fetched_links > 1 ){
+			wpcp_log( 'Could not find available links Total Fetched Link ' . $total_fetched_links );
+
+			if ( $total_fetched_links > 1 ) {
+				wpcp_log( 'Link discovery skipped because there already links waiting for getting ready ' . $total_fetched_links );
 				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'content-pilot' ) );
 			}
 
 			//otherwise discover few new links
+			wpcp_log('Discovering links');
 			$links = $this->discover_links();
 
 			if ( is_wp_error( $links ) ) {
+				wpcp_log('Error in discovering links Message'. $links->get_error_message());
 				return $links;
 			}
 
 			//hook here for any link to subtract
+			wpcp_log('Generated total links '. count($links));
 			$links = apply_filters( 'wpcp_fetched_links', $links, $this->campaign_id, $this->campaign_type );
 
 			if ( empty( $links ) ) {
@@ -136,13 +150,13 @@ abstract class WPCP_Campaign {
 
 			wpcp_log( __( sprintf( 'Total %d links inserted', $inserted ), 'wp-content-pilot' ), 'log' );
 
-			$link  = $this->get_link();
-			$total_fetched_links = $this->count_links('fetched');
-			if( $total_fetched_links > 1 ){
+			$link                = $this->get_link();
+			$total_fetched_links = $this->count_links( 'fetched' );
+			if ( $total_fetched_links > 1 ) {
 				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'content-pilot' ) );
 			}
 
-			if ( empty($total_fetched_links)  && empty( $link ) ) {
+			if ( empty( $total_fetched_links ) && empty( $link ) ) {
 				return new \WP_Error( 'no-valid-links-found', __( 'Could not retrieve any valid links. Please wait to generate new links.', 'content-pilot' ) );
 			}
 		}
@@ -202,7 +216,7 @@ abstract class WPCP_Campaign {
 
 		//insert post summary
 		$use_post_summary = wpcp_get_post_meta( $this->campaign_id, '_excerpt', 0 );
-		if ( 'on' === $use_post_summary && !empty( $article['content'] ) ) {
+		if ( 'on' === $use_post_summary && ! empty( $article['content'] ) ) {
 			$summary = wp_trim_words( $article['content'], 55 );
 			$summary = strip_tags( $summary );
 			$summary = strip_shortcodes( $summary );
@@ -329,8 +343,8 @@ abstract class WPCP_Campaign {
 	 */
 	protected function get_link( $type = 'ready' ) {
 		global $wpdb;
-		$table = $wpdb->prefix . 'wpcp_links';
-		$sql   = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = %s limit 1",
+		$table  = $wpdb->prefix . 'wpcp_links';
+		$sql    = $wpdb->prepare( "select * from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = %s limit 1",
 			$this->keyword,
 			$this->campaign_id,
 			$this->campaign_type,
@@ -354,7 +368,7 @@ abstract class WPCP_Campaign {
 	 *
 	 * @return null|string
 	 */
-	protected function count_links( $status = 'ready' ){
+	protected function count_links( $status = 'ready' ) {
 		global $wpdb;
 		$table = $wpdb->prefix . 'wpcp_links';
 		$sql   = $wpdb->prepare( "select count(id) from {$table} where keyword = %s and camp_id  = %s and camp_type= %s and status = %s limit 1",
@@ -363,7 +377,8 @@ abstract class WPCP_Campaign {
 			$this->campaign_type,
 			$status
 		);
-		return $wpdb->get_var($sql);
+
+		return $wpdb->get_var( $sql );
 	}
 
 

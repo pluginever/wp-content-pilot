@@ -320,7 +320,11 @@ final class ContentPilot {
 	public function add_notice( $message, $type = 'success' ) {
 
 		if ( is_string( $message ) && is_string( $type ) ) {
+
 			$notices = get_option( 'wpcp_admin_notifications', [] );
+			if(wp_list_filter($notices, array('message' => $message))){
+				return false;
+			}
 
 			$notices[] = array(
 				'message' => $message,
