@@ -98,7 +98,7 @@ class WPCP_Feed extends WPCP_Campaign {
 	 * @return bool
 	 */
 	public function campaign_option_fields( $post_id, $campaign_type ) {
-		if ( 'feeds' != $campaign_type ) {
+		if ( 'feed' != $campaign_type ) {
 			return false;
 		}
 
@@ -117,6 +117,7 @@ class WPCP_Feed extends WPCP_Campaign {
 			'selected'         => wpcp_get_post_meta( $post_id, '_force_feed', 'no' ),
 			'desc'             => __( 'If you are putting exact feed link then set this to yes, otherwise feed links will be auto discovered', 'wp-content-pilot' ),
 		) );
+
 
 	}
 

@@ -1,9 +1,9 @@
 <?php
 /**
- * Flicker Class
+ * Flickr Class
  *
  * @package     WP Content Pilot
- * @subpackage  Flicker
+ * @subpackage  Flickr
  * @copyright   Copyright (c) 2019, MD Sultan Nasir Uddin(manikdrmc@gmail.com)
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.2.0
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WPCP_Flicker extends WPCP_Campaign {
+class WPCP_Flickr extends WPCP_Campaign {
 
 	protected $api_key;
 
@@ -38,9 +38,9 @@ class WPCP_Flicker extends WPCP_Campaign {
 	 * @return mixed
 	 */
 	public function register_module( $modules ) {
-		$modules['flicker'] = [
-			'title'       => __( 'Flicker', 'wp-content-pilot' ),
-			'description' => __( 'Scraps photos based on keywords from flicker', 'wp-content-pilot' ),
+		$modules['flickr'] = [
+			'title'       => __( 'Flickr', 'wp-content-pilot' ),
+			'description' => __( 'Scraps photos based on keywords from flickr', 'wp-content-pilot' ),
 			'supports'    => self::get_template_tags(),
 			'callback'    => __CLASS__,
 		];
@@ -80,7 +80,7 @@ class WPCP_Flicker extends WPCP_Campaign {
 	 */
 	public function prepare_contents( $link ) {
 
-		if ( 'flicker' != $link->camp_type ) {
+		if ( 'flickr' != $link->camp_type ) {
 			return false;
 		}
 
@@ -125,7 +125,7 @@ class WPCP_Flicker extends WPCP_Campaign {
 	 */
 	public function replace_template_tags( $content, $article ) {
 
-		if ( 'flicker' !== $article['campaign_type'] ) {
+		if ( 'flickr' !== $article['campaign_type'] ) {
 			return $content;
 		}
 
@@ -145,7 +145,7 @@ class WPCP_Flicker extends WPCP_Campaign {
 
 		if ( empty( $api_key ) ) {
 
-			$msg = __( 'Flicker API Key is not set, The campaign won\'t work without API Key.', 'wp-content-pilot' );
+			$msg = __( 'Flickr API Key is not set, The campaign won\'t work without API Key.', 'wp-content-pilot' );
 			wpcp_log( $msg );
 
 			return new \WP_Error( 'invalid-api-settings', $msg );

@@ -105,6 +105,16 @@ function wpcp_campaign_options_metabox_callback( $post ) {
 function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'article' ) {
 
 	do_action( 'wpcp_before_campaign_keyword_input', $post_id, $campaign_type );
+	if ( in_array( $campaign_type, wpcp_get_keyword_suggestion_supported_modules() ) ) {
+		echo content_pilot()->elements->input( array(
+			'label'          => __( 'Keyword Suggestion', 'wp-content-pilot' ),
+			'name'           => '_keyword_suggestion',
+			'placeholder'    => __( 'How to cook noddles', 'wp-content-pilot' ),
+			'desc'           => __( 'Type something to find better related keywords', 'wp-content-pilot-pro' ),
+			'disabled'       => true,
+			'double_columns' => true,
+		) );
+	}
 
 	$keywords = wpcp_get_post_meta( $post_id, '_keywords', '' );
 
@@ -229,6 +239,99 @@ function wpcp_campaign_settings_metabox_fields( $post_id, $campaign_type ) {
 
 	echo apply_filters( 'wpcp_campaign_template_input', content_pilot()->elements->textarea( $template_input_args ), $post_id, $campaign_type );
 
+	echo content_pilot()->elements->select( array(
+		'label'            => __( 'Post type', 'wp-content-pilot' ),
+		'name'             => '_post_type',
+		'placeholder'      => '',
+		'show_option_all'  => '',
+		'show_option_none' => '',
+		'double_columns'   => true,
+		'options'          => apply_filters( 'wpcp_campaign_post_types', array(
+			'post' => __( 'Post', 'wp-content-pilot' ),
+			'page' => __( 'Page', 'wp-content-pilot' ),
+		) ),
+		'required'         => true,
+		'selected'         => wpcp_get_post_meta( $post_id, '_post_type', 'post' ),
+	) );
+
+	echo content_pilot()->elements->select( array(
+		'label'            => __( 'Status', 'wp-content-pilot' ),
+		'name'             => '_post_status',
+		'placeholder'      => '',
+		'show_option_all'  => '',
+		'show_option_none' => '',
+		'double_columns'   => true,
+		'options'          => apply_filters( 'wpcp_campaign_post_statuses', array(
+			'publish' => __( 'Published', 'wp-content-pilot' ),
+			'private' => __( 'Private', 'wp-content-pilot' ),
+			'draft'   => __( 'Draft', 'wp-content-pilot' ),
+			'pending' => __( 'Pending', 'wp-content-pilot' ),
+		) ),
+		'required'         => true,
+		'multiple'         => false,
+		'selected'         => wpcp_get_post_meta( $post_id, '_post_status', 'publish' ),
+	) );
+
+	echo content_pilot()->elements->select( array(
+		'label'            => __( 'Categories', 'wp-content-pilot' ),
+		'name'             => '_categories',
+		'placeholder'      => '',
+		'show_option_all'  => '',
+		'show_option_none' => '',
+		'double_columns'   => true,
+		'options'          => wpcp_get_post_categories(),
+		'required'         => false,
+		'multiple'         => true,
+		'chosen'           => true,
+		'desc'             => __( 'Select categories from aviallbe categories', 'wp-content-pilot' ),
+		'selected'         => wpcp_get_post_meta( $post_id, '_categories', '' ),
+	) );
+
+	echo content_pilot()->elements->input( array(
+		'label'       => __( 'Custom Categories', 'wp-content-pilot' ),
+		'name'        => '_custom_categories',
+		'placeholder' => __( 'Fashion, Sports, Tech', 'wp-content-pilot' ),
+		'desc'        => __( 'Input any number of custom categories separate by comma (PRO) ', 'wp-content-pilot' ),
+		'disabled'    => true,
+	) );
+
+	echo content_pilot()->elements->select( array(
+		'label'            => __( 'Tags', 'wp-content-pilot' ),
+		'name'             => '_tags',
+		'placeholder'      => '',
+		'show_option_all'  => '',
+		'show_option_none' => '',
+		'double_columns'   => true,
+		'options'          => wpcp_get_post_tags(),
+		'required'         => false,
+		'multiple'         => true,
+		'chosen'           => true,
+		'desc'             => __( 'Select tags from aviallbe tags', 'wp-content-pilot' ),
+		'selected'         => wpcp_get_post_meta( $post_id, '_tags', '' ),
+	) );
+
+	echo content_pilot()->elements->input( array(
+		'label'       => __( 'Custom Tags', 'wp-content-pilot' ),
+		'name'        => '_custom_tags',
+		'placeholder' => __( 'Fashion, Sports, Tech', 'wp-content-pilot' ),
+		'desc'        => __( 'Input any number of custom tags separate by comma (PRO) ', 'wp-content-pilot' ),
+		'disabled'    => true,
+	) );
+
+	echo content_pilot()->elements->select( array(
+		'label'            => __( 'Post Author', 'wp-content-pilot' ),
+		'name'             => '_author',
+		'placeholder'      => '',
+		'show_option_all'  => '',
+		'show_option_none' => '',
+		'double_columns'   => true,
+		'options'          => wpcp_get_authors(),
+		'required'         => true,
+		'multiple'         => false,
+		'chosen'           => true,
+		'desc'             => __( 'Select categories from aviallbe categories', 'wp-content-pilot' ),
+		'selected'         => wpcp_get_post_meta( $post_id, '_author', '' ),
+	) );
 }
 
 function wpcp_campaign_advance_settings_metabox_callback( $post ) {
@@ -253,6 +356,117 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'value' => wpcp_get_post_meta( $post_id, '_content_limit', '' ),
 		'desc'  => 'Input the number of word to limit content. Default full content.',
 	) );
+
+	echo content_pilot()->elements->input( array(
+		'label'       => __( 'Words Count', 'wp-content-pilot' ),
+		'name'        => '_min_words',
+		'type'        => 'number',
+		'placeholder' => 500,
+		'desc'        => __( 'Min Words required, otherwise post will be rejected. (PRO) ', 'wp-content-pilot' ),
+		'disabled'    => true,
+	) );
+
+	echo content_pilot()->elements->input( array(
+		'label'       => __( 'Required Words', 'wp-content-pilot' ),
+		'name'        => '_required_words',
+		'placeholder' => __( 'Fashion, Secret, Awesome', 'wp-content-pilot' ),
+		'desc'        => __( 'Must contain words, otherwise post will be rejected. (PRO) ', 'wp-content-pilot' ),
+		'disabled'    => true,
+	) );
+
+	echo content_pilot()->elements->input( array(
+		'label'       => __( 'Banned Words', 'wp-content-pilot' ),
+		'name'        => '_banded_words',
+		'placeholder' => __( 'youtube, wikipedia, google', 'wp-content-pilot' ),
+		'desc'        => __( 'If contains above words post will be rejected. (PRO) ', 'wp-content-pilot' ),
+		'disabled'    => true,
+	) );
+
+	echo content_pilot()->elements->select( array(
+		'label'            => __( 'Translate To', 'wp-content-pilot' ),
+		'name'             => '_translate_to',
+		'placeholder'      => '',
+		'show_option_all'  => '',
+		'show_option_none' => '',
+		'double_columns'   => true,
+		'options'          => array(
+			'' => __('No Translation', 'wp-content-pilot')
+		),
+		'disabled'         => true,
+		'multiple'         => false,
+		'chosen'           => false,
+		'desc'             => __( 'Select language to translate. (PRO)', 'wp-content-pilot' ),
+		'selected'         => '',
+	) );
+
+	$search_replace_args = apply_filters( 'wpcp_campaign_search_replace_input_args', array(
+		'label'    => __( 'Search Replace', 'wp-content-pilot' ),
+		'name'     => '_search_replace',
+		'required' => false,
+		'disabled' => true,
+		'desc'     => __( 'Separate each search replace words by (|) and separate pairs with comma(,). (PRO)', 'wp-content-pilot' ),
+		'placeholder'     => __( 'Search Word | Replace Word', 'wp-content-pilot' ),
+	), $post_id, $campaign_type );
+
+	echo apply_filters( 'wpcp_campaign_search_replace_input', content_pilot()->elements->textarea( $search_replace_args ), $post_id, $campaign_type );
+	?>
+
+
+	<div class=" ever-row ever-form-group _translate_to_field">
+		<div class="ever-col-3">
+			<label for="_translate_to" class="ever-label"><?php _e('Meta Fields', 'wp-content-pilot');?></label>
+		</div>
+		<div class="ever-col-1">:</div>
+		<div class="ever-col-8">
+
+			<div id="checkout_download_details" class="edd_meta_table_wrap">
+				<table class="widefat edd_repeatable_table" width="100%" cellpadding="0" cellspacing="0">
+					<thead>
+					<tr>
+						<th style="width: 2%"></th>
+						<th style="width: 45%"><?php _e( 'Meta Key', 'wp-content-pilot' ); ?></th>
+						<th class="variable-option-assigment" style="width: 45%;"><?php _e( 'Meta Value', 'wp-content-pilot' ); ?></th>
+						<th style="width: 3%"></th>
+					</tr>
+					</thead>
+					<tbody class="edd-repeatables-wrap">
+					<?php
+
+					if( ! empty( $checkout_download_details ) ) :
+
+						foreach( $checkout_download_details as $key => $value ) :
+							$text         = isset( $value['text'] )         ? $value['text']         : '';
+							$price_option = isset( $value['price_option'] ) ? $value['price_option'] : '';
+							$index        = isset( $value['index'] )        ? $value['index']        : $key;
+							$args         = apply_filters( 'checkout_download_detail_row_args', compact( 'text', 'price_option', 'index' ), $value );
+							?>
+							<tr class="edd_variable_prices_wrapper edd_repeatable_row" data-key="<?php echo esc_attr( $key ); ?>">
+								<?php do_action( 'checkout_render_download_detail_row', $key, $args, $post->ID, $index ); ?>
+							</tr>
+						<?php
+						endforeach;
+
+					else :
+						?>
+						<tr class="edd_variable_prices_wrapper edd_repeatable_row">
+							<?php do_action( 'checkout_render_download_detail_row', 1, array(), $post->ID, 1 ); ?>
+						</tr>
+					<?php
+					endif;
+					?>
+
+					<tr>
+						<td class="submit" colspan="4" style="float: none; clear:both; background:#fff;">
+							<a class="button-secondary button-small edd_add_repeatable" style="margin: 6px 0;"><?php _e( 'New Meta Field', 'checkout' ); ?></a>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			<span class="ever-field-description">Select language to translate. (PRO)</span>
+		</div>
+	</div>
+	<?php
 }
 
 function wpcp_campaign_template_tags_metabox_callback( $post ) {

@@ -6,7 +6,7 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 <div id="submitpost" class="submitbox ever-submitbox">
 	<div id="minor-publishing">
 		<?php
-
+		do_action('wpcp_before_campaign_action_metabox', $post_id);
 		echo content_pilot()->elements->input( array(
 			'label'          => __( 'Campaign Target', 'wp-content-pilot' ),
 			'name'           => '_campaign_target',
@@ -41,6 +41,19 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 			'double_columns'   => false,
 			'selected'         => wpcp_get_post_meta( $post_id, '_campaign_status' ),
 		) );
+
+		echo content_pilot()->elements->input( array(
+			'label'          => __( 'Readability Score', 'wp-content-pilot' ),
+			'name'           => '_readability_score',
+			'type'           => 'number',
+			'placeholder'    => '40',
+			'desc'           => __( 'Min readability score required to post (PRO)', 'wp-content-pilot-pro' ),
+			'value'          => wpcp_get_post_meta( $post_id, '_readability_score', 60 ),
+			'disabled'       => true,
+			'double_columns' => false,
+		) );
+
+		do_action('wpcp_after_campaign_action_metabox', $post_id);
 		?>
 	</div>
 	<div id="major-publishing-actions">

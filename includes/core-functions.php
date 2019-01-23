@@ -667,3 +667,68 @@ function wpcp_cent_to_usd( $cent ) {
 	return number_format( ( $cent / 100 ), 2, '.', ' ' );
 }
 
+/**
+ * returns the modules that support keyword suggestion
+ *
+ * @since 1.0.0
+ * @return array
+ */
+function wpcp_get_keyword_suggestion_supported_modules() {
+	$modules = array( 'article', 'youtube', 'envato', 'flickr' );
+
+	return apply_filters( 'wpcp_keyword_suggestion_supported_modules', $modules );
+}
+
+/**
+ * Get post categories
+ *
+ * @since 1.0.3
+ * @return array
+ */
+function wpcp_get_post_categories() {
+
+	$args = [
+		'taxonomy'   => 'category',
+		'hide_empty' => false
+	];
+
+	$categories = get_terms( $args );
+
+	return wp_list_pluck( $categories, 'name', 'term_id' );
+}
+
+/**
+ * Get post categories
+ *
+ * @since 1.0.3
+ * @return array
+ */
+function wpcp_get_post_tags() {
+
+	$args = [
+		'taxonomy'   => 'post_tag',
+		'hide_empty' => false
+	];
+
+	$tags = get_terms( $args );
+
+	return wp_list_pluck( $tags, 'name', 'term_id' );
+}
+
+/**
+ * Get all the authors
+ *
+ * @since 1.0.0
+ *
+ * @return array
+ *
+ */
+function wpcp_get_authors() {
+	$result = [];
+	$users  = get_users( [ 'who' => 'authors' ] );
+	foreach ( $users as $user ) {
+		$result[ $user->ID ] = "{$user->display_name} ({$user->user_email})";
+	}
+
+	return $result;
+}

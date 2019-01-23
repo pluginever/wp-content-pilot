@@ -243,7 +243,7 @@ final class ContentPilot {
 		require_once WPCP_MODULES . '/class-article.php';
 		require_once WPCP_MODULES . '/class-envato.php';
 		require_once WPCP_MODULES . '/class-youtube.php';
-		require_once WPCP_MODULES . '/class-flicker.php';
+		require_once WPCP_MODULES . '/class-flickr.php';
 
 
 		//
@@ -256,11 +256,6 @@ final class ContentPilot {
 			require_once WPCP_INCLUDES . '/class-settings-api.php';
 			require_once WPCP_INCLUDES . '/class-settings.php';
 			require_once WPCP_INCLUDES . '/class-promotion.php';
-		}
-
-		//frontend includes
-		if ( $this->is_request( 'frontend' ) ) {
-			require_once WPCP_INCLUDES . '/class-frontend.php';
 		}
 
 	}
@@ -371,7 +366,7 @@ final class ContentPilot {
 		new WPCP_Article();
 		new WPCP_Envato();
 		new WPCP_Youtube();
-		new WPCP_Flicker();
+		new WPCP_Flickr();
 
 		$this->elements = new WPCP_Elements();
 		$this->modules  = new WPCP_Module();
