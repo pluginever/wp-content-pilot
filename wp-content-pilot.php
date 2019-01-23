@@ -103,7 +103,6 @@ final class ContentPilot {
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
-			self::$instance->setup();
 		}
 
 		return self::$instance;
@@ -156,12 +155,12 @@ final class ContentPilot {
 	/**
 	 * EverProjects Constructor.
 	 */
-	public function setup() {
+	public function __construct() {
 		$this->check_environment();
 		$this->define_constants();
 		$this->includes();
 		$this->init_hooks();
-		$this->boot();
+//		$this->boot();
 		do_action( 'content_pilot_loaded' );
 	}
 
@@ -256,6 +255,7 @@ final class ContentPilot {
 			require_once WPCP_INCLUDES . '/class-admin-menu.php';
 			require_once WPCP_INCLUDES . '/class-settings-api.php';
 			require_once WPCP_INCLUDES . '/class-settings.php';
+			require_once WPCP_INCLUDES . '/class-promotion.php';
 		}
 
 		//frontend includes
@@ -279,6 +279,8 @@ final class ContentPilot {
 		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ) );
 
 		add_action( 'admin_notices', array( $this, 'show_admin_notice' ) );
+
+		add_action( 'plugins_loaded', array( $this, 'boot' ) );
 	}
 
 	/**
@@ -322,7 +324,7 @@ final class ContentPilot {
 
 	public function add_notice( $message, $type = 'success' ) {
 
-		if ( is_string( $message ) &&   is_string( $type ) ) {
+		if ( is_string( $message ) && is_string( $type ) ) {
 			$notices = get_option( 'wpcp_admin_notifications', [] );
 
 			$notices[] = array(
