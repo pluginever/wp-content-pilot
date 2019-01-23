@@ -20,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 function wpcp_register_meta_boxes() {
+
 	add_meta_box( 'campaign-type-selection', __( 'Campaign Type', 'wp-content-pilot' ), 'wpcp_campaign_type_metabox_callback', 'wp_content_pilot', 'normal', 'high' );
 	add_meta_box( 'campaign-actions', __( 'Actions', 'wp-content-pilot' ), 'wpcp_campaign_action_metabox_callback', 'wp_content_pilot', 'side', 'high' );
 	add_meta_box( 'campaign-options', __( 'Campaign Options', 'wp-content-pilot' ), 'wpcp_campaign_options_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
@@ -27,6 +28,9 @@ function wpcp_register_meta_boxes() {
 	add_meta_box( 'campaign-advanced-settings', __( 'Advanced Settings', 'wp-content-pilot' ), 'wpcp_campaign_advance_settings_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 
 	add_meta_box( 'campaign-template-tags', __( 'Template Tags', 'wp-content-pilot' ), 'wpcp_campaign_template_tags_metabox_callback', 'wp_content_pilot', 'side', 'low' );
+	add_meta_box( 'campaign-posted-posts', __( 'Posted Posts', 'wp-content-pilot' ), 'wpcp_campaign_posted_posts_metabox_callback', 'wp_content_pilot', 'side', 'low' );
+	add_meta_box( 'campaign-logs', __( 'Logs', 'wp-content-pilot' ), 'wpcp_campaign_logs_metabox_callback', 'wp_content_pilot', 'side', 'low' );
+	add_meta_box( 'campaign-meta-actions', __( 'Actions', 'wp-content-pilot' ), 'wpcp_campaign_meta_actions_metabox_callback', 'wp_content_pilot', 'side', 'low' );
 }
 
 add_action( 'add_meta_boxes', 'wpcp_register_meta_boxes', 99 );
@@ -434,15 +438,15 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 
 					global $post;
 
-					$meta_fields = wpcp_get_post_meta($post_id, '_meta_fields', '');
+					$meta_fields          = wpcp_get_post_meta( $post_id, '_meta_fields', '' );
 
 					if ( ! empty( $meta_fields ) ) {
 
 						foreach ( $meta_fields as $key => $value ) :
 							$text = isset( $value['text'] ) ? $value['text'] : '';
 							$price_option = isset( $value['price_option'] ) ? $value['price_option'] : '';
-							$index = isset( $value['index'] ) ? $value['index'] : $key;
-							$args = apply_filters( 'checkout_download_detail_row_args', compact( 'text', 'price_option', 'index' ), $value );
+							$index        = isset( $value['index'] ) ? $value['index'] : $key;
+							$args         = apply_filters( 'checkout_download_detail_row_args', compact( 'text', 'price_option', 'index' ), $value );
 							?>
 							<tr class="edd_variable_prices_wrapper edd_repeatable_row" data-key="<?php echo esc_attr( $key ); ?>">
 								<?php do_action( 'wpcp_render_repeat_row', $key, $args, '', $index ); ?>
@@ -502,6 +506,25 @@ function wpcp_campaign_template_tags_metabox_fields( $post_id, $campaign_type ) 
 	<?php
 
 }
+
+function wpcp_campaign_posted_posts_metabox_callback( $post, $campaign_type ) {
+	ob_start();
+	include WPCP_VIEWS.'/metabox/posted-posts.php';
+	$html = ob_get_clean();
+	echo $html;
+}
+
+function wpcp_campaign_logs_metabox_callback( $post, $campaign_type ) {
+
+}
+
+function wpcp_campaign_meta_actions_metabox_callback( $post, $campaign_type ) {
+	ob_start();
+	include WPCP_VIEWS.'/metabox/meta-actions.php';
+	$html = ob_get_clean();
+	echo $html;
+}
+
 
 function wpcp_update_campaign_settings( $post_id ) {
 
