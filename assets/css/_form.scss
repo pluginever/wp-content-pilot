@@ -279,7 +279,8 @@ input[type="checkbox"].ever-checkbox {
 	outline: none;
 	transition: 0.05s border-color ease-in-out;
 	.chosen-choices{
-		//border: 1px solid #ddd;
+		border: 1px solid #ddd;
+
 	}
 
 	.chosen-single{
@@ -290,6 +291,7 @@ input[type="checkbox"].ever-checkbox {
 		box-shadow: none;
 		&>span{
 			margin-top: 3px;
+			border: none !important;
 		}
 	}
 
@@ -297,15 +299,19 @@ input[type="checkbox"].ever-checkbox {
 		//border-color: #5b9dd9;
 		//box-shadow: 0 0 2px rgba( 30, 140, 190, 0.8 );
 
+		.chosen-choices{
+			box-shadow: none;
+		}
+
 		&.chosen-container-single{
 			.chosen-drop{
 				position: relative;
 				border-radius: 0;
+				border: none;
 				top: 0;
 			}
 
-			.chosen-single:hover{
-				border: 1px solid #aaa;
+			.chosen-single{
 			}
 
 			&.chosen-with-drop{
