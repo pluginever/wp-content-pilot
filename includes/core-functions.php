@@ -51,8 +51,8 @@ function wpcp_remote_post( $url, $args = array(), $options = array(), $headers =
  * since 1.0.0
  *
  * @param        $url
- * @param array  $args
- * @param array  $options
+ * @param array $args
+ * @param array $options
  * @param string $type
  *
  * @return \Curl\Curl
@@ -93,7 +93,7 @@ function wpcp_remote_request( $url, $args = array(), $options = array(), $header
  * since 1.0.0
  *
  * @param  \Curl\Curl $response
- * @param null        $param
+ * @param null $param
  *
  * @return string
  */
@@ -237,7 +237,7 @@ function wpcp_update_option( $key, $value ) {
  *
  * @param        $section
  * @param        $field
- * @param bool   $default
+ * @param bool $default
  *
  * @return string|array|bool
  */
@@ -480,7 +480,7 @@ function wpcp_insert_link( array $data ) {
 /**
  * Update link in wpcp_links table
  *
- * @param int   $id
+ * @param int $id
  * @param array $data
  *
  * @return false|int|null
@@ -731,4 +731,29 @@ function wpcp_get_authors() {
 	}
 
 	return $result;
+}
+
+/**
+ * Get posts
+ *
+ * @param $args
+ *
+ * @return array
+ */
+
+function wpcp_get_posts( $args ) {
+	$args = wp_parse_args( $args, array(
+		'post_type'      => 'post',
+		'meta_key'       => '',
+		'meta_value'     => '',
+		'post_status'    => 'publish',
+		'posts_per_page' => 15,
+		'paged'          => 1,
+		'orderby'        => 'date',
+		'order'          => 'DESC',
+	) );
+
+	$posts = get_posts($args);
+
+	return $posts;
 }

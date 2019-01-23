@@ -25,3 +25,19 @@
 		}
 	}
 }
+
+#campaign-posted-posts{
+	&.postbox{
+		.inside{
+			&>a{
+				display: block;
+				text-decoration: none;
+				font-size: 14px;
+			}
+			&>span{
+				margin-bottom: 15px;
+				display: block;
+			}
+		}
+	}
+}
