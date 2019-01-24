@@ -21,6 +21,7 @@ class WPCP_Fetch_Contents extends WP_Background_Process {
 
 
 	protected function complete() {
+		wpcp_log('Fetch content complete');
 		parent::complete();
 	}
 

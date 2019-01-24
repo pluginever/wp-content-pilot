@@ -272,7 +272,7 @@ final class ContentPilot {
 				<p><?php echo wp_kses( $notice['message'], array( 'a' => array( 'href' => array() ) ) ); ?></p>
 			</div>
 		<?php
-
+		update_option('wpcp_admin_notifications', []);
 		endforeach;
 	}
 

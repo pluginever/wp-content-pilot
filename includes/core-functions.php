@@ -273,8 +273,8 @@ function wpcp_update_settings( $field, $data ) {
  * @param $camp_id
  */
 function wpcp_disable_campaign( $camp_id ) {
-	do_action( 'wpcp_disable_campaign', $camp_id );
 	wpcp_update_post_meta( $camp_id, '_campaign_status', 'inactive' );
+	do_action( 'wpcp_disable_campaign', $camp_id );
 }
 
 /**
