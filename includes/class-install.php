@@ -1,17 +1,14 @@
 <?php
 
 class WPCP_Install {
-	public function __construct() {
-		register_activation_hook( WPCP_FILE, array( $this, 'activate' ) );
-		register_deactivation_hook( WPCP_FILE, array( $this, 'deactivate' ) );
-	}
 
-	public function activate() {
+	public static function activate() {
+		error_log('activate');
 		$current_db_version   = get_option( 'wpcp_db_version', null );
 		$current_wpcp_version = get_option( 'wpcp_version', null );
-		$this->create_tables();
-		$this->populate();
-		$this->create_cron_jobs();
+		self::create_tables();
+		self::populate();
+		self::create_cron_jobs();
 		//save db version
 		if ( is_null( $current_wpcp_version ) ) {
 			update_option( 'wpcp_version', WPCP_VERSION );
@@ -26,7 +23,8 @@ class WPCP_Install {
 		}
 	}
 
-	public function create_tables() {
+	public static function create_tables() {
+		error_log('create_tables');
 		global $wpdb;
 		$collate = '';
 		if ( $wpdb->has_cap( 'collation' ) ) {
@@ -76,7 +74,8 @@ class WPCP_Install {
 		}
 	}
 
-	public function populate() {
+	public static function populate() {
+		error_log('populate');
 		$article_settings = wpcp_get_settings( 'wpcp_settings_article' );
 		if ( empty( $article_settings['banned_hosts'] ) ) {
 			$hosts                            = array(
@@ -95,12 +94,14 @@ class WPCP_Install {
 	 *
 	 * @return void
 	 */
-	public function create_cron_jobs() {
+	public static function create_cron_jobs() {
+		error_log('create_cron_jobs');
 		wp_schedule_event( time(), 'once_a_minute', 'wpcp_per_minute_scheduled_events' );
 		wp_schedule_event( time(), 'daily', 'wpcp_daily_scheduled_events' );
 	}
 
-	public function deactivate() {
+	public static function deactivate() {
+		error_log('deactivate');
 		wp_clear_scheduled_hook( 'wpcp_per_minute_scheduled_events' );
 		wp_clear_scheduled_hook( 'wpcp_daily_scheduled_events' );
 	}

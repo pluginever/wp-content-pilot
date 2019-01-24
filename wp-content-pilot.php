@@ -126,6 +126,9 @@ final class ContentPilot {
 
 		// if the environment check fails, initialize the plugin
 		if ( $this->is_environment_compatible() ) {
+			require_once dirname( __FILE__ ) . '/includes/class-install.php';
+			register_activation_hook( __FILE__, array( 'WPCP_Install', 'activate' ) );
+			register_deactivation_hook( __FILE__, array( 'WPCP_Install', 'deactivate' ) );
 			$this->init_plugin();
 		}
 	}
@@ -264,15 +267,15 @@ final class ContentPilot {
 	 * @since 2.8.0
 	 */
 	public function admin_notices() {
-		$notices = (array) array_merge($this->notices, get_option( 'wpcp_admin_notifications', [] ));
+		$notices = (array) array_merge( $this->notices, get_option( 'wpcp_admin_notifications', [] ) );
 		foreach ( $notices as $notice_key => $notice ) :
 
 			?>
 			<div class="<?php echo esc_attr( $notice['class'] ); ?>">
 				<p><?php echo wp_kses( $notice['message'], array( 'a' => array( 'href' => array() ) ) ); ?></p>
 			</div>
-		<?php
-		update_option('wpcp_admin_notifications', []);
+			<?php
+			update_option( 'wpcp_admin_notifications', [] );
 		endforeach;
 	}
 
@@ -347,18 +350,19 @@ final class ContentPilot {
 	/**
 	 * Add notice to database
 	 * since 1.0.0
+	 *
 	 * @param        $message
 	 * @param string $type
 	 *
 	 * @return void
 	 */
 	public function add_notice( $message, $type = 'success' ) {
-			$notices = get_option( 'wpcp_admin_notifications', [] );
-		if ( is_string( $message ) && is_string( $type ) && !wp_list_filter($notices, array('message' => $message)) ) {
+		$notices = get_option( 'wpcp_admin_notifications', [] );
+		if ( is_string( $message ) && is_string( $type ) && ! wp_list_filter( $notices, array( 'message' => $message ) ) ) {
 
 			$notices[] = array(
 				'message' => $message,
-				'class'    => $type
+				'class'   => $type
 			);
 
 			update_option( 'wpcp_admin_notifications', $notices );
