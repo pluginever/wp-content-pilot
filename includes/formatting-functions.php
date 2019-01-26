@@ -288,3 +288,14 @@ function wpcp_remove_empty_tags_recursive( $str, $replace_with = null ) {
 		$str
 	);
 }
+
+/**
+ * Remove url from content
+ * since 1.0.0
+ * @param $content
+ *
+ * @return string
+ */
+function wpcp_strip_urls($content){
+	return preg_replace('{http[s]?://[^\s]*}', '', $content);
+}

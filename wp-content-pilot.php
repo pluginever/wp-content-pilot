@@ -271,7 +271,7 @@ final class ContentPilot {
 		foreach ( $notices as $notice_key => $notice ) :
 
 			?>
-			<div class="<?php echo esc_attr( $notice['class'] ); ?>">
+			<div class="notice <?php echo sanitize_html_class( $notice['class'] ); ?>">
 				<p><?php echo wp_kses( $notice['message'], array( 'a' => array( 'href' => array() ) ) ); ?></p>
 			</div>
 			<?php

@@ -51,8 +51,8 @@ function wpcp_remote_post( $url, $args = array(), $options = array(), $headers =
  * since 1.0.0
  *
  * @param        $url
- * @param array $args
- * @param array $options
+ * @param array  $args
+ * @param array  $options
  * @param string $type
  *
  * @return \Curl\Curl
@@ -85,6 +85,9 @@ function wpcp_remote_request( $url, $args = array(), $options = array(), $header
 			break;
 	}
 
+	wpcp_log( $curl->getUrl() );
+	wpcp_log( $curl->getRequestHeaders() );
+
 	return $curl;
 }
 
@@ -93,7 +96,7 @@ function wpcp_remote_request( $url, $args = array(), $options = array(), $header
  * since 1.0.0
  *
  * @param  \Curl\Curl $response
- * @param null $param
+ * @param null        $param
  *
  * @return string
  */
@@ -237,7 +240,7 @@ function wpcp_update_option( $key, $value ) {
  *
  * @param        $section
  * @param        $field
- * @param bool $default
+ * @param bool   $default
  *
  * @return string|array|bool
  */
@@ -409,7 +412,7 @@ function wpcp_run_campaign( $campaign_id ) {
 	//set the module
 	$is_error = $instance->setup();
 
-	wpcp_log('loaded module '. $module_class);
+	wpcp_log( 'loaded module ' . $module_class );
 
 	//check error
 	if ( is_wp_error( $is_error ) ) {
@@ -483,7 +486,7 @@ function wpcp_insert_link( array $data ) {
 /**
  * Update link in wpcp_links table
  *
- * @param int $id
+ * @param int   $id
  * @param array $data
  *
  * @return false|int|null
@@ -756,7 +759,94 @@ function wpcp_get_posts( $args ) {
 		'order'          => 'DESC',
 	) );
 
-	$posts = get_posts($args);
+	$posts = get_posts( $args );
 
 	return $posts;
+}
+
+/**
+ * hyperlink any text
+ *
+ * since 1.0.0
+ *
+ * @param $text
+ *
+ * @return string
+ */
+function wpcp_hyperlink_text( $text ) {
+	return preg_replace( '@(https?://([-\w\.]+[-\w])+(:\d+)?(/([\w/_\.#-]*(\?\S+)?[^\.\s])?)?)@', '<a href="$1" target="_blank">$0</a>', $text );
+}
+
+/**
+ * clean emoji from content
+ * since 1.0.0
+ *
+ * @param $content
+ *
+ * @return string
+ */
+function wpcp_remove_emoji( $content ) {
+	$clean_text = "";
+
+	// Match Emoticons
+	$regexEmoticons = '/[\x{1F600}-\x{1F64F}]/u';
+	$clean_text     = preg_replace( $regexEmoticons, '', $content );
+
+	// Match Miscellaneous Symbols and Pictographs
+	$regexSymbols = '/[\x{1F300}-\x{1F5FF}]/u';
+	$clean_text   = preg_replace( $regexSymbols, '', $clean_text );
+
+	// Match Transport And Map Symbols
+	$regexTransport = '/[\x{1F680}-\x{1F6FF}]/u';
+	$clean_text     = preg_replace( $regexTransport, '', $clean_text );
+
+	// Match Miscellaneous Symbols
+	$regexMisc  = '/[\x{2600}-\x{26FF}]/u';
+	$clean_text = preg_replace( $regexMisc, '', $clean_text );
+
+	// Match Dingbats
+	$regexDingbats = '/[\x{2700}-\x{27BF}]/u';
+	$clean_text    = preg_replace( $regexDingbats, '', $clean_text );
+
+	return $clean_text;
+}
+
+/**
+ * clean title
+ *
+ * since 1.0.0
+ *
+ * @param $title
+ *
+ * @return null|string|string[]
+ */
+function wpcp_clean_title( $title ) {
+	$title = str_replace( 'nospin', '', $title );
+	$title = str_replace( ' ', '-', $title ); // Replaces all spaces with hyphens.
+	$title = preg_replace( '/[^A-Za-z0-9\-]/', '', $title ); // Removes special chars.
+
+	return preg_replace( '/-+/', '-', $title ); // Replaces multiple hyphens with single one.
+}
+
+/**
+ *
+ * since 1.0.0
+ *
+ * @param     $content
+ * @param int $length
+ *
+ * @return bool|null|string|string[]
+ */
+function wpcp_generate_title_from_content( $content, $length = 80 ) {
+	$cleanContent = wpcp_remove_emoji( wpcp_strip_urls( strip_tags( $content ) ) );
+
+	if ( function_exists( 'mb_substr' ) ) {
+		$newTitle = ( mb_substr( $cleanContent, 0, $length ) );
+	} else {
+		$newTitle = ( substr( $cleanContent, 0, $length ) );
+	}
+
+	$newTitle = preg_replace( '{RT @.*?: }', '', $newTitle );
+
+	return wpcp_clean_title( $newTitle );
 }

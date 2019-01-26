@@ -12,17 +12,19 @@
 	&:before, &:after {
 		box-sizing: border-box;
 	}
+
 	img {
 		max-width: 100%;
 	}
-	a:not(.button) {
-		text-decoration: none;
-		&:hover, &:focus, &:active {
-			outline: 0;
-			box-shadow: none;
-			border: 0;
-		}
-	}
+	//a:not(.button) {
+	//	text-decoration: none;
+	//	&:hover, &:focus, &:active {
+	//		outline: 0;
+	//		box-shadow: none;
+	//		border: 0;
+	//	}
+	//}
+
 }
 .inside{
 	overflow: hidden;
