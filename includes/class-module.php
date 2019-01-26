@@ -49,7 +49,7 @@ class WPCP_Module {
 	 * @return array
 	 */
 	public function get_modules() {
-		return $this->modules;
+		return wpcp_array_sort($this->modules, 'title');
 	}
 
 	/**

@@ -58,39 +58,39 @@ function wpcp_remote_post( $url, $args = array(), $options = array(), $headers =
  * @return \Curl\Curl
  */
 function wpcp_remote_request( $url, $args = array(), $options = array(), $headers = array(), $type = 'GET' ) {
-	$curl = new \Curl\Curl( $url );
-	$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
-	$curl->setOpt( CURLOPT_TIMEOUT, 30 );
-	$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
+	global $wpcp_curl;
+	$wpcp_curl = new \Curl\Curl( $url );
+	$wpcp_curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
+	$wpcp_curl->setOpt( CURLOPT_TIMEOUT, 30 );
+	$wpcp_curl->setOpt( CURLOPT_RETURNTRANSFER, true );
 
 	$options = apply_filters( 'wpcp_remote_request_options', $options );
 	if ( ! empty( $options ) ) {
 		foreach ( $options as $param => $value ) {
-			$curl->setOpt( $param, $value );
+			$wpcp_curl->setOpt( $param, $value );
 		}
 	}
 
-	$curl->setOpt(CURLOPT_USERAGENT, wpcp_get_random_user_agent());
+	$wpcp_curl->setOpt(CURLOPT_USERAGENT, wpcp_get_random_user_agent());
 
 	$headers = apply_filters( 'wpcp_remote_request_headers', $headers );
 	if ( ! empty( $headers ) ) {
 		foreach ( $headers as $param => $value ) {
-			$curl->setHeader( $param, $value );
+			$wpcp_curl->setHeader( $param, $value );
 		}
 	}
 	switch ( $type ) {
 		case 'POST':
-			$curl->post( null, $args );
+			$wpcp_curl->post( null, $args );
 			break;
 		default:
-			$curl->get( null, $args );
+			$wpcp_curl->get( null, $args );
 			break;
 	}
 
-	wpcp_log( $curl->getUrl() );
-	wpcp_log( $curl->getRequestHeaders() );
 
-	return $curl;
+
+	return $wpcp_curl;
 }
 
 /**
@@ -123,6 +123,8 @@ function wpcp_remote_headers( $response, $param = null ) {
  * @return \SimpleXMLElement | \WP_Error
  */
 function wpcp_retrieve_body( $response ) {
+	global $wpcp_curl;
+	$wpcp_curl->close();
 
 	if ( $response->error ) {
 		return new WP_Error( 'request-failed', $response->errorMessage );

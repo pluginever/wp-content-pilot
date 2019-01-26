@@ -120,31 +120,63 @@ function wpcp_convert_rel_2_abs_url( $rel_url, $host ) {
  * @param $html
  * @param $host
  *
+ * @deprecated 1.2.0
  * @return mixed
  */
 function wpcp_fix_html_links( $html, $host ) {
-	preg_match_all( '/(href|src)="([^"]*)"/i', $html, $matched );
-	if ( ! empty( $matches[1] ) ) {
-		foreach ( $matches[1] as $src ) {
-			if ( filter_var( $src, FILTER_VALIDATE_URL ) ) {
-				continue;
+	return wpcp_fix_relative_paths( $html, $host );
+}
+
+/**
+ * Fix relative urls
+ * since 1.0.0
+ *
+ * @param $content
+ * @param $url
+ *
+ * @return string
+ */
+function wpcp_fix_relative_paths( $content, $url ) {
+	$pars = parse_url( $url );
+	$host = $pars['host'];
+
+	preg_match_all( '{(?:href|src)[\s]*=[\s]*["|\'](.*?)["|\'].*?>}is', $content, $matches );
+	$img_srcs = ( $matches[1] );
+	foreach ( $img_srcs as $img_src ) {
+		$original_src = $img_src;
+		if ( stristr( $img_src, '../' ) ) {
+			$img_src = str_replace( '../', '', $img_src );
+		}
+
+		if ( stristr( $img_src, 'http:' ) || stristr( $img_src, 'www.' ) || stristr( $img_src, 'https:' ) || stristr( $img_src, 'data:image' ) ) {
+			//valid image
+		} else {
+			//not valid image i.e relative path starting with a / or not or //
+			$img_src = trim( $img_src );
+
+			if ( preg_match( '{^//}', $img_src ) ) {
+
+				$img_src = 'http:' . $img_src;
+
+			} elseif ( preg_match( '{^/}', $img_src ) ) {
+				$img_src = 'http://' . $host . $img_src;
+			} else {
+				$img_src = 'http://' . $host . '/' . $img_src;
 			}
 
-			//fix url with appending
-			$new_src = wpcp_convert_rel_2_abs_url( $src, $host );
-			$request = wp_remote_head( $new_src );
-			$type    = wp_remote_retrieve_header( $request, 'content-type' );
+			$reg_img = '{["|\'][\s]*' . preg_quote( $original_src, '{' ) . '[\s]*["|\']}s';
 
-			if ( ! $type ) {
-				continue;
-			}
-
-			$html = str_replace( $src, $new_src, $html );
+			$content = preg_replace( $reg_img, '"' . $img_src . '"', $content );
 		}
 	}
 
-	return $html;
+	//Fix relative links
+	$content = str_replace( 'href="../', 'href="http://' . $host . '/', $content );
+	$content = preg_replace( '{href="/(\w)}', 'href="http://' . $host . '/$1', $content );
+
+	return $content;
 }
+
 
 /**
  * get all image tags
@@ -292,10 +324,56 @@ function wpcp_remove_empty_tags_recursive( $str, $replace_with = null ) {
 /**
  * Remove url from content
  * since 1.0.0
+ *
  * @param $content
  *
  * @return string
  */
-function wpcp_strip_urls($content){
-	return preg_replace('{http[s]?://[^\s]*}', '', $content);
+function wpcp_strip_urls( $content ) {
+	return preg_replace( '{http[s]?://[^\s]*}', '', $content );
+}
+
+/**
+ * sort a multi dimensional array
+ * since 1.0.0
+ *
+ * @param     $array
+ * @param     $on
+ * @param int $order
+ *
+ * @return array
+ */
+function wpcp_array_sort( $array, $on, $order = SORT_ASC ) {
+
+	$new_array      = array();
+	$sortable_array = array();
+
+	if ( count( $array ) > 0 ) {
+		foreach ( $array as $k => $v ) {
+			if ( is_array( $v ) ) {
+				foreach ( $v as $k2 => $v2 ) {
+					if ( $k2 == $on ) {
+						$sortable_array[ $k ] = $v2;
+					}
+				}
+			} else {
+				$sortable_array[ $k ] = $v;
+			}
+		}
+
+		switch ( $order ) {
+			case SORT_ASC:
+				asort( $sortable_array );
+				break;
+			case SORT_DESC:
+				arsort( $sortable_array );
+				break;
+		}
+
+		foreach ( $sortable_array as $k => $v ) {
+			$new_array[ $k ] = $array[ $k ];
+		}
+	}
+
+	return $new_array;
 }
