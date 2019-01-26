@@ -110,14 +110,14 @@ function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'artic
 
 	do_action( 'wpcp_before_campaign_keyword_input', $post_id, $campaign_type );
 	if ( in_array( $campaign_type, wpcp_get_keyword_suggestion_supported_modules() ) ) {
-		echo content_pilot()->elements->input( array(
-			'label'          => __( 'Keyword Suggestion', 'wp-content-pilot' ),
+		echo content_pilot()->elements->input( apply_filters('wpcp_keyword_suggester_input_args', array(
+			'label'          => __( 'Keyword Suggester', 'wp-content-pilot' ),
 			'name'           => '_keyword_suggestion',
 			'placeholder'    => __( 'How to cook noddles', 'wp-content-pilot' ),
 			'desc'           => __( 'Type something to find better related keywords', 'wp-content-pilot-pro' ),
 			'disabled'       => true,
 			'double_columns' => true,
-		) );
+		)) );
 	}
 
 	$keywords = wpcp_get_post_meta( $post_id, '_keywords', '' );

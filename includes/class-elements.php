@@ -738,7 +738,9 @@ class WPCP_Elements {
 		$attributes .= $this->get_attributes($args['attrs']);
 
 		$output .= '<input type="' . esc_attr($args['type']) . '" name="' . esc_attr($args['name']) . '" id="' . esc_attr($args['id']) . '" value="' . esc_attr($args['value']) . '" class="' . $class . '" ' . $attributes . ' />';
-
+		if(!empty($args['after'])){
+			$output .= $args['after'];
+		}
 		if ($args['desc']) {
 			$output .= '<span class="ever-field-description">'.sanitize_text_field($args['desc']).'</span>';
 		}
