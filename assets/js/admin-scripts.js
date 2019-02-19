@@ -93,7 +93,7 @@ var Ever_Repeatable = {
 
 		// Retrieve the highest current key
 		var key = highest = 1;
-		row.parent().find( '.edd_repeatable_row' ).each(function() {
+		row.parent().find( '.ever_repeatable_row' ).each(function() {
 			var current = $(this).data( 'key' );
 			if( parseInt( current ) > highest ) {
 				highest = current;
@@ -103,7 +103,7 @@ var Ever_Repeatable = {
 
 		clone = row.clone();
 
-		clone.removeClass( 'edd_add_blank' );
+		clone.removeClass( 'ever_add_blank' );
 
 		clone.attr( 'data-key', key );
 		clone.find( 'input, select, textarea' ).val( '' ).each(function() {
@@ -174,7 +174,7 @@ var Ever_Repeatable = {
 		$( document.body ).on( 'click', '.submit .edd_add_repeatable', function(e) {
 			e.preventDefault();
 			var button = $( this ),
-				row = button.parent().parent().prev( '.edd_repeatable_row' ),
+				row = button.parent().parent().prev( '.ever_repeatable_row' ),
 				clone = Ever_Repeatable.clone_repeatable(row);
 
 			clone.insertAfter( row ).find('input, textarea, select').filter(':visible').eq(0).focus();
@@ -193,9 +193,9 @@ var Ever_Repeatable = {
 	move : function() {
 
 		$(".edd_repeatable_table .edd-repeatables-wrap").sortable({
-			handle: '.edd-draghandle-anchor', items: '.edd_repeatable_row', opacity: 0.6, cursor: 'move', axis: 'y', update: function() {
+			handle: '.edd-draghandle-anchor', items: '.ever_repeatable_row', opacity: 0.6, cursor: 'move', axis: 'y', update: function() {
 				var count  = 0;
-				$(this).find( '.edd_repeatable_row' ).each(function() {
+				$(this).find( '.ever_repeatable_row' ).each(function() {
 					$(this).find( 'input.edd_repeatable_index' ).each(function() {
 						$( this ).val( count );
 					});
@@ -210,8 +210,8 @@ var Ever_Repeatable = {
 		$( document.body ).on( 'click', '.edd-remove-row, .edd_remove_repeatable', function(e) {
 			e.preventDefault();
 
-			var row   = $(this).parents( '.edd_repeatable_row' ),
-				count = row.parent().find( '.edd_repeatable_row' ).length,
+			var row   = $(this).parents( '.ever_repeatable_row' ),
+				count = row.parent().find( '.ever_repeatable_row' ).length,
 				type  = $(this).data('type'),
 				repeatable = 'div.edd_repeatable_' + type + 's',
 				focusElement,
@@ -219,10 +219,10 @@ var Ever_Repeatable = {
 				firstFocusable;
 
 			// Set focus on next element if removing the first row. Otherwise set focus on previous element.
-			if ( $(this).is( '.ui-sortable .edd_repeatable_row:first-child .edd-remove-row, .ui-sortable .edd_repeatable_row:first-child .edd_remove_repeatable' ) ) {
-				focusElement  = row.next( '.edd_repeatable_row' );
+			if ( $(this).is( '.ui-sortable .ever_repeatable_row:first-child .edd-remove-row, .ui-sortable .ever_repeatable_row:first-child .edd_remove_repeatable' ) ) {
+				focusElement  = row.next( '.ever_repeatable_row' );
 			} else {
-				focusElement  = row.prev( '.edd_repeatable_row' );
+				focusElement  = row.prev( '.ever_repeatable_row' );
 			}
 
 			focusable  = focusElement.find( 'select, input, textarea, button' ).filter( ':visible' );
@@ -403,7 +403,7 @@ var Ever_Repeatable = {
 	updatePrices: function() {
 		$( '#edd_price_fields' ).on( 'keyup', '.edd_variable_prices_name', function() {
 
-			var key = $( this ).parents( '.edd_repeatable_row' ).data( 'key' ),
+			var key = $( this ).parents( '.ever_repeatable_row' ).data( 'key' ),
 				name = $( this ).val(),
 				field_option = $( '.edd_repeatable_condition_field option[value=' + key + ']' );
 

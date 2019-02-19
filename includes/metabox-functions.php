@@ -427,7 +427,6 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 				<table class="widefat ever-repeater-table edd_repeatable_table" width="100%" cellpadding="0" cellspacing="0">
 					<thead>
 					<tr>
-						<th style="width: 2%"></th>
 						<th style="width: 45%"><?php _e( 'Meta Key', 'wp-content-pilot' ); ?></th>
 						<th class="variable-option-assigment" style="width: 45%;"><?php _e( 'Meta Value', 'wp-content-pilot' ); ?></th>
 						<th style="width: 3%"></th>
@@ -442,22 +441,18 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 
 					if ( ! empty( $meta_fields ) ) {
 
-						foreach ( $meta_fields as $key => $value ) :
-							$text = isset( $value['text'] ) ? $value['text'] : '';
-							$price_option = isset( $value['price_option'] ) ? $value['price_option'] : '';
-							$index        = isset( $value['index'] ) ? $value['index'] : $key;
-							$args         = apply_filters( 'checkout_download_detail_row_args', compact( 'text', 'price_option', 'index' ), $value );
-							?>
-							<tr class="edd_variable_prices_wrapper edd_repeatable_row" data-key="<?php echo esc_attr( $key ); ?>">
-								<?php do_action( 'wpcp_render_repeat_row', $key, $args, '', $index ); ?>
+						foreach ( $meta_fields as $index => $value ) :
+						   ?>
+							<tr class="edd_variable_prices_wrapper ever_repeatable_row" data-key="<?php echo esc_attr( $index ); ?>">
+								<?php do_action( 'wpcp_render_repeat_row', $index, $value, $post_id); ?>
 							</tr>
 						<?php
 						endforeach;
 
 					} else {
 						?>
-						<tr class="edd_variable_prices_wrapper edd_repeatable_row">
-							<?php do_action( 'wpcp_render_repeat_row', 1, array(), $post->ID, 1 ); ?>
+						<tr class="edd_variable_prices_wrapper ever_repeatable_row">
+							<?php do_action( 'wpcp_render_repeat_row', 1, array(), $post->ID); ?>
 						</tr>
 						<?php
 					}

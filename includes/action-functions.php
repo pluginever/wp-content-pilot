@@ -133,7 +133,7 @@ function wpcp_update_campaign_counter( $post_id, $campaign_id ) {
 add_action( 'wpcp_after_post_publish', 'wpcp_update_campaign_counter', 10, 2 );
 
 
-function wpcp_render_repeat_row( $key, $args = array(), $post_id, $index ) {
+function wpcp_render_repeat_row( $key, $args, $post_id ) {
 
 	$defaults = array(
 		'key'   => null,
@@ -142,10 +142,8 @@ function wpcp_render_repeat_row( $key, $args = array(), $post_id, $index ) {
 	$args     = wp_parse_args( $args, $defaults );
 	?>
 	<td>
-		<span class="edd-draghandle-anchor dashicons dashicons-move"></span>
 		<input type="hidden" name="download_details[<?php echo absint( $key ); ?>][index]" class="edd_repeatable_index" value="<?php echo absint( $key ); ?>"/>
-	</td>
-	<td>
+
 		<input type="text" name="<?php echo '_meta_fields[' . $key . '][key]';?>" id="<?php echo sanitize_key('_meta_fields[' . $key . '][key]');?>" value="<?php echo esc_attr( $args['key'] );?>" class="regular-text ever-field large-text ever-field" autocomplete="false" >
 	</td>
 
