@@ -110,14 +110,14 @@ function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'artic
 
 	do_action( 'wpcp_before_campaign_keyword_input', $post_id, $campaign_type );
 	if ( in_array( $campaign_type, wpcp_get_keyword_suggestion_supported_modules() ) ) {
-		echo content_pilot()->elements->input( apply_filters('wpcp_keyword_suggester_input_args', array(
+		echo content_pilot()->elements->input( apply_filters( 'wpcp_keyword_suggester_input_args', array(
 			'label'          => __( 'Keyword Suggester', 'wp-content-pilot' ),
 			'name'           => '_keyword_suggestion',
 			'placeholder'    => __( 'How to cook noddles', 'wp-content-pilot' ),
 			'desc'           => __( 'Type something to find better related keywords', 'wp-content-pilot-pro' ),
 			'disabled'       => true,
 			'double_columns' => true,
-		)) );
+		) ) );
 	}
 
 	$keywords = wpcp_get_post_meta( $post_id, '_keywords', '' );
@@ -403,18 +403,34 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'selected'         => '',
 	) );
 
-	$search_replace_args = apply_filters( 'wpcp_campaign_search_replace_input_args', array(
-		'label'       => __( 'Search Replace', 'wp-content-pilot' ),
-		'name'        => '_search_replace',
-		'required'    => false,
-		'disabled'    => true,
-		'desc'        => __( 'Separate each search replace words by (|) and separate pairs with comma(,). (PRO)', 'wp-content-pilot' ),
-		'placeholder' => __( 'Search Word | Replace Word', 'wp-content-pilot' ),
-	), $post_id, $campaign_type );
-
-	echo apply_filters( 'wpcp_campaign_search_replace_input', content_pilot()->elements->textarea( $search_replace_args ), $post_id, $campaign_type );
 	?>
+	<div class="ever-form-group ever-row _search_replace_field">
+		<div class="ever-col-3"><label for="_search_replace" class="ever-label">Search Replace</label></div>
+		<div class="ever-col-1">:</div>
+		<div class="ever-col-8">
+			<table class="ever-repeater">
+				<?php
 
+				global $post;
+
+				$meta_fields = wpcp_get_post_meta( $post->ID, '_meta_fields', '' );
+
+				if ( ! empty( $meta_fields ) ) {
+
+					foreach ( $meta_fields as $index => $value ) :
+						echo '<tr data-row="'.$index.'">';
+						do_action( 'wpcp_render_repeat_search_replace_row', $value, $post_id, $index );
+						echo '</tr>';
+					endforeach;
+				} else {
+					echo '<tr data-row="0">';
+					do_action( 'wpcp_render_repeat_search_replace_row', array( 'search' => '', 'replace' => '' ), $post_id, 0 );
+					echo '</tr>';
+				} ?>
+
+			</table>
+		</div>
+	</div>
 
 	<div class=" ever-row ever-form-group _translate_to_field">
 		<div class="ever-col-3">
@@ -422,51 +438,27 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		</div>
 		<div class="ever-col-1">:</div>
 		<div class="ever-col-8">
+			<table class="ever-repeater">
+				<?php
 
-			<div id="ever-repeater" class="ever-repeater-wrap">
-				<table class="widefat ever-repeater-table edd_repeatable_table" width="100%" cellpadding="0" cellspacing="0">
-					<thead>
-					<tr>
-						<th style="width: 45%"><?php _e( 'Meta Key', 'wp-content-pilot' ); ?></th>
-						<th class="variable-option-assigment" style="width: 45%;"><?php _e( 'Meta Value', 'wp-content-pilot' ); ?></th>
-						<th style="width: 3%"></th>
-					</tr>
-					</thead>
-					<tbody class="ever-repeatables-wrap edd-repeatables-wrap">
-					<?php
+				global $post;
 
-					global $post;
+				$meta_fields = wpcp_get_post_meta( $post->ID, '_meta_fields', '' );
 
-					$meta_fields          = wpcp_get_post_meta( $post_id, '_meta_fields', '' );
+				if ( ! empty( $meta_fields ) ) {
 
-					if ( ! empty( $meta_fields ) ) {
+					foreach ( $meta_fields as $index => $value ) :
+						echo '<tr data-row="'.$index.'">';
+						do_action( 'wpcp_render_repeat_meta_field_row', $value, $post_id, $index );
+						echo '</tr>';
+					endforeach;
+				} else {
+					echo '<tr data-row="0">';
+					do_action( 'wpcp_render_repeat_meta_field_row', array( 'key' => '', 'value' => '' ), $post_id, 0 );
+					echo '</tr>';
+				} ?>
 
-						foreach ( $meta_fields as $index => $value ) :
-						   ?>
-							<tr class="edd_variable_prices_wrapper ever_repeatable_row" data-key="<?php echo esc_attr( $index ); ?>">
-								<?php do_action( 'wpcp_render_repeat_row', $index, $value, $post_id); ?>
-							</tr>
-						<?php
-						endforeach;
-
-					} else {
-						?>
-						<tr class="edd_variable_prices_wrapper ever_repeatable_row">
-							<?php do_action( 'wpcp_render_repeat_row', 1, array(), $post->ID); ?>
-						</tr>
-						<?php
-					}
-					?>
-
-					<tr>
-						<td class="submit" colspan="4" style="float: none; clear:both; background:#fff;">
-							<a class="button button-primary ever-new-repeater edd_add_repeatable"><?php _e( 'Add Field', 'checkout' ); ?></a>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-			<span class="ever-field-description">Select language to translate. (PRO)</span>
+			</table>
 		</div>
 	</div>
 	<?php
@@ -504,7 +496,7 @@ function wpcp_campaign_template_tags_metabox_fields( $post_id, $campaign_type ) 
 
 function wpcp_campaign_posted_posts_metabox_callback( $post, $campaign_type ) {
 	ob_start();
-	include WPCP_VIEWS.'/metabox/posted-posts.php';
+	include WPCP_VIEWS . '/metabox/posted-posts.php';
 	$html = ob_get_clean();
 	echo $html;
 }
@@ -515,7 +507,7 @@ function wpcp_campaign_logs_metabox_callback( $post, $campaign_type ) {
 
 function wpcp_campaign_meta_actions_metabox_callback( $post, $campaign_type ) {
 	ob_start();
-	include WPCP_VIEWS.'/metabox/meta-actions.php';
+	include WPCP_VIEWS . '/metabox/meta-actions.php';
 	$html = ob_get_clean();
 	echo $html;
 }
@@ -566,3 +558,49 @@ function wpcp_update_campaign_settings( $post_id ) {
 
 add_action( 'save_post_wp_content_pilot', 'wpcp_update_campaign_settings' );
 
+
+function wpcp_repeat_search_replace_row($args, $post_id, $index){
+	$args= wp_parse_args($args, array(
+		'search' => '',
+		'replace' => '',
+	));
+
+	?>
+	<td>
+		<input type="text" name="_search_replace[<?php echo intval($index);?>]['search']" disabled="disabled"><br>
+		<span class="ever-field-description"><?php _e( 'Search Word' ); ?></span>
+	</td>
+	<td>
+		<input type="text" name="_search_replace[<?php echo intval($index);?>]['replace']" value="<?php echo $args['replace'];?>" disabled="disabled"><br>
+		<span class="ever-field-description"><?php _e( 'Replace Word' ); ?></span>
+	</td>
+	<td>
+		<a href="#" class="add-field disabled"><i class="dashicons dashicons-plus"></i></a>
+		<a href="#" class="remove-field disabled"><i class="dashicons dashicons-minus"></i></a>
+	</td>
+	<?php
+}
+add_action('wpcp_repeat_meta_field_row', 'wpcp_repeat_search_replace_row', 10, 3);
+
+function wpcp_repeat_meta_field_row($args, $post_id, $index){
+	$args= wp_parse_args($args, array(
+		'key' => '',
+		'value' => '',
+	));
+
+	?>
+	<td>
+		<input type="text" name="_meta_fields[<?php echo intval($index);?>]['key']" disabled="disabled"><br>
+		<span class="ever-field-description"><?php _e( 'Search Word' ); ?></span>
+	</td>
+	<td>
+		<input type="text" name="_meta_fields[<?php echo intval($index);?>]['replace']" value="<?php echo $args['replace'];?>" disabled="disabled"><br>
+		<span class="ever-field-description"><?php _e( 'Replace Word' ); ?></span>
+	</td>
+	<td>
+		<a href="#" class="add-field disabled"><i class="dashicons dashicons-plus"></i></a>
+		<a href="#" class="remove-field disabled"><i class="dashicons dashicons-minus"></i></a>
+	</td>
+	<?php
+}
+add_action('wpcp_render_repeat_meta_field_row', 'wpcp_repeat_meta_field_row', 10, 3);

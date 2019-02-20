@@ -1,23 +1,23 @@
-.ever-icon{
+.ever-icon {
 	width: $iconsize;
 }
 
-.ever-submitbox{
+.ever-submitbox {
 
-	#major-publishing-actions{
+	#major-publishing-actions {
 		margin: 0 -15px -15px;
-		#delete-action{
+		#delete-action {
 			float: right !important;
 			margin-top: -5px;
 		}
 	}
 
-	#publishing-action{
+	#publishing-action {
 		display: block;
 		width: 100%;
 		margin: 10px 0 0;
 		float: none;
-		.publishing-action-btn{
+		.publishing-action-btn {
 			display: flex;
 			width: 100%;
 			justify-content: space-between;
@@ -26,17 +26,39 @@
 	}
 }
 
-#campaign-posted-posts{
-	&.postbox{
-		.inside{
-			&>a{
+#campaign-posted-posts {
+	&.postbox {
+		.inside {
+			& > a {
 				display: block;
 				text-decoration: none;
 				font-size: 14px;
 			}
-			&>span{
+			& > span {
 				margin-bottom: 15px;
 				display: block;
+			}
+		}
+	}
+}
+
+.ever-repeater {
+	tr{
+		&:nth-child(1){
+			.remove-field{
+				display: none;
+			}
+		}
+	}
+
+	td {
+		&:last-child {
+			vertical-align: top;
+			margin-top: 5px;
+			display: inline-block;
+			a {
+				text-decoration: none;
+				color: #000;
 			}
 		}
 	}
