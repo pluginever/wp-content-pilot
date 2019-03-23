@@ -5,6 +5,7 @@ global $post_id;
 $args = array(
 	'meta_key'   => '_wpcp_campaign_generated_post',
 	'meta_value' => $post_id,
+	'meta_value' => $post_id,
 );
 
 $posts = wpcp_get_posts( $args );

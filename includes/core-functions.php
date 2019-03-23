@@ -590,7 +590,7 @@ function wpcp_get_readability( $html, $url ) {
  *
  * @return bool|int
  */
-function wpcp_download_image( $url ) {
+function wpcp_download_image( $url, $description = '' ) {
 	$url     = explode( '?', esc_url_raw( $url ) );
 	$url     = $url[0];
 	$get     = wp_remote_get( $url );
@@ -603,7 +603,8 @@ function wpcp_download_image( $url ) {
 	$mirror     = wp_upload_bits( basename( $url ), '', wp_remote_retrieve_body( $get ) );
 	$attachment = array(
 		'post_title'     => basename( $url ),
-		'post_mime_type' => $type
+		'post_mime_type' => $type,
+		'post_content'   => $description,
 	);
 
 	$attach_id = wp_insert_attachment( $attachment, $mirror['file'] );
@@ -757,7 +758,7 @@ function wpcp_get_posts( $args ) {
 		'meta_key'       => '',
 		'meta_value'     => '',
 		'post_status'    => 'publish',
-		'posts_per_page' => 15,
+		'posts_per_page' => 10,
 		'paged'          => 1,
 		'orderby'        => 'date',
 		'order'          => 'DESC',

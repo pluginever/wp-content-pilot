@@ -14,7 +14,7 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 			'placeholder'    => '10',
 			'value'          => wpcp_get_post_meta( $post_id, '_campaign_target', 5 ),
 			'required'       => true,
-			'double_columns' => false,
+			'class'       => 'long',
 		) );
 
 		echo content_pilot()->elements->select( array(
@@ -25,7 +25,7 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 			'options'          => wpcp_get_campaign_schedule_options(),
 			'selected'         => wpcp_get_post_meta( $post_id, '_campaign_frequency' ),
 			'required'         => true,
-			'double_columns'   => false,
+			'class'       => 'long',
 		) );
 
 		echo content_pilot()->elements->select( array(
@@ -38,7 +38,7 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 				'inactive' => __( 'Inactive', 'wp-content-pilot' ),
 			),
 			'required'         => true,
-			'double_columns'   => false,
+			'class'       => 'long',
 			'selected'         => wpcp_get_post_meta( $post_id, '_campaign_status' ),
 		) );
 
@@ -50,7 +50,7 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 			'desc'           => __( 'Min readability score required to post (PRO)', 'wp-content-pilot-pro' ),
 			'value'          => wpcp_get_post_meta( $post_id, '_readability_score', 60 ),
 			'disabled'       => true,
-			'double_columns' => false,
+			'class'       => 'long',
 		) );
 
 		do_action('wpcp_after_campaign_action_metabox', $post_id);

@@ -107,16 +107,14 @@ function wpcp_campaign_options_metabox_callback( $post ) {
  * @param string $campaign_type
  */
 function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'article' ) {
-
 	do_action( 'wpcp_before_campaign_keyword_input', $post_id, $campaign_type );
 	if ( in_array( $campaign_type, wpcp_get_keyword_suggestion_supported_modules() ) ) {
 		echo content_pilot()->elements->input( apply_filters( 'wpcp_keyword_suggester_input_args', array(
-			'label'          => __( 'Keyword Suggester', 'wp-content-pilot' ),
-			'name'           => '_keyword_suggestion',
-			'placeholder'    => __( 'How to cook noddles', 'wp-content-pilot' ),
-			'desc'           => __( 'Type something to find better related keywords', 'wp-content-pilot-pro' ),
-			'disabled'       => true,
-			'double_columns' => true,
+			'label'       => __( 'Keyword Suggester', 'wp-content-pilot' ),
+			'name'        => '_keyword_suggestion',
+			'placeholder' => __( 'How to cook noddles', 'wp-content-pilot' ),
+			'desc'        => __( 'Type something to find better related keywords', 'wp-content-pilot-pro' ),
+			'disabled'    => true,
 		) ) );
 	}
 
@@ -127,7 +125,10 @@ function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'artic
 		'name'     => '_keywords',
 		'required' => true,
 		'desc'     => __( 'Separate keywords by comma.', 'wp-content-pilot' ),
-		'value'    => $keywords
+		'value'    => $keywords,
+		'attrs'    => array(
+			'rows' => 3,
+		),
 	), $post_id, $campaign_type );
 
 	echo apply_filters( 'wpcp_campaign_keyword_input', content_pilot()->elements->textarea( $keyword_input_args ), $post_id, $campaign_type );
@@ -227,17 +228,19 @@ function wpcp_campaign_post_settings_metabox_callback( $post ) {
 function wpcp_campaign_settings_metabox_fields( $post_id, $campaign_type ) {
 
 	echo content_pilot()->elements->input( array(
-		'label'          => __( 'Post Title', 'wp-content-pilot' ),
-		'name'           => '_post_title',
-		'required'       => true,
-		'double_columns' => true,
-		'value'          => wpcp_get_post_meta( $post_id, '_post_title', '{title}' )
+		'label'    => __( 'Post Title', 'wp-content-pilot' ),
+		'name'     => '_post_title',
+		'required' => true,
+		'value'    => wpcp_get_post_meta( $post_id, '_post_title', '{title}' )
 	) );
 
 	$template_input_args = apply_filters( 'wpcp_campaign_template_input_args', array(
 		'label'    => __( 'Post Template', 'wp-content-pilot' ),
 		'name'     => '_post_template',
 		'required' => true,
+		'attrs'    => array(
+			'rows' => 5,
+		),
 		'value'    => wpcp_get_post_meta( $post_id, '_post_template', '{content} <br> <a href="{source_url}" target="_blank">Source</a>' )
 	), $post_id, $campaign_type );
 
@@ -282,22 +285,21 @@ function wpcp_campaign_settings_metabox_fields( $post_id, $campaign_type ) {
 		'placeholder'      => '',
 		'show_option_all'  => '',
 		'show_option_none' => '',
-		'double_columns'   => true,
+		'selected'         => wpcp_get_post_meta( $post_id, '_categories', [] ),
 		'options'          => wpcp_get_post_categories(),
 		'required'         => false,
 		'multiple'         => true,
 		'chosen'           => true,
 		'desc'             => __( 'Select categories from aviallbe categories', 'wp-content-pilot' ),
-		'selected'         => wpcp_get_post_meta( $post_id, '_categories', '' ),
 	) );
 
-	echo content_pilot()->elements->input( array(
+	echo content_pilot()->elements->input( apply_filters( 'wpcp_custom_categories_args', array(
 		'label'       => __( 'Custom Categories', 'wp-content-pilot' ),
 		'name'        => '_custom_categories',
 		'placeholder' => __( 'Fashion, Sports, Tech', 'wp-content-pilot' ),
 		'desc'        => __( 'Input any number of custom categories separate by comma (PRO) ', 'wp-content-pilot' ),
 		'disabled'    => true,
-	) );
+	), $post_id ) );
 
 	echo content_pilot()->elements->select( array(
 		'label'            => __( 'Tags', 'wp-content-pilot' ),
@@ -305,22 +307,21 @@ function wpcp_campaign_settings_metabox_fields( $post_id, $campaign_type ) {
 		'placeholder'      => '',
 		'show_option_all'  => '',
 		'show_option_none' => '',
-		'double_columns'   => true,
+		'selected'         => wpcp_get_post_meta( $post_id, '_tags', [] ),
 		'options'          => wpcp_get_post_tags(),
 		'required'         => false,
 		'multiple'         => true,
 		'chosen'           => true,
 		'desc'             => __( 'Select tags from aviallbe tags', 'wp-content-pilot' ),
-		'selected'         => wpcp_get_post_meta( $post_id, '_tags', '' ),
 	) );
 
-	echo content_pilot()->elements->input( array(
+	echo content_pilot()->elements->input( apply_filters( 'wpcp_custom_tags_args', array(
 		'label'       => __( 'Custom Tags', 'wp-content-pilot' ),
 		'name'        => '_custom_tags',
 		'placeholder' => __( 'Fashion, Sports, Tech', 'wp-content-pilot' ),
 		'desc'        => __( 'Input any number of custom tags separate by comma (PRO) ', 'wp-content-pilot' ),
 		'disabled'    => true,
-	) );
+	), $post_id ) );
 
 	echo content_pilot()->elements->select( array(
 		'label'            => __( 'Post Author', 'wp-content-pilot' ),
@@ -332,7 +333,7 @@ function wpcp_campaign_settings_metabox_fields( $post_id, $campaign_type ) {
 		'options'          => wpcp_get_authors(),
 		'required'         => true,
 		'multiple'         => false,
-		'chosen'           => true,
+		'chosen'           => false,
 		'desc'             => __( 'Select categories from aviallbe categories', 'wp-content-pilot' ),
 		'selected'         => wpcp_get_post_meta( $post_id, '_author', '' ),
 	) );
@@ -361,32 +362,32 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'desc'  => 'Input the number of word to limit content. Default full content.',
 	) );
 
-	echo content_pilot()->elements->input( array(
+	echo content_pilot()->elements->input( apply_filters( 'wpcp_min_words_args', array(
 		'label'       => __( 'Words Count', 'wp-content-pilot' ),
 		'name'        => '_min_words',
 		'type'        => 'number',
 		'placeholder' => 500,
 		'desc'        => __( 'Min Words required, otherwise post will be rejected. (PRO) ', 'wp-content-pilot' ),
 		'disabled'    => true,
-	) );
+	), $post_id ) );
 
-	echo content_pilot()->elements->input( array(
+	echo content_pilot()->elements->input( apply_filters( 'wpcp_required_words_args', array(
 		'label'       => __( 'Required Words', 'wp-content-pilot' ),
 		'name'        => '_required_words',
 		'placeholder' => __( 'Fashion, Secret, Awesome', 'wp-content-pilot' ),
 		'desc'        => __( 'Must contain words, otherwise post will be rejected. (PRO) ', 'wp-content-pilot' ),
 		'disabled'    => true,
-	) );
+	), $post_id ) );
 
-	echo content_pilot()->elements->input( array(
+	echo content_pilot()->elements->input( apply_filters( 'wpcp_banned_words_args', array(
 		'label'       => __( 'Banned Words', 'wp-content-pilot' ),
-		'name'        => '_banded_words',
+		'name'        => '_banned_words',
 		'placeholder' => __( 'youtube, wikipedia, google', 'wp-content-pilot' ),
 		'desc'        => __( 'If contains above words post will be rejected. (PRO) ', 'wp-content-pilot' ),
 		'disabled'    => true,
-	) );
+	), $post_id ) );
 
-	echo content_pilot()->elements->select( array(
+	echo content_pilot()->elements->select( apply_filters( 'wpcp_translate_to_args', array(
 		'label'            => __( 'Translate To', 'wp-content-pilot' ),
 		'name'             => '_translate_to',
 		'placeholder'      => '',
@@ -401,67 +402,8 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'chosen'           => false,
 		'desc'             => __( 'Select language to translate. (PRO)', 'wp-content-pilot' ),
 		'selected'         => '',
-	) );
+	), $post_id ) );
 
-	?>
-	<div class="ever-form-group ever-row _search_replace_field">
-		<div class="ever-col-3"><label for="_search_replace" class="ever-label">Search Replace</label></div>
-		<div class="ever-col-1">:</div>
-		<div class="ever-col-8">
-			<table class="ever-repeater">
-				<?php
-
-				global $post;
-
-				$meta_fields = wpcp_get_post_meta( $post->ID, '_meta_fields', '' );
-
-				if ( ! empty( $meta_fields ) ) {
-
-					foreach ( $meta_fields as $index => $value ) :
-						echo '<tr data-row="'.$index.'">';
-						do_action( 'wpcp_render_repeat_search_replace_row', $value, $post_id, $index );
-						echo '</tr>';
-					endforeach;
-				} else {
-					echo '<tr data-row="0">';
-					do_action( 'wpcp_render_repeat_search_replace_row', array( 'search' => '', 'replace' => '' ), $post_id, 0 );
-					echo '</tr>';
-				} ?>
-
-			</table>
-		</div>
-	</div>
-
-	<div class=" ever-row ever-form-group _translate_to_field">
-		<div class="ever-col-3">
-			<label for="_translate_to" class="ever-label"><?php _e( 'Meta Fields', 'wp-content-pilot' ); ?></label>
-		</div>
-		<div class="ever-col-1">:</div>
-		<div class="ever-col-8">
-			<table class="ever-repeater">
-				<?php
-
-				global $post;
-
-				$meta_fields = wpcp_get_post_meta( $post->ID, '_meta_fields', '' );
-
-				if ( ! empty( $meta_fields ) ) {
-
-					foreach ( $meta_fields as $index => $value ) :
-						echo '<tr data-row="'.$index.'">';
-						do_action( 'wpcp_render_repeat_meta_field_row', $value, $post_id, $index );
-						echo '</tr>';
-					endforeach;
-				} else {
-					echo '<tr data-row="0">';
-					do_action( 'wpcp_render_repeat_meta_field_row', array( 'key' => '', 'value' => '' ), $post_id, 0 );
-					echo '</tr>';
-				} ?>
-
-			</table>
-		</div>
-	</div>
-	<?php
 }
 
 function wpcp_campaign_template_tags_metabox_callback( $post ) {
@@ -529,26 +471,29 @@ function wpcp_update_campaign_settings( $post_id ) {
 
 	//save post meta
 	$posted = empty( $_POST ) ? [] : $_POST;
-	update_post_meta( $post_id, '_campaign_type', empty( $posted['_campaign_type'] ) ? 'feed' : esc_attr( $posted['_campaign_type'] ) );
+	update_post_meta( $post_id, '_campaign_type', empty( $posted['_campaign_type'] ) ? 'feed' : sanitize_text_field( $posted['_campaign_type'] ) );
 	update_post_meta( $post_id, '_campaign_target', empty( $posted['_campaign_target'] ) ? '' : intval( $posted['_campaign_target'] ) );
 	update_post_meta( $post_id, '_campaign_frequency', empty( $posted['_campaign_frequency'] ) ? '' : intval( $posted['_campaign_frequency'] ) );
-	update_post_meta( $post_id, '_campaign_status', empty( $posted['_campaign_status'] ) ? 'inactive' : esc_attr( $posted['_campaign_status'] ) );
+	update_post_meta( $post_id, '_campaign_status', empty( $posted['_campaign_status'] ) ? 'inactive' : sanitize_text_field( $posted['_campaign_status'] ) );
 
-	update_post_meta( $post_id, '_keywords', empty( $posted['_keywords'] ) ? '' : esc_attr( $posted['_keywords'] ) );
-	update_post_meta( $post_id, '_content_type', empty( $posted['_content_type'] ) ? 'html' : esc_attr( $posted['_content_type'] ) );
+	update_post_meta( $post_id, '_keywords', empty( $posted['_keywords'] ) ? '' : sanitize_text_field( $posted['_keywords'] ) );
+	update_post_meta( $post_id, '_content_type', empty( $posted['_content_type'] ) ? 'html' : sanitize_text_field( $posted['_content_type'] ) );
 
-	update_post_meta( $post_id, '_set_featured_image', empty( $posted['_set_featured_image'] ) ? '' : esc_attr( $posted['_set_featured_image'] ) );
-	update_post_meta( $post_id, '_remove_images', empty( $posted['_remove_images'] ) ? '' : esc_attr( $posted['_remove_images'] ) );
-	update_post_meta( $post_id, '_excerpt', empty( $posted['_excerpt'] ) ? '' : esc_attr( $posted['_excerpt'] ) );
-	update_post_meta( $post_id, '_strip_links', empty( $posted['_strip_links'] ) ? '' : esc_attr( $posted['_strip_links'] ) );
-	update_post_meta( $post_id, '_allow_comments', empty( $posted['_allow_comments'] ) ? '' : esc_attr( $posted['_allow_comments'] ) );
-	update_post_meta( $post_id, '_allow_pingbacks', empty( $posted['_allow_pingbacks'] ) ? '' : esc_attr( $posted['_allow_pingbacks'] ) );
-	update_post_meta( $post_id, '_use_original_date', empty( $posted['_use_original_date'] ) ? '' : esc_attr( $posted['_use_original_date'] ) );
-	update_post_meta( $post_id, '_skip_no_image', empty( $posted['_skip_no_image'] ) ? '' : esc_attr( $posted['_skip_no_image'] ) );
-	update_post_meta( $post_id, '_skip_duplicate_title', empty( $posted['_skip_duplicate_title'] ) ? '' : esc_attr( $posted['_skip_duplicate_title'] ) );
+	update_post_meta( $post_id, '_set_featured_image', empty( $posted['_set_featured_image'] ) ? '' : sanitize_text_field( $posted['_set_featured_image'] ) );
+	update_post_meta( $post_id, '_remove_images', empty( $posted['_remove_images'] ) ? '' : sanitize_text_field( $posted['_remove_images'] ) );
+	update_post_meta( $post_id, '_excerpt', empty( $posted['_excerpt'] ) ? '' : sanitize_text_field( $posted['_excerpt'] ) );
+	update_post_meta( $post_id, '_strip_links', empty( $posted['_strip_links'] ) ? '' : sanitize_text_field( $posted['_strip_links'] ) );
+	update_post_meta( $post_id, '_allow_comments', empty( $posted['_allow_comments'] ) ? '' : sanitize_text_field( $posted['_allow_comments'] ) );
+	update_post_meta( $post_id, '_allow_pingbacks', empty( $posted['_allow_pingbacks'] ) ? '' : sanitize_text_field( $posted['_allow_pingbacks'] ) );
+	update_post_meta( $post_id, '_use_original_date', empty( $posted['_use_original_date'] ) ? '' : sanitize_text_field( $posted['_use_original_date'] ) );
+	update_post_meta( $post_id, '_skip_no_image', empty( $posted['_skip_no_image'] ) ? '' : sanitize_text_field( $posted['_skip_no_image'] ) );
+	update_post_meta( $post_id, '_skip_duplicate_title', empty( $posted['_skip_duplicate_title'] ) ? '' : sanitize_text_field( $posted['_skip_duplicate_title'] ) );
 
-	update_post_meta( $post_id, '_post_title', empty( $posted['_post_title'] ) ? '' : esc_attr( $posted['_post_title'] ) );
+	update_post_meta( $post_id, '_post_title', empty( $posted['_post_title'] ) ? '' : sanitize_text_field( $posted['_post_title'] ) );
 	update_post_meta( $post_id, '_post_template', empty( $posted['_post_template'] ) ? '' : wp_kses_post( $posted['_post_template'] ) );
+	update_post_meta( $post_id, '_categories', empty( $posted['_categories'] ) ? '' : $posted['_categories'] );
+	update_post_meta( $post_id, '_tag', empty( $posted['_tag'] ) ? '' : $posted['_tag'] );
+
 
 	update_post_meta( $post_id, '_title_limit', empty( $posted['_title_limit'] ) ? '' : esc_attr( $posted['_title_limit'] ) );
 	update_post_meta( $post_id, '_content_limit', empty( $posted['_content_limit'] ) ? '' : esc_attr( $posted['_content_limit'] ) );
@@ -559,48 +504,59 @@ function wpcp_update_campaign_settings( $post_id ) {
 add_action( 'save_post_wp_content_pilot', 'wpcp_update_campaign_settings' );
 
 
-function wpcp_repeat_search_replace_row($args, $post_id, $index){
-	$args= wp_parse_args($args, array(
-		'search' => '',
+function wpcp_repeat_search_replace_row( $args, $post_id, $index ) {
+	$args = wp_parse_args( $args, array(
+		'search'  => '',
 		'replace' => '',
-	));
+	) );
 
 	?>
-	<td>
-		<input type="text" name="_search_replace[<?php echo intval($index);?>]['search']" disabled="disabled"><br>
-		<span class="ever-field-description"><?php _e( 'Search Word' ); ?></span>
-	</td>
-	<td>
-		<input type="text" name="_search_replace[<?php echo intval($index);?>]['replace']" value="<?php echo $args['replace'];?>" disabled="disabled"><br>
-		<span class="ever-field-description"><?php _e( 'Replace Word' ); ?></span>
-	</td>
-	<td>
-		<a href="#" class="add-field disabled"><i class="dashicons dashicons-plus"></i></a>
-		<a href="#" class="remove-field disabled"><i class="dashicons dashicons-minus"></i></a>
-	</td>
+	<!--	<td>-->
+	<!--		<input type="text" name="_search_replace[--><?php //echo intval($index);
+	?><!--]['search']" disabled="disabled"><br>-->
+	<!--		<span class="ever-field-description">--><?php //_e( 'Search Word' );
+	?><!--</span>-->
+	<!--	</td>-->
+	<!--	<td>-->
+	<!--		<input type="text" name="_search_replace[--><?php //echo intval($index);
+	?><!--]['replace']" value="--><?php //echo $args['replace'];
+	?><!--" disabled="disabled"><br>-->
+	<!--		<span class="ever-field-description">--><?php //_e( 'Replace Word' );
+	?><!--</span>-->
+	<!--	</td>-->
+	<!--	<td>-->
+	<!--		<a href="#" class="add-field disabled"><i class="dashicons dashicons-plus"></i></a>-->
+	<!--		<a href="#" class="remove-field disabled"><i class="dashicons dashicons-minus"></i></a>-->
+	<!--	</td>-->
 	<?php
 }
-add_action('wpcp_repeat_meta_field_row', 'wpcp_repeat_search_replace_row', 10, 3);
 
-function wpcp_repeat_meta_field_row($args, $post_id, $index){
-	$args= wp_parse_args($args, array(
-		'key' => '',
+//add_action('wpcp_repeat_meta_field_row', 'wpcp_repeat_search_replace_row', 10, 3);
+
+function wpcp_repeat_meta_field_row( $args, $post_id, $index ) {
+	$args = wp_parse_args( $args, array(
+		'key'   => '',
 		'value' => '',
-	));
+	) );
 
 	?>
-	<td>
-		<input type="text" name="_meta_fields[<?php echo intval($index);?>]['key']" disabled="disabled"><br>
-		<span class="ever-field-description"><?php _e( 'Search Word' ); ?></span>
-	</td>
-	<td>
-		<input type="text" name="_meta_fields[<?php echo intval($index);?>]['replace']" value="<?php echo $args['replace'];?>" disabled="disabled"><br>
-		<span class="ever-field-description"><?php _e( 'Replace Word' ); ?></span>
-	</td>
-	<td>
-		<a href="#" class="add-field disabled"><i class="dashicons dashicons-plus"></i></a>
-		<a href="#" class="remove-field disabled"><i class="dashicons dashicons-minus"></i></a>
-	</td>
+	<!--	<td>-->
+	<!--		<input type="text" name="_meta_fields[--><?php //echo intval($index);
+	?><!--]['key']" disabled="disabled"><br>-->
+	<!--		<span class="ever-field-description">--><?php //_e( 'Search Word' );
+	?><!--</span>-->
+	<!--	</td>-->
+	<!--	<td>-->
+	<!--		<input type="text" name="_meta_fields[--><?php //echo intval($index);
+	?><!--]['replace']" value="--><?php //echo $args['replace'];
+	?><!--" disabled="disabled"><br>-->
+	<!--		<span class="ever-field-description">--><?php //_e( 'Replace Word' );
+	?><!--</span>-->
+	<!--	</td>-->
+	<!--	<td>-->
+	<!--		<a href="#" class="add-field disabled"><i class="dashicons dashicons-plus"></i></a>-->
+	<!--		<a href="#" class="remove-field disabled"><i class="dashicons dashicons-minus"></i></a>-->
+	<!--	</td>-->
 	<?php
 }
-add_action('wpcp_render_repeat_meta_field_row', 'wpcp_repeat_meta_field_row', 10, 3);
+//add_action('wpcp_render_repeat_meta_field_row', 'wpcp_repeat_meta_field_row', 10, 3);
