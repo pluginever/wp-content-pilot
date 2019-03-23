@@ -351,7 +351,7 @@ abstract class WPCP_Campaign {
 			$type
 		);
 		$result = $wpdb->get_row( $sql );
-		$result = $wpdb->get_row( "select * from {$table} where id='104'" );
+		//$result = $wpdb->get_row( "select * from {$table} where id='104'" );
 		if ( empty( $result ) ) {
 			return false;
 		}

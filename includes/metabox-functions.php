@@ -346,6 +346,7 @@ function wpcp_campaign_advance_settings_metabox_callback( $post ) {
 }
 
 function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type ) {
+	do_action( 'wpcp_start_campaign_advance_settings_metabox', $post_id, $campaign_type );
 	echo content_pilot()->elements->input( array(
 		'label' => __( 'Limit Title', 'wp-content-pilot' ),
 		'type'  => 'number',
@@ -404,6 +405,7 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'selected'         => '',
 	), $post_id ) );
 
+	do_action( 'wpcp_end_campaign_advance_settings_metabox', $post_id, $campaign_type );
 }
 
 function wpcp_campaign_template_tags_metabox_callback( $post ) {

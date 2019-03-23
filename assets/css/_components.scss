@@ -43,9 +43,18 @@
 }
 
 .ever-repeater {
-	tr{
-		&:nth-child(1){
-			.remove-field{
+	.remove-field, .add-field {
+		line-height: 1;
+		height: 25px;
+	}
+
+	.help{
+		margin-left: 0 !important;
+	}
+
+	tr {
+		&:nth-child(1) {
+			.remove-field, .add-field {
 				display: none;
 			}
 		}
@@ -54,7 +63,6 @@
 	td {
 		&:last-child {
 			vertical-align: top;
-			margin-top: 5px;
 			display: inline-block;
 			a {
 				text-decoration: none;
@@ -64,14 +72,13 @@
 	}
 }
 
-
-.ever-field{
+.ever-field {
 	margin: 0 0 9px;
 	font-size: 12px;
 	padding: 5px 0;
 	line-height: 24px;
 	vertical-align: top;
-	&>label {
+	& > label {
 		float: left;
 		width: 200px;
 		padding: 0;
@@ -80,7 +87,7 @@
 	.short {
 		width: 50%;
 	}
-	.long{
+	.long {
 		width: 100%;
 	}
 	.help {
@@ -93,13 +100,14 @@
 		margin-left: 200px;
 	}
 
-	.ever-checkboxes{
+	.ever-checkboxes {
 		margin-left: 200px;
-		label{
+		label {
 			width: auto;
 		}
 	}
 }
-.long + .help{
+
+.long + .help {
 	margin-left: 0;
 }
