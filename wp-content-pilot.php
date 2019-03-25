@@ -414,6 +414,7 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/core-functions.php';
 		require_once WPCP_INCLUDES . '/formatting-functions.php';
 		require_once WPCP_INCLUDES . '/action-functions.php';
+		require_once WPCP_INCLUDES . '/hooks-functions.php';
 		require_once WPCP_INCLUDES . '/class-install.php';
 		require_once WPCP_INCLUDES . '/post-types.php';
 		require_once WPCP_INCLUDES . '/script-functions.php';

@@ -196,7 +196,7 @@ function wpcp_log( $message, $log_level = "log" ) {
  * @param      $key
  * @param null $default
  *
- * @return null|string
+ * @return null|string|array
  */
 function wpcp_get_post_meta( $post_id, $key, $default = null ) {
 	$meta_value = get_post_meta( $post_id, $key, true );
