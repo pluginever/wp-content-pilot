@@ -245,7 +245,7 @@ class WPCP_Envato extends WPCP_Campaign {
 		}
 
 		$link        = wpcp_get_link( $article['link_id'] );
-		$raw_content = maybe_unserialize( $link->raw_content );
+		$raw_content = maybe_unserialize( $link->t );
 
 		foreach ( $raw_content as $tag => $tag_content ) {
 			$content = str_replace( "{{$tag}}", $tag_content, $content );

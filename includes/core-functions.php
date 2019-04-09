@@ -2,8 +2,8 @@
 /**
  * get all the modules
  *
- * @since 1.0.0
  * @return array
+ * @since 1.0.0
  */
 function wpcp_get_modules() {
 	$modules = [];
@@ -59,10 +59,18 @@ function wpcp_remote_post( $url, $args = array(), $options = array(), $headers =
  */
 function wpcp_remote_request( $url, $args = array(), $options = array(), $headers = array(), $type = 'GET' ) {
 	global $wpcp_curl;
+	global $wpcp_request_cookies;
 	$wpcp_curl = new \Curl\Curl( $url );
 	$wpcp_curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
 	$wpcp_curl->setOpt( CURLOPT_TIMEOUT, 30 );
 	$wpcp_curl->setOpt( CURLOPT_RETURNTRANSFER, true );
+
+	if ( isset( $wpcp_request_cookies ) && is_array( $wpcp_request_cookies ) && ! empty( $wpcp_request_cookies ) ) {
+		foreach ( $wpcp_request_cookies as $cookie_key => $cookie_value ) {
+			$wpcp_curl->setCookie( $cookie_key, $cookie_value );
+		}
+	}
+
 
 	$options = apply_filters( 'wpcp_remote_request_options', $options );
 	if ( ! empty( $options ) ) {
@@ -71,7 +79,7 @@ function wpcp_remote_request( $url, $args = array(), $options = array(), $header
 		}
 	}
 
-	$wpcp_curl->setOpt(CURLOPT_USERAGENT, wpcp_get_random_user_agent());
+	$wpcp_curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );
 
 	$headers = apply_filters( 'wpcp_remote_request_headers', $headers );
 	if ( ! empty( $headers ) ) {
@@ -89,7 +97,6 @@ function wpcp_remote_request( $url, $args = array(), $options = array(), $header
 	}
 
 
-
 	return $wpcp_curl;
 }
 
@@ -97,8 +104,8 @@ function wpcp_remote_request( $url, $args = array(), $options = array(), $header
  * get response headers
  * since 1.0.0
  *
- * @param  \Curl\Curl $response
- * @param null        $param
+ * @param \Curl\Curl $response
+ * @param null       $param
  *
  * @return string
  */
@@ -136,8 +143,6 @@ function wpcp_retrieve_body( $response ) {
 /**
  * Logger for the plugin
  *
- * @since    1.0.0
- *
  * @param  $message
  *
  * @param  $log_level
@@ -147,6 +152,8 @@ function wpcp_retrieve_body( $response ) {
  *
  *
  * @return  string
+ * @since    1.0.0
+ *
  */
 function wpcp_log( $message, $log_level = "log" ) {
 	$log_level = strtolower( $log_level );
@@ -213,11 +220,12 @@ function wpcp_get_post_meta( $post_id, $key, $default = null ) {
 /**
  * Save post meta
  *
- * @since 1.0.0
- *
  * @param $post_id
  * @param $key
  * @param $value
+ *
+ * @since 1.0.0
+ *
  */
 function wpcp_update_post_meta( $post_id, $key, $value ) {
 	update_post_meta( $post_id, $key, $value );
@@ -226,10 +234,11 @@ function wpcp_update_post_meta( $post_id, $key, $value ) {
 /**
  * Save option
  *
- * @since 1.0.0
- *
  * @param $key
  * @param $value
+ *
+ * @since 1.0.0
+ *
  */
 function wpcp_update_option( $key, $value ) {
 	update_option( $key, $value );
@@ -239,14 +248,14 @@ function wpcp_update_option( $key, $value ) {
 /**
  * Get plugin settings
  *
- * @since 1.0.0
- * @since 1.0.1 section has been added
- *
  * @param        $section
  * @param        $field
  * @param bool   $default
  *
  * @return string|array|bool
+ * @since 1.0.0
+ * @since 1.0.1 section has been added
+ *
  */
 function wpcp_get_settings( $field, $section = 'wpcp_settings', $default = false ) {
 	$settings = get_option( $section );
@@ -261,10 +270,11 @@ function wpcp_get_settings( $field, $section = 'wpcp_settings', $default = false
 /**
  * Update settings
  *
- * @since 1.0.0
- *
  * @param $field
  * @param $data
+ *
+ * @since 1.0.0
+ *
  */
 function wpcp_update_settings( $field, $data ) {
 	$settings           = get_option( 'wpcp_settings' );
@@ -275,9 +285,10 @@ function wpcp_update_settings( $field, $data ) {
 /**
  * Mark campaign as disabled
  *
+ * @param $camp_id
+ *
  * @since 1.0.0
  *
- * @param $camp_id
  */
 function wpcp_disable_campaign( $camp_id ) {
 	wpcp_update_post_meta( $camp_id, '_campaign_status', 'inactive' );
@@ -287,10 +298,11 @@ function wpcp_disable_campaign( $camp_id ) {
 /**
  * Disable any keyword
  *
- * @since 1.0.0
- *
  * @param        $keyword
  * @param string $meta_value
+ *
+ * @since 1.0.0
+ *
  */
 function wpcp_disable_keyword( $campaign_id, $keyword, $meta_value = 'keywords' ) {
 	do_action( 'wpcp_disable_keyword', $campaign_id, $keyword );
@@ -315,9 +327,9 @@ function wpcp_disable_keyword( $campaign_id, $keyword, $meta_value = 'keywords' 
 /**
  * Campaign schedule options
  *
+ * @return array
  * @since 1.0.0
  *
- * @return array
  */
 function wpcp_get_campaign_schedule_options() {
 	$options = [];
@@ -333,11 +345,11 @@ function wpcp_get_campaign_schedule_options() {
 /**
  * get keyword
  *
- * @since 1.0.0
- *
  * @param $campaign_id
  *
  * @return string
+ * @since 1.0.0
+ *
  */
 function wpcp_get_keyword( $campaign_id ) {
 	$keyword = wpcp_get_post_meta( $campaign_id, '_keywords', '' );
@@ -348,11 +360,11 @@ function wpcp_get_keyword( $campaign_id ) {
 /**
  * Checks if campaign is valid or not
  *
- * @since 1.0.0
- *
  * @param $campaign_id
  *
  * @return bool|\WP_Error
+ *
+ * @since 1.0.0
  *
  */
 function wpcp_campaign_can_run( $campaign_id ) {
@@ -381,11 +393,11 @@ function wpcp_campaign_can_run( $campaign_id ) {
  *
  * wpcp run campaign
  *
- * @since 1.0.0
- *
  * @param $campaign_id
  *
  * @return bool|\WP_Error
+ * @since 1.0.0
+ *
  */
 function wpcp_run_campaign( $campaign_id ) {
 	$can_run = wpcp_campaign_can_run( $campaign_id );
@@ -643,12 +655,12 @@ function wpcp_replace_template_tags( $content, $article = array() ) {
 /**
  * checks for links
  *
- * @since 1.0.0
- *
  * @param      $campaign_id
  * @param null $campaign_type
  *
  * @return object|\WP_Error
+ * @since 1.0.0
+ *
  */
 function wpcp_get_ready_campaign_links( $campaign_id, $campaign_type = null ) {
 	if ( ! $campaign_type ) {
@@ -668,11 +680,11 @@ function wpcp_get_ready_campaign_links( $campaign_id, $campaign_type = null ) {
 /**
  * convert cents into usd
  *
- * @since 1.0.0
- *
  * @param $cent
  *
  * @return string
+ * @since 1.0.0
+ *
  */
 function wpcp_cent_to_usd( $cent ) {
 	return number_format( ( $cent / 100 ), 2, '.', ' ' );
@@ -681,8 +693,8 @@ function wpcp_cent_to_usd( $cent ) {
 /**
  * returns the modules that support keyword suggestion
  *
- * @since 1.0.0
  * @return array
+ * @since 1.0.0
  */
 function wpcp_get_keyword_suggestion_supported_modules() {
 	$modules = array( 'article', 'youtube', 'envato', 'flickr' );
@@ -693,8 +705,8 @@ function wpcp_get_keyword_suggestion_supported_modules() {
 /**
  * Get post categories
  *
- * @since 1.0.3
  * @return array
+ * @since 1.0.3
  */
 function wpcp_get_post_categories() {
 
@@ -711,8 +723,8 @@ function wpcp_get_post_categories() {
 /**
  * Get post categories
  *
- * @since 1.0.3
  * @return array
+ * @since 1.0.3
  */
 function wpcp_get_post_tags() {
 
@@ -729,9 +741,9 @@ function wpcp_get_post_tags() {
 /**
  * Get all the authors
  *
- * @since 1.0.0
- *
  * @return array
+ *
+ * @since 1.0.0
  *
  */
 function wpcp_get_authors() {
@@ -859,6 +871,7 @@ function wpcp_generate_title_from_content( $content, $length = 80 ) {
 /**
  * get random user agent
  * since 1.0.0
+ *
  * @return string
  */
 function wpcp_get_random_user_agent() {
