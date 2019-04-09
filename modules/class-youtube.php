@@ -248,7 +248,6 @@ class WPCP_Youtube extends WPCP_Campaign {
 		if ( is_wp_error( $response ) ) {
 			return $response;
 		}
-
 		$item = array_pop( $response->items );
 
 		$description = wp_kses_post( @$item->snippet->description );
@@ -342,11 +341,11 @@ class WPCP_Youtube extends WPCP_Campaign {
 
 		$request = wpcp_remote_get( 'https://www.googleapis.com/youtube/v3/search', $query_args );
 
-
 		$response = wpcp_retrieve_body( $request );
 
 		if ( is_wp_error( $response ) ) {
-			return array();
+			wpcp_log($response->get_error_messages(),'api_log');
+			return $response->get_error_messages();
 		}
 
 		$items = $response->items;
