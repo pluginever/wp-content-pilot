@@ -225,6 +225,7 @@ function wpcp_remove_unauthorized_html( $content ) {
 			'cite'     => true,
 			'lang'     => true,
 			'xml:lang' => true,
+			'class'    => true,
 		),
 		'br'         => array(),
 		'button'     => array(
