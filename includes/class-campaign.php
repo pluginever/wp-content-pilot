@@ -169,6 +169,7 @@ abstract class WPCP_Campaign {
 		if ( is_wp_error( $article ) ) {
 			return $article;
 		}
+
 		/*=========================CHECK FOR ACCEPTANCE=========================*/
 
 		//minimum content check
@@ -227,14 +228,15 @@ abstract class WPCP_Campaign {
 		//remove images links
 		$remove_image_links = wpcp_get_post_meta( $this->campaign_id, '_remove_images', 0 );
 		if ( 'on' === $remove_image_links ) {
-			$article['content'] = preg_replace( '#<img.*?>.*?>#i', '', $article['content'] );
+			$article['content'] = preg_replace( '#<img.*?>.*?>#i', '', html_entity_decode($article['content']) );
 		}
 
 		//remove hyper links
 		$remove_hyper_links = wpcp_get_post_meta( $this->campaign_id, '_strip_links', 0 );
 		if ( 'on' === $remove_hyper_links ) {
 			//keep text
-			$article['content'] = preg_replace( '#<a.*?>(.*?)</a>#i', '\1', $article['content'] );
+			$article['content'] = preg_replace( '#<a.*?>(.*?)</a>#i', '\1', html_entity_decode($article['content']) );
+			error_log($article['content']);
 			//remove text
 			/*$content =  preg_replace( '#<a.*?>(.*?)</a>#i', '', $content );*/
 
