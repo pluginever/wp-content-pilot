@@ -200,7 +200,7 @@ class WPCP_Envato extends WPCP_Campaign {
 		$raw = maybe_unserialize( $link->raw_content );
 
 		$affiliate_url = add_query_arg( array(
-			'ref' => $this->user_name
+			'ref' => wpcp_get_settings( 'user_name', 'wpcp_settings_envato', '' )
 		), $link->url );
 
 		$article = array(
@@ -209,11 +209,11 @@ class WPCP_Envato extends WPCP_Campaign {
 			'classification_url' => sanitize_text_field( @$raw->classification ),
 			'price'              => wpcp_cent_to_usd( @$raw->price_cents ),
 			'number_of_sales'    => intval( @$raw->number_of_sales ),
-			'author_username'    => sanitize_key( @$raw->number_of_sales ),
+			'author_username'    => sanitize_key( @$raw->author_username ),
 			'author_url'         => esc_url( @$raw->author_url ),
 			'author_image'       => esc_url( @$raw->author_image ),
 			'summary'            => esc_html( @$raw->summary ),
-			'tags'               => sanitize_text_field( @$raw->tags ),
+			'tags'               => sanitize_text_field( implode(',', @$raw->tags) ),
 			'description_html'   => wp_kses_post( @$raw->description_html ),
 			'affiliate_url'      => esc_url( $affiliate_url ),
 		);
@@ -245,7 +245,7 @@ class WPCP_Envato extends WPCP_Campaign {
 		}
 
 		$link        = wpcp_get_link( $article['link_id'] );
-		$raw_content = maybe_unserialize( $link->t );
+		$raw_content = maybe_unserialize( $link->raw_content );
 
 		foreach ( $raw_content as $tag => $tag_content ) {
 			$content = str_replace( "{{$tag}}", $tag_content, $content );

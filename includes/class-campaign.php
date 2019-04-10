@@ -238,7 +238,6 @@ abstract class WPCP_Campaign {
 		if ( 'on' === $remove_hyper_links ) {
 			//keep text
 			$article['content'] = preg_replace( '#<a.*?>(.*?)</a>#i', '\1', html_entity_decode( $article['content'] ) );
-			error_log( $article['content'] );
 			//remove text
 			/*$content =  preg_replace( '#<a.*?>(.*?)</a>#i', '', $content );*/
 
