@@ -210,7 +210,7 @@ function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'artic
 			'_skip_no_image'        => __( 'Skip post if no image found in the article', 'wp-content-pilot' ),
 		),
 		'required'         => false,
-	), $campaign_type );
+	), $campaign_type, $post_id );
 
 	echo apply_filters( 'wpcp_campaign_additional_settings_field', content_pilot()->elements->checkboxes( $additional_settings_args ), $campaign_type );
 
