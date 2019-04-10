@@ -114,20 +114,22 @@ abstract class WPCP_Campaign {
 
 			if ( $total_fetched_links > 1 ) {
 				wpcp_log( 'Link discovery skipped because there already links waiting for getting ready ' . $total_fetched_links );
+
 				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'content-pilot' ) );
 			}
 
 			//otherwise discover few new links
-			wpcp_log('Discovering links');
+			wpcp_log( 'Discovering links' );
 			$links = $this->discover_links();
 
 			if ( is_wp_error( $links ) ) {
-				wpcp_log('Error in discovering links Message'. $links->get_error_message());
+				wpcp_log( 'Error in discovering links Message' . $links->get_error_message() );
+
 				return $links;
 			}
 
 			//hook here for any link to subtract
-			wpcp_log('Generated total links '. count($links));
+			wpcp_log( 'Generated total links ' . count( $links ) );
 			$links = apply_filters( 'wpcp_fetched_links', $links, $this->campaign_id, $this->campaign_type );
 
 			if ( empty( $links ) ) {
@@ -211,7 +213,7 @@ abstract class WPCP_Campaign {
 		/*=========================BEFORE INSERTING POST =========================*/
 		//use original post date
 		$use_original_date = wpcp_get_post_meta( $this->campaign_id, '_use_original_date', 0 );
-		if ( 'on' === $use_original_date && empty( $article['date'] ) ) {
+		if ( 'on' === $use_original_date && !empty( $article['date'] ) ) {
 			$post_time = $article['date'];
 		}
 
@@ -228,15 +230,15 @@ abstract class WPCP_Campaign {
 		//remove images links
 		$remove_image_links = wpcp_get_post_meta( $this->campaign_id, '_remove_images', 0 );
 		if ( 'on' === $remove_image_links ) {
-			$article['content'] = preg_replace( '#<img.*?>.*?>#i', '', html_entity_decode($article['content']) );
+			$article['content'] = preg_replace( '#<img.*?>.*?>#i', '', html_entity_decode( $article['content'] ) );
 		}
 
 		//remove hyper links
 		$remove_hyper_links = wpcp_get_post_meta( $this->campaign_id, '_strip_links', 0 );
 		if ( 'on' === $remove_hyper_links ) {
 			//keep text
-			$article['content'] = preg_replace( '#<a.*?>(.*?)</a>#i', '\1', html_entity_decode($article['content']) );
-			error_log($article['content']);
+			$article['content'] = preg_replace( '#<a.*?>(.*?)</a>#i', '\1', html_entity_decode( $article['content'] ) );
+			error_log( $article['content'] );
 			//remove text
 			/*$content =  preg_replace( '#<a.*?>(.*?)</a>#i', '', $content );*/
 
