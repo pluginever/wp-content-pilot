@@ -343,10 +343,10 @@ module.exports = function (grunt) {
 		]);
 
 	grunt.registerTask('build',
-	[
-		'clean',
-		'zip'
-	]);
+		[
+			'clean',
+			'zip'
+		]);
 
 	grunt.registerTask('zip',
 		[
