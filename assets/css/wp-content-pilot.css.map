@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA;;;;;;GAMG;AAEH,cAAe;EACX,MAAM,EAAE,2BAA2B;;AAEvC,yBAA0B;EACtB,WAAW,EAAE,GAAG",
-"sources": ["sass/wp-content-pilot.scss"],
-"names": [],
-"file": "wp-content-pilot.css"
-}

@@ -1,11 +1,11 @@
 <?php
-namespace Pluginever\WPCP;
+
 /**
  * Plugin Upgrade Routine
  *
  * @since 1.0.0
  */
-class Upgrades {
+class ContentPilot_Upgrades {
 
     /**
      * The upgrades
@@ -13,7 +13,7 @@ class Upgrades {
      * @var array
      */
     private static $upgrades = array(
-         '1.0.1'    => 'updates/update-1.0.1.php',
+        // '1.0'    => 'updates/update-1.0.php',
     );
 
     /**
@@ -22,7 +22,7 @@ class Upgrades {
      * @return string
      */
     public function get_version() {
-        return get_option( 'wp_content_pilot_version' );
+        return get_option( '_version' );
     }
 
     /**
@@ -56,10 +56,10 @@ class Upgrades {
         foreach ( self::$upgrades as $version => $file ) {
             if ( version_compare( $installed_version, $version, '<' ) ) {
                 include $path . $file;
-                update_option( 'wp_content_pilot_version', $version );
+                update_option( '_version', $version );
             }
         }
 
-        update_option( 'wp_content_pilot_version', 'WPCP_VERSION' );
+        update_option( '_version', 'WPCP_VERSION' );
     }
 }
