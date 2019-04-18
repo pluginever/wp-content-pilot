@@ -15,6 +15,8 @@ jQuery(document).ready(function ($, window, document, undefined) {
 			$('#_campaign_type').on('change', this.triggerCampaignTypeChange);
 			$('body').bind('campaign_type_changed', this.getCampaignOptions);
 			$('body').bind('campaign_type_changed', this.getCampaignTemplateTags);
+
+			this.repeatableInput();
 		},
 		initPlugins: function () {
 			$('.ever-select-chosen').chosen({
@@ -68,6 +70,33 @@ jQuery(document).ready(function ($, window, document, undefined) {
 					console.log(error);
 				}
 			});
+		},
+		repeatableInput: function () {
+			var date = Date.now();
+			var getUniqId = function () {
+				date++;
+				return date.toString(36);
+			};
+			$( 'body' ).on( 'click', '.wpcp-add-field', function ( e ) {
+				e.preventDefault();
+				var tmplID = $(this).data( 'tmpl' ),
+					template = $('#'+tmplID),
+					fieldsContainer = $(this).prev(),
+					html = template.html();
+
+				html = html.replace( /ITEM_ID/g, getUniqId() );
+				
+				fieldsContainer.append( html );
+			} );
+
+			$( 'body' ).on( 'click', '.wpcp-repeatable-delete', function ( e ) {
+				e.preventDefault();
+				var item = $(this).parents( '.wpcp-repeatable-field' );
+
+				if ( confirm( 'Yes delete it' ) ) {
+					item.remove();
+				}
+			} );
 		}
 	};
 

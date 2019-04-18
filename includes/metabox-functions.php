@@ -405,6 +405,33 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'selected'         => '',
 	), $post_id ) );
 
+	
+
+	echo content_pilot()->elements->repeatable( apply_filters( 'wpcp_custom_meta_args', array(
+		'label'       => __( 'Custom Meta (Pro)', 'wp-content-pilot' ),
+		'name'        => '_wpcp_custom_meta_field',
+		'desc'        => __( 'Add custom meta for posts. (PRO) ', 'wp-content-pilot' ),
+		'disabled'    => true,
+		'fields'      => array(
+			array(
+				'name' => 'meta_key',
+				'placeholder' => __( 'Meta Key', 'wp-content-pilot' ),
+				'type' => 'text',
+				'class' => 'long',
+				'attrs' => array(
+					'pattern' => '^[a-zA-Z0-9_-]+',
+					'title' => __( 'Valid mata key no space and no spacial key. Only \'_\' and \'-\' allowed.', 'wp-content-pilot' ),
+				)
+			),
+			array(
+				'name' => 'meta_value',
+				'placeholder' => __( 'Meta Value', 'wp-content-pilot' ),
+				'type' => 'text',
+				'class' => 'long'
+			)
+		),
+	), $post_id ) );
+
 	do_action( 'wpcp_end_campaign_advance_settings_metabox', $post_id, $campaign_type );
 }
 
