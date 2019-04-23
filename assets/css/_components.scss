@@ -174,3 +174,15 @@
 		}
 	}
 }
+
+.wpcp-delete-all{
+	+ .spinner{
+		display: none;
+		visibility: hidden;
+
+		&.active{
+			display: block;
+			visibility: visible;
+		}
+	}
+}
