@@ -40,7 +40,14 @@ function wpcp_set_post_author( $author, $campaign_id ) {
 
 add_filter( 'wpcp_post_author', 'wpcp_set_post_author', 10, 2 );
 
-
+/**
+ * 5 Star Rating banner.
+ *
+ * @since 1.0.4
+ *
+ * @param string $text
+ * @return string
+ */
 function wpcp_admin_footer_text( $text ) {
 	$screen = get_current_screen();
 

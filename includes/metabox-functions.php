@@ -473,7 +473,10 @@ function wpcp_campaign_posted_posts_metabox_callback( $post, $campaign_type ) {
 }
 
 function wpcp_campaign_logs_metabox_callback( $post, $campaign_type ) {
-
+	ob_start();
+	include WPCP_VIEWS . '/metabox/logs.php';
+	$html = ob_get_clean();
+	echo $html;
 }
 
 function wpcp_campaign_meta_actions_metabox_callback( $post, $campaign_type ) {
