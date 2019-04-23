@@ -444,6 +444,7 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/class-settings.php';
 
 		//misc
+		require_once WPCP_INCLUDES . '/class-help.php';
 		require_once WPCP_INCLUDES . '/class-promotion.php';
 
 		//modules
@@ -468,6 +469,8 @@ final class ContentPilot {
 			new WPCP_Envato();
 			new WPCP_Youtube();
 			new WPCP_Flickr();
+			
+			new WPCP_Help();
 
 			$this->elements = new WPCP_Elements();
 			$this->modules  = new WPCP_Module();
