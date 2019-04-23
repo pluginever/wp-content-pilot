@@ -76,6 +76,6 @@ class WPCP_Ajax {
 			wp_send_json_error( 'Invalid campaign ID.' );
 		}
 
-		wp_send_json_success(  );
+		wp_send_json_success( 'Done' );
 	}
 }
