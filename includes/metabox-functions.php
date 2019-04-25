@@ -432,6 +432,27 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		),
 	), $post_id ) );
 
+	echo content_pilot()->elements->repeatable( apply_filters( 'wpcp_search_n_replace_args', array(
+		'label'       => __( 'Search & Replace (Pro)', 'wp-content-pilot' ),
+		'name'        => '_wpcp_search_n_replace',
+		'desc'        => __( 'Search and replace content with text or regular expression. (PRO) ', 'wp-content-pilot' ),
+		'disabled'    => true,
+		'fields'      => array(
+			array(
+				'name' => 'search',
+				'placeholder' => __( 'Search', 'wp-content-pilot' ),
+				'type' => 'text',
+				'class' => 'long',
+			),
+			array(
+				'name' => 'replace',
+				'placeholder' => __( 'Replace', 'wp-content-pilot' ),
+				'type' => 'text',
+				'class' => 'long'
+			)
+		),
+	), $post_id ) );
+
 	do_action( 'wpcp_end_campaign_advance_settings_metabox', $post_id, $campaign_type );
 }
 
