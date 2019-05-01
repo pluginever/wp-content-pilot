@@ -255,6 +255,7 @@ abstract class WPCP_Campaign {
 
 
 		//apply limit
+		// TODO: Search & Replace hook for pro
 
 
 		//translate template

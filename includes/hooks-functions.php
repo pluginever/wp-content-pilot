@@ -39,3 +39,24 @@ function wpcp_set_post_author( $author, $campaign_id ) {
 }
 
 add_filter( 'wpcp_post_author', 'wpcp_set_post_author', 10, 2 );
+
+/**
+ * 5 Star Rating banner.
+ *
+ * @since 1.0.4
+ *
+ * @param string $text
+ * @return string
+ */
+function wpcp_admin_footer_text( $text ) {
+	$screen = get_current_screen();
+
+	if ( 'wp_content_pilot' == $screen->post_type ) {
+		$star_url = 'https://wordpress.org/support/plugin/wp-content-pilot/reviews/?filter=5#new-post';
+		$text = sprintf( __( 'If you like <strong>WP Content Pilot</strong> please leave us a <a href="%s" target="_blank">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. Your Review is very important to us as it helps us to grow more.', 'wp-content-pilot' ), $star_url );
+	}
+
+	return $text;
+}
+
+add_filter( 'admin_footer_text', 'wpcp_admin_footer_text' );

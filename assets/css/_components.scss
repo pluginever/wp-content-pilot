@@ -106,8 +106,83 @@
 			width: auto;
 		}
 	}
+
+	&.ever-repeatable-field{
+		.short{
+			margin-left: 200px;
+		}
+	}
+
+	.wpcp-repeatable-fields{
+		box-sizing: border-box;
+		// max-width: 690px;
+
+		*{
+			box-sizing: border-box;
+		}
+		.wpcp-repeatable-field{
+			display: flex;
+			margin-left: -10px;
+			margin-right: -10px;
+
+			.ever-field{
+				flex: 0 0 calc(50% - 31px);
+				padding: 0 10px;
+			}
+
+			.wpcp-repeatable-delete-wrap{
+				flex: 0 0 62px;
+				padding: 0 10px;
+			}
+		}
+	}
+
+	.wpcp-repeatable-delete,
+	.wpcp-add-field{
+		.dashicons{
+			vertical-align: middle;
+		}
+	}
 }
 
 .long + .help {
 	margin-left: 0;
+}
+
+#wpcp-keyword-suggester{
+	display: none;
+	width: calc( 50% - 14px );
+	position: absolute;
+	top: 32px;
+	left: 213px;
+	border: 1px solid #ddd;
+	box-shadow: 0 2px 5px rgba(221, 221, 221, 0.85);
+
+	&:empty{
+		display: none !important;
+	}
+
+	> div{
+		background-color: #fff;
+		padding: 5px 20px;
+		user-select: none;
+		cursor: pointer;
+
+		&:hover{
+			background-color: #0085ba;
+			color: #fff;
+		}
+	}
+}
+
+.wpcp-delete-all{
+	+ .spinner{
+		display: none;
+		visibility: hidden;
+
+		&.active{
+			display: block;
+			visibility: visible;
+		}
+	}
 }

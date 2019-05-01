@@ -673,5 +673,100 @@ class WPCP_Elements {
 		return $output;
 	}
 
+	/**
+	 * Renders an HTML Repeatable field
+	 *
+	 * @since 1.0.4
+	 *
+	 * @param array $args Arguments for the text field
+	 *
+	 * @return string Text field
+	 */
+	public function repeatable( $args = array() ) {
+		$defaults = array(
+			'id'             => '',
+			'name'           => '',
+			'value'          => '',
+			'label'          => '',
+			'desc'           => '',
+			'wrapper_class'  => '',
+			'disabled'       => false,
+			'autocomplete'   => 'false',
+			'data'           => array(),
+			'attrs'          => array(),
+			'fields'         => array(),
+		);
 
+		$args = wp_parse_args( $args, $defaults );
+
+		$template_id = 'wpcp_tmp_' . wpcp_sanitize_key( $args['name'] );
+
+		// $class = implode( ' ', array_map( 'sanitize_html_class', explode( ' ', $args['class'] ) ) );
+		if ( empty( $args['id'] ) ) {
+			$args['id'] = esc_attr( wpcp_sanitize_key( str_replace( '-', '_', $args['name'] ) ) );
+		}
+
+		if ( isset( $args['disabled'] ) && $args['disabled'] ) {
+			$args['attrs']['disabled'] = 'disabled';
+		}
+
+		$attributes = '';
+		$attributes .= $this->get_data_attributes( $args['data'] );
+		$attributes .= $this->get_attributes( $args['attrs'] );
+
+		// var_dump($args['value']);
+		$output = '';
+
+		$output .= '<div class="ever-field ever-repeatable-field ' . wpcp_sanitize_key( $args['name'] ) . '_field">';
+			if ( ! empty( $args['label'] ) ) {
+				$label = wp_kses_post( $args['label'] );
+
+				$output .= '<label for="' . $args['id'] . '">' . $label . '</label>';
+			}
+
+			$output .= '<div class="short">';
+				$output .= '<div class="wpcp-repeatable-fields">';
+					if ( isset( $args['value'] ) && is_array( $args['value'] ) && count( $args['value'] ) ) {
+						foreach( $args['value'] as $id => $custom_meta ) {
+							$output .= $this->get_repeatable_item( $id, $args['fields'], $args['name'], $custom_meta, $args['disabled'] );
+						}
+					} else {
+						$output .= $this->get_repeatable_item( 0, $args['fields'], $args['name'], array(), $args['disabled'] );
+					}
+				$output .= '</div>';
+				$output .= '<button type="button" class="button button-primary wpcp-add-field" data-tmpl="' . $template_id . '" ' . $attributes . '><span class="dashicons dashicons-plus"></span> Add</button>';
+			$output .= '</div>';
+			if ( $args['desc'] ) {
+				$output .= '<span class="help">' . sanitize_text_field( $args['desc'] ) . '</span>';
+			}
+		$output .= '</div>';
+		$output .= '<template id="' . $template_id . '">';
+			$output .= $this->get_repeatable_item( 'ITEM_ID', $args['fields'], $args['name'] );
+		$output .= '</template>';
+
+		return $output;
+	}
+
+	public function get_repeatable_item( $id, $fields = array(), $key = '', $values = array(), $disabled = false ) {
+		$output = '';
+		$output .= '<div class="wpcp-repeatable-field">';
+			if ( is_array( $fields ) && count( $fields ) ) {
+				foreach( $fields as $field ) {
+					$field['disabled'] = $disabled;
+
+					if ( isset( $values[ $field['name'] ] ) ) {
+						$field['value'] = $values[ $field['name'] ];
+					}
+					$field['name'] = $key . '[' . $id . '][' . $field['name'] . ']';
+	
+					$output .= $this->input( $field );
+				}
+			}
+		$output .= '<div class="wpcp-repeatable-delete-wrap">';
+		$output .= '<button type="button" class="button button-link-delete wpcp-repeatable-delete" ' . ( $disabled ? 'disabled="disabled"' : '' ) . '><span class="dashicons dashicons-trash"></span></button>';
+		$output .= '</div>';
+		$output .= '</div>';
+
+		return $output;
+	}
 }

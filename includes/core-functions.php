@@ -167,7 +167,8 @@ function wpcp_log( $message, $log_level = "log" ) {
 	}
 
 	if ( in_array( $log_level, array( 'log', 'critical' ) ) ) {
-		$camp_id = isset( content_pilot()->campaign_id ) ? content_pilot()->campaign_id : null;
+		$camp_id = content_pilot()->get_campaign_id();
+		// $camp_id = isset( content_pilot()->campaign_id ) ? content_pilot()->campaign_id : null;
 		$keyword = isset( content_pilot()->keyword ) ? content_pilot()->keyword : null;
 		$message = strip_tags( $message );
 		$level   = $log_level;
@@ -401,6 +402,7 @@ function wpcp_campaign_can_run( $campaign_id ) {
  */
 function wpcp_run_campaign( $campaign_id ) {
 	$can_run = wpcp_campaign_can_run( $campaign_id );
+	content_pilot()->set_campaign_id( $campaign_id );
 	if ( is_wp_error( $can_run ) ) {
 		wpcp_log( $can_run->get_error_message(), 'critical' );
 
@@ -453,6 +455,8 @@ function wpcp_run_campaign( $campaign_id ) {
 		return $article;
 	}
 	wpcp_log( sprintf( __( "Post Insertion was success Post ID: %s", 'wp-content-pilot' ), $article ), 'log' );
+
+	content_pilot()->set_campaign_id();
 
 	return $article;
 
@@ -900,4 +904,26 @@ function wpcp_get_random_user_agent() {
 	$rand   = rand( 0, count( $agents ) - 1 );
 
 	return trim( $agents[ $rand ] );
+}
+
+/**
+ * Get latest 10 logs for campaign
+ *
+ * @param int $campaign_id
+ * @return array|bool|null
+ */
+function wpcp_get_latest_logs( $campaign_id ) {
+	global $wpdb;
+
+	if ( ! isset( $campaign_id ) || ! $campaign_id ) {
+		return false;
+	}
+
+	$campaign_id = addslashes( $campaign_id );
+	
+	$sql = "SELECT * FROM {$wpdb->prefix}wpcp_logs WHERE `log_level`='log' AND `camp_id`='{$campaign_id}' ORDER BY `created_at` DESC LIMIT 10;";
+
+	$logs = $wpdb->get_results( $sql );
+
+	return $logs;
 }

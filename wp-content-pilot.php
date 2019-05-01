@@ -107,6 +107,14 @@ final class ContentPilot {
 	 * @var string
 	 */
 	public $plugin_name = 'WP Content Pilot';
+	
+	/**
+	 * It will hold current running campaign ID.
+	 *
+	 * @since 1.0.4
+	 * @var int
+	 */
+	private $campaign_id = null;
 
 	/**
 	 * ContentPilot constructor.
@@ -436,6 +444,7 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/class-settings.php';
 
 		//misc
+		require_once WPCP_INCLUDES . '/class-help.php';
 		require_once WPCP_INCLUDES . '/class-promotion.php';
 
 		//modules
@@ -460,10 +469,31 @@ final class ContentPilot {
 			new WPCP_Envato();
 			new WPCP_Youtube();
 			new WPCP_Flickr();
+			
+			new WPCP_Help();
 
 			$this->elements = new WPCP_Elements();
 			$this->modules  = new WPCP_Module();
 		}
+	}
+
+	/**
+	 * Set running campaign ID
+	 *
+	 * @param int $id
+	 * @return void
+	 */
+	public function set_campaign_id( $id = null ) {
+		$this->campaign_id = $id;
+	}
+
+	/**
+	 * Get running campaign ID
+	 *
+	 * @return int|null
+	 */
+	public function get_campaign_id() {
+		return $this->campaign_id;
 	}
 
 	/**
