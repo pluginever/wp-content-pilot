@@ -42,7 +42,7 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 			'selected'         => wpcp_get_post_meta( $post_id, '_campaign_status' ),
 		) );
 
-		echo content_pilot()->elements->input( array(
+		echo content_pilot()->elements->input( apply_filters( 'wpcp_readability_score_meta', array(
 			'label'          => __( 'Readability Score', 'wp-content-pilot' ),
 			'name'           => '_readability_score',
 			'type'           => 'number',
@@ -51,7 +51,7 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 			'value'          => wpcp_get_post_meta( $post_id, '_readability_score', 60 ),
 			'disabled'       => true,
 			'class'       => 'long',
-		) );
+		), $post_id ) );
 
 		do_action('wpcp_after_campaign_action_metabox', $post_id);
 		?>
