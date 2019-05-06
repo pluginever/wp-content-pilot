@@ -607,9 +607,10 @@ function wpcp_get_readability( $html, $url ) {
  * @return bool|int
  */
 function wpcp_download_image( $url, $description = '' ) {
+	$raw_url = $url;
 	$url     = explode( '?', esc_url_raw( $url ) );
 	$url     = $url[0];
-	$get     = wp_remote_get( $url );
+	$get     = wp_remote_get( $raw_url );
 	$headers = wp_remote_retrieve_headers( $get );
 	$type    = isset( $headers['content-type'] ) ? $headers['content-type'] : null;
 	if ( is_wp_error( $get ) || ! isset( $type ) || ( ! in_array( $type, [ 'image/png', 'image/jpeg' ] ) ) ) {
