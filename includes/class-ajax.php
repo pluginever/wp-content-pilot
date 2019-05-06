@@ -22,9 +22,19 @@ class WPCP_Ajax {
 	 * WPCP_Ajax constructor.
 	 */
 	public function __construct() {
-		add_action( 'wp_ajax_wpcp_get_campaign_options_metabox_content', array( $this, 'campaign_options_metabox_content' ) );
-		add_action( 'wp_ajax_wpcp_get_campaign_template_tags_metabox_content', array( $this, 'campaign_template_tags_metabox_content' ) );
+		add_action( 'wp_ajax_wpcp_get_campaign_options_metabox_content', array(
+			$this,
+			'campaign_options_metabox_content'
+		) );
+		add_action( 'wp_ajax_wpcp_get_campaign_template_tags_metabox_content', array(
+			$this,
+			'campaign_template_tags_metabox_content'
+		) );
 		add_action( 'wp_ajax_wpcp_delete_all_posts_by_campaign_id', array( $this, 'delete_all_posts_by_campaign_id' ) );
+		add_action( 'wp_ajax_wpcp_get_campaign_default_template_tags', array(
+			$this,
+			'campaign_default_template_tags'
+		) );
 	}
 
 	public function campaign_options_metabox_content() {
@@ -39,7 +49,6 @@ class WPCP_Ajax {
 		wp_send_json_success( $html );
 	}
 
-
 	public function campaign_template_tags_metabox_content() {
 		ob_start();
 
@@ -52,23 +61,38 @@ class WPCP_Ajax {
 		wp_send_json_success( $html );
 	}
 
+	public function campaign_default_template_tags() {
+		$type = ! empty( $_REQUEST['campaign_type'] ) ? sanitize_key( $_REQUEST['campaign_type'] ) : '';
+
+		ob_start();
+
+		if(!empty($type)){
+			echo wpcp_get_campaign_default_templates_tags($type);
+		}
+
+		$html = ob_get_clean();
+
+		wp_send_json_success($html);
+
+	}
+
 	public function delete_all_posts_by_campaign_id() {
-		if ( ! isset( $_REQUEST[ 'nonce' ] ) || ! isset( $_REQUEST[ 'camp_id' ] ) || ! wp_verify_nonce( $_REQUEST[ 'nonce' ], 'wpcp_delete_all_posts_' . $_REQUEST[ 'camp_id' ] ) ) {
+		if ( ! isset( $_REQUEST['nonce'] ) || ! isset( $_REQUEST['camp_id'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_delete_all_posts_' . $_REQUEST['camp_id'] ) ) {
 			wp_send_json_error( 'Unauthorized!!!' );
 		}
 
-		$camp_id = isset( $_REQUEST[ 'camp_id' ] ) && ! empty( $_REQUEST[ 'camp_id' ] ) ? $_REQUEST[ 'camp_id' ] : false;
+		$camp_id = isset( $_REQUEST['camp_id'] ) && ! empty( $_REQUEST['camp_id'] ) ? $_REQUEST['camp_id'] : false;
 
 		if ( $camp_id !== false ) {
 			$args = array(
 				'meta_key'   => '_wpcp_campaign_generated_post',
 				'meta_value' => $camp_id,
 			);
-			
+
 			$posts = wpcp_get_posts( $args );
-			
+
 			if ( is_array( $posts ) && count( $posts ) ) {
-				foreach ($posts as $post) {
+				foreach ( $posts as $post ) {
 					wp_delete_post( $post->ID, true );
 				}
 			}
