@@ -13,7 +13,7 @@ class ContentPilot_Upgrades {
      * @var array
      */
     private static $upgrades = array(
-        // '1.0'    => 'updates/update-1.0.php',
+         '1.0.4'    => 'updates/update-1.0.4.php',
     );
 
     /**
@@ -37,7 +37,7 @@ class ContentPilot_Upgrades {
             return false;
         }
 
-        if ( version_compare( $this->get_version(), 'WPCP_VERSION', '<' ) ) {
+        if ( version_compare( $this->get_version(), WPCP_VERSION, '<' ) ) {
             return true;
         }
 

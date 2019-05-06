@@ -107,7 +107,7 @@ final class ContentPilot {
 	 * @var string
 	 */
 	public $plugin_name = 'WP Content Pilot';
-	
+
 	/**
 	 * It will hold current running campaign ID.
 	 *
@@ -130,6 +130,7 @@ final class ContentPilot {
 		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ) );
 
 		add_action( 'plugins_loaded', array( $this, 'instantiate' ) );
+
 		//add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 
 		// if the environment check fails, initialize the plugin
@@ -138,6 +139,7 @@ final class ContentPilot {
 			register_activation_hook( __FILE__, array( 'WPCP_Install', 'activate' ) );
 			register_deactivation_hook( __FILE__, array( 'WPCP_Install', 'deactivate' ) );
 			$this->init_plugin();
+			add_action( 'admin_init', array( $this, 'plugin_upgrades' ) );
 		}
 	}
 
@@ -202,9 +204,9 @@ final class ContentPilot {
 	 *
 	 * Override this method to add checks for more than just the PHP version.
 	 *
+	 * @return bool
 	 * @since 1.0.0
 	 *
-	 * @return bool
 	 */
 	protected function is_environment_compatible() {
 
@@ -214,9 +216,9 @@ final class ContentPilot {
 	/**
 	 * Determines if the WordPress compatible.
 	 *
+	 * @return bool
 	 * @since 1.0.0
 	 *
-	 * @return bool
 	 */
 	protected function is_wp_compatible() {
 
@@ -226,9 +228,9 @@ final class ContentPilot {
 	/**
 	 * Determines if the required plugins are compatible.
 	 *
+	 * @return bool
 	 * @since 1.0.0
 	 *
-	 * @return bool
 	 */
 	protected function plugins_compatible() {
 
@@ -252,11 +254,12 @@ final class ContentPilot {
 	/**
 	 * Adds an admin notice to be displayed.
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param string $slug the notice slug
 	 * @param string $class the notice class
 	 * @param string $message the notice message body
+	 *
+	 * @since 1.0.0
+	 *
 	 */
 	public function add_admin_notice( $slug, $class, $message ) {
 
@@ -290,9 +293,9 @@ final class ContentPilot {
 	/**
 	 * Returns the message for display when the environment is incompatible with this plugin.
 	 *
+	 * @return string
 	 * @since 1.0.0
 	 *
-	 * @return string
 	 */
 	protected function get_environment_message() {
 
@@ -319,9 +322,9 @@ final class ContentPilot {
 	/**
 	 * Initialize plugin for localization
 	 *
+	 * @return void
 	 * @since 1.0.0
 	 *
-	 * @return void
 	 */
 	public function localization_setup() {
 		load_plugin_textdomain( 'wp-content-pilot', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
@@ -330,7 +333,7 @@ final class ContentPilot {
 	/**
 	 * Plugin action links
 	 *
-	 * @param  array $links
+	 * @param array $links
 	 *
 	 * @return array
 	 */
@@ -395,8 +398,8 @@ final class ContentPilot {
 	/**
 	 * Define EverProjects Constants.
 	 *
-	 * @since 1.0.0
 	 * @return void
+	 * @since 1.0.0
 	 */
 	private function define_constants() {
 		//$upload_dir = wp_upload_dir( null, false );
@@ -455,6 +458,25 @@ final class ContentPilot {
 		require_once WPCP_MODULES . '/class-flickr.php';
 	}
 
+
+	/**
+	 * Do plugin upgrades
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 *
+	 */
+	function plugin_upgrades() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		require_once( dirname( __FILE__ ) . '/includes/class-upgrades.php' );
+		$upgrader = new ContentPilot_Upgrades();
+		if ( $upgrader->needs_update() ) {
+			$upgrader->perform_updates();
+		}
+	}
+
 	/**
 	 * instantiate plugins
 	 * since 1.0.0
@@ -469,7 +491,7 @@ final class ContentPilot {
 			new WPCP_Envato();
 			new WPCP_Youtube();
 			new WPCP_Flickr();
-			
+
 			new WPCP_Help();
 
 			$this->elements = new WPCP_Elements();
@@ -481,6 +503,7 @@ final class ContentPilot {
 	 * Set running campaign ID
 	 *
 	 * @param int $id
+	 *
 	 * @return void
 	 */
 	public function set_campaign_id( $id = null ) {
@@ -499,8 +522,8 @@ final class ContentPilot {
 	/**
 	 * Returns the plugin loader main instance.
 	 *
-	 * @since 1.0.0
 	 * @return \ContentPilot
+	 * @since 1.0.0
 	 */
 	public static function instance() {
 

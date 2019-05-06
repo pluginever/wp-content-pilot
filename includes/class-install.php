@@ -14,7 +14,7 @@ class WPCP_Install {
 		}
 		//save db version
 		if ( is_null( $current_db_version ) ) {
-			update_option( 'wpcp_db_version', '1.00' );
+			update_option( 'wpcp_db_version', WPCP_VERSION );
 		}
 		//save install date
 		if ( false == get_option( 'wpcp_install_date' ) ) {
