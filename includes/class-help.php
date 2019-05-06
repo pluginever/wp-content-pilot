@@ -70,7 +70,7 @@ class WPCP_Help {
             .free-vs-pro table th + th,
             .free-vs-pro table td + td{
                 text-align: center;
-            } 
+            }
             .free-vs-pro table td{
                 padding: 10px 30px;
                 border-left: 1px solid #DDDDDD;
@@ -159,7 +159,7 @@ class WPCP_Help {
                             <td></td>
                             <td></td>
                             <td>
-                                <a href="#" class="button button-pro">Get Pro</a>
+                                <a href="https://www.pluginever.com/plugins/wp-content-pilot-pro?utm_source=comparision-chart&utm_medium=button&utm_campaign=content-pilot&utm_content=Go%20Pro" class="button button-pro" target="_blank">Get Pro</a>
                             </td>
                         </tr>
                     </table>
@@ -215,30 +215,163 @@ class WPCP_Help {
 
     public function get_features() {
         return [
+	        [
+		        'title' => __( 'Article', 'wp-content-pilot' ),
+		        'desc' => __( 'Article module to auto import articles from web', 'wp-content-pilot' ),
+		        'free' => true,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Envato', 'wp-content-pilot' ),
+		        'desc' => __( 'Envato modules to import envato products and affiliation', 'wp-content-pilot' ),
+		        'free' => true,
+		        'pro' => true,
+	        ],
             [
-                'title' => __( 'Feed', 'wp-content-pilot' ),
-                'desc' => __( 'RSS Feed module to import rss feeds', 'wp-content-pilot' ),
+                'title' => __( 'Youtube', 'wp-content-pilot' ),
+                'desc' => __( 'Youtube module to import youtube videos', 'wp-content-pilot' ),
                 'free' => true,
                 'pro' => true,
             ],
-            [
-                'title' => __( 'Envato', 'wp-content-pilot' ),
-                'desc' => __( 'RSS Feed module to import rss feeds', 'wp-content-pilot' ),
-                'free' => true,
-                'pro' => true,
-            ],
-            [
-                'title' => __( 'Twitter', 'wp-content-pilot' ),
-                'desc' => __( 'RSS Feed module to import rss feeds', 'wp-content-pilot' ),
-                'free' => false,
-                'pro' => true,
-            ],
-            [
-                'title' => __( 'Facebook', 'wp-content-pilot' ),
-                'desc' => __( 'RSS Feed module to import rss feeds', 'wp-content-pilot' ),
-                'free' => false,
-                'pro' => true,
-            ],
+	        [
+		        'title' => __( 'Feed', 'wp-content-pilot' ),
+		        'desc' => __( 'RSS Feed module to import rss feeds', 'wp-content-pilot' ),
+		        'free' => true,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Flickr', 'wp-content-pilot' ),
+		        'desc' => __( 'Flickr module to import images', 'wp-content-pilot' ),
+		        'free' => true,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Amazon', 'wp-content-pilot' ),
+		        'desc' => __( 'Amazon module to import products & automatic affiliation', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'ClickBank', 'wp-content-pilot' ),
+		        'desc' => __( 'ClickBank module to import products & automatic affiliation', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Ebay', 'wp-content-pilot' ),
+		        'desc' => __( 'Ebay module to import products & automatic affiliation', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Facebook', 'wp-content-pilot' ),
+		        'desc' => __( 'Facebook module to import Facebook posts, events', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Twitter', 'wp-content-pilot' ),
+		        'desc' => __( 'Twitter module to import twitter posts', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Walmart', 'wp-content-pilot' ),
+		        'desc' => __( 'Walmart module to import products & automatic affiliation', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Bestbuy', 'wp-content-pilot' ),
+		        'desc' => __( 'Bestbuy module to import products & automatic affiliation', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Craiglist', 'wp-content-pilot' ),
+		        'desc' => __( 'Craiglist module to import Craiglist listings', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Itunes', 'wp-content-pilot' ),
+		        'desc' => __( 'Itunes module to import products & automatic affiliation', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'CareerJet', 'wp-content-pilot' ),
+		        'desc' => __( 'CareerJet module to import jobs & automatic affiliation', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'EzineArticles', 'wp-content-pilot' ),
+		        'desc' => __( 'EzineArticles module to import articles', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Quora', 'wp-content-pilot' ),
+		        'desc' => __( 'Quora module to import articles', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Reddit', 'wp-content-pilot' ),
+		        'desc' => __( 'Reddit module to import articles', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'SoundCloud', 'wp-content-pilot' ),
+		        'desc' => __( 'SoundCloud module to import audios', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Instragram', 'wp-content-pilot' ),
+		        'desc' => __( 'Instragram module to import photos', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Pinterest', 'wp-content-pilot' ),
+		        'desc' => __( 'Pinterest module to import photos', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Search Replace', 'wp-content-pilot' ),
+		        'desc' => __( 'Automatic search replace with regex support', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Custom Post Meta', 'wp-content-pilot' ),
+		        'desc' => __( 'Insert custom post meta', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Readability', 'wp-content-pilot' ),
+		        'desc' => __( 'Readability score controlled posts for clean articles', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Keyword Suggestion', 'wp-content-pilot' ),
+		        'desc' => __( 'A tool to find a good keyword', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
+		        'title' => __( 'Translation Support', 'wp-content-pilot' ),
+		        'desc' => __( 'Translate articles in other language', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+
         ];
     }
 }
