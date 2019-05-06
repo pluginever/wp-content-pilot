@@ -209,10 +209,10 @@ function wpcp_log( $message, $log_level = "log" ) {
 function wpcp_get_post_meta( $post_id, $key, $default = null ) {
 	$meta_value = get_post_meta( $post_id, $key, true );
 
-	if ( $meta_value ) {
-		$value = get_post_meta( $post_id, $key, true );
-	} else {
+	if ( $meta_value === false || $meta_value === '' ) {
 		$value = $default;
+	} else {
+		$value = get_post_meta( $post_id, $key, true );
 	}
 
 	return is_string( $value ) ? trim( $value ) : $value;

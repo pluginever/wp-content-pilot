@@ -255,8 +255,6 @@ abstract class WPCP_Campaign {
 
 
 		//apply limit
-		// TODO: Search & Replace hook for pro
-
 
 		//translate template
 		$content_template = wpcp_get_post_meta( $this->campaign_id, '_post_template', '' );
@@ -272,6 +270,12 @@ abstract class WPCP_Campaign {
 
 		//post
 		do_action( 'wpcp_before_post_insert', $this->campaign_id, $article, $this->keyword );
+
+		$readability_score_passed = apply_filters( 'wpcp_check_readability_score', true, $this->campaign_id, $article );
+
+		if ( ! $readability_score_passed ) {
+			return new WP_Error( 'score', __( 'Readability score faild!', 'wp-content-pilot' ) );
+		}
 
 		$title          = apply_filters( 'wpcp_post_title', $title, $this->campaign_id, $article, $this->keyword );
 		$post_content   = apply_filters( 'wpcp_post_content', $content, $this->campaign_id, $article, $this->keyword );

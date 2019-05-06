@@ -137,10 +137,19 @@
 		}
 	}
 
-	.wpcp-repeatable-delete,
 	.wpcp-add-field{
 		.dashicons{
 			vertical-align: middle;
+		}
+	}
+	.wpcp-repeatable-delete,
+	.wpcp-add-field{
+		.dashicons{
+			font-size: 14px;
+			width: auto;
+			height: auto;
+			line-height: inherit;
+
 		}
 	}
 }
