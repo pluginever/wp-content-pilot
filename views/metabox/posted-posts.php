@@ -18,13 +18,13 @@ $args = array(
 );
 
 $posts = wpcp_get_posts( $args );
-
+if(empty($posts)){
+	_e('No post created with this campaign yet.', 'wp-content-pilot');
+}
 foreach ( $posts as $post ) {
-	setup_postdata( $post );
 	?>
 
 	<a href="<?php echo get_the_permalink( $post->ID ) ?>"><?php echo get_the_title( $post->ID ) ?></a>
 	<span class="description"><?php echo sprintf( __( 'Published at: %s', 'wp-content-pilot' ), $post->post_date ) ?></span>
 
 <?php }
-wp_reset_postdata();
