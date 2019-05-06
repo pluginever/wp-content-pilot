@@ -769,16 +769,14 @@ function wpcp_get_authors() {
  */
 
 function wpcp_get_posts( $args ) {
-	$args = wp_parse_args( array(
+	$args = wp_parse_args( $args, array(
 		'post_type'      => 'post',
-		'meta_key'       => '',
-		'meta_value'     => '',
 		'post_status'    => 'publish',
 		'posts_per_page' => 10,
 		'paged'          => 1,
 		'orderby'        => 'date',
 		'order'          => 'DESC',
-	), $args );
+	) );
 
 	$posts = get_posts( $args );
 

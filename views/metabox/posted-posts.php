@@ -8,10 +8,13 @@ if ( ! $post_id ) {
 }
 
 $args = array(
-	'meta_key'   => '_wpcp_campaign_generated_post',
-	'meta_value' => $post_id,
-	'meta_value' => $post_id,
-	'orderby'    => 'id',
+	'orderby'    => 'ID',
+	'meta_query' => array(
+		array(
+			'key'     => '_wpcp_campaign_generated_post',
+			'value'   => $post_id,
+		),
+	),
 );
 
 $posts = wpcp_get_posts( $args );
@@ -24,3 +27,4 @@ foreach ( $posts as $post ) {
 	<span class="description"><?php echo sprintf( __( 'Published at: %s', 'wp-content-pilot' ), $post->post_date ) ?></span>
 
 <?php }
+wp_reset_postdata();
