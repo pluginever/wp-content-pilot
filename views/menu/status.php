@@ -131,6 +131,23 @@ $information['remote_get'] = array(
 	'label' => __( 'Remote Get', 'wp-content-pilot' ),
 	'value' => wpcp_test_get_reponse() ? 'ON' : 'OFF',
 );
+global $wpdb;
+
+$information['links_table'] = array(
+	'label' => __( 'Links Table', 'wp-content-pilot' ),
+	'value' => !empty($wpdb->query("DESCRIBE {$wpdb->prefix}wpcp_links")) ? 'Yes' : 'No',
+);
+
+$information['log_table'] = array(
+	'label' => __( 'Log Table', 'wp-content-pilot' ),
+	'value' => !empty($wpdb->query("DESCRIBE {$wpdb->prefix}wpcp_logs")) ? 'Yes' : 'No',
+);
+
+$information['per_minute_cron'] = array(
+	'label' => __( 'Per Minute Cron Installed', 'wp-content-pilot' ),
+	'value' => !empty(wp_get_scheduled_event('wpcp_per_minute_scheduled_events')) ? 'Yes' : 'No',
+);
+
 
 $information['loaded_extensions']   = array(
 	'label' => __( 'Loaded PHP Extensions', 'wp-content-pilot' ),

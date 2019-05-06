@@ -7,29 +7,6 @@ class WPCP_Promotion {
 	public function __construct() {
 		add_action( 'admin_notices', array( $this, 'promotional_offer' ) );
 		add_action( 'wp_ajax_wpcp-dismiss-promotional-offer-notice', array( $this, 'dismiss_promotional_offer' ) );
-		add_action( 'admin_menu', array( $this, 'get_pro_link' ), 502 );
-		add_action( 'admin_init', array( $this, 'go_pro_redirect' ) );
-
-	}
-
-	public function get_pro_link() {
-		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
-			add_submenu_page(
-				'edit.php?post_type=wp_content_pilot',
-				'',
-				'<span style="color:#ff7a03;"><span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . __( 'Go Pro', 'wp-content-pilot' ) . '</span>',
-				'manage_options',
-				'go_wpcp_pro',
-				array( $this, 'go_pro_redirect' )
-			);
-		}
-	}
-
-	public function go_pro_redirect() {
-		if ( isset( $_GET['page'] ) && 'go_wpcp_pro' === $_GET['page'] ) {
-			wp_redirect(  'https://www.pluginever.com/plugins/woocommerce-category-showcase-pro/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
-			die;
-		}
 	}
 
 	/**

@@ -158,3 +158,22 @@ function wpcp_render_repeat_row( $key, $args, $post_id ) {
 }
 
 add_action( 'wpcp_render_repeat_row', 'wpcp_render_repeat_row', 10, 4 );
+
+function wpcp_remove_logs(){
+	if( !current_user_can('manage_options')){
+		return ;
+	}
+
+	if(!empty($_REQUEST['remove_logs']) && !empty($_REQUEST['page'])  && 'wpcp-logs' == $_REQUEST['page']){
+		if(wp_verify_nonce($_REQUEST['wpcp_nonce'], 'wpcp_remove_logs')){
+			global $wpdb;
+			$sql = "truncate {$wpdb->prefix}wpcp_logs;";
+			$wpdb->query( $sql );
+			$page_url = admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
+			$page_url = remove_query_arg( array( 'wpcp_nonce', 'remove_logs' ), $page_url );
+			wp_safe_redirect( $page_url );
+		}
+	}
+
+}
+add_action('admin_init', 'wpcp_remove_logs');
