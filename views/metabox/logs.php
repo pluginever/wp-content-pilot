@@ -39,4 +39,6 @@ if ( is_array( $logs ) && count( $logs ) ) {
     ?>
     </table>
     <?php
+} else {
+    esc_html_e( 'No log found.', 'wp-content-pilot' );
 }

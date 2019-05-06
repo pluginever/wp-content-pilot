@@ -14,7 +14,8 @@ jQuery(document).ready(function ($, window, document, undefined) {
 		init: function () {
 			$('#_campaign_type').on('change', this.triggerCampaignTypeChange);
 			$('body').bind('campaign_type_changed', this.getCampaignOptions);
-			$('body').bind('campaign_type_changed', this.getCampaignTemplateTags);
+			$('body').bind('campaign_type_changed', this.getCampaignAllTemplateTags);
+			$('body').bind('campaign_type_changed', this.getCampaignDefaultTemplateTags);
 			$('body').on('click', '.wpcp-delete-all', this.deleteAllPostedPosts);
 
 			this.repeatableInput();
@@ -55,7 +56,8 @@ jQuery(document).ready(function ($, window, document, undefined) {
 				}
 			});
 		},
-		getCampaignTemplateTags: function (e, data) {
+
+		getCampaignAllTemplateTags: function (e, data) {
 			wp.ajax.send({
 				data: {
 					action: 'wpcp_get_campaign_template_tags_metabox_content',
@@ -72,6 +74,7 @@ jQuery(document).ready(function ($, window, document, undefined) {
 				}
 			});
 		},
+
 		repeatableInput: function () {
 			var date = Date.now();
 			var getUniqId = function () {
@@ -133,6 +136,26 @@ jQuery(document).ready(function ($, window, document, undefined) {
 				}
 			});
 		},
+
+		getCampaignDefaultTemplateTags: function (e, data) {
+		wp.ajax.send({
+			data: {
+				action: 'wpcp_get_campaign_default_template_tags',
+				campaign_type: data.type,
+				post_id: data.post_id
+			},
+
+			success: function (res) {
+				console.log(res);
+				$('#_post_template').text(res);
+			},
+
+			error: function (error) {
+				alert('Something happend wrong');
+				console.log(error);
+			}
+		});
+	},
 	};
 
 

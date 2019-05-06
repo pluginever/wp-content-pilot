@@ -51,8 +51,8 @@ function wpcp_remote_post( $url, $args = array(), $options = array(), $headers =
  * since 1.0.0
  *
  * @param        $url
- * @param array  $args
- * @param array  $options
+ * @param array $args
+ * @param array $options
  * @param string $type
  *
  * @return \Curl\Curl
@@ -105,7 +105,7 @@ function wpcp_remote_request( $url, $args = array(), $options = array(), $header
  * since 1.0.0
  *
  * @param \Curl\Curl $response
- * @param null       $param
+ * @param null $param
  *
  * @return string
  */
@@ -251,7 +251,7 @@ function wpcp_update_option( $key, $value ) {
  *
  * @param        $section
  * @param        $field
- * @param bool   $default
+ * @param bool $default
  *
  * @return string|array|bool
  * @since 1.0.0
@@ -506,7 +506,7 @@ function wpcp_insert_link( array $data ) {
 /**
  * Update link in wpcp_links table
  *
- * @param int   $id
+ * @param int $id
  * @param array $data
  *
  * @return false|int|null
@@ -607,21 +607,42 @@ function wpcp_get_readability( $html, $url ) {
  * @return bool|int
  */
 function wpcp_download_image( $url, $description = '' ) {
-	$url     = explode( '?', esc_url_raw( $url ) );
-	$url     = $url[0];
-	$get     = wp_remote_get( $url );
-	$headers = wp_remote_retrieve_headers( $get );
-	$type    = isset( $headers['content-type'] ) ? $headers['content-type'] : null;
-	if ( is_wp_error( $get ) || ! isset( $type ) || ( ! in_array( $type, [ 'image/png', 'image/jpeg' ] ) ) ) {
+	$raw_url  = $url;
+	$url      = explode( '?', esc_url_raw( $url ) );
+	$url      = $url[0];
+	$get      = wp_remote_get( $raw_url );
+	$headers  = wp_remote_retrieve_headers( $get );
+	$type     = isset( $headers['content-type'] ) ? $headers['content-type'] : null;
+	$types    = array(
+		'image/png',
+		'image/jpeg',
+		'image/gif',
+	);
+	$file_ext = array(
+		'image/png'  => '.png',
+		'image/jpeg' => '.jpg',
+		'image/gif'  => '.gif',
+	);
+	if ( is_wp_error( $get ) || ! isset( $type ) || ( ! in_array( $type, $types ) ) ) {
 		return false;
 	}
+	$file_name = basename( $url );
+	$ext       = pathinfo( basename( $file_name ), PATHINFO_EXTENSION );
 
-	$mirror     = wp_upload_bits( basename( $url ), '', wp_remote_retrieve_body( $get ) );
+	if ( $ext === '' ) {
+		$file_name .= $file_ext[ $type ];
+	}
+
+	$mirror     = wp_upload_bits( $file_name, '', wp_remote_retrieve_body( $get ) );
 	$attachment = array(
-		'post_title'     => basename( $url ),
+		'post_title'     => $file_name,
 		'post_mime_type' => $type,
 		'post_content'   => $description,
 	);
+
+	if ( empty( $mirror['file'] ) ) {
+		return false;
+	}
 
 	$attach_id = wp_insert_attachment( $attachment, $mirror['file'] );
 
@@ -771,8 +792,6 @@ function wpcp_get_authors() {
 function wpcp_get_posts( $args ) {
 	$args = wp_parse_args( $args, array(
 		'post_type'      => 'post',
-		'meta_key'       => '',
-		'meta_value'     => '',
 		'post_status'    => 'publish',
 		'posts_per_page' => 10,
 		'paged'          => 1,
@@ -910,6 +929,7 @@ function wpcp_get_random_user_agent() {
  * Get latest 10 logs for campaign
  *
  * @param int $campaign_id
+ *
  * @return array|bool|null
  */
 function wpcp_get_latest_logs( $campaign_id ) {
@@ -920,10 +940,75 @@ function wpcp_get_latest_logs( $campaign_id ) {
 	}
 
 	$campaign_id = addslashes( $campaign_id );
-	
+
 	$sql = "SELECT * FROM {$wpdb->prefix}wpcp_logs WHERE `log_level`='log' AND `camp_id`='{$campaign_id}' ORDER BY `created_at` DESC LIMIT 10;";
 
 	$logs = $wpdb->get_results( $sql );
 
 	return $logs;
+}
+
+/**
+ * Get campaign template tags depends on campaign type
+ *
+ * @since 2.0.0
+ *
+ * @param $type
+ *
+ * @return string
+ */
+function wpcp_get_campaign_default_templates_tags( $type ) {
+	$content = '{content} ';
+	$source  = ' <br> <a href="{source_url}" target="_blank">Source</a> ';
+	$img     = ' <img src="{image_url}"> ';
+	$tags    = '{tags}';
+	$price   = '{price}';
+	$title   = '{title}';
+
+	$output = $content . $source;
+
+	/** Envato **/
+	if ( 'envato' == $type ) {
+		$preview_link = '<a target="_blank" href="{affiliate_url}">LIVE PREVIEW</a> ';
+		$buy_link     = ' <a target="_blank" href="{affiliate_url}">BUY FOR ${price}</a> ';
+		$output       = $preview_link . $buy_link . $img . $content . $source;
+	}
+
+	/** Flickr **/
+	if ( 'flickr' == $type ) {
+		$posted_by = '<p><a href="{image_url}">Posted</a> by <a href="http://flicker.com/{author_url}">{author}</a> ';
+		$output    = $img . $posted_by . $tags;
+	}
+
+	/** Youtube **/
+	if ( 'youtube' == $type ) {
+		$embed  = '{embed_html}';
+		$output = $embed . $content . $source;
+	}
+
+	/** Amazon **/
+	if ( 'amazon' == $type ) {
+		$price    = "Price: $price";
+		$brand    = "Brand: {brand}";
+		$model    = "Brand: {model}";
+		$features = "Brand: {features}";
+		$buy_link = '<a href="{source_url}"><img src="https://i.imgur.com/q25bNRh.png"></a> ';
+		$output   = $price . $brand . $model . $features . $buy_link . $source;
+	}
+
+	/** ClickBank **/
+	if ( 'clickbank' == $type ) {
+		$product_name = "<p><strong>Product Name:</strong> $title </p> ";
+		$buy_link     = '<p style="text-align: center; "><a href="' . $source . '"><img style="display:inline" src="https://i.imgur.com/RBVKrWl.jpg"></a></p>';
+		$desc         = '<p><strong>Description:</strong> {description} </p>';
+		$output       = "<p>$img</p> $product_name $buy_link $desc $source ";
+	}
+
+	/** Instagram **/
+	if ( 'instagram' == $type ) {
+		$output       = $img.$content.$source;
+	}
+
+	return $output;
+
 }
