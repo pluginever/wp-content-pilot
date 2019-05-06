@@ -640,6 +640,10 @@ function wpcp_download_image( $url, $description = '' ) {
 		'post_content'   => $description,
 	);
 
+	if ( empty( $mirror['file'] ) ) {
+		return false;
+	}
+
 	$attach_id = wp_insert_attachment( $attachment, $mirror['file'] );
 
 	require_once( ABSPATH . 'wp-admin/includes/image.php' );
