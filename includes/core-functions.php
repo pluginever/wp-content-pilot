@@ -962,8 +962,6 @@ function wpcp_get_campaign_default_templates_tags( $type ) {
 	$source  = ' <br> <a href="{source_url}" target="_blank">Source</a> ';
 	$img     = ' <img src="{image_url}"> ';
 	$tags    = '{tags}';
-	$price   = '{price}';
-	$title   = '{title}';
 
 	$output = $content . $source;
 
@@ -986,29 +984,6 @@ function wpcp_get_campaign_default_templates_tags( $type ) {
 		$output = $embed . $content . $source;
 	}
 
-	/** Amazon **/
-	if ( 'amazon' == $type ) {
-		$price    = "Price: $price";
-		$brand    = "Brand: {brand}";
-		$model    = "Brand: {model}";
-		$features = "Brand: {features}";
-		$buy_link = '<a href="{source_url}"><img src="https://i.imgur.com/q25bNRh.png"></a> ';
-		$output   = $price . $brand . $model . $features . $buy_link . $source;
-	}
-
-	/** ClickBank **/
-	if ( 'clickbank' == $type ) {
-		$product_name = "<p><strong>Product Name:</strong> $title </p> ";
-		$buy_link     = '<p style="text-align: center; "><a href="' . $source . '"><img style="display:inline" src="https://i.imgur.com/RBVKrWl.jpg"></a></p>';
-		$desc         = '<p><strong>Description:</strong> {description} </p>';
-		$output       = "<p>$img</p> $product_name $buy_link $desc $source ";
-	}
-
-	/** Instagram **/
-	if ( 'instagram' == $type ) {
-		$output       = $img.$content.$source;
-	}
-
-	return $output;
+	return apply_filters('wpcp_campaign_default_templates_tags', $output, $type);
 
 }
