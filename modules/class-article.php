@@ -30,11 +30,11 @@ class WPCP_Article extends WPCP_Campaign {
 	/**
 	 * Register article module
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $modules
 	 *
 	 * @return mixed
+	 * @since 1.0.0
+	 *
 	 */
 	public function register_module( $modules ) {
 		$modules['article'] = [
@@ -50,28 +50,40 @@ class WPCP_Article extends WPCP_Campaign {
 	/**
 	 * Supported template tags
 	 *
-	 * @since 1.0.0
 	 * @return array
+	 * @since 1.0.0
 	 */
 	public static function get_template_tags() {
 		return array(
-			'title'     => __( 'Title', 'wp-content-pilot' ),
-			'except'    => __( 'Summary', 'wp-content-pilot' ),
-			'content'   => __( 'Content', 'wp-content-pilot' ),
-			'image_url' => __( 'Main image url', 'wp-content-pilot' ),
+			'title'      => __( 'Title', 'wp-content-pilot' ),
+			'except'     => __( 'Summary', 'wp-content-pilot' ),
+			'content'    => __( 'Content', 'wp-content-pilot' ),
+			'image_url'  => __( 'Main image url', 'wp-content-pilot' ),
 			'source_url' => __( 'Source link', 'wp-content-pilot' ),
 		);
+	}
+
+
+	public static function get_default_template() {
+		$template = <<<EOT
+{content}
+<br> <a href="{source_url}" target="_blank">Source</a>
+<img src="{image_url}">
+{tags}
+EOT;
+
+		return $template;
 	}
 
 	/**
 	 * add extra fields
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $post_id
 	 * @param $campaign_type
 	 *
 	 * @return bool
+	 * @since 1.0.0
+	 *
 	 */
 	public function campaign_option_fields( $post_id, $campaign_type ) {
 
@@ -99,10 +111,11 @@ class WPCP_Article extends WPCP_Campaign {
 	/**
 	 * update campaign settings postmeta
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $post_id
 	 * @param $posted
+	 *
+	 * @since 1.0.0
+	 *
 	 */
 	public function update_campaign_settings( $post_id, $posted ) {
 
@@ -121,11 +134,11 @@ class WPCP_Article extends WPCP_Campaign {
 	/**
 	 * Skip base domain from fetched urls
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $links
 	 *
 	 * @return array
+	 * @since 1.0.0
+	 *
 	 */
 	public function skip_base_domain( $links ) {
 
@@ -194,11 +207,11 @@ class WPCP_Article extends WPCP_Campaign {
 	/**
 	 * Hook in background process and prepare contents
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $link
 	 *
 	 * @return bool
+	 * @since 1.0.0
+	 *
 	 */
 	public function prepare_contents( $link ) {
 
@@ -258,6 +271,7 @@ class WPCP_Article extends WPCP_Campaign {
 			'campaign_type' => $link->camp_type,
 			'link_id'       => $link->id
 		);
+
 		return $article;
 	}
 

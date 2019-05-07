@@ -74,7 +74,7 @@ final class ContentPilot {
 	/**
 	 * The single instance of the class.
 	 *
-	 * @var ContentPilot_Pro
+	 * @var ContentPilot
 	 * @since 1.0.0
 	 */
 	protected static $instance = null;
@@ -93,13 +93,6 @@ final class ContentPilot {
 	 * @var \WPCP_Elements
 	 */
 	public $elements;
-
-	/**
-	 * Holds various class instances
-	 *
-	 * @var array
-	 */
-	private $container = array();
 
 	/**
 	 * @since 1.0.0

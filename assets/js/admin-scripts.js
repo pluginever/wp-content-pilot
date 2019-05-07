@@ -7,24 +7,25 @@
  */
 
 /*jslint browser: true */
+/*global alert:false */
 /*global jQuery:false */
+/*global confirm:false */
 jQuery(document).ready(function ($, window, document, undefined) {
 	'use strict';
 	$.wp_content_pilot = {
 		init: function () {
 			$('#_campaign_type').on('change', this.triggerCampaignTypeChange);
 			$('body').bind('campaign_type_changed', this.getCampaignOptions);
+			$('body').bind('campaign_type_changed', this.getPostSettings);
 			$('body').bind('campaign_type_changed', this.getCampaignAllTemplateTags);
-			$('body').bind('campaign_type_changed', this.getCampaignDefaultTemplateTags);
 			$('body').on('click', '.wpcp-delete-all', this.deleteAllPostedPosts);
+
 
 			this.repeatableInput();
 		},
 		initPlugins: function () {
 			$('.ever-select-chosen').chosen({
-				inherit_select_classes: true,
-				// placeholder_text_single: edd_vars.one_option,
-				// placeholder_text_multiple: edd_vars.one_or_more_option,
+				inherit_select_classes: true
 			});
 		},
 		triggerCampaignTypeChange: function () {
@@ -34,7 +35,7 @@ jQuery(document).ready(function ($, window, document, undefined) {
 				var data = {
 					campaign_type: campaign_type,
 					post_id: post_id,
-					type: campaign_type,
+					type: campaign_type
 				};
 				$('body').trigger('campaign_type_changed', data);
 			}
@@ -45,10 +46,28 @@ jQuery(document).ready(function ($, window, document, undefined) {
 					action: 'wpcp_get_campaign_options_metabox_content',
 					campaign_type: data.type,
 					post_id: data.post_id,
-					nonce: '',
+					nonce: ''
 				},
 				success: function (res) {
 					$('#campaign-options .inside').html(res);
+				},
+				error: function (error) {
+					alert('Something happend wrong');
+					console.log(error);
+				}
+			});
+		},
+
+		getPostSettings: function (e, data) {
+			wp.ajax.send({
+				data: {
+					action: 'wpcp_get_campaign_post_settings_metabox_content',
+					campaign_type: data.type,
+					post_id: data.post_id,
+					nonce: ''
+				},
+				success: function (res) {
+					$('#campaign-post-settings .inside').html(res);
 				},
 				error: function (error) {
 					alert('Something happend wrong');
@@ -63,7 +82,7 @@ jQuery(document).ready(function ($, window, document, undefined) {
 					action: 'wpcp_get_campaign_template_tags_metabox_content',
 					campaign_type: data.type,
 					post_id: data.post_id,
-					nonce: '',
+					nonce: ''
 				},
 				success: function (res) {
 					$('#campaign-template-tags .inside').html(res);
@@ -89,7 +108,7 @@ jQuery(document).ready(function ($, window, document, undefined) {
 					html = template.html();
 
 				html = html.replace( /ITEM_ID/g, getUniqId() );
-				
+
 				fieldsContainer.append( html );
 			} );
 
@@ -116,16 +135,17 @@ jQuery(document).ready(function ($, window, document, undefined) {
 
 			$el.attr( 'disabled', true );
 			spinner.addClass( 'active' );
-			
+
 			wp.ajax.send({
 				data: {
 					action: 'wpcp_delete_all_posts_by_campaign_id',
 					camp_id: camp_id,
-					nonce: nonce,
+					nonce: nonce
 				},
 				success: function (res) {
 					spinner.removeClass( 'active' );
 					$el.attr( 'disabled', false );
+					console.log(res);
 					// $('#campaign-template-tags .inside').html(res);
 				},
 				error: function (error) {
@@ -135,27 +155,8 @@ jQuery(document).ready(function ($, window, document, undefined) {
 					console.log(error);
 				}
 			});
-		},
+		}
 
-		getCampaignDefaultTemplateTags: function (e, data) {
-		wp.ajax.send({
-			data: {
-				action: 'wpcp_get_campaign_default_template_tags',
-				campaign_type: data.type,
-				post_id: data.post_id
-			},
-
-			success: function (res) {
-				console.log(res);
-				$('#_post_template').text(res);
-			},
-
-			error: function (error) {
-				alert('Something happend wrong');
-				console.log(error);
-			}
-		});
-	},
 	};
 
 

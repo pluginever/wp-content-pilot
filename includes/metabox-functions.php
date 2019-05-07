@@ -54,9 +54,10 @@ add_action( 'add_meta_boxes', 'wpcp_remove_meta_boxes', 10 );
 /**
  * campaign actions
  *
+ * @param $post
+ *
  * @since 1.0.0
  *
- * @param $post
  */
 function wpcp_campaign_action_metabox_callback( $post ) {
 	require WPCP_VIEWS . '/metabox/action-metabox.php';
@@ -65,9 +66,10 @@ function wpcp_campaign_action_metabox_callback( $post ) {
 /**
  * Render
  *
+ * @param $post
+ *
  * @since 1.2.0
  *
- * @param $post
  */
 function wpcp_campaign_type_metabox_callback( $post ) {
 	echo content_pilot()->elements->select( array(
@@ -87,9 +89,10 @@ function wpcp_campaign_type_metabox_callback( $post ) {
 /**
  * Campaign options metabox
  *
+ * @param $post
+ *
  * @since 1.0.0
  *
- * @param $post
  */
 function wpcp_campaign_options_metabox_callback( $post ) {
 	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
@@ -101,10 +104,11 @@ function wpcp_campaign_options_metabox_callback( $post ) {
 /**
  * campaign options metabox fields
  *
- * @since 1.0.0
- *
  * @param        $post_id
  * @param string $campaign_type
+ *
+ * @since 1.0.0
+ *
  */
 function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'article' ) {
 	do_action( 'wpcp_before_campaign_keyword_input', $post_id, $campaign_type );
@@ -222,10 +226,10 @@ function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'artic
 function wpcp_campaign_post_settings_metabox_callback( $post ) {
 	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
 	$campaign_type = empty( $campaign_type ) ? 'feeds' : $campaign_type;
-	wpcp_campaign_settings_metabox_fields( $post->ID, $campaign_type );
+	wpcp_campaign_post_settings_metabox_fields( $post->ID, $campaign_type );
 }
 
-function wpcp_campaign_settings_metabox_fields( $post_id, $campaign_type ) {
+function wpcp_campaign_post_settings_metabox_fields( $post_id, $campaign_type ) {
 
 	echo content_pilot()->elements->input( array(
 		'label'    => __( 'Post Title', 'wp-content-pilot' ),
@@ -234,6 +238,15 @@ function wpcp_campaign_settings_metabox_fields( $post_id, $campaign_type ) {
 		'value'    => wpcp_get_post_meta( $post_id, '_post_title', '{title}' )
 	) );
 
+
+	$post_template = wpcp_get_post_meta( $post_id, '_post_template', '' );
+	if ( empty( $post_template ) ) {
+		$module        = content_pilot()->modules->get_module( $campaign_type );
+		$module_class  = $module['callback'];
+		$post_template = $module_class::get_default_template();
+	}
+
+
 	$template_input_args = apply_filters( 'wpcp_campaign_template_input_args', array(
 		'label'    => __( 'Post Template', 'wp-content-pilot' ),
 		'name'     => '_post_template',
@@ -241,8 +254,9 @@ function wpcp_campaign_settings_metabox_fields( $post_id, $campaign_type ) {
 		'attrs'    => array(
 			'rows' => 5,
 		),
-		'value'    => wpcp_get_post_meta( $post_id, '_post_template', '{content} <br> <a href="{source_url}" target="_blank">Source</a>' )
+		'value'    => $post_template
 	), $post_id, $campaign_type );
+
 
 	echo apply_filters( 'wpcp_campaign_template_input', content_pilot()->elements->textarea( $template_input_args ), $post_id, $campaign_type );
 
@@ -405,50 +419,49 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'selected'         => '',
 	), $post_id ) );
 
-	
 
 	echo content_pilot()->elements->repeatable( apply_filters( 'wpcp_custom_meta_args', array(
-		'label'       => __( 'Custom Meta (Pro)', 'wp-content-pilot' ),
-		'name'        => '_wpcp_custom_meta_field',
-		'desc'        => __( 'Add custom meta for posts. (PRO) ', 'wp-content-pilot' ),
-		'disabled'    => true,
-		'fields'      => array(
+		'label'    => __( 'Custom Meta (Pro)', 'wp-content-pilot' ),
+		'name'     => '_wpcp_custom_meta_field',
+		'desc'     => __( 'Add custom meta for posts. (PRO) ', 'wp-content-pilot' ),
+		'disabled' => true,
+		'fields'   => array(
 			array(
-				'name' => 'meta_key',
+				'name'        => 'meta_key',
 				'placeholder' => __( 'Meta Key', 'wp-content-pilot' ),
-				'type' => 'text',
-				'class' => 'long',
-				'attrs' => array(
+				'type'        => 'text',
+				'class'       => 'long',
+				'attrs'       => array(
 					'pattern' => '^[a-zA-Z0-9_-]+',
-					'title' => __( 'Valid mata key no space and no spacial key. Only \'_\' and \'-\' allowed.', 'wp-content-pilot' ),
+					'title'   => __( 'Valid mata key no space and no spacial key. Only \'_\' and \'-\' allowed.', 'wp-content-pilot' ),
 				)
 			),
 			array(
-				'name' => 'meta_value',
+				'name'        => 'meta_value',
 				'placeholder' => __( 'Meta Value', 'wp-content-pilot' ),
-				'type' => 'text',
-				'class' => 'long'
+				'type'        => 'text',
+				'class'       => 'long'
 			)
 		),
 	), $post_id ) );
 
 	echo content_pilot()->elements->repeatable( apply_filters( 'wpcp_search_n_replace_args', array(
-		'label'       => __( 'Search & Replace (Pro)', 'wp-content-pilot' ),
-		'name'        => '_wpcp_search_n_replace',
-		'desc'        => __( 'Search and replace content with text or regular expression. (PRO) ', 'wp-content-pilot' ),
-		'disabled'    => true,
-		'fields'      => array(
+		'label'    => __( 'Search & Replace (Pro)', 'wp-content-pilot' ),
+		'name'     => '_wpcp_search_n_replace',
+		'desc'     => __( 'Search and replace content with text or regular expression. (PRO) ', 'wp-content-pilot' ),
+		'disabled' => true,
+		'fields'   => array(
 			array(
-				'name' => 'search',
+				'name'        => 'search',
 				'placeholder' => __( 'Search', 'wp-content-pilot' ),
-				'type' => 'text',
-				'class' => 'long',
+				'type'        => 'text',
+				'class'       => 'long',
 			),
 			array(
-				'name' => 'replace',
+				'name'        => 'replace',
 				'placeholder' => __( 'Replace', 'wp-content-pilot' ),
-				'type' => 'text',
-				'class' => 'long'
+				'type'        => 'text',
+				'class'       => 'long'
 			)
 		),
 	), $post_id ) );

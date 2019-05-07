@@ -80,6 +80,24 @@ class WPCP_Envato extends WPCP_Campaign {
 	}
 
 	/**
+	 *
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+	public static function get_default_template() {
+		$template = <<<EOT
+{content}
+<br> <a href="{source_url}" target="_blank">Source</a>
+<img src="{image_url}">
+{tags}
+EOT;
+
+		return $template;
+	}
+
+	/**
 	 * Conditionally show meta fields
 	 *
 	 * @since 1.0.0
