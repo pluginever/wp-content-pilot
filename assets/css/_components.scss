@@ -6,6 +6,7 @@
 
 	#major-publishing-actions {
 		margin: 0 -15px -15px;
+
 		#delete-action {
 			float: right !important;
 			margin-top: -5px;
@@ -17,6 +18,7 @@
 		width: 100%;
 		margin: 10px 0 0;
 		float: none;
+
 		.publishing-action-btn {
 			display: flex;
 			width: 100%;
@@ -34,6 +36,7 @@
 				text-decoration: none;
 				font-size: 14px;
 			}
+
 			& > span {
 				margin-bottom: 15px;
 				display: block;
@@ -48,7 +51,7 @@
 		height: 25px;
 	}
 
-	.help{
+	.help {
 		margin-left: 0 !important;
 	}
 
@@ -64,6 +67,7 @@
 		&:last-child {
 			vertical-align: top;
 			display: inline-block;
+
 			a {
 				text-decoration: none;
 				color: #000;
@@ -78,18 +82,22 @@
 	padding: 5px 0;
 	line-height: 24px;
 	vertical-align: top;
+
 	& > label {
 		float: left;
 		width: 200px;
 		padding: 0;
 		font-weight: 600;
 	}
+
 	.short {
 		width: 50%;
 	}
+
 	.long {
 		width: 100%;
 	}
+
 	.help {
 		font-size: 12px;
 		font-weight: 400;
@@ -102,49 +110,52 @@
 
 	.ever-checkboxes {
 		margin-left: 200px;
+
 		label {
 			width: auto;
 		}
 	}
 
-	&.ever-repeatable-field{
-		.short{
+	&.ever-repeatable-field {
+		.short {
 			margin-left: 200px;
 		}
 	}
 
-	.wpcp-repeatable-fields{
+	.wpcp-repeatable-fields {
 		box-sizing: border-box;
 		// max-width: 690px;
 
-		*{
+		* {
 			box-sizing: border-box;
 		}
-		.wpcp-repeatable-field{
+
+		.wpcp-repeatable-field {
 			display: flex;
 			margin-left: -10px;
 			margin-right: -10px;
 
-			.ever-field{
+			.ever-field {
 				flex: 0 0 calc(50% - 31px);
 				padding: 0 10px;
 			}
 
-			.wpcp-repeatable-delete-wrap{
+			.wpcp-repeatable-delete-wrap {
 				flex: 0 0 62px;
 				padding: 0 10px;
 			}
 		}
 	}
 
-	.wpcp-add-field{
-		.dashicons{
+	.wpcp-add-field {
+		.dashicons {
 			vertical-align: middle;
 		}
 	}
+
 	.wpcp-repeatable-delete,
-	.wpcp-add-field{
-		.dashicons{
+	.wpcp-add-field {
+		.dashicons {
 			font-size: 14px;
 			width: auto;
 			height: auto;
@@ -152,44 +163,48 @@
 
 		}
 	}
+
+	input:disabled{
+		background: #eaeaea !important;
+	}
 }
 
 .long + .help {
 	margin-left: 0;
 }
 
-#wpcp-keyword-suggester{
+#wpcp-keyword-suggester {
 	display: none;
-	width: calc( 50% - 14px );
+	width: calc(50% - 14px);
 	position: absolute;
 	top: 32px;
 	left: 213px;
 	border: 1px solid #ddd;
 	box-shadow: 0 2px 5px rgba(221, 221, 221, 0.85);
 
-	&:empty{
+	&:empty {
 		display: none !important;
 	}
 
-	> div{
+	> div {
 		background-color: #fff;
 		padding: 5px 20px;
 		user-select: none;
 		cursor: pointer;
 
-		&:hover{
+		&:hover {
 			background-color: #0085ba;
 			color: #fff;
 		}
 	}
 }
 
-.wpcp-delete-all{
-	+ .spinner{
+.wpcp-delete-all {
+	+ .spinner {
 		display: none;
 		visibility: hidden;
 
-		&.active{
+		&.active {
 			display: block;
 			visibility: visible;
 		}
