@@ -49,11 +49,8 @@ class WPCP_Log_List_Table extends \WP_List_Table {
                     return ' - ';
                 }
 
-            case 'keyword':
-                return !empty($item->keyword)? $item->keyword : ' - ';
-
             case 'level':
-                return $item->log_level == 'log'? 'Normal' : $item->log_level;
+                return $item->log_level == 'log'? __('Normal', 'wp-content-pilot') : $item->log_level;
 
             case 'message':
                 return stripslashes($item->message);
@@ -74,8 +71,7 @@ class WPCP_Log_List_Table extends \WP_List_Table {
     function get_columns() {
         $columns = array(
             'camp_id'      => __( 'Campaign', 'wp-content-pilot' ),
-            'level'      => __( 'Keyword', 'wp-content-pilot' ),
-            'keyword'      => __( 'Keyword', 'wp-content-pilot' ),
+            'level'      => __( 'Level', 'wp-content-pilot' ),
             'message'      => __( 'Message', 'wp-content-pilot' ),
             'date'      => __( 'Date', 'wp-content-pilot' ),
 
