@@ -476,13 +476,16 @@ function wpcp_campaign_template_tags_metabox_callback( $post ) {
 }
 
 function wpcp_campaign_template_tags_metabox_fields( $post_id, $campaign_type ) {
+
 	$module = content_pilot()->modules->get_module( $campaign_type );
 	if ( empty( $module ) || is_wp_error( $module ) ) {
 		return new WP_Error( 'invalid-module-type', __( 'Invalid module type' ) );
 	}
 
 	$tags = $module['callback']::get_template_tags();
+
 	?>
+
 	<table class="fixed striped widefat">
 		<tr>
 			<th><?php _e( 'Tag', 'wp-content-pilot' ); ?></th>

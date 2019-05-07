@@ -75,7 +75,6 @@ class WPCP_Ajax {
 		wp_send_json_success( $html );
 	}
 
-
 	public function delete_all_posts_by_campaign_id() {
 		if ( ! isset( $_REQUEST['nonce'] ) || ! isset( $_REQUEST['camp_id'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_delete_all_posts_' . $_REQUEST['camp_id'] ) ) {
 			wp_send_json_error( 'Unauthorized!!!' );

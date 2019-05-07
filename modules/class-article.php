@@ -65,13 +65,13 @@ class WPCP_Article extends WPCP_Campaign {
 
 
 	public static function get_default_template() {
-		$template = <<<EOT
+		$template =
+<<<EOT
 {content}
 <br> <a href="{source_url}" target="_blank">Source</a>
 <img src="{image_url}">
 {tags}
 EOT;
-
 		return $template;
 	}
 

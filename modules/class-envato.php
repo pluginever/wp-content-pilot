@@ -31,6 +31,28 @@ class WPCP_Envato extends WPCP_Campaign {
 	}
 
 	/**
+	 * Get WPCP_Envato default template tags
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+	public static function get_default_template() {
+		$template
+			= <<<EOT
+{image}
+<br>
+<a target="_blank" href="{affiliate_url}">LIVE PREVIEW</a>
+<a target="_blank" href="{affiliate_url}">BUY FOR {price}</a>
+{content}
+<br>
+<a href="{source_url}" target="_blank">Source</a>
+EOT;
+
+		return $template;
+	}
+
+	/**
 	 * Register article module
 	 *
 	 * @since 1.0.0
@@ -77,24 +99,6 @@ class WPCP_Envato extends WPCP_Campaign {
 			'description_html'   => __( 'HTML description', 'wp-content-pilot' ),
 			'affiliate_url'      => __( 'Affiliate URL', 'wp-content-pilot' ),
 		);
-	}
-
-	/**
-	 *
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string
-	 */
-	public static function get_default_template() {
-		$template = <<<EOT
-{content}
-<br> <a href="{source_url}" target="_blank">Source</a>
-<img src="{image_url}">
-{tags}
-EOT;
-
-		return $template;
 	}
 
 	/**
@@ -231,7 +235,7 @@ EOT;
 			'author_url'         => esc_url( @$raw->author_url ),
 			'author_image'       => esc_url( @$raw->author_image ),
 			'summary'            => esc_html( @$raw->summary ),
-			'tags'               => sanitize_text_field( implode(',', @$raw->tags) ),
+			'tags'               => sanitize_text_field( implode( ',', @$raw->tags ) ),
 			'description_html'   => wp_kses_post( @$raw->description_html ),
 			'affiliate_url'      => esc_url( $affiliate_url ),
 		);

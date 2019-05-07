@@ -29,6 +29,26 @@ class WPCP_Flickr extends WPCP_Campaign {
 	}
 
 	/**
+	 * Get WPCP_Envato default template tags
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+	public static function get_default_template() {
+		$template
+			= <<<EOT
+{image}
+<br>
+<a href="{image_url}">Posted</a> by <a href="http://flicker.com/{author_url}">{author}</a>
+<br>
+{tags}
+EOT;
+
+		return $template;
+	}
+
+	/**
 	 * Register article module
 	 *
 	 * @since 1.0.0
@@ -59,7 +79,7 @@ class WPCP_Flickr extends WPCP_Campaign {
 			'title'      => __( 'Title', 'wp-content-pilot' ),
 			'content'    => __( 'Content', 'wp-content-pilot' ),
 			'date'       => __( 'Published date', 'wp-content-pilot' ),
-			'image_url'      => __( 'Main image url', 'wp-content-pilot' ),
+			'image_url'  => __( 'Main image url', 'wp-content-pilot' ),
 			'source_url' => __( 'Source link', 'wp-content-pilot' ),
 			'author'     => __( 'Aurhor Name', 'wp-content-pilot' ),
 			'author_url' => __( 'Author Url', 'wp-content-pilot' ),

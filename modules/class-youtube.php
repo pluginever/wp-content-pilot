@@ -32,6 +32,24 @@ class WPCP_Youtube extends WPCP_Campaign {
 	}
 
 	/**
+	 * Get WPCP_Envato default template tags
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+	public static function get_default_template() {
+		$template
+			= <<<EOT
+{embed_html}
+<br>{content}
+<br> <a href="{source_url}" target="_blank">Source</a>}
+EOT;
+
+		return $template;
+	}
+
+	/**
 	 * Register article module
 	 *
 	 * @since 1.0.0
@@ -276,6 +294,33 @@ class WPCP_Youtube extends WPCP_Campaign {
 
 	}
 
+	public function convert_youtube_duration( $youtube_time ) {
+		preg_match_all( '/(\d+)/', $youtube_time, $parts );
+
+		// Put in zeros if we have less than 3 numbers.
+		if ( count( $parts[0] ) == 1 ) {
+			array_unshift( $parts[0], "0", "0" );
+		} elseif ( count( $parts[0] ) == 2 ) {
+			array_unshift( $parts[0], "0" );
+		}
+
+		$sec_init         = $parts[0][2];
+		$seconds          = $sec_init % 60;
+		$seconds_overflow = floor( $sec_init / 60 );
+
+		$min_init         = $parts[0][1] + $seconds_overflow;
+		$minutes          = ( $min_init ) % 60;
+		$minutes_overflow = floor( ( $min_init ) / 60 );
+
+		$hours = $parts[0][0] + $minutes_overflow;
+
+		if ( $hours != 0 ) {
+			return $hours . ':' . $minutes . ':' . $seconds;
+		} else {
+			return $minutes . ':' . $seconds;
+		}
+	}
+
 	/**
 	 * Replace additional template tags
 	 *
@@ -403,33 +448,6 @@ class WPCP_Youtube extends WPCP_Campaign {
 		);
 
 		return $article;
-	}
-
-	public function convert_youtube_duration( $youtube_time ) {
-		preg_match_all( '/(\d+)/', $youtube_time, $parts );
-
-		// Put in zeros if we have less than 3 numbers.
-		if ( count( $parts[0] ) == 1 ) {
-			array_unshift( $parts[0], "0", "0" );
-		} elseif ( count( $parts[0] ) == 2 ) {
-			array_unshift( $parts[0], "0" );
-		}
-
-		$sec_init         = $parts[0][2];
-		$seconds          = $sec_init % 60;
-		$seconds_overflow = floor( $sec_init / 60 );
-
-		$min_init         = $parts[0][1] + $seconds_overflow;
-		$minutes          = ( $min_init ) % 60;
-		$minutes_overflow = floor( ( $min_init ) / 60 );
-
-		$hours = $parts[0][0] + $minutes_overflow;
-
-		if ( $hours != 0 ) {
-			return $hours . ':' . $minutes . ':' . $seconds;
-		} else {
-			return $minutes . ':' . $seconds;
-		}
 	}
 
 }
