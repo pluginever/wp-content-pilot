@@ -116,7 +116,7 @@ function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'artic
 		echo content_pilot()->elements->input( apply_filters( 'wpcp_keyword_suggester_input_args', array(
 			'label'       => __( 'Keyword Suggester', 'wp-content-pilot' ),
 			'name'        => '_keyword_suggestion',
-			'placeholder' => __( 'How to cook noddles', 'wp-content-pilot' ),
+			'placeholder' => __( 'How to cook noodle', 'wp-content-pilot' ),
 			'desc'        => __( 'Type something to find better related keywords', 'wp-content-pilot-pro' ),
 			'disabled'    => true,
 		) ) );
