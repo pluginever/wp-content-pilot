@@ -330,8 +330,8 @@ class WPCP_Help {
 		        'pro' => true,
 	        ],
 	        [
-		        'title' => __( 'Instragram', 'wp-content-pilot' ),
-		        'desc' => __( 'Instragram module to import photos', 'wp-content-pilot' ),
+		        'title' => __( 'Instagram', 'wp-content-pilot' ),
+		        'desc' => __( 'Instagram module to import photos', 'wp-content-pilot' ),
 		        'free' => false,
 		        'pro' => true,
 	        ],
