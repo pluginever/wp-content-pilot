@@ -427,6 +427,9 @@ function wpcp_run_campaign( $campaign_id ) {
 	// $instance \WPCP_Campaign
 	$instance = new $module_class();
 
+	$instance->set_campaign_id( $campaign_id );
+	$instance->set_keyword( $keyword );
+
 	//set the module
 	$is_error = $instance->setup();
 
@@ -439,9 +442,7 @@ function wpcp_run_campaign( $campaign_id ) {
 		return $is_error;
 	}
 
-	$instance->set_campaign_id( $campaign_id );
 
-	$instance->set_keyword( $keyword );
 
 	$instance->set_campaign_type( $campaign_type );
 
