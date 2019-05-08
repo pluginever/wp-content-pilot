@@ -114,8 +114,8 @@ jQuery(document).ready(function ($, window, document, undefined) {
 					html            = template.html();
 
 				html = html.replace(/ITEM_ID/g, getUniqId());
-				fieldsContainer.append( html );
-			} );
+				fieldsContainer.append(html);
+			});
 
 			$('body').on('click', '.wpcp-repeatable-delete', function (e) {
 				e.preventDefault();
@@ -141,8 +141,8 @@ jQuery(document).ready(function ($, window, document, undefined) {
 
 			$el.attr('disabled', true);
 			spinner.addClass('active');
-			$el.attr( 'disabled', true );
-			spinner.addClass( 'active' );
+			$el.attr('disabled', true);
+			spinner.addClass('active');
 
 			wp.ajax.send({
 				data: {
@@ -151,8 +151,8 @@ jQuery(document).ready(function ($, window, document, undefined) {
 					nonce: nonce
 				},
 				success: function (res) {
-					spinner.removeClass( 'active' );
-					$el.attr( 'disabled', false );
+					spinner.removeClass('active');
+					$el.attr('disabled', false);
 					console.log(res);
 					spinner.removeClass('active');
 					$el.attr('disabled', false);
@@ -189,18 +189,21 @@ jQuery(document).ready(function ($, window, document, undefined) {
 
 		toggleKeywordsField: function () {
 
-			var $keywords_input = $('#_keywords'),
-				$keywords_field = $('._keywords_field'),
-				$post_from      = $('#_post_from').val();
+			var $post_from_field = $('#_post_from');
 
-			if ('global' !== $post_from) {
-				$keywords_field.hide('fast');
-				$keywords_input.removeAttr('required');
-			} else {
-				$keywords_field.show('fast');
-				$keywords_input.attr('required', true);
+			if ($post_from_field.length) {
+				var $keywords_input = $('#_keywords'),
+					$keywords_field = $('._keywords_field'),
+					$post_from      = $post_from_field.val();
+
+				if ('global' !== $post_from) {
+					$keywords_field.hide('fast');
+					$keywords_input.removeAttr('required');
+				} else {
+					$keywords_field.show('fast');
+					$keywords_input.attr('required', true);
+				}
 			}
-
 		}
 	};
 
