@@ -51,8 +51,8 @@ function wpcp_remote_post( $url, $args = array(), $options = array(), $headers =
  * since 1.0.0
  *
  * @param        $url
- * @param array $args
- * @param array $options
+ * @param array  $args
+ * @param array  $options
  * @param string $type
  *
  * @return \Curl\Curl
@@ -105,7 +105,7 @@ function wpcp_remote_request( $url, $args = array(), $options = array(), $header
  * since 1.0.0
  *
  * @param \Curl\Curl $response
- * @param null $param
+ * @param null       $param
  *
  * @return string
  */
@@ -251,7 +251,7 @@ function wpcp_update_option( $key, $value ) {
  *
  * @param        $section
  * @param        $field
- * @param bool $default
+ * @param bool   $default
  *
  * @return string|array|bool
  * @since 1.0.0
@@ -443,7 +443,6 @@ function wpcp_run_campaign( $campaign_id ) {
 	}
 
 
-
 	$instance->set_campaign_type( $campaign_type );
 
 	try {
@@ -507,7 +506,7 @@ function wpcp_insert_link( array $data ) {
 /**
  * Update link in wpcp_links table
  *
- * @param int $id
+ * @param int   $id
  * @param array $data
  *
  * @return false|int|null
@@ -561,12 +560,9 @@ function wpcp_get_read_ability_score( $html ) {
  * @return array|\WP_Error
  */
 function wpcp_get_readability( $html, $url ) {
-	$configuration = new \andreskrey\Readability\Configuration( [
-		'fixRelativeURLs' => true,
-		'originalURL'     => $url,
-		// other parameters ... listing below
-	] );
-
+	$configuration = new \andreskrey\Readability\Configuration();
+	$configuration->setFixRelativeURLs( true );
+	$configuration->setOriginalURL( $url );
 	$readability = new \andreskrey\Readability\Readability( $configuration );
 	try {
 		$readability->parse( $html );

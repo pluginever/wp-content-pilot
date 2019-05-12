@@ -67,10 +67,9 @@ class WPCP_Article extends WPCP_Campaign {
 	public static function get_default_template() {
 		$template =
 <<<EOT
+<img src="{image_url}">
 {content}
 <br> <a href="{source_url}" target="_blank">Source</a>
-<img src="{image_url}">
-{tags}
 EOT;
 		return $template;
 	}
@@ -229,8 +228,9 @@ EOT;
 
 			return false;
 		}
+		$html        = wpcp_fix_relative_paths( $body, $link->url );
 
-		$article = wpcp_get_readability( $body, $link->url );
+		$article = wpcp_get_readability( $html, $link->url );
 
 		if ( is_wp_error( $article ) ) {
 			wpcp_update_link( $link->id, [ 'status' => 'readability_error' ] );
