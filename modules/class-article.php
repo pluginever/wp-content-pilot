@@ -56,7 +56,7 @@ class WPCP_Article extends WPCP_Campaign {
 	public static function get_template_tags() {
 		return array(
 			'title'      => __( 'Title', 'wp-content-pilot' ),
-			'except'     => __( 'Summary', 'wp-content-pilot' ),
+//			'excerpt'     => __( 'Summary', 'wp-content-pilot' ),
 			'content'    => __( 'Content', 'wp-content-pilot' ),
 			'image_url'  => __( 'Main image url', 'wp-content-pilot' ),
 			'source_url' => __( 'Source link', 'wp-content-pilot' ),
@@ -263,6 +263,7 @@ EOT;
 		$article = array(
 			'title'         => $link->title,
 			'content'       => $link->content,
+			'excerpt'       =>  wp_trim_words($link->content, 55),
 			'image_url'     => $link->image,
 			'source_url'    => $link->url,
 			'date'          => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
