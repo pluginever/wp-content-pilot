@@ -230,7 +230,7 @@ abstract class WPCP_Campaign {
 		//remove images links
 		$remove_image_links = wpcp_get_post_meta( $this->campaign_id, '_remove_images', 0 );
 		if ( 'on' === $remove_image_links ) {
-			$article['content'] = preg_replace( '#<img.*?>.*?>#i', '', html_entity_decode( $article['content'] ) );
+			$article['content'] = preg_replace( '/<img[^>]+\>/mi', '', html_entity_decode( $article['content'] ) );
 		}
 
 		//remove hyper links
