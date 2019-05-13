@@ -164,6 +164,9 @@ EOT;
 	 */
 	public function discover_links() {
 		$page  = $this->get_page_number( 0 );
+		$banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article' );
+		$banned_hosts = preg_split( '/\n/', $banned_hosts );
+		
 		$links = array();
 		if ( ! $page ) {
 			for ( $page = 0; $page <= 10; $page ++ ) {
@@ -187,6 +190,18 @@ EOT;
 		$sanitized_links = array();
 
 		foreach ( $links as $link ) {
+			$host = wpcp_get_host( $link['link'] );
+			$banned = false;
+			foreach( $banned_hosts as $banned_host ) {
+				if ( strpos( $host, trim( $banned_host ) ) !== false ) {
+					$banned = true;
+				}
+			}
+
+			if ( $banned ) {
+				continue;
+			}
+			
 			$sanitized_links[] = array(
 				'title'       => $link['title'],
 				'content'     => $link['description'],
