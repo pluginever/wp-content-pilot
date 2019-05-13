@@ -863,8 +863,8 @@ function wpcp_remove_emoji( $content ) {
  */
 function wpcp_clean_title( $title ) {
 	$title = str_replace( 'nospin', '', $title );
-	$title = str_replace( ' ', '-', $title ); // Replaces all spaces with hyphens.
-	$title = preg_replace( '/[^A-Za-z0-9\-]/', '', $title ); // Removes special chars.
+	//$title = str_replace( ' ', '-', $title ); // Replaces all spaces with hyphens.
+	$title = preg_replace( '/[^A-Za-z0-9\-\s\.\,]/', '', $title ); // Removes special chars.
 
 	return preg_replace( '/-+/', '-', $title ); // Replaces multiple hyphens with single one.
 }
