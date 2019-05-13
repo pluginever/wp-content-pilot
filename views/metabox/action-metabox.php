@@ -48,7 +48,7 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 			'type'           => 'number',
 			'placeholder'    => '40',
 			'desc'           => __( 'Min readability score required to post (PRO)', 'wp-content-pilot-pro' ),
-			'value'          => wpcp_get_post_meta( $post_id, '_readability_score', 60 ),
+			'value'          => wpcp_get_post_meta( $post_id, '_readability_score', 40 ),
 			'disabled'       => true,
 			'class'       => 'long',
 		), $post_id ) );
