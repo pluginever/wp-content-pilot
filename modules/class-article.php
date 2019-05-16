@@ -25,6 +25,8 @@ class WPCP_Article extends WPCP_Campaign {
 		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
 		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
 		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
+
+		add_filter( 'wpcp_replace_template_tags', array( $this, 'replace_template_tags' ), 10, 2 );
 	}
 
 	/**
@@ -253,10 +255,15 @@ EOT;
 			return false;
 		}
 
+		$raw_content = array();
+
+		$raw_content['content'] = trim( $article['content'] );
+		$raw_content['excerpt'] = wp_trim_words( trim( $article['content'] ) , 55 );
+
 		wpcp_update_link( $link->id, array(
 			'title'       => $article['title'],
 			'content'     => trim( $article['content'] ),
-			'raw_content' => trim( $article['content'] ),
+			'raw_content' => serialize( $raw_content ),
 			'image'       => $article['image'],
 			'score'       => wpcp_get_read_ability_score( $article['content'] ),
 			'status'      => empty( $article['content'] ) ? 'not_readable' : 'ready',
@@ -291,5 +298,30 @@ EOT;
 		return $article;
 	}
 
+	/**
+	 * Replace additional template tags
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $content
+	 * @param $article
+	 *
+	 * @return mixed
+	 */
+	public function replace_template_tags( $content, $article ) {
+
+		if ( 'article' !== $article['campaign_type'] ) {
+			return $content;
+		}
+
+		$link        = wpcp_get_link( $article['link_id'] );
+		$raw_content = maybe_unserialize( $link->raw_content );
+
+		foreach ( $raw_content as $tag => $tag_content ) {
+			$content = str_replace( "{{$tag}}", $tag_content, $content );
+		}
+
+		return $content;
+	}
 
 }
