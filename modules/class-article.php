@@ -56,7 +56,7 @@ class WPCP_Article extends WPCP_Campaign {
 	public static function get_template_tags() {
 		return array(
 			'title'      => __( 'Title', 'wp-content-pilot' ),
-//			'excerpt'     => __( 'Summary', 'wp-content-pilot' ),
+			'excerpt'     => __( 'Summary', 'wp-content-pilot' ),
 			'content'    => __( 'Content', 'wp-content-pilot' ),
 			'image_url'  => __( 'Main image url', 'wp-content-pilot' ),
 			'source_url' => __( 'Source link', 'wp-content-pilot' ),

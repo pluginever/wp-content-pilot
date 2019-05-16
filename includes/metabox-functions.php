@@ -560,6 +560,8 @@ function wpcp_update_campaign_settings( $post_id ) {
 
 	update_post_meta( $post_id, '_post_title', empty( $posted['_post_title'] ) ? '' : sanitize_text_field( $posted['_post_title'] ) );
 	update_post_meta( $post_id, '_post_template', empty( $posted['_post_template'] ) ? '' : wp_kses_post( $posted['_post_template'] ) );
+	update_post_meta( $post_id, '_post_type', empty( $posted['_post_type'] ) ? 'post' : wp_kses_post( $posted['_post_type'] ) );
+	update_post_meta( $post_id, '_post_status', empty( $posted['_post_status'] ) ? 'publish' : wp_kses_post( $posted['_post_status'] ) );
 	update_post_meta( $post_id, '_author', empty( $posted['_author'] ) ? '' : intval( $posted['_author'] ) );
 	update_post_meta( $post_id, '_categories', empty( $posted['_categories'] ) ? '' : $posted['_categories'] );
 	update_post_meta( $post_id, '_tags', empty( $posted['_tags'] ) ? '' : $posted['_tags'] );

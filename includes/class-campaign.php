@@ -277,12 +277,15 @@ abstract class WPCP_Campaign {
 			return new WP_Error( 'score', __( 'Readability score faild!', 'wp-content-pilot' ) );
 		}
 
+		$post_type = wpcp_get_post_meta( $this->campaign_id, '_post_type', 'post' );
+		$post_status = wpcp_get_post_meta( $this->campaign_id, '_post_status', 'post' );
+
 		$title          = apply_filters( 'wpcp_post_title', $title, $this->campaign_id, $article, $this->keyword );
 		$post_content   = apply_filters( 'wpcp_post_content', $content, $this->campaign_id, $article, $this->keyword );
 		$post_excerpt   = apply_filters( 'wpcp_post_excerpt', $summary, $this->campaign_id, $article, $this->keyword );
 		$post_author    = apply_filters( 'wpcp_post_author', $author_id, $this->campaign_id, $article, $this->keyword );
-		$post_type      = apply_filters( 'wpcp_post_type', 'post', $this->campaign_id, $article, $this->keyword );
-		$post_status    = apply_filters( 'wpcp_post_status', 'publish', $this->campaign_id, $article, $this->keyword );
+		$post_type      = apply_filters( 'wpcp_post_type', $post_type, $this->campaign_id, $article, $this->keyword );
+		$post_status    = apply_filters( 'wpcp_post_status', $post_status, $this->campaign_id, $article, $this->keyword );
 		$post_meta      = apply_filters( 'wpcp_post_meta', [], $this->campaign_id, $article, $this->keyword );
 		$post_tax       = apply_filters( 'wpcp_post_taxonomy', [], $this->campaign_id, $article, $this->keyword );
 		$post_time      = apply_filters( 'wpcp_post_time', $post_time, $this->campaign_id, $article, $this->keyword );
