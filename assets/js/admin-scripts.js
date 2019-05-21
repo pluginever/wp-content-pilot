@@ -74,6 +74,7 @@ jQuery(document).ready(function ($, window, document, undefined) {
 				},
 				success: function (res) {
 					$('#campaign-post-settings .inside').html(res);
+					$( 'body' ).trigger( 'wpcpcontentloaded' );
 				},
 				error: function (error) {
 					alert('Something happend wrong');
@@ -92,6 +93,7 @@ jQuery(document).ready(function ($, window, document, undefined) {
 				},
 				success: function (res) {
 					$('#campaign-template-tags .inside').html(res);
+					$( 'body' ).trigger( 'wpcpcontentloaded' );
 				},
 				error: function (error) {
 					alert('Something happend wrong');
