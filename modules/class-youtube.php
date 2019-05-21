@@ -31,6 +31,8 @@ class WPCP_Youtube extends WPCP_Campaign {
 		add_filter( 'wpcp_replace_template_tags', array( $this, 'replace_template_tags' ), 10, 2 );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
+
+		add_filter( 'wpcp_campaign_additional_settings_field_args', array( $this, 'additional_settings_fields' ), 10, 3 );
 	}
 
 	/**
@@ -184,6 +186,28 @@ EOT;
 		) );
 
 
+	}
+
+	/**
+     * Add additional settings option for youtube
+     *
+     * @since 1.0.4
+     *
+     * @param $args
+     * @param $type
+     *
+     * @return array
+     */
+	public function additional_settings_fields( $args, $type, $post_id ) {
+		if ( 'youtube' != $type ) {
+            return $args;
+		}
+		
+		unset( $args['options']['_remove_images'] );
+		unset( $args['options']['_strip_links'] );
+		unset( $args['options']['_skip_no_image'] );
+
+		return $args;
 	}
 
 	/**
