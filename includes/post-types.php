@@ -56,6 +56,30 @@ function wpcp_setup_wpcp_post_types() {
 
 add_action( 'init', 'wpcp_setup_wpcp_post_types', 1 );
 
+add_filter('post_updated_messages', 'wpcp_post_types_messages');
+function wpcp_post_types_messages( $messages ) {
+	global $post, $post_ID;
+
+	$messages['wp_content_pilot'] = array(
+		0 => '', // Unused. Messages start at index 1.
+		1 => __('Campaign updated.', 'wp-content-pilot'),
+		2 => __('Custom field updated.', 'wp-content-pilot'),
+		3 => __('Custom field deleted.', 'wp-content-pilot'),
+		4 => __('Campaign updated.', 'wp-content-pilot'),
+		/* translators: %s: date and time of the revision */
+		5 => isset($_GET['revision']) ? sprintf( __('Campaign restored to revision from %s', 'wp-content-pilot'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6 => __('Campaign created.', 'wp-content-pilot'),
+		7 => __( 'Campaign saved.', 'wp-content-pilot' ),
+		8 => __( 'Campaign submitted.', 'wp-content-pilot' ),
+		9 => sprintf( __('Campaign scheduled for: <strong>%1$s</strong>.', 'wp-content-pilot'),
+			// translators: Publish box date format, see http://php.net/date
+			date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+		10 => __('Campaign draft updated.', 'wp-content-pilot'),
+	);
+
+	return $messages;
+}
+
 /**
  * Change default "Enter title here" input
  *
