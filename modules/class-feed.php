@@ -23,7 +23,6 @@ class WPCP_Feed extends WPCP_Campaign {
 		//campaign settings
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
 		add_filter( 'wpcp_campaign_keyword_input_args', array( $this, 'campaign_keyword_input' ), 99, 3 );
-		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
 		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
 
 		add_filter( 'wpcp_keyword', array( $this, 'feed_links' ), 10, 2 );
@@ -34,6 +33,7 @@ class WPCP_Feed extends WPCP_Campaign {
 		add_action( 'wp_feed_options', array( $this, 'force_feed' ), 10, 1 );
 
 		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
+		add_filter( 'wpcp_replace_template_tags', array( $this, 'replace_template_tags' ), 10, 2 );
 
 	}
 
@@ -57,7 +57,7 @@ class WPCP_Feed extends WPCP_Campaign {
 	public static function get_template_tags() {
 		return array(
 			'title'     => __( 'Title', 'wp-content-pilot' ),
-			'except'    => __( 'Summary', 'wp-content-pilot' ),
+			'excerpt'    => __( 'Summary', 'wp-content-pilot' ),
 			'content'   => __( 'Content', 'wp-content-pilot' ),
 			'image_url' => __( 'Main image url', 'wp-content-pilot' ),
 			'source_url' => __( 'Source link', 'wp-content-pilot' ),
@@ -67,10 +67,9 @@ class WPCP_Feed extends WPCP_Campaign {
 	public static function get_default_template() {
 		$template =
 			<<<EOT
+<img src="{image_url}" alt="">
 {content}
 <br> <a href="{source_url}" target="_blank">Source</a>
-<img src="{image_url}">
-{tags}
 EOT;
 		return $template;
 	}
@@ -99,40 +98,6 @@ EOT;
 	}
 
 	/**
-	 * Conditionally show meta fields
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param $post_id
-	 * @param $campaign_type
-	 *
-	 * @return bool
-	 */
-	public function campaign_option_fields( $post_id, $campaign_type ) {
-		if ( 'feed' != $campaign_type ) {
-			return false;
-		}
-
-		echo content_pilot()->elements->select( array(
-			'label'            => __( 'Force Feed', 'wp-content-pilot' ),
-			'name'             => '_force_feed',
-			'placeholder'      => '',
-			'show_option_all'  => '',
-			'show_option_none' => '',
-			'options'          => array(
-				'yes' => __( 'Yes', 'wp-content-pilot' ),
-				'no'  => __( 'No', 'wp-content-pilot' ),
-			),
-			'required'         => true,
-			'double_columns'   => true,
-			'selected'         => wpcp_get_post_meta( $post_id, '_force_feed', 'no' ),
-			'desc'             => __( 'If you are putting exact feed link then set this to yes, otherwise feed links will be auto discovered', 'wp-content-pilot' ),
-		) );
-
-
-	}
-
-	/**
 	 * update campaign settings
 	 *
 	 * @since 1.0.0
@@ -146,7 +111,6 @@ EOT;
 		$str_links = implode( ',', $links );
 
 		update_post_meta( $post_id, '_feed_links', $str_links );
-		update_post_meta( $post_id, '_force_feed', empty( $posted['_force_feed'] ) ? 'no' : esc_attr( $posted['_force_feed'] ) );
 	}
 
 	/**
@@ -195,18 +159,6 @@ EOT;
 		return $args;
 	}
 
-	/**
-	 * Force feed with the given feedlink
-	 *
-	 * since 1.0.0
-	 *
-	 * @param $feed
-	 */
-	public function force_feed( $feed ) {
-		if ( 'yes' == wpcp_get_post_meta( $this->campaign_id, '_force_feed', 'no' ) ) {
-			$feed->force_feed( true );
-		}
-	}
 
 	/**
 	 * Hook in background process and prepare contents
@@ -291,12 +243,17 @@ EOT;
 			$host    = wpcp_get_host( $url );
 			$content = wpcp_fix_html_links( $rss_item->get_content(), $host );
 
+			$raw_content = array(
+				'content' => $content,
+				'excerpt' =>  wp_trim_words( trim( $content ) , 55 ),
+			);
+
 			$link = array(
 				'title'       => $rss_item->get_title(),
 				'content'     => $content,
 				'url'         => $url,
 				'image'       => '',
-				'raw_content' => $content,
+				'raw_content' => serialize( $raw_content ),
 				'score'       => '0',
 				'status'      => 'fetched',
 			);
@@ -325,6 +282,32 @@ EOT;
 		);
 
 		return $article;
+	}
+
+	/**
+	 * Replace additional template tags
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $content
+	 * @param $article
+	 *
+	 * @return mixed
+	 */
+	public function replace_template_tags( $content, $article ) {
+
+		if ( 'feed' !== $article['campaign_type'] ) {
+			return $content;
+		}
+
+		$link        = wpcp_get_link( $article['link_id'] );
+		$raw_content = maybe_unserialize( $link->raw_content );
+
+		foreach ( $raw_content as $tag => $tag_content ) {
+			$content = str_replace( "{{$tag}}", $tag_content, $content );
+		}
+
+		return $content;
 	}
 
 
