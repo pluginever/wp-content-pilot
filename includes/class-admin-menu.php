@@ -22,6 +22,7 @@ class WPCP_Admin_Menu {
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_menu', array( $this, 'get_pro_link' ), 502 );
+		add_action( 'admin_init', array( $this, 'go_pro_redirect' ) );
 	}
 
 
