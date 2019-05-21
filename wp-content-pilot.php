@@ -465,8 +465,7 @@ final class ContentPilot {
 		}
 		require_once( dirname( __FILE__ ) . '/includes/class-upgrades.php' );
 		$upgrader = new ContentPilot_Upgrades();
-
-		var_dump( $upgrader->needs_update() );
+		
 		if ( $upgrader->needs_update() ) {
 			$upgrader->perform_updates();
 		}
