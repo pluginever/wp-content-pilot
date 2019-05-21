@@ -90,9 +90,9 @@ class WPCP_Settings {
 					'default' => ''
 				),
 				array(
-					'name'    => 'user_name',
-					'label'   => __( 'Envato Username', 'wp-content-pilot' ),
-					'desc'    => __( 'Your username (Affiliate ID) for affiliate integration. e.g. "pluginever"' ),
+					'name'    => 'envato_impact_radius',
+					'label'   => __( 'Impact Radius affiliate URL', 'wp-content-pilot' ),
+					'desc'    => __( 'Check this tutorial on how to get it', 'wp-content-pilot' ),
 					'type'    => 'text',
 					'default' => ''
 				),

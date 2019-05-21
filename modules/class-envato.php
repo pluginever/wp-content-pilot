@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WPCP_Envato extends WPCP_Campaign {
 	protected $token;
-	protected $user_name;
+	protected $envato_impact_radius;
 
 	/**
 	 * WPCP_Envato constructor.
@@ -40,7 +40,7 @@ class WPCP_Envato extends WPCP_Campaign {
 	public static function get_default_template() {
 		$template
 			= <<<EOT
-{image}
+<img src="{image_url}" alt="">
 <br>
 <a target="_blank" href="{affiliate_url}">LIVE PREVIEW</a>
 <a target="_blank" href="{affiliate_url}">BUY FOR {price}</a>
@@ -221,9 +221,11 @@ EOT;
 
 		$raw = maybe_unserialize( $link->raw_content );
 
+		$envato_impact_radius = wpcp_get_settings( 'envato_impact_radius', 'wpcp_settings_envato', '' );
+
 		$affiliate_url = add_query_arg( array(
-			'ref' => wpcp_get_settings( 'user_name', 'wpcp_settings_envato', '' )
-		), $link->url );
+			'u' => urlencode( $link->url )
+		), $envato_impact_radius );
 
 		$article = array(
 			'site'               => sanitize_text_field( @$raw->site ),
@@ -284,7 +286,7 @@ EOT;
 	 */
 	public function setup() {
 		$token     = wpcp_get_settings( 'token', 'wpcp_settings_envato', '' );
-		$user_name = wpcp_get_settings( 'user_name', 'wpcp_settings_envato', '' );
+		$envato_impact_radius = wpcp_get_settings( 'envato_impact_radius', 'wpcp_settings_envato', '' );
 		if ( empty( $token ) ) {
 			$msg = __( 'Envato API is not set. Please configure Envato API.', 'wp-content-pilot' );
 			wpcp_log( $msg );
@@ -294,7 +296,7 @@ EOT;
 
 		$this->token = $token;
 
-		$this->user_name = empty( $user_name ) ? '' : $user_name;
+		$this->envato_impact_radius = empty( $envato_impact_radius ) ? '' : $envato_impact_radius;
 
 		return true;
 	}
