@@ -38,7 +38,7 @@ class WPCP_Flickr extends WPCP_Campaign {
 	public static function get_default_template() {
 		$template
 			= <<<EOT
-{image}
+<img src="{image_url}" alt="">
 <br>
 <a href="{image_url}">Posted</a> by <a href="http://flicker.com/{author_url}">{author}</a>
 <br>
