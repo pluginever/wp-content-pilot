@@ -81,7 +81,7 @@ EOT;
 			'date'       => __( 'Published date', 'wp-content-pilot' ),
 			'image_url'  => __( 'Main image url', 'wp-content-pilot' ),
 			'source_url' => __( 'Source link', 'wp-content-pilot' ),
-			'author'     => __( 'Aurhor Name', 'wp-content-pilot' ),
+			'author'     => __( 'Author Name', 'wp-content-pilot' ),
 			'author_url' => __( 'Author Url', 'wp-content-pilot' ),
 			'tags'       => __( 'Photo Tags', 'wp-content-pilot' ),
 			'views'      => __( 'Photo Views', 'wp-content-pilot' ),
