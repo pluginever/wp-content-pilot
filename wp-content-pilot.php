@@ -3,7 +3,7 @@
  * Plugin Name: WP Content Pilot
  * Plugin URI:  https://www.pluginever.com
  * Description: The Best WordPress Plugin ever made!
- * Version:     1.2.0
+ * Version:     1.0.3
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
@@ -46,7 +46,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '1.4.0';
+	protected $version = '1.0.4';
 
 	/**
 	 * @since 1.0.0
@@ -465,6 +465,8 @@ final class ContentPilot {
 		}
 		require_once( dirname( __FILE__ ) . '/includes/class-upgrades.php' );
 		$upgrader = new ContentPilot_Upgrades();
+
+		var_dump( $upgrader->needs_update() );
 		if ( $upgrader->needs_update() ) {
 			$upgrader->perform_updates();
 		}

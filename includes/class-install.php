@@ -43,7 +43,7 @@ class WPCP_Install {
                 `keyword` varchar(191) DEFAULT NULL,
                 `camp_type` varchar(191) DEFAULT NULL,
                 `status` VARCHAR(100) NOT NULL,
-                `url` varchar(191) DEFAULT NULL,
+                `url` varchar(500) DEFAULT NULL,
                 `title` text DEFAULT NULL,
                 `image` text DEFAULT NULL,
                 `content` longtext DEFAULT NULL,
