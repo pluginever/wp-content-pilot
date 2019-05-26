@@ -67,7 +67,7 @@ class WPCP_Settings {
 				array(
 					'name'    => 'api_key',
 					'label'   => __( 'Youtube API Key', 'wp-content-pilot' ),
-					'desc'    => __( 'Youtube campaigns wont run without settings this.', 'wp-content-pilot' ),
+					'desc'    => sprintf( __( 'Youtube campaigns won\'t run without API key. <a href="%s" target="_blank">Learn how to get one</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/set-up-youtube-api-key-for-wp-content-pilot/' ),
 					'type'    => 'text',
 					'default' => ''
 				),
@@ -76,7 +76,7 @@ class WPCP_Settings {
 				array(
 					'name'    => 'api_key',
 					'label'   => __( 'Flickr API Key', 'wp-content-pilot' ),
-					'desc'    => __( 'Flickr campaigns wont run without settings this.', 'wp-content-pilot' ),
+					'desc'    => sprintf( __( 'Get your Flickr API key by following this <a href="%s" target="_blank">link</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/flickr-campaign-settings/' ),
 					'type'    => 'text',
 					'default' => ''
 				),
@@ -85,14 +85,14 @@ class WPCP_Settings {
 				array(
 					'name'    => 'token',
 					'label'   => __( 'Envato Token', 'wp-content-pilot' ),
-					'desc'    => __( 'Check this tutorial <a href="https://www.pluginever.com/docs/wp-content-pilot/how-to-create-envato-token/" target="_blank">Here</a> to get your token.', 'wp-content-pilot' ),
+					'desc'    => sprintf( __( 'Check this tutorial to get your <a href="%s" target="_blank">Envato token</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/how-to-create-envato-token/' ),
 					'type'    => 'text',
 					'default' => ''
 				),
 				array(
 					'name'    => 'envato_impact_radius',
 					'label'   => __( 'Impact Radius affiliate URL', 'wp-content-pilot' ),
-					'desc'    => __( 'Check this tutorial on how to get it', 'wp-content-pilot' ),
+					'desc'    => sprintf( __( 'Learn how to get your Impact Radius affiliate URL <a href="%s">here</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/get-your-envato-impact-radius-affiliate-url/' ),
 					'type'    => 'text',
 					'default' => ''
 				),
