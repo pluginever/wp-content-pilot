@@ -326,7 +326,7 @@ abstract class WPCP_Campaign {
 		//set featured image
 		$is_set_featured_image = wpcp_get_post_meta( $this->campaign_id, '_set_featured_image', 0 );
 		if ( 'on' === $is_set_featured_image && ! empty( $article['image_url'] ) ) {
-			$attachment_id = wpcp_download_image( $article['image_url'] );
+			$attachment_id = wpcp_download_image( html_entity_decode( $article['image_url'] ) );
 			if ( $attachment_id ) {
 				update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
 			}
