@@ -31,7 +31,7 @@ class WPCP_Promotion {
 			return;
 		}
 
-		$offer_msg = __( 'Your most desired and long waited update for <strong>WP Content Pilot Pro</strong> is finally here. Now it will empower your auto blogging with 21 campaign types.', 'wpcp' );
+		$offer_msg = __( 'Your most desired and long waited update for <strong>WP Content Pilot</strong> is finally here.<br> Now it will empower your auto blogging with <strong>5 free</strong> and <strong>16 premium</strong> campaigns that includes outstanding features. Learn more about the premium version.', 'wpcp' );
 
 		?>
 		<div class="notice notice-info is-dismissible" id="wpcp-promotional-offer-notice">
@@ -50,7 +50,7 @@ class WPCP_Promotion {
 			#wpcp-promotional-offer-notice{
 				display: flex;
 				align-items: center;
-				padding: 15px 12px;
+				padding: 10px 12px;
 				padding-right: 38px;
 			}
 			#wpcp-promotional-offer-notice p{
@@ -64,8 +64,8 @@ class WPCP_Promotion {
 				padding: 0 10px;
 			}
 			#wpcp-promotional-offer-notice span.wpcp-promotional-icon svg{
-				width: 30px;
-				height: 30px;
+				width: 40px;
+				height: 40px;
 			}
 			#wpcp-promotional-offer-notice .button-pro{
                 background-color: #ff7a03;
