@@ -36,9 +36,9 @@ function wpcp_run_automatic_campaign() {
 			$posted       = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
 			$current_time = current_time( 'timestamp' );
 			$diff         = $current_time - $last_run;
-//			if ( $diff < $frequency ) {
-//				continue;
-//			}
+			if ( $diff < $frequency ) {
+				continue;
+			}
 
 			if ( $posted >= $target ) {
 				wpcp_disable_campaign( $campaign_id );
