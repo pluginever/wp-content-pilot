@@ -111,4 +111,11 @@ class WPCP_Promotion {
 	}
 }
 
-new WPCP_Promotion();
+function wpcp_init_promotion() {
+	if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
+		new WPCP_Promotion();
+	}
+}
+
+add_action( 'admin_init', 'wpcp_init_promotion' );
+
