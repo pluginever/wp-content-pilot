@@ -547,7 +547,7 @@ function wpcp_get_link( $id ) {
 function wpcp_get_read_ability_score( $html ) {
 	$textStatistics = new \DaveChild\TextStatistics\TextStatistics();
 
-	return $textStatistics->fleschKincaidReadingEase( $html );
+	return @$textStatistics->fleschKincaidReadingEase( $html );
 }
 
 /**
