@@ -10,7 +10,7 @@
 /*global alert:false */
 /*global jQuery:false */
 /*global confirm:false */
-jQuery(document).ready(function ($, window, document, undefined) {
+jQuery(document).ready(function ($) {
 	'use strict';
 	$.wp_content_pilot = {
 
@@ -159,6 +159,7 @@ jQuery(document).ready(function ($, window, document, undefined) {
 					spinner.removeClass('active');
 					$el.attr('disabled', false);
 					// $('#campaign-template-tags .inside').html(res);
+					window.location.reload();
 				},
 				error: function (error) {
 					spinner.removeClass('active');

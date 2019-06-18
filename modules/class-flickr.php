@@ -157,7 +157,7 @@ EOT;
 		$raw_content = maybe_unserialize( $link->raw_content );
 
 		foreach ( $raw_content as $tag => $tag_content ) {
-			$content = str_replace( "{{$tag}}", $tag_content, $content );
+			$content = str_replace( '{' . $tag . '}', $tag_content, $content );
 		}
 
 		return $content;
