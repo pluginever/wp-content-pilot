@@ -43,6 +43,8 @@ class WPCP_Flickr extends WPCP_Campaign {
 <a href="{image_url}">Posted</a> by <a href="http://flicker.com/{author_url}">{author}</a>
 <br>
 {tags}
+<br>
+<a href="{source_url}">Source</a>
 EOT;
 
 		return $template;
@@ -112,6 +114,7 @@ EOT;
 		$description = @$response->photo->description->_content;
 		$tags        = ! empty( $response->photo->tags->tag ) ? implode( ', ', wp_list_pluck( @$response->photo->tags->tag, 'raw' ) ) : '';
 		$image_url   = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}.jpg";
+		$source_url  = $response->photo->urls->url[0]->_content;
 
 		$article = array(
 			'author'     => $response->photo->owner->username,
@@ -123,6 +126,7 @@ EOT;
 
 		wpcp_update_link( $link->id, array(
 			'title'       => $title,
+			'url'         => $source_url,
 			'gmt_date'    => gmdate( 'Y-m-d H:i:s', $response->photo->dates->posted ),
 			'content'     => $description,
 			'image'       => $image_url,
