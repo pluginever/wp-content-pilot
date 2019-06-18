@@ -81,7 +81,6 @@ EOT;
 	public static function get_template_tags() {
 		return array(
 			'title'              => __( 'Title', 'wp-content-pilot' ),
-			'except'             => __( 'Summary', 'wp-content-pilot' ),
 			'content'            => __( 'Content', 'wp-content-pilot' ),
 			'image_url'          => __( 'Main image url', 'wp-content-pilot' ),
 			'source_url'         => __( 'Source link', 'wp-content-pilot' ),
@@ -328,8 +327,10 @@ EOT;
 			'sort_direction' => $sort_direction,
 		];
 
-		if ( ! empty( $min_price ) && ! empty( $max_price ) ) {
+		if ( ! empty( $min_price ) ) {
 			$query_args['price_min'] = $min_price;
+		}
+		if ( ! empty( $max_price ) ) {
 			$query_args['price_max'] = $max_price;
 		}
 
