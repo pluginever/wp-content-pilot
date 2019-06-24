@@ -58,7 +58,7 @@ echo ".........................................."
 svn mkdir $TRUNK 2> /dev/null
 svn add $TRUNK 2> /dev/null
 
-rsync -r --exclude='*.git*' --exclude="node_modules" --exclude="build" --exclude="*.scss*" $BUILD_DIR/* $TRUNK
+rsync -r --exclude='*.git*' --exclude="node_modules" --exclude="build" --exclude="*.scss*"  $BUILD_DIR/* $TRUNK
 cd $TRUNK
 
 echo -e"Updating SVN repo \c"

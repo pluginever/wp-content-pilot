@@ -242,6 +242,8 @@ module.exports = function (grunt) {
 					'!**/css/*.scss',
 					'!**/images/src/**',
 					'!**/sass/**',
+					'!**/test/**',
+					'!**/tests/**',
 					'!build/**',
 					'!**/*.md',
 					'!**/*.map',
@@ -249,12 +251,17 @@ module.exports = function (grunt) {
 					'!.idea/**',
 					'!bin/**',
 					'!.git/**',
+					'!.zip',
 					'!Gruntfile.js',
 					'!package.json',
 					'!composer.json',
 					'!composer.lock',
 					'!package-lock.json',
 					'!debug.log',
+					'!yarn.lock',
+					'!phpcs.xml',
+					'!phpcs.xml',
+					'!phpunit.xml',
 					'!none',
 					'!.gitignore',
 					'!.gitmodules',
@@ -345,7 +352,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('build',
 		[
 			'clean',
-			'zip'
+			'copy'
 		]);
 
 	grunt.registerTask('zip',
