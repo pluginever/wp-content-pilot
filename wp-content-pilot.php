@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Content Pilot
  * Plugin URI:  https://www.pluginever.com
- * Description: The Best WordPress Plugin ever made!
+ * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
  * Version:     1.0.3
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
@@ -124,7 +124,7 @@ final class ContentPilot {
 
 		add_action( 'plugins_loaded', array( $this, 'instantiate' ) );
 
-		//add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 
 		// if the environment check fails, initialize the plugin
 		if ( $this->is_environment_compatible() ) {
@@ -331,7 +331,10 @@ final class ContentPilot {
 	 * @return array
 	 */
 	public function plugin_action_links( $links ) {
-		//$links[] = '<a href="' . admin_url( 'admin.php?page=' ) . '">' . __( 'Settings', '' ) . '</a>';
+		$links[] = '<a href="' . admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-settings' ) . '">' . __( 'Settings', '' ) . '</a>';
+		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
+			$links[] = '<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro" style="color: red;font-weight: bold;" target="_blank">' . __( 'Upgrade to PRO', 'wc-serial-numbers' ) . '</a>';
+		}
 		return $links;
 	}
 
@@ -465,7 +468,7 @@ final class ContentPilot {
 		}
 		require_once( dirname( __FILE__ ) . '/includes/class-upgrades.php' );
 		$upgrader = new ContentPilot_Upgrades();
-		
+
 		if ( $upgrader->needs_update() ) {
 			$upgrader->perform_updates();
 		}

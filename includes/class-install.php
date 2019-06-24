@@ -24,6 +24,7 @@ class WPCP_Install {
 
 	public static function create_tables() {
 		global $wpdb;
+		$wpdb->hide_errors();
 		$collate = '';
 		if ( $wpdb->has_cap( 'collation' ) ) {
 			if ( ! empty( $wpdb->charset ) ) {
@@ -33,7 +34,6 @@ class WPCP_Install {
 				$collate .= " COLLATE $wpdb->collate";
 			}
 		}
-		//todo remake table structure
 
 		$table_schema = [
 			"CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}wpcp_links` (

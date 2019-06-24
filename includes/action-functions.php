@@ -11,7 +11,7 @@ function wpcp_run_automatic_campaign() {
 	$sql       = "select * from {$wpdb->posts} p  left join {$wpdb->postmeta} m on p.id = m.post_id having m.meta_key = '_campaign_status' AND m.meta_value = 'active'";
 	$campaigns = $wpdb->get_results( $sql );
 
-	if ( ! $campaigns ) {
+	if ( empty($campaigns) ) {
 		wpcp_log( 'dev', 'No campaign found in scheduled task' );
 
 		return;
@@ -39,7 +39,6 @@ function wpcp_run_automatic_campaign() {
 			if ( $diff < $frequency ) {
 				continue;
 			}
-
 			if ( $posted >= $target ) {
 				wpcp_disable_campaign( $campaign_id );
 				continue;

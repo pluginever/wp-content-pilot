@@ -274,7 +274,7 @@ abstract class WPCP_Campaign {
 		$readability_score_passed = apply_filters( 'wpcp_check_readability_score', true, $this->campaign_id, $article );
 
 		if ( ! $readability_score_passed ) {
-			return new WP_Error( 'score', __( 'Readability score faild!', 'wp-content-pilot' ) );
+			return new WP_Error( 'score', __( 'Readability score failed!, Try with decreased readability score.', 'wp-content-pilot' ) );
 		}
 
 		$post_type = wpcp_get_post_meta( $this->campaign_id, '_post_type', 'post' );

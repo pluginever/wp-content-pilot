@@ -54,12 +54,12 @@ class ContentPilot_Upgrades {
 		$path              = trailingslashit( dirname( __FILE__ ) );
 
 		foreach ( self::$upgrades as $version => $file ) {
-			if ( version_compare( $version, $installed_version, '<' ) ) {
+			if ( version_compare( $installed_version, $version, '<' ) ) {
 				include $path . $file;
 				update_option( 'wpcp_version', $version );
 			}
 		}
 
-		update_option( 'wpcp_version', WPCP_VERSION );
+
 	}
 }
