@@ -139,11 +139,12 @@ This may have bugs and lack of many features. If you want to contribute to this 
 
 == Screenshots ==
 1. Campaign List Page
-2. Article Campaign setup
-3. Feed Campaign Setup
-4. Youtube Campaign Setup
-5. Flickr Campaign Setup
+2. Campaign Type Selection
+3. Campaign Option Settings
+4. Campaign Post Settings
+5. Campaign Advanced Settings
 6. Settings Page
+7. Campaign Log Page
 
 
 == Installation ==
