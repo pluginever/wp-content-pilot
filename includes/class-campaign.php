@@ -115,7 +115,7 @@ abstract class WPCP_Campaign {
 			if ( $total_fetched_links > 1 ) {
 				wpcp_log( 'Link discovery skipped because there already links waiting for getting ready ' . $total_fetched_links );
 
-				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'content-pilot' ) );
+				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'wp-content-pilot' ) );
 			}
 
 			//otherwise discover few new links
@@ -155,11 +155,11 @@ abstract class WPCP_Campaign {
 			$link                = $this->get_link();
 			$total_fetched_links = $this->count_links( 'fetched' );
 			if ( $total_fetched_links > 1 ) {
-				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'content-pilot' ) );
+				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'wp-content-pilot' ) );
 			}
 
 			if ( empty( $total_fetched_links ) && empty( $link ) ) {
-				return new \WP_Error( 'no-valid-links-found', __( 'Could not retrieve any valid links. Please wait to generate new links.', 'content-pilot' ) );
+				return new \WP_Error( 'no-valid-links-found', __( 'Could not retrieve any valid links. Please wait to generate new links.', 'wp-content-pilot' ) );
 			}
 		}
 

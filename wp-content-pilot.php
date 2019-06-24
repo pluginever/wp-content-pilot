@@ -3,7 +3,7 @@
  * Plugin Name: WP Content Pilot
  * Plugin URI:  https://www.pluginever.com
  * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:     1.0.3
+ * Version:     1.0.4
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
@@ -320,7 +320,7 @@ final class ContentPilot {
 	 *
 	 */
 	public function localization_setup() {
-		load_plugin_textdomain( 'wp-content-pilot', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'wp-content-pilot', false, dirname( plugin_basename( __FILE__ ) ) . '/i18n/languages/' );
 	}
 
 	/**
@@ -331,9 +331,9 @@ final class ContentPilot {
 	 * @return array
 	 */
 	public function plugin_action_links( $links ) {
-		$links[] = '<a href="' . admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-settings' ) . '">' . __( 'Settings', '' ) . '</a>';
+		$links[] = '<a href="' . admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-settings' ) . '">' . __( 'Settings', 'wp-content-pilot' ) . '</a>';
 		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
-			$links[] = '<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro" style="color: red;font-weight: bold;" target="_blank">' . __( 'Upgrade to PRO', 'wc-serial-numbers' ) . '</a>';
+			$links[] = '<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro" style="color: red;font-weight: bold;" target="_blank">' . __( 'Upgrade to PRO', 'wp-content-pilot' ) . '</a>';
 		}
 		return $links;
 	}
@@ -348,7 +348,7 @@ final class ContentPilot {
 	public function custom_cron_schedules( $schedules ) {
 		$schedules ['once_a_minute'] = array(
 			'interval' => 60,
-			'display'  => __( 'Once a Minute' )
+			'display'  => __( 'Once a Minute', 'wp-content-pilot' )
 		);
 
 		return $schedules;

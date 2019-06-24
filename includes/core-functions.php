@@ -448,7 +448,7 @@ function wpcp_run_campaign( $campaign_id ) {
 	try {
 		$article = $instance->run();
 	} catch ( Exception $exception ) {
-		wpcp_log( __( 'Post insertion failed message ' . $exception->getMessage() ), 'critical' );
+		wpcp_log( __( 'Post insertion failed message ', 'wp-content-pilot') . $exception->getMessage(), 'critical' );
 	}
 
 	if ( is_wp_error( $article ) ) {

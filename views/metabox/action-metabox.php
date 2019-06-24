@@ -47,7 +47,7 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 			'name'           => '_readability_score',
 			'type'           => 'number',
 			'placeholder'    => '40',
-			'desc'           => __( 'Min readability score required to post (PRO)', 'wp-content-pilot-pro' ),
+			'desc'           => __( 'Min readability score required to post (PRO)', 'wp-content-pilot' ),
 			'value'          => wpcp_get_post_meta( $post_id, '_readability_score', 40 ),
 			'disabled'       => true,
 			'class'       => 'long',
@@ -73,11 +73,11 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 			<?php
 			if ( $action !== 'edit' ) {
 				if ( $can_publish ) : ?>
-					<input name="original_publish" type="hidden" id="original_publish" value="<?php esc_attr_e( 'Publish' ) ?>"/>
+					<input name="original_publish" type="hidden" id="original_publish" value="<?php esc_attr_e( 'Publish', 'wp-content-pilot' ) ?>"/>
 					<?php submit_button( __( 'Create Campaign', 'wp-content-pilot' ), 'primary button-large', 'publish', false ); ?><?php
 				endif;
 			} else { ?>
-				<input name="original_publish" type="hidden" id="original_publish" value="<?php esc_attr_e( 'Update' ) ?>"/>
+				<input name="original_publish" type="hidden" id="original_publish" value="<?php esc_attr_e( 'Update', 'wp-content-pilot' ) ?>"/>
 				<div class="publishing-action-btn">
 					<?php
 					$test_run_url = add_query_arg(array(

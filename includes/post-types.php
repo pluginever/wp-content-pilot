@@ -73,7 +73,7 @@ function wpcp_post_types_messages( $messages ) {
 		8 => __( 'Campaign submitted.', 'wp-content-pilot' ),
 		9 => sprintf( __('Campaign scheduled for: <strong>%1$s</strong>.', 'wp-content-pilot'),
 			// translators: Publish box date format, see http://php.net/date
-			date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+			date_i18n( __( 'M j, Y @ G:i', 'wp-content-pilot' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
 		10 => __('Campaign draft updated.', 'wp-content-pilot'),
 	);
 
