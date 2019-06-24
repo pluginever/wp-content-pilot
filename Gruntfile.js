@@ -278,7 +278,7 @@ module.exports = function (grunt) {
 			main: {
 				options: {
 					mode: 'zip',
-					archive: './build/'+pkg.name+'-v' + pkg.version + '.zip'
+					archive: './build/' + pkg.name + '-v' + pkg.version + '.zip'
 				},
 				expand: true,
 				cwd: 'build/',
