@@ -1,18 +1,19 @@
 <?php
 /**
  * Plugin Name: WP Content Pilot
- * Plugin URI:  http://pluginever.com/plugins/wp-content-pilot
+ * Plugin URI:  https://www.pluginever.com
  * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:     1.0.3
+ * Version:     1.0.4
  * Author:      pluginever
- * Author URI:  http://pluginever.com
+ * Author URI:  https://www.pluginever.com
+ * Donate link: https://www.pluginever.com
  * License:     GPLv2+
- * Text Domain: wpcp
- * Domain Path: /languages
+ * Text Domain: wp-content-pilot
+ * Domain Path: /i18n/languages/
  */
 
 /**
- * Copyright (c) 2018 PluginEver (email : support@pluginever.com)
+ * Copyright (c) 2019 pluginever (email : support@pluginever.com)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at
@@ -31,319 +32,511 @@
 
 // don't call the file directly
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
 /**
- * Main initiation class
+ * Main ContentPilot Class.
  *
- * @since 1.0.0
+ * @class ContentPilot
  */
-class Wp_Content_Pilot {
+final class ContentPilot {
+	/**
+	 * ContentPilot_Pro version.
+	 *
+	 * @var string
+	 */
+	protected $version = '1.0.4';
 
-    /**
-     * Add-on Version
-     *
-     * @since 1.0.0
-     * @var  string
-     */
-    public $version = '1.0.3';
+	/**
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
+	protected $min_wp = '4.0.0';
 
-    /**
-     * Minimum PHP version required
-     *
-     * @var string
-     */
-    private $min_php = '5.4.0';
+	/**
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
+	protected $min_php = '5.6';
 
-    /**
-     * Holds various class instances
-     *
-     * @var array
-     */
-    private $container = array();
+	/**
+	 * admin notices
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array
+	 */
+	protected $notices = array();
 
-    /**
-     * @var object
-     *
-     */
-    private static $instance;
+	/**
+	 * The single instance of the class.
+	 *
+	 * @var ContentPilot
+	 * @since 1.0.0
+	 */
+	protected static $instance = null;
 
-    /**
-     * Constructor for the class
-     *
-     * Sets up all the appropriate hooks and actions
-     *
-     * @since 1.0.0
-     *
-     * @return void
-     */
-    private function setup() {
-        // on deactivate plugin register hook
-        register_deactivation_hook( __FILE__, array( $this, 'auto_deactivate' ) );
-
-        if ( ! $this->is_supported_php() ) {
-            return;
-        }
-
-        // Define constants
-        $this->define_constants();
-
-        // Include required files
-        $this->includes();
-
-        // instantiate classes
-        $this->instantiate();
-
-        // Initialize the action hooks
-        $this->init_actions();
-
-        // load the modules
-        $this->load_module();
-
-        do_action( 'wp_content_pilot_loaded' );
-    }
+	/**
+	 * @since 1.2.0
+	 *
+	 * @var \WPCP_Module
+	 */
+	public $modules;
 
 
-    /**
-     * Initializes the class
-     *
-     * Checks for an existing instance
-     * and if it does't find one, creates it.
-     *
-     * @since 1.0.0
-     *
-     * @return object Class instance
-     */
-    public static function init() {
-        if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Wp_Content_Pilot ) ) {
-            self::$instance = new Wp_Content_Pilot;
-            self::$instance->setup();
-        }
+	/**
+	 * @since 1.0.0
+	 *
+	 * @var \WPCP_Elements
+	 */
+	public $elements;
 
-        return self::$instance;
-    }
+	/**
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
+	public $plugin_name = 'WP Content Pilot';
 
+	/**
+	 * It will hold current running campaign ID.
+	 *
+	 * @since 1.0.4
+	 * @var int
+	 */
+	private $campaign_id = null;
 
-    /**
-     * Magic getter to bypass referencing plugin.
-     *
-     * @param $prop
-     *
-     * @return mixed
-     */
-    public function __get( $prop ) {
-        if ( array_key_exists( $prop, $this->container ) ) {
-            return $this->container[ $prop ];
-        }
+	/**
+	 * ContentPilot constructor.
+	 */
+	public function __construct() {
+		register_activation_hook( __FILE__, array( $this, 'activation_check' ) );
 
-        return $this->{$prop};
-    }
+		add_action( 'admin_init', array( $this, 'check_environment' ) );
+		add_action( 'admin_init', array( $this, 'add_plugin_notices' ) );
+		add_action( 'admin_notices', array( $this, 'admin_notices' ), 15 );
 
-    /**
-     * Magic isset to bypass referencing plugin.
-     *
-     * @param $prop
-     *
-     * @return mixed
-     */
-    public function __isset( $prop ) {
-        return isset( $this->{$prop} ) || isset( $this->container[ $prop ] );
-    }
+		add_action( 'init', array( $this, 'localization_setup' ) );
+		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ) );
 
+		add_action( 'plugins_loaded', array( $this, 'instantiate' ) );
 
-    /**
-     * Define constants
-     *
-     * @since 1.0.0
-     *
-     * @return void
-     */
-    private function define_constants() {
-        define( 'WPCP_VERSION', $this->version );
-        define( 'WPCP_FILE', __FILE__ );
-        define( 'WPCP_PATH', dirname( WPCP_FILE ) );
-        define( 'WPCP_INCLUDES', WPCP_PATH . '/includes' );
-        define( 'WPCP_VENDOR_DIR', WPCP_PATH . '/vendor' );
-        define( 'WPCP_URL', plugins_url( '', WPCP_FILE ) );
-        define( 'WPCP_ASSETS', WPCP_URL . '/assets' );
-        define( 'WPCP_VIEWS', WPCP_PATH . '/views' );
-        define( 'WPCP_TEMPLATES_DIR', WPCP_PATH . '/templates' );
-    }
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 
-    /**
-     * Include required files
-     *
-     * @since 1.0.0
-     *
-     * @return void
-     */
-    private function includes() {
-        require WPCP_VENDOR_DIR . '/autoload.php';
-        require WPCP_INCLUDES . '/functions.php';
-        require WPCP_INCLUDES . '/functions-html.php';
-        require WPCP_INCLUDES . '/function-actions.php';
-        require WPCP_INCLUDES . '/function-filters.php';
-        require WPCP_INCLUDES . '/actions-filters.php';
-        require WPCP_INCLUDES . '/module-categories.php';
-        require WPCP_INCLUDES . '/core/class-insights.php';
-    }
+		// if the environment check fails, initialize the plugin
+		if ( $this->is_environment_compatible() ) {
+			require_once dirname( __FILE__ ) . '/includes/class-install.php';
+			register_activation_hook( __FILE__, array( 'WPCP_Install', 'activate' ) );
+			register_deactivation_hook( __FILE__, array( 'WPCP_Install', 'deactivate' ) );
+			$this->init_plugin();
+			add_action( 'admin_init', array( $this, 'plugin_upgrades' ) );
+		}
+	}
 
-    /**
-     * Instantiate classes
-     *
-     * @since 1.0.0
-     *
-     * @return void
-     */
-    private function instantiate() {
-        new \Pluginever\WPCP\Core\Cron();
-        new \Pluginever\WPCP\Install();
-        new \Pluginever\WPCP\Upgrades();
-        new \Pluginever\WPCP\Core\CPT();
-        new \Pluginever\WPCP\Core\Help();
-        new \Pluginever\WPCP\Admin\Admin();
-        new \Pluginever\WPCP\Core\Ajax();
-        new \Pluginever\WPCP\Core\Tracker();
+	/**
+	 * Cloning is forbidden.
+	 *
+	 * @since 1.0
+	 */
+	public function __clone() {
+		_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'wp-content-pilot' ), '1.0.0' );
+	}
 
-        $this->container['modules'] = new \Pluginever\WPCP\Module\Module();
-    }
-
-    /**
-     * Init Hooks
-     *
-     * @since 1.0.0
-     *
-     * @return void
-     */
-    private function init_actions() {
-        // Localize our plugin
-        add_action( 'init', [ $this, 'localization_setup' ] );
-
-        add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
-    }
-
-    /**
-     * Initialize plugin for localization
-     *
-     * @since 1.0.0
-     *
-     * @return void
-     */
-    public function localization_setup() {
-        load_plugin_textdomain( 'wp_content_pilot', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-    }
+	/**
+	 * Universalizing instances of this class is forbidden.
+	 *
+	 * @since 1.0
+	 */
+	public function __wakeup() {
+		_doing_it_wrong( __FUNCTION__, __( 'Universalizing instances of this class is forbidden.', 'wp-content-pilot' ), '1.0.0' );
+	}
 
 
-    /**
-     * Plugin action links
-     *
-     * @param  array $links
-     *
-     * @return array
-     */
-    function plugin_action_links( $links ) {
+	/**
+	 * Checks the environment on loading WordPress, just in case the environment changes after activation.
+	 *
+	 * @internal
+	 *
+	 * @since 1.0.0
+	 */
+	public function check_environment() {
 
-        //$links[] = '<a href="' . admin_url( 'admin.php?page=' ) . '">' . __( 'Settings', '' ) . '</a>';
+		if ( ! $this->is_environment_compatible() && is_plugin_active( plugin_basename( __FILE__ ) ) ) {
 
-        return $links;
-    }
+			$this->deactivate_plugin();
+
+			$this->add_admin_notice( 'bad_environment', 'error', $this->plugin_name . ' has been deactivated. ' . $this->get_environment_message() );
+		}
+	}
+
+	/**
+	 * Adds notices for out-of-date WordPress and/or WP Content Pilot versions.
+	 *
+	 * @internal
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_plugin_notices() {
+
+		if ( ! $this->is_wp_compatible() ) {
+
+			$this->add_admin_notice( 'update_wordpress', 'error', sprintf(
+				'%s requires WordPress version %s or higher. Please %supdate WordPress &raquo;%s',
+				'<strong>' . $this->plugin_name . '</strong>',
+				$this->min_wp,
+				'<a href="' . esc_url( admin_url( 'update-core.php' ) ) . '">', '</a>'
+			) );
+		}
+	}
+
+	/**
+	 * Determines if the server environment is compatible with this plugin.
+	 *
+	 * Override this method to add checks for more than just the PHP version.
+	 *
+	 * @return bool
+	 * @since 1.0.0
+	 *
+	 */
+	protected function is_environment_compatible() {
+
+		return version_compare( PHP_VERSION, $this->min_php, '>=' );
+	}
+
+	/**
+	 * Determines if the WordPress compatible.
+	 *
+	 * @return bool
+	 * @since 1.0.0
+	 *
+	 */
+	protected function is_wp_compatible() {
+
+		return version_compare( get_bloginfo( 'version' ), $this->min_wp, '>=' );
+	}
+
+	/**
+	 * Determines if the required plugins are compatible.
+	 *
+	 * @return bool
+	 * @since 1.0.0
+	 *
+	 */
+	protected function plugins_compatible() {
+
+		return $this->is_wp_compatible();
+	}
+
+	/**
+	 * Deactivates the plugin.
+	 *
+	 * @since 1.0.0
+	 */
+	protected function deactivate_plugin() {
+
+		deactivate_plugins( plugin_basename( __FILE__ ) );
+
+		if ( isset( $_GET['activate'] ) ) {
+			unset( $_GET['activate'] );
+		}
+	}
+
+	/**
+	 * Adds an admin notice to be displayed.
+	 *
+	 * @param string $slug the notice slug
+	 * @param string $class the notice class
+	 * @param string $message the notice message body
+	 *
+	 * @since 1.0.0
+	 *
+	 */
+	public function add_admin_notice( $slug, $class, $message ) {
+
+		$this->notices[ $slug ] = array(
+			'class'   => $class,
+			'message' => $message
+		);
+	}
 
 
-    /**
-     * Check if the PHP version is supported
-     *
-     * @return bool
-     */
-    public function is_supported_php( $min_php = null ) {
+	/**
+	 * Displays any admin notices added
+	 *
+	 * @internal
+	 *
+	 * @since 2.8.0
+	 */
+	public function admin_notices() {
+		$notices = (array) array_merge( $this->notices, get_option( 'wpcp_admin_notifications', [] ) );
+		foreach ( $notices as $notice_key => $notice ) :
 
-        $min_php = $min_php ? $min_php : $this->min_php;
+			?>
+			<div class="notice <?php echo sanitize_html_class( $notice['class'] ); ?>">
+				<p><?php echo wp_kses( $notice['message'], array( 'a' => array( 'href' => array() ) ) ); ?></p>
+			</div>
+			<?php
+			update_option( 'wpcp_admin_notifications', [] );
+		endforeach;
+	}
 
-        if ( version_compare( PHP_VERSION, $min_php, '<=' ) ) {
-            return false;
-        }
+	/**
+	 * Returns the message for display when the environment is incompatible with this plugin.
+	 *
+	 * @return string
+	 * @since 1.0.0
+	 *
+	 */
+	protected function get_environment_message() {
 
-        return true;
-    }
+		return sprintf( 'The minimum PHP version required for this plugin is %1$s. You are running %2$s.', $this->min_php, PHP_VERSION );
+	}
 
-    /**
-     * Show notice about PHP version
-     *
-     * @return void
-     */
-    function php_version_notice() {
+	/**
+	 * Checks the server environment and other factors and deactivates plugins as necessary.
+	 *
+	 * @internal
+	 *
+	 * @since 1.0.0
+	 */
+	public function activation_check() {
 
-        if ( $this->is_supported_php() || ! current_user_can( 'manage_options' ) ) {
-            return;
-        }
+		if ( ! $this->is_environment_compatible() ) {
 
-        $error = __( 'Your installed PHP Version is: ', 'wpcp' ) . PHP_VERSION . '. ';
-        $error .= __( 'The <strong>WP Content Pilot</strong> plugin requires PHP version <strong>', 'wpcp' ) . $this->min_php . __( '</strong> or greater.', 'wp_content_pilot' );
-        ?>
-        <div class="error">
-            <p><?php printf( $error ); ?></p>
-        </div>
-        <?php
-    }
+			$this->deactivate_plugin();
 
-    /**
-     * Bail out if the php version is lower than
-     *
-     * @return void
-     */
-    function auto_deactivate() {
-        if ( $this->is_supported_php() ) {
-            return;
-        }
+			wp_die( $this->plugin_name . ' could not be activated. ' . $this->get_environment_message() );
+		}
+	}
 
-        deactivate_plugins( plugin_basename( __FILE__ ) );
+	/**
+	 * Initialize plugin for localization
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 *
+	 */
+	public function localization_setup() {
+		load_plugin_textdomain( 'wp-content-pilot', false, dirname( plugin_basename( __FILE__ ) ) . '/i18n/languages/' );
+	}
 
-        $error = __( '<h1>An Error Occurred</h1>', 'wpcp' );
-        $error .= __( '<h2>Your installed PHP Version is: ', 'wpcp' ) . PHP_VERSION . '</h2>';
-        $error .= __( '<p>The <strong>WP Content Pilot</strong> plugin requires PHP version <strong>', 'wp_content_pilot' ) . $this->min_php . __( '</strong> or greater', 'wpcp' );
-        $error .= __( '<p>The version of your PHP is ', 'wpcp' ) . '<a href="http://php.net/supported-versions.php" target="_blank"><strong>' . __( 'unsupported and old', 'wpcp' ) . '</strong></a>.';
-        $error .= __( 'You should update your PHP software or contact your host regarding this matter.</p>', 'wpcp' );
+	/**
+	 * Plugin action links
+	 *
+	 * @param array $links
+	 *
+	 * @return array
+	 */
+	public function plugin_action_links( $links ) {
+		$links[] = '<a href="' . admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-settings' ) . '">' . __( 'Settings', 'wp-content-pilot' ) . '</a>';
+		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
+			$links[] = '<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro" style="color: red;font-weight: bold;" target="_blank">' . __( 'Upgrade to PRO', 'wp-content-pilot' ) . '</a>';
+		}
+		return $links;
+	}
 
-        wp_die( $error, __( 'Plugin Activation Error', 'wpcp' ), array( 'back_link' => true ) );
-    }
+	/**
+	 * Add custom cron schedule
+	 *
+	 * @param $schedules
+	 *
+	 * @return mixed
+	 */
+	public function custom_cron_schedules( $schedules ) {
+		$schedules ['once_a_minute'] = array(
+			'interval' => 60,
+			'display'  => __( 'Once a Minute', 'wp-content-pilot' )
+		);
 
-    /**
-     * Load modules
-     *
-     * We don't load every module at once, just load
-     * what is necessary
-     *
-     * @return void
-     */
-    public function load_module() {
-        $modules = $this->modules->get_modules();
+		return $schedules;
+	}
 
-        if ( ! $modules ) {
-            return;
-        }
+	/**
+	 * Add notice to database
+	 * since 1.0.0
+	 *
+	 * @param        $message
+	 * @param string $type
+	 *
+	 * @return void
+	 */
+	public function add_notice( $message, $type = 'updated' ) {
+		$notices = get_option( 'wpcp_admin_notifications', [] );
+		if ( is_string( $message ) && is_string( $type ) && ! wp_list_filter( $notices, array( 'message' => $message ) ) ) {
 
-        foreach ( $modules as $key => $module ) {
+			$notices[] = array(
+				'message' => $message,
+				'class'   => $type == 'success' ? 'updated' : $type
+			);
 
-            if ( ! $this->modules->get_module( $key ) ) {
-                continue;
-            }
+			update_option( 'wpcp_admin_notifications', $notices );
+		}
+	}
 
-            if ( isset( $module['callback'] ) && class_exists( $module['callback'] ) ) {
-                new $module['callback']( $this );
-            }
-        }
-    }
+	/**
+	 * Initializes the plugin.
+	 *
+	 * @internal
+	 *
+	 * @since 1.0.0
+	 */
+	public function init_plugin() {
+		if ( $this->plugins_compatible() ) {
+			$this->define_constants();
+			$this->includes();
+			do_action( 'content_pilot_loaded' );
+		}
+	}
+
+	/**
+	 * Define EverProjects Constants.
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 */
+	private function define_constants() {
+		//$upload_dir = wp_upload_dir( null, false );
+		define( 'WPCP_VERSION', $this->version );
+		define( 'WPCP_FILE', __FILE__ );
+		define( 'WPCP_PATH', dirname( WPCP_FILE ) );
+		define( 'WPCP_INCLUDES', WPCP_PATH . '/includes' );
+		define( 'WPCP_MODULES', WPCP_PATH . '/modules' );
+		define( 'WPCP_URL', plugins_url( '', WPCP_FILE ) );
+		define( 'WPCP_VIEWS', WPCP_PATH . '/views' );
+		define( 'WPCP_ASSETS_URL', WPCP_URL . '/assets' );
+		define( 'WPCP_TEMPLATES_DIR', WPCP_PATH . '/templates' );
+	}
+
+	/**
+	 * Include required core files used in admin and on the frontend.
+	 */
+	public function includes() {
+		//vendor
+		require_once WPCP_PATH . '/vendor/autoload.php';
+
+		//functions
+		require_once WPCP_INCLUDES . '/core-functions.php';
+		require_once WPCP_INCLUDES . '/formatting-functions.php';
+		require_once WPCP_INCLUDES . '/action-functions.php';
+		require_once WPCP_INCLUDES . '/hooks-functions.php';
+		require_once WPCP_INCLUDES . '/class-install.php';
+		require_once WPCP_INCLUDES . '/post-types.php';
+		require_once WPCP_INCLUDES . '/script-functions.php';
+		require_once WPCP_INCLUDES . '/metabox-functions.php';
+
+		//core files
+		require_once WPCP_INCLUDES . '/wp-async-request.php';
+		require_once WPCP_INCLUDES . '/wp-background-process.php';
+		require_once WPCP_INCLUDES . '/class-automatic-campaign.php';
+		require_once WPCP_INCLUDES . '/class-fetch-contents.php';
+		require_once WPCP_INCLUDES . '/class-elements.php';
+		require_once WPCP_INCLUDES . '/class-ajax.php';
+		require_once WPCP_INCLUDES . '/class-campaign.php';
+		require_once WPCP_INCLUDES . '/class-module.php';
+
+		//settings
+		require_once WPCP_INCLUDES . '/class-admin-menu.php';
+		require_once WPCP_INCLUDES . '/class-settings-api.php';
+		require_once WPCP_INCLUDES . '/class-settings.php';
+
+		//misc
+		require_once WPCP_INCLUDES . '/class-help.php';
+		require_once WPCP_INCLUDES . '/class-promotion.php';
+
+		//modules
+		require_once WPCP_MODULES . '/class-feed.php';
+		require_once WPCP_MODULES . '/class-article.php';
+		require_once WPCP_MODULES . '/class-envato.php';
+		require_once WPCP_MODULES . '/class-youtube.php';
+		require_once WPCP_MODULES . '/class-flickr.php';
+	}
+
+
+	/**
+	 * Do plugin upgrades
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 *
+	 */
+	function plugin_upgrades() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		require_once( dirname( __FILE__ ) . '/includes/class-upgrades.php' );
+		$upgrader = new ContentPilot_Upgrades();
+
+		if ( $upgrader->needs_update() ) {
+			$upgrader->perform_updates();
+		}
+	}
+
+	/**
+	 * instantiate plugins
+	 * since 1.0.0
+	 */
+	public function instantiate() {
+		if ( $this->plugins_compatible() ) {
+			new WPCP_Ajax();
+			new WPCP_Automatic_Campaign();
+			new WPCP_Fetch_Contents();
+			new WPCP_Feed();
+			new WPCP_Article();
+			new WPCP_Envato();
+			new WPCP_Youtube();
+			new WPCP_Flickr();
+
+			new WPCP_Help();
+
+			$this->elements = new WPCP_Elements();
+			$this->modules  = new WPCP_Module();
+		}
+	}
+
+	/**
+	 * Set running campaign ID
+	 *
+	 * @param int $id
+	 *
+	 * @return void
+	 */
+	public function set_campaign_id( $id = null ) {
+		$this->campaign_id = $id;
+	}
+
+	/**
+	 * Get running campaign ID
+	 *
+	 * @return int|null
+	 */
+	public function get_campaign_id() {
+		return $this->campaign_id;
+	}
+
+	/**
+	 * Returns the plugin loader main instance.
+	 *
+	 * @return \ContentPilot
+	 * @since 1.0.0
+	 */
+	public static function instance() {
+
+		if ( null === self::$instance ) {
+
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
 
 }
 
-/**
- * Initialize the plugin
- *
- * @return object
- */
-function wp_content_pilot() {
-    return Wp_Content_Pilot::init();
+function content_pilot() {
+	return ContentPilot::instance();
 }
 
-// kick-off
-wp_content_pilot();
+//fire off the plugin
+content_pilot();

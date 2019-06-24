@@ -26,7 +26,7 @@ class Envato extends Item {
         $user_name = $this->settings['user_name'];
 
         if ( empty( $token ) ) {
-            $msg = __( 'Flickr API is not set. Please configure Flickr settings.', 'wpcp' );
+            $msg = __( 'Flickr API is not set. Please configure Flickr settings.', 'wp-content-pilot' );
             wpcp_log( 'critical', $msg );
 
             return new \WP_Error( 'invalid-flickr-settings', $msg );
@@ -161,17 +161,17 @@ class Envato extends Item {
         ];
 
         $contents = [
-            __( 'Image', 'wpcp' )       => $post['image'],
-            __( 'Author', 'wpcp' )      => sprintf( "<a href='%s'>%s</a>", $response->author_url, $post['author'] ),
-            __( 'Description', 'wpcp' ) => $response->description,
-            __( 'Price', 'wpcp' )       => $post['price_html'],
-            __( 'Rating', 'wpcp' )      => $response->rating,
-            __( 'tags', 'wpcp' )        => $post['tags'],
-            __( 'categories', 'wpcp' )  => $post['categories'],
-            __( 'Total Sales', 'wpcp' ) => $post['number_of_sales'],
-            __( 'Live demo', 'wpcp' )   => $post['live_url'],
-            __( 'Attributes', 'wpcp' )  => $attributes_html,
-            __( 'Buy Now', 'wpcp' )     => sprintf( "<a href='%s'>%s</a>", $post['affiliate_url'], __( 'Buy Now', 'wpcp' ) ),
+            __( 'Image', 'wp-content-pilot' )       => $post['image'],
+            __( 'Author', 'wp-content-pilot' )      => sprintf( "<a href='%s'>%s</a>", $response->author_url, $post['author'] ),
+            __( 'Description', 'wp-content-pilot' ) => $response->description,
+            __( 'Price', 'wp-content-pilot' )       => $post['price_html'],
+            __( 'Rating', 'wp-content-pilot' )      => $response->rating,
+            __( 'tags', 'wp-content-pilot' )        => $post['tags'],
+            __( 'categories', 'wp-content-pilot' )  => $post['categories'],
+            __( 'Total Sales', 'wp-content-pilot' ) => $post['number_of_sales'],
+            __( 'Live demo', 'wp-content-pilot' )   => $post['live_url'],
+            __( 'Attributes', 'wp-content-pilot' )  => $attributes_html,
+            __( 'Buy Now', 'wp-content-pilot' )     => sprintf( "<a href='%s'>%s</a>", $post['affiliate_url'], __( 'Buy Now', 'wp-content-pilot' ) ),
         ];
 
         $html = '';

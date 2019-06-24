@@ -7,7 +7,7 @@ class Module {
     /**
      * Hold the modules
      *
-     * @var
+     * @var array
      */
     protected $modules;
 
@@ -24,22 +24,22 @@ class Module {
      * @return void
      */
     public function init_modules() {
-        $this->modules = [
+        $modules = [
             'article' => [
-                'title'       => __( 'Article', 'wpcp' ),
-                'description' => __( 'Scraps articles with the predefined keywords', 'wpcp' ),
+                'title'       => __( 'Article', 'wp-content-pilot' ),
+                'description' => __( 'Scraps articles with the predefined keywords', 'wp-content-pilot' ),
                 'supports'    => array( 'author', 'title', 'except', 'content', 'image_url', 'image', 'images' ),
                 'callback'    => 'Pluginever\WPCP\Module\Article',
             ],
             'feed'    => [
-                'title'       => __( 'Feed', 'wpcp' ),
-                'description' => __( 'Scraps articles from the feed urls', 'wpcp' ),
+                'title'       => __( 'Feed', 'wp-content-pilot' ),
+                'description' => __( 'Scraps articles from the feed urls', 'wp-content-pilot' ),
                 'supports'    => array( 'author', 'title', 'except', 'content', 'image_url', 'image', 'images' ),
                 'callback'    => 'Pluginever\WPCP\Module\Feed',
             ],
             'flickr'  => [
-                'title'       => __( 'Flickr', 'wpcp' ),
-                'description' => __( 'Scraps photo and contents by the predefined keywords', 'wpcp' ),
+                'title'       => __( 'Flickr', 'wp-content-pilot' ),
+                'description' => __( 'Scraps photo and contents by the predefined keywords', 'wp-content-pilot' ),
                 'supports'    => array(
                     'published',
                     'author',
@@ -63,8 +63,8 @@ class Module {
                 'callback'    => 'Pluginever\WPCP\Module\Flickr',
             ],
             'youtube' => [
-                'title'       => __( 'Youtube', 'wpcp' ),
-                'description' => __( 'Scraps youtube video and contents using the predefined keywords', 'wpcp' ),
+                'title'       => __( 'Youtube', 'wp-content-pilot' ),
+                'description' => __( 'Scraps youtube video and contents using the predefined keywords', 'wp-content-pilot' ),
                 'supports'    => array(
                     'author',
                     'published',
@@ -88,8 +88,8 @@ class Module {
                 'callback'    => 'Pluginever\WPCP\Module\Youtube',
             ],
             'envato'  => [
-                'title'       => __( 'Envato', 'wpcp' ),
-                'description' => __( 'Scraps photo and contents by the predefined keywords', 'wpcp' ),
+                'title'       => __( 'Envato', 'wp-content-pilot' ),
+                'description' => __( 'Scraps photo and contents by the predefined keywords', 'wp-content-pilot' ),
                 'supports'    => array(
                     'published',
                     'author',
@@ -122,6 +122,7 @@ class Module {
             ],
         ];
 
+        $this->modules = apply_filters( 'wpcp_modules', $modules );
     }
 
     /**
@@ -130,7 +131,7 @@ class Module {
      * @return array
      */
     public function get_modules() {
-        return apply_filters( 'wpcp_get_modules', $this->modules );
+        return $this->modules;
     }
 
     /**
@@ -147,5 +148,4 @@ class Module {
 
         return false;
     }
-
 }

@@ -62,7 +62,7 @@ class Feed extends Item {
             return $rss;
         }
         if ( $this->is_result_like_last_time( $rss ) ) {
-            $msg = __( sprintf('Could not discover any new post to for the url . Please try letter.', $this->keyword), 'wpcp' );
+            $msg = __( sprintf('Could not discover any new post to for the url . Please try letter.', $this->keyword), 'wp-content-pilot' );
             wpcp_log( 'log', $msg );
 
             return new \WP_Error( 'no-new-result', $msg );
@@ -73,7 +73,7 @@ class Feed extends Item {
 
         if ( ! isset( $max_items ) || $max_items == 0 ) {
             wpcp_disable_keyword( $this->campaign_id, $this->keyword, '_wpcp_feed_links' );
-            $msg = __( 'Could not find any post so disabling url', 'wpcp' );
+            $msg = __( 'Could not find any post so disabling url', 'wp-content-pilot' );
             wpcp_log( 'critical', $msg );
 
             return new \WP_Error( 'fetch-links-failed', $msg );

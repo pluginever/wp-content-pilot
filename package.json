@@ -1,32 +1,53 @@
 {
   "name": "wp-content-pilot",
   "title": "WP Content Pilot",
-  "description": "The plugin posts high quality Articles. Amazon, Ebay, BestBuy, Walmart Products Youtube, Vimeo Videos as well as Images from Flicker and from others platforms based on your keywords.",
-  "version": "1.0.3",
-  "homepage": "http://pluginever.com",
+  "description": "The Best WordPress Plugin ever made!",
+  "version": "1.0.4",
+  "homepage": "https://www.pluginever.com",
   "author": {
-    "name": "PluginEver",
+    "name": "pluginever",
     "email": "support@pluginever.com",
-    "url": "http://pluginever.com"
+    "url": "https://www.pluginever.com"
+  },
+  "engines": {
+    "node": ">=8.9.3",
+    "npm": ">=5.5.1"
+  },
+  "scripts": {
+    "build": "grunt",
+    "build-watch": "grunt watch"
   },
   "devDependencies": {
+    "autoprefixer": "~8.6.2",
+    "babel": "^6.5.2",
+    "babel-cli": "^6.14.0",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-stage-2": "^6.13.0",
+    "config": "^1.24.0",
+    "cross-env": "^5.1.6",
     "grunt": "^1.0.3",
-    "grunt-contrib-clean": "^1.1.0",
+    "grunt-checktextdomain": "~1.0.1",
+    "grunt-contrib-clean": "~1.1.0",
     "grunt-contrib-compress": "^1.4.3",
-    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-concat": "~1.0.1",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-cssmin": "^2.2.0",
-    "grunt-contrib-imagemin": "^2.0.1",
-    "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-nodeunit": "^2.0.0",
-    "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-uglify": "^3.0.1",
+    "grunt-contrib-cssmin": "~2.2.1",
+    "grunt-contrib-jshint": "~1.1.0",
+    "grunt-contrib-uglify": "~3.3.0",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-livereload": "^0.1.3",
-    "grunt-notify": "^0.4.5",
-    "grunt-phpcs": "^0.4.0",
-    "grunt-wp-i18n": "^1.0.2",
-    "jshint-stylish": "^2.2.1"
+    "grunt-phpcs": "~0.4.0",
+    "grunt-postcss": "~0.9.0",
+    "grunt-prompt": "^1.3.3",
+    "grunt-sass": "~2.1.0",
+    "grunt-stylelint": "~0.10.0",
+    "grunt-wp-i18n": "~1.0.1",
+    "stylelint": "~9.2.1",
+    "braces": ">=2.3.1",
+    "js-yaml": ">=3.13.1",
+    "fstream": ">=1.0.12",
+    "tar": ">=2.2.2"
   },
   "keywords": []
 }
