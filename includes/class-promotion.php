@@ -31,7 +31,7 @@ class WPCP_Promotion {
 			return;
 		}
 
-		$offer_msg = __( 'Your most desired and long awaited update for <strong>WP Content Pilot(v1.0.4)</strong> is finally here.<br> Now it will empower your auto blogging & Affiliate Marketing with <strong>5 free</strong> and <strong>16 premium</strong> campaigns that includes outstanding features. Learn more about the premium version.<br> Use Coupon <strong>WPCPPROLAUNCH</strong> to avail <strong>20%</strong> discount if you upgrade to PRO now.</strong>', 'wpcp' );
+		$offer_msg = __( 'Your most desired and long awaited update for <strong>WP Content Pilot(v1.0.4)</strong> is finally here.<br> Now it will empower your auto blogging & Affiliate Marketing with <strong>5 free</strong> and <strong>16 premium</strong> campaigns that includes outstanding features. Learn more about the premium version.<br> Use Coupon <strong>WPCPPROLAUNCH</strong> to avail <strong>20%</strong> discount if you upgrade to PRO now.</strong>', 'wp-content-pilot' );
 
 		?>
 		<div class="notice notice-info is-dismissible" id="wpcp-promotional-offer-notice">
@@ -43,7 +43,7 @@ class WPCP_Promotion {
 			<p>
 				<?php echo $offer_msg; ?>
 			</p>
-			<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash" class="button button-pro promo-btn" target="_blank"><?php _e( 'Get Pro', 'wpcp' ); ?></a>
+			<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash" class="button button-pro promo-btn" target="_blank"><?php _e( 'Get Pro', 'wp-content-pilot' ); ?></a>
 		</div><!-- #wpcp-promotional-offer-notice -->
 
 		<style>

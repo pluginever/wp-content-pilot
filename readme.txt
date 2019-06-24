@@ -26,8 +26,6 @@ It will keeps posting articles even while you are asleep.
 
 Just install the plugin and configure it as per your requirements and the plugin will work just like your assistant for posting contents on your site at a scheduled time.
 
->[Documentation ](https://www.pluginever.com/docs/wp-content-pilot/)
-
 = Features: =
 * RSS/Feed Automatic Post to WordPress
 * Envato Products Auto Posting to WordPress
@@ -73,64 +71,67 @@ Just install the plugin and configure it as per your requirements and the plugin
 * Custom Category
 * Custom Tag
 
-= Free Modules =
-== RSS/Feed ==
+== Free Modules ==
+
+= RSS/Feed =
 WP Content Pilot can can keep track of the defined feed links and whenever a new post is found it will automatically start posting content from that site to your site.It can import the full content, author, tags, categories and set the featured image.
 
-== Article ==
+= Article =
 WP Content Pilot can search entire web based on your keyword and analyse the article’s readability using its AI then post every x hour until it meets the defined target.It can import the full content, author, tags, categories and set the featured image.
 
-== Envato ==
+= Envato =
 WP Content Pilot can import from Envato markets like ThemeForest, CodeCanyon, GraphicRiver, PhotoDune by keyword, tag, category or a specific seller. It automatically include affiliate links making sure you get the commissions from products sold via your referrals.
 
-== Youtube ==
+= Youtube =
 WP Content Pilot can search YouTube for videos matching your keywords and post them to your WordPress site.You can post videos from YouTube by keyword, username or by a specific playlist and auto publish them to your website with this WP Content Pilot WordPress plugin.
 
-== Flickr ==
+= Flickr =
 WP Content Pilot can search flickr images for keywords you specify and will post the images and caption as a post on your site. It can also post from a specific flickr user by searching that user items for specified keywords or without filtering.
 
 = Pro Modules =
-== Amazon ==
+
+
+= Amazon =
 WP Content Pilot can search Amazon for products matching your keywords, post them and add your affiliate links automatically so you can make commissions from products sold via your referrals.
 
-== Facebook ==
+= Facebook =
 WP Content Pilot can Plugin can post from Facebook pages, Facebook open groups, closed groups or personal profiles and each new post from Facebook will be added as a post to WordPress automatically. where it can post full sized images shared on the page, videos and links.
 
-== Twitter ==
+= Twitter =
 WP Content Pilot can import Tweets from Twitter to WordPress. It can import Tweets based on keyword, hashtag or from a specific profile. It will automatically publish those on your site as regular WordPress posts.
 
-== eBay == 
+= eBay = 
 Automatically post eBay auctions to your WordPress site with WP Content Pilot. The importer works both on specific keyword and seller. You will also be able to add extra filter on top of specific sellers. The plugin will automatically take care of your affiliate links.
 
-== ClickBank ==
+= ClickBank =
 Effortlessly publish ClickBank products to your WordPress site with WP Content Pilot. Fetch and post products as WordPress posts from the ClickBank site for specific keywords. Product description and affiliate links will be taken care by the plugin.
 
-== EzineArticles ==
+= EzineArticles =
 EzineArticles is a great source of quality articles. WP Content Pilot can fetch and automatically post articles to your WordPress site from EzineArticles. You have to just add your desired keyword and our plugin will take care of everything else. It will fetch quality articles from EzineArticles that matches your campaign quality.
 
-== SoundCloud == 
+= SoundCloud = 
 Automatically post audio (music, podcast) from SoundCloud to your WordPress site with WP Content Pilot. It can fetch sounds based on specific keywords, username or by specific playlist.
 
-== Pinterest ==
+= Pinterest =
 WP Content Pilot can import Pinterest pins and post them to your WordPress site. You can target specific pins by keyword, board or from a specific user profile. You will also be able to apply custom filter on the user.
 
-== Instagram ==
+= Instagram =
 Import Instagram posts and publish them to your WordPress site with WP Content Pilot. You can target posts with specific keyword, hashtag and also a specific profile to generate desired posts.
 
-== Reddit ==
+= Reddit =
 
 Import posts from Reddit to your WordPress site with WP Content Pilot. You will be able to run campaign by searching specific user reddits or subreddit. Our plugin will also enable you to fetch comments with support for videos and GIFs.
-== Quora ==
+= Quora =
 
 Quora has earned great reputation as an excellent question answer site. WP Content pilot can grab articles from Quora and auto publish as post on your site. You can insert any keyword to get posts from Quora.
-== Craigslist ==
+= Craigslist =
 
 WP Content Pilot can import Itunes items to WordPress automatically by keyword or artist so it can post apps, songs, movies, ebooks, podcasts and more from Itunes. The plugin automatically insert your affiliate link to ensure you get the commissions from sale.
 
-== Walmart ==
+= Walmart =
 WP Content Pilot can automatically import products from Walmart by keyword optionally by setting filtering category, price. The plugin set the affiliate link automatically to ensure you get the commissions from sale.
 
-== BestBuy ==
+= BestBuy =
 WP Content Pilot can automatically import products from BestBuy by keyword optionally by setting filtering category, price. The plugin set the affiliate link automatically to ensure you get the commissions from sale.
 
 
@@ -187,6 +188,14 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.0.4 -> June 24, 2019 =
+* [Enhance] Full Rewrite of plugin
+* [Enhance] Better Templating
+* [Enhance] Better UI
+* [Enhance] Many more
+
+
+
 = v1.0.3 -> July 8, 2018 =
 * [Feature]  Allow Comment
 * [Feature] Allow Ping back

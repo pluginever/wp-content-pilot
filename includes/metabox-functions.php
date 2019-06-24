@@ -117,7 +117,7 @@ function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'artic
 			'label'       => __( 'Keyword Suggester', 'wp-content-pilot' ),
 			'name'        => '_keyword_suggestion',
 			'placeholder' => __( 'How to cook noodle', 'wp-content-pilot' ),
-			'desc'        => __( 'Type something to find better related keywords', 'wp-content-pilot-pro' ),
+			'desc'        => __( 'Type something to find better related keywords', 'wp-content-pilot' ),
 			'disabled'    => true,
 		) ) );
 	}
@@ -479,7 +479,7 @@ function wpcp_campaign_template_tags_metabox_fields( $post_id, $campaign_type ) 
 
 	$module = content_pilot()->modules->get_module( $campaign_type );
 	if ( empty( $module ) || is_wp_error( $module ) ) {
-		return new WP_Error( 'invalid-module-type', __( 'Invalid module type' ) );
+		return new WP_Error( 'invalid-module-type', __( 'Invalid module type', 'wp-content-pilot' ) );
 	}
 
 	$tags = $module['callback']::get_template_tags();
