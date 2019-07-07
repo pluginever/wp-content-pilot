@@ -147,6 +147,11 @@ $information['per_minute_cron'] = array(
 	'label' => __( 'Per Minute Cron Installed', 'wp-content-pilot' ),
 	'value' => !empty(wp_get_scheduled_event('wpcp_per_minute_scheduled_events')) ? 'Yes' : 'No',
 );
+$cron_status = wpcp_check_cron_status();
+$information['cron_running'] = array(
+	'label' => __( 'Is CRON running', 'wp-content-pilot' ),
+	'value' => is_wp_error($cron_status)? 'No '.esc_html($cron_status->get_error_message()): 'Yes' ,
+);
 
 
 $information['loaded_extensions']   = array(

@@ -133,6 +133,8 @@ final class ContentPilot {
 			register_deactivation_hook( __FILE__, array( 'WPCP_Install', 'deactivate' ) );
 			$this->init_plugin();
 			add_action( 'admin_init', array( $this, 'plugin_upgrades' ) );
+			add_action( 'admin_init', array( $this, 'check_tables_exist' ) );
+			add_action( 'admin_init', array( $this, 'check_if_cron_running' ) );
 		}
 	}
 
@@ -335,6 +337,7 @@ final class ContentPilot {
 		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
 			$links[] = '<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro" style="color: red;font-weight: bold;" target="_blank">' . __( 'Upgrade to PRO', 'wp-content-pilot' ) . '</a>';
 		}
+
 		return $links;
 	}
 
@@ -462,7 +465,7 @@ final class ContentPilot {
 	 * @since 1.0.0
 	 *
 	 */
-	function plugin_upgrades() {
+	public function plugin_upgrades() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
@@ -472,6 +475,39 @@ final class ContentPilot {
 		if ( $upgrader->needs_update() ) {
 			$upgrader->perform_updates();
 		}
+	}
+
+
+	/**
+	 * Check if tables exist
+	 * @return bool
+	 */
+	public function check_tables_exist() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+		global $wpdb;
+		$tables = [ $wpdb->prefix . 'wpcp_links', $wpdb->prefix . 'wpcp_logs' ];
+		foreach ( $tables as $table ) {
+
+			if ( ! $wpdb->query( "DESCRIBE {$table}" ) ) {
+				$this->add_admin_notice( 'db-table-error', 'error', __( 'One or more WP Content Pilot Database table is missing, please reactivate the plugin', 'wp-content-pilot' ) );
+				break;
+			}
+		}
+
+	}
+
+	public function check_if_cron_running(){
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
+		$status = wpcp_check_cron_status();
+		if ( is_wp_error( $status ) ) {
+			$this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf(__('There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot'),  '<strong>'.esc_html( $status->get_error_message() ).'</strong>') );
+		}
+
 	}
 
 	/**
