@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.0.4\n"
+"Project-Id-Version: WP Content Pilot 1.0.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2019-06-24 15:46:13+00:00\n"
+"POT-Creation-Date: 2019-07-15 06:48:55+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -389,7 +389,7 @@ msgstr ""
 msgid "Choose File"
 msgstr ""
 
-#: includes/class-settings.php:21 wp-content-pilot.php:334
+#: includes/class-settings.php:21 wp-content-pilot.php:336
 msgid "Settings"
 msgstr ""
 
@@ -503,6 +503,21 @@ msgstr ""
 
 #: includes/core-functions.php:696
 msgid "The campaign is not ready yet for testing, please allow some time"
+msgstr ""
+
+#: includes/core-functions.php:955
+#. translators: 1: The name of the PHP constant that is set.
+msgid "The %s constant is set to true. WP-Cron spawning is disabled."
+msgstr ""
+
+#: includes/core-functions.php:960
+#. translators: 1: The name of the PHP constant that is set.
+msgid "The %s constant is set to true."
+msgstr ""
+
+#: includes/core-functions.php:991
+#. translators: 1: The HTTP response code.
+msgid "Unexpected HTTP response code: %s"
 msgstr ""
 
 #: includes/hooks-functions.php:56
@@ -1411,58 +1426,62 @@ msgstr ""
 msgid "Per Minute Cron Installed"
 msgstr ""
 
-#: views/menu/status.php:153
+#: views/menu/status.php:152
+msgid "Is CRON running"
+msgstr ""
+
+#: views/menu/status.php:158
 msgid "Loaded PHP Extensions"
 msgstr ""
 
-#: views/menu/status.php:157
+#: views/menu/status.php:162
 msgid "Required PHP Extensions"
 msgstr ""
 
-#: views/menu/status.php:171
+#: views/menu/status.php:176
 msgid "Total Campaigns"
 msgstr ""
 
-#: views/menu/status.php:180
+#: views/menu/status.php:185
 msgid "Status > WP Content Pilot"
 msgstr ""
 
-#: views/menu/status.php:183
+#: views/menu/status.php:188
 msgid ""
 "Experiencing an issue and need to contact WP Content Pilot support? Click "
 "the link below to get debug information you can send to us."
 msgstr ""
 
-#: views/menu/status.php:195
+#: views/menu/status.php:200
 msgid "Get System Information"
 msgstr ""
 
-#: views/menu/status.php:202
+#: views/menu/status.php:207
 msgid "System Information"
 msgstr ""
 
-#: views/menu/status.php:205 views/menu/status.php:212
+#: views/menu/status.php:210 views/menu/status.php:217
 msgid "Setting"
 msgstr ""
 
-#: views/menu/status.php:206 views/menu/status.php:213
-#: views/menu/status.php:236 views/menu/status.php:243
+#: views/menu/status.php:211 views/menu/status.php:218
+#: views/menu/status.php:241 views/menu/status.php:248
 msgid "Value"
 msgstr ""
 
-#: views/menu/status.php:232
+#: views/menu/status.php:237
 msgid "Campaigns Information"
 msgstr ""
 
-#: views/menu/status.php:235 views/menu/status.php:242
+#: views/menu/status.php:240 views/menu/status.php:247
 msgid "Label"
 msgstr ""
 
-#: views/menu/status.php:269
+#: views/menu/status.php:274
 msgid "Copy System Information"
 msgstr ""
 
-#: views/menu/status.php:280
+#: views/menu/status.php:285
 msgid "Copied"
 msgstr ""
 
@@ -1558,20 +1577,32 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: wp-content-pilot.php:145
+#: wp-content-pilot.php:147
 msgid "Cloning is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:154
+#: wp-content-pilot.php:156
 msgid "Universalizing instances of this class is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:336
+#: wp-content-pilot.php:338
 msgid "Upgrade to PRO"
 msgstr ""
 
-#: wp-content-pilot.php:351
+#: wp-content-pilot.php:354
 msgid "Once a Minute"
+msgstr ""
+
+#: wp-content-pilot.php:494
+msgid ""
+"One or more WP Content Pilot Database table is missing, please reactivate "
+"the plugin"
+msgstr ""
+
+#: wp-content-pilot.php:508
+msgid ""
+"There was a problem spawning a call to the WP-Cron system on your site. "
+"This means WP Content Pilot on your site may not work. The problem was: %s"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
