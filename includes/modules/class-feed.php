@@ -62,7 +62,7 @@ class Feed extends Item {
             return $rss;
         }
         if ( $this->is_result_like_last_time( $rss ) ) {
-            $msg = __( sprintf('Could not discover any new post to for the url . Please try letter.', $this->keyword), 'wp-content-pilot' );
+            $msg = __( sprintf('Could not discover any new post to for the url . Please try later.', $this->keyword), 'wp-content-pilot' );
             wpcp_log( 'log', $msg );
 
             return new \WP_Error( 'no-new-result', $msg );

@@ -141,7 +141,7 @@ abstract class WPCP_Campaign {
 			$string_urls = implode( ',', $urls );
 
 			if ( $this->is_result_like_last_time( $string_urls ) ) {
-				$msg = __( sprintf( 'Could not discover any new links to grab contents for the keyword "%s". Please try letter.', $this->keyword ), 'wp-content-pilot' );
+				$msg = __( sprintf( 'Could not discover any new links to grab contents for the keyword "%s". Please try later.', $this->keyword ), 'wp-content-pilot' );
 				wpcp_log( $msg, 'log' );
 
 				return new \WP_Error( 'no-new-result', $msg );
