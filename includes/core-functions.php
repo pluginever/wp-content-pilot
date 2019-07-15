@@ -988,7 +988,7 @@ function wpcp_check_cron_status(){
 	} elseif ( wp_remote_retrieve_response_code( $result ) >= 300 ) {
 		return new WP_Error( 'unexpected_http_response_code', sprintf(
 		/* translators: 1: The HTTP response code. */
-			__( 'Unexpected HTTP response code: %s', 'wp-crontrol' ),
+			__( 'Unexpected HTTP response code: %s', 'wp-content-pilot' ),
 			intval( wp_remote_retrieve_response_code( $result ) )
 		) );
 	} else {
