@@ -25,6 +25,10 @@
     "andreskrey/readability.php": "1.1.0",
     "davechild/textstatistics": "1.0.2",
     "paquettg/php-html-parser": "^1.7",
-    "voku/simple_html_dom": "^3.1"
+    "dg/composer-cleaner": "^2.1"
+  },
+  "extra": {
+    "cleaner-ignore": {
+    }
   }
 }

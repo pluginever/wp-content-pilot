@@ -945,3 +945,55 @@ function wpcp_get_latest_logs( $campaign_id ) {
 	return $logs;
 }
 
+
+
+function wpcp_check_cron_status(){
+	global $wp_version;
+
+	if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) {
+		/* translators: 1: The name of the PHP constant that is set. */
+		return new WP_Error( 'crontrol_info', sprintf( __( 'The %s constant is set to true. WP-Cron spawning is disabled.', 'wp-content-pilot' ), 'DISABLE_WP_CRON' ) );
+	}
+
+	if ( defined( 'ALTERNATE_WP_CRON' ) && ALTERNATE_WP_CRON ) {
+		/* translators: 1: The name of the PHP constant that is set. */
+		return new WP_Error( 'crontrol_info', sprintf( __( 'The %s constant is set to true.', 'wp-content-pilot' ), 'ALTERNATE_WP_CRON' ) );
+	}
+
+	$cached_status = get_transient( 'wpcp-cron-test-ok' );
+
+	if ( $cached_status ) {
+		return true;
+	}
+
+	$sslverify     = version_compare( $wp_version, 4.0, '<' );
+	$doing_wp_cron = sprintf( '%.22F', microtime( true ) );
+
+	$cron_request = apply_filters( 'cron_request', array(
+		'url'  => site_url( 'wp-cron.php?doing_wp_cron=' . $doing_wp_cron ),
+		'key'  => $doing_wp_cron,
+		'args' => array(
+			'timeout'   => 3,
+			'blocking'  => true,
+			'sslverify' => apply_filters( 'https_local_ssl_verify', $sslverify ),
+		),
+	) );
+
+	$cron_request['args']['blocking'] = true;
+
+	$result = wp_remote_post( $cron_request['url'], $cron_request['args'] );
+
+	if ( is_wp_error( $result ) ) {
+		return $result;
+	} elseif ( wp_remote_retrieve_response_code( $result ) >= 300 ) {
+		return new WP_Error( 'unexpected_http_response_code', sprintf(
+		/* translators: 1: The HTTP response code. */
+			__( 'Unexpected HTTP response code: %s', 'wp-content-pilot' ),
+			intval( wp_remote_retrieve_response_code( $result ) )
+		) );
+	} else {
+		set_transient( 'wpcp-cron-test-ok', 1, 3600 );
+		return true;
+	}
+
+}

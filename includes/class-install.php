@@ -87,6 +87,7 @@ class WPCP_Install {
 		}
 	}
 
+
 	/**
 	 * Create cron jobs
 	 *
