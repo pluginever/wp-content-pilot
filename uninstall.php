@@ -21,7 +21,5 @@ if( 'on' == wpcp_get_settings( 'uninstall_on_delete', 'wpcp_settings_misc' ) ) {
 	wp_clear_scheduled_hook( 'wpcp_per_minute_scheduled_events' );
 	wp_clear_scheduled_hook( 'wpcp_daily_scheduled_events' );
 
-
-	delete_option('wpcp_settings_article');
-	$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '\_wpcp_%'" );
+	$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'wpcp_%'" );
 }
