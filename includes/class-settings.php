@@ -41,6 +41,10 @@ class WPCP_Settings {
 			array(
 				'id'    => 'wpcp_settings_envato',
 				'title' => __( 'Envato Settings', 'wp-content-pilot' )
+			),
+			array(
+				'id'    => 'wpcp_settings_misc',
+				'title' => __( 'Misc Settings', 'wp-content-pilot' )
 			)
 		);
 
@@ -96,7 +100,16 @@ class WPCP_Settings {
 					'type'    => 'text',
 					'default' => ''
 				),
-			)
+			),
+			'wpcp_settings_misc' => array(
+				array(
+					'name'    => 'uninstall_on_delete',
+					'label'   => __( 'Remove Data on Uninstall?', 'wp-content-pilot' ),
+					'desc' => __( 'Check this box if you would like to completely remove all of its data when the plugin is deleted.', 'wp-content-pilot' ),
+					'type'    => 'checkbox',
+					'default' => ''
+				),
+			),
 		);
 
 		return apply_filters( 'wpcp_settings_fields', $settings_fields );

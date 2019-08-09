@@ -9,3 +9,19 @@
  */
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
+
+if( 'on' == wpcp_get_settings( 'uninstall_on_delete', 'wpcp_settings_misc' ) ) {
+	global $wpdb;
+
+	// Remove all database tables
+	$wpdb->query( "DROP TABLE IF EXISTS " . $wpdb->prefix . "wpcp_links" );
+	$wpdb->query( "DROP TABLE IF EXISTS " . $wpdb->prefix . "wpcp_logs" );
+
+	/** Cleanup Cron Events */
+	wp_clear_scheduled_hook( 'wpcp_per_minute_scheduled_events' );
+	wp_clear_scheduled_hook( 'wpcp_daily_scheduled_events' );
+
+
+	delete_option('wpcp_settings_article');
+	$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '\_wpcp_%'" );
+}
