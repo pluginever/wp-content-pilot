@@ -9,10 +9,9 @@
  */
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
-$wpcp_settings = get_option( 'uninstall_on_delete', [] );
-if ( isset( $wpcp_settings['wpcp_settings_misc'] ) && $wpcp_settings['wpcp_settings_misc'] == 'on' ) {
+$wpcp_settings = get_option( 'wpcp_settings_misc', [] );
+if ( isset( $wpcp_settings['uninstall_on_delete'] ) && $wpcp_settings['uninstall_on_delete'] == 'on' ) {
 	global $wpdb;
-	error_log( 'Uninstalled' );
 	// Remove all database tables
 	$wpdb->query( "DROP TABLE IF EXISTS " . $wpdb->prefix . "wpcp_links" );
 	$wpdb->query( "DROP TABLE IF EXISTS " . $wpdb->prefix . "wpcp_logs" );
