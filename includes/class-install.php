@@ -34,7 +34,7 @@ class WPCP_Install {
                 `keyword` varchar(191) DEFAULT NULL,
                 `camp_type` varchar(191) DEFAULT NULL,
                 `status` VARCHAR(100) NOT NULL,
-                `url` varchar(500) DEFAULT NULL,
+                `url` longtext DEFAULT NULL,
                 `title` text DEFAULT NULL,
                 `image` text DEFAULT NULL,
                 `content` longtext DEFAULT NULL,
@@ -44,8 +44,7 @@ class WPCP_Install {
                 `gmt_date` datetime DEFAULT CURRENT_TIMESTAMP,
                 `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
                 `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-                PRIMARY KEY (`id`),
-                  UNIQUE (url)
+                PRIMARY KEY (`id`)
             )  CHARACTER SET utf8 COLLATE utf8_general_ci;",
 			"CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}wpcp_logs` (
                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

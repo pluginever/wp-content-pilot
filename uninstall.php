@@ -4,7 +4,7 @@
  *
  * Uninstalling ContentPilot deletes user roles, pages, tables, and options.
  *
- * @package ContentPilot\Uninstaller
+ * @package Uninstaller
  * @version 1.0.0
  */
 
