@@ -25,15 +25,6 @@ class WPCP_Install {
 	public static function create_tables() {
 		global $wpdb;
 		$wpdb->hide_errors();
-		$collate = '';
-		if ( $wpdb->has_cap( 'collation' ) ) {
-			if ( ! empty( $wpdb->charset ) ) {
-				$collate .= "DEFAULT CHARACTER SET $wpdb->charset";
-			}
-			if ( ! empty( $wpdb->collate ) ) {
-				$collate .= " COLLATE $wpdb->collate";
-			}
-		}
 
 		$table_schema = [
 			"CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}wpcp_links` (
@@ -43,7 +34,7 @@ class WPCP_Install {
                 `keyword` varchar(191) DEFAULT NULL,
                 `camp_type` varchar(191) DEFAULT NULL,
                 `status` VARCHAR(100) NOT NULL,
-                `url` varchar(500) DEFAULT NULL,
+                `url` longtext DEFAULT NULL,
                 `title` text DEFAULT NULL,
                 `image` text DEFAULT NULL,
                 `content` longtext DEFAULT NULL,
@@ -53,9 +44,8 @@ class WPCP_Install {
                 `gmt_date` datetime DEFAULT CURRENT_TIMESTAMP,
                 `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
                 `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-                PRIMARY KEY (`id`),
-                  UNIQUE (url)
-            ) $collate;",
+                PRIMARY KEY (`id`)
+            )  CHARACTER SET utf8 COLLATE utf8_general_ci;",
 			"CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}wpcp_logs` (
                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
                 `camp_id` int(11) DEFAULT NULL,
@@ -65,7 +55,7 @@ class WPCP_Install {
                 `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
                 `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`)
-            ) $collate;",
+            )  CHARACTER SET utf8 COLLATE utf8_general_ci;;",
 		];
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		foreach ( $table_schema as $table ) {

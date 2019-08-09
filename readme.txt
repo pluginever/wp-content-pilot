@@ -12,11 +12,13 @@ WP Content Pilot automatically posts contents from various sources based on the 
 
 == Description ==
 
+https://www.youtube.com/watch?v=cNAEJqCqatg
+
 WP Content Pilot is an autoblogging and content curation plugin that allows you to create high-quality WordPress blog posts automatically and inject your affiliate link automatically.
 You just have to set the keywords or targeted feed urls and WP Content Pilot will automatically posts contents from various sources until it meets the target that you set.
 It will keeps posting articles even while you are asleep.
 
-> [Get The PRO Version](https://www.pluginever.com/plugins/wp-content-pilot-pro/) | [Demo](http://wpcp.pluginever.com/wp-admin)  |  [Support](https://www.pluginever.com/support/)  |  [Documentation ](https://www.pluginever.com/docs/wp-content-pilot/)
+> [Get The PRO Version](https://www.pluginever.com/plugins/wp-content-pilot-pro/) | [Demo](http://demo.pluginever.com/wp-content-pilot)  |  [Support](https://www.pluginever.com/support/)  |  [Documentation ](https://www.pluginever.com/docs/wp-content-pilot/)
 
 == How It Works ==
 1. Set keywords or feed links
@@ -43,6 +45,10 @@ Just install the plugin and configure it as per your requirements and the plugin
 * Custom post types
 * Custom post status
 * Custom author setting
+
+= WP Content Pilot Pro Features Demo: =
+
+https://www.youtube.com/watch?v=QPEvHGbc58E
 
 = WP Content Pilot Pro Features: =
 * Auto post Amazon products to WordPress
@@ -71,13 +77,15 @@ Just install the plugin and configure it as per your requirements and the plugin
 * Custom Category
 * Custom Tag
 
+[Upgrade To PRO Now](https://www.pluginever.com/plugins/wp-content-pilot-pro/)
+
 == Free Modules ==
 
 = RSS/Feed =
 WP Content Pilot can can keep track of the defined feed links and whenever a new post is found it will automatically start posting content from that site to your site.It can import the full content, author, tags, categories and set the featured image.
 
 = Article =
-WP Content Pilot can search entire web based on your keyword and analyse the article’s readability using its AI then post every x hour until it meets the defined target.It can import the full content, author, tags, categories and set the featured image.
+WP Content Pilot can search entire web based on your keyword and analyse the articleÃ¢â‚¬â„¢s readability using its AI then post every x hour until it meets the defined target.It can import the full content, author, tags, categories and set the featured image.
 
 = Envato =
 WP Content Pilot can import from Envato markets like ThemeForest, CodeCanyon, GraphicRiver, PhotoDune by keyword, tag, category or a specific seller. It automatically include affiliate links making sure you get the commissions from products sold via your referrals.
@@ -161,7 +169,7 @@ This may have bugs and lack of many features. If you want to contribute to this 
 If your server is not connected to the Internet, then you can use this method-
 
 1. Download the plugin by clicking on the red button above. A ZIP file will be downloaded.
-2. Login to your site’s admin panel and navigate to Plugins -> Add New -> Upload.
+2. Login to your siteÃ¢â‚¬â„¢s admin panel and navigate to Plugins -> Add New -> Upload.
 3. Click choose file, select the plugin file and click install
 
 ###Install Using FTP
@@ -188,18 +196,19 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.0.6 -> August 9, 2019 =
+* [Fix] Database table could not create below mysql v5.6
+* [Enhance] Add settings to remove table on uninstall
+
 = v1.0.5 -> July 15, 2019 =
 * [Enhance] Reporting or cron system
 * [Enhance] Reporting of database missing
-
 
 = v1.0.4 -> June 24, 2019 =
 * [Enhance] Full Rewrite of plugin
 * [Enhance] Better Templating
 * [Enhance] Better UI
 * [Enhance] Many more
-
-
 
 = v1.0.3 -> July 8, 2018 =
 * [Feature]  Allow Comment
