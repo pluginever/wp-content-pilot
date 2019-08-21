@@ -54,7 +54,7 @@ EOT;
 	}
 
 	/**
-	 * Register article module
+	 * Register youtube module
 	 *
 	 * @since 1.0.0
 	 *
@@ -330,6 +330,12 @@ EOT;
 
 	}
 
+	/**
+	 * since 1.0.0
+	 * @param $youtube_time
+	 *
+	 * @return string
+	 */
 	public function convert_youtube_duration( $youtube_time ) {
 		preg_match_all( '/(\d+)/', $youtube_time, $parts );
 
@@ -400,6 +406,10 @@ EOT;
 		return true;
 	}
 
+	/**
+	 * since 1.0.0
+	 * @return array|WP_Error
+	 */
 	public function discover_links() {
 
 		$page         = $this->get_page_number( '' );
@@ -475,6 +485,12 @@ EOT;
 
 	}
 
+	/**
+	 * since 1.0.0
+	 * @param $link
+	 *
+	 * @return array
+	 */
 	public function get_post( $link ) {
 
 		$article = array(
