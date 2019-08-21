@@ -127,7 +127,7 @@ EOT;
 		$links     = wpcp_string_to_array( $raw_links, ',', array( 'trim', 'esc_url' ) );
 		$str_links = implode( ',', $links );
 
-		$force_feed = empty( $posted['_force_feed'] ) ? '' : esc_html( $posted['_force_feed'] );
+		$force_feed = empty( $posted['_force_feed'] ) ? '' : sanitize_key( $posted['_force_feed'] );
 
 		update_post_meta( $post_id, '_feed_links', $str_links );
 		update_post_meta( $post_id, '_force_feed', $force_feed );

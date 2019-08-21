@@ -7,7 +7,6 @@ class WPCP_Install {
 		$current_wpcp_version = get_option( 'wpcp_version', null );
 		self::create_tables();
 		self::populate();
-		self::create_cron_jobs();
 		//save db version
 		if ( is_null( $current_wpcp_version ) ) {
 			update_option( 'wpcp_version', WPCP_VERSION );
@@ -77,16 +76,6 @@ class WPCP_Install {
 		}
 	}
 
-
-	/**
-	 * Create cron jobs
-	 *
-	 * @return void
-	 */
-	public static function create_cron_jobs() {
-		wp_schedule_event( time(), 'once_a_minute', 'wpcp_per_minute_scheduled_events' );
-		wp_schedule_event( time(), 'daily', 'wpcp_daily_scheduled_events' );
-	}
 
 	public static function deactivate() {
 		wp_clear_scheduled_hook( 'wpcp_per_minute_scheduled_events' );
