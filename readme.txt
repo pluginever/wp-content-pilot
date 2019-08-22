@@ -196,6 +196,10 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.0.7 -> August 22, 2019 =
+* [Fix] Remove duplicate modules folder
+* [Enhance] Add force feed feature
+
 = v1.0.6 -> August 9, 2019 =
 * [Fix] Database table could not create below mysql v5.6
 * [Enhance] Add settings to remove table on uninstall
