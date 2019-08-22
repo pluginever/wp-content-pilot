@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.0.6\n"
+"Project-Id-Version: WP Content Pilot 1.0.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2019-08-09 18:00:16+00:00\n"
+"POT-Creation-Date: 2019-08-22 04:26:39+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -158,8 +158,7 @@ msgstr ""
 msgid "Review Us on WP.org"
 msgstr ""
 
-#: includes/class-help.php:219 includes/modules/class-modules.php:29
-#: modules/class-article.php:43
+#: includes/class-help.php:219 modules/class-article.php:43
 msgid "Article"
 msgstr ""
 
@@ -167,8 +166,7 @@ msgstr ""
 msgid "Article module to auto import articles from web"
 msgstr ""
 
-#: includes/class-help.php:225 includes/modules/class-modules.php:91
-#: modules/class-envato.php:66
+#: includes/class-help.php:225 modules/class-envato.php:66
 msgid "Envato"
 msgstr ""
 
@@ -176,8 +174,7 @@ msgstr ""
 msgid "Envato modules to import envato products and affiliation"
 msgstr ""
 
-#: includes/class-help.php:231 includes/modules/class-modules.php:66
-#: modules/class-youtube.php:67
+#: includes/class-help.php:231 modules/class-youtube.php:67
 msgid "Youtube"
 msgstr ""
 
@@ -185,8 +182,7 @@ msgstr ""
 msgid "Youtube module to import youtube videos"
 msgstr ""
 
-#: includes/class-help.php:237 includes/modules/class-modules.php:35
-#: modules/class-feed.php:42
+#: includes/class-help.php:237 modules/class-feed.php:54
 msgid "Feed"
 msgstr ""
 
@@ -194,8 +190,7 @@ msgstr ""
 msgid "RSS Feed module to import rss feeds"
 msgstr ""
 
-#: includes/class-help.php:243 includes/modules/class-modules.php:41
-#: modules/class-flickr.php:64
+#: includes/class-help.php:243 modules/class-flickr.php:64
 msgid "Flickr"
 msgstr ""
 
@@ -389,7 +384,7 @@ msgstr ""
 msgid "Choose File"
 msgstr ""
 
-#: includes/class-settings.php:21 wp-content-pilot.php:336
+#: includes/class-settings.php:21 wp-content-pilot.php:350
 msgid "Settings"
 msgstr ""
 
@@ -817,103 +812,8 @@ msgstr ""
 msgid "Tag"
 msgstr ""
 
-#: includes/metabox-functions.php:492 includes/modules/class-envato.php:166
-#: includes/modules/class-flickr.php:113 includes/modules/class-youtube.php:134
+#: includes/metabox-functions.php:492
 msgid "Description"
-msgstr ""
-
-#: includes/modules/class-envato.php:29 includes/modules/class-flickr.php:16
-msgid "Flickr API is not set. Please configure Flickr settings."
-msgstr ""
-
-#: includes/modules/class-envato.php:164 includes/modules/class-flickr.php:111
-msgid "Image"
-msgstr ""
-
-#: includes/modules/class-envato.php:165 includes/modules/class-flickr.php:112
-msgid "Author"
-msgstr ""
-
-#: includes/modules/class-envato.php:167 modules/class-envato.php:158
-msgid "Price"
-msgstr ""
-
-#: includes/modules/class-envato.php:168 modules/class-envato.php:156
-#: modules/class-youtube.php:167
-msgid "Rating"
-msgstr ""
-
-#: includes/modules/class-envato.php:169 includes/modules/class-flickr.php:115
-#: includes/modules/class-youtube.php:135 modules/class-envato.php:97
-msgid "tags"
-msgstr ""
-
-#: includes/modules/class-envato.php:170
-msgid "categories"
-msgstr ""
-
-#: includes/modules/class-envato.php:171
-msgid "Total Sales"
-msgstr ""
-
-#: includes/modules/class-envato.php:172
-msgid "Live demo"
-msgstr ""
-
-#: includes/modules/class-envato.php:173
-msgid "Attributes"
-msgstr ""
-
-#: includes/modules/class-envato.php:174
-msgid "Buy Now"
-msgstr ""
-
-#: includes/modules/class-feed.php:76 modules/class-feed.php:215
-msgid "Could not find any post so disabling url"
-msgstr ""
-
-#: includes/modules/class-flickr.php:50 includes/modules/class-youtube.php:64
-msgid "Could not find any links"
-msgstr ""
-
-#: includes/modules/class-flickr.php:114
-msgid "Views"
-msgstr ""
-
-#: includes/modules/class-modules.php:30
-msgid "Scraps articles with the predefined keywords"
-msgstr ""
-
-#: includes/modules/class-modules.php:36 modules/class-feed.php:43
-msgid "Scraps articles from the feed urls"
-msgstr ""
-
-#: includes/modules/class-modules.php:42 includes/modules/class-modules.php:92
-msgid "Scraps photo and contents by the predefined keywords"
-msgstr ""
-
-#: includes/modules/class-modules.php:67
-msgid "Scraps youtube video and contents using the predefined keywords"
-msgstr ""
-
-#: includes/modules/class-vimeo.php:16
-msgid "Vimeo token is not set. Please configure vimeo settings."
-msgstr ""
-
-#: includes/modules/class-youtube.php:23
-msgid "Youtube api is not configured. Please configure youtube settings."
-msgstr ""
-
-#: includes/modules/class-youtube.php:131
-msgid "Video"
-msgstr ""
-
-#: includes/modules/class-youtube.php:132
-msgid "Channel"
-msgstr ""
-
-#: includes/modules/class-youtube.php:133
-msgid "Duration"
 msgstr ""
 
 #: includes/post-types.php:22
@@ -1051,30 +951,30 @@ msgid "Scraps articles based on links"
 msgstr ""
 
 #: modules/class-article.php:60 modules/class-envato.php:83
-#: modules/class-feed.php:59 modules/class-flickr.php:81
+#: modules/class-feed.php:71 modules/class-flickr.php:81
 #: modules/class-youtube.php:84 modules/class-youtube.php:165
 msgid "Title"
 msgstr ""
 
-#: modules/class-article.php:61 modules/class-feed.php:60
+#: modules/class-article.php:61 modules/class-feed.php:72
 #: modules/class-youtube.php:85
 msgid "Summary"
 msgstr ""
 
 #: modules/class-article.php:62 modules/class-envato.php:84
-#: modules/class-feed.php:61 modules/class-flickr.php:82
+#: modules/class-feed.php:73 modules/class-flickr.php:82
 #: modules/class-youtube.php:86
 msgid "Content"
 msgstr ""
 
 #: modules/class-article.php:63 modules/class-envato.php:85
-#: modules/class-feed.php:62 modules/class-flickr.php:84
+#: modules/class-feed.php:74 modules/class-flickr.php:84
 #: modules/class-youtube.php:87
 msgid "Main image url"
 msgstr ""
 
 #: modules/class-article.php:64 modules/class-envato.php:86
-#: modules/class-feed.php:63 modules/class-flickr.php:85
+#: modules/class-feed.php:75 modules/class-flickr.php:85
 #: modules/class-youtube.php:88
 msgid "Source link"
 msgstr ""
@@ -1135,6 +1035,10 @@ msgstr ""
 msgid "Item summary"
 msgstr ""
 
+#: modules/class-envato.php:97
+msgid "tags"
+msgstr ""
+
 #: modules/class-envato.php:98
 msgid "HTML description"
 msgstr ""
@@ -1171,8 +1075,16 @@ msgstr ""
 msgid "Following"
 msgstr ""
 
+#: modules/class-envato.php:156 modules/class-youtube.php:167
+msgid "Rating"
+msgstr ""
+
 #: modules/class-envato.php:157
 msgid "Sales"
+msgstr ""
+
+#: modules/class-envato.php:158
+msgid "Price"
 msgstr ""
 
 #: modules/class-envato.php:159 modules/class-youtube.php:164
@@ -1216,12 +1128,24 @@ msgstr ""
 msgid "Envato API is not set. Please configure Envato API."
 msgstr ""
 
-#: modules/class-feed.php:91
+#: modules/class-feed.php:55
+msgid "Scraps articles from the feed urls"
+msgstr ""
+
+#: modules/class-feed.php:108
 msgid "Feed Links"
 msgstr ""
 
-#: modules/class-feed.php:93
+#: modules/class-feed.php:110
 msgid "Input feed links separate comma"
+msgstr ""
+
+#: modules/class-feed.php:248
+msgid "Could not find any post so disabling url"
+msgstr ""
+
+#: modules/class-feed.php:361
+msgid "Allow Force Feed"
 msgstr ""
 
 #: modules/class-flickr.php:65
@@ -1356,7 +1280,7 @@ msgstr ""
 msgid "Search Order"
 msgstr ""
 
-#: modules/class-youtube.php:392
+#: modules/class-youtube.php:398
 msgid "Youtube API Key is not set, The campaign won't work without API Key."
 msgstr ""
 
@@ -1591,29 +1515,29 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: wp-content-pilot.php:147
+#: wp-content-pilot.php:149
 msgid "Cloning is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:156
+#: wp-content-pilot.php:158
 msgid "Universalizing instances of this class is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:338
+#: wp-content-pilot.php:352
 msgid "Upgrade to PRO"
 msgstr ""
 
-#: wp-content-pilot.php:354
+#: wp-content-pilot.php:368
 msgid "Once a Minute"
 msgstr ""
 
-#: wp-content-pilot.php:494
+#: wp-content-pilot.php:508
 msgid ""
 "One or more WP Content Pilot Database table is missing, please reactivate "
 "the plugin"
 msgstr ""
 
-#: wp-content-pilot.php:508
+#: wp-content-pilot.php:522
 msgid ""
 "There was a problem spawning a call to the WP-Cron system on your site. "
 "This means WP Content Pilot on your site may not work. The problem was: %s"
