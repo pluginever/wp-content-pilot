@@ -3,7 +3,7 @@
  * Plugin Name: WP Content Pilot
  * Plugin URI:  https://www.pluginever.com
  * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:     1.0.6
+ * Version:     1.0.7
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
@@ -46,7 +46,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '1.0.6';
+	protected $version = '1.0.7';
 
 	/**
 	 * @since 1.0.0
@@ -120,17 +120,19 @@ final class ContentPilot {
 		add_action( 'admin_notices', array( $this, 'admin_notices' ), 15 );
 
 		add_action( 'init', array( $this, 'localization_setup' ) );
-		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ) );
+		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ), 20 );
 
 		add_action( 'plugins_loaded', array( $this, 'instantiate' ) );
 
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 
+		register_activation_hook( __FILE__, array( $this, 'activate_cron' ) );
+		require_once dirname( __FILE__ ) . '/includes/class-install.php';
+		register_activation_hook( __FILE__, array( 'WPCP_Install', 'activate' ) );
+		register_deactivation_hook( __FILE__, array( 'WPCP_Install', 'deactivate' ) );
+
 		// if the environment check fails, initialize the plugin
 		if ( $this->is_environment_compatible() ) {
-			require_once dirname( __FILE__ ) . '/includes/class-install.php';
-			register_activation_hook( __FILE__, array( 'WPCP_Install', 'activate' ) );
-			register_deactivation_hook( __FILE__, array( 'WPCP_Install', 'deactivate' ) );
 			$this->init_plugin();
 			add_action( 'admin_init', array( $this, 'plugin_upgrades' ) );
 			add_action( 'admin_init', array( $this, 'check_tables_exist' ) );
@@ -323,6 +325,18 @@ final class ContentPilot {
 	 */
 	public function localization_setup() {
 		load_plugin_textdomain( 'wp-content-pilot', false, dirname( plugin_basename( __FILE__ ) ) . '/i18n/languages/' );
+	}
+
+	/**
+	 * Create cron job
+	 *
+	 * since 1.0.7
+	 *
+	 * @return void
+	 */
+	public function activate_cron(){
+		wp_schedule_event( time(), 'once_a_minute', 'wpcp_per_minute_scheduled_events' );
+		wp_schedule_event( time(), 'daily', 'wpcp_daily_scheduled_events' );
 	}
 
 	/**

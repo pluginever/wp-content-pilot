@@ -34,9 +34,21 @@ class WPCP_Feed extends WPCP_Campaign {
 
 		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
 		add_filter( 'wpcp_replace_template_tags', array( $this, 'replace_template_tags' ), 10, 2 );
-
+		add_filter( 'wpcp_campaign_additional_settings_field_args', array(
+			$this,
+			'additional_settings_fields'
+		), 10, 3 );
 	}
 
+	/**
+	 * Register feed module
+	 *
+	 * since 1.0.0
+	 *
+	 * @param $modules
+	 *
+	 * @return array
+	 */
 	public function register_module( $modules ) {
 		$modules['feed'] = [
 			'title'       => __( 'Feed', 'wp-content-pilot' ),
@@ -56,14 +68,18 @@ class WPCP_Feed extends WPCP_Campaign {
 	 */
 	public static function get_template_tags() {
 		return array(
-			'title'     => __( 'Title', 'wp-content-pilot' ),
+			'title'      => __( 'Title', 'wp-content-pilot' ),
 			'excerpt'    => __( 'Summary', 'wp-content-pilot' ),
-			'content'   => __( 'Content', 'wp-content-pilot' ),
-			'image_url' => __( 'Main image url', 'wp-content-pilot' ),
+			'content'    => __( 'Content', 'wp-content-pilot' ),
+			'image_url'  => __( 'Main image url', 'wp-content-pilot' ),
 			'source_url' => __( 'Source link', 'wp-content-pilot' ),
 		);
 	}
 
+	/**
+	 * since 1.0.0
+	 * @return string
+	 */
 	public static function get_default_template() {
 		$template =
 			<<<EOT
@@ -71,6 +87,7 @@ class WPCP_Feed extends WPCP_Campaign {
 {content}
 <br> <a href="{source_url}" target="_blank">Source</a>
 EOT;
+
 		return $template;
 	}
 
@@ -110,7 +127,10 @@ EOT;
 		$links     = wpcp_string_to_array( $raw_links, ',', array( 'trim', 'esc_url' ) );
 		$str_links = implode( ',', $links );
 
+		$force_feed = empty( $posted['_force_feed'] ) ? '' : sanitize_key( $posted['_force_feed'] );
+
 		update_post_meta( $post_id, '_feed_links', $str_links );
+		update_post_meta( $post_id, '_force_feed', $force_feed );
 	}
 
 	/**
@@ -157,6 +177,19 @@ EOT;
 		$args['body'] = trim( $args['body'] );
 
 		return $args;
+	}
+
+	/**
+	 * Force feed with the given feedlink
+	 *
+	 * since 1.0.0
+	 *
+	 * @param $feed
+	 */
+	public function force_feed( $feed ) {
+		if ( 'on' == wpcp_get_post_meta( $this->campaign_id, '_force_feed', '' ) ) {
+			$feed->force_feed( true );
+		}
 	}
 
 
@@ -245,7 +278,7 @@ EOT;
 
 			$raw_content = array(
 				'content' => $content,
-				'excerpt' =>  wp_trim_words( trim( $content ) , 55 ),
+				'excerpt' => wp_trim_words( trim( $content ), 55 ),
 			);
 
 			$link = array(
@@ -308,6 +341,30 @@ EOT;
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Add additional settings option for feed
+	 *
+	 * @since 1.0.7
+	 *
+	 * @param $args
+	 * @param $type
+	 * @param $post_id
+	 *
+	 * @return array
+	 */
+	public function additional_settings_fields( $args, $type, $post_id ) {
+		if ( 'feed' != $type ) {
+			return $args;
+		}
+		$args['options']['_force_feed'] = __( 'Allow Force Feed', 'wp-content-pilot' );
+		$_force_feed                    = get_post_meta( $post_id, '_force_feed', true );
+		if ( 'on' == $_force_feed ) {
+			$args['value'][] = '_force_feed';
+		}
+
+		return $args;
 	}
 
 
