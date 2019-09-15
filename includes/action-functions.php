@@ -176,3 +176,18 @@ function wpcp_remove_logs(){
 
 }
 add_action('admin_init', 'wpcp_remove_logs');
+
+function wpcp_custom_wpkses_post_tags( $tags, $context ) {
+	if ( 'post' === $context ) {
+		$tags['iframe'] = array(
+			'src'             => true,
+			'height'          => true,
+			'width'           => true,
+			'frameborder'     => true,
+			'allowfullscreen' => true,
+		);
+	}
+
+	return $tags;
+}
+add_filter( 'wp_kses_allowed_html', 'wpcp_custom_wpkses_post_tags', 10, 2 );
