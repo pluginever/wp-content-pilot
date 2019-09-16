@@ -314,6 +314,15 @@ abstract class WPCP_Campaign {
 			'ping_status'    => $ping_status,
 		], $this->campaign_id, $article );
 
+		/**
+		 * @since 1.0.8
+		 * set user when insert post using background process
+		 */
+		$user = get_user_by( 'ID', $post_author );
+		if ( $user ) {
+			wp_set_current_user( $post_author, $user->user_login );
+		}
+
 		$post_id = wp_insert_post( $postarr, true );
 
 		if ( is_wp_error( $post_id ) ) {
