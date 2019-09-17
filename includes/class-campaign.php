@@ -114,7 +114,8 @@ abstract class WPCP_Campaign {
 
 			if ( $total_fetched_links > 1 ) {
 				wpcp_log( 'Link discovery skipped because there already links waiting for getting ready ' . $total_fetched_links );
-
+				//seems cron is not started yet let it run manually
+				do_action('wpcp_per_minute_scheduled_events');
 				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'wp-content-pilot' ) );
 			}
 
@@ -313,6 +314,15 @@ abstract class WPCP_Campaign {
 			'comment_status' => $comment_status,
 			'ping_status'    => $ping_status,
 		], $this->campaign_id, $article );
+
+		/**
+		 * @since 1.0.8
+		 * set user when insert post using background process
+		 */
+		$user = get_user_by( 'ID', $post_author );
+		if ( $user ) {
+			wp_set_current_user( $post_author, $user->user_login );
+		}
 
 		$post_id = wp_insert_post( $postarr, true );
 
