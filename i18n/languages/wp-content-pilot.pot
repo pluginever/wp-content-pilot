@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.0.7\n"
+"Project-Id-Version: WP Content Pilot 1.0.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2019-08-22 04:26:39+00:00\n"
+"POT-Creation-Date: 2019-09-17 10:04:57+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -54,31 +54,31 @@ msgstr ""
 msgid "Campaign is not initiated correctly, missing ID||keyword"
 msgstr ""
 
-#: includes/class-campaign.php:118 includes/class-campaign.php:158
+#: includes/class-campaign.php:119 includes/class-campaign.php:159
 msgid "Please wait links generated but not ready to run campaign yet."
 msgstr ""
 
-#: includes/class-campaign.php:136
+#: includes/class-campaign.php:137
 msgid "Could not retrieve any valid links"
 msgstr ""
 
-#: includes/class-campaign.php:162
+#: includes/class-campaign.php:163
 msgid "Could not retrieve any valid links. Please wait to generate new links."
 msgstr ""
 
-#: includes/class-campaign.php:182
+#: includes/class-campaign.php:183
 msgid "Post is rejected due to less content. Required %d Found %d"
 msgstr ""
 
-#: includes/class-campaign.php:192
+#: includes/class-campaign.php:193
 msgid "Post is rejected because post with same title exit."
 msgstr ""
 
-#: includes/class-campaign.php:199
+#: includes/class-campaign.php:200
 msgid "Post is rejected because could not find any image in the post."
 msgstr ""
 
-#: includes/class-campaign.php:277
+#: includes/class-campaign.php:278
 msgid "Readability score failed!, Try with decreased readability score."
 msgstr ""
 
@@ -529,7 +529,7 @@ msgstr ""
 msgid "Unexpected HTTP response code: %s"
 msgstr ""
 
-#: includes/hooks-functions.php:56
+#: includes/hooks-functions.php:57
 msgid ""
 "If you like <strong>WP Content Pilot</strong> please leave us a <a "
 "href=\"%s\" target=\"_blank\">&#9733;&#9733;&#9733;&#9733;&#9733;</a> "
