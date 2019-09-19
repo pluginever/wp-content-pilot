@@ -124,7 +124,7 @@ abstract class WPCP_Campaign {
 			$links = $this->discover_links();
 
 			if ( is_wp_error( $links ) ) {
-				wpcp_log( 'Error in discovering links Message' . $links->get_error_message() );
+				wpcp_log( 'Error in discovering links Message ' . $links->get_error_message() );
 
 				return $links;
 			}

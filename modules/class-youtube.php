@@ -442,7 +442,6 @@ EOT;
 		$response = wpcp_retrieve_body( $request );
 
 		if ( is_wp_error( $response ) ) {
-			wpcp_log( $response->get_error_messages(), 'api_log' );
 
 			return $response;
 		}
