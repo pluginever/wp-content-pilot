@@ -98,6 +98,3 @@ function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article, 
 }
 
 add_action( 'wpcp_after_post_publish', 'wpcp_post_publish_mail_notification', 10, 4 );
-add_action( 'wpcp_after_post_publish', function(){
-	error_log(12);
-});
