@@ -45,8 +45,8 @@ abstract class WPCP_Campaign {
 	/**
 	 * Discover links
 	 *
-	 * @since 1.0.0
 	 * @return array|\WP_Error
+	 * @since 1.0.0
 	 */
 	abstract function discover_links();
 
@@ -55,9 +55,10 @@ abstract class WPCP_Campaign {
 	/**
 	 * setup campaign id
 	 *
+	 * @param $campaign_id
+	 *
 	 * @since 1.0.0
 	 *
-	 * @param $campaign_id
 	 */
 	public function set_campaign_id( $campaign_id ) {
 		$this->campaign_id   = intval( $campaign_id );
@@ -67,9 +68,10 @@ abstract class WPCP_Campaign {
 	/**
 	 * keyword for the campaign
 	 *
+	 * @param $keyword
+	 *
 	 * @since 1.0.0
 	 *
-	 * @param $keyword
 	 */
 	public function set_keyword( $keywords ) {
 		$keywords      = strip_tags( $keywords );
@@ -81,9 +83,10 @@ abstract class WPCP_Campaign {
 	/**
 	 * set campaign type
 	 *
+	 * @param $campaign_type
+	 *
 	 * @since 1.0.0
 	 *
-	 * @param $campaign_type
 	 */
 	public function set_campaign_type( $campaign_type ) {
 		$this->campaign_type = $campaign_type;
@@ -93,8 +96,8 @@ abstract class WPCP_Campaign {
 	/**
 	 * run the campaign
 	 *
-	 * @since 1.0.0
 	 * @return int|\WP_Error
+	 * @since 1.0.0
 	 */
 	public function run() {
 		wpcp_log( "Running campaign #ID{$this->campaign_id} Type {$this->campaign_type} Keyword {$this->keyword}" );
@@ -115,7 +118,8 @@ abstract class WPCP_Campaign {
 			if ( $total_fetched_links > 1 ) {
 				wpcp_log( 'Link discovery skipped because there already links waiting for getting ready ' . $total_fetched_links );
 				//seems cron is not started yet let it run manually
-				do_action('wpcp_per_minute_scheduled_events');
+				do_action( 'wpcp_per_minute_scheduled_events' );
+
 				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'wp-content-pilot' ) );
 			}
 
@@ -124,7 +128,7 @@ abstract class WPCP_Campaign {
 			$links = $this->discover_links();
 
 			if ( is_wp_error( $links ) ) {
-				wpcp_log( 'Error in discovering links Message' . $links->get_error_message() );
+				wpcp_log( 'Error in discovering links Message ' . $links->get_error_message() );
 
 				return $links;
 			}
@@ -214,7 +218,7 @@ abstract class WPCP_Campaign {
 		/*=========================BEFORE INSERTING POST =========================*/
 		//use original post date
 		$use_original_date = wpcp_get_post_meta( $this->campaign_id, '_use_original_date', 0 );
-		if ( 'on' === $use_original_date && !empty( $article['date'] ) ) {
+		if ( 'on' === $use_original_date && ! empty( $article['date'] ) ) {
 			$post_time = $article['date'];
 		}
 
@@ -226,6 +230,7 @@ abstract class WPCP_Campaign {
 			$summary = strip_shortcodes( $summary );
 		}
 		//is custom author
+
 
 
 		//remove images links
@@ -244,6 +249,7 @@ abstract class WPCP_Campaign {
 
 		}
 
+
 		$limit_title = wpcp_get_post_meta( $this->campaign_id, '_title_limit', 0 );
 		if ( ! empty( $limit_title ) && $limit_title > 0 ) {
 			$article['title'] = wp_trim_words( $article['title'], $limit_title );
@@ -254,6 +260,11 @@ abstract class WPCP_Campaign {
 			$article['content'] = wp_trim_words( $article['content'], $limit_content );
 		}
 
+		//remove all html tag from content
+		$plain_text = wpcp_get_post_meta( $this->campaign_id, '_content_type', '' );
+		if ( $plain_text == 'plain' ) {
+			$article['content'] = @strip_tags( $article['content'], '<img>' );
+		}
 
 		//apply limit
 
@@ -278,7 +289,7 @@ abstract class WPCP_Campaign {
 			return new WP_Error( 'score', __( 'Readability score failed!, Try with decreased readability score.', 'wp-content-pilot' ) );
 		}
 
-		$post_type = wpcp_get_post_meta( $this->campaign_id, '_post_type', 'post' );
+		$post_type   = wpcp_get_post_meta( $this->campaign_id, '_post_type', 'post' );
 		$post_status = wpcp_get_post_meta( $this->campaign_id, '_post_status', 'post' );
 
 		$title          = apply_filters( 'wpcp_post_title', $title, $this->campaign_id, $article, $this->keyword );
@@ -296,9 +307,10 @@ abstract class WPCP_Campaign {
 		/**
 		 * Filter to manipulate postarr param before insert a post
 		 *
+		 * @param array
+		 *
 		 * @since 1.0.3
 		 *
-		 * @param array
 		 */
 		$postarr = apply_filters( 'wpcp_insert_post_postarr', [
 			'post_title'     => $title,
@@ -356,11 +368,11 @@ abstract class WPCP_Campaign {
 	/**
 	 * Get new link
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param string $type
 	 *
 	 * @return object|boolean
+	 * @since 1.0.0
+	 *
 	 */
 	protected function get_link( $type = 'ready' ) {
 		global $wpdb;
@@ -383,11 +395,11 @@ abstract class WPCP_Campaign {
 	/**
 	 * get total links available
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param string $status
 	 *
 	 * @return null|string
+	 * @since 1.0.0
+	 *
 	 */
 	protected function count_links( $status = 'ready' ) {
 		global $wpdb;
@@ -406,11 +418,11 @@ abstract class WPCP_Campaign {
 	/**
 	 * Checks the result if its like the last run
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $html
 	 *
 	 * @return bool
+	 *
+	 * @since 1.0.0
 	 *
 	 */
 	protected function is_result_like_last_time( $html ) {
@@ -451,11 +463,11 @@ abstract class WPCP_Campaign {
 	/**
 	 * Insert links
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $links
 	 *
 	 * @return int
+	 *
+	 * @since 1.0.0
 	 *
 	 */
 	protected function inset_links( $links ) {
@@ -474,11 +486,11 @@ abstract class WPCP_Campaign {
 	/**
 	 * Get unique string for the campaign
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param string $string
 	 *
 	 * @return string
+	 * @since 1.0.0
+	 *
 	 */
 	public function get_uid( $string = '' ) {
 		$string = '_wpcp_' . $this->campaign_id . '-' . $this->campaign_type . '-' . $this->keyword . '-' . $string;
@@ -489,11 +501,11 @@ abstract class WPCP_Campaign {
 	/**
 	 * Get last page
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param int $default
 	 *
 	 * @return int|mixed
+	 *
+	 * @since 1.0.0
 	 *
 	 */
 	public function get_page_number( $default = 0 ) {
@@ -505,9 +517,9 @@ abstract class WPCP_Campaign {
 	/**
 	 * set the page number from where next query will be
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $number
+	 *
+	 * @since 1.0.0
 	 *
 	 */
 	public function set_page_number( $number ) {
@@ -520,7 +532,7 @@ abstract class WPCP_Campaign {
 	 * since 1.0.0
 	 *
 	 * @param        $keywords
-	 * @param int    $page
+	 * @param int $page
 	 * @param string $result_group
 	 *
 	 * @return array|mixed|object

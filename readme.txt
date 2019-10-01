@@ -196,9 +196,14 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+
+= v1.0.9 -> October 01, 2019 =
+* [Fix] Content type plain text not working
+* [Feature] Send email notification when a new post is created
+
 = v1.0.8 -> September 17, 2019 =
-* Fix - Post is not assigning to the preset categories
-* Fix - Youtube video missing embed HTML
+* [Fix] Post is not assigning to the preset categories
+* [Fix] Youtube video missing embed HTML
 
 = v1.0.7 -> August 22, 2019 =
 * [Fix] Remove duplicate modules folder

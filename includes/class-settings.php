@@ -109,6 +109,13 @@ class WPCP_Settings {
 					'type'    => 'checkbox',
 					'default' => ''
 				),
+				array(
+					'name'    => 'post_publish_mail',
+					'label'   => __( 'Post Publish mail', 'wp-content-pilot' ),
+					'desc' => __( 'Send mail After post publish', 'wp-content-pilot' ),
+					'type'    => 'checkbox',
+					'default' => ''
+				),
 			),
 		);
 
