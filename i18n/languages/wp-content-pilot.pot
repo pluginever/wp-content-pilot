@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.0.8\n"
+"Project-Id-Version: WP Content Pilot 1.0.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2019-09-17 10:04:57+00:00\n"
+"POT-Creation-Date: 2019-10-01 10:44:26+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -50,35 +50,35 @@ msgstr ""
 msgid "Automatic campaign failed."
 msgstr ""
 
-#: includes/class-campaign.php:104
+#: includes/class-campaign.php:107
 msgid "Campaign is not initiated correctly, missing ID||keyword"
 msgstr ""
 
-#: includes/class-campaign.php:119 includes/class-campaign.php:159
+#: includes/class-campaign.php:123 includes/class-campaign.php:163
 msgid "Please wait links generated but not ready to run campaign yet."
 msgstr ""
 
-#: includes/class-campaign.php:137
+#: includes/class-campaign.php:141
 msgid "Could not retrieve any valid links"
 msgstr ""
 
-#: includes/class-campaign.php:163
+#: includes/class-campaign.php:167
 msgid "Could not retrieve any valid links. Please wait to generate new links."
 msgstr ""
 
-#: includes/class-campaign.php:183
+#: includes/class-campaign.php:187
 msgid "Post is rejected due to less content. Required %d Found %d"
 msgstr ""
 
-#: includes/class-campaign.php:193
+#: includes/class-campaign.php:197
 msgid "Post is rejected because post with same title exit."
 msgstr ""
 
-#: includes/class-campaign.php:200
+#: includes/class-campaign.php:204
 msgid "Post is rejected because could not find any image in the post."
 msgstr ""
 
-#: includes/class-campaign.php:278
+#: includes/class-campaign.php:289
 msgid "Readability score failed!, Try with decreased readability score."
 msgstr ""
 
@@ -472,7 +472,15 @@ msgid ""
 "the plugin is deleted."
 msgstr ""
 
-#: includes/class-settings.php:122
+#: includes/class-settings.php:114
+msgid "Post Publish mail"
+msgstr ""
+
+#: includes/class-settings.php:115
+msgid "Send mail After post publish"
+msgstr ""
+
+#: includes/class-settings.php:129
 msgid "WP Content Pilot Settings"
 msgstr ""
 
@@ -529,11 +537,23 @@ msgstr ""
 msgid "Unexpected HTTP response code: %s"
 msgstr ""
 
-#: includes/hooks-functions.php:57
+#: includes/hooks-functions.php:60
 msgid ""
 "If you like <strong>WP Content Pilot</strong> please leave us a <a "
 "href=\"%s\" target=\"_blank\">&#9733;&#9733;&#9733;&#9733;&#9733;</a> "
 "rating. Your Review is very important to us as it helps us to grow more."
+msgstr ""
+
+#: includes/hooks-functions.php:89
+msgid "Post Publish"
+msgstr ""
+
+#: includes/hooks-functions.php:90
+msgid ""
+"<h4>Post Title: %s</h4>\n"
+"                    <h5>Post Excerpt</h5>\n"
+"                    <p>%s</p>\n"
+"                    <a href='%s'>View Post</a>"
 msgstr ""
 
 #: includes/metabox-functions.php:24 includes/metabox-functions.php:76
