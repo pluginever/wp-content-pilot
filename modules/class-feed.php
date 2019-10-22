@@ -63,8 +63,8 @@ class WPCP_Feed extends WPCP_Campaign {
 	/**
 	 * Supported template tags
 	 *
-	 * @since 1.0.0
 	 * @return array
+	 * @since 1.0.0
 	 */
 	public static function get_template_tags() {
 		return array(
@@ -95,13 +95,13 @@ EOT;
 	/**
 	 * Filter keyword input to change as links
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $attr
 	 * @param $post_id
 	 * @param $campaign_type
 	 *
 	 * @return mixed
+	 * @since 1.0.0
+	 *
 	 */
 	public function campaign_keyword_input( $attr, $post_id, $campaign_type ) {
 		if ( $campaign_type == 'feed' ) {
@@ -117,31 +117,34 @@ EOT;
 	/**
 	 * update campaign settings
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $post_id
 	 * @param $posted
+	 *
+	 * @since 1.0.0
+	 *
 	 */
 	public function update_campaign_settings( $post_id, $posted ) {
 		$raw_links = empty( $posted['_feed_links'] ) ? '' : esc_html( $posted['_feed_links'] );
 		$links     = wpcp_string_to_array( $raw_links, ',', array( 'trim', 'esc_url' ) );
 		$str_links = implode( ',', $links );
 
-		$force_feed = empty( $posted['_force_feed'] ) ? '' : sanitize_key( $posted['_force_feed'] );
+		$force_feed         = empty( $posted['_force_feed'] ) ? '' : sanitize_key( $posted['_force_feed'] );
+		$fetch_full_content = empty( $posted['_fetch_full_content'] ) ? '' : sanitize_key( $posted['_fetch_full_content'] );
 
 		update_post_meta( $post_id, '_feed_links', $str_links );
 		update_post_meta( $post_id, '_force_feed', $force_feed );
+		update_post_meta( $post_id, '_fetch_full_content', $fetch_full_content );
 	}
 
 	/**
 	 * fe
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $keywords
 	 * @param $campaign_id
 	 *
 	 * @return null|string
+	 * @since 1.0.0
+	 *
 	 */
 	public function feed_links( $keywords, $campaign_id ) {
 		$type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
@@ -156,9 +159,10 @@ EOT;
 	 * Set user agent to fix curl transfer
 	 * closed without complete data
 	 *
+	 * @param $args
+	 *
 	 * @since 1.0.0
 	 *
-	 * @param $args
 	 */
 	public function set_feed_options( $args ) {
 		$args->set_useragent( 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/41.0.2272.76 ' );
@@ -196,19 +200,19 @@ EOT;
 	/**
 	 * Hook in background process and prepare contents
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $link
 	 *
 	 * @return bool
+	 * @since 1.0.0
+	 *
 	 */
 	public function prepare_contents( $link ) {
 
 		if ( 'feed' !== $link->camp_type ) {
 			return false;
 		}
-
 		do_action( 'wpcp_feed_content_proceeding', $link, $this );
+
 		wpcp_update_link( $link->id, array(
 			'status' => 'ready',
 		) );
@@ -290,7 +294,6 @@ EOT;
 				'score'       => '0',
 				'status'      => 'fetched',
 			);
-
 			$link = apply_filters( 'wpcp_before_insert_feed_link', $link, $this->campaign_id );
 
 			$links[] = $link;
@@ -320,12 +323,12 @@ EOT;
 	/**
 	 * Replace additional template tags
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $content
 	 * @param $article
 	 *
 	 * @return mixed
+	 * @since 1.0.0
+	 *
 	 */
 	public function replace_template_tags( $content, $article ) {
 
@@ -346,22 +349,33 @@ EOT;
 	/**
 	 * Add additional settings option for feed
 	 *
-	 * @since 1.0.7
-	 *
 	 * @param $args
 	 * @param $type
 	 * @param $post_id
 	 *
 	 * @return array
+	 * @since 1.0.7
+	 *
 	 */
 	public function additional_settings_fields( $args, $type, $post_id ) {
 		if ( 'feed' != $type ) {
 			return $args;
 		}
+
 		$args['options']['_force_feed'] = __( 'Allow Force Feed', 'wp-content-pilot' );
-		$_force_feed                    = get_post_meta( $post_id, '_force_feed', true );
-		if ( 'on' == $_force_feed ) {
+		$force_feed                     = get_post_meta( $post_id, '_force_feed', true );
+		if ( 'on' == $force_feed ) {
 			$args['value'][] = '_force_feed';
+		}
+		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
+			unset( $args['options']['_set_featured_image'] );
+			unset( $args['options']['_remove_images'] );
+		} else {
+			$args['options']    = array( '_fetch_full_content' => __( 'Fetch full content', 'wp-content-pilot' ) ) + $args['options'];
+			$fetch_full_content = get_post_meta( $post_id, '_fetch_full_content', true );
+			if ( 'on' == $fetch_full_content ) {
+				$args['value'][] = '_fetch_full_content';
+			}
 		}
 
 		return $args;

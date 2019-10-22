@@ -177,6 +177,8 @@ abstract class WPCP_Campaign {
 			return $article;
 		}
 
+		$article = apply_filters( 'wpcp_pre_acceptance_article', $article );
+
 		/*=========================CHECK FOR ACCEPTANCE=========================*/
 
 		//minimum content check

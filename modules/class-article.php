@@ -58,7 +58,7 @@ class WPCP_Article extends WPCP_Campaign {
 	public static function get_template_tags() {
 		return array(
 			'title'      => __( 'Title', 'wp-content-pilot' ),
-			'excerpt'     => __( 'Summary', 'wp-content-pilot' ),
+			'excerpt'    => __( 'Summary', 'wp-content-pilot' ),
 			'content'    => __( 'Content', 'wp-content-pilot' ),
 			'image_url'  => __( 'Main image url', 'wp-content-pilot' ),
 			'source_url' => __( 'Source link', 'wp-content-pilot' ),
@@ -68,11 +68,12 @@ class WPCP_Article extends WPCP_Campaign {
 
 	public static function get_default_template() {
 		$template =
-<<<EOT
+			<<<EOT
 <img src="{image_url}">
 {content}
 <br> <a href="{source_url}" target="_blank">Source</a>
 EOT;
+
 		return $template;
 	}
 
@@ -165,10 +166,10 @@ EOT;
 	 * @return array|mixed|object
 	 */
 	public function discover_links() {
-		$page  = $this->get_page_number( 0 );
+		$page         = $this->get_page_number( 0 );
 		$banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article' );
 		$banned_hosts = preg_split( '/\n/', $banned_hosts );
-		
+
 		$links = array();
 		if ( ! $page ) {
 			for ( $page = 0; $page <= 10; $page ++ ) {
@@ -192,9 +193,9 @@ EOT;
 		$sanitized_links = array();
 
 		foreach ( $links as $link ) {
-			$host = wpcp_get_host( $link['link'] );
+			$host   = wpcp_get_host( $link['link'] );
 			$banned = false;
-			foreach( $banned_hosts as $banned_host ) {
+			foreach ( $banned_hosts as $banned_host ) {
 				if ( strpos( $host, trim( $banned_host ) ) !== false ) {
 					$banned = true;
 				}
@@ -203,7 +204,7 @@ EOT;
 			if ( $banned ) {
 				continue;
 			}
-			
+
 			$sanitized_links[] = array(
 				'title'       => $link['title'],
 				'content'     => $link['description'],
@@ -245,7 +246,7 @@ EOT;
 
 			return false;
 		}
-		$html        = wpcp_fix_relative_paths( $body, $link->url );
+		$html = wpcp_fix_relative_paths( $body, $link->url );
 
 		$article = wpcp_get_readability( $html, $link->url );
 
@@ -258,7 +259,7 @@ EOT;
 		$raw_content = array();
 
 		$raw_content['content'] = trim( $article['content'] );
-		$raw_content['excerpt'] = wp_trim_words( trim( $article['content'] ) , 55 );
+		$raw_content['excerpt'] = wp_trim_words( trim( $article['content'] ), 55 );
 
 		wpcp_update_link( $link->id, array(
 			'title'       => $article['title'],
@@ -285,7 +286,7 @@ EOT;
 		$article = array(
 			'title'         => $link->title,
 			'content'       => $link->content,
-			'excerpt'       =>  wp_trim_words($link->content, 55),
+			'excerpt'       => wp_trim_words( $link->content, 55 ),
 			'image_url'     => $link->image,
 			'source_url'    => $link->url,
 			'date'          => $link->gmt_date ? get_date_from_gmt( $link->gmt_date ) : current_time( 'mysql' ),
@@ -301,12 +302,12 @@ EOT;
 	/**
 	 * Replace additional template tags
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $content
 	 * @param $article
 	 *
 	 * @return mixed
+	 * @since 1.0.0
+	 *
 	 */
 	public function replace_template_tags( $content, $article ) {
 
