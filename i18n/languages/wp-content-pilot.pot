@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.0.9\n"
+"Project-Id-Version: WP Content Pilot 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2019-10-01 10:44:26+00:00\n"
+"POT-Creation-Date: 2019-10-24 05:10:27+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -66,19 +66,19 @@ msgstr ""
 msgid "Could not retrieve any valid links. Please wait to generate new links."
 msgstr ""
 
-#: includes/class-campaign.php:187
+#: includes/class-campaign.php:189
 msgid "Post is rejected due to less content. Required %d Found %d"
 msgstr ""
 
-#: includes/class-campaign.php:197
+#: includes/class-campaign.php:199
 msgid "Post is rejected because post with same title exit."
 msgstr ""
 
-#: includes/class-campaign.php:204
+#: includes/class-campaign.php:206
 msgid "Post is rejected because could not find any image in the post."
 msgstr ""
 
-#: includes/class-campaign.php:289
+#: includes/class-campaign.php:292
 msgid "Readability score failed!, Try with decreased readability score."
 msgstr ""
 
@@ -522,17 +522,17 @@ msgstr ""
 msgid "The campaign is not ready yet for testing, please allow some time"
 msgstr ""
 
-#: includes/core-functions.php:955
+#: includes/core-functions.php:954
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true. WP-Cron spawning is disabled."
 msgstr ""
 
-#: includes/core-functions.php:960
+#: includes/core-functions.php:959
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true."
 msgstr ""
 
-#: includes/core-functions.php:991
+#: includes/core-functions.php:990
 #. translators: 1: The HTTP response code.
 msgid "Unexpected HTTP response code: %s"
 msgstr ""
@@ -544,11 +544,11 @@ msgid ""
 "rating. Your Review is very important to us as it helps us to grow more."
 msgstr ""
 
-#: includes/hooks-functions.php:89
+#: includes/hooks-functions.php:97
 msgid "Post Publish"
 msgstr ""
 
-#: includes/hooks-functions.php:90
+#: includes/hooks-functions.php:98
 msgid ""
 "<h4>Post Title: %s</h4>\n"
 "                    <h5>Post Excerpt</h5>\n"
@@ -999,15 +999,15 @@ msgstr ""
 msgid "Source link"
 msgstr ""
 
-#: modules/class-article.php:96
+#: modules/class-article.php:97
 msgid "Keyword Type"
 msgstr ""
 
-#: modules/class-article.php:102
+#: modules/class-article.php:103
 msgid "Any Words"
 msgstr ""
 
-#: modules/class-article.php:103
+#: modules/class-article.php:104
 msgid "Exact Word"
 msgstr ""
 
@@ -1160,12 +1160,16 @@ msgstr ""
 msgid "Input feed links separate comma"
 msgstr ""
 
-#: modules/class-feed.php:248
+#: modules/class-feed.php:252
 msgid "Could not find any post so disabling url"
 msgstr ""
 
-#: modules/class-feed.php:361
+#: modules/class-feed.php:365
 msgid "Allow Force Feed"
+msgstr ""
+
+#: modules/class-feed.php:374
+msgid "Fetch full content"
 msgstr ""
 
 #: modules/class-flickr.php:65
