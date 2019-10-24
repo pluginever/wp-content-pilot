@@ -84,7 +84,15 @@ function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article, 
 	$author_id = get_post_field( 'post_author', $post_id );
 	$to        = get_the_author_meta( 'user_email', $author_id );
 	$title     = $article['title'];
-	$excerpt   = $article['excerpt'];
+	//when excerpt is not available
+	if(empty($article['excerpt'])){
+		$summary = wp_trim_words( $article['content'], 55 );
+		$summary = strip_tags( $summary );
+		$excerpt = strip_shortcodes( $summary );
+	}else{
+		$excerpt   = $article['excerpt'];
+	}
+
 	$post_link = get_the_permalink( $post_id );
 	$subject   = __( 'Post Publish', 'wp-content-pilot' );
 	$body      = sprintf( __( "<h4>Post Title: %s</h4>

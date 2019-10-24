@@ -51,8 +51,8 @@ function wpcp_remote_post( $url, $args = array(), $options = array(), $headers =
  * since 1.0.0
  *
  * @param        $url
- * @param array  $args
- * @param array  $options
+ * @param array $args
+ * @param array $options
  * @param string $type
  *
  * @return \Curl\Curl
@@ -105,7 +105,7 @@ function wpcp_remote_request( $url, $args = array(), $options = array(), $header
  * since 1.0.0
  *
  * @param \Curl\Curl $response
- * @param null       $param
+ * @param null $param
  *
  * @return string
  */
@@ -251,7 +251,7 @@ function wpcp_update_option( $key, $value ) {
  *
  * @param        $section
  * @param        $field
- * @param bool   $default
+ * @param bool $default
  *
  * @return string|array|bool
  * @since 1.0.0
@@ -448,7 +448,7 @@ function wpcp_run_campaign( $campaign_id ) {
 	try {
 		$article = $instance->run();
 	} catch ( Exception $exception ) {
-		wpcp_log( __( 'Post insertion failed message ', 'wp-content-pilot') . $exception->getMessage(), 'critical' );
+		wpcp_log( __( 'Post insertion failed message ', 'wp-content-pilot' ) . $exception->getMessage(), 'critical' );
 	}
 
 	if ( is_wp_error( $article ) ) {
@@ -506,7 +506,7 @@ function wpcp_insert_link( array $data ) {
 /**
  * Update link in wpcp_links table
  *
- * @param int   $id
+ * @param int $id
  * @param array $data
  *
  * @return false|int|null
@@ -946,8 +946,7 @@ function wpcp_get_latest_logs( $campaign_id ) {
 }
 
 
-
-function wpcp_check_cron_status(){
+function wpcp_check_cron_status() {
 	global $wp_version;
 
 	if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) {
@@ -993,7 +992,32 @@ function wpcp_check_cron_status(){
 		) );
 	} else {
 		set_transient( 'wpcp-cron-test-ok', 1, 3600 );
+
 		return true;
 	}
 
+}
+
+/**
+ * allow html tag when string from content
+ *
+ * @param $content
+ * @param $length
+ * @param bool $html
+ *
+ * @return string
+ */
+function wpcp_truncate_content( $content, $length, $html = true ) {
+	if ( $html ) {
+		// if the plain text is shorter than the maximum length, return the whole text
+		if ( strlen( preg_replace( '/<.*?>/', '', $content ) ) <= $length ) {
+			return $content;
+		}
+		//Balances tags of string using a modified stack.
+		$content = force_balance_tags( html_entity_decode( wp_trim_words( htmlentities( $content ), $length, '...' ) ) );
+	} else {
+		$content = wp_trim_words( $content, $length );
+	}
+
+	return $content;
 }

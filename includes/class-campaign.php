@@ -177,6 +177,8 @@ abstract class WPCP_Campaign {
 			return $article;
 		}
 
+		$article = apply_filters( 'wpcp_pre_acceptance_article', $article );
+
 		/*=========================CHECK FOR ACCEPTANCE=========================*/
 
 		//minimum content check
@@ -232,7 +234,6 @@ abstract class WPCP_Campaign {
 		//is custom author
 
 
-
 		//remove images links
 		$remove_image_links = wpcp_get_post_meta( $this->campaign_id, '_remove_images', 0 );
 		if ( 'on' === $remove_image_links ) {
@@ -257,7 +258,9 @@ abstract class WPCP_Campaign {
 
 		$limit_content = wpcp_get_post_meta( $this->campaign_id, '_content_limit', 0 );
 		if ( ! empty( $limit_content ) && $limit_content > 0 ) {
-			$article['content'] = wp_trim_words( $article['content'], $limit_content );
+			//previously use wp_trim_words but it remove all html tag from content
+			//that's why use custom function wpcp_truncate_content from allow html in content
+			$article['content'] = wpcp_truncate_content( $article['content'], $limit_content );
 		}
 
 		//remove all html tag from content
