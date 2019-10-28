@@ -56,25 +56,25 @@ function wpcp_setup_wpcp_post_types() {
 
 add_action( 'init', 'wpcp_setup_wpcp_post_types', 1 );
 
-add_filter('post_updated_messages', 'wpcp_post_types_messages');
+add_filter( 'post_updated_messages', 'wpcp_post_types_messages' );
 function wpcp_post_types_messages( $messages ) {
 	global $post, $post_ID;
 
 	$messages['wp_content_pilot'] = array(
-		0 => '', // Unused. Messages start at index 1.
-		1 => __('Campaign updated.', 'wp-content-pilot'),
-		2 => __('Custom field updated.', 'wp-content-pilot'),
-		3 => __('Custom field deleted.', 'wp-content-pilot'),
-		4 => __('Campaign updated.', 'wp-content-pilot'),
+		0  => '', // Unused. Messages start at index 1.
+		1  => __( 'Campaign updated.', 'wp-content-pilot' ),
+		2  => __( 'Custom field updated.', 'wp-content-pilot' ),
+		3  => __( 'Custom field deleted.', 'wp-content-pilot' ),
+		4  => __( 'Campaign updated.', 'wp-content-pilot' ),
 		/* translators: %s: date and time of the revision */
-		5 => isset($_GET['revision']) ? sprintf( __('Campaign restored to revision from %s', 'wp-content-pilot'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6 => __('Campaign created.', 'wp-content-pilot'),
-		7 => __( 'Campaign saved.', 'wp-content-pilot' ),
-		8 => __( 'Campaign submitted.', 'wp-content-pilot' ),
-		9 => sprintf( __('Campaign scheduled for: <strong>%1$s</strong>.', 'wp-content-pilot'),
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Campaign restored to revision from %s', 'wp-content-pilot' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6  => __( 'Campaign created.', 'wp-content-pilot' ),
+		7  => __( 'Campaign saved.', 'wp-content-pilot' ),
+		8  => __( 'Campaign submitted.', 'wp-content-pilot' ),
+		9  => sprintf( __( 'Campaign scheduled for: <strong>%1$s</strong>.', 'wp-content-pilot' ),
 			// translators: Publish box date format, see http://php.net/date
-			date_i18n( __( 'M j, Y @ G:i', 'wp-content-pilot' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-		10 => __('Campaign draft updated.', 'wp-content-pilot'),
+			date_i18n( __( 'M j, Y @ G:i', 'wp-content-pilot' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+		10 => __( 'Campaign draft updated.', 'wp-content-pilot' ),
 	);
 
 	return $messages;
@@ -83,11 +83,11 @@ function wpcp_post_types_messages( $messages ) {
 /**
  * Change default "Enter title here" input
  *
- * @since 1.0.0
- *
  * @param string $title Default title placeholder text
  *
  * @return string $title New placeholder text
+ * @since 1.0.0
+ *
  */
 function wpcp_change_default_title( $title ) {
 	$screen = get_current_screen();
@@ -104,7 +104,7 @@ function wp_content_pilot_columns( $columns ) {
 	unset( $columns['date'] );
 	$columns['status']    = __( 'Status', 'wp-content-pilot' );
 	$columns['type']      = __( 'Type', 'wp-content-pilot' );
-	$columns['target']      = __( 'Target', 'wp-content-pilot' );
+	$columns['target']    = __( 'Target', 'wp-content-pilot' );
 	$columns['frequency'] = __( 'Frequency', 'wp-content-pilot' );
 	$columns['last_run']  = __( 'Last Run', 'wp-content-pilot' );
 
@@ -113,45 +113,46 @@ function wp_content_pilot_columns( $columns ) {
 
 add_action( 'manage_wp_content_pilot_posts_columns', 'wp_content_pilot_columns', 10 );
 
-function wp_content_pilot_column_content($column_name, $post_ID){
-	switch ($column_name){
+function wp_content_pilot_column_content( $column_name, $post_ID ) {
+	switch ( $column_name ) {
 		case 'status':
-			$active = wpcp_get_post_meta($post_ID, '_campaign_status', 0);
-			if($active == 'active'){
-				echo '<span style="background: green;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">'.__('Active', 'wp-content-pilot').'</span>';
-			}else{
-				echo '<span style="background: red;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">'.__('Disabled', 'wp-content-pilot').'</span>';
+			$active = wpcp_get_post_meta( $post_ID, '_campaign_status', 0 );
+			if ( $active == 'active' ) {
+				echo '<span style="background: green;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">' . __( 'Active', 'wp-content-pilot' ) . '</span>';
+			} else {
+				echo '<span style="background: red;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">' . __( 'Disabled', 'wp-content-pilot' ) . '</span>';
 			}
 			break;
 		case 'type':
-			$campaign_type = wpcp_get_post_meta($post_ID, '_campaign_type');
-			echo ucfirst($campaign_type);
+			$campaign_type = wpcp_get_post_meta( $post_ID, '_campaign_type' );
+			echo ucfirst( $campaign_type );
 			break;
 		case 'target':
-			$target = wpcp_get_post_meta($post_ID, '_campaign_target', 0);
-			$completed = wpcp_get_post_meta($post_ID, '_post_count', 0);
-			if( $target && $completed ){
-				echo $completed.'/'.$target;
-			}else{
-				echo $target.'/ - ';
+			$target    = wpcp_get_post_meta( $post_ID, '_campaign_target', 0 );
+			$completed = wpcp_get_post_meta( $post_ID, '_post_count', 0 );
+			if ( $target && $completed ) {
+				echo $completed . '/' . $target;
+			} else {
+				echo $target . '/ - ';
 			}
 			break;
 		case 'frequency':
-			$frenquency = wpcp_get_post_meta($post_ID, '_campaign_frequency', 0);
-			if( $frenquency ){
-				echo 'Every '. $frenquency/3600 . ' Hour(s)';
-			} else{
+			$frenquency = wpcp_get_post_meta( $post_ID, '_campaign_frequency', 0 );
+			if ( $frenquency ) {
+				echo 'Every ' . $frenquency / 3600 . ' Hour(s)';
+			} else {
 				echo ' - ';
 			}
 			break;
 		case 'last_run':
-			$last_run = wpcp_get_post_meta($post_ID, '_last_run', 0);
-			if( $last_run ){
-				echo date_i18n( get_option( 'date_format' ) .' '. get_option('time_format'), $last_run );
-			}else{
+			$last_run = wpcp_get_post_meta( $post_ID, '_last_run', 0 );
+			if ( $last_run ) {
+				echo date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $last_run );
+			} else {
 				echo ' - ';
 			}
 			break;
 	}
 }
-add_action('manage_wp_content_pilot_posts_custom_column', 'wp_content_pilot_column_content', 10, 2);
+
+add_action( 'manage_wp_content_pilot_posts_custom_column', 'wp_content_pilot_column_content', 10, 2 );

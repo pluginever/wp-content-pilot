@@ -11,7 +11,7 @@ function wpcp_run_automatic_campaign() {
 	$sql       = "select * from {$wpdb->posts} p  left join {$wpdb->postmeta} m on p.id = m.post_id having m.meta_key = '_campaign_status' AND m.meta_value = 'active'";
 	$campaigns = $wpdb->get_results( $sql );
 
-	if ( empty($campaigns) ) {
+	if ( empty( $campaigns ) ) {
 		wpcp_log( 'dev', 'No campaign found in scheduled task' );
 
 		return;
@@ -116,10 +116,11 @@ add_action( 'admin_post_wpcp_campaign_test_run', 'wpcp_handle_campaign_test_run'
 /**
  * Update campaign counter and settings
  *
- * @since 1.0.0
- *
  * @param $post_id
  * @param $campaign_id
+ *
+ * @since 1.0.0
+ *
  */
 function wpcp_update_campaign_counter( $post_id, $campaign_id ) {
 	$posted = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
@@ -141,30 +142,38 @@ function wpcp_render_repeat_row( $key, $args, $post_id ) {
 	$args     = wp_parse_args( $args, $defaults );
 	?>
 	<td>
-		<input type="hidden" name="download_details[<?php echo absint( $key ); ?>][index]" class="edd_repeatable_index" value="<?php echo absint( $key ); ?>"/>
+		<input type="hidden" name="download_details[<?php echo absint( $key ); ?>][index]" class="edd_repeatable_index"
+		       value="<?php echo absint( $key ); ?>"/>
 
-		<input type="text" name="<?php echo '_meta_fields[' . $key . '][key]';?>" id="<?php echo sanitize_key('_meta_fields[' . $key . '][key]');?>" value="<?php echo esc_attr( $args['key'] );?>" class="regular-text ever-field large-text ever-field" autocomplete="false" >
+		<input type="text" name="<?php echo '_meta_fields[' . $key . '][key]'; ?>"
+		       id="<?php echo sanitize_key( '_meta_fields[' . $key . '][key]' ); ?>"
+		       value="<?php echo esc_attr( $args['key'] ); ?>" class="regular-text ever-field large-text ever-field"
+		       autocomplete="false">
 	</td>
 
 	<td class="pricing">
-		<input type="text" name="<?php echo '_meta_fields[' . $key . '][value]';?>" id="<?php echo sanitize_key('_meta_fields[' . $key . '][key]');?>" value="<?php echo esc_attr( $args['key'] );?>" class="regular-text ever-field large-text ever-field" autocomplete="false" >
+		<input type="text" name="<?php echo '_meta_fields[' . $key . '][value]'; ?>"
+		       id="<?php echo sanitize_key( '_meta_fields[' . $key . '][key]' ); ?>"
+		       value="<?php echo esc_attr( $args['key'] ); ?>" class="regular-text ever-field large-text ever-field"
+		       autocomplete="false">
 	</td>
 
 	<td>
-		<span class="ever-remove-repeatable ever-remove-row edd-remove-row" style="background: url(<?php echo admin_url( '/images/xit.gif' ); ?>) no-repeat;"></span>
+		<span class="ever-remove-repeatable ever-remove-row edd-remove-row"
+		      style="background: url(<?php echo admin_url( '/images/xit.gif' ); ?>) no-repeat;"></span>
 	</td>
 	<?php
 }
 
 add_action( 'wpcp_render_repeat_row', 'wpcp_render_repeat_row', 10, 4 );
 
-function wpcp_remove_logs(){
-	if( !current_user_can('manage_options')){
-		return ;
+function wpcp_remove_logs() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
 	}
 
-	if(!empty($_REQUEST['remove_logs']) && !empty($_REQUEST['page'])  && 'wpcp-logs' == $_REQUEST['page']){
-		if(wp_verify_nonce($_REQUEST['wpcp_nonce'], 'wpcp_remove_logs')){
+	if ( ! empty( $_REQUEST['remove_logs'] ) && ! empty( $_REQUEST['page'] ) && 'wpcp-logs' == $_REQUEST['page'] ) {
+		if ( wp_verify_nonce( $_REQUEST['wpcp_nonce'], 'wpcp_remove_logs' ) ) {
 			global $wpdb;
 			$sql = "truncate {$wpdb->prefix}wpcp_logs;";
 			$wpdb->query( $sql );
@@ -175,7 +184,8 @@ function wpcp_remove_logs(){
 	}
 
 }
-add_action('admin_init', 'wpcp_remove_logs');
+
+add_action( 'admin_init', 'wpcp_remove_logs' );
 
 function wpcp_custom_wpkses_post_tags( $tags, $context ) {
 	if ( 'post' === $context ) {
@@ -190,4 +200,18 @@ function wpcp_custom_wpkses_post_tags( $tags, $context ) {
 
 	return $tags;
 }
+
 add_filter( 'wp_kses_allowed_html', 'wpcp_custom_wpkses_post_tags', 10, 2 );
+
+
+add_action( 'plugins_loaded', 'wpcp_per_minute_cron_auto_activeate' );
+
+/**
+ * check wpcp_per_minute_scheduled_events status
+ */
+function wpcp_per_minute_cron_auto_activeate() {
+	$per_minute_cron = wp_get_scheduled_event( 'wpcp_per_minute_scheduled_events' );
+	if ( ! $per_minute_cron ) {
+		wp_schedule_event( time(), 'once_a_minute', 'wpcp_per_minute_scheduled_events' );
+	}
+}
