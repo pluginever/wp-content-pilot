@@ -204,14 +204,59 @@ function wpcp_custom_wpkses_post_tags( $tags, $context ) {
 add_filter( 'wp_kses_allowed_html', 'wpcp_custom_wpkses_post_tags', 10, 2 );
 
 
-add_action( 'plugins_loaded', 'wpcp_per_minute_cron_auto_activeate' );
+add_action( 'plugins_loaded', 'wpcp_per_minute_cron_auto_activate' );
 
 /**
  * check wpcp_per_minute_scheduled_events status
  */
-function wpcp_per_minute_cron_auto_activeate() {
+function wpcp_per_minute_cron_auto_activate() {
 	$per_minute_cron = wp_get_scheduled_event( 'wpcp_per_minute_scheduled_events' );
 	if ( ! $per_minute_cron ) {
 		wp_schedule_event( time(), 'once_a_minute', 'wpcp_per_minute_scheduled_events' );
 	}
 }
+
+/**
+ * Reset search page number
+ */
+function wpcp_handle_campaign_reset_search() {
+	if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_campaign_reset_search' ) ) {
+		wp_die( __( 'No Cheating', 'wp-content-pilot' ) );
+	}
+
+	$campaign_id = intval( $_REQUEST['campaign_id'] );
+
+	$campaign_post = get_post( $campaign_id );
+
+	if ( empty( $campaign_post ) || 'wp_content_pilot' !== $campaign_post->post_type ) {
+		wp_die( __( 'Invalid post action', 'wp-content-pilot' ) );
+	}
+
+	$exclude       = array( 'feed', 'craigslist', 'reddit' );
+	$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
+
+	if ( in_array( $campaign_type, $exclude ) ) {
+		content_pilot()->add_notice( sprintf( __( 'Reset search not working with %', 'wp-content-pilot' ), $campaign_type ), 'error' );
+		wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
+	}
+
+	$keywords = wpcp_get_post_meta( $campaign_id, '_keywords', '' );
+	$keywords = explode( ',', $keywords );
+
+	if ( ! empty( $keywords ) ) {
+		foreach ( $keywords as $keyword ) {
+			$string = 'page-_wpcp_' . $campaign_id . '-' . $campaign_type . '-' . $keyword . '-page-number';
+			$string = sanitize_title( $string );
+			update_post_meta( $campaign_id, $string, 0 );
+		}
+	}
+
+	$message = sprintf( __( ' Reset search page number', 'wp-content-pilot' ) );
+
+	content_pilot()->add_notice( $message, 'success' );
+
+	wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
+
+}
+
+add_action( 'admin_post_wpcp_campaign_reset_search', 'wpcp_handle_campaign_reset_search' );
