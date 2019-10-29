@@ -32,15 +32,18 @@ class WPCP_Youtube extends WPCP_Campaign {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 
-		add_filter( 'wpcp_campaign_additional_settings_field_args', array( $this, 'additional_settings_fields' ), 10, 3 );
+		add_filter( 'wpcp_campaign_additional_settings_field_args', array(
+			$this,
+			'additional_settings_fields'
+		), 10, 3 );
 	}
 
 	/**
 	 * Get WPCP_Envato default template tags
 	 *
+	 * @return string
 	 * @since 1.0.0
 	 *
-	 * @return string
 	 */
 	public static function get_default_template() {
 		$template
@@ -56,11 +59,11 @@ EOT;
 	/**
 	 * Register youtube module
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $modules
 	 *
 	 * @return mixed
+	 * @since 1.0.0
+	 *
 	 */
 	public function register_module( $modules ) {
 		$modules['youtube'] = [
@@ -76,8 +79,8 @@ EOT;
 	/**
 	 * Supported template tags
 	 *
-	 * @since 1.0.0
 	 * @return array
+	 * @since 1.0.0
 	 */
 	public static function get_template_tags() {
 		return array(
@@ -103,12 +106,12 @@ EOT;
 	/**
 	 * Conditionally show meta fields
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $post_id
 	 * @param $campaign_type
 	 *
 	 * @return bool
+	 * @since 1.0.0
+	 *
 	 */
 	public function campaign_option_fields( $post_id, $campaign_type ) {
 
@@ -132,11 +135,11 @@ EOT;
 		) );
 
 		echo content_pilot()->elements->input( array(
-			'name'             => '_youtube_channel_id',
-			'placeholder'      => __( 'Example: UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
-			'label'            => __( 'Channel ID', 'wp-content-pilot' ),
-			'desc'             => __( 'eg. channel id is "UCIQOOX3ReApm-KTZ66eMVzQ" for https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
-			'value'            => wpcp_get_post_meta( $post_id, '_youtube_channel_id', '' ),
+			'name'        => '_youtube_channel_id',
+			'placeholder' => __( 'Example: UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
+			'label'       => __( 'Channel ID', 'wp-content-pilot' ),
+			'desc'        => __( 'eg. channel id is "UCIQOOX3ReApm-KTZ66eMVzQ" for https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
+			'value'       => wpcp_get_post_meta( $post_id, '_youtube_channel_id', '' ),
 		) );
 
 		echo content_pilot()->elements->select( array(
@@ -189,23 +192,31 @@ EOT;
 	}
 
 	/**
-     * Add additional settings option for youtube
-     *
-     * @since 1.0.4
-     *
-     * @param $args
-     * @param $type
-     *
-     * @return array
-     */
+	 * Add additional settings option for youtube
+	 *
+	 * @param $args
+	 * @param $type
+	 *
+	 * @return array
+	 * @since 1.0.4
+	 *
+	 */
 	public function additional_settings_fields( $args, $type, $post_id ) {
 		if ( 'youtube' != $type ) {
-            return $args;
+			return $args;
 		}
-		
+
 		unset( $args['options']['_remove_images'] );
 		unset( $args['options']['_strip_links'] );
 		unset( $args['options']['_skip_no_image'] );
+
+		if ( defined( 'WPCP_PRO_VERSION' ) ) {
+			$args['options']['_video_transcription'] = __( 'Video transcription as content', 'wp-content-pilot' );
+			$video_transcription                     = get_post_meta( $post_id, '_video_transcription', true );
+			if ( 'on' == $video_transcription ) {
+				$args['value'][] = '_video_transcription';
+			}
+		}
 
 		return $args;
 	}
@@ -213,46 +224,46 @@ EOT;
 	/**
 	 * Get all youtube categories
 	 *
+	 * @return array
 	 * @since 1.0.0
 	 *
-	 * @return array
 	 */
 
 	public function get_youtube_categories() {
 		$categories = array(
 			'all' => 'All',
-			'1' => 'Film & Animation',
-			'2' => 'Autos & Vehicles',
-			'10' => 'Music',
-			'15' => 'Pets & Animals',
-			'17' => 'Sports',
-			'18' => 'Short Movies',
-			'19' => 'Travel & Events',
-			'20' => 'Gaming',
-			'21' => 'Videoblogging',
-			'22' => 'People & Blogs',
-			'23' => 'Comedy',
-			'24' => 'Entertainment',
-			'25' => 'News & Politics',
-			'26' => 'Howto & Style',
-			'27' => 'Education',
-			'28' => 'Science & Technology',
-			'29' => 'Nonprofits & Activism',
-			'30' => 'Movies',
-			'31' => 'Anime/Animation',
-			'32' => 'Action/Adventure',
-			'33' => 'Classics',
-			'34' => 'Comedy',
-			'35' => 'Documentary',
-			'36' => 'Drama',
-			'37' => 'Family',
-			'38' => 'Foreign',
-			'39' => 'Horror',
-			'40' => 'Sci-Fi/Fantasy',
-			'41' => 'Thriller',
-			'42' => 'Shorts',
-			'43' => 'Shows',
-			'44' => 'Trailers'
+			'1'   => 'Film & Animation',
+			'2'   => 'Autos & Vehicles',
+			'10'  => 'Music',
+			'15'  => 'Pets & Animals',
+			'17'  => 'Sports',
+			'18'  => 'Short Movies',
+			'19'  => 'Travel & Events',
+			'20'  => 'Gaming',
+			'21'  => 'Videoblogging',
+			'22'  => 'People & Blogs',
+			'23'  => 'Comedy',
+			'24'  => 'Entertainment',
+			'25'  => 'News & Politics',
+			'26'  => 'Howto & Style',
+			'27'  => 'Education',
+			'28'  => 'Science & Technology',
+			'29'  => 'Nonprofits & Activism',
+			'30'  => 'Movies',
+			'31'  => 'Anime/Animation',
+			'32'  => 'Action/Adventure',
+			'33'  => 'Classics',
+			'34'  => 'Comedy',
+			'35'  => 'Documentary',
+			'36'  => 'Drama',
+			'37'  => 'Family',
+			'38'  => 'Foreign',
+			'39'  => 'Horror',
+			'40'  => 'Sci-Fi/Fantasy',
+			'41'  => 'Thriller',
+			'42'  => 'Shorts',
+			'43'  => 'Shows',
+			'44'  => 'Trailers'
 		);
 
 		return $categories;
@@ -261,27 +272,33 @@ EOT;
 	/**
 	 * update campaign settings
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $post_id
 	 * @param $posted
+	 *
+	 * @since 1.0.0
+	 *
 	 */
 	public function update_campaign_settings( $post_id, $posted ) {
+		$video_transcription = empty( $posted['_video_transcription'] ) ? '' : sanitize_key( $posted['_video_transcription'] );
+
 		update_post_meta( $post_id, '_youtube_search_type', empty( $posted['_youtube_search_type'] ) ? 'global' : sanitize_text_field( $posted['_youtube_search_type'] ) );
 		update_post_meta( $post_id, '_youtube_channel_id', empty( $posted['_youtube_channel_id'] ) ? '' : sanitize_text_field( $posted['_youtube_channel_id'] ) );
 		update_post_meta( $post_id, '_youtube_category', empty( $posted['_youtube_category'] ) ? 'all' : sanitize_text_field( $posted['_youtube_category'] ) );
 		update_post_meta( $post_id, '_youtube_search_orderby', empty( $posted['_youtube_search_orderby'] ) ? '' : sanitize_key( $posted['_youtube_search_orderby'] ) );
 		update_post_meta( $post_id, '_youtube_search_order', empty( $posted['_youtube_search_order'] ) ? '' : sanitize_key( $posted['_youtube_search_order'] ) );
+		update_post_meta( $post_id, '_video_transcription', $video_transcription );
+
+
 	}
 
 	/**
 	 * Hook in background process and prepare contents
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $link
 	 *
 	 * @return bool|\WP_Error
+	 * @since 1.0.0
+	 *
 	 */
 	public function prepare_contents( $link ) {
 
@@ -318,7 +335,7 @@ EOT;
 			'favorite_count' => intval( @$item->statistics->favoriteCount ),
 			'comment_count'  => intval( @$item->statistics->commentCount ),
 			'embed_html'     => @$item->player->embedHtml,
-			'excerpt'        => wp_trim_words( trim( $description ) , 55 ),
+			'excerpt'        => wp_trim_words( trim( $description ), 55 ),
 		);
 
 		wpcp_update_link( $link->id, array(
@@ -332,6 +349,7 @@ EOT;
 
 	/**
 	 * since 1.0.0
+	 *
 	 * @param $youtube_time
 	 *
 	 * @return string
@@ -366,12 +384,12 @@ EOT;
 	/**
 	 * Replace additional template tags
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $content
 	 * @param $article
 	 *
 	 * @return mixed
+	 * @since 1.0.0
+	 *
 	 */
 	public function replace_template_tags( $content, $article ) {
 
@@ -412,11 +430,11 @@ EOT;
 	 */
 	public function discover_links() {
 
-		$page         = $this->get_page_number( '' );
-		$category     = wpcp_get_post_meta( $this->campaign_id, '_youtube_category', 'all' );
-		$orderby      = wpcp_get_post_meta( $this->campaign_id, '_youtube_search_orderby', 'relevance' );
-		$search_type  = wpcp_get_post_meta( $this->campaign_id, '_youtube_search_type', 'global' );
-		$channel_id   = wpcp_get_post_meta( $this->campaign_id, '_youtube_channel_id', '' );
+		$page        = $this->get_page_number( '' );
+		$category    = wpcp_get_post_meta( $this->campaign_id, '_youtube_category', 'all' );
+		$orderby     = wpcp_get_post_meta( $this->campaign_id, '_youtube_search_orderby', 'relevance' );
+		$search_type = wpcp_get_post_meta( $this->campaign_id, '_youtube_search_type', 'global' );
+		$channel_id  = wpcp_get_post_meta( $this->campaign_id, '_youtube_channel_id', '' );
 
 		$query_args = array(
 			'part'              => 'snippet',
@@ -486,6 +504,7 @@ EOT;
 
 	/**
 	 * since 1.0.0
+	 *
 	 * @param $link
 	 *
 	 * @return array
@@ -509,31 +528,31 @@ EOT;
 
 	/**
 	 * Admin Scripts
-	 * 
+	 *
 	 * All scripts for admin and youtube.
 	 *
-	 * @since 1.0.4
 	 * @return void
+	 * @since 1.0.4
 	 */
 	public function admin_scripts() {
 		?>
 		<script>
-			window.addEventListener( 'load', function() {
-				( function( $ ) {
-					var checkSearchType = function () {
-						if ( $( '#_youtube_search_type' ).val() === 'channel' ) {
-							$( '._youtube_channel_id_field' ).slideDown();
-						} else {
-							$( '._youtube_channel_id_field' ).slideUp();
-						}
-					};
+            window.addEventListener('load', function () {
+                (function ($) {
+                    var checkSearchType = function () {
+                        if ($('#_youtube_search_type').val() === 'channel') {
+                            $('._youtube_channel_id_field').slideDown();
+                        } else {
+                            $('._youtube_channel_id_field').slideUp();
+                        }
+                    };
 
-					checkSearchType();
+                    checkSearchType();
 
-					$( 'body' ).on( 'change', '#_youtube_search_type', checkSearchType );
-					$( 'body' ).on( 'wpcpcontentloaded', checkSearchType );
-				} )( jQuery )
-			} );
+                    $('body').on('change', '#_youtube_search_type', checkSearchType);
+                    $('body').on('wpcpcontentloaded', checkSearchType);
+                })(jQuery)
+            });
 		</script>
 		<?php
 	}
