@@ -495,8 +495,9 @@ EOT;
 				'status'      => 'fetched',
 			);
 		}
-
-		$this->set_page_number( $response->nextPageToken );
+		if ( isset( $response->nextPageToken ) ) {
+			$this->set_page_number( $response->nextPageToken );
+		}
 
 		return $links;
 
