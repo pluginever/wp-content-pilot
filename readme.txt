@@ -197,6 +197,11 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 
 == Changelog ==
 
+= v1.1.1 -> November 3, 2019 =
+* [Fix] Per minute cron auto shutdown 
+* [Enhance] Reset search page number
+* [Enhance] Youtube additional settings
+
 = v1.1.0 -> October 24, 2019 =
 * [Fix] Warning Send email notification
 * [Fix] WP Compatibility v5.2.4

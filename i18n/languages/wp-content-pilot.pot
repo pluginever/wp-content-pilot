@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.1.0\n"
+"Project-Id-Version: WP Content Pilot 1.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2019-10-24 05:10:27+00:00\n"
+"POT-Creation-Date: 2019-11-03 06:12:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,16 +13,24 @@ msgstr ""
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/action-functions.php:74
+#: includes/action-functions.php:74 includes/action-functions.php:224
 msgid "No Cheating"
 msgstr ""
 
-#: includes/action-functions.php:82
+#: includes/action-functions.php:82 includes/action-functions.php:232
 msgid "Invalid post action"
 msgstr ""
 
 #: includes/action-functions.php:105
 msgid "A post successfully created by %s titled %s"
+msgstr ""
+
+#: includes/action-functions.php:239
+msgid "Reset search not working with %"
+msgstr ""
+
+#: includes/action-functions.php:254
+msgid " Reset search page number"
 msgstr ""
 
 #: includes/class-admin-menu.php:31 includes/metabox-functions.php:279
@@ -174,7 +182,7 @@ msgstr ""
 msgid "Envato modules to import envato products and affiliation"
 msgstr ""
 
-#: includes/class-help.php:231 modules/class-youtube.php:67
+#: includes/class-help.php:231 modules/class-youtube.php:70
 msgid "Youtube"
 msgstr ""
 
@@ -972,30 +980,30 @@ msgstr ""
 
 #: modules/class-article.php:60 modules/class-envato.php:83
 #: modules/class-feed.php:71 modules/class-flickr.php:81
-#: modules/class-youtube.php:84 modules/class-youtube.php:165
+#: modules/class-youtube.php:87 modules/class-youtube.php:168
 msgid "Title"
 msgstr ""
 
 #: modules/class-article.php:61 modules/class-feed.php:72
-#: modules/class-youtube.php:85
+#: modules/class-youtube.php:88
 msgid "Summary"
 msgstr ""
 
 #: modules/class-article.php:62 modules/class-envato.php:84
 #: modules/class-feed.php:73 modules/class-flickr.php:82
-#: modules/class-youtube.php:86
+#: modules/class-youtube.php:89
 msgid "Content"
 msgstr ""
 
 #: modules/class-article.php:63 modules/class-envato.php:85
 #: modules/class-feed.php:74 modules/class-flickr.php:84
-#: modules/class-youtube.php:87
+#: modules/class-youtube.php:90
 msgid "Main image url"
 msgstr ""
 
 #: modules/class-article.php:64 modules/class-envato.php:86
 #: modules/class-feed.php:75 modules/class-flickr.php:85
-#: modules/class-youtube.php:88
+#: modules/class-youtube.php:91
 msgid "Source link"
 msgstr ""
 
@@ -1087,7 +1095,7 @@ msgstr ""
 msgid "Sort By"
 msgstr ""
 
-#: modules/class-envato.php:154 modules/class-youtube.php:163
+#: modules/class-envato.php:154 modules/class-youtube.php:166
 msgid "Relevance"
 msgstr ""
 
@@ -1095,7 +1103,7 @@ msgstr ""
 msgid "Following"
 msgstr ""
 
-#: modules/class-envato.php:156 modules/class-youtube.php:167
+#: modules/class-envato.php:156 modules/class-youtube.php:170
 msgid "Rating"
 msgstr ""
 
@@ -1107,7 +1115,7 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: modules/class-envato.php:159 modules/class-youtube.php:164
+#: modules/class-envato.php:159 modules/class-youtube.php:167
 #: views/tables/log-list-table.php:76
 msgid "Date"
 msgstr ""
@@ -1208,103 +1216,107 @@ msgstr ""
 msgid "Could not find any result for the keyword %s"
 msgstr ""
 
-#: modules/class-youtube.php:68
+#: modules/class-youtube.php:71
 msgid "Scraps videos based on keywords from youtube"
 msgstr ""
 
-#: modules/class-youtube.php:89
+#: modules/class-youtube.php:92
 msgid "Video Id"
 msgstr ""
 
-#: modules/class-youtube.php:90
+#: modules/class-youtube.php:93
 msgid "Channel Id"
 msgstr ""
 
-#: modules/class-youtube.php:91
+#: modules/class-youtube.php:94
 msgid "Channel Name"
 msgstr ""
 
-#: modules/class-youtube.php:92
+#: modules/class-youtube.php:95
 msgid "Video Tags"
 msgstr ""
 
-#: modules/class-youtube.php:93
+#: modules/class-youtube.php:96
 msgid "Video Duration"
 msgstr ""
 
-#: modules/class-youtube.php:94
+#: modules/class-youtube.php:97
 msgid "Total Views"
 msgstr ""
 
-#: modules/class-youtube.php:95
+#: modules/class-youtube.php:98
 msgid "Total Likes"
 msgstr ""
 
-#: modules/class-youtube.php:96
+#: modules/class-youtube.php:99
 msgid "Total Dislikes"
 msgstr ""
 
-#: modules/class-youtube.php:97
+#: modules/class-youtube.php:100
 msgid "Total Favourites"
 msgstr ""
 
-#: modules/class-youtube.php:98
+#: modules/class-youtube.php:101
 msgid "Total Comments"
 msgstr ""
 
-#: modules/class-youtube.php:99
+#: modules/class-youtube.php:102
 msgid "HTML Embed Code "
 msgstr ""
 
-#: modules/class-youtube.php:124
+#: modules/class-youtube.php:127
 msgid "Search Type"
 msgstr ""
 
-#: modules/class-youtube.php:125
+#: modules/class-youtube.php:128
 msgid ""
 "Use global search for all result or use specific channel if you want to "
 "limit to that channel."
 msgstr ""
 
-#: modules/class-youtube.php:127
+#: modules/class-youtube.php:130
 msgid "Global"
 msgstr ""
 
-#: modules/class-youtube.php:128
+#: modules/class-youtube.php:131
 msgid "From Specific Channel"
 msgstr ""
 
-#: modules/class-youtube.php:136
+#: modules/class-youtube.php:139
 msgid "Example: UCIQOOX3ReApm-KTZ66eMVzQ"
 msgstr ""
 
-#: modules/class-youtube.php:137
+#: modules/class-youtube.php:140
 msgid "Channel ID"
 msgstr ""
 
-#: modules/class-youtube.php:138
+#: modules/class-youtube.php:141
 msgid ""
 "eg. channel id is \"UCIQOOX3ReApm-KTZ66eMVzQ\" for "
 "https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ"
 msgstr ""
 
-#: modules/class-youtube.php:147
+#: modules/class-youtube.php:150
 msgid "Category"
 msgstr ""
 
-#: modules/class-youtube.php:156
+#: modules/class-youtube.php:159
 msgid "Search Order By"
 msgstr ""
 
-#: modules/class-youtube.php:166
+#: modules/class-youtube.php:169
 msgid "View Count"
 msgstr ""
 
-#: modules/class-youtube.php:175
+#: modules/class-youtube.php:178
 msgid "Search Order"
 msgstr ""
 
-#: modules/class-youtube.php:398
+#: modules/class-youtube.php:214
+msgid "Video transcription as content"
+msgstr ""
+
+#: modules/class-youtube.php:416
 msgid "Youtube API Key is not set, The campaign won't work without API Key."
 msgstr ""
 
@@ -1400,50 +1412,50 @@ msgstr ""
 msgid "Required PHP Extensions"
 msgstr ""
 
-#: views/menu/status.php:176
+#: views/menu/status.php:173
 msgid "Total Campaigns"
 msgstr ""
 
-#: views/menu/status.php:185
+#: views/menu/status.php:192
 msgid "Status > WP Content Pilot"
 msgstr ""
 
-#: views/menu/status.php:188
+#: views/menu/status.php:195
 msgid ""
 "Experiencing an issue and need to contact WP Content Pilot support? Click "
 "the link below to get debug information you can send to us."
 msgstr ""
 
-#: views/menu/status.php:200
+#: views/menu/status.php:207
 msgid "Get System Information"
 msgstr ""
 
-#: views/menu/status.php:207
+#: views/menu/status.php:214
 msgid "System Information"
 msgstr ""
 
-#: views/menu/status.php:210 views/menu/status.php:217
+#: views/menu/status.php:217 views/menu/status.php:224
 msgid "Setting"
 msgstr ""
 
-#: views/menu/status.php:211 views/menu/status.php:218
-#: views/menu/status.php:241 views/menu/status.php:248
+#: views/menu/status.php:218 views/menu/status.php:225
+#: views/menu/status.php:248 views/menu/status.php:255
 msgid "Value"
 msgstr ""
 
-#: views/menu/status.php:237
+#: views/menu/status.php:244
 msgid "Campaigns Information"
 msgstr ""
 
-#: views/menu/status.php:240 views/menu/status.php:247
+#: views/menu/status.php:247 views/menu/status.php:254
 msgid "Label"
 msgstr ""
 
-#: views/menu/status.php:274
+#: views/menu/status.php:281
 msgid "Copy System Information"
 msgstr ""
 
-#: views/menu/status.php:285
+#: views/menu/status.php:292
 msgid "Copied"
 msgstr ""
 
@@ -1479,23 +1491,27 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: views/metabox/action-metabox.php:76
+#: views/metabox/action-metabox.php:77
+msgid "Reset"
+msgstr ""
+
+#: views/metabox/action-metabox.php:88
 msgid "Publish"
 msgstr ""
 
-#: views/metabox/action-metabox.php:77
+#: views/metabox/action-metabox.php:89
 msgid "Create Campaign"
 msgstr ""
 
-#: views/metabox/action-metabox.php:80
+#: views/metabox/action-metabox.php:92
 msgid "Update"
 msgstr ""
 
-#: views/metabox/action-metabox.php:89
+#: views/metabox/action-metabox.php:101
 msgid "Test Run"
 msgstr ""
 
-#: views/metabox/action-metabox.php:90
+#: views/metabox/action-metabox.php:102
 msgid "Update Campaign"
 msgstr ""
 
