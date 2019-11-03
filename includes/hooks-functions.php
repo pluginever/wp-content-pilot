@@ -79,18 +79,18 @@ add_filter( 'admin_footer_text', 'wpcp_admin_footer_text' );
 function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article, $keyword ) {
 	$send_mail = wpcp_get_settings( 'post_publish_mail', 'wpcp_settings_misc', '' );
 	if ( $send_mail != 'on' ) {
-		return ;
+		return;
 	}
 	$author_id = get_post_field( 'post_author', $post_id );
 	$to        = get_the_author_meta( 'user_email', $author_id );
 	$title     = $article['title'];
 	//when excerpt is not available
-	if(empty($article['excerpt'])){
+	if ( empty( $article['excerpt'] ) ) {
 		$summary = wp_trim_words( $article['content'], 55 );
 		$summary = strip_tags( $summary );
 		$excerpt = strip_shortcodes( $summary );
-	}else{
-		$excerpt   = $article['excerpt'];
+	} else {
+		$excerpt = $article['excerpt'];
 	}
 
 	$post_link = get_the_permalink( $post_id );
@@ -106,3 +106,5 @@ function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article, 
 }
 
 add_action( 'wpcp_after_post_publish', 'wpcp_post_publish_mail_notification', 10, 4 );
+
+

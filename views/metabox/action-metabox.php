@@ -66,6 +66,18 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 			</div>
 		<?php } ?>
 
+		<?php if ( ! empty( $_REQUEST['post'] ) ) { ?>
+			<?php
+			$reset_search_url = add_query_arg(array(
+				'action' => 'wpcp_campaign_reset_search',
+				'campaign_id' => intval($_REQUEST['post']),
+				'nonce' => wp_create_nonce('wpcp_campaign_reset_search')
+			),esc_url( admin_url('admin-post.php') ))
+			?>
+			<a href="<?php echo esc_url( $reset_search_url ); ?>" class="button"><?php _e( 'Reset', 'wp-content-pilot' ); ?></a>
+		<?php } ?>
+
+
 		<input type="hidden" name="hidden_post_status" id="hidden_post_status" value="publish"/>
 
 		<div id="publishing-action">

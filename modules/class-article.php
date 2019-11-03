@@ -1,6 +1,6 @@
 <?php
 /**
- * Feed Class
+ * Article Class
  *
  * @package     WP Content Pilot
  * @subpackage  Feed

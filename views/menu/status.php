@@ -169,13 +169,20 @@ $information['required_extensions'] = array(
  * Campagin Information
  */
 
-$campaigns_info = array();
-$campaigns = $wpdb->get_results($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_type = %s AND post_status = %s", 'wp_content_pilot', 'publish' ));
-
 $campaigns_info['count'] = array(
 	'label' => __( 'Total Campaigns', 'wp-content-pilot' ),
-	'value' => count($campaigns),
 );
+$campaigns               = $wpdb->get_results( $wpdb->prepare( "SELECT count(pm.post_id) AS total_post,pm.meta_value as status  FROM wp_posts p  INNER JOIN wp_postmeta pm  ON p.ID = pm.post_id WHERE p.post_type = %s AND p.post_status = %s AND pm.meta_key = %s GROUP BY pm.meta_value", 'wp_content_pilot', 'publish', '_campaign_status' ) );
+$total                   = 0;
+$string                  = '';
+if ( ! empty( $campaigns ) ) {
+	foreach ( $campaigns as $campaign ) {
+		$total  += $campaign->total_post;
+		$string .= "$campaign->status $campaign->total_post, ";
+	}
+	$total = sprintf( '%d ( %s)', intval( $total ), sanitize_text_field( $string ) );
+}
+$campaigns_info['count']['value'] = $total;
 
 ?>
 
