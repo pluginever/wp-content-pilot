@@ -82,6 +82,10 @@
 	padding: 5px 0;
 	line-height: 24px;
 	vertical-align: top;
+	//added for resolve conflict with wc-serial-number
+	height: auto !important;
+	border: none;
+	box-shadow: none;
 
 	& > label {
 		float: left;
