@@ -107,4 +107,15 @@ function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article, 
 
 add_action( 'wpcp_after_post_publish', 'wpcp_post_publish_mail_notification', 10, 4 );
 
+/**
+ * Remove links from wpcp_links table when links status is success
+ */
+function wpcp_clean_links(){
+	global $wpdb;
+	$response = $wpdb->query( "DELETE FROM {$wpdb->prefix}wpcp_links where status='success' " );
+	if( $response ){
+		wpcp_log('Clean wpcp_links table');
+	}
+}
 
+add_action( 'wp_scheduled_delete', 'wpcp_clean_links' );
