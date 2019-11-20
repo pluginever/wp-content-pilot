@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.1.1\n"
+"Project-Id-Version: WP Content Pilot 1.1.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2019-11-03 06:12:07+00:00\n"
+"POT-Creation-Date: 2019-11-20 11:33:35+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -54,7 +54,7 @@ msgstr ""
 msgid "Clear Logs"
 msgstr ""
 
-#: includes/class-automatic-campaign.php:10
+#: includes/class-automatic-campaign.php:22
 msgid "Automatic campaign failed."
 msgstr ""
 
@@ -377,11 +377,11 @@ msgstr ""
 #: includes/class-promotion.php:34
 msgid ""
 "Your most desired and long awaited update for <strong>WP Content "
-"Pilot(v1.0.4)</strong> is finally here.<br> Now it will empower your auto "
+"Pilot(v%s)</strong> is finally here.<br> Now it will empower your auto "
 "blogging & Affiliate Marketing with <strong>5 free</strong> and <strong>16 "
 "premium</strong> campaigns that includes outstanding features. Learn more "
 "about the premium version.<br> Use Coupon <strong>WPCPPROLAUNCH</strong> to "
-"avail <strong>20%</strong> discount if you upgrade to PRO now.</strong>"
+"avail <strong>%s</strong> discount if you upgrade to PRO now.</strong>"
 msgstr ""
 
 #: includes/class-promotion.php:46
@@ -1208,11 +1208,11 @@ msgstr ""
 msgid "Flickr API Key is not set, The campaign won't work without API Key."
 msgstr ""
 
-#: modules/class-flickr.php:192
+#: modules/class-flickr.php:193
 msgid "Maximum page number reached for the keyword %s"
 msgstr ""
 
-#: modules/class-flickr.php:222
+#: modules/class-flickr.php:223
 msgid "Could not find any result for the keyword %s"
 msgstr ""
 
@@ -1316,7 +1316,7 @@ msgstr ""
 msgid "Video transcription as content"
 msgstr ""
 
-#: modules/class-youtube.php:416
+#: modules/class-youtube.php:442
 msgid "Youtube API Key is not set, The campaign won't work without API Key."
 msgstr ""
 
