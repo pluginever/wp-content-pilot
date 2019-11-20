@@ -204,7 +204,7 @@ function wpcp_custom_wpkses_post_tags( $tags, $context ) {
 add_filter( 'wp_kses_allowed_html', 'wpcp_custom_wpkses_post_tags', 10, 2 );
 
 
-add_action( 'plugins_loaded', 'wpcp_per_minute_cron_auto_activate' );
+add_action( 'wp_version_check', 'wpcp_per_minute_cron_auto_activate' );
 
 /**
  * check wpcp_per_minute_scheduled_events status
