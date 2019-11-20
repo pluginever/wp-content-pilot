@@ -317,11 +317,15 @@ EOT;
 		$response = wpcp_retrieve_body( $request );
 
 		if ( is_wp_error( $response ) ) {
+			wpcp_update_link( $link->id, array(
+				'status' => 'http_error',
+			) );
+
 			return $response;
 		}
 		$item = array_pop( $response->items );
 
-		$description = wp_kses_post( @$item->snippet->description );
+		$description = wp_kses_post( $this->remove_imoji( @$item->snippet->description ) );
 
 		$article = array(
 			'video_id'       => sanitize_key( @$item->id ),
@@ -338,12 +342,19 @@ EOT;
 			'excerpt'        => wp_trim_words( trim( $description ), 55 ),
 		);
 
-		wpcp_update_link( $link->id, array(
+		$update = wpcp_update_link( $link->id, array(
 			'content'     => $description,
 			'raw_content' => serialize( $article ),
 			'score'       => wpcp_get_read_ability_score( $description ),
 			'status'      => 'ready',
 		) );
+
+		//if found any database error
+		if(!$update){
+			wpcp_update_link( $link->id, array(
+				'status'      => 'failed'
+			));
+		}
 
 	}
 
@@ -405,6 +416,21 @@ EOT;
 		}
 
 		return $content;
+	}
+
+	public function remove_imoji( $text ) {
+		$regexEmoticons = '/[\x{1F600}-\x{1F64F}]/u';
+		$text           = preg_replace( $regexEmoticons, '', $text );
+
+		// Match Miscellaneous Symbols and Pictographs
+		$regexSymbols = '/[\x{1F300}-\x{1F5FF}]/u';
+		$text         = preg_replace( $regexSymbols, '', $text );
+
+		// Match Transport And Map Symbols
+		$regexTransport = '/[\x{1F680}-\x{1F6FF}]/u';
+		$text           = preg_replace( $regexTransport, '', $text );
+
+		return $text;
 	}
 
 	public function setup() {
