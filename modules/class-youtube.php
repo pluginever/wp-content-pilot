@@ -350,10 +350,10 @@ EOT;
 		) );
 
 		//if found any database error
-		if(!$update){
+		if ( ! $update ) {
 			wpcp_update_link( $link->id, array(
-				'status'      => 'failed'
-			));
+				'status' => 'failed'
+			) );
 		}
 
 	}
@@ -462,11 +462,13 @@ EOT;
 		$search_type = wpcp_get_post_meta( $this->campaign_id, '_youtube_search_type', 'global' );
 		$channel_id  = wpcp_get_post_meta( $this->campaign_id, '_youtube_channel_id', '' );
 
+		$maxResults = wpcp_perpage_data_fetch_limit( $this->campaign_id );
+
 		$query_args = array(
 			'part'              => 'snippet',
 			'type'              => 'video',
 			'key'               => $this->api_key,
-			'maxResults'        => 50,
+			'maxResults'        => $maxResults,
 			'q'                 => $this->keyword,
 			'category'          => $category,
 			'videoEmbeddable'   => 'true',
