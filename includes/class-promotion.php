@@ -31,7 +31,7 @@ class WPCP_Promotion {
 			return;
 		}
 
-		$offer_msg = __( 'Your most desired and long awaited update for <strong>WP Content Pilot(v1.0.4)</strong> is finally here.<br> Now it will empower your auto blogging & Affiliate Marketing with <strong>5 free</strong> and <strong>16 premium</strong> campaigns that includes outstanding features. Learn more about the premium version.<br> Use Coupon <strong>WPCPPROLAUNCH</strong> to avail <strong>20%</strong> discount if you upgrade to PRO now.</strong>', 'wp-content-pilot' );
+		$offer_msg = sprintf(__( 'Your most desired and long awaited update for <strong>WP Content Pilot(v%s)</strong> is finally here.<br> Now it will empower your auto blogging & Affiliate Marketing with <strong>5 free</strong> and <strong>16 premium</strong> campaigns that includes outstanding features. Learn more about the premium version.<br> Use Coupon <strong>WPCPPROLAUNCH</strong> to avail <strong>%s</strong> discount if you upgrade to PRO now.</strong>', 'wp-content-pilot' ),WPCP_VERSION, '20%');
 
 		?>
 		<div class="notice notice-info is-dismissible" id="wpcp-promotional-offer-notice">
