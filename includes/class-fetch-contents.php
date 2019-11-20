@@ -10,7 +10,7 @@ class WPCP_Fetch_Contents extends WP_Background_Process {
 	protected function task( $link_id ) {
 		$link = wpcp_get_link( $link_id );
 
-		if ( $link->status !== 'fetched' ) {
+		if ( empty($link) || $link->status !== 'fetched' ) {
 			return false;
 		}
 
