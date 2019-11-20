@@ -186,7 +186,8 @@ EOT;
 		$total_page     = wpcp_get_post_meta( $this->campaign_id, $total_page_uid, 0 );
 		$page           = $this->get_page_number( '1' );
 		$keywords       = wpcp_get_post_meta( $this->campaign_id, '_keywords', '' );
-		$per_page       = 50;
+		$per_page       = wpcp_perpage_data_fetch_limit( $this->campaign_id );
+
 
 		if ( $page > $total_page && ! empty( $total_page ) ) {
 			$msg = sprintf( __( 'Maximum page number reached for the keyword %s', 'wp-content-pilot' ), $keywords );

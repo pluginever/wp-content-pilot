@@ -316,13 +316,13 @@ EOT;
 		$price_range = explode( '|', $price_range );
 		$min_price   = ! empty( $price_range[0] ) ? trim( $price_range[0] ) : 0;
 		$max_price   = ! empty( $price_range[1] ) ? trim( $price_range[1] ) : 0;
-
+		$page_size = wpcp_perpage_data_fetch_limit( $this->campaign_id );
 		$query_args = [
 			'site'           => $site,
 			'term'           => $this->keyword,
 			'category'       => '',
 			'page'           => $page,
-			'page_size'      => 50,
+			'page_size'      => $page_size,
 			'sort_by'        => $sort_by,
 			'sort_direction' => $sort_direction,
 		];

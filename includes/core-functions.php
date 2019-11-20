@@ -1021,3 +1021,20 @@ function wpcp_truncate_content( $content, $length, $html = true ) {
 
 	return $content;
 }
+
+
+/**
+ * @param $campaign_id
+ * @param int $limit
+ *
+ * @return int
+ */
+function wpcp_perpage_data_fetch_limit( $campaign_id, $limit = 50 ){
+	$target     = wpcp_get_post_meta( $campaign_id, '_campaign_target', 0 );
+	$posted     = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
+	$need       = $target - $posted;
+	if ( $limit > $need && $need > 0 ) {
+		$limit = $need + ceil( ( $need / 100 ) * 10 );
+	}
+	return $limit;
+}

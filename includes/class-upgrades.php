@@ -14,6 +14,7 @@ class ContentPilot_Upgrades {
 	 */
 	private static $upgrades = array(
 		'1.0.4' => 'updates/update-1.0.4.php',
+		'1.1.2' => 'updates/update-1.1.2.php',
 	);
 
 	/**
