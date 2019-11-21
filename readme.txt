@@ -38,7 +38,6 @@ Just install the plugin and configure it as per your requirements and the plugin
 * Skip if not image found
 * Remove all images from post content.
 * Remove hyper links from post content.
-* Skip non-English article
 * Skip duplicate posting
 * Custom post title
 * Custom content template
@@ -197,8 +196,11 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 
 == Changelog ==
 
+= v1.1.2.1 -> November 21, 2019 =
+* [Fix] Code optimization to fix stuck campaigns
+
 = v1.1.2 -> November 20, 2019 =
-* [Fix] content fetching error in youtube
+* [Fix] Content fetching error in youtube
 * [Fix] WP Compatibility v5.3
 
 = v1.1.1 -> November 3, 2019 =

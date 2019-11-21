@@ -21,7 +21,6 @@ class WPCP_Automatic_Campaign extends WP_Background_Process {
 		if ( is_wp_error( $campaign ) ) {
 			wpcp_log( __( 'Automatic campaign failed.', 'wp-content-pilot' ), 'dev' );
 			wpcp_log( $campaign->get_error_message(), 'critical' );
-			exit;
 		}
 
 		return false;
