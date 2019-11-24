@@ -117,7 +117,7 @@ class WPCP_Log_List_Table extends \WP_List_Table {
         $items     = wp_cache_get( $cache_key, 'wp-content-pilot' );
 
         if ( false === $items ) {
-            $prepare = $wpdb->prepare('SELECT * FROM wp_wpcp_logs ORDER BY `created_at` DESC LIMIT %d, %d', $args['offset'],$args['limit'] );
+            $prepare = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}wpcp_logs ORDER BY `created_at` DESC LIMIT %d, %d", $args['offset'],$args['limit'] );
 
             $items = $wpdb->get_results( $prepare );
             wp_cache_set( $cache_key, $items, 'wp-content-pilot' );
