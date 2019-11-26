@@ -107,7 +107,7 @@ EOT;
 		if ( $campaign_type == 'feed' ) {
 			$attr['label'] = __( 'Feed Links', 'wp-content-pilot' );
 			$attr['name']  = '_feed_links';
-			$attr['desc']  = __( 'Input feed links separate comma', 'wp-content-pilot' );
+			$attr['desc']  = __( 'Input feed links, Separate links with a comma (,)', 'wp-content-pilot' );
 			$attr['value'] = wpcp_get_post_meta( $post_id, '_feed_links' );
 		}
 
