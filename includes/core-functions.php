@@ -577,6 +577,7 @@ function wpcp_get_readability( $html, $url ) {
 	$content = convert_chars( $content );
 	$content = wpcp_remove_empty_tags_recursive( $content );
 	$content = wpcp_remove_unauthorized_html( $content );
+	$content = wpcp_fix_image_src( $content );
 
 	if ( empty( $image ) ) {
 		$images = wpcp_get_all_image_urls( $content );
