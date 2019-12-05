@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH')|| exit();
+
 class WPCP_Fetch_Contents extends WP_Background_Process {
 
 	/**

@@ -1,7 +1,5 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined('ABSPATH')|| exit();
 
 if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 	class Ever_WP_Settings_API {

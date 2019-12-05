@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH')|| exit();
 
 class WPCP_Install {
 

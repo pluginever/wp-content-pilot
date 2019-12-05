@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH')|| exit();
+
 class WPCP_Automatic_Campaign extends WP_Background_Process {
 
 	protected $action = 'wpcp_automatic_campaign';

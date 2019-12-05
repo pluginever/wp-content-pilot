@@ -714,7 +714,6 @@ class WPCP_Elements {
 		$attributes .= $this->get_data_attributes( $args['data'] );
 		$attributes .= $this->get_attributes( $args['attrs'] );
 
-		// var_dump($args['value']);
 		$output = '';
 
 		$output .= '<div class="ever-field ever-repeatable-field ' . wpcp_sanitize_key( $args['name'] ) . '_field">';

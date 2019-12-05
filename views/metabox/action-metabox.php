@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH')|| exit();
 $can_publish = true;
 global $post_id;
 $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
