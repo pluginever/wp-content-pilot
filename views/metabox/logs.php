@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH')|| exit();
 $post_id = get_the_ID();
 $logs = wpcp_get_latest_logs( $post_id );
 

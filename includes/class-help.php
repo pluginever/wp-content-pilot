@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH')|| exit();
+
 class WPCP_Help {
     public $blocks;
 

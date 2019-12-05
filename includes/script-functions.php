@@ -8,7 +8,7 @@
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.2.0
  */
-
+defined('ABSPATH')|| exit();
 function wpcp_load_admin_scripts( $hook ) {
 	$js_dir     = WPCP_ASSETS_URL . '/js/';
 	$css_dir    = WPCP_ASSETS_URL . '/css/';

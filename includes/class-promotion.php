@@ -1,7 +1,6 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined('ABSPATH')|| exit();
+
 class WPCP_Promotion {
 
 	public function __construct() {
@@ -25,13 +24,13 @@ class WPCP_Promotion {
 //		}
 
 		// check if it has already been dismissed
-		$hide_notice = get_option( 'wpcp_pro_release_announcement', 'no' );
+		$hide_notice = get_option( 'wpcp_pro_free2pro_promotion', 'no' );
 
 		if ( 'hide' == $hide_notice ) {
 			return;
 		}
 
-		$offer_msg = sprintf(__( 'Your most desired and long awaited update for <strong>WP Content Pilot(v%s)</strong> is finally here.<br> Now it will empower your auto blogging & Affiliate Marketing with <strong>5 free</strong> and <strong>16 premium</strong> campaigns that includes outstanding features. Learn more about the premium version.<br> Use Coupon <strong>WPCPPROLAUNCH</strong> to avail <strong>%s</strong> discount if you upgrade to PRO now.</strong>', 'wp-content-pilot' ),WPCP_VERSION, '20%');
+		$offer_msg = __( 'Turn on Auto-Pilot For Automatic content generation and affiliation with 20+ Supported Campaign Types using <strong>WP Content Pilot Pro</strong><br> Use Coupon <strong>WPCPFREE2PRO</strong> to avail <strong>10%</strong> discount if you upgrade to PRO now.</strong>', 'wp-content-pilot' );
 
 		?>
 		<div class="notice notice-info is-dismissible" id="wpcp-promotional-offer-notice">
@@ -43,7 +42,7 @@ class WPCP_Promotion {
 			<p>
 				<?php echo $offer_msg; ?>
 			</p>
-			<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash" class="button button-pro promo-btn" target="_blank"><?php _e( 'Get Pro', 'wp-content-pilot' ); ?></a>
+			<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=admin-notice&utm_campaign=getpro&utm_medium=admin-dashboard" class="button button-pro promo-btn" target="_blank"><?php _e( 'Get Pro', 'wp-content-pilot' ); ?></a>
 		</div><!-- #wpcp-promotional-offer-notice -->
 
 		<style>
@@ -105,7 +104,7 @@ class WPCP_Promotion {
 	 */
 	public function dismiss_promotional_offer() {
 		if ( ! empty( $_POST['dismissed'] ) ) {
-			$offer_key = 'wpcp_pro_release_announcement';
+			$offer_key = 'wpcp_pro_free2pro_promotion';
 			update_option( $offer_key, 'hide' );
 		}
 	}

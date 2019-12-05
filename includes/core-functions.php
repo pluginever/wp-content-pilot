@@ -1,4 +1,6 @@
 <?php
+defined('ABSPATH')|| exit();
+
 /**
  * get all the modules
  *

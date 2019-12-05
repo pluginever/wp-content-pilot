@@ -1,10 +1,6 @@
 <?php
 
-// don't call the file directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
+defined('ABSPATH')|| exit();
 global $wpdb;
 global $wp_version;
 
