@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH')|| exit();
 /**
  * Sanitizes a string key for WPCP Settings
  *
@@ -18,13 +19,13 @@ function wpcp_sanitize_key( $key ) {
 /**
  * Convert a string to array
  *
- * @since 1.0.0
- *
  * @param        $string
  * @param string $separator
- * @param array  $callbacks
+ * @param array $callbacks
  *
  * @return array
+ * @since 1.0.0
+ *
  */
 function wpcp_string_to_array( $string, $separator = ',', $callbacks = array() ) {
 	$default   = array(
@@ -120,8 +121,8 @@ function wpcp_convert_rel_2_abs_url( $rel_url, $host ) {
  * @param $html
  * @param $host
  *
- * @deprecated 1.2.0
  * @return mixed
+ * @deprecated 1.2.0
  */
 function wpcp_fix_html_links( $html, $host ) {
 	return wpcp_fix_relative_paths( $html, $host );
@@ -182,11 +183,11 @@ function wpcp_fix_relative_paths( $content, $url ) {
  * get all image tags
  *
  *
- * @since 1.0.0
- *
  * @param $content
  *
  * @return array
+ * @since 1.0.0
+ *
  */
 function wpcp_get_all_image_urls( $content ) {
 	preg_match_all( '/< *img[^>]*src *= *["\']?([^"\']*)/i', $content, $matches );
@@ -199,11 +200,11 @@ function wpcp_get_all_image_urls( $content ) {
 
 
 /**
- * @since 1.0.
- *
  * @param $content
  *
  * @return string
+ *
+ * @since 1.0.
  *
  */
 function wpcp_remove_unauthorized_html( $content ) {
@@ -252,11 +253,12 @@ function wpcp_remove_unauthorized_html( $content ) {
 		),
 		'i'          => array(),
 		'img'        => array(
-			'alt'    => true,
-			'align'  => true,
-			'height' => true,
-			'src'    => true,
-			'width'  => true,
+			'alt'      => true,
+			'align'    => true,
+			'height'   => true,
+			'src'      => true,
+			'width'    => true,
+			'data-src' => true,
 		),
 		'p'          => array(
 			'xml:lang' => true,
@@ -377,4 +379,32 @@ function wpcp_array_sort( $array, $on, $order = SORT_ASC ) {
 	}
 
 	return $new_array;
+}
+
+/**
+ * Fix img tags
+ *
+ * @since 1.1.2.2
+ * @param $content
+ *
+ * @return \PHPHtmlParser\Dom
+ */
+function wpcp_fix_image_src( $content ) {
+	$dom = new \PHPHtmlParser\Dom();
+	$dom->load($content);
+	$images = $dom->find('img');
+	foreach ($images as $image){
+		$src = $image->getAttribute('src');
+		$data_src = $image->getAttribute('data-src');
+		if(empty($src) && !empty($data_src)){
+			$image->setAttribute('src', $data_src);
+		}
+
+		if(empty($src) && empty($data_src)){
+			$image->delete();
+		}
+		unset($image);
+	}
+
+	return $dom;
 }

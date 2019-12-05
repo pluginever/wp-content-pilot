@@ -9,11 +9,7 @@
  * @since       1.2.0
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
+defined('ABSPATH')|| exit();
 
 function wpcp_setup_wpcp_post_types() {
 	$campaign_labels = array(

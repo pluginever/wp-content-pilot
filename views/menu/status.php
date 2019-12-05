@@ -1,10 +1,6 @@
 <?php
 
-// don't call the file directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-
+defined('ABSPATH')|| exit();
 global $wpdb;
 global $wp_version;
 
@@ -172,7 +168,7 @@ $information['required_extensions'] = array(
 $campaigns_info['count'] = array(
 	'label' => __( 'Total Campaigns', 'wp-content-pilot' ),
 );
-$campaigns               = $wpdb->get_results( $wpdb->prepare( "SELECT count(pm.post_id) AS total_post,pm.meta_value as status  FROM wp_posts p  INNER JOIN wp_postmeta pm  ON p.ID = pm.post_id WHERE p.post_type = %s AND p.post_status = %s AND pm.meta_key = %s GROUP BY pm.meta_value", 'wp_content_pilot', 'publish', '_campaign_status' ) );
+$campaigns               = $wpdb->get_results( $wpdb->prepare( "SELECT count(pm.post_id) AS total_post,pm.meta_value as status  FROM {$wpdb->prefix}posts p  INNER JOIN {$wpdb->prefix}postmeta pm  ON p.ID = pm.post_id WHERE p.post_type = %s AND p.post_status = %s AND pm.meta_key = %s GROUP BY pm.meta_value", 'wp_content_pilot', 'publish', '_campaign_status' ) );
 $total                   = 0;
 $string                  = '';
 if ( ! empty( $campaigns ) ) {

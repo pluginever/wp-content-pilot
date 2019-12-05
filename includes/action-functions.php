@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH')|| exit();
 /**
  * Trigger automatic campaigns
  * This is the main function that handle all automatic

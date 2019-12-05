@@ -9,10 +9,7 @@
  * @since       1.2.0
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined('ABSPATH')|| exit();
 
 abstract class WPCP_Campaign {
 	/**
@@ -387,7 +384,7 @@ abstract class WPCP_Campaign {
 			$type
 		);
 		$result = $wpdb->get_row( $sql );
-//		$result = $wpdb->get_row( "select * from {$table} where id='7'" );
+		//$result = $wpdb->get_row( "select * from {$table} where id='1'" );
 		if ( empty( $result ) ) {
 			return false;
 		}

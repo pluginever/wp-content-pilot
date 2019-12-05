@@ -9,10 +9,7 @@
  * @since       1.2.0
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined('ABSPATH')|| exit();
 
 class WPCP_Youtube extends WPCP_Campaign {
 
@@ -320,7 +317,7 @@ EOT;
 			wpcp_update_link( $link->id, array(
 				'status' => 'http_error',
 			) );
-
+			$this->youtube_api_error_log( $request, $link->camp_id );
 			return $response;
 		}
 		$item = array_pop( $response->items );
@@ -488,6 +485,7 @@ EOT;
 		$response = wpcp_retrieve_body( $request );
 
 		if ( is_wp_error( $response ) ) {
+			$this->youtube_api_error_log( $request, $this->campaign_id );
 
 			return $response;
 		}
@@ -584,6 +582,13 @@ EOT;
             });
 		</script>
 		<?php
+	}
+
+	public function youtube_api_error_log( $request, $camp_id ) {
+		if ( isset( $request->response->error->errors ) ) {
+			$error = @current( $request->response->error->errors );
+			wpcp_log( "campaign #ID{$camp_id} {$error->domain} -- {$error->reason}", 'Critical' );
+		}
 	}
 
 }

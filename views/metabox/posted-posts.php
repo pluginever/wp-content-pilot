@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH')|| exit();
 global $wpdb;
 global $post_id;
 

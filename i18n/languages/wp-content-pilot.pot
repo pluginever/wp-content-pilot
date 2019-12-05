@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.1.2.1\n"
+"Project-Id-Version: WP Content Pilot 1.1.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2019-11-21 11:28:38+00:00\n"
+"POT-Creation-Date: 2019-12-05 05:08:23+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,80 +13,80 @@ msgstr ""
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/action-functions.php:74 includes/action-functions.php:224
+#: includes/action-functions.php:75 includes/action-functions.php:225
 msgid "No Cheating"
 msgstr ""
 
-#: includes/action-functions.php:82 includes/action-functions.php:232
+#: includes/action-functions.php:83 includes/action-functions.php:233
 msgid "Invalid post action"
 msgstr ""
 
-#: includes/action-functions.php:105
+#: includes/action-functions.php:106
 msgid "A post successfully created by %s titled %s"
 msgstr ""
 
-#: includes/action-functions.php:239
+#: includes/action-functions.php:240
 msgid "Reset search not working with %"
 msgstr ""
 
-#: includes/action-functions.php:254
+#: includes/action-functions.php:255
 msgid " Reset search page number"
 msgstr ""
 
-#: includes/class-admin-menu.php:31 includes/metabox-functions.php:279
-#: includes/post-types.php:105
+#: includes/class-admin-menu.php:29 includes/metabox-functions.php:276
+#: includes/post-types.php:101
 msgid "Status"
 msgstr ""
 
-#: includes/class-admin-menu.php:36 includes/metabox-functions.php:32
+#: includes/class-admin-menu.php:34 includes/metabox-functions.php:29
 msgid "Logs"
 msgstr ""
 
-#: includes/class-admin-menu.php:56
+#: includes/class-admin-menu.php:54
 msgid "Go Pro"
 msgstr ""
 
-#: includes/class-admin-menu.php:68
+#: includes/class-admin-menu.php:66
 msgid "Campaign Log"
 msgstr ""
 
-#: includes/class-admin-menu.php:70
+#: includes/class-admin-menu.php:68
 msgid "Clear Logs"
 msgstr ""
 
-#: includes/class-automatic-campaign.php:22
+#: includes/class-automatic-campaign.php:24
 msgid "Automatic campaign failed."
 msgstr ""
 
-#: includes/class-campaign.php:107
+#: includes/class-campaign.php:104
 msgid "Campaign is not initiated correctly, missing ID||keyword"
 msgstr ""
 
-#: includes/class-campaign.php:123 includes/class-campaign.php:163
+#: includes/class-campaign.php:120 includes/class-campaign.php:160
 msgid "Please wait links generated but not ready to run campaign yet."
 msgstr ""
 
-#: includes/class-campaign.php:141
+#: includes/class-campaign.php:138
 msgid "Could not retrieve any valid links"
 msgstr ""
 
-#: includes/class-campaign.php:167
+#: includes/class-campaign.php:164
 msgid "Could not retrieve any valid links. Please wait to generate new links."
 msgstr ""
 
-#: includes/class-campaign.php:189
+#: includes/class-campaign.php:186
 msgid "Post is rejected due to less content. Required %d Found %d"
 msgstr ""
 
-#: includes/class-campaign.php:199
+#: includes/class-campaign.php:196
 msgid "Post is rejected because post with same title exit."
 msgstr ""
 
-#: includes/class-campaign.php:206
+#: includes/class-campaign.php:203
 msgid "Post is rejected because could not find any image in the post."
 msgstr ""
 
-#: includes/class-campaign.php:292
+#: includes/class-campaign.php:289
 msgid "Readability score failed!, Try with decreased readability score."
 msgstr ""
 
@@ -106,457 +106,455 @@ msgstr ""
 msgid "No users found"
 msgstr ""
 
-#: includes/class-help.php:180
+#: includes/class-help.php:182
 msgid "Looking for Something?"
 msgstr ""
 
-#: includes/class-help.php:181
+#: includes/class-help.php:183
 msgid "We have detailed documentation on every aspects of WP Content Pilot."
 msgstr ""
 
-#: includes/class-help.php:183
+#: includes/class-help.php:185
 msgid "Visit the Plugin Documentation"
 msgstr ""
 
-#: includes/class-help.php:187
+#: includes/class-help.php:189
 msgid "Need Any Assistance?"
 msgstr ""
 
-#: includes/class-help.php:188
+#: includes/class-help.php:190
 msgid "Our EXPERT Support Team is always ready to Help you out."
 msgstr ""
 
-#: includes/class-help.php:190
+#: includes/class-help.php:192
 msgid "Contact Support"
 msgstr ""
 
-#: includes/class-help.php:194
+#: includes/class-help.php:196
 msgid "Found Any Bugs?"
 msgstr ""
 
-#: includes/class-help.php:195
+#: includes/class-help.php:197
 msgid "OReport any Bug that you Discovered, Get Instant Solutions."
 msgstr ""
 
-#: includes/class-help.php:197
+#: includes/class-help.php:199
 msgid "Report to Github"
 msgstr ""
 
-#: includes/class-help.php:201
+#: includes/class-help.php:203
 msgid "Require Customization?"
 msgstr ""
 
-#: includes/class-help.php:202
+#: includes/class-help.php:204
 msgid "We would Love to hear your Integration and Customization Ideas."
 msgstr ""
 
-#: includes/class-help.php:204
+#: includes/class-help.php:206
 msgid "Contact Our Services"
 msgstr ""
 
-#: includes/class-help.php:208
+#: includes/class-help.php:210
 msgid "Like The Plugin?"
 msgstr ""
 
-#: includes/class-help.php:209
+#: includes/class-help.php:211
 msgid "Your Review is very important to us as it helps us to grow more."
 msgstr ""
 
-#: includes/class-help.php:211
+#: includes/class-help.php:213
 msgid "Review Us on WP.org"
 msgstr ""
 
-#: includes/class-help.php:219 modules/class-article.php:43
+#: includes/class-help.php:221 modules/class-article.php:40
 msgid "Article"
 msgstr ""
 
-#: includes/class-help.php:220
+#: includes/class-help.php:222
 msgid "Article module to auto import articles from web"
 msgstr ""
 
-#: includes/class-help.php:225 modules/class-envato.php:66
+#: includes/class-help.php:227 modules/class-envato.php:63
 msgid "Envato"
 msgstr ""
 
-#: includes/class-help.php:226
+#: includes/class-help.php:228
 msgid "Envato modules to import envato products and affiliation"
 msgstr ""
 
-#: includes/class-help.php:231 modules/class-youtube.php:70
+#: includes/class-help.php:233 modules/class-youtube.php:67
 msgid "Youtube"
 msgstr ""
 
-#: includes/class-help.php:232
+#: includes/class-help.php:234
 msgid "Youtube module to import youtube videos"
 msgstr ""
 
-#: includes/class-help.php:237 modules/class-feed.php:54
+#: includes/class-help.php:239 modules/class-feed.php:51
 msgid "Feed"
 msgstr ""
 
-#: includes/class-help.php:238
+#: includes/class-help.php:240
 msgid "RSS Feed module to import rss feeds"
 msgstr ""
 
-#: includes/class-help.php:243 modules/class-flickr.php:64
+#: includes/class-help.php:245 modules/class-flickr.php:61
 msgid "Flickr"
 msgstr ""
 
-#: includes/class-help.php:244
+#: includes/class-help.php:246
 msgid "Flickr module to import images"
 msgstr ""
 
-#: includes/class-help.php:249
+#: includes/class-help.php:251
 msgid "Amazon"
 msgstr ""
 
-#: includes/class-help.php:250
+#: includes/class-help.php:252
 msgid "Amazon module to import products & automatic affiliation"
 msgstr ""
 
-#: includes/class-help.php:255
+#: includes/class-help.php:257
 msgid "ClickBank"
 msgstr ""
 
-#: includes/class-help.php:256
+#: includes/class-help.php:258
 msgid "ClickBank module to import products & automatic affiliation"
 msgstr ""
 
-#: includes/class-help.php:261
+#: includes/class-help.php:263
 msgid "Ebay"
 msgstr ""
 
-#: includes/class-help.php:262
+#: includes/class-help.php:264
 msgid "Ebay module to import products & automatic affiliation"
 msgstr ""
 
-#: includes/class-help.php:267
+#: includes/class-help.php:269
 msgid "Facebook"
 msgstr ""
 
-#: includes/class-help.php:268
+#: includes/class-help.php:270
 msgid "Facebook module to import Facebook posts, events"
 msgstr ""
 
-#: includes/class-help.php:273
+#: includes/class-help.php:275
 msgid "Twitter"
 msgstr ""
 
-#: includes/class-help.php:274
+#: includes/class-help.php:276
 msgid "Twitter module to import twitter posts"
 msgstr ""
 
-#: includes/class-help.php:279
+#: includes/class-help.php:281
 msgid "Walmart"
 msgstr ""
 
-#: includes/class-help.php:280
+#: includes/class-help.php:282
 msgid "Walmart module to import products & automatic affiliation"
 msgstr ""
 
-#: includes/class-help.php:285
+#: includes/class-help.php:287
 msgid "Bestbuy"
 msgstr ""
 
-#: includes/class-help.php:286
+#: includes/class-help.php:288
 msgid "Bestbuy module to import products & automatic affiliation"
 msgstr ""
 
-#: includes/class-help.php:291
+#: includes/class-help.php:293
 msgid "Craiglist"
 msgstr ""
 
-#: includes/class-help.php:292
+#: includes/class-help.php:294
 msgid "Craiglist module to import Craiglist listings"
 msgstr ""
 
-#: includes/class-help.php:297
+#: includes/class-help.php:299
 msgid "Itunes"
 msgstr ""
 
-#: includes/class-help.php:298
+#: includes/class-help.php:300
 msgid "Itunes module to import products & automatic affiliation"
 msgstr ""
 
-#: includes/class-help.php:303
+#: includes/class-help.php:305
 msgid "CareerJet"
 msgstr ""
 
-#: includes/class-help.php:304
+#: includes/class-help.php:306
 msgid "CareerJet module to import jobs & automatic affiliation"
 msgstr ""
 
-#: includes/class-help.php:309
+#: includes/class-help.php:311
 msgid "EzineArticles"
 msgstr ""
 
-#: includes/class-help.php:310
+#: includes/class-help.php:312
 msgid "EzineArticles module to import articles"
 msgstr ""
 
-#: includes/class-help.php:315
+#: includes/class-help.php:317
 msgid "Quora"
 msgstr ""
 
-#: includes/class-help.php:316
+#: includes/class-help.php:318
 msgid "Quora module to import articles"
 msgstr ""
 
-#: includes/class-help.php:321
+#: includes/class-help.php:323
 msgid "Reddit"
 msgstr ""
 
-#: includes/class-help.php:322
+#: includes/class-help.php:324
 msgid "Reddit module to import articles"
 msgstr ""
 
-#: includes/class-help.php:327
+#: includes/class-help.php:329
 msgid "SoundCloud"
 msgstr ""
 
-#: includes/class-help.php:328
+#: includes/class-help.php:330
 msgid "SoundCloud module to import audios"
 msgstr ""
 
-#: includes/class-help.php:333
+#: includes/class-help.php:335
 msgid "Instagram"
 msgstr ""
 
-#: includes/class-help.php:334
+#: includes/class-help.php:336
 msgid "Instagram module to import photos"
 msgstr ""
 
-#: includes/class-help.php:339
+#: includes/class-help.php:341
 msgid "Pinterest"
 msgstr ""
 
-#: includes/class-help.php:340
+#: includes/class-help.php:342
 msgid "Pinterest module to import photos"
 msgstr ""
 
-#: includes/class-help.php:345
+#: includes/class-help.php:347
 msgid "Search Replace"
 msgstr ""
 
-#: includes/class-help.php:346
+#: includes/class-help.php:348
 msgid "Automatic search replace with regex support"
 msgstr ""
 
-#: includes/class-help.php:351
+#: includes/class-help.php:353
 msgid "Custom Post Meta"
 msgstr ""
 
-#: includes/class-help.php:352
+#: includes/class-help.php:354
 msgid "Insert custom post meta"
 msgstr ""
 
-#: includes/class-help.php:357
+#: includes/class-help.php:359
 msgid "Readability"
 msgstr ""
 
-#: includes/class-help.php:358
+#: includes/class-help.php:360
 msgid "Readability score controlled posts for clean articles"
 msgstr ""
 
-#: includes/class-help.php:363
+#: includes/class-help.php:365
 msgid "Keyword Suggestion"
 msgstr ""
 
-#: includes/class-help.php:364
+#: includes/class-help.php:366
 msgid "A tool to find a good keyword"
 msgstr ""
 
-#: includes/class-help.php:369
+#: includes/class-help.php:371
 msgid "Translation Support"
 msgstr ""
 
-#: includes/class-help.php:370
+#: includes/class-help.php:372
 msgid "Translate articles in other language"
 msgstr ""
 
-#: includes/class-promotion.php:34
+#: includes/class-promotion.php:33
 msgid ""
-"Your most desired and long awaited update for <strong>WP Content "
-"Pilot(v%s)</strong> is finally here.<br> Now it will empower your auto "
-"blogging & Affiliate Marketing with <strong>5 free</strong> and <strong>16 "
-"premium</strong> campaigns that includes outstanding features. Learn more "
-"about the premium version.<br> Use Coupon <strong>WPCPPROLAUNCH</strong> to "
-"avail <strong>%s</strong> discount if you upgrade to PRO now.</strong>"
+"Turn on Auto-Pilot For Automatic content generation and affiliation with "
+"20+ Supported Campaign Types using <strong>WP Content Pilot "
+"Pro</strong><br> Use Coupon <strong>WPCPFREE2PRO</strong> to avail "
+"<strong>10%</strong> discount if you upgrade to PRO now.</strong>"
 msgstr ""
 
-#: includes/class-promotion.php:46
+#: includes/class-promotion.php:45
 msgid "Get Pro"
 msgstr ""
 
-#: includes/class-settings-api.php:356
+#: includes/class-settings-api.php:354
 msgid "Choose File"
 msgstr ""
 
-#: includes/class-settings.php:21 wp-content-pilot.php:350
+#: includes/class-settings.php:22 wp-content-pilot.php:348
 msgid "Settings"
 msgstr ""
 
-#: includes/class-settings.php:31
+#: includes/class-settings.php:32
 msgid "Article Settings"
 msgstr ""
 
-#: includes/class-settings.php:35
+#: includes/class-settings.php:36
 msgid "Youtube Settings"
 msgstr ""
 
-#: includes/class-settings.php:39
+#: includes/class-settings.php:40
 msgid "Flickr Settings"
 msgstr ""
 
-#: includes/class-settings.php:43
+#: includes/class-settings.php:44
 msgid "Envato Settings"
 msgstr ""
 
-#: includes/class-settings.php:47
+#: includes/class-settings.php:48
 msgid "Misc Settings"
 msgstr ""
 
-#: includes/class-settings.php:64
+#: includes/class-settings.php:65
 msgid "Banned Hosts"
 msgstr ""
 
-#: includes/class-settings.php:65
+#: includes/class-settings.php:66
 msgid ""
 "Articles from the above hosts will be rejected. put single url/host per "
 "line."
 msgstr ""
 
-#: includes/class-settings.php:66
+#: includes/class-settings.php:67
 msgid ""
 "example.com \n"
 " example1.com"
 msgstr ""
 
-#: includes/class-settings.php:73
+#: includes/class-settings.php:74
 msgid "Youtube API Key"
 msgstr ""
 
-#: includes/class-settings.php:74
+#: includes/class-settings.php:75
 msgid ""
 "Youtube campaigns won't run without API key. <a href=\"%s\" "
 "target=\"_blank\">Learn how to get one</a>."
 msgstr ""
 
-#: includes/class-settings.php:82
+#: includes/class-settings.php:83
 msgid "Flickr API Key"
 msgstr ""
 
-#: includes/class-settings.php:83
+#: includes/class-settings.php:84
 msgid ""
 "Get your Flickr API key by following this <a href=\"%s\" "
 "target=\"_blank\">link</a>."
 msgstr ""
 
-#: includes/class-settings.php:91
+#: includes/class-settings.php:92
 msgid "Envato Token"
 msgstr ""
 
-#: includes/class-settings.php:92
+#: includes/class-settings.php:93
 msgid ""
 "Check this tutorial to get your <a href=\"%s\" target=\"_blank\">Envato "
 "token</a>."
 msgstr ""
 
-#: includes/class-settings.php:98
+#: includes/class-settings.php:99
 msgid "Impact Radius affiliate URL"
 msgstr ""
 
-#: includes/class-settings.php:99
+#: includes/class-settings.php:100
 msgid "Learn how to get your Impact Radius affiliate URL <a href=\"%s\">here</a>."
 msgstr ""
 
-#: includes/class-settings.php:107
+#: includes/class-settings.php:108
 msgid "Remove Data on Uninstall?"
 msgstr ""
 
-#: includes/class-settings.php:108
+#: includes/class-settings.php:109
 msgid ""
 "Check this box if you would like to completely remove all of its data when "
 "the plugin is deleted."
 msgstr ""
 
-#: includes/class-settings.php:114
+#: includes/class-settings.php:115
 msgid "Post Publish mail"
 msgstr ""
 
-#: includes/class-settings.php:115
+#: includes/class-settings.php:116
 msgid "Send mail After post publish"
 msgstr ""
 
-#: includes/class-settings.php:129
+#: includes/class-settings.php:130
 msgid "WP Content Pilot Settings"
 msgstr ""
 
-#: includes/core-functions.php:339
+#: includes/core-functions.php:341
 msgid "%s Hour"
 msgid_plural "%s Hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/core-functions.php:373
+#: includes/core-functions.php:375
 msgid "Campaign is not exist."
 msgstr ""
 
-#: includes/core-functions.php:377
+#: includes/core-functions.php:379
 msgid "Campaign is not active this wont run."
 msgstr ""
 
-#: includes/core-functions.php:382
+#: includes/core-functions.php:384
 msgid "Campaign type is not set. Campaign won't run"
 msgstr ""
 
-#: includes/core-functions.php:387
+#: includes/core-functions.php:389
 msgid "Campaign keyword is not set. Campaign won't run"
 msgstr ""
 
-#: includes/core-functions.php:417
+#: includes/core-functions.php:419
 msgid "Could not find the module for the campaign type"
 msgstr ""
 
-#: includes/core-functions.php:451
+#: includes/core-functions.php:453
 msgid "Post insertion failed message "
 msgstr ""
 
-#: includes/core-functions.php:457
+#: includes/core-functions.php:459
 msgid "Post Insertion was success Post ID: %s"
 msgstr ""
 
-#: includes/core-functions.php:696
+#: includes/core-functions.php:699
 msgid "The campaign is not ready yet for testing, please allow some time"
 msgstr ""
 
-#: includes/core-functions.php:954
+#: includes/core-functions.php:957
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true. WP-Cron spawning is disabled."
 msgstr ""
 
-#: includes/core-functions.php:959
+#: includes/core-functions.php:962
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true."
 msgstr ""
 
-#: includes/core-functions.php:990
+#: includes/core-functions.php:993
 #. translators: 1: The HTTP response code.
 msgid "Unexpected HTTP response code: %s"
 msgstr ""
 
-#: includes/hooks-functions.php:60
+#: includes/hooks-functions.php:61
 msgid ""
 "If you like <strong>WP Content Pilot</strong> please leave us a <a "
 "href=\"%s\" target=\"_blank\">&#9733;&#9733;&#9733;&#9733;&#9733;</a> "
 "rating. Your Review is very important to us as it helps us to grow more."
 msgstr ""
 
-#: includes/hooks-functions.php:97
+#: includes/hooks-functions.php:98
 msgid "Post Publish"
 msgstr ""
 
-#: includes/hooks-functions.php:98
+#: includes/hooks-functions.php:99
 msgid ""
 "<h4>Post Title: %s</h4>\n"
 "                    <h5>Post Excerpt</h5>\n"
@@ -564,409 +562,413 @@ msgid ""
 "                    <a href='%s'>View Post</a>"
 msgstr ""
 
-#: includes/metabox-functions.php:24 includes/metabox-functions.php:76
+#: includes/metabox-functions.php:21 includes/metabox-functions.php:73
 msgid "Campaign Type"
 msgstr ""
 
-#: includes/metabox-functions.php:25 includes/metabox-functions.php:33
+#: includes/metabox-functions.php:22 includes/metabox-functions.php:30
 msgid "Actions"
 msgstr ""
 
-#: includes/metabox-functions.php:26
+#: includes/metabox-functions.php:23
 msgid "Campaign Options"
 msgstr ""
 
-#: includes/metabox-functions.php:27
+#: includes/metabox-functions.php:24
 msgid "Post Settings"
 msgstr ""
 
-#: includes/metabox-functions.php:28
+#: includes/metabox-functions.php:25
 msgid "Advanced Settings"
 msgstr ""
 
-#: includes/metabox-functions.php:30
+#: includes/metabox-functions.php:27
 msgid "Template Tags"
 msgstr ""
 
-#: includes/metabox-functions.php:31
+#: includes/metabox-functions.php:28
 msgid "Posted Posts"
 msgstr ""
 
-#: includes/metabox-functions.php:85
-msgid "Select Campaign type, depending your need"
+#: includes/metabox-functions.php:82
+msgid "Select a Campaign type"
 msgstr ""
 
-#: includes/metabox-functions.php:117
+#: includes/metabox-functions.php:114
 msgid "Keyword Suggester"
 msgstr ""
 
-#: includes/metabox-functions.php:119
+#: includes/metabox-functions.php:116
 msgid "How to cook noodle"
 msgstr ""
 
-#: includes/metabox-functions.php:120
+#: includes/metabox-functions.php:117
 msgid "Type something to find better related keywords"
 msgstr ""
 
-#: includes/metabox-functions.php:128
+#: includes/metabox-functions.php:125
 msgid "Keywords"
 msgstr ""
 
-#: includes/metabox-functions.php:131
+#: includes/metabox-functions.php:128
 msgid "Separate keywords by comma."
 msgstr ""
 
-#: includes/metabox-functions.php:143
+#: includes/metabox-functions.php:140
 msgid "Content Type"
 msgstr ""
 
-#: includes/metabox-functions.php:150
+#: includes/metabox-functions.php:147
 msgid "HTML"
 msgstr ""
 
-#: includes/metabox-functions.php:151
+#: includes/metabox-functions.php:148
 msgid "Plain Text"
 msgstr ""
 
-#: includes/metabox-functions.php:200
+#: includes/metabox-functions.php:197
 msgid "Additional Settings"
 msgstr ""
 
-#: includes/metabox-functions.php:206
+#: includes/metabox-functions.php:203
 msgid "Use first image as featured image"
 msgstr ""
 
-#: includes/metabox-functions.php:207
+#: includes/metabox-functions.php:204
 msgid "Remove all images from the article"
 msgstr ""
 
-#: includes/metabox-functions.php:208
+#: includes/metabox-functions.php:205
 msgid "Use summary as excerpt"
 msgstr ""
 
-#: includes/metabox-functions.php:209
+#: includes/metabox-functions.php:206
 msgid "Remove hyperlinks found in the article"
 msgstr ""
 
-#: includes/metabox-functions.php:210
+#: includes/metabox-functions.php:207
 msgid "Allow comments"
 msgstr ""
 
-#: includes/metabox-functions.php:211
+#: includes/metabox-functions.php:208
 msgid "Allow pingbacks"
 msgstr ""
 
-#: includes/metabox-functions.php:212
+#: includes/metabox-functions.php:209
 msgid "Use original post date"
 msgstr ""
 
-#: includes/metabox-functions.php:213
+#: includes/metabox-functions.php:210
 msgid "Skip post with duplicate title"
 msgstr ""
 
-#: includes/metabox-functions.php:214
+#: includes/metabox-functions.php:211
 msgid "Skip post if no image found in the article"
 msgstr ""
 
-#: includes/metabox-functions.php:235
+#: includes/metabox-functions.php:232
 msgid "Post Title"
 msgstr ""
 
-#: includes/metabox-functions.php:251
+#: includes/metabox-functions.php:248
 msgid "Post Template"
 msgstr ""
 
-#: includes/metabox-functions.php:264
+#: includes/metabox-functions.php:261
 msgid "Post type"
 msgstr ""
 
-#: includes/metabox-functions.php:271
+#: includes/metabox-functions.php:268
 msgid "Post"
 msgstr ""
 
-#: includes/metabox-functions.php:272
+#: includes/metabox-functions.php:269
 msgid "Page"
 msgstr ""
 
-#: includes/metabox-functions.php:286
+#: includes/metabox-functions.php:283
 msgid "Published"
 msgstr ""
 
-#: includes/metabox-functions.php:287
+#: includes/metabox-functions.php:284
 msgid "Private"
 msgstr ""
 
-#: includes/metabox-functions.php:288
+#: includes/metabox-functions.php:285
 msgid "Draft"
 msgstr ""
 
-#: includes/metabox-functions.php:289
+#: includes/metabox-functions.php:286
 msgid "Pending"
 msgstr ""
 
-#: includes/metabox-functions.php:297
+#: includes/metabox-functions.php:294
 msgid "Categories"
 msgstr ""
 
-#: includes/metabox-functions.php:307 includes/metabox-functions.php:351
-msgid "Select categories from aviallbe categories"
+#: includes/metabox-functions.php:304
+msgid "Select categories from available categories"
 msgstr ""
 
-#: includes/metabox-functions.php:311
+#: includes/metabox-functions.php:308
 msgid "Custom Categories"
 msgstr ""
 
-#: includes/metabox-functions.php:313 includes/metabox-functions.php:335
+#: includes/metabox-functions.php:310 includes/metabox-functions.php:332
 msgid "Fashion, Sports, Tech"
 msgstr ""
 
-#: includes/metabox-functions.php:314
-msgid "Input any number of custom categories separate by comma (PRO) "
+#: includes/metabox-functions.php:311
+msgid "Input any number of custom categories, separate with a comma (PRO)"
 msgstr ""
 
-#: includes/metabox-functions.php:319
+#: includes/metabox-functions.php:316
 msgid "Tags"
 msgstr ""
 
-#: includes/metabox-functions.php:329
-msgid "Select tags from aviallbe tags"
+#: includes/metabox-functions.php:326
+msgid "Select tags from available tags"
 msgstr ""
 
-#: includes/metabox-functions.php:333
+#: includes/metabox-functions.php:330
 msgid "Custom Tags"
 msgstr ""
 
-#: includes/metabox-functions.php:336
-msgid "Input any number of custom tags separate by comma (PRO) "
+#: includes/metabox-functions.php:333
+msgid "Input any number of custom tags, separate with a comma (PRO)"
 msgstr ""
 
-#: includes/metabox-functions.php:341
+#: includes/metabox-functions.php:338
 msgid "Post Author"
 msgstr ""
 
-#: includes/metabox-functions.php:365
+#: includes/metabox-functions.php:348
+msgid "Select author"
+msgstr ""
+
+#: includes/metabox-functions.php:362
 msgid "Limit Title"
 msgstr ""
 
-#: includes/metabox-functions.php:373
+#: includes/metabox-functions.php:370
 msgid "Limit Content"
 msgstr ""
 
-#: includes/metabox-functions.php:381
+#: includes/metabox-functions.php:378
 msgid "Words Count"
 msgstr ""
 
-#: includes/metabox-functions.php:385
-msgid "Min Words required, otherwise post will be rejected. (PRO) "
+#: includes/metabox-functions.php:382
+msgid "Min required words, otherwise posts will be rejected. (PRO)"
 msgstr ""
 
-#: includes/metabox-functions.php:390
+#: includes/metabox-functions.php:387
 msgid "Required Words"
 msgstr ""
 
-#: includes/metabox-functions.php:392
+#: includes/metabox-functions.php:389
 msgid "Fashion, Secret, Awesome"
 msgstr ""
 
-#: includes/metabox-functions.php:393
-msgid "Must contain words, otherwise post will be rejected. (PRO) "
+#: includes/metabox-functions.php:390
+msgid "Must contain words, otherwise posts will be rejected. (PRO)"
 msgstr ""
 
-#: includes/metabox-functions.php:398
+#: includes/metabox-functions.php:395
 msgid "Banned Words"
 msgstr ""
 
-#: includes/metabox-functions.php:400
+#: includes/metabox-functions.php:397
 msgid "youtube, wikipedia, google"
 msgstr ""
 
-#: includes/metabox-functions.php:401
-msgid "If contains above words post will be rejected. (PRO) "
+#: includes/metabox-functions.php:398
+msgid "If a post contains the above words it will be rejected. (PRO)"
 msgstr ""
 
-#: includes/metabox-functions.php:406
+#: includes/metabox-functions.php:403
 msgid "Translate To"
 msgstr ""
 
-#: includes/metabox-functions.php:413
+#: includes/metabox-functions.php:410
 msgid "No Translation"
 msgstr ""
 
-#: includes/metabox-functions.php:418
-msgid "Select language to translate. (PRO)"
+#: includes/metabox-functions.php:415
+msgid "Select a language to translate. (PRO)"
 msgstr ""
 
-#: includes/metabox-functions.php:424
+#: includes/metabox-functions.php:421
 msgid "Custom Meta (Pro)"
 msgstr ""
 
-#: includes/metabox-functions.php:426
-msgid "Add custom meta for posts. (PRO) "
+#: includes/metabox-functions.php:423
+msgid "Add custom meta for posts."
 msgstr ""
 
-#: includes/metabox-functions.php:431
+#: includes/metabox-functions.php:428
 msgid "Meta Key"
 msgstr ""
 
-#: includes/metabox-functions.php:436
+#: includes/metabox-functions.php:433
 msgid "Valid mata key no space and no spacial key. Only '_' and '-' allowed."
 msgstr ""
 
-#: includes/metabox-functions.php:441
+#: includes/metabox-functions.php:438
 msgid "Meta Value"
 msgstr ""
 
-#: includes/metabox-functions.php:449
+#: includes/metabox-functions.php:446
 msgid "Search & Replace (Pro)"
 msgstr ""
 
-#: includes/metabox-functions.php:451
-msgid "Search and replace content with text or regular expression. (PRO) "
+#: includes/metabox-functions.php:448
+msgid "Search and replace contents with text or regular expression. (PRO) "
 msgstr ""
 
-#: includes/metabox-functions.php:456
+#: includes/metabox-functions.php:453
 msgid "Search"
 msgstr ""
 
-#: includes/metabox-functions.php:462
+#: includes/metabox-functions.php:459
 msgid "Replace"
 msgstr ""
 
-#: includes/metabox-functions.php:482
+#: includes/metabox-functions.php:479
 msgid "Invalid module type"
 msgstr ""
 
-#: includes/metabox-functions.php:491
+#: includes/metabox-functions.php:488
 msgid "Tag"
 msgstr ""
 
-#: includes/metabox-functions.php:492
+#: includes/metabox-functions.php:489
 msgid "Description"
 msgstr ""
 
-#: includes/post-types.php:22
+#: includes/post-types.php:18
 msgid "Add New"
 msgstr ""
 
-#: includes/post-types.php:23
+#: includes/post-types.php:19
 msgid "Add New Campaign"
 msgstr ""
 
-#: includes/post-types.php:24
+#: includes/post-types.php:20
 msgid "Edit Campaign"
 msgstr ""
 
-#: includes/post-types.php:25
+#: includes/post-types.php:21
 msgid "New Campaign"
 msgstr ""
 
-#: includes/post-types.php:26
+#: includes/post-types.php:22
 msgid "All Campaigns"
 msgstr ""
 
-#: includes/post-types.php:27
+#: includes/post-types.php:23
 msgid "View Campaign"
 msgstr ""
 
-#: includes/post-types.php:28
+#: includes/post-types.php:24
 msgid "Search Campaigns"
 msgstr ""
 
-#: includes/post-types.php:29
+#: includes/post-types.php:25
 msgid "No Campaigns found"
 msgstr ""
 
-#: includes/post-types.php:30
+#: includes/post-types.php:26
 msgid "No Campaigns found in Trash"
 msgstr ""
 
-#: includes/post-types.php:33
+#: includes/post-types.php:29
 msgid "Campaign Attributes"
 msgstr ""
 
-#: includes/post-types.php:34
+#: includes/post-types.php:30
 msgid "Filter Campaigns list"
 msgstr ""
 
-#: includes/post-types.php:35
+#: includes/post-types.php:31
 msgid "Campaigns list navigation"
 msgstr ""
 
-#: includes/post-types.php:36
+#: includes/post-types.php:32
 msgid "Campaigns list"
 msgstr ""
 
-#: includes/post-types.php:40
+#: includes/post-types.php:36
 msgid "Campaigns of Wordpress Content Pilot"
 msgstr ""
 
-#: includes/post-types.php:65 includes/post-types.php:68
+#: includes/post-types.php:61 includes/post-types.php:64
 msgid "Campaign updated."
 msgstr ""
 
-#: includes/post-types.php:66
+#: includes/post-types.php:62
 msgid "Custom field updated."
 msgstr ""
 
-#: includes/post-types.php:67
+#: includes/post-types.php:63
 msgid "Custom field deleted."
 msgstr ""
 
-#: includes/post-types.php:70
+#: includes/post-types.php:66
 #. translators: %s: date and time of the revision
 msgid "Campaign restored to revision from %s"
 msgstr ""
 
-#: includes/post-types.php:71
+#: includes/post-types.php:67
 msgid "Campaign created."
 msgstr ""
 
-#: includes/post-types.php:72
+#: includes/post-types.php:68
 msgid "Campaign saved."
 msgstr ""
 
-#: includes/post-types.php:73
+#: includes/post-types.php:69
 msgid "Campaign submitted."
 msgstr ""
 
-#: includes/post-types.php:74
+#: includes/post-types.php:70
 msgid "Campaign scheduled for: <strong>%1$s</strong>."
 msgstr ""
 
-#: includes/post-types.php:76
+#: includes/post-types.php:72
 #. translators: Publish box date format, see http:php.net/date
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: includes/post-types.php:77
+#: includes/post-types.php:73
 msgid "Campaign draft updated."
 msgstr ""
 
-#: includes/post-types.php:96
+#: includes/post-types.php:92
 msgid "Enter campaign name here"
 msgstr ""
 
-#: includes/post-types.php:106
+#: includes/post-types.php:102
 msgid "Type"
 msgstr ""
 
-#: includes/post-types.php:107
+#: includes/post-types.php:103
 msgid "Target"
 msgstr ""
 
-#: includes/post-types.php:108
+#: includes/post-types.php:104
 msgid "Frequency"
 msgstr ""
 
-#: includes/post-types.php:109
+#: includes/post-types.php:105
 msgid "Last Run"
 msgstr ""
 
-#: includes/post-types.php:121 views/metabox/action-metabox.php:37
+#: includes/post-types.php:117 views/metabox/action-metabox.php:38
 msgid "Active"
 msgstr ""
 
-#: includes/post-types.php:123
+#: includes/post-types.php:119
 msgid "Disabled"
 msgstr ""
 
@@ -974,610 +976,610 @@ msgstr ""
 msgid "Every %d Minutes"
 msgstr ""
 
-#: modules/class-article.php:44
+#: modules/class-article.php:41
 msgid "Scraps articles based on links"
 msgstr ""
 
-#: modules/class-article.php:60 modules/class-envato.php:83
-#: modules/class-feed.php:71 modules/class-flickr.php:81
-#: modules/class-youtube.php:87 modules/class-youtube.php:168
+#: modules/class-article.php:57 modules/class-envato.php:80
+#: modules/class-feed.php:68 modules/class-flickr.php:78
+#: modules/class-youtube.php:84 modules/class-youtube.php:165
 msgid "Title"
 msgstr ""
 
-#: modules/class-article.php:61 modules/class-feed.php:72
-#: modules/class-youtube.php:88
+#: modules/class-article.php:58 modules/class-feed.php:69
+#: modules/class-youtube.php:85
 msgid "Summary"
 msgstr ""
 
-#: modules/class-article.php:62 modules/class-envato.php:84
-#: modules/class-feed.php:73 modules/class-flickr.php:82
-#: modules/class-youtube.php:89
+#: modules/class-article.php:59 modules/class-envato.php:81
+#: modules/class-feed.php:70 modules/class-flickr.php:79
+#: modules/class-youtube.php:86
 msgid "Content"
 msgstr ""
 
-#: modules/class-article.php:63 modules/class-envato.php:85
-#: modules/class-feed.php:74 modules/class-flickr.php:84
-#: modules/class-youtube.php:90
+#: modules/class-article.php:60 modules/class-envato.php:82
+#: modules/class-feed.php:71 modules/class-flickr.php:81
+#: modules/class-youtube.php:87
 msgid "Main image url"
 msgstr ""
 
-#: modules/class-article.php:64 modules/class-envato.php:86
-#: modules/class-feed.php:75 modules/class-flickr.php:85
-#: modules/class-youtube.php:91
+#: modules/class-article.php:61 modules/class-envato.php:83
+#: modules/class-feed.php:72 modules/class-flickr.php:82
+#: modules/class-youtube.php:88
 msgid "Source link"
 msgstr ""
 
-#: modules/class-article.php:97
+#: modules/class-article.php:94
 msgid "Keyword Type"
 msgstr ""
 
-#: modules/class-article.php:103
+#: modules/class-article.php:100
 msgid "Any Words"
 msgstr ""
 
-#: modules/class-article.php:104
+#: modules/class-article.php:101
 msgid "Exact Word"
 msgstr ""
 
-#: modules/class-envato.php:67
+#: modules/class-envato.php:64
 msgid "Scraps articles based on keywords from envato"
 msgstr ""
 
-#: modules/class-envato.php:87 modules/class-flickr.php:83
+#: modules/class-envato.php:84 modules/class-flickr.php:80
 msgid "Published date"
 msgstr ""
 
-#: modules/class-envato.php:88
+#: modules/class-envato.php:85
 msgid "Envato platform"
 msgstr ""
 
-#: modules/class-envato.php:89
+#: modules/class-envato.php:86
 msgid "Item classification"
 msgstr ""
 
-#: modules/class-envato.php:90
+#: modules/class-envato.php:87
 msgid "Item classification url"
 msgstr ""
 
-#: modules/class-envato.php:91
+#: modules/class-envato.php:88
 msgid "Price USD"
 msgstr ""
 
-#: modules/class-envato.php:92
+#: modules/class-envato.php:89
 msgid "Number of sales"
 msgstr ""
 
-#: modules/class-envato.php:93
+#: modules/class-envato.php:90
 msgid "Author user name"
 msgstr ""
 
-#: modules/class-envato.php:94
+#: modules/class-envato.php:91
 msgid "Author url"
 msgstr ""
 
-#: modules/class-envato.php:95
+#: modules/class-envato.php:92
 msgid "Author image url"
 msgstr ""
 
-#: modules/class-envato.php:96
+#: modules/class-envato.php:93
 msgid "Item summary"
 msgstr ""
 
-#: modules/class-envato.php:97
+#: modules/class-envato.php:94
 msgid "tags"
 msgstr ""
 
-#: modules/class-envato.php:98
+#: modules/class-envato.php:95
 msgid "HTML description"
 msgstr ""
 
-#: modules/class-envato.php:99
+#: modules/class-envato.php:96
 msgid "Affiliate URL"
 msgstr ""
 
-#: modules/class-envato.php:119
+#: modules/class-envato.php:116
 msgid "Platform"
 msgstr ""
 
-#: modules/class-envato.php:135
+#: modules/class-envato.php:132
 msgid "Select envato platform"
 msgstr ""
 
-#: modules/class-envato.php:139
+#: modules/class-envato.php:136
 msgid "Price Range"
 msgstr ""
 
-#: modules/class-envato.php:144
+#: modules/class-envato.php:141
 msgid "separate min max price with (|). e.g. 20|100"
 msgstr ""
 
-#: modules/class-envato.php:148
+#: modules/class-envato.php:145
 msgid "Sort By"
 msgstr ""
 
-#: modules/class-envato.php:154 modules/class-youtube.php:166
+#: modules/class-envato.php:151 modules/class-youtube.php:163
 msgid "Relevance"
 msgstr ""
 
-#: modules/class-envato.php:155
+#: modules/class-envato.php:152
 msgid "Following"
 msgstr ""
 
-#: modules/class-envato.php:156 modules/class-youtube.php:170
+#: modules/class-envato.php:153 modules/class-youtube.php:167
 msgid "Rating"
 msgstr ""
 
-#: modules/class-envato.php:157
+#: modules/class-envato.php:154
 msgid "Sales"
 msgstr ""
 
-#: modules/class-envato.php:158
+#: modules/class-envato.php:155
 msgid "Price"
 msgstr ""
 
-#: modules/class-envato.php:159 modules/class-youtube.php:167
-#: views/tables/log-list-table.php:76
+#: modules/class-envato.php:156 modules/class-youtube.php:164
+#: views/tables/log-list-table.php:77
 msgid "Date"
 msgstr ""
 
-#: modules/class-envato.php:160
+#: modules/class-envato.php:157
 msgid "Updated"
 msgstr ""
 
-#: modules/class-envato.php:161
+#: modules/class-envato.php:158
 msgid "Name"
 msgstr ""
 
-#: modules/class-envato.php:162
+#: modules/class-envato.php:159
 msgid "Trending"
 msgstr ""
 
-#: modules/class-envato.php:167
+#: modules/class-envato.php:164
 msgid "Select how the result will be sorted"
 msgstr ""
 
-#: modules/class-envato.php:171
+#: modules/class-envato.php:168
 msgid "Sort Direction"
 msgstr ""
 
-#: modules/class-envato.php:177
+#: modules/class-envato.php:174
 msgid "ASC"
 msgstr ""
 
-#: modules/class-envato.php:178
+#: modules/class-envato.php:175
 msgid "DESC"
 msgstr ""
 
-#: modules/class-envato.php:183
+#: modules/class-envato.php:180
 msgid "Select sort direction for the result set"
 msgstr ""
 
-#: modules/class-envato.php:290
+#: modules/class-envato.php:287
 msgid "Envato API is not set. Please configure Envato API."
 msgstr ""
 
-#: modules/class-feed.php:55
+#: modules/class-feed.php:52
 msgid "Scraps articles from the feed urls"
 msgstr ""
 
-#: modules/class-feed.php:108
+#: modules/class-feed.php:105
 msgid "Feed Links"
 msgstr ""
 
-#: modules/class-feed.php:110
-msgid "Input feed links separate comma"
+#: modules/class-feed.php:107
+msgid "Input feed links, Separate links with a comma (,)"
 msgstr ""
 
-#: modules/class-feed.php:252
+#: modules/class-feed.php:249
 msgid "Could not find any post so disabling url"
 msgstr ""
 
-#: modules/class-feed.php:365
+#: modules/class-feed.php:362
 msgid "Allow Force Feed"
 msgstr ""
 
-#: modules/class-feed.php:374
+#: modules/class-feed.php:371
 msgid "Fetch full content"
 msgstr ""
 
-#: modules/class-flickr.php:65
+#: modules/class-flickr.php:62
 msgid "Scraps photos based on keywords from flickr"
 msgstr ""
 
-#: modules/class-flickr.php:86
+#: modules/class-flickr.php:83
 msgid "Author Name"
 msgstr ""
 
-#: modules/class-flickr.php:87
+#: modules/class-flickr.php:84
 msgid "Author Url"
 msgstr ""
 
-#: modules/class-flickr.php:88
+#: modules/class-flickr.php:85
 msgid "Photo Tags"
 msgstr ""
 
-#: modules/class-flickr.php:89
+#: modules/class-flickr.php:86
 msgid "Photo Views"
 msgstr ""
 
-#: modules/class-flickr.php:90
+#: modules/class-flickr.php:87
 msgid "User Id"
 msgstr ""
 
-#: modules/class-flickr.php:172
+#: modules/class-flickr.php:169
 msgid "Flickr API Key is not set, The campaign won't work without API Key."
 msgstr ""
 
-#: modules/class-flickr.php:193
+#: modules/class-flickr.php:190
 msgid "Maximum page number reached for the keyword %s"
 msgstr ""
 
-#: modules/class-flickr.php:223
+#: modules/class-flickr.php:220
 msgid "Could not find any result for the keyword %s"
 msgstr ""
 
-#: modules/class-youtube.php:71
+#: modules/class-youtube.php:68
 msgid "Scraps videos based on keywords from youtube"
 msgstr ""
 
-#: modules/class-youtube.php:92
+#: modules/class-youtube.php:89
 msgid "Video Id"
 msgstr ""
 
-#: modules/class-youtube.php:93
+#: modules/class-youtube.php:90
 msgid "Channel Id"
 msgstr ""
 
-#: modules/class-youtube.php:94
+#: modules/class-youtube.php:91
 msgid "Channel Name"
 msgstr ""
 
-#: modules/class-youtube.php:95
+#: modules/class-youtube.php:92
 msgid "Video Tags"
 msgstr ""
 
-#: modules/class-youtube.php:96
+#: modules/class-youtube.php:93
 msgid "Video Duration"
 msgstr ""
 
-#: modules/class-youtube.php:97
+#: modules/class-youtube.php:94
 msgid "Total Views"
 msgstr ""
 
-#: modules/class-youtube.php:98
+#: modules/class-youtube.php:95
 msgid "Total Likes"
 msgstr ""
 
-#: modules/class-youtube.php:99
+#: modules/class-youtube.php:96
 msgid "Total Dislikes"
 msgstr ""
 
-#: modules/class-youtube.php:100
+#: modules/class-youtube.php:97
 msgid "Total Favourites"
 msgstr ""
 
-#: modules/class-youtube.php:101
+#: modules/class-youtube.php:98
 msgid "Total Comments"
 msgstr ""
 
-#: modules/class-youtube.php:102
+#: modules/class-youtube.php:99
 msgid "HTML Embed Code "
 msgstr ""
 
-#: modules/class-youtube.php:127
+#: modules/class-youtube.php:124
 msgid "Search Type"
 msgstr ""
 
-#: modules/class-youtube.php:128
+#: modules/class-youtube.php:125
 msgid ""
 "Use global search for all result or use specific channel if you want to "
 "limit to that channel."
 msgstr ""
 
-#: modules/class-youtube.php:130
+#: modules/class-youtube.php:127
 msgid "Global"
 msgstr ""
 
-#: modules/class-youtube.php:131
+#: modules/class-youtube.php:128
 msgid "From Specific Channel"
 msgstr ""
 
-#: modules/class-youtube.php:139
+#: modules/class-youtube.php:136
 msgid "Example: UCIQOOX3ReApm-KTZ66eMVzQ"
 msgstr ""
 
-#: modules/class-youtube.php:140
+#: modules/class-youtube.php:137
 msgid "Channel ID"
 msgstr ""
 
-#: modules/class-youtube.php:141
+#: modules/class-youtube.php:138
 msgid ""
 "eg. channel id is \"UCIQOOX3ReApm-KTZ66eMVzQ\" for "
 "https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ"
 msgstr ""
 
-#: modules/class-youtube.php:150
+#: modules/class-youtube.php:147
 msgid "Category"
 msgstr ""
 
-#: modules/class-youtube.php:159
+#: modules/class-youtube.php:156
 msgid "Search Order By"
 msgstr ""
 
-#: modules/class-youtube.php:169
+#: modules/class-youtube.php:166
 msgid "View Count"
 msgstr ""
 
-#: modules/class-youtube.php:178
+#: modules/class-youtube.php:175
 msgid "Search Order"
 msgstr ""
 
-#: modules/class-youtube.php:214
+#: modules/class-youtube.php:211
 msgid "Video transcription as content"
 msgstr ""
 
-#: modules/class-youtube.php:442
+#: modules/class-youtube.php:439
 msgid "Youtube API Key is not set, The campaign won't work without API Key."
 msgstr ""
 
-#: views/menu/status.php:56
+#: views/menu/status.php:52
 msgid "WordPress version"
 msgstr ""
 
-#: views/menu/status.php:61
+#: views/menu/status.php:57
 msgid "WP Content Pilot version"
 msgstr ""
 
-#: views/menu/status.php:66
+#: views/menu/status.php:62
 msgid "PHP version"
 msgstr ""
 
-#: views/menu/status.php:71
+#: views/menu/status.php:67
 msgid "MySQL version"
 msgstr ""
 
-#: views/menu/status.php:76
+#: views/menu/status.php:72
 msgid "cURL version"
 msgstr ""
 
-#: views/menu/status.php:81
+#: views/menu/status.php:77
 msgid "cURL SSL version"
 msgstr ""
 
-#: views/menu/status.php:86
+#: views/menu/status.php:82
 msgid "WP-Cron url"
 msgstr ""
 
-#: views/menu/status.php:91
+#: views/menu/status.php:87
 msgid "Document root"
 msgstr ""
 
-#: views/menu/status.php:96
+#: views/menu/status.php:92
 msgid "SERVER"
 msgstr ""
 
-#: views/menu/status.php:101
+#: views/menu/status.php:97
 msgid "Operating System"
 msgstr ""
 
-#: views/menu/status.php:106
+#: views/menu/status.php:102
 msgid "Maximum execution time"
 msgstr ""
 
-#: views/menu/status.php:107
+#: views/menu/status.php:103
 msgid "%s seconds"
 msgstr ""
 
-#: views/menu/status.php:111
+#: views/menu/status.php:107
 msgid "Language"
 msgstr ""
 
-#: views/menu/status.php:116
+#: views/menu/status.php:112
 msgid "MySQL Client encoding"
 msgstr ""
 
-#: views/menu/status.php:121
+#: views/menu/status.php:117
 msgid "Max Upload Size"
 msgstr ""
 
-#: views/menu/status.php:126
+#: views/menu/status.php:122
 msgid "Remote Post"
 msgstr ""
 
-#: views/menu/status.php:131
+#: views/menu/status.php:127
 msgid "Remote Get"
 msgstr ""
 
-#: views/menu/status.php:137
+#: views/menu/status.php:133
 msgid "Links Table"
 msgstr ""
 
-#: views/menu/status.php:142
+#: views/menu/status.php:138
 msgid "Log Table"
 msgstr ""
 
-#: views/menu/status.php:147
+#: views/menu/status.php:143
 msgid "Per Minute Cron Installed"
 msgstr ""
 
-#: views/menu/status.php:152
+#: views/menu/status.php:148
 msgid "Is CRON running"
 msgstr ""
 
-#: views/menu/status.php:158
+#: views/menu/status.php:154
 msgid "Loaded PHP Extensions"
 msgstr ""
 
-#: views/menu/status.php:162
+#: views/menu/status.php:158
 msgid "Required PHP Extensions"
 msgstr ""
 
-#: views/menu/status.php:173
+#: views/menu/status.php:169
 msgid "Total Campaigns"
 msgstr ""
 
-#: views/menu/status.php:192
+#: views/menu/status.php:188
 msgid "Status > WP Content Pilot"
 msgstr ""
 
-#: views/menu/status.php:195
+#: views/menu/status.php:191
 msgid ""
 "Experiencing an issue and need to contact WP Content Pilot support? Click "
 "the link below to get debug information you can send to us."
 msgstr ""
 
-#: views/menu/status.php:207
+#: views/menu/status.php:203
 msgid "Get System Information"
 msgstr ""
 
-#: views/menu/status.php:214
+#: views/menu/status.php:210
 msgid "System Information"
 msgstr ""
 
-#: views/menu/status.php:217 views/menu/status.php:224
+#: views/menu/status.php:213 views/menu/status.php:220
 msgid "Setting"
 msgstr ""
 
-#: views/menu/status.php:218 views/menu/status.php:225
-#: views/menu/status.php:248 views/menu/status.php:255
+#: views/menu/status.php:214 views/menu/status.php:221
+#: views/menu/status.php:244 views/menu/status.php:251
 msgid "Value"
 msgstr ""
 
-#: views/menu/status.php:244
+#: views/menu/status.php:240
 msgid "Campaigns Information"
 msgstr ""
 
-#: views/menu/status.php:247 views/menu/status.php:254
+#: views/menu/status.php:243 views/menu/status.php:250
 msgid "Label"
 msgstr ""
 
-#: views/menu/status.php:281
+#: views/menu/status.php:277
 msgid "Copy System Information"
 msgstr ""
 
-#: views/menu/status.php:292
+#: views/menu/status.php:288
 msgid "Copied"
 msgstr ""
 
-#: views/metabox/action-metabox.php:11
+#: views/metabox/action-metabox.php:12
 msgid "Campaign Target"
 msgstr ""
 
-#: views/metabox/action-metabox.php:21
+#: views/metabox/action-metabox.php:22
 msgid "Campaign Frequency"
 msgstr ""
 
-#: views/metabox/action-metabox.php:32
+#: views/metabox/action-metabox.php:33
 msgid "Campaign Status"
 msgstr ""
 
-#: views/metabox/action-metabox.php:38
+#: views/metabox/action-metabox.php:39
 msgid "Inactive"
 msgstr ""
 
-#: views/metabox/action-metabox.php:46
+#: views/metabox/action-metabox.php:47
 msgid "Readability Score"
 msgstr ""
 
-#: views/metabox/action-metabox.php:50
+#: views/metabox/action-metabox.php:51
 msgid "Min readability score required to post (PRO)"
 msgstr ""
 
-#: views/metabox/action-metabox.php:63
+#: views/metabox/action-metabox.php:64
 msgid "Move to Trash"
 msgstr ""
 
-#: views/metabox/action-metabox.php:64
+#: views/metabox/action-metabox.php:65
 msgid "Trash"
 msgstr ""
 
-#: views/metabox/action-metabox.php:77
+#: views/metabox/action-metabox.php:78
 msgid "Reset"
 msgstr ""
 
-#: views/metabox/action-metabox.php:88
+#: views/metabox/action-metabox.php:89
 msgid "Publish"
 msgstr ""
 
-#: views/metabox/action-metabox.php:89
+#: views/metabox/action-metabox.php:90
 msgid "Create Campaign"
 msgstr ""
 
-#: views/metabox/action-metabox.php:92
+#: views/metabox/action-metabox.php:93
 msgid "Update"
 msgstr ""
 
-#: views/metabox/action-metabox.php:101
+#: views/metabox/action-metabox.php:102
 msgid "Test Run"
 msgstr ""
 
-#: views/metabox/action-metabox.php:102
+#: views/metabox/action-metabox.php:103
 msgid "Update Campaign"
 msgstr ""
 
-#: views/metabox/logs.php:43
+#: views/metabox/logs.php:44
 msgid "No log found."
 msgstr ""
 
-#: views/metabox/meta-actions.php:3
+#: views/metabox/meta-actions.php:4
 msgid "Delete all posted posts"
 msgstr ""
 
-#: views/metabox/posted-posts.php:6
+#: views/metabox/posted-posts.php:7
 msgid "No post found from this campaign"
 msgstr ""
 
-#: views/metabox/posted-posts.php:22
+#: views/metabox/posted-posts.php:23
 msgid "No post created with this campaign yet."
 msgstr ""
 
-#: views/metabox/posted-posts.php:28
+#: views/metabox/posted-posts.php:29
 msgid "Published at: %s"
 msgstr ""
 
-#: views/tables/log-list-table.php:29
+#: views/tables/log-list-table.php:30
 msgid "No log found"
 msgstr ""
 
-#: views/tables/log-list-table.php:53
+#: views/tables/log-list-table.php:54
 msgid "Normal"
 msgstr ""
 
-#: views/tables/log-list-table.php:73
+#: views/tables/log-list-table.php:74
 msgid "Campaign"
 msgstr ""
 
-#: views/tables/log-list-table.php:74
+#: views/tables/log-list-table.php:75
 msgid "Level"
 msgstr ""
 
-#: views/tables/log-list-table.php:75
+#: views/tables/log-list-table.php:76
 msgid "Message"
 msgstr ""
 
-#: wp-content-pilot.php:149
+#: wp-content-pilot.php:147
 msgid "Cloning is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:158
+#: wp-content-pilot.php:156
 msgid "Universalizing instances of this class is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:352
+#: wp-content-pilot.php:350
 msgid "Upgrade to PRO"
 msgstr ""
 
-#: wp-content-pilot.php:368
+#: wp-content-pilot.php:366
 msgid "Once a Minute"
 msgstr ""
 
-#: wp-content-pilot.php:508
+#: wp-content-pilot.php:506
 msgid ""
 "One or more WP Content Pilot Database table is missing, please reactivate "
 "the plugin"
 msgstr ""
 
-#: wp-content-pilot.php:522
+#: wp-content-pilot.php:520
 msgid ""
 "There was a problem spawning a call to the WP-Cron system on your site. "
 "This means WP Content Pilot on your site may not work. The problem was: %s"
@@ -1611,17 +1613,17 @@ msgctxt "no dropdown items"
 msgid "None"
 msgstr ""
 
-#: includes/post-types.php:20
+#: includes/post-types.php:16
 msgctxt "campaign post type name"
 msgid "Campaigns"
 msgstr ""
 
-#: includes/post-types.php:21
+#: includes/post-types.php:17
 msgctxt "singular campaign post type name"
 msgid "Campaign"
 msgstr ""
 
-#: includes/post-types.php:32
+#: includes/post-types.php:28
 msgctxt "wp content pilot post type menu name"
 msgid "WP Content Pilot"
 msgstr ""

@@ -12,13 +12,13 @@ WP Content Pilot automatically posts contents from various sources based on the 
 
 == Description ==
 
-https://www.youtube.com/watch?v=cNAEJqCqatg
-
 WP Content Pilot is an autoblogging and content curation plugin that allows you to create high-quality WordPress blog posts automatically and inject your affiliate link automatically.
 You just have to set the keywords or targeted feed urls and WP Content Pilot will automatically posts contents from various sources until it meets the target that you set.
 It will keeps posting articles even while you are asleep.
 
 > [Get The PRO Version](https://www.pluginever.com/plugins/wp-content-pilot-pro/) | [Demo](http://demo.pluginever.com/wp-content-pilot)  |  [Support](https://www.pluginever.com/support/)  |  [Documentation ](https://www.pluginever.com/docs/wp-content-pilot/)
+
+https://www.youtube.com/watch?v=cNAEJqCqatg
 
 == How It Works ==
 1. Set keywords or feed links
@@ -81,22 +81,26 @@ https://www.youtube.com/watch?v=QPEvHGbc58E
 == Free Modules ==
 
 = RSS/Feed =
+https://www.youtube.com/watch?v=8LUrdHH-FJk
 WP Content Pilot can can keep track of the defined feed links and whenever a new post is found it will automatically start posting content from that site to your site.It can import the full content, author, tags, categories and set the featured image.
 
 = Article =
-WP Content Pilot can search entire web based on your keyword and analyse the articleÃ¢â‚¬â„¢s readability using its AI then post every x hour until it meets the defined target.It can import the full content, author, tags, categories and set the featured image.
+WP Content Pilot can search entire web based on your keyword and analyse the articles readability using its AI then post every x hour until it meets the defined target.It can import the full content, author, tags, categories and set the featured image.
 
 = Envato =
 WP Content Pilot can import from Envato markets like ThemeForest, CodeCanyon, GraphicRiver, PhotoDune by keyword, tag, category or a specific seller. It automatically include affiliate links making sure you get the commissions from products sold via your referrals.
 
 = Youtube =
+https://www.youtube.com/watch?v=GCoO2YCmLFU
 WP Content Pilot can search YouTube for videos matching your keywords and post them to your WordPress site.You can post videos from YouTube by keyword, username or by a specific playlist and auto publish them to your website with this WP Content Pilot WordPress plugin.
 
 = Flickr =
+https://www.youtube.com/watch?v=PsepKjH9F_Q
 WP Content Pilot can search flickr images for keywords you specify and will post the images and caption as a post on your site. It can also post from a specific flickr user by searching that user items for specified keywords or without filtering.
 
-= Pro Modules =
 
+== Pro Modules ==
+Over 20+ Supported Campaign Types
 
 = Amazon =
 WP Content Pilot can search Amazon for products matching your keywords, post them and add your affiliate links automatically so you can make commissions from products sold via your referrals.
@@ -126,13 +130,12 @@ WP Content Pilot can import Pinterest pins and post them to your WordPress site.
 Import Instagram posts and publish them to your WordPress site with WP Content Pilot. You can target posts with specific keyword, hashtag and also a specific profile to generate desired posts.
 
 = Reddit =
-
 Import posts from Reddit to your WordPress site with WP Content Pilot. You will be able to run campaign by searching specific user reddits or subreddit. Our plugin will also enable you to fetch comments with support for videos and GIFs.
+
 = Quora =
-
 Quora has earned great reputation as an excellent question answer site. WP Content pilot can grab articles from Quora and auto publish as post on your site. You can insert any keyword to get posts from Quora.
-= Craigslist =
 
+= Craigslist =
 WP Content Pilot can import Itunes items to WordPress automatically by keyword or artist so it can post apps, songs, movies, ebooks, podcasts and more from Itunes. The plugin automatically insert your affiliate link to ensure you get the commissions from sale.
 
 = Walmart =
@@ -195,6 +198,11 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.1.3 -> December 5, 2019 =
+* [Enhance] Image sources in data attribute not adding with article
+* [Enhance] Youtube api error logging
+* [Fix] Database prefix not working
+
 
 = v1.1.2.1 -> November 21, 2019 =
 * [Fix] Code optimization to fix stuck campaigns

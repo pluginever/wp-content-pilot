@@ -9,10 +9,7 @@
  * @since       1.2.0
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined('ABSPATH')|| exit();
 
 /**
  * Register metabox
@@ -82,7 +79,7 @@ function wpcp_campaign_type_metabox_callback( $post ) {
 		'options'          => wpcp_get_modules(),
 		'required'         => true,
 		'selected'         => wpcp_get_post_meta( $post->ID, '_campaign_type', 'feed' ),
-		'desc'             => __( 'Select Campaign type, depending your need', 'wp-content-pilot' ),
+		'desc'             => __( 'Select a Campaign type', 'wp-content-pilot' ),
 	) );
 }
 
@@ -304,14 +301,14 @@ function wpcp_campaign_post_settings_metabox_fields( $post_id, $campaign_type ) 
 		'required'         => false,
 		'multiple'         => true,
 		'chosen'           => true,
-		'desc'             => __( 'Select categories from aviallbe categories', 'wp-content-pilot' ),
+		'desc'             => __( 'Select categories from available categories', 'wp-content-pilot' ),
 	) );
 
 	echo content_pilot()->elements->input( apply_filters( 'wpcp_custom_categories_args', array(
 		'label'       => __( 'Custom Categories', 'wp-content-pilot' ),
 		'name'        => '_custom_categories',
 		'placeholder' => __( 'Fashion, Sports, Tech', 'wp-content-pilot' ),
-		'desc'        => __( 'Input any number of custom categories separate by comma (PRO) ', 'wp-content-pilot' ),
+		'desc'        => __( 'Input any number of custom categories, separate with a comma (PRO)', 'wp-content-pilot' ),
 		'disabled'    => true,
 	), $post_id ) );
 
@@ -326,14 +323,14 @@ function wpcp_campaign_post_settings_metabox_fields( $post_id, $campaign_type ) 
 		'required'         => false,
 		'multiple'         => true,
 		'chosen'           => true,
-		'desc'             => __( 'Select tags from aviallbe tags', 'wp-content-pilot' ),
+		'desc'             => __( 'Select tags from available tags', 'wp-content-pilot' ),
 	) );
 
 	echo content_pilot()->elements->input( apply_filters( 'wpcp_custom_tags_args', array(
 		'label'       => __( 'Custom Tags', 'wp-content-pilot' ),
 		'name'        => '_custom_tags',
 		'placeholder' => __( 'Fashion, Sports, Tech', 'wp-content-pilot' ),
-		'desc'        => __( 'Input any number of custom tags separate by comma (PRO) ', 'wp-content-pilot' ),
+		'desc'        => __( 'Input any number of custom tags, separate with a comma (PRO)', 'wp-content-pilot' ),
 		'disabled'    => true,
 	), $post_id ) );
 
@@ -348,7 +345,7 @@ function wpcp_campaign_post_settings_metabox_fields( $post_id, $campaign_type ) 
 		'required'         => true,
 		'multiple'         => false,
 		'chosen'           => false,
-		'desc'             => __( 'Select categories from aviallbe categories', 'wp-content-pilot' ),
+		'desc'             => __( 'Select author', 'wp-content-pilot' ),
 		'selected'         => wpcp_get_post_meta( $post_id, '_author', '' ),
 	) );
 }
@@ -366,7 +363,7 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'type'  => 'number',
 		'name'  => '_title_limit',
 		'value' => wpcp_get_post_meta( $post_id, '_title_limit', '' ),
-		'desc'  => 'Input the number of word to limit title. Default full title.',
+		'desc'  => 'Input the number of words to limit the title. Default full title.',
 	) );
 
 	echo content_pilot()->elements->input( array(
@@ -374,7 +371,7 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'type'  => 'number',
 		'name'  => '_content_limit',
 		'value' => wpcp_get_post_meta( $post_id, '_content_limit', '' ),
-		'desc'  => 'Input the number of word to limit content. Default full content.',
+		'desc'  => 'Input the number of words to limit content. Default full content.',
 	) );
 
 	echo content_pilot()->elements->input( apply_filters( 'wpcp_min_words_args', array(
@@ -382,7 +379,7 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'name'        => '_min_words',
 		'type'        => 'number',
 		'placeholder' => 500,
-		'desc'        => __( 'Min Words required, otherwise post will be rejected. (PRO) ', 'wp-content-pilot' ),
+		'desc'        => __( 'Min required words, otherwise posts will be rejected. (PRO)', 'wp-content-pilot' ),
 		'disabled'    => true,
 	), $post_id ) );
 
@@ -390,7 +387,7 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'label'       => __( 'Required Words', 'wp-content-pilot' ),
 		'name'        => '_required_words',
 		'placeholder' => __( 'Fashion, Secret, Awesome', 'wp-content-pilot' ),
-		'desc'        => __( 'Must contain words, otherwise post will be rejected. (PRO) ', 'wp-content-pilot' ),
+		'desc'        => __( 'Must contain words, otherwise posts will be rejected. (PRO)', 'wp-content-pilot' ),
 		'disabled'    => true,
 	), $post_id ) );
 
@@ -398,7 +395,7 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'label'       => __( 'Banned Words', 'wp-content-pilot' ),
 		'name'        => '_banned_words',
 		'placeholder' => __( 'youtube, wikipedia, google', 'wp-content-pilot' ),
-		'desc'        => __( 'If contains above words post will be rejected. (PRO) ', 'wp-content-pilot' ),
+		'desc'        => __( 'If a post contains the above words it will be rejected. (PRO)', 'wp-content-pilot' ),
 		'disabled'    => true,
 	), $post_id ) );
 
@@ -415,7 +412,7 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 		'disabled'         => true,
 		'multiple'         => false,
 		'chosen'           => false,
-		'desc'             => __( 'Select language to translate. (PRO)', 'wp-content-pilot' ),
+		'desc'             => __( 'Select a language to translate. (PRO)', 'wp-content-pilot' ),
 		'selected'         => '',
 	), $post_id ) );
 
@@ -423,7 +420,7 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 	echo content_pilot()->elements->repeatable( apply_filters( 'wpcp_custom_meta_args', array(
 		'label'    => __( 'Custom Meta (Pro)', 'wp-content-pilot' ),
 		'name'     => '_wpcp_custom_meta_field',
-		'desc'     => __( 'Add custom meta for posts. (PRO) ', 'wp-content-pilot' ),
+		'desc'     => __( 'Add custom meta for posts.', 'wp-content-pilot' ),
 		'disabled' => true,
 		'fields'   => array(
 			array(
@@ -448,7 +445,7 @@ function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type
 	echo content_pilot()->elements->repeatable( apply_filters( 'wpcp_search_n_replace_args', array(
 		'label'    => __( 'Search & Replace (Pro)', 'wp-content-pilot' ),
 		'name'     => '_wpcp_search_n_replace',
-		'desc'     => __( 'Search and replace content with text or regular expression. (PRO) ', 'wp-content-pilot' ),
+		'desc'     => __( 'Search and replace contents with text or regular expression. (PRO) ', 'wp-content-pilot' ),
 		'disabled' => true,
 		'fields'   => array(
 			array(

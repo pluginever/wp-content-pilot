@@ -9,9 +9,7 @@
  * @since       1.2.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined('ABSPATH')|| exit();
 
 class WPCP_Admin_Menu {
 

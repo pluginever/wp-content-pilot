@@ -9,10 +9,7 @@
  * @since       1.2.0
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined('ABSPATH')|| exit();
 
 class WPCP_Feed extends WPCP_Campaign {
 
@@ -107,7 +104,7 @@ EOT;
 		if ( $campaign_type == 'feed' ) {
 			$attr['label'] = __( 'Feed Links', 'wp-content-pilot' );
 			$attr['name']  = '_feed_links';
-			$attr['desc']  = __( 'Input feed links separate comma', 'wp-content-pilot' );
+			$attr['desc']  = __( 'Input feed links, Separate links with a comma (,)', 'wp-content-pilot' );
 			$attr['value'] = wpcp_get_post_meta( $post_id, '_feed_links' );
 		}
 
