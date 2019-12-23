@@ -73,7 +73,7 @@ class WPCP_Settings {
 					'name'    => 'api_key',
 					'label'   => __( 'Youtube API Key', 'wp-content-pilot' ),
 					'desc'    => sprintf( __( 'Youtube campaigns won\'t run without API key. <a href="%s" target="_blank">Learn how to get one</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/set-up-youtube-api-key-for-wp-content-pilot/' ),
-					'type'    => 'text',
+					'type'    => 'password',
 					'default' => ''
 				),
 			),
@@ -82,7 +82,7 @@ class WPCP_Settings {
 					'name'    => 'api_key',
 					'label'   => __( 'Flickr API Key', 'wp-content-pilot' ),
 					'desc'    => sprintf( __( 'Get your Flickr API key by following this <a href="%s" target="_blank">link</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/flickr-campaign-settings/' ),
-					'type'    => 'text',
+					'type'    => 'password',
 					'default' => ''
 				),
 			),
@@ -91,7 +91,7 @@ class WPCP_Settings {
 					'name'    => 'token',
 					'label'   => __( 'Envato Token', 'wp-content-pilot' ),
 					'desc'    => sprintf( __( 'Check this tutorial to get your <a href="%s" target="_blank">Envato token</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/how-to-create-envato-token/' ),
-					'type'    => 'text',
+					'type'    => 'password',
 					'default' => ''
 				),
 				array(
