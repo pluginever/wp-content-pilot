@@ -8,8 +8,6 @@ class WPCP_Automatic_Campaign extends WP_Background_Process {
 
 	protected function task( $campaign_id ) {
 		wpcp_log( 'Running WPCP_Automatic_Campaign' );
-
-
 		//check campaign status
 		$last_run     = wpcp_get_post_meta( $campaign_id, '_last_run', 0 );
 		$frequency    = wpcp_get_post_meta( $campaign_id, '_campaign_frequency', 0 );

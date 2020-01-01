@@ -451,6 +451,7 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/class-ajax.php';
 		require_once WPCP_INCLUDES . '/class-campaign.php';
 		require_once WPCP_INCLUDES . '/class-module.php';
+		require_once WPCP_INCLUDES . '/class-html-dom.php';
 
 		//settings
 		require_once WPCP_INCLUDES . '/class-admin-menu.php';
