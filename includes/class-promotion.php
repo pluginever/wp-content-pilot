@@ -24,7 +24,7 @@ class WPCP_Promotion {
 //		}
 
 		// check if it has already been dismissed
-		$hide_notice = get_option( 'wpcp_pro_free2pro_promotion', 'no' );
+		$hide_notice = get_option( 'wpcp_pro_free2pro_promotion1_1', 'no' );
 
 		if ( 'hide' == $hide_notice ) {
 			return;
@@ -104,7 +104,7 @@ class WPCP_Promotion {
 	 */
 	public function dismiss_promotional_offer() {
 		if ( ! empty( $_POST['dismissed'] ) ) {
-			$offer_key = 'wpcp_pro_free2pro_promotion';
+			$offer_key = 'wpcp_pro_free2pro_promotion1_1';
 			update_option( $offer_key, 'hide' );
 		}
 	}

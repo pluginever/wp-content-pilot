@@ -3,7 +3,7 @@
  * Plugin Name: WP Content Pilot
  * Plugin URI:  https://www.pluginever.com
  * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:     1.1.3
+ * Version:     1.1.4
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
@@ -44,7 +44,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '1.1.3';
+	protected $version = '1.1.4';
 
 	/**
 	 * @since 1.0.0
@@ -451,6 +451,7 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/class-ajax.php';
 		require_once WPCP_INCLUDES . '/class-campaign.php';
 		require_once WPCP_INCLUDES . '/class-module.php';
+		require_once WPCP_INCLUDES . '/class-html-dom.php';
 
 		//settings
 		require_once WPCP_INCLUDES . '/class-admin-menu.php';

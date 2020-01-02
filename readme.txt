@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: autoblog, curatator, content pilot, auto post, feeds, flicker, youtube, envato, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
 Requires at least: 4.4
-Tested up to: 5.3
+Tested up to: 5.3.2
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -198,6 +198,10 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.1.4 -> January 2, 2020 =
+* [Enhance] API key masked so nobody cant see saved API keys
+* [Fix] WordPress compatibility with 5.3.2
+
 = v1.1.3 -> December 5, 2019 =
 * [Enhance] Image sources in data attribute not adding with article
 * [Enhance] Youtube api error logging
