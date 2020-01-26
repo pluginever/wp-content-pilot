@@ -1,0 +1,27 @@
+@media only screen and (min-width: 600px) {
+	.wpcp-double-column {
+		overflow: hidden;
+		position: relative;
+
+		& > .form-field {
+			width: 50%;
+			line-height: 2em;
+			float: left;
+			box-sizing: border-box;
+			clear: both;
+
+			&:nth-child(even) {
+				float: right;
+				padding: 0 0 0 12px;
+				clear: right
+			}
+
+			&:nth-last-child(-n+2) {
+				margin-bottom: 0;
+				padding-bottom: 0;
+				border-bottom: 0
+			}
+		}
+
+	}
+}

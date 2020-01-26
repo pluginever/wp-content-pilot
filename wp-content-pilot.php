@@ -440,6 +440,7 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/class-install.php';
 		require_once WPCP_INCLUDES . '/post-types.php';
 		require_once WPCP_INCLUDES . '/script-functions.php';
+		require_once WPCP_INCLUDES . '/metabox-html-functions.php';
 		require_once WPCP_INCLUDES . '/metabox-functions.php';
 
 		//core files

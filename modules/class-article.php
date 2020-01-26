@@ -19,9 +19,13 @@ class WPCP_Article extends WPCP_Campaign {
 	public function __construct() {
 		//campaign settings
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
-		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
-		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
-		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
+		add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_keyword_field');
+		add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_rotate_keyword_field');
+		add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_strip_links_field');
+		add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_external_link_field');
+//		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
+//		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
+//		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
 
 		add_filter( 'wpcp_replace_template_tags', array( $this, 'replace_template_tags' ), 10, 2 );
 	}

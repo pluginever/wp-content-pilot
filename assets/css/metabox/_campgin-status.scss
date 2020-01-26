@@ -1,0 +1,69 @@
+.wpcp-campaign-status-wrap{
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	margin-bottom: 20px;
+
+	.wpcp-campaign-status-column{
+		flex: 1;
+		padding: 0 10px;
+		text-align: center;
+	}
+
+	span.wpcp-campaign-status-label {
+		font-weight: 700;
+		margin: .5em 0;
+		display: block;
+	}
+
+	.wpcp-campaign-status-in{
+		background-color: #e74c3c;
+		display: inline-block;
+		color: #fff;
+		font-weight: 700;
+		padding: 5px 30px;
+		border: 1px solid #c0392b;
+
+		&.on{
+			background-color: #2ecc71;
+			border: 1px solid #27ae60;
+		}
+	}
+}
+
+/*Action*/
+.wpcp-submitbox {
+	._campaign_status-field{
+		background: #f7f7f7;
+		margin: 20px -12px 0;
+		padding: 10px 15px;
+		border-top: 1px solid #ccd0d4;
+	}
+
+	select{
+		width: 100% !important;
+	}
+
+	#major-publishing-actions {
+		margin: 0 -15px -15px;
+
+		#delete-action {
+			float: right !important;
+			margin-top: -5px;
+		}
+	}
+
+	#publishing-action {
+		display: block;
+		width: 100%;
+		margin: 10px 0 0;
+		float: none;
+
+		.publishing-action-btn {
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+			padding-bottom: 5px;
+		}
+	}
+}

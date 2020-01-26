@@ -1,0 +1,67 @@
+.wpcp-choose-campaign-wrap{
+	margin-bottom: 20px;
+}
+.wpcp-choose-campaign-items {
+	flex-wrap: wrap;
+	margin: 20px 0 0 0;
+	display: -webkit-box;
+	display: flex;
+	max-height: 393px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+
+	.wpcp-choose-campaign-item {
+		padding: 0 13px;
+		margin-bottom: 25px;
+		flex-grow: 1;
+
+		input{
+			width: 0;
+			height: 0;
+			position: absolute;
+			left: -9999px;
+		}
+
+		label{
+			margin: 0px;
+			box-sizing: border-box;
+			position: relative;
+			display: inline-block;
+			text-align: center;
+			background-color: transparent;
+			border: 1px solid #F1F2F6;
+			text-transform: none;
+			transition: border-color .15s ease-out, color .25s ease-out, background-color .15s ease-out, box-shadow .15s ease-out;
+		}
+
+		img{
+			width: 201px;
+			height: auto;
+		}
+
+		input:checked + label {
+			border: 1px solid #46b450;
+			z-index: 1;
+		}
+
+		&.disabled-item{
+			position: relative;
+			img{
+				opacity: 0.4;
+			}
+
+			label:after{
+				content: 'PRO';
+				position: absolute;
+				top: 2px;
+				right: 2px;
+				background: #de0a0a;
+				color: #fff;
+				font-size: 12px;
+				padding: 2px;
+			}
+
+		}
+	}
+}
+

@@ -30,6 +30,18 @@ jQuery(document).ready(function ($) {
 			$('.ever-select-chosen').chosen({
 				inherit_select_classes: true
 			});
+			$( '.wpcp-help-tip' ).tipTip( {
+				'attribute': 'data-tip',
+				'fadeIn': 50,
+				'fadeOut': 50,
+				'delay': 200
+			} );
+
+			$('.wpcp-range-slider').ionRangeSlider({
+				skin: "round"
+			});
+
+
 		},
 
 		triggerCampaignTypeChange: function () {

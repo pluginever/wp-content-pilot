@@ -18,19 +18,21 @@ function wpcp_load_admin_scripts( $hook ) {
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '';
 
 	// These have to be global
+	wp_enqueue_script( 'jquery-tiptip', $vendor_dir . 'jquery.tiptip.min.js', array('jquery'), WPCP_VERSION );
 
-	wp_register_style( 'jquery-chosen', $vendor_dir . 'chosen/chosen' . $suffix . '.css', array(), WPCP_VERSION );
-	wp_enqueue_style( 'jquery-chosen' );
+	wp_enqueue_style( 'jquery-chosen', $vendor_dir . 'chosen/chosen' . $suffix . '.css', array(), WPCP_VERSION );
+	wp_enqueue_script( 'jquery-chosen', $vendor_dir . 'chosen/chosen.jquery' . $suffix . '.js', array( 'jquery' ), WPCP_VERSION );
 
-	wp_register_script( 'jquery-chosen', $vendor_dir . 'chosen/chosen.jquery' . $suffix . '.js', array( 'jquery' ), WPCP_VERSION );
-	wp_enqueue_script( 'jquery-chosen' );
 
 	wp_register_script( 'wpcp-admin-scripts', $js_dir . 'admin-scripts' . $suffix . '.js', array( 'jquery-chosen', 'wp-util' ), WPCP_VERSION, false );
-
 	wp_enqueue_script( 'wpcp-admin-scripts' );
+
+	wp_enqueue_style( 'wpcp-ionslider', $vendor_dir . 'ionslider/ion.rangeSlider'.$suffix.'.css', array(), WPCP_VERSION, false );
+	wp_enqueue_script( 'wpcp-ionslider', $vendor_dir . 'ionslider/ion.rangeSlider'.$suffix.'.js', array( 'jquery' ), WPCP_VERSION, false );
+
 
 	wp_register_style( 'wpcp-admin-styles', $css_dir . 'admin-styles' . $suffix . '.css', array(), WPCP_VERSION );
 	wp_enqueue_style( 'wpcp-admin-styles' );
 }
 
-add_action( 'admin_enqueue_scripts', 'wpcp_load_admin_scripts', 100 );
+add_action( 'admin_enqueue_scripts', 'wpcp_load_admin_scripts');
