@@ -15,11 +15,11 @@ jQuery(document).ready(function ($) {
 	$.wp_content_pilot = {
 
 		init: function () {
-			$('#_campaign_type').on('change', this.triggerCampaignTypeChange);
+			// $('#_campaign_type').on('change', this.triggerCampaignTypeChange);
 			$('body').on('change', '#_post_from', this.toggleKeywordsField);
-			$('body').bind('campaign_type_changed', this.getCampaignOptions);
-			$('body').bind('campaign_type_changed', this.getPostSettings);
-			$('body').bind('campaign_type_changed', this.getCampaignAllTemplateTags);
+			// $('body').bind('campaign_type_changed', this.getCampaignOptions);
+			// $('body').bind('campaign_type_changed', this.getPostSettings);
+			// $('body').bind('campaign_type_changed', this.getCampaignAllTemplateTags);
 			$('body').on('click', '.wpcp-delete-all', this.deleteAllPostedPosts);
 
 
