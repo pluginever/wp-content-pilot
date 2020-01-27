@@ -19,19 +19,19 @@ class WPCP_Ajax {
 	 * WPCP_Ajax constructor.
 	 */
 	public function __construct() {
-		add_action( 'wp_ajax_wpcp_get_campaign_options_metabox_content', array(
-			$this,
-			'campaign_options_metabox_content'
-		) );
-		add_action( 'wp_ajax_wpcp_get_campaign_template_tags_metabox_content', array(
-			$this,
-			'campaign_template_tags_metabox_content'
-		) );
-
-		add_action( 'wp_ajax_wpcp_get_campaign_post_settings_metabox_content', array(
-			$this,
-			'campaign_post_settings_metabox_content'
-		) );
+//		add_action( 'wp_ajax_wpcp_get_campaign_options_metabox_content', array(
+//			$this,
+//			'campaign_options_metabox_content'
+//		) );
+//		add_action( 'wp_ajax_wpcp_get_campaign_template_tags_metabox_content', array(
+//			$this,
+//			'campaign_template_tags_metabox_content'
+//		) );
+//
+//		add_action( 'wp_ajax_wpcp_get_campaign_post_settings_metabox_content', array(
+//			$this,
+//			'campaign_post_settings_metabox_content'
+//		) );
 
 		add_action( 'wp_ajax_wpcp_delete_all_posts_by_campaign_id', array( $this, 'delete_all_posts_by_campaign_id' ) );
 	}

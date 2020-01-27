@@ -2,53 +2,56 @@
 defined( 'ABSPATH' ) || exit();
 $can_publish = true;
 global $post_id;
-$action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
+$action        = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
+$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
+
 ?>
 <div id="submitpost" class="submitbox wpcp-submitbox">
 	<?php
-	echo wpcp_range_input( array(
-		'name'       => '_campaign_target',
-		'id'         => '_campaign_target',
-		'label'      => __( 'Campaign Target', 'wp-content-pilot' ),
-		'attributes' => array(
-			'required' => 'required'
-		),
-	) );
+	if ( !empty( $campaign_type ) ){
+		echo wpcp_range_input( array(
+			'name'       => '_campaign_target',
+			'id'         => '_campaign_target',
+			'label'      => __( 'Campaign Target', 'wp-content-pilot' ),
+			'attributes' => array(
+				'required' => 'required'
+			),
+		) );
 
-	echo wpcp_range_input( array(
-		'name'       => '_campaign_frequency',
-		'id'         => '_campaign_frequency',
-		'label'      => __( 'Campaign Frequency', 'wp-content-pilot' ),
-		'min'         => '1',
-		'max'         => '100',
-		'attributes' => array(
-			'required'    => 'required',
+		echo wpcp_range_input( array(
+			'name'       => '_campaign_frequency',
+			'id'         => '_campaign_frequency',
+			'label'      => __( 'Campaign Frequency', 'wp-content-pilot' ),
+			'min'        => '1',
+			'max'        => '100',
+			'attributes' => array(
+				'required' => 'required',
 //			'data-prefix' => __( 'Every ', 'wp-content-pilot' ),
-		),
-	) );
+			),
+		) );
 
-	echo wpcp_select_input( array(
-		'label'    => __( 'Frequency Unit', 'wp-content-pilot' ),
-		'name'     => '_frequency_unit',
-		'options'  => apply_filters( 'wpcp_campaign_post_types', array(
-			'minutes' => __( 'Minutes', 'wp-content-pilot' ),
-			'hours'   => __( 'Hours', 'wp-content-pilot' ),
-			'days'    => __( 'Days', 'wp-content-pilot' ),
-		) ),
-		'required' => true,
-		'wrapper_class' => 'pro',
-		'attributes' => array(
-			'disabled'    => 'disabled',
-		)
-	) );
+		echo wpcp_select_input( array(
+			'label'         => __( 'Frequency Unit', 'wp-content-pilot' ),
+			'name'          => '_frequency_unit',
+			'options'       => apply_filters( 'wpcp_campaign_post_types', array(
+				'minutes' => __( 'Minutes', 'wp-content-pilot' ),
+				'hours'   => __( 'Hours', 'wp-content-pilot' ),
+				'days'    => __( 'Days', 'wp-content-pilot' ),
+			) ),
+			'required'      => true,
+			'wrapper_class' => 'pro',
+			'attributes'    => array(
+				'disabled' => 'disabled',
+			)
+		) );
 
-	echo wpcp_switch_input( array(
-		'label' => __( 'Campaign Status', 'wp-content-pilot' ),
-		'name'  => '_campaign_status',
-		'desc'  => __( 'On', 'wp-content-pilot' ),
-	) );
+		echo wpcp_switch_input( array(
+			'label' => __( 'Campaign Status', 'wp-content-pilot' ),
+			'name'  => '_campaign_status',
+			'desc'  => __( 'On', 'wp-content-pilot' ),
+		) );
 
-
+	}
 	?>
 	<div id="major-publishing-actions">
 
@@ -57,7 +60,8 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 				<a class="submitdelete deletion"
 				   href="<?php echo get_delete_post_link( esc_attr( $_REQUEST['post'] ) ) ?>"
 				   title="<?php _e( 'Move to Trash', 'wp-content-pilot' ); ?>">
-					<button type="button"  class="button-link button-link-delete"><?php _e( 'Trash', 'wp-content-pilot' ); ?></button>
+					<button type="button"
+					        class="button-link button-link-delete"><?php _e( 'Trash', 'wp-content-pilot' ); ?></button>
 				</a>
 			</div>
 		<?php } ?>
@@ -70,9 +74,9 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 				'nonce'       => wp_create_nonce( 'wpcp_campaign_reset_search' )
 			), esc_url( admin_url( 'admin-post.php' ) ) )
 			?>
-			<a href="<?php echo esc_url( $reset_search_url ); ?>" class="button-link"><?php _e( 'Reset', 'wp-content-pilot' ); ?></a>
+			<a href="<?php echo esc_url( $reset_search_url ); ?>"
+			   class="button-link"><?php _e( 'Reset', 'wp-content-pilot' ); ?></a>
 		<?php } ?>
-
 
 		<input type="hidden" name="hidden_post_status" id="hidden_post_status" value="publish"/>
 
@@ -88,7 +92,8 @@ $action = empty( $_GET['action'] ) ? '' : esc_attr( $_GET['action'] );
 				<input name="original_publish" type="hidden" id="original_publish"
 				       value="<?php esc_attr_e( 'Update', 'wp-content-pilot' ) ?>"/>
 				<div class="publishing-action-btn">
-					<input name="save" type="submit" class="button button-primary button-large" id="publish" value="<?php esc_attr_e( 'Update Campaign', 'wp-content-pilot' ) ?>"/>
+					<input name="save" type="submit" class="button button-primary button-large" id="publish"
+					       value="<?php esc_attr_e( 'Update Campaign', 'wp-content-pilot' ) ?>"/>
 				</div>
 				<?php
 			} ?>

@@ -96,7 +96,7 @@ function wpcp_double_column( $end = false ) {
  */
 function wpcp_text_input( $field ) {
 	global $thepostid, $post;
-
+	var_dump($post);
 	$thepostid = empty( $thepostid ) ? $post->ID : $thepostid;
 	$field     = wp_parse_args( $field, array(
 		'label'         => false,
@@ -341,12 +341,13 @@ function wpcp_switch_input( $field ) {
 	) );
 
 	$html = wpcp_html_input_label( $field );
-
+	$data = wpcp_implode_html_attributes( $field['attributes'] );
+	$checked = checked( $field['value'], $field['check'], false );
 	$html .= sprintf( '
 					<label for="%1$s">
-					<input type="checkbox" class="%2$s" id="%3$s" name="%4$s" value="%5$s" %6$s%/>
+					<input type="checkbox" class="%2$s" id="%3$s" name="%4$s" value="%5$s" %6$s %7$s/>
 					<span class="wpcp-switch-view"></span>
-					</label>', $field['id'], $field['class'], $field['id'], $field['name'], $field['check'], checked( $field['value'], $field['check'], false ) );
+					</label>', $field['id'], $field['class'], $field['id'], $field['name'], $field['check'], $checked, $data );
 
 	return sprintf( '<p class="form-field wpcp-switch-field wpcp-form-field %1$s-field %2$s">%3$s</p>', sanitize_html_class( $field['id'] ), sanitize_html_class( $field['wrapper_class'] ), $html );
 }

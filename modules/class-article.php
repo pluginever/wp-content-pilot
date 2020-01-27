@@ -132,6 +132,7 @@ EOT;
 
 	public function setup() {
 		add_filter( 'wpcp_fetched_links', array( $this, 'skip_base_domain' ) );
+		return true;
 	}
 
 	/**
