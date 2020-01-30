@@ -24,19 +24,16 @@ class WPCP_Youtube extends WPCP_Campaign {
 		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_keyword_suggestion_field' );
 		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_keyword_field' );
 		add_action( 'wpcp_campaign_youtube_options_meta_fields', array( $this, 'campaign_option_fields' ) );
-		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_strip_links_field' );
 		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_featured_image_field' );
+		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_strip_links_field' );
+		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_use_excerpt_field' );
 		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_external_link_field' );
 		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_featured_image_random_field' );
 
-
 		add_action( 'wpcp_update_campaign_settings_youtube', array( $this, 'update_campaign_settings' ), 10, 2 );
 		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
-
 		add_filter( 'wpcp_replace_template_tags', array( $this, 'replace_template_tags' ), 10, 2 );
-
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-
 		add_filter( 'wpcp_campaign_additional_settings_field_args', array(
 			$this,
 			'additional_settings_fields'

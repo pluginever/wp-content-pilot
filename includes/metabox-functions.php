@@ -267,3 +267,10 @@ function wpcp_use_original_date_field() {
 	) );
 }
 
+function wpcp_use_excerpt_field() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label'         => __( 'Use summary as excerpt', 'wp-content-pilot' ),
+		'name'          => '_excerpt',
+	) );
+}
+

@@ -1,5 +1,5 @@
 <?php
-defined('ABSPATH') || exit();
+defined( 'ABSPATH' ) || exit();
 global $post;
 
 echo WPCP_HTML::text_input( array(
@@ -14,6 +14,17 @@ echo WPCP_HTML::text_input( array(
 	'type'    => 'number',
 	'name'    => '_content_limit',
 	'tooltip' => 'Input the number of words to limit content. Default full content.',
+) );
+
+echo WPCP_HTML::text_input( array(
+	'label'         => __( 'Excerpt Length', 'wp-content-pilot' ),
+	'type'          => 'number',
+	'name'          => '_excerpt_length',
+	'default'       => '55',
+	'wrapper_class' => 'pro',
+	'attrs'         => array(
+		'disabled' => 'disabled',
+	)
 ) );
 
 echo WPCP_HTML::select_input( array(
