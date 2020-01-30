@@ -17,6 +17,11 @@ $modules = array(
 		'keywords' => 'job',
 		'disabled' => false,
 		'image' => esc_url(WPCP_ASSETS_URL.'/images/modules/youtube.png')
+	), array(
+		'name' => 'Flickr',
+		'keywords' => 'job',
+		'disabled' => false,
+		'image' => esc_url(WPCP_ASSETS_URL.'/images/modules/flickr.png')
 	),
 	array(
 		'name' => 'Envato',
@@ -65,12 +70,6 @@ $modules = array(
 		'keywords' => 'job',
 		'disabled' => true,
 		'image' => esc_url(WPCP_ASSETS_URL.'/images/modules/facebook.png')
-	),
-	array(
-		'name' => 'Flickr',
-		'keywords' => 'job',
-		'disabled' => true,
-		'image' => esc_url(WPCP_ASSETS_URL.'/images/modules/flickr.png')
 	),
 	array(
 		'name' => 'Instragram',
@@ -155,4 +154,3 @@ $modules = array(
 		<input type="submit" name="submit" id="submit" class="button button-primary button-large" value="<?php _e('Submit', 'wp-content-pilot');?>">
 	</p>
 </div>
-

@@ -540,7 +540,7 @@ Build date: 2019-12-19 16:51:02
 .irs--round .irs-bar {
   top: 36px;
   height: 4px;
-  background-color: #006cfa;
+  background-color: #007cba;
 }
 .irs--round .irs-bar--single {
   border-radius: 4px 0 0 4px;
@@ -554,7 +554,7 @@ Build date: 2019-12-19 16:51:02
   top: 26px;
   width: 24px;
   height: 24px;
-  border: 4px solid #006cfa;
+  border: 4px solid #007cba;
   background-color: white;
   border-radius: 24px;
   box-shadow: 0 1px 3px rgba(0, 0, 255, 0.3);
@@ -580,7 +580,7 @@ Build date: 2019-12-19 16:51:02
   line-height: 1;
   text-shadow: none;
   padding: 3px 5px;
-  background-color: #006cfa;
+  background-color: #007cba;
   color: white;
   border-radius: 4px;
 }
@@ -597,7 +597,7 @@ Build date: 2019-12-19 16:51:02
   margin-left: -3px;
   overflow: hidden;
   border: 3px solid transparent;
-  border-top-color: #006cfa;
+  border-top-color: #007cba;
 }
 .irs--round .irs-grid {
   height: 25px;

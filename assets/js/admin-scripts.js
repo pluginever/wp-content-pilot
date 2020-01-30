@@ -222,6 +222,9 @@ jQuery(document).ready(function ($) {
 		}
 	};
 
+	$('.wpcp-input-check').on('change', function () {
+		console.log($(this).is(':checked'));
+	});
 
 	$.wp_content_pilot.init();
 	$.wp_content_pilot.initPlugins();

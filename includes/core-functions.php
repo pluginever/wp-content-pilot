@@ -405,87 +405,62 @@ function wpcp_campaign_can_run( $campaign_id ) {
 function wpcp_run_campaign( $campaign_id ) {
 	$can_run = wpcp_campaign_can_run( $campaign_id );
 	content_pilot()->set_campaign_id( $campaign_id );
-
 	if ( is_wp_error( $can_run ) ) {
 		wpcp_log( $can_run->get_error_message(), 'critical' );
 
 		return $can_run;
 	}
-
 	$campaign_type = get_post_meta( $campaign_id, '_campaign_type', true );
 	$keyword       = wpcp_get_keyword( $campaign_id );
 
-	/* $campaign WPCP_Campaign*/
-	$campaign = null;
-	switch ( $campaign_type ) {
-		case 'article':
-			$campaign = new WPCP_Article();
-			break;
-		default:
-			do_action( 'wpcp_campain_module_selection', $campaign_type );
-			break;
-	}
+	$module = content_pilot()->modules->get_module( $campaign_type );
 
-	if ( empty( $campaign ) ) {
-		$msg = __( 'Unknown campaign type', 'wp-content-pilot' );
+	if ( ! $module ) {
+		$msg = __( 'Could not find the module for the campaign type', 'wp-content-pilot' );
 		wpcp_log( $msg, 'critical' );
 
 		return new \WP_Error( 'invalid-campaign-type', $msg );
 	}
 
-	$is_set = $campaign->setup();
+
+	//get the module callback
+	$module_class = $module['callback'];
+
+	/* @var $module_class WPCP_Campaign */
+	$instance = new $module_class();
+
+	$instance->set_campaign_id( $campaign_id );
+	$instance->set_keyword( $keyword );
+
+	//set the module
+	$is_error = $instance->setup();
+
+	wpcp_log( 'loaded module ' . $module_class );
+
 	//check error
-	if ( is_wp_error( $is_set ) ) {
+	if ( is_wp_error( $is_error ) ) {
 		wpcp_disable_campaign( $campaign_id );
 
-		return $is_set;
+		return $is_error;
 	}
 
+
+	$instance->set_campaign_type( $campaign_type );
+
 	try {
-		$article = $campaign->run($campaign_id, $keyword);
+		$article = $instance->run();
 	} catch ( Exception $exception ) {
 		wpcp_log( __( 'Post insertion failed message ', 'wp-content-pilot' ) . $exception->getMessage(), 'critical' );
 	}
 
+	if ( is_wp_error( $article ) ) {
+		return $article;
+	}
+	wpcp_log( sprintf( __( "Post Insertion was success Post ID: %s", 'wp-content-pilot' ), $article ), 'log' );
 
-//	//get the module callback
-//	$module_class = $module['callback'];
-//
-//	// $instance \WPCP_Campaign
-//	$instance = new $module_class();
-//
-//	$instance->set_campaign_id( $campaign_id );
-//	$instance->set_keyword( $keyword );
-//
-//	//set the module
-//	$is_error = $instance->setup();
-//
-//	wpcp_log( 'loaded module ' . $module_class );
-//
-//	//check error
-//	if ( is_wp_error( $is_error ) ) {
-//		wpcp_disable_campaign( $campaign_id );
-//
-//		return $is_error;
-//	}
-//
-//
-//	$instance->set_campaign_type( $campaign_type );
-//
-//	try {
-//		$article = $instance->run();
-//	} catch ( Exception $exception ) {
-//		wpcp_log( __( 'Post insertion failed message ', 'wp-content-pilot' ) . $exception->getMessage(), 'critical' );
-//	}
-//
-//	if ( is_wp_error( $article ) ) {
-//		return $article;
-//	}
-//	wpcp_log( sprintf( __( "Post Insertion was success Post ID: %s", 'wp-content-pilot' ), $article ), 'log' );
-//
-//	content_pilot()->set_campaign_id();
-//
-//	return $article;
+	content_pilot()->set_campaign_id();
+
+	return $article;
 
 }
 
@@ -784,7 +759,6 @@ function wpcp_get_post_tags() {
 	];
 
 	$tags = get_terms( $args );
-
 	return wp_list_pluck( $tags, 'name', 'term_id' );
 }
 
@@ -1066,4 +1040,20 @@ function wpcp_perpage_data_fetch_limit( $campaign_id, $limit = 50 ) {
 	}
 
 	return $limit;
+}
+
+/**
+ * Get admin view
+ * since 1.0.0
+ * @param $template_name
+ * @param array $args
+ */
+function wpcp_get_views( $template_name, $args = [] ) {
+	if ( $args && is_array( $args ) ) {
+		extract( $args );
+	}
+
+	if ( file_exists( WPCP_INCLUDES . '/views/' . $template_name ) ) {
+		include WPCP_INCLUDES . '/views/' . $template_name;
+	}
 }

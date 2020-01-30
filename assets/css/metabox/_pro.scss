@@ -1,12 +1,11 @@
-.wpcp-form-field.pro{
+.wpcp-field.pro{
 	.wpcp-label:after{
 		content: 'PRO';
 		font-size: 9px;
 		font-weight: normal;
 		background: red;
 		color: #fff;
-		display: inline-block;
 		padding: 0 5px;
-		line-height: 13px;
+		line-height: 1;
 	}
 }

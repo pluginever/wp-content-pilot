@@ -11,958 +11,99 @@
 
 defined( 'ABSPATH' ) || exit();
 
+
 /**
  * Register metabox
  *
  * @since 1.0.0
  */
 function wpcp_register_meta_boxes() {
-
-//	add_meta_box( 'campaign-type-selection', __( 'Campaign Type', 'wp-content-pilot' ), 'wpcp_campaign_type_metabox_callback', 'wp_content_pilot', 'normal', 'high' );
-//	add_meta_box( 'campaign-options', __( 'Campaign Options', 'wp-content-pilot' ), 'wpcp_campaign_options_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
-//	add_meta_box( 'campaign-post-settings', __( 'Post Settings', 'wp-content-pilot' ), 'wpcp_campaign_post_settings_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
-//	add_meta_box( 'campaign-advanced-settings', __( 'Advanced Settings', 'wp-content-pilot' ), 'wpcp_campaign_advance_settings_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
-//
-//	add_meta_box( 'campaign-template-tags', __( 'Template Tags', 'wp-content-pilot' ), 'wpcp_campaign_template_tags_metabox_callback', 'wp_content_pilot', 'side', 'low' );
-//	add_meta_box( 'campaign-posted-posts', __( 'Posted Posts', 'wp-content-pilot' ), 'wpcp_campaign_posted_posts_metabox_callback', 'wp_content_pilot', 'side', 'low' );
-//	add_meta_box( 'campaign-logs', __( 'Logs', 'wp-content-pilot' ), 'wpcp_campaign_logs_metabox_callback', 'wp_content_pilot', 'side', 'low' );
-//	add_meta_box( 'campaign-meta-actions', __( 'Actions', 'wp-content-pilot' ), 'wpcp_campaign_meta_actions_metabox_callback', 'wp_content_pilot', 'side', 'low' );
-
-
-	add_meta_box( 'campaign-selection', __( 'Select Campaign', 'wp-content-pilot' ), 'wpcp_campaign_selection_metabox_callback', 'wp_content_pilot', 'normal', 'high' );
+	add_meta_box( 'campaign-selection', __( 'Select a campaign to start', 'wp-content-pilot' ), 'wpcp_campaign_selection_metabox_callback', 'wp_content_pilot', 'normal', 'high' );
 	add_meta_box( 'wpcp-campaign-status', __( 'Campaign Status', 'wp-content-pilot' ), 'wpcp_campaign_status_metabox_callback', 'wp_content_pilot', 'normal', 'high' );
 	add_meta_box( 'wpcp-campaign-options', __( 'Campaign Options', 'wp-content-pilot' ), 'wpcp_campaign_options_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-post-template', __( 'Post Template', 'wp-content-pilot' ), 'wpcp_post_template_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-post-settings', __( 'Post Settings', 'wp-content-pilot' ), 'wpcp_post_settings_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
-	add_meta_box( 'wpcp-post-images', __( 'Post Image', 'wp-content-pilot' ), 'wpcp_post_image_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-post-filters', __( 'Posts Filter', 'wp-content-pilot' ), 'wpcp_posts_filter_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-advanced-settings', __( 'Advanced Settings', 'wp-content-pilot' ), 'wpcp_advanced_settings_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
-
 	add_meta_box( 'wpcp-campaign-actions', __( 'Actions', 'wp-content-pilot' ), 'wpcp_campaign_action_metabox_callback', 'wp_content_pilot', 'side', 'high' );
-
 }
 
 add_action( 'add_meta_boxes', 'wpcp_register_meta_boxes', 10 );
 
 /**
- * remove metaboxes
+ * Conditionally render metabox
  *
- * @since 1.0.0
+ * @param $post_type
+ * @param $context
+ * @param $post
  */
-function wpcp_remove_meta_boxes() {
-	$post_type = 'wp_content_pilot';
-	global $post;
-	remove_meta_box( 'submitdiv', $post_type, 'side' );
-	remove_meta_box( 'commentsdiv', $post_type, 'normal' );
-	remove_meta_box( 'commentstatusdiv', $post_type, 'normal' );
-	remove_meta_box( 'slugdiv', $post_type, 'normal' );
-
-	if($post && $post->ID && $post->post_type = $post_type){
-		if('' !== get_post_meta($post->ID, '_campaign_type', true )){
-			remove_meta_box( 'campaign-selection', $post_type, 'normal' );
-		}else{
-			remove_meta_box( 'wpcp-campaign-status', $post_type, 'normal' );
-			remove_meta_box( 'wpcp-campaign-options', $post_type, 'normal' );
-			remove_meta_box( 'wpcp-post-template', $post_type, 'normal' );
-
-		}
-	}
-}
-
-//add_action( 'add_meta_boxes', 'wpcp_remove_meta_boxes', 20 );
-
-
 function wpcp_conditional_metabox_remove( $post_type, $context, $post ) {
 	$post_type = 'wp_content_pilot';
 	remove_meta_box( 'submitdiv', 'wp_content_pilot', 'side' );
 	remove_meta_box( 'commentsdiv', 'wp_content_pilot', 'normal' );
 	remove_meta_box( 'commentstatusdiv', 'wp_content_pilot', 'normal' );
 	remove_meta_box( 'slugdiv', 'wp_content_pilot', 'normal' );
-	if( $post_type !==  'wp_content_pilot'){
-		return ;
+	error_log($post_type);
+	if ( $post_type !== 'wp_content_pilot' ) {
+		return false;
 	}
-	if ( empty( get_post_meta( $post->ID, '_campaign_type', true ) ) ) {
+	if ( isset($post->ID) && empty( get_post_meta( $post->ID, '_campaign_type', true ) ) ) {
 		remove_meta_box( 'wpcp-campaign-status', $post_type, 'normal' );
 		remove_meta_box( 'wpcp-campaign-options', $post_type, 'normal' );
 		remove_meta_box( 'wpcp-post-template', 'wp_content_pilot', 'normal' );
 		remove_meta_box( 'wpcp-post-settings', 'wp_content_pilot', 'normal' );
-		remove_meta_box( 'wpcp-post-images', 'wp_content_pilot', 'normal' );
 		remove_meta_box( 'wpcp-post-filters', 'wp_content_pilot', 'normal' );
 		remove_meta_box( 'wpcp-advanced-settings', 'wp_content_pilot', 'normal' );
-	}else{
+	} else {
 		remove_meta_box( 'campaign-selection', 'wp_content_pilot', 'normal' );
+		remove_meta_box( 'wpcp-campaign-actions', 'wp_content_pilot', 'normal' );
 	}
-
-
-//	if ( empty( get_post_meta( $post->ID, '_campaign_type', true ) ) ) {
-//		remove_meta_box( 'campaign-type-selection', 'wp_content_pilot', 'normal' );
-//		remove_meta_box( 'wpcp-campaign-options', 'wp_content_pilot', 'normal' );
-//		remove_meta_box( 'wpcp-post-template', 'wp_content_pilot', 'normal' );
-//		remove_meta_box( 'campaign-post-settings', 'wp_content_pilot', 'normal' );
-//		remove_meta_box( 'campaign-advanced-settings', 'wp_content_pilot', 'normal' );
-//		remove_meta_box( 'campaign-actions', 'wp_content_pilot', 'side' );
-//		remove_meta_box( 'campaign-posted-posts', 'wp_content_pilot', 'side' );
-//		remove_meta_box( 'campaign-logs', 'wp_content_pilot', 'side' );
-//		remove_meta_box( 'campaign-meta-actions', 'wp_content_pilot', 'side' );
-//		remove_meta_box( 'wpcp-advanced-filters', 'wp_content_pilot', 'side' );
-//	} else {
-//		remove_meta_box( 'campaign-selection', 'wp_content_pilot', 'normal' );
-//	}
-
 }
 
 add_action( 'do_meta_boxes', 'wpcp_conditional_metabox_remove', 10, 3 );
 
-
-
-
 /**
- * campaign actions
+ * Campaign selection metabox
  *
  * @param $post
- *
- * @since 1.0.0
- *
  */
-function wpcp_campaign_action_metabox_callback( $post ) {
-	require WPCP_VIEWS . '/metabox/action-metabox.php';
-}
-
-/**
- * Render
- *
- * @param $post
- *
- * @since 1.2.0
- *
- */
-function wpcp_campaign_type_metabox_callback( $post ) {
-	echo content_pilot()->elements->select( array(
-		'label'            => __( 'Campaign Type', 'wp-content-pilot' ),
-		'name'             => '_campaign_type',
-		'placeholder'      => '',
-		'show_option_all'  => '',
-		'show_option_none' => '',
-		'double_columns'   => true,
-		'options'          => wpcp_get_modules(),
-		'required'         => true,
-		'selected'         => wpcp_get_post_meta( $post->ID, '_campaign_type', 'feed' ),
-		'desc'             => __( 'Select a Campaign type', 'wp-content-pilot' ),
-	) );
-}
-
-/**
- * Campaign options metabox
- *
- * @param $post
- *
- * @since 1.0.0
- *
- */
-//function wpcp_campaign_options_metabox_callback( $post ) {
-//	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
-//	$campaign_type = empty( $campaign_type ) ? 'feeds' : $campaign_type;
-//	wpcp_campaign_options_metabox_fields( $post->ID, $campaign_type );
-//}
-
-/**
- * campaign options metabox fields
- *
- * @param        $post_id
- * @param string $campaign_type
- *
- * @since 1.0.0
- *
- */
-function wpcp_campaign_options_metabox_fields( $post_id, $campaign_type = 'article' ) {
-	do_action( 'wpcp_before_campaign_keyword_input', $post_id, $campaign_type );
-	if ( in_array( $campaign_type, wpcp_get_keyword_suggestion_supported_modules() ) ) {
-		echo content_pilot()->elements->input( apply_filters( 'wpcp_keyword_suggester_input_args', array(
-			'label'       => __( 'Keyword Suggester', 'wp-content-pilot' ),
-			'name'        => '_keyword_suggestion',
-			'placeholder' => __( 'How to cook noodle', 'wp-content-pilot' ),
-			'desc'        => __( 'Type something to find better related keywords', 'wp-content-pilot' ),
-			'disabled'    => true,
-		) ) );
-	}
-
-	$keywords = wpcp_get_post_meta( $post_id, '_keywords', '' );
-
-	$keyword_input_args = apply_filters( 'wpcp_campaign_keyword_input_args', array(
-		'label'    => __( 'Keywords', 'wp-content-pilot' ),
-		'name'     => '_keywords',
-		'required' => true,
-		'desc'     => __( 'Separate keywords by comma.', 'wp-content-pilot' ),
-		'value'    => $keywords,
-		'attrs'    => array(
-			'rows' => 3,
-		),
-	), $post_id, $campaign_type );
-
-	echo apply_filters( 'wpcp_campaign_keyword_input', content_pilot()->elements->textarea( $keyword_input_args ), $post_id, $campaign_type );
-
-	do_action( 'wpcp_after_campaign_keyword_input', $post_id, $campaign_type );
-
-	$content_type_select_args = apply_filters( 'wpcp_campaign_content_type_select_args', array(
-		'label'            => __( 'Content Type', 'wp-content-pilot' ),
-		'name'             => '_content_type',
-		'selected'         => wpcp_get_post_meta( $post_id, '_content_type', 'html' ),
-		'show_option_all'  => '',
-		'show_option_none' => '',
-		'double_columns'   => true,
-		'options'          => array(
-			'html'  => __( 'HTML', 'wp-content-pilot' ),
-			'plain' => __( 'Plain Text', 'wp-content-pilot' ),
-		),
-		'required'         => false,
-	), $campaign_type );
-
-	echo apply_filters( 'wpcp_campaign_content_type_select_field', content_pilot()->elements->select( $content_type_select_args ), $campaign_type );
-
-	$additional_settings   = [];
-	$_set_featured_image   = get_post_meta( $post_id, '_set_featured_image', true );
-	$_remove_images        = get_post_meta( $post_id, '_remove_images', true );
-	$_excerpt              = get_post_meta( $post_id, '_excerpt', true );
-	$_strip_links          = get_post_meta( $post_id, '_strip_links', true );
-	$_skip_duplicate_title = get_post_meta( $post_id, '_skip_duplicate_title', true );
-	$_allow_comments       = get_post_meta( $post_id, '_allow_comments', true );
-	$_allow_pingbacks      = get_post_meta( $post_id, '_allow_pingbacks', true );
-	$_skip_no_image        = get_post_meta( $post_id, '_skip_no_image', true );
-	$_use_original_date    = get_post_meta( $post_id, '_use_original_date', true );
-
-	if ( 'on' == $_set_featured_image ) {
-		$additional_settings[] = '_set_featured_image';
-	}
-	if ( 'on' == $_remove_images ) {
-		$additional_settings[] = '_remove_images';
-	}
-	if ( 'on' == $_excerpt ) {
-		$additional_settings[] = '_excerpt';
-	}
-	if ( 'on' == $_strip_links ) {
-		$additional_settings[] = '_strip_links';
-	}
-	if ( 'on' == $_skip_duplicate_title ) {
-		$additional_settings[] = '_skip_duplicate_title';
-	}
-	if ( 'on' == $_allow_comments ) {
-		$additional_settings[] = '_allow_comments';
-	}
-	if ( 'on' == $_allow_pingbacks ) {
-		$additional_settings[] = '_allow_pingbacks';
-	}
-	if ( 'on' == $_skip_no_image ) {
-		$additional_settings[] = '_skip_no_image';
-	}
-
-	if ( 'on' == $_use_original_date ) {
-		$additional_settings[] = '_use_original_date';
-	}
-
-
-	$additional_settings_args = apply_filters( 'wpcp_campaign_additional_settings_field_args', array(
-		'label'            => __( 'Additional Settings', 'wp-content-pilot' ),
-		'value'            => $additional_settings,
-		'double_columns'   => true,
-		'show_option_all'  => '',
-		'show_option_none' => '',
-		'options'          => array(
-			'_set_featured_image'   => __( 'Use first image as featured image', 'wp-content-pilot' ),
-			'_remove_images'        => __( 'Remove all images from the article', 'wp-content-pilot' ),
-			'_excerpt'              => __( 'Use summary as excerpt', 'wp-content-pilot' ),
-			'_strip_links'          => __( 'Remove hyperlinks found in the article', 'wp-content-pilot' ),
-			'_allow_comments'       => __( 'Allow comments', 'wp-content-pilot' ),
-			'_allow_pingbacks'      => __( 'Allow pingbacks', 'wp-content-pilot' ),
-			'_use_original_date'    => __( 'Use original post date', 'wp-content-pilot' ),
-			'_skip_duplicate_title' => __( 'Skip post with duplicate title', 'wp-content-pilot' ),
-			'_skip_no_image'        => __( 'Skip post if no image found in the article', 'wp-content-pilot' ),
-		),
-		'required'         => false,
-	), $campaign_type, $post_id );
-
-	echo apply_filters( 'wpcp_campaign_additional_settings_field', content_pilot()->elements->checkboxes( $additional_settings_args ), $campaign_type );
-
-
-	do_action( 'wpcp_campaign_options_metabox', $post_id );
-}
-
-
-//function wpcp_campaign_post_settings_metabox_callback( $post ) {
-//	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
-//	$campaign_type = empty( $campaign_type ) ? 'feeds' : $campaign_type;
-//	wpcp_campaign_post_settings_metabox_fields( $post->ID, $campaign_type );
-//}
-
-function wpcp_campaign_post_settings_metabox_fields( $post_id, $campaign_type ) {
-
-	echo content_pilot()->elements->input( array(
-		'label'    => __( 'Post Title', 'wp-content-pilot' ),
-		'name'     => '_post_title',
-		'required' => true,
-		'value'    => wpcp_get_post_meta( $post_id, '_post_title', '{title}' )
-	) );
-
-
-	$post_template = wpcp_get_post_meta( $post_id, '_post_template', '' );
-	if ( empty( $post_template ) ) {
-		$module        = content_pilot()->modules->get_module( $campaign_type );
-		$module_class  = $module['callback'];
-		$post_template = $module_class::get_default_template();
-	}
-
-
-	$template_input_args = apply_filters( 'wpcp_campaign_template_input_args', array(
-		'label'    => __( 'Post Template', 'wp-content-pilot' ),
-		'name'     => '_post_template',
-		'required' => true,
-		'attrs'    => array(
-			'rows' => 5,
-		),
-		'value'    => $post_template
-	), $post_id, $campaign_type );
-
-
-	echo apply_filters( 'wpcp_campaign_template_input', content_pilot()->elements->textarea( $template_input_args ), $post_id, $campaign_type );
-
-	echo content_pilot()->elements->select( array(
-		'label'            => __( 'Post type', 'wp-content-pilot' ),
-		'name'             => '_post_type',
-		'placeholder'      => '',
-		'show_option_all'  => '',
-		'show_option_none' => '',
-		'double_columns'   => true,
-		'options'          => apply_filters( 'wpcp_campaign_post_types', array(
-			'post' => __( 'Post', 'wp-content-pilot' ),
-			'page' => __( 'Page', 'wp-content-pilot' ),
-		) ),
-		'required'         => true,
-		'selected'         => wpcp_get_post_meta( $post_id, '_post_type', 'post' ),
-	) );
-
-	echo content_pilot()->elements->select( array(
-		'label'            => __( 'Status', 'wp-content-pilot' ),
-		'name'             => '_post_status',
-		'placeholder'      => '',
-		'show_option_all'  => '',
-		'show_option_none' => '',
-		'double_columns'   => true,
-		'options'          => apply_filters( 'wpcp_campaign_post_statuses', array(
-			'publish' => __( 'Published', 'wp-content-pilot' ),
-			'private' => __( 'Private', 'wp-content-pilot' ),
-			'draft'   => __( 'Draft', 'wp-content-pilot' ),
-			'pending' => __( 'Pending', 'wp-content-pilot' ),
-		) ),
-		'required'         => true,
-		'multiple'         => false,
-		'selected'         => wpcp_get_post_meta( $post_id, '_post_status', 'publish' ),
-	) );
-
-	echo content_pilot()->elements->select( array(
-		'label'            => __( 'Categories', 'wp-content-pilot' ),
-		'name'             => '_categories',
-		'placeholder'      => '',
-		'show_option_all'  => '',
-		'show_option_none' => '',
-		'selected'         => wpcp_get_post_meta( $post_id, '_categories', [] ),
-		'options'          => wpcp_get_post_categories(),
-		'required'         => false,
-		'multiple'         => true,
-		'chosen'           => true,
-		'desc'             => __( 'Select categories from available categories', 'wp-content-pilot' ),
-	) );
-
-	echo content_pilot()->elements->input( apply_filters( 'wpcp_custom_categories_args', array(
-		'label'       => __( 'Custom Categories', 'wp-content-pilot' ),
-		'name'        => '_custom_categories',
-		'placeholder' => __( 'Fashion, Sports, Tech', 'wp-content-pilot' ),
-		'desc'        => __( 'Input any number of custom categories, separate with a comma (PRO)', 'wp-content-pilot' ),
-		'disabled'    => true,
-	), $post_id ) );
-
-	echo content_pilot()->elements->select( array(
-		'label'            => __( 'Tags', 'wp-content-pilot' ),
-		'name'             => '_tags',
-		'placeholder'      => '',
-		'show_option_all'  => '',
-		'show_option_none' => '',
-		'selected'         => wpcp_get_post_meta( $post_id, '_tags', [] ),
-		'options'          => wpcp_get_post_tags(),
-		'required'         => false,
-		'multiple'         => true,
-		'chosen'           => true,
-		'desc'             => __( 'Select tags from available tags', 'wp-content-pilot' ),
-	) );
-
-	echo content_pilot()->elements->input( apply_filters( 'wpcp_custom_tags_args', array(
-		'label'       => __( 'Custom Tags', 'wp-content-pilot' ),
-		'name'        => '_custom_tags',
-		'placeholder' => __( 'Fashion, Sports, Tech', 'wp-content-pilot' ),
-		'desc'        => __( 'Input any number of custom tags, separate with a comma (PRO)', 'wp-content-pilot' ),
-		'disabled'    => true,
-	), $post_id ) );
-
-	echo content_pilot()->elements->select( array(
-		'label'            => __( 'Post Author', 'wp-content-pilot' ),
-		'name'             => '_author',
-		'placeholder'      => '',
-		'show_option_all'  => '',
-		'show_option_none' => '',
-		'double_columns'   => true,
-		'options'          => wpcp_get_authors(),
-		'required'         => true,
-		'multiple'         => false,
-		'chosen'           => false,
-		'desc'             => __( 'Select author', 'wp-content-pilot' ),
-		'selected'         => wpcp_get_post_meta( $post_id, '_author', '' ),
-	) );
-}
-
-function wpcp_campaign_advance_settings_metabox_callback( $post ) {
-	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
-	$campaign_type = empty( $campaign_type ) ? 'feeds' : $campaign_type;
-	wpcp_campaign_advance_settings_metabox_fields( $post->ID, $campaign_type );
-}
-
-function wpcp_campaign_advance_settings_metabox_fields( $post_id, $campaign_type ) {
-	do_action( 'wpcp_start_campaign_advance_settings_metabox', $post_id, $campaign_type );
-	echo content_pilot()->elements->input( array(
-		'label' => __( 'Limit Title', 'wp-content-pilot' ),
-		'type'  => 'number',
-		'name'  => '_title_limit',
-		'value' => wpcp_get_post_meta( $post_id, '_title_limit', '' ),
-		'desc'  => 'Input the number of words to limit the title. Default full title.',
-	) );
-
-	echo content_pilot()->elements->input( array(
-		'label' => __( 'Limit Content', 'wp-content-pilot' ),
-		'type'  => 'number',
-		'name'  => '_content_limit',
-		'value' => wpcp_get_post_meta( $post_id, '_content_limit', '' ),
-		'desc'  => 'Input the number of words to limit content. Default full content.',
-	) );
-
-	echo content_pilot()->elements->input( apply_filters( 'wpcp_min_words_args', array(
-		'label'       => __( 'Words Count', 'wp-content-pilot' ),
-		'name'        => '_min_words',
-		'type'        => 'number',
-		'placeholder' => 500,
-		'desc'        => __( 'Min required words, otherwise posts will be rejected. (PRO)', 'wp-content-pilot' ),
-		'disabled'    => true,
-	), $post_id ) );
-
-	echo content_pilot()->elements->input( apply_filters( 'wpcp_required_words_args', array(
-		'label'       => __( 'Required Words', 'wp-content-pilot' ),
-		'name'        => '_required_words',
-		'placeholder' => __( 'Fashion, Secret, Awesome', 'wp-content-pilot' ),
-		'desc'        => __( 'Must contain words, otherwise posts will be rejected. (PRO)', 'wp-content-pilot' ),
-		'disabled'    => true,
-	), $post_id ) );
-
-	echo content_pilot()->elements->input( apply_filters( 'wpcp_banned_words_args', array(
-		'label'       => __( 'Banned Words', 'wp-content-pilot' ),
-		'name'        => '_banned_words',
-		'placeholder' => __( 'youtube, wikipedia, google', 'wp-content-pilot' ),
-		'desc'        => __( 'If a post contains the above words it will be rejected. (PRO)', 'wp-content-pilot' ),
-		'disabled'    => true,
-	), $post_id ) );
-
-	echo content_pilot()->elements->select( apply_filters( 'wpcp_translate_to_args', array(
-		'label'            => __( 'Translate To', 'wp-content-pilot' ),
-		'name'             => '_translate_to',
-		'placeholder'      => '',
-		'show_option_all'  => '',
-		'show_option_none' => '',
-		'double_columns'   => true,
-		'options'          => array(
-			'' => __( 'No Translation', 'wp-content-pilot' )
-		),
-		'disabled'         => true,
-		'multiple'         => false,
-		'chosen'           => false,
-		'desc'             => __( 'Select a language to translate. (PRO)', 'wp-content-pilot' ),
-		'selected'         => '',
-	), $post_id ) );
-
-
-	echo content_pilot()->elements->repeatable( apply_filters( 'wpcp_custom_meta_args', array(
-		'label'    => __( 'Custom Meta (Pro)', 'wp-content-pilot' ),
-		'name'     => '_wpcp_custom_meta_field',
-		'desc'     => __( 'Add custom meta for posts.', 'wp-content-pilot' ),
-		'disabled' => true,
-		'fields'   => array(
-			array(
-				'name'        => 'meta_key',
-				'placeholder' => __( 'Meta Key', 'wp-content-pilot' ),
-				'type'        => 'text',
-				'class'       => 'long',
-				'attrs'       => array(
-					'pattern' => '^[a-zA-Z0-9_-]+',
-					'title'   => __( 'Valid mata key no space and no spacial key. Only \'_\' and \'-\' allowed.', 'wp-content-pilot' ),
-				)
-			),
-			array(
-				'name'        => 'meta_value',
-				'placeholder' => __( 'Meta Value', 'wp-content-pilot' ),
-				'type'        => 'text',
-				'class'       => 'long'
-			)
-		),
-	), $post_id ) );
-
-	echo content_pilot()->elements->repeatable( apply_filters( 'wpcp_search_n_replace_args', array(
-		'label'    => __( 'Search & Replace (Pro)', 'wp-content-pilot' ),
-		'name'     => '_wpcp_search_n_replace',
-		'desc'     => __( 'Search and replace contents with text or regular expression. (PRO) ', 'wp-content-pilot' ),
-		'disabled' => true,
-		'fields'   => array(
-			array(
-				'name'        => 'search',
-				'placeholder' => __( 'Search', 'wp-content-pilot' ),
-				'type'        => 'text',
-				'class'       => 'long',
-			),
-			array(
-				'name'        => 'replace',
-				'placeholder' => __( 'Replace', 'wp-content-pilot' ),
-				'type'        => 'text',
-				'class'       => 'long'
-			)
-		),
-	), $post_id ) );
-
-	do_action( 'wpcp_end_campaign_advance_settings_metabox', $post_id, $campaign_type );
-}
-
-function wpcp_campaign_template_tags_metabox_callback( $post ) {
-	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
-	$campaign_type = empty( $campaign_type ) ? 'feeds' : $campaign_type;
-	wpcp_campaign_template_tags_metabox_fields( $post->ID, $campaign_type );
-}
-
-function wpcp_campaign_template_tags_metabox_fields( $post_id, $campaign_type ) {
-
-	$module = content_pilot()->modules->get_module( $campaign_type );
-	if ( empty( $module ) || is_wp_error( $module ) ) {
-		return new WP_Error( 'invalid-module-type', __( 'Invalid module type', 'wp-content-pilot' ) );
-	}
-
-	$tags = $module['callback']::get_template_tags();
-
-	?>
-
-	<table class="fixed striped widefat">
-		<tr>
-			<th><?php _e( 'Tag', 'wp-content-pilot' ); ?></th>
-			<th><?php _e( 'Description', 'wp-content-pilot' ); ?></th>
-		</tr>
-		<?php foreach ( $tags as $tag => $description ): ?>
-			<tr>
-				<td><code>{<?php echo esc_html( $tag ); ?>}</code></td>
-				<td><?php echo esc_html( $description ); ?> </td>
-			</tr>
-		<?php endforeach; ?>
-	</table>
-	<?php
-
-}
-
-function wpcp_campaign_posted_posts_metabox_callback( $post, $campaign_type ) {
-	ob_start();
-	include WPCP_VIEWS . '/metabox/posted-posts.php';
-	$html = ob_get_clean();
-	echo $html;
-}
-
-function wpcp_campaign_logs_metabox_callback( $post, $campaign_type ) {
-	ob_start();
-	include WPCP_VIEWS . '/metabox/logs.php';
-	$html = ob_get_clean();
-	echo $html;
-}
-
-function wpcp_campaign_meta_actions_metabox_callback( $post, $campaign_type ) {
-	ob_start();
-	include WPCP_VIEWS . '/metabox/meta-actions.php';
-	$html = ob_get_clean();
-	echo $html;
-}
-
-
 function wpcp_campaign_selection_metabox_callback( $post ) {
-	ob_start();
-	include WPCP_VIEWS . '/metabox/campagin-selection.php';
-	$html = ob_get_clean();
-	echo $html;
-}
-
-
-
-function wpcp_campaign_status_metabox_callback( $post ) {
-	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
-	?>
-	<div class="wpcp-campaign-status-wrap">
-
-		<div class="wpcp-campaign-status-column wpcp-campaign-status">
-			<span class="wpcp-campaign-status-label">Status</span>
-			<span class="wpcp-campaign-status-data"><span class="wpcp-campaign-status-in">OFF</span></span>
-		</div>
-
-		<div class="wpcp-campaign-status-column">
-			<span class="wpcp-campaign-status-label">Campaign Type</span>
-			<span class="wpcp-campaign-status-data">
-				<?php echo empty( $campaign_type ) ? '&mdash;' : ucfirst( $campaign_type ) ?>
-			</span>
-		</div>
-
-		<div class="wpcp-campaign-status-column">
-			<span class="wpcp-campaign-status-label">Last Run</span>
-			<span class="wpcp-campaign-status-data"><?php echo current_time( 'mysql' ); ?></span>
-		</div>
-
-		<div class="wpcp-campaign-status-column">
-			<span class="wpcp-campaign-status-label">Last Post</span>
-			<span
-				class="wpcp-campaign-status-data"><?php echo sprintf( '<a href="#">%s</a>', get_the_title( 90 ) ); ?></span>
-		</div>
-		<div class="wpcp-campaign-status-column">
-			<span class="wpcp-campaign-status-label">Run Campaign</span>
-			<span class="wpcp-campaign-status-data"><button class="button button-secondary">Run Now</button></span>
-		</div>
-
-	</div>
-
-	<?php
+	wpcp_get_views( 'metabox/campaign-selection.php', array( 'post' => $post ) );
 }
 
 /**
- * campaign options
+ * Render campaign status
  *
  * @param $post
- *
- * @since 1.2.0
  */
+function wpcp_campaign_status_metabox_callback( $post ) {
+	wpcp_get_views( 'metabox/campaign-status.php', array( 'post' => $post ) );
+}
+
 function wpcp_campaign_options_metabox_callback( $post ) {
 	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
-	echo wpcp_double_column();
 	do_action( 'wpcp_campaign_options_meta_fields', $campaign_type, $post );
-
-	echo wpcp_double_column( true );
-	do_action( 'wpcp_campaign_options_meta_fields_before_end', $campaign_type, $post );
+	do_action( 'wpcp_campaign_' . esc_attr__( $campaign_type ) . '_options_meta_fields', $post );
 }
 
-/**
- * Post template
- *
- * @param $post
- *
- * @return WP_Error
- * @since 1.2.0
- */
 function wpcp_post_template_metabox_callback( $post ) {
-	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
-	if(empty($campaign_type)){
-		return false;
-	}
-	$module        = content_pilot()->modules->get_module( $campaign_type );
-	if(empty($module)){
-		return false;
-	}
-	$module_class  = $module['callback'];
-	$post_template = $module_class::get_default_template();
-
-	echo wpcp_text_input( array(
-		'label'    => __( 'Post Title', 'wp-content-pilot' ),
-		'name'     => '_post_title',
-		'default'  => '{title}',
-		'required' => true,
-	) );
-
-	echo wpcp_textarea_input( array(
-		'label'      => __( 'Post Template', 'wp-content-pilot' ),
-		'name'       => '_post_template',
-		'default'    => $post_template,
-		'required'   => true,
-		'style'      => 'min-height:200px;',
-		'attributes' => array(
-			'rows' => 5,
-		),
-	) );
-
-	$module = content_pilot()->modules->get_module( $campaign_type );
-	if ( empty( $module ) || is_wp_error( $module ) ) {
-		return new WP_Error( 'invalid-module-type', __( 'Invalid module type', 'wp-content-pilot' ) );
-	}
-
-	$tags = $module['callback']::get_template_tags();
-	echo '<label>supported Tags:</label>';
-	foreach ( $tags as $tag => $description ) {
-		echo sprintf( '<code>{%s}</code>, ', $tag );
-	}
-
+	wpcp_get_views( 'metabox/post-template.php' );
 }
 
 function wpcp_post_settings_metabox_callback( $post ) {
-	echo wpcp_double_column();
-	echo wpcp_select_input( array(
-		'label'            => __( 'Post type', 'wp-content-pilot' ),
-		'name'             => '_post_type',
-		'placeholder'      => '',
-		'show_option_all'  => '',
-		'show_option_none' => '',
-		'double_columns'   => true,
-		'options'          => apply_filters( 'wpcp_campaign_post_types', array(
-			'post' => __( 'Post', 'wp-content-pilot' ),
-			'page' => __( 'Page', 'wp-content-pilot' ),
-		) ),
-		'required'         => true,
-	) );
-
-	echo wpcp_select_input( array(
-		'label'    => __( 'Status', 'wp-content-pilot' ),
-		'name'     => '_post_status',
-		'options'  => apply_filters( 'wpcp_campaign_post_statuses', array(
-			'publish' => __( 'Published', 'wp-content-pilot' ),
-			'private' => __( 'Private', 'wp-content-pilot' ),
-			'draft'   => __( 'Draft', 'wp-content-pilot' ),
-			'pending' => __( 'Pending', 'wp-content-pilot' ),
-		) ),
-		'required' => true,
-	) );
-
-	echo wpcp_select_input( array(
-		'label'       => __( 'Post Author', 'wp-content-pilot' ),
-		'name'        => '_author',
-		'placeholder' => '',
-		'options'     => wpcp_get_authors(),
-		'required'    => true,
-		'tooltip'     => __( 'Select author', 'wp-content-pilot' ),
-	) );
-
-	echo wpcp_text_input( array(
-		'label'       => __( 'Post Format', 'wp-content-pilot' ),
-		'name'        => '_post_format',
-		'placeholder' => 'audio',
-		'tooltip'     => __( 'Select post format', 'wp-content-pilot' ),
-	) );
-
-	echo wpcp_text_input( array(
-		'label'       => __( 'Post Category', 'wp-content-pilot' ),
-		'name'        => '_categories',
-		'placeholder' => '',
-		'required'    => true,
-		'tooltip'     => __( 'Select category for the post', 'wp-content-pilot' ),
-	) );
-
-	echo wpcp_text_input( array(
-		'label'         => __( 'Keyword to category', 'wp-content-pilot' ),
-		'name'          => '_keyword_to_category',
-		'required'      => true,
-		'placeholder'   => __( 'Separate with (,) comma', 'wp-content-pilot' ),
-		'tooltip'       => __( 'This option will search the content for the keyword and if exists, it will assign & set category to the post', 'wp-content-pilot' ),
-		'wrapper_class' => 'pro',
-		'attributes'    => array(
-			'disabled' => 'disabled',
-		)
-	) );
-
-	echo wpcp_text_input( array(
-		'label'       => __( 'Post Tags', 'wp-content-pilot' ),
-		'name'        => '_tags',
-		'placeholder' => '',
-		'required'    => true,
-		'tooltip'     => __( 'Select tags for the post', 'wp-content-pilot' ),
-	) );
-
-	echo wpcp_text_input( array(
-		'label'         => __( 'Keyword to tag', 'wp-content-pilot' ),
-		'name'          => '_keyword_to_tag',
-		'required'      => true,
-		'placeholder'   => __( 'Separate with (,) comma', 'wp-content-pilot' ),
-		'tooltip'       => __( 'This option will search the content for the keyword and if exists, it will assign & set tag to the post', 'wp-content-pilot' ),
-		'wrapper_class' => 'pro',
-		'attributes'    => array(
-			'disabled' => 'disabled',
-		)
-	) );
-
-	echo wpcp_switch_input( array(
-		'label' => __( 'Allow Comment', 'wp-content-pilot' ),
-		'name'  => '_allow_comments',
-		'value' => 'on',
-		'desc'  => __( 'Yes', 'wp-content-pilot' ),
-	) );
-
-
-	echo wpcp_switch_input( array(
-		'label' => __( 'Allow pingbacks', 'wp-content-pilot' ),
-		'name'  => '_allow_pingbacks',
-		'desc'  => __( 'Yes', 'wp-content-pilot' ),
-	) );
-
-	echo wpcp_switch_input( array(
-		'label' => __( 'Add excerpt', 'wp-content-pilot' ),
-		'name'  => '_excerpt',
-		'desc'  => __( 'Yes', 'wp-content-pilot' ),
-	) );
-
-	echo wpcp_double_column( true );
-}
-
-function wpcp_post_image_metabox_callback( $post ) {
-
+	wpcp_get_views( 'metabox/post-settings.php' );
 }
 
 function wpcp_posts_filter_metabox_callback( $post ) {
-	echo wpcp_double_column();
-	echo wpcp_text_input( array(
-		'label'       => __( 'Min Words', 'wp-content-pilot' ),
-		'name'        => '_min_words',
-		'type'        => 'number',
-		'placeholder' => 500,
-		'tooltip'     => __( 'Min required words, otherwise posts will be rejected. (PRO)', 'wp-content-pilot' ),
-	) );
-
-	echo wpcp_text_input( array(
-		'label'       => __( 'Required Words', 'wp-content-pilot' ),
-		'name'        => '_required_words',
-		'placeholder' => __( 'Fashion, Secret, Awesome', 'wp-content-pilot' ),
-		'tooltip'     => __( 'Must contain words, otherwise posts will be rejected. (PRO)', 'wp-content-pilot' ),
-	) );
-
-	echo wpcp_text_input( array(
-		'label'       => __( 'Banned Words', 'wp-content-pilot' ),
-		'name'        => '_banned_words',
-		'placeholder' => __( 'youtube, wikipedia, google', 'wp-content-pilot' ),
-		'tooltip'     => __( 'If a post contains the above words it will be rejected. (PRO)', 'wp-content-pilot' ),
-	) );
-	echo wpcp_double_column( true );
+	wpcp_get_views( 'metabox/post-filter.php' );
 }
 
 function wpcp_advanced_settings_metabox_callback( $post ) {
-	echo wpcp_double_column();
-
-	echo wpcp_text_input( array(
-		'label'   => __( 'Limit Title', 'wp-content-pilot' ),
-		'type'    => 'number',
-		'name'    => '_title_limit',
-		'tooltip' => 'Input the number of words to limit the title. Default full title.',
-	) );
-
-	echo wpcp_text_input( array(
-		'label'   => __( 'Limit Content', 'wp-content-pilot' ),
-		'type'    => 'number',
-		'name'    => '_content_limit',
-		'tooltip' => 'Input the number of words to limit content. Default full content.',
-	) );
-
-	echo wpcp_select_input( array(
-		'label'         => __( 'Translate To', 'wp-content-pilot' ),
-		'name'          => '_translate_to',
-		'options'       => array(
-			'' => __( 'No Translation', 'wp-content-pilot' )
-		),
-		'tooltip'       => __( 'Select a language to translate.', 'wp-content-pilot' ),
-		'wrapper_class' => 'pro',
-		'attributes'    => array(
-			'disabled' => 'disabled',
-		)
-	) );
-
-
-	echo wpcp_range_input( array(
-		'name'       => '_readability_score',
-		'id'         => '_readability_score',
-		'label'      => __( 'Readability Score', 'wp-content-pilot' ),
-		'min'        => '0',
-		'max'        => '100',
-		'attributes' => array(
-			'required' => 'required',
-			'disabled' => 'disabled',
-		),
-	) );
-
-	echo wpcp_double_column( true );
-
-	echo wpcp_double_column();
-	echo wpcp_textarea_input( array(
-		'label'         => __( 'Search Replace', 'wp-content-pilot' ),
-		'name'          => '_wpcp_search_n_replace',
-		'placeholder'   => __( 'Apple|Mango', 'wp-content-pilot' ),
-		'desc'          => __( 'One per line', 'wp-content-pilot' ),
-		'style'         => 'min-height:100px;',
-		'tooltip'       => __( 'Search and replace contents with text or regular expression.Must be one per line.', 'wp-content-pilot' ),
-		'wrapper_class' => 'pro',
-		'attributes'    => array(
-			'disabled' => 'disabled',
-		)
-	) );
-
-	echo wpcp_textarea_input( array(
-		'label'         => __( 'Post Meta', 'wp-content-pilot' ),
-		'name'          => '_wpcp_custom_meta_field',
-		'placeholder'   => __( 'title|{title}', 'wp-content-pilot' ),
-		'desc'          => __( 'One per line', 'wp-content-pilot' ),
-		'style'         => 'min-height:100px;',
-		'tooltip'       => __( 'Add custom post meta for posts. Must be one per line.', 'wp-content-pilot' ),
-		'wrapper_class' => 'pro',
-		'attributes'    => array(
-			'disabled' => 'disabled',
-		)
-	) );
-
-
-	echo wpcp_double_column( true );
+	wpcp_get_views( 'metabox/advanced-settings.php' );
 }
 
-
-function wpcp_keyword_field() {
-	global $post;
-	echo wpcp_text_input( array(
-		'label'       => __( 'Keywords', 'wp-content-pilot' ),
-		'name'        => '_keywords',
-		'placeholder' => 'Bonsai tree care',
-		'desc'        => __( 'Separate keywords by comma.', 'wp-content-pilot' ),
-		'attrs'       => array(
-			'rows'     => 3,
-			'required' => 'required'
-		),
-	) );
-}
-
-
-function wpcp_strip_links_field() {
-	echo wpcp_switch_input( array(
-		'label'   => __( 'Strip Links', 'wp-content-pilot' ),
-		'name'    => '_strip_links',
-		'value'   => 'on',
-		'desc'    => __( 'Yes', 'wp-content-pilot' ),
-		'tooltip' => __( 'Remove hyperlinks found in the article', 'wp-content-pilot' ),
-	) );
-}
-
-function wpcp_external_link_field() {
-	echo wpcp_switch_input( array(
-		'label'         => __( 'External Post', 'wp-content-pilot' ),
-		'name'          => '_external_post',
-		'value'         => 'on',
-		'desc'          => __( 'Yes', 'wp-content-pilot' ),
-		'tooltip'       => __( 'Make post link directly to the source site, Posts will not load at your site.', 'wp-content-pilot' ),
-		'wrapper_class' => 'pro',
-		'attributes'    => array(
-			'disabled' => 'disabled',
-		)
-	) );
-}
-
-
-function wpcp_rotate_keyword_field() {
-	echo wpcp_switch_input( array(
-		'label'   => __( 'Rotate keywords', 'wp-content-pilot' ),
-		'name'    => '_rotate_keyword',
-		'value'   => 'on',
-		'desc'    => __( 'Yes', 'wp-content-pilot' ),
-		'tooltip' => __( 'Use different keyword each time', 'wp-content-pilot' ),
-	) );
+function wpcp_campaign_action_metabox_callback( $post ) {
+	wpcp_get_views( 'metabox/action-metabox.php' );
 }
 
 
@@ -979,15 +120,34 @@ function wpcp_update_campaign_settings( $post_id ) {
 		return false;
 	}
 
-
 	//save post meta
 	$posted = empty( $_POST ) ? [] : $_POST;
 	if ( empty( $posted['_campaign_type'] ) ) {
 		return false;
 	}
+
+	$frequency_unit = ! empty( $posted['_frequency_unit'] ) && in_array( $posted['_frequency_unit'], [
+		'minutes',
+		'hours',
+		'days'
+	] ) ? sanitize_key( $posted['_frequency_unit'] ) : 'hours';
+
+	if ( $frequency_unit == 'minutes' ) {
+		$every = 60;
+	} elseif ( $frequency_unit == 'minutes' ) {
+		$every = 60 * 60 * 24;
+	} else {
+		$every = 60 * 60;
+	}
+
+	$campaign_target    = empty( $posted['_campaign_target'] ) ? 10 : absint( $posted['_campaign_target'] );
+	$campaign_frequency = empty( $posted['_campaign_frequency'] ) ? 5 : absint( $posted['_campaign_frequency'] );
+
 	update_post_meta( $post_id, '_campaign_type', empty( $posted['_campaign_type'] ) ? 'feed' : sanitize_text_field( $posted['_campaign_type'] ) );
-	update_post_meta( $post_id, '_campaign_target', empty( $posted['_campaign_target'] ) ? '' : intval( $posted['_campaign_target'] ) );
-	update_post_meta( $post_id, '_campaign_frequency', empty( $posted['_campaign_frequency'] ) ? '' : intval( $posted['_campaign_frequency'] ) );
+	update_post_meta( $post_id, '_campaign_target', $campaign_target );
+	update_post_meta( $post_id, '_campaign_frequency', $campaign_frequency );
+	update_post_meta( $post_id, '_frequency_unit', $frequency_unit );
+	update_post_meta( $post_id, '_run_every', ( $every * absint( $posted['_campaign_frequency'] ) ) );
 	update_post_meta( $post_id, '_campaign_status', empty( $posted['_campaign_status'] ) ? 'inactive' : sanitize_text_field( $posted['_campaign_status'] ) );
 
 	update_post_meta( $post_id, '_keywords', empty( $posted['_keywords'] ) ? '' : sanitize_text_field( $posted['_keywords'] ) );
@@ -1014,8 +174,96 @@ function wpcp_update_campaign_settings( $post_id ) {
 
 	update_post_meta( $post_id, '_title_limit', empty( $posted['_title_limit'] ) ? '' : esc_attr( $posted['_title_limit'] ) );
 	update_post_meta( $post_id, '_content_limit', empty( $posted['_content_limit'] ) ? '' : esc_attr( $posted['_content_limit'] ) );
-
 	do_action( 'wpcp_update_campaign_settings', $post_id, $posted );
+	do_action( 'wpcp_update_campaign_settings_' . esc_attr__( $posted['_campaign_type'] ), $post_id, $posted );
 }
 
 add_action( 'save_post_wp_content_pilot', 'wpcp_update_campaign_settings' );
+
+
+function wpcp_keyword_field() {
+	echo WPCP_HTML::textarea_input( array(
+		'label'       => __( 'Keywords', 'wp-content-pilot' ),
+		'name'        => '_keywords',
+		'placeholder' => 'Bonsai tree care',
+		'desc'        => __( 'Separate keywords by comma.', 'wp-content-pilot' ),
+		'attrs'       => array(
+			'rows'     => 3,
+			'required' => 'required'
+		),
+	) );
+}
+
+function wpcp_keyword_suggestion_field() {
+	echo WPCP_HTML::text_input( array(
+		'label'         => __( 'Keyword Suggestion', 'wp-content-pilot' ),
+		'name'          => '_keyword_suggestion',
+		'placeholder'   => 'Enter Keyword Here',
+		'wrapper_class' => 'pro',
+		'attrs'         => array(
+			'disabled' => 'disabled',
+		)
+	) );
+}
+
+
+function wpcp_strip_links_field() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label'   => __( 'Strip original links from the post', 'wp-content-pilot' ),
+		'name'    => '_strip_links',
+		'tooltip' => __( 'Remove hyperlinks found in the article', 'wp-content-pilot' ),
+	) );
+}
+
+function wpcp_external_link_field() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label'         => __( 'Make permalink link directly to the source', 'wp-content-pilot' ),
+		'name'          => '_external_post',
+		'tooltip'       => __( 'Make post link directly to the source site, Posts will not load at your site.', 'wp-content-pilot' ),
+		'wrapper_class' => 'pro',
+		'attrs'         => array(
+			'disabled' => 'disabled',
+		)
+	) );
+}
+
+function wpcp_canonical_link_field() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label'         => __( 'Add Canonical Tag with the original post link ', 'wp-content-pilot' ),
+		'name'          => '_canonical_tag',
+		'wrapper_class' => 'pro',
+		'attrs'         => array(
+			'disabled' => 'disabled',
+		)
+	) );
+}
+
+function wpcp_featured_image_field() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label' => __( 'Set First image as featured image', 'wp-content-pilot' ),
+		'name'  => '_set_featured_image',
+	) );
+}
+
+function wpcp_featured_image_random_field() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label'         => __( 'Set random featured image if no image exists', 'wp-content-pilot' ),
+		'name'          => '_random_featured_image',
+		'wrapper_class' => 'pro',
+		'attrs'         => array(
+			'disabled' => 'disabled',
+		)
+	) );
+}
+
+function wpcp_use_original_date_field() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label'         => __( 'Use original date if possible', 'wp-content-pilot' ),
+		'name'          => '_use_original_date',
+		'wrapper_class' => 'pro',
+		'attrs'         => array(
+			'disabled' => 'disabled',
+		)
+	) );
+}
+

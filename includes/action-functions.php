@@ -1,5 +1,5 @@
 <?php
-defined('ABSPATH')|| exit();
+defined( 'ABSPATH' ) || exit();
 /**
  * Trigger automatic campaigns
  * This is the main function that handle all automatic
@@ -8,6 +8,7 @@ defined('ABSPATH')|| exit();
  * @since 1.0.0
  */
 function wpcp_run_automatic_campaign() {
+	error_log( 'wpcp_run_automatic_campaign' );
 	global $wpdb;
 	$sql       = "select * from {$wpdb->posts} p  left join {$wpdb->postmeta} m on p.id = m.post_id having m.meta_key = '_campaign_status' AND m.meta_value = 'active'";
 	$campaigns = $wpdb->get_results( $sql );
@@ -29,10 +30,9 @@ function wpcp_run_automatic_campaign() {
 
 	if ( ! empty( $campaigns ) ) {
 		$automatic_campaign = new WPCP_Automatic_Campaign();
-
 		foreach ( $campaigns as $campaign_id ) {
 			$last_run     = wpcp_get_post_meta( $campaign_id, '_last_run', 0 );
-			$frequency    = wpcp_get_post_meta( $campaign_id, '_campaign_frequency', 0 );
+			$frequency    = wpcp_get_post_meta( $campaign_id, '_run_every', 0 );
 			$target       = wpcp_get_post_meta( $campaign_id, '_campaign_target', 0 );
 			$posted       = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
 			$current_time = current_time( 'timestamp' );
@@ -134,40 +134,6 @@ function wpcp_update_campaign_counter( $post_id, $campaign_id ) {
 add_action( 'wpcp_after_post_publish', 'wpcp_update_campaign_counter', 10, 2 );
 
 
-function wpcp_render_repeat_row( $key, $args, $post_id ) {
-
-	$defaults = array(
-		'key'   => null,
-		'value' => null,
-	);
-	$args     = wp_parse_args( $args, $defaults );
-	?>
-	<td>
-		<input type="hidden" name="download_details[<?php echo absint( $key ); ?>][index]" class="edd_repeatable_index"
-		       value="<?php echo absint( $key ); ?>"/>
-
-		<input type="text" name="<?php echo '_meta_fields[' . $key . '][key]'; ?>"
-		       id="<?php echo sanitize_key( '_meta_fields[' . $key . '][key]' ); ?>"
-		       value="<?php echo esc_attr( $args['key'] ); ?>" class="regular-text ever-field large-text ever-field"
-		       autocomplete="false">
-	</td>
-
-	<td class="pricing">
-		<input type="text" name="<?php echo '_meta_fields[' . $key . '][value]'; ?>"
-		       id="<?php echo sanitize_key( '_meta_fields[' . $key . '][key]' ); ?>"
-		       value="<?php echo esc_attr( $args['key'] ); ?>" class="regular-text ever-field large-text ever-field"
-		       autocomplete="false">
-	</td>
-
-	<td>
-		<span class="ever-remove-repeatable ever-remove-row edd-remove-row"
-		      style="background: url(<?php echo admin_url( '/images/xit.gif' ); ?>) no-repeat;"></span>
-	</td>
-	<?php
-}
-
-add_action( 'wpcp_render_repeat_row', 'wpcp_render_repeat_row', 10, 4 );
-
 function wpcp_remove_logs() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
@@ -203,8 +169,6 @@ function wpcp_custom_wpkses_post_tags( $tags, $context ) {
 }
 
 add_filter( 'wp_kses_allowed_html', 'wpcp_custom_wpkses_post_tags', 10, 2 );
-
-
 add_action( 'wp_version_check', 'wpcp_per_minute_cron_auto_activate' );
 
 /**
@@ -261,3 +225,10 @@ function wpcp_handle_campaign_reset_search() {
 }
 
 add_action( 'admin_post_wpcp_campaign_reset_search', 'wpcp_handle_campaign_reset_search' );
+
+
+function wpcp_save_last_post_id( $post_id, $campaign_id ) {
+	wpcp_update_post_meta( $campaign_id, '_last_post', $post_id );
+}
+
+add_action( 'wpcp_after_post_publish', 'wpcp_save_last_post_id', 10, 2 );

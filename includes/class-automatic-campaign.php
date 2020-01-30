@@ -14,6 +14,7 @@ class WPCP_Automatic_Campaign extends WP_Background_Process {
 		$current_time = current_time( 'timestamp' );
 		$diff         = $current_time - $last_run;
 		if ( $diff < $frequency ) {
+			$this->complete();
 			return true;
 		}
 

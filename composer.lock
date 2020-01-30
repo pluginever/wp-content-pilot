@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fdd7cec113fc79c74768d803a5060700",
+    "content-hash": "ef449a208aa01c491ab698308ec5546e",
     "packages": [
         {
             "name": "andreskrey/readability.php",
@@ -252,16 +252,16 @@
         },
         {
             "name": "php-curl-class/php-curl-class",
-            "version": "8.6.1",
+            "version": "8.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-curl-class/php-curl-class.git",
-                "reference": "a418962c4385aba6b97d2d57d65a0d405b514cf7"
+                "reference": "54be433a7299c15b024ba808e10a96c5d5791d99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/a418962c4385aba6b97d2d57d65a0d405b514cf7",
-                "reference": "a418962c4385aba6b97d2d57d65a0d405b514cf7",
+                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/54be433a7299c15b024ba808e10a96c5d5791d99",
+                "reference": "54be433a7299c15b024ba808e10a96c5d5791d99",
                 "shasum": ""
             },
             "require": {
@@ -315,20 +315,20 @@
                 "web-service",
                 "xml"
             ],
-            "time": "2019-08-05T04:18:26+00:00"
+            "time": "2019-11-17T08:37:31+00:00"
         },
         {
             "name": "psr/log",
-            "version": "1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
+                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
-                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/446d54b4cb6bf489fc9d75f55843658e6f25d801",
+                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801",
                 "shasum": ""
             },
             "require": {
@@ -337,7 +337,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -362,7 +362,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2018-11-20T15:27:04+00:00"
+            "time": "2019-11-01T11:05:21+00:00"
         }
     ],
     "packages-dev": [],

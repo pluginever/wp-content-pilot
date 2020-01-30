@@ -9,7 +9,7 @@
  * @since       1.2.0
  */
 
-defined('ABSPATH')|| exit();
+defined( 'ABSPATH' ) || exit();
 
 class WPCP_Article extends WPCP_Campaign {
 
@@ -19,13 +19,17 @@ class WPCP_Article extends WPCP_Campaign {
 	public function __construct() {
 		//campaign settings
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
-		add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_keyword_field');
-		add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_rotate_keyword_field');
-		add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_strip_links_field');
-		add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_external_link_field');
-//		add_action( 'wpcp_after_campaign_keyword_input', array( $this, 'campaign_option_fields' ), 10, 2 );
-//		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
-//		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
+		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_keyword_suggestion_field' );
+		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_keyword_field' );
+		add_action( 'wpcp_campaign_article_options_meta_fields', array( $this, 'campaign_option_fields' ) );
+		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_strip_links_field' );
+		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_featured_image_field' );
+		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_use_original_date_field' );
+		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_external_link_field' );
+		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_featured_image_random_field' );
+		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_canonical_link_field' );
+		add_action( 'wpcp_update_campaign_settings_article', array( $this, 'update_campaign_settings' ), 10, 2 );
+		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
 
 		add_filter( 'wpcp_replace_template_tags', array( $this, 'replace_template_tags' ), 10, 2 );
 	}
@@ -88,27 +92,15 @@ EOT;
 	 * @since 1.0.0
 	 *
 	 */
-	public function campaign_option_fields( $post_id, $campaign_type ) {
-
-		if ( 'article' != $campaign_type ) {
-			return false;
-		}
-
-		echo content_pilot()->elements->select( array(
-			'label'            => __( 'Keyword Type', 'wp-content-pilot' ),
-			'name'             => '_keywords_type',
-			'placeholder'      => '',
-			'show_option_all'  => '',
-			'show_option_none' => '',
-			'options'          => array(
+	public function campaign_option_fields( $post ) {
+		echo WPCP_HTML::select_input( array(
+			'label'   => __( 'Keyword Type', 'wp-content-pilot' ),
+			'name'    => '_keywords_type',
+			'options' => array(
 				'any'   => __( 'Any Words', 'wp-content-pilot' ),
 				'exact' => __( 'Exact Word', 'wp-content-pilot' ),
 			),
-			'required'         => true,
-			'double_columns'   => true,
-			'selected'         => wpcp_get_post_meta( $post_id, '_keywords_type', 'any' ),
 		) );
-
 	}
 
 	/**
@@ -121,7 +113,6 @@ EOT;
 	 *
 	 */
 	public function update_campaign_settings( $post_id, $posted ) {
-
 		$raw_keywords = empty( $posted['_keywords'] ) ? '' : esc_html( $posted['_keywords'] );
 		$keywords     = wpcp_string_to_array( $raw_keywords, ',', array( 'trim' ) );
 		$str_words    = implode( ',', $keywords );
@@ -130,8 +121,12 @@ EOT;
 		update_post_meta( $post_id, '_keywords_type', empty( $posted['_keywords_type'] ) ? 'any' : esc_attr( $posted['_keywords_type'] ) );
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function setup() {
 		add_filter( 'wpcp_fetched_links', array( $this, 'skip_base_domain' ) );
+
 		return true;
 	}
 

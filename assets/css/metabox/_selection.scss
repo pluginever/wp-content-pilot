@@ -1,5 +1,10 @@
 .wpcp-choose-campaign-wrap{
 	margin-bottom: 20px;
+
+	.submit{
+		margin-top: 20px !important;
+		float: left !important;
+	}
 }
 .wpcp-choose-campaign-items {
 	flex-wrap: wrap;
@@ -59,7 +64,10 @@
 				color: #fff;
 				font-size: 12px;
 				padding: 2px;
+				opacity: 0.5;
 			}
+
+
 
 		}
 	}

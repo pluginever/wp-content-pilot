@@ -19,7 +19,13 @@ class WPCP_Feed extends WPCP_Campaign {
 	public function __construct() {
 		//campaign settings
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
-		add_filter( 'wpcp_campaign_keyword_input_args', array( $this, 'campaign_keyword_input' ), 99, 3 );
+		add_action( 'wpcp_campaign_feed_options_meta_fields', array( $this, 'campaign_option_fields' ) );
+		add_action( 'wpcp_campaign_feed_options_meta_fields', 'wpcp_strip_links_field' );
+		add_action( 'wpcp_campaign_feed_options_meta_fields', 'wpcp_featured_image_field' );
+		add_action( 'wpcp_campaign_feed_options_meta_fields', 'wpcp_external_link_field' );
+		add_action( 'wpcp_campaign_feed_options_meta_fields', 'wpcp_featured_image_random_field' );
+
+
 		add_action( 'wpcp_update_campaign_settings', array( $this, 'update_campaign_settings' ), 10, 2 );
 
 		add_filter( 'wpcp_keyword', array( $this, 'feed_links' ), 10, 2 );
@@ -100,15 +106,14 @@ EOT;
 	 * @since 1.0.0
 	 *
 	 */
-	public function campaign_keyword_input( $attr, $post_id, $campaign_type ) {
-		if ( $campaign_type == 'feed' ) {
-			$attr['label'] = __( 'Feed Links', 'wp-content-pilot' );
-			$attr['name']  = '_feed_links';
-			$attr['desc']  = __( 'Input feed links, Separate links with a comma (,)', 'wp-content-pilot' );
-			$attr['value'] = wpcp_get_post_meta( $post_id, '_feed_links' );
-		}
+	public function campaign_option_fields( $post ) {
+		echo WPCP_HTML::textarea_input( array(
+			'name'        => '_feed_links',
+			'label'       => __( 'Feed Links', 'wp-content-pilot' ),
+			'placeholder' => __( 'Example: http://example.com/feed', 'wp-content-pilot' ),
+			'desc'        => __( 'Input feed links, Separate links with a comma (,)', 'wp-content-pilot' ),
+		) );
 
-		return $attr;
 	}
 
 	/**

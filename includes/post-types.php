@@ -89,7 +89,7 @@ function wpcp_change_default_title( $title ) {
 	$screen = get_current_screen();
 
 	if ( 'wp_content_pilot' == $screen->post_type ) {
-		$title = __( 'Enter campaign name here', 'wp-content-pilot' );
+		$title = __( 'Campaign Title', 'wp-content-pilot' );
 	}
 
 	return $title;
@@ -134,8 +134,9 @@ function wp_content_pilot_column_content( $column_name, $post_ID ) {
 			break;
 		case 'frequency':
 			$frenquency = wpcp_get_post_meta( $post_ID, '_campaign_frequency', 0 );
+			$frenquency_unit = wpcp_get_post_meta( $post_ID, '_frequency_unit', 'hour' );
 			if ( $frenquency ) {
-				echo 'Every ' . $frenquency / 3600 . ' Hour(s)';
+				echo sprintf('%d/%s', $frenquency, $frenquency_unit);
 			} else {
 				echo ' - ';
 			}

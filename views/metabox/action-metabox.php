@@ -8,11 +8,12 @@ $campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
 ?>
 <div id="submitpost" class="submitbox wpcp-submitbox">
 	<?php
-	if ( !empty( $campaign_type ) ){
+	if ( ! empty( $campaign_type ) ) {
 		echo wpcp_range_input( array(
 			'name'       => '_campaign_target',
 			'id'         => '_campaign_target',
 			'label'      => __( 'Campaign Target', 'wp-content-pilot' ),
+			'default'    => 5,
 			'attributes' => array(
 				'required' => 'required'
 			),
@@ -22,6 +23,7 @@ $campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
 			'name'       => '_campaign_frequency',
 			'id'         => '_campaign_frequency',
 			'label'      => __( 'Campaign Frequency', 'wp-content-pilot' ),
+			'default'    => 10,
 			'min'        => '1',
 			'max'        => '100',
 			'attributes' => array(
@@ -38,6 +40,7 @@ $campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
 				'hours'   => __( 'Hours', 'wp-content-pilot' ),
 				'days'    => __( 'Days', 'wp-content-pilot' ),
 			) ),
+			'default'       => 'hours',
 			'required'      => true,
 			'wrapper_class' => 'pro',
 			'attributes'    => array(

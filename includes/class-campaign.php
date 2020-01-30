@@ -9,9 +9,9 @@
  * @since       1.2.0
  */
 
-defined( 'ABSPATH' ) || exit();
+defined('ABSPATH')|| exit();
 
-abstract class WPCP_Campaign{
+abstract class WPCP_Campaign {
 	/**
 	 * This is actually a post ID
 	 *
@@ -34,19 +34,9 @@ abstract class WPCP_Campaign{
 	 */
 	protected $campaign_title;
 
-	/**
-	 * Register module
-	 *
-	 * @param $modules
-	 *
-	 * @return mixed
-	 */
+
 	abstract function register_module( $modules );
 
-	/**
-	 * Set module
-	 * @return mixed
-	 */
 	abstract function setup();
 
 	/**
@@ -57,28 +47,46 @@ abstract class WPCP_Campaign{
 	 */
 	abstract function discover_links();
 
-	/**
-	 * Get post
-	 *
-	 * @param $link
-	 *
-	 * @return mixed
-	 */
 	abstract function get_post( $link );
+
+	/**
+	 * setup campaign id
+	 *
+	 * @param $campaign_id
+	 *
+	 * @since 1.0.0
+	 *
+	 */
+	public function set_campaign_id( $campaign_id ) {
+		$this->campaign_id   = intval( $campaign_id );
+		$this->campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
+	}
 
 	/**
 	 * keyword for the campaign
 	 *
-	 * @param $keywords
+	 * @param $keyword
 	 *
-	 * @return string
+	 * @since 1.0.0
+	 *
 	 */
-	public function sanitize_keyword( $keywords ) {
-		$keywords = strip_tags( $keywords );
-		$keywords = wpcp_string_to_array( $keywords );
-		$keyword  = $keywords[ array_rand( $keywords ) ];
+	public function set_keyword( $keywords ) {
+		$keywords      = strip_tags( $keywords );
+		$keywords      = wpcp_string_to_array( $keywords );
+		$keyword       = $keywords[ array_rand( $keywords ) ];
+		$this->keyword = strip_tags( $keyword );
+	}
 
-		return strip_tags( $keyword );
+	/**
+	 * set campaign type
+	 *
+	 * @param $campaign_type
+	 *
+	 * @since 1.0.0
+	 *
+	 */
+	public function set_campaign_type( $campaign_type ) {
+		$this->campaign_type = $campaign_type;
 	}
 
 
@@ -88,12 +96,7 @@ abstract class WPCP_Campaign{
 	 * @return int|\WP_Error
 	 * @since 1.0.0
 	 */
-	public function run( $campaign_id, $keyword ) {
-		$this->campaign_id = absint( $campaign_id );
-		$this->keyword     = $this->sanitize_keyword( $keyword );
-		$this->campaign_type = get_post_meta($this->campaign_id, '_campaign_type', true );
-
-
+	public function run() {
 		wpcp_log( "Running campaign #ID{$this->campaign_id} Type {$this->campaign_type} Keyword {$this->keyword}" );
 		if ( empty( $this->campaign_id ) || empty( $this->keyword ) || empty( $this->campaign_type ) ) {
 			wpcp_log( 'Campaign is not initiated correctly, missing ID||keyword' );
@@ -104,19 +107,32 @@ abstract class WPCP_Campaign{
 		wpcp_log( 'Looking for link to run campaign' );
 		$link = $this->get_link();
 		if ( ! $link ) {
+			//check if there is already links but not ready yet
+			$total_fetched_links = $this->count_links( 'fetched' );
+
+			wpcp_log( 'Could not find available links Total Fetched Link ' . $total_fetched_links );
+
+			if ( $total_fetched_links > 1 ) {
+				wpcp_log( 'Link discovery skipped because there already links waiting for getting ready ' . $total_fetched_links );
+				//seems cron is not started yet let it run manually
+				do_action( 'wpcp_per_minute_scheduled_events' );
+
+				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'wp-content-pilot' ) );
+			}
+
 			//otherwise discover few new links
 			wpcp_log( 'Discovering links' );
 			$links = $this->discover_links();
 
 			if ( is_wp_error( $links ) ) {
 				wpcp_log( 'Error in discovering links Message ' . $links->get_error_message() );
+
 				return $links;
 			}
+
 			//hook here for any link to subtract
 			wpcp_log( 'Generated total links ' . count( $links ) );
 			$links = apply_filters( 'wpcp_fetched_links', $links, $this->campaign_id, $this->campaign_type );
-
-
 
 			if ( empty( $links ) ) {
 				return new \WP_Error( 'no-links-found', __( 'Could not retrieve any valid links', 'wp-content-pilot' ) );
@@ -129,12 +145,24 @@ abstract class WPCP_Campaign{
 			if ( $this->is_result_like_last_time( $string_urls ) ) {
 				$msg = __( sprintf( 'Could not discover any new links to grab contents for the keyword "%s". Please try later.', $this->keyword ), 'wp-content-pilot' );
 				wpcp_log( $msg, 'log' );
+
 				return new \WP_Error( 'no-new-result', $msg );
 			}
 
+
 			$inserted = $this->inset_links( $links );
+
 			wpcp_log( __( sprintf( 'Total %d links inserted', $inserted ), 'wp-content-pilot' ), 'log' );
+
 			$link                = $this->get_link();
+			$total_fetched_links = $this->count_links( 'fetched' );
+			if ( $total_fetched_links > 1 ) {
+				return new \WP_Error( 'no-ready-links', __( 'Please wait links generated but not ready to run campaign yet.', 'wp-content-pilot' ) );
+			}
+
+			if ( empty( $total_fetched_links ) && empty( $link ) ) {
+				return new \WP_Error( 'no-valid-links-found', __( 'Could not retrieve any valid links. Please wait to generate new links.', 'wp-content-pilot' ) );
+			}
 		}
 
 		//set link as failed if run till end then mark as success
@@ -334,11 +362,6 @@ abstract class WPCP_Campaign{
 		wpcp_update_link( $link->id, [ 'status' => 'success', 'post_id' => $post_id ] );
 
 		return $post_id;
-
-	}
-
-
-	protected function get_links(){
 
 	}
 

@@ -20,6 +20,15 @@ class WPCP_Flickr extends WPCP_Campaign {
 	 */
 	public function __construct() {
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
+		add_action( 'wpcp_campaign_flickr_options_meta_fields', 'wpcp_keyword_suggestion_field' );
+		add_action( 'wpcp_campaign_flickr_options_meta_fields', 'wpcp_keyword_field' );
+		add_action( 'wpcp_campaign_flickr_options_meta_fields', 'wpcp_strip_links_field' );
+		add_action( 'wpcp_campaign_flickr_options_meta_fields', 'wpcp_featured_image_field' );
+		add_action( 'wpcp_campaign_flickr_options_meta_fields', 'wpcp_use_original_date_field' );
+		add_action( 'wpcp_campaign_flickr_options_meta_fields', 'wpcp_external_link_field' );
+		add_action( 'wpcp_campaign_flickr_options_meta_fields', 'wpcp_featured_image_random_field' );
+		add_action( 'wpcp_campaign_flickr_options_meta_fields', 'wpcp_canonical_link_field' );
+
 		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
 
 		add_filter( 'wpcp_replace_template_tags', array( $this, 'replace_template_tags' ), 10, 2 );

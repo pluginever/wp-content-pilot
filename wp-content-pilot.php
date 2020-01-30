@@ -31,7 +31,7 @@
  */
 
 // don't call the file directly
-defined('ABSPATH')|| exit();
+defined( 'ABSPATH' ) || exit();
 
 /**
  * Main ContentPilot Class.
@@ -83,14 +83,6 @@ final class ContentPilot {
 	 * @var \WPCP_Module
 	 */
 	public $modules;
-
-
-	/**
-	 * @since 1.0.0
-	 *
-	 * @var \WPCP_Elements
-	 */
-	public $elements;
 
 	/**
 	 * @since 1.0.0
@@ -332,7 +324,7 @@ final class ContentPilot {
 	 *
 	 * @return void
 	 */
-	public function activate_cron(){
+	public function activate_cron() {
 		wp_schedule_event( time(), 'once_a_minute', 'wpcp_per_minute_scheduled_events' );
 		wp_schedule_event( time(), 'daily', 'wpcp_daily_scheduled_events' );
 	}
@@ -440,7 +432,6 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/class-install.php';
 		require_once WPCP_INCLUDES . '/post-types.php';
 		require_once WPCP_INCLUDES . '/script-functions.php';
-		require_once WPCP_INCLUDES . '/metabox-html-functions.php';
 		require_once WPCP_INCLUDES . '/metabox-functions.php';
 
 		//core files
@@ -448,11 +439,12 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/wp-background-process.php';
 		require_once WPCP_INCLUDES . '/class-automatic-campaign.php';
 		require_once WPCP_INCLUDES . '/class-fetch-contents.php';
-		require_once WPCP_INCLUDES . '/class-elements.php';
 		require_once WPCP_INCLUDES . '/class-ajax.php';
 		require_once WPCP_INCLUDES . '/class-campaign.php';
 		require_once WPCP_INCLUDES . '/class-module.php';
 		require_once WPCP_INCLUDES . '/class-html-dom.php';
+		require_once WPCP_INCLUDES . '/class-html-dom.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-html.php';
 
 		//settings
 		require_once WPCP_INCLUDES . '/class-admin-menu.php';
@@ -512,14 +504,14 @@ final class ContentPilot {
 
 	}
 
-	public function check_if_cron_running(){
+	public function check_if_cron_running() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return false;
 		}
 
 		$status = wpcp_check_cron_status();
 		if ( is_wp_error( $status ) ) {
-			$this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf(__('There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot'),  '<strong>'.esc_html( $status->get_error_message() ).'</strong>') );
+			$this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
 		}
 
 	}
@@ -541,7 +533,6 @@ final class ContentPilot {
 
 			new WPCP_Help();
 
-			$this->elements = new WPCP_Elements();
 			$this->modules  = new WPCP_Module();
 		}
 	}
