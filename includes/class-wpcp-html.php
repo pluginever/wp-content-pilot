@@ -6,7 +6,7 @@ class WPCP_HTML {
 	public static function text_input( $field ) {
 		global $thepostid, $post;
 		$thepostid = empty( $thepostid ) ? $post->ID : $thepostid;
-		$args      = wp_parse_args( $field, array(
+		$args      = apply_filters( 'wpcp_text_input', wp_parse_args( $field, array(
 			'type'          => 'text',
 			'label'         => '',
 			'name'          => '',
@@ -21,13 +21,13 @@ class WPCP_HTML {
 			'desc'          => '',
 			'css'           => '',
 			'attrs'         => array(),
-		) );
+		) ) );
 
-		$args['id']    = esc_attr( ! empty( $args['id'] ) ? $args['id'] : $args['name'] );
+		$args['id'] = esc_attr( ! empty( $args['id'] ) ? $args['id'] : $args['name'] );
 
-		if ( empty( $args['value'] )  && $meta_value = get_post_meta( $thepostid, $field['name'], true ) ) {
+		if ( empty( $args['value'] ) && $meta_value = get_post_meta( $thepostid, $field['name'], true ) ) {
 			$args['value'] = (string) $meta_value;
-		}else{
+		} else {
 			$args['value'] = $args['default'];
 		}
 
@@ -53,7 +53,7 @@ class WPCP_HTML {
 	public static function textarea_input( $field ) {
 		global $thepostid, $post;
 		$thepostid = empty( $thepostid ) ? $post->ID : $thepostid;
-		$args      = wp_parse_args( $field, array(
+		$args      = apply_filters( 'wpcp_textarea_input', wp_parse_args( $field, array(
 			'type'          => 'text',
 			'label'         => '',
 			'name'          => '',
@@ -70,12 +70,12 @@ class WPCP_HTML {
 			'rows'          => '2',
 			'cols'          => '20',
 			'attrs'         => array(),
-		) );
+		) ) );
 
-		$args['id']    = esc_attr( ! empty( $args['id'] ) ? $args['id'] : $args['name'] );
+		$args['id'] = esc_attr( ! empty( $args['id'] ) ? $args['id'] : $args['name'] );
 		if ( empty( $args['value'] ) && ! empty( $thepostid ) && $meta_value = get_post_meta( $thepostid, $args['name'], true ) ) {
 			$args['value'] = (string) $meta_value;
-		}else{
+		} else {
 			$args['value'] = $args['default'];
 		}
 		$attributes = self::implode_html_attributes( $args['attrs'], array(
@@ -103,7 +103,7 @@ class WPCP_HTML {
 	public static function checkbox_input( $field ) {
 		global $thepostid, $post;
 		$thepostid = empty( $thepostid ) ? $post->ID : $thepostid;
-		$args      = wp_parse_args( $field, array(
+		$args      = apply_filters( 'wpcp_checkbox_input', wp_parse_args( $field, array(
 			'type'          => 'text',
 			'label'         => '',
 			'name'          => '',
@@ -119,12 +119,12 @@ class WPCP_HTML {
 			'css'           => '',
 			'cbvalue'       => 'on',
 			'attrs'         => array(),
-		) );
+		) ) );
 
-		$args['id']    = esc_attr( ! empty( $args['id'] ) ? $args['id'] : $args['name'] );
+		$args['id'] = esc_attr( ! empty( $args['id'] ) ? $args['id'] : $args['name'] );
 		if ( empty( $args['value'] ) && ! empty( $thepostid ) && $meta_value = get_post_meta( $thepostid, $args['name'], true ) ) {
 			$args['value'] = (string) $meta_value;
-		}else{
+		} else {
 			$args['value'] = $args['default'];
 		}
 		$attributes = self::implode_html_attributes( $args['attrs'], array(
@@ -160,7 +160,7 @@ class WPCP_HTML {
 		global $thepostid, $post;
 		$thepostid = empty( $thepostid ) ? $post->ID : $thepostid;
 
-		$args = wp_parse_args( $field, array(
+		$args = apply_filters( 'wpcp_select_input', wp_parse_args( $field, array(
 			'label'         => '',
 			'name'          => null,
 			'options'       => array(),
@@ -175,12 +175,12 @@ class WPCP_HTML {
 			'placeholder'   => __( '-- Please Select --', 'wp-ever-accounting' ),
 			'multiple'      => false,
 			'attrs'         => array()
-		) );
+		) ) );
 
-		$args['id']    = esc_attr( ! empty( $args['id'] ) ? $args['id'] : $args['name'] );
+		$args['id'] = esc_attr( ! empty( $args['id'] ) ? $args['id'] : $args['name'] );
 		if ( empty( $args['value'] ) && ! empty( $thepostid ) && $meta_value = get_post_meta( $thepostid, $field['name'], true ) ) {
 			$args['value'] = $meta_value;
-		}else{
+		} else {
 			$args['value'] = $args['default'];
 		}
 
@@ -235,7 +235,7 @@ class WPCP_HTML {
 		global $thepostid, $post;
 		$thepostid = empty( $thepostid ) ? $post->ID : $thepostid;
 
-		$args = wp_parse_args( $field, array(
+		$args = apply_filters( 'wpcp_switch_input', wp_parse_args( $field, array(
 			'label'         => false,
 			'name'          => '',
 			'id'            => '',
@@ -248,12 +248,12 @@ class WPCP_HTML {
 			'tooltip'       => '',
 			'desc'          => '',
 			'attrs'         => [],
-		) );
+		) ) );
 
-		$args['id']    = esc_attr( ! empty( $args['id'] ) ? $args['id'] : $args['name'] );
+		$args['id'] = esc_attr( ! empty( $args['id'] ) ? $args['id'] : $args['name'] );
 		if ( empty( $args['value'] ) && ! empty( $thepostid ) && $meta_value = get_post_meta( $thepostid, $field['name'], true ) ) {
 			$args['value'] = (string) $meta_value;
-		}else{
+		} else {
 			$args['value'] = $args['default'];
 		}
 		$attributes = self::implode_html_attributes( $args['attrs'], array(
