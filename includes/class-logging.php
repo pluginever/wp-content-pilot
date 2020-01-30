@@ -151,7 +151,6 @@ class WPCP_Logging {
 
 		$this->file = '';
 		return true;
-
 	}
 
 	/**

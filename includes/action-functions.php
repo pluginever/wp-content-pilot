@@ -133,7 +133,9 @@ function wpcp_update_campaign_counter( $post_id, $campaign_id ) {
 
 add_action( 'wpcp_after_post_publish', 'wpcp_update_campaign_counter', 10, 2 );
 
-
+/**
+ *
+ */
 function wpcp_remove_logs() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;

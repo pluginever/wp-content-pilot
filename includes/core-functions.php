@@ -375,9 +375,9 @@ function wpcp_campaign_can_run( $campaign_id ) {
 		return new \WP_Error( 'invalid-campaign-id', __( 'Campaign is not exist.', 'wp-content-pilot' ) );
 	}
 
-//	if ( 'active' !== get_post_meta( $campaign_id, '_campaign_status', true ) ) {
-//		return new \WP_Error( 'invalid-campaign-status', __( 'Campaign is not active this wont run.', 'wp-content-pilot' ) );
-//	}
+	if ( 'active' !== get_post_meta( $campaign_id, '_campaign_status', true ) ) {
+		return new \WP_Error( 'invalid-campaign-status', __( 'Campaign is not active this wont run.', 'wp-content-pilot' ) );
+	}
 
 	$campaign_type = get_post_meta( $campaign_id, '_campaign_type', true );
 	if ( empty( $campaign_type ) ) {

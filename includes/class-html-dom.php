@@ -21,60 +21,33 @@
  * Version Rev. 1.9.1 (291)
  */
 
-define( 'HDOM_TYPE_ELEMENT', 1 );
-define( 'HDOM_TYPE_COMMENT', 2 );
-define( 'HDOM_TYPE_TEXT', 3 );
-define( 'HDOM_TYPE_ENDTAG', 4 );
-define( 'HDOM_TYPE_ROOT', 5 );
-define( 'HDOM_TYPE_UNKNOWN', 6 );
-define( 'HDOM_QUOTE_DOUBLE', 0 );
-define( 'HDOM_QUOTE_SINGLE', 1 );
-define( 'HDOM_QUOTE_NO', 3 );
-define( 'HDOM_INFO_BEGIN', 0 );
-define( 'HDOM_INFO_END', 1 );
-define( 'HDOM_INFO_QUOTE', 2 );
-define( 'HDOM_INFO_SPACE', 3 );
-define( 'HDOM_INFO_TEXT', 4 );
-define( 'HDOM_INFO_INNER', 5 );
-define( 'HDOM_INFO_OUTER', 6 );
-define( 'HDOM_INFO_ENDSPACE', 7 );
-
-defined( 'DEFAULT_TARGET_CHARSET' ) || define( 'DEFAULT_TARGET_CHARSET', 'UTF-8' );
-defined( 'DEFAULT_BR_TEXT' ) || define( 'DEFAULT_BR_TEXT', "\r\n" );
-defined( 'DEFAULT_SPAN_TEXT' ) || define( 'DEFAULT_SPAN_TEXT', ' ' );
-defined( 'MAX_FILE_SIZE' ) || define( 'MAX_FILE_SIZE', 600000 );
-define( 'HDOM_SMARTY_AS_TEXT', 1 );
-
-function wpcp_str_get_html(
-	$str,
-	$lowercase = true,
-	$forceTagsClosed = true,
-	$target_charset = DEFAULT_TARGET_CHARSET,
-	$stripRN = true,
-	$defaultBRText = DEFAULT_BR_TEXT,
-	$defaultSpanText = DEFAULT_SPAN_TEXT
-) {
-	$dom = new simple_html_dom(
-		null,
-		$lowercase,
-		$forceTagsClosed,
-		$target_charset,
-		$stripRN,
-		$defaultBRText,
-		$defaultSpanText
-	);
-
-	if ( empty( $str ) || strlen( $str ) > MAX_FILE_SIZE ) {
-		$dom->clear();
-
-		return false;
-	}
-
-	return $dom->load( $str, $lowercase, $stripRN );
-}
-
+defined( 'ABSPATH' ) || exit();
 
 if ( ! class_exists( 'simple_html_dom_node' ) ):
+	define( 'HDOM_TYPE_ELEMENT', 1 );
+	define( 'HDOM_TYPE_COMMENT', 2 );
+	define( 'HDOM_TYPE_TEXT', 3 );
+	define( 'HDOM_TYPE_ENDTAG', 4 );
+	define( 'HDOM_TYPE_ROOT', 5 );
+	define( 'HDOM_TYPE_UNKNOWN', 6 );
+	define( 'HDOM_QUOTE_DOUBLE', 0 );
+	define( 'HDOM_QUOTE_SINGLE', 1 );
+	define( 'HDOM_QUOTE_NO', 3 );
+	define( 'HDOM_INFO_BEGIN', 0 );
+	define( 'HDOM_INFO_END', 1 );
+	define( 'HDOM_INFO_QUOTE', 2 );
+	define( 'HDOM_INFO_SPACE', 3 );
+	define( 'HDOM_INFO_TEXT', 4 );
+	define( 'HDOM_INFO_INNER', 5 );
+	define( 'HDOM_INFO_OUTER', 6 );
+	define( 'HDOM_INFO_ENDSPACE', 7 );
+
+	defined( 'DEFAULT_TARGET_CHARSET' ) || define( 'DEFAULT_TARGET_CHARSET', 'UTF-8' );
+	defined( 'DEFAULT_BR_TEXT' ) || define( 'DEFAULT_BR_TEXT', "\r\n" );
+	defined( 'DEFAULT_SPAN_TEXT' ) || define( 'DEFAULT_SPAN_TEXT', ' ' );
+	defined( 'MAX_FILE_SIZE' ) || define( 'MAX_FILE_SIZE', 600000 );
+	define( 'HDOM_SMARTY_AS_TEXT', 1 );
+
 	class simple_html_dom_node {
 		public $nodetype = HDOM_TYPE_TEXT;
 		public $tag = 'text';
@@ -889,14 +862,14 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 
 				/* Extract attributes (pattern based on the pattern above!)
 
-			 * [0] - full match
-			 * [1] - attribute name
-			 * [2] - attribute expression
-			 * [3] - attribute value
-			 * [4] - case sensitivity
-			 *
-			 * Note: Attributes can be negated with a "!" prefix to their name
-			 */
+				 * [0] - full match
+				 * [1] - attribute name
+				 * [2] - attribute expression
+				 * [3] - attribute value
+				 * [4] - case sensitivity
+				 *
+				 * Note: Attributes can be negated with a "!" prefix to their name
+				 */
 				if ( $m[4] !== '' ) {
 					preg_match_all(
 						"/\[@?(!?[\w:-]+)(?:([!*^$|~]?=)[\"']?(.*?)[\"']?)?(?:\s+?([iIsS])?)?\]/is",
@@ -1219,6 +1192,10 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 						$this->class = $c;
 					}
 				}
+			} else {
+				if ( is_object( $debug_object ) ) {
+					$debug_object->debug_log( 2, 'Invalid type: ', gettype( $class ) );
+				}
 			}
 		}
 
@@ -1226,6 +1203,10 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			if ( is_string( $class ) ) {
 				if ( isset( $this->class ) ) {
 					return in_array( $class, explode( ' ', $this->class ), true );
+				}
+			} else {
+				if ( is_object( $debug_object ) ) {
+					$debug_object->debug_log( 2, 'Invalid type: ', gettype( $class ) );
 				}
 			}
 
@@ -1368,9 +1349,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 		}
 
 	}
-endif;
 
-if ( ! class_exists( 'simple_html_dom' ) ):
 	class simple_html_dom {
 		public $root = null;
 		public $nodes = array();
@@ -2345,5 +2324,37 @@ if ( ! class_exists( 'simple_html_dom' ) ):
 			$args = func_get_args();
 			$this->load_file( $args );
 		}
+	}
+
+	function wpcp_str_get_html(
+		$str,
+		$lowercase = true,
+		$forceTagsClosed = true,
+		$target_charset = DEFAULT_TARGET_CHARSET,
+		$stripRN = true,
+		$defaultBRText = DEFAULT_BR_TEXT,
+		$defaultSpanText = DEFAULT_SPAN_TEXT
+	) {
+		$dom = new simple_html_dom(
+			null,
+			$lowercase,
+			$forceTagsClosed,
+			$target_charset,
+			$stripRN,
+			$defaultBRText,
+			$defaultSpanText
+		);
+
+		if ( empty( $str ) || strlen( $str ) > MAX_FILE_SIZE ) {
+			$dom->clear();
+
+			return false;
+		}
+
+		return $dom->load( $str, $lowercase, $stripRN );
+	}
+
+	function wpcp_dump_html_tree( $node, $show_attr = true, $deep = 0 ) {
+		$node->dump( $node );
 	}
 endif;

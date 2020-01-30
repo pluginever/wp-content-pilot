@@ -159,9 +159,7 @@ final class ContentPilot {
 	public function check_environment() {
 
 		if ( ! $this->is_environment_compatible() && is_plugin_active( plugin_basename( __FILE__ ) ) ) {
-
 			$this->deactivate_plugin();
-
 			$this->add_admin_notice( 'bad_environment', 'error', $this->plugin_name . ' has been deactivated. ' . $this->get_environment_message() );
 		}
 	}
@@ -174,9 +172,7 @@ final class ContentPilot {
 	 * @since 1.0.0
 	 */
 	public function add_plugin_notices() {
-
 		if ( ! $this->is_wp_compatible() ) {
-
 			$this->add_admin_notice( 'update_wordpress', 'error', sprintf(
 				'%s requires WordPress version %s or higher. Please %supdate WordPress &raquo;%s',
 				'<strong>' . $this->plugin_name . '</strong>',
@@ -196,7 +192,6 @@ final class ContentPilot {
 	 *
 	 */
 	protected function is_environment_compatible() {
-
 		return version_compare( PHP_VERSION, $this->min_php, '>=' );
 	}
 
@@ -208,7 +203,6 @@ final class ContentPilot {
 	 *
 	 */
 	protected function is_wp_compatible() {
-
 		return version_compare( get_bloginfo( 'version' ), $this->min_wp, '>=' );
 	}
 
@@ -442,7 +436,6 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/class-ajax.php';
 		require_once WPCP_INCLUDES . '/class-campaign.php';
 		require_once WPCP_INCLUDES . '/class-module.php';
-		require_once WPCP_INCLUDES . '/class-html-dom.php';
 		require_once WPCP_INCLUDES . '/class-html-dom.php';
 		require_once WPCP_INCLUDES . '/class-wpcp-html.php';
 

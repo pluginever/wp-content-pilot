@@ -9,11 +9,9 @@
  * @since       1.2.0
  */
 
-defined('ABSPATH')|| exit();
+defined( 'ABSPATH' ) || exit();
 
 class WPCP_Admin_Menu {
-
-
 	/**
 	 * Admin_Menu constructor.
 	 */
@@ -38,15 +36,15 @@ class WPCP_Admin_Menu {
 
 	}
 
-	function status_page(){
+	function status_page() {
 		ob_start();
-		include WPCP_VIEWS.'/menu/status.php';
+		include WPCP_VIEWS . '/menu/status.php';
 		$html = ob_get_clean();
 
 		echo $html;
 	}
 
-	public function get_pro_link(){
+	public function get_pro_link() {
 		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
 			add_submenu_page(
 				'edit.php?post_type=wp_content_pilot',
@@ -71,7 +69,7 @@ class WPCP_Admin_Menu {
 			<form method="post">
 				<input type="hidden" name="page" value="ttest_list_table">
 				<?php
-				require_once ( WPCP_VIEWS .'/tables/log-list-table.php');
+				require_once( WPCP_VIEWS . '/tables/log-list-table.php' );
 
 				$list_table = new WPCP_Log_List_Table();
 				$list_table->prepare_items();
@@ -85,7 +83,7 @@ class WPCP_Admin_Menu {
 
 	public function go_pro_redirect() {
 		if ( isset( $_GET['page'] ) && 'go_wpcp_pro' === $_GET['page'] ) {
-			wp_redirect(  'https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
+			wp_redirect( 'https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
 			die;
 		}
 	}
