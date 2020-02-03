@@ -43,7 +43,7 @@ function wpcp_conditional_metabox_remove( $post_type, $context, $post ) {
 	remove_meta_box( 'commentsdiv', 'wp_content_pilot', 'normal' );
 	remove_meta_box( 'commentstatusdiv', 'wp_content_pilot', 'normal' );
 	remove_meta_box( 'slugdiv', 'wp_content_pilot', 'normal' );
-	error_log($post_type);
+
 	if ( $post_type !== 'wp_content_pilot' ) {
 		return false;
 	}
@@ -133,12 +133,13 @@ function wpcp_update_campaign_settings( $post_id ) {
 	] ) ? sanitize_key( $posted['_frequency_unit'] ) : 'hours';
 
 	if ( $frequency_unit == 'minutes' ) {
-		$every = 60;
-	} elseif ( $frequency_unit == 'minutes' ) {
-		$every = 60 * 60 * 24;
+		$every = MINUTE_IN_SECONDS;
+	} elseif ( $frequency_unit == 'hours' ) {
+		$every = HOUR_IN_SECONDS;
 	} else {
-		$every = 60 * 60;
+		$every = DAY_IN_SECONDS;
 	}
+
 
 	$campaign_target    = empty( $posted['_campaign_target'] ) ? 10 : absint( $posted['_campaign_target'] );
 	$campaign_frequency = empty( $posted['_campaign_frequency'] ) ? 5 : absint( $posted['_campaign_frequency'] );
@@ -170,7 +171,6 @@ function wpcp_update_campaign_settings( $post_id ) {
 	update_post_meta( $post_id, '_author', empty( $posted['_author'] ) ? '' : intval( $posted['_author'] ) );
 	update_post_meta( $post_id, '_categories', empty( $posted['_categories'] ) ? '' : $posted['_categories'] );
 	update_post_meta( $post_id, '_tags', empty( $posted['_tags'] ) ? '' : $posted['_tags'] );
-
 
 	update_post_meta( $post_id, '_title_limit', empty( $posted['_title_limit'] ) ? '' : esc_attr( $posted['_title_limit'] ) );
 	update_post_meta( $post_id, '_content_limit', empty( $posted['_content_limit'] ) ? '' : esc_attr( $posted['_content_limit'] ) );

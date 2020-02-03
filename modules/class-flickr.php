@@ -9,7 +9,7 @@
  * @since       1.2.0
  */
 
-defined('ABSPATH')|| exit();
+defined( 'ABSPATH' ) || exit();
 
 class WPCP_Flickr extends WPCP_Campaign {
 
@@ -38,9 +38,9 @@ class WPCP_Flickr extends WPCP_Campaign {
 	/**
 	 * Get WPCP_Envato default template tags
 	 *
+	 * @return string
 	 * @since 1.0.0
 	 *
-	 * @return string
 	 */
 	public static function get_default_template() {
 		$template
@@ -60,11 +60,11 @@ EOT;
 	/**
 	 * Register article module
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $modules
 	 *
 	 * @return mixed
+	 * @since 1.0.0
+	 *
 	 */
 	public function register_module( $modules ) {
 		$modules['flickr'] = [
@@ -80,8 +80,8 @@ EOT;
 	/**
 	 * Supported template tags
 	 *
-	 * @since 1.0.0
 	 * @return array
+	 * @since 1.0.0
 	 */
 	public static function get_template_tags() {
 		return array(
@@ -101,11 +101,11 @@ EOT;
 	/**
 	 * Hook in background process and prepare contents
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $link
 	 *
 	 * @return bool|\WP_Error
+	 * @since 1.0.0
+	 *
 	 */
 	public function prepare_contents( $link ) {
 
@@ -147,12 +147,12 @@ EOT;
 	/**
 	 * Replace additional template tags
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param $content
 	 * @param $article
 	 *
 	 * @return mixed
+	 * @since 1.0.0
+	 *
 	 */
 	public function replace_template_tags( $content, $article ) {
 
@@ -286,3 +286,5 @@ EOT;
 
 
 }
+
+WPCP_Flickr::instance();

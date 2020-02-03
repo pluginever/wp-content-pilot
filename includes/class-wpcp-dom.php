@@ -45,7 +45,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 	defined( 'DEFAULT_TARGET_CHARSET' ) || define( 'DEFAULT_TARGET_CHARSET', 'UTF-8' );
 	defined( 'DEFAULT_BR_TEXT' ) || define( 'DEFAULT_BR_TEXT', "\r\n" );
 	defined( 'DEFAULT_SPAN_TEXT' ) || define( 'DEFAULT_SPAN_TEXT', ' ' );
-	defined( 'MAX_FILE_SIZE' ) || define( 'MAX_FILE_SIZE', 600000 );
+	defined( 'MAX_FILE_SIZE' ) || define( 'MAX_FILE_SIZE', 1000000 );
 	define( 'HDOM_SMARTY_AS_TEXT', 1 );
 
 	class simple_html_dom_node {
@@ -2326,6 +2326,18 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 		}
 	}
 
+	/**
+	 * @param $str
+	 * @param bool $lowercase
+	 * @param bool $forceTagsClosed
+	 * @param string $target_charset
+	 * @param bool $stripRN
+	 * @param string $defaultBRText
+	 * @param string $defaultSpanText
+	 *
+	 * @return simple_html_dom
+	 * @since 1.2.0
+	 */
 	function wpcp_str_get_html(
 		$str,
 		$lowercase = true,
@@ -2345,11 +2357,10 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			$defaultSpanText
 		);
 
-		if ( empty( $str ) || strlen( $str ) > MAX_FILE_SIZE ) {
-			$dom->clear();
-
-			return false;
-		}
+//		if ( empty( $str ) || strlen( $str ) > MAX_FILE_SIZE ) {
+//			$dom->clear();
+//			return false;
+//		}
 
 		return $dom->load( $str, $lowercase, $stripRN );
 	}

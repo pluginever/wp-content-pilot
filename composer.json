@@ -19,22 +19,12 @@
       "php": "5.6.1"
     }
   },
-  "repositories": [
-    {
-      "url": "https://github.com/sultann/php-html-parser",
-      "type": "vcs"
-    }
-  ],
   "require": {
     "php": ">=5.6.0",
-    "php-curl-class/php-curl-class": "^8.0",
-    "andreskrey/readability.php": "1.1.0",
-    "davechild/textstatistics": "1.0.2",
-    "dg/composer-cleaner": "^2.1",
-    "paquettg/php-html-parser": "^1.7"
+    "php-curl-class/php-curl-class": "^8.0"
   },
   "extra": {
     "cleaner-ignore": {
     }
-  },
-},
+  }
+}

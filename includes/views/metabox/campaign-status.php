@@ -2,10 +2,10 @@
 defined( 'ABSPATH' ) || exit();
 global $post;
 
-$test_run_url = add_query_arg( array(
-	'action'      => 'wpcp_campaign_test_run',
+$run_campaign_url = add_query_arg( array(
+	'action'      => 'wpcp_run_campaign',
 	'campaign_id' => $post->ID,
-	'nonce'       => wp_create_nonce( 'wpcp_campaign_test_run' )
+	'nonce'       => wp_create_nonce( 'wpcp_run_campaign' )
 ), esc_url( admin_url( 'admin-post.php' ) ) );
 $last_run     = wpcp_get_post_meta( $post->ID, '_last_run', 0 );
 if ( $last_run ) {
@@ -43,6 +43,6 @@ $last_post     = wpcp_get_post_meta( $post->ID, '_last_post', '' );
 
 	<div class="wpcp-campaign-statue-item">
 		<h2 class="wpcp-campaign-statue-title">Run Campaign</h2>
-		<a class="button button-secondary" href="<?php echo esc_url( $test_run_url ); ?>">Run Now</a>
+		<a class="button button-secondary" href="<?php echo esc_url( $run_campaign_url ); ?>">Run Now</a>
 	</div>
 </div>

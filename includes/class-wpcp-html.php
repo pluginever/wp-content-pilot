@@ -178,7 +178,7 @@ class WPCP_HTML {
 		) ) );
 
 		$args['id'] = esc_attr( ! empty( $args['id'] ) ? $args['id'] : $args['name'] );
-		if ( empty( $args['value'] ) && ! empty( $thepostid ) && $meta_value = get_post_meta( $thepostid, $field['name'], true ) ) {
+		if ( empty( $args['value'] ) && ! empty( $thepostid ) && $meta_value = get_post_meta( $thepostid, sanitize_key( $field['name'] ), true ) ) {
 			$args['value'] = $meta_value;
 		} else {
 			$args['value'] = $args['default'];
@@ -197,11 +197,9 @@ class WPCP_HTML {
 			$options .= sprintf( '<option value="%1$s" %2$s>%3$s</option>', esc_attr( $key ), self::is_selected( $key, $args['value'] ), esc_html( $value ) );
 		}
 
-		$selected = self::is_selected( $args['value'], $args['options'] );
-
 		$html = sprintf( '<p class="form-field wpcp-field wpcp-check %1$s-field %2$s-input %3$s">', sanitize_html_class( $args['id'] ), 'select', sanitize_html_class( $args['wrapper_class'] ) );
 		$html .= ! empty( $args['label'] ) ? sprintf( '<label for="%1$s" class="wpcp-label">%2$s %3$s</label>', $args['id'], $args['label'], $args['tooltip'] ) : '';
-		$html .= sprintf( '<select class="wpcp-input %1$s-text %2$s" id="%3$s" name="%4$s" %5$s %6$s/>%7$s</select>', $args['size'], $args['class'], $args['id'], $args['name'], $selected, $attributes, $options );
+		$html .= sprintf( '<select class="wpcp-input %1$s-text %2$s" id="%3$s" name="%4$s" %5$s/>%6$s</select>', $args['size'], $args['class'], $args['id'], $args['name'], $attributes, $options );
 		$html .= ! empty( $args['desc'] ) ? sprintf( '<span class="wpcp-desc description">%s</span>', wp_kses_post( $args['desc'] ) ) : '';
 		$html .= '</p>';
 
@@ -305,9 +303,9 @@ class WPCP_HTML {
 	 * @return string
 	 */
 	public static function is_selected( $value, $options ) {
-		if ( is_array( $options ) ) {
-			$options = array_map( 'strval', $options );
 
+		if ( is_array( $options ) ) {
+			$options = array_map( 'intval', $options );
 			return selected( in_array( $value, $options, true ), true, false );
 		}
 
@@ -328,6 +326,24 @@ class WPCP_HTML {
 		}
 
 		return implode( ' ', $attributes );
+	}
+
+	/**
+	 * @since 1.2.0
+	 * @param string $class
+	 *
+	 * @return string
+	 */
+	public static function start_double_columns($class = ''){
+		return sprintf( '<div class="wpcp-dc %s">', sanitize_html_class( $class));
+	}
+
+	/**
+	 * @since 1.2.0
+	 * @return string
+	 */
+	public static function end_double_columns(){
+		return '</div><!--wpcp-dc-->';
 	}
 
 }

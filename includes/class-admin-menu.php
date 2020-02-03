@@ -11,7 +11,7 @@
 
 defined( 'ABSPATH' ) || exit();
 
-class WPCP_Admin_Menu {
+class WPCP_Admin {
 	/**
 	 * Admin_Menu constructor.
 	 */
@@ -23,7 +23,6 @@ class WPCP_Admin_Menu {
 
 
 	function admin_menu() {
-
 		add_submenu_page( 'edit.php?post_type=wp_content_pilot', __( 'Status', 'wp-content-pilot' ), __( 'Status', 'wp-content-pilot' ), 'manage_options', 'wpcp-status', array(
 			$this,
 			'status_page'
@@ -33,7 +32,6 @@ class WPCP_Admin_Menu {
 			$this,
 			'logs_page'
 		) );
-
 	}
 
 	function status_page() {
@@ -89,4 +87,4 @@ class WPCP_Admin_Menu {
 	}
 }
 
-new WPCP_Admin_Menu();
+new WPCP_Admin();

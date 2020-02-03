@@ -188,8 +188,7 @@
 		}
 
 		.select2-search__field{
-			margin-top: 0;
-			min-height: auto !important;
+			min-height: 20px !important;
 			line-height: 1;
 		}
 
@@ -199,6 +198,10 @@
 
 		.select2-selection__choice{
 			border-radius: 0;
+		}
+
+		.select2-results__option--highlighted[aria-selected]{
+			background-color: #007cba;
 		}
 	}
 }

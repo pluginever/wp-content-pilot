@@ -43,7 +43,7 @@ echo WPCP_HTML::text_input( array(
 
 echo WPCP_HTML::select_input( array(
 	'label'   => __( 'Post Category', 'wp-content-pilot' ),
-	'name'    => '_categories',
+	'name'    => '_categories[]',
 	'options' => wpcp_get_post_categories(),
 	'class'   => 'wpcp-select2',
 	'tooltip' => __( 'Select category for the post', 'wp-content-pilot' ),
@@ -66,10 +66,13 @@ echo WPCP_HTML::text_input( array(
 
 echo WPCP_HTML::select_input( array(
 	'label'   => __( 'Post Tags', 'wp-content-pilot' ),
-	'name'    => '_tags',
+	'name'    => '_tags[]',
 	'class'   => 'wpcp-select2',
 	'options' => wpcp_get_post_tags(),
 	'tooltip' => __( 'Select tags for the post', 'wp-content-pilot' ),
+	'attrs'         => array(
+		'multiple' => 'multiple',
+	)
 ) );
 
 echo WPCP_HTML::text_input( array(

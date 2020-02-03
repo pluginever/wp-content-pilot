@@ -383,3 +383,5 @@ EOT;
 		return $article;
 	}
 }
+
+WPCP_Envato::instance();

@@ -244,7 +244,6 @@ abstract class WPCP_Campaign {
 			$article['content'] = preg_replace( '#<a.*?>(.*?)</a>#i', '\1', html_entity_decode( $article['content'] ) );
 			//remove text
 			/*$content =  preg_replace( '#<a.*?>(.*?)</a>#i', '', $content );*/
-
 		}
 
 
@@ -291,7 +290,6 @@ abstract class WPCP_Campaign {
 
 		$post_type   = wpcp_get_post_meta( $this->campaign_id, '_post_type', 'post' );
 		$post_status = wpcp_get_post_meta( $this->campaign_id, '_post_status', 'post' );
-
 		$title          = apply_filters( 'wpcp_post_title', $title, $this->campaign_id, $article, $this->keyword );
 		$post_content   = apply_filters( 'wpcp_post_content', $content, $this->campaign_id, $article, $this->keyword );
 		$post_excerpt   = apply_filters( 'wpcp_post_excerpt', $summary, $this->campaign_id, $article, $this->keyword );
