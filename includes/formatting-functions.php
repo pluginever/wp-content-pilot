@@ -231,3 +231,20 @@ function wpcp_clean_title( $title ) {
 
 	return preg_replace( '/-+/', '-', $title ); // Replaces multiple hyphens with single one.
 }
+
+/**
+ * Fix utf8
+ * @since 1.2.0
+ * @param $content
+ *
+ * @return string
+ */
+function wpcp_fix_utf8($content){
+	if ( 1 === @preg_match( '/^./us', $content ) ) {
+		return $content;
+	}
+	if(function_exists('iconv')){
+		return iconv( 'utf-8', 'utf-8//IGNORE', $content );
+	}
+	return $content;
+}

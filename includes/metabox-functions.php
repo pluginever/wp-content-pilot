@@ -47,7 +47,7 @@ function wpcp_conditional_metabox_remove( $post_type, $context, $post ) {
 	if ( $post_type !== 'wp_content_pilot' ) {
 		return false;
 	}
-	if ( isset($post->ID) && empty( get_post_meta( $post->ID, '_campaign_type', true ) ) ) {
+	if ( isset( $post->ID ) && empty( get_post_meta( $post->ID, '_campaign_type', true ) ) ) {
 		remove_meta_box( 'wpcp-campaign-status', $post_type, 'normal' );
 		remove_meta_box( 'wpcp-campaign-options', $post_type, 'normal' );
 		remove_meta_box( 'wpcp-post-template', 'wp_content_pilot', 'normal' );
@@ -82,8 +82,8 @@ function wpcp_campaign_status_metabox_callback( $post ) {
 
 function wpcp_campaign_options_metabox_callback( $post ) {
 	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
+	do_action( 'wpcp_' . esc_attr__( $campaign_type ) . '_campaign_options_meta_fields', $post );
 	do_action( 'wpcp_campaign_options_meta_fields', $campaign_type, $post );
-	do_action( 'wpcp_campaign_' . esc_attr__( $campaign_type ) . '_options_meta_fields', $post );
 }
 
 function wpcp_post_template_metabox_callback( $post ) {
@@ -175,7 +175,7 @@ function wpcp_update_campaign_settings( $post_id ) {
 	update_post_meta( $post_id, '_title_limit', empty( $posted['_title_limit'] ) ? '' : esc_attr( $posted['_title_limit'] ) );
 	update_post_meta( $post_id, '_content_limit', empty( $posted['_content_limit'] ) ? '' : esc_attr( $posted['_content_limit'] ) );
 	do_action( 'wpcp_update_campaign_settings', $post_id, $posted );
-	do_action( 'wpcp_update_campaign_settings_' . esc_attr__( $posted['_campaign_type'] ), $post_id, $posted );
+	do_action( 'wpcp_' . esc_attr__( $posted['_campaign_type'] ) . '_update_campaign_settings', $post_id, $posted );
 }
 
 add_action( 'save_post_wp_content_pilot', 'wpcp_update_campaign_settings' );
@@ -269,8 +269,28 @@ function wpcp_use_original_date_field() {
 
 function wpcp_use_excerpt_field() {
 	echo WPCP_HTML::checkbox_input( array(
-		'label'         => __( 'Use summary as excerpt', 'wp-content-pilot' ),
-		'name'          => '_excerpt',
+		'label' => __( 'Use summary as excerpt', 'wp-content-pilot' ),
+		'name'  => '_excerpt',
 	) );
 }
 
+function wpcp_target_rel_field() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label'         => __( 'Add rel nofollow & set target blank for all links', 'wp-content-pilot' ),
+		'name'          => '_add_rel_no_follow_target',
+		'wrapper_class' => 'pro',
+		'attrs'         => array(
+			'disabled' => 'disabled',
+		)
+	) );
+}
+
+
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_featured_image_field', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_strip_links_field', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_use_excerpt_field', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_use_original_date_field', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_external_link_field', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_featured_image_random_field', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_canonical_link_field', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_target_rel_field', 20 );

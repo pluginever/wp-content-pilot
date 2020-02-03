@@ -87,18 +87,18 @@ echo WPCP_HTML::text_input( array(
 	)
 ) );
 
-echo WPCP_HTML::checkbox_input( array(
-	'label' => __( 'Allow Comment', 'wp-content-pilot' ),
-	'name'  => '_allow_comments',
-) );
-
-
-echo WPCP_HTML::checkbox_input( array(
-	'label' => __( 'Allow pingbacks', 'wp-content-pilot' ),
-	'name'  => '_allow_pingbacks',
-) );
-
-echo WPCP_HTML::checkbox_input( array(
-	'label' => __( 'Add excerpt', 'wp-content-pilot' ),
-	'name'  => '_excerpt',
-) );
+//echo WPCP_HTML::checkbox_input( array(
+//	'label' => __( 'Allow Comment', 'wp-content-pilot' ),
+//	'name'  => '_allow_comments',
+//) );
+//
+//
+//echo WPCP_HTML::checkbox_input( array(
+//	'label' => __( 'Allow pingbacks', 'wp-content-pilot' ),
+//	'name'  => '_allow_pingbacks',
+//) );
+//
+//echo WPCP_HTML::checkbox_input( array(
+//	'label' => __( 'Add excerpt', 'wp-content-pilot' ),
+//	'name'  => '_excerpt',
+//) );

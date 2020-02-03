@@ -16,18 +16,11 @@ class WPCP_Envato extends WPCP_Module {
 	 */
 	public function __construct() {
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
-		add_action( 'wpcp_campaign_envato_options_meta_fields', 'wpcp_keyword_suggestion_field' );
-		add_action( 'wpcp_campaign_envato_options_meta_fields', 'wpcp_keyword_field' );
-		add_action( 'wpcp_campaign_envato_options_meta_fields', array( $this, 'add_campaign_fields' ) );
-		add_action( 'wpcp_campaign_envato_options_meta_fields', 'wpcp_featured_image_field' );
-		add_action( 'wpcp_campaign_envato_options_meta_fields', 'wpcp_strip_links_field' );
-		add_action( 'wpcp_campaign_envato_options_meta_fields', 'wpcp_use_excerpt_field' );
-		add_action( 'wpcp_campaign_envato_options_meta_fields', 'wpcp_use_original_date_field' );
-		add_action( 'wpcp_campaign_envato_options_meta_fields', 'wpcp_external_link_field' );
-		add_action( 'wpcp_campaign_envato_options_meta_fields', 'wpcp_featured_image_random_field' );
-		add_action( 'wpcp_campaign_envato_options_meta_fields', 'wpcp_canonical_link_field' );
+		add_action( 'wpcp_envato_campaign_options_meta_fields', 'wpcp_keyword_suggestion_field' );
+		add_action( 'wpcp_envato_campaign_options_meta_fields', 'wpcp_keyword_field' );
+		add_action( 'wpcp_envato_campaign_options_meta_fields', array( $this, 'add_campaign_fields' ) );
 
-		add_action( 'wpcp_campaign_envato_options_meta_fields', array( $this, 'add_campaign_fields' ) );
+		add_action( 'wpcp_envato_campaign_options_meta_fields', array( $this, 'add_campaign_fields' ) );
 		add_action( 'wpcp_update_campaign_settings_youtube', array( $this, 'save_campaign_meta' ), 10, 2 );
 	}
 
@@ -109,6 +102,7 @@ EOT;
 	 * @param $post
 	 */
 	public function add_campaign_fields( $post ) {
+
 		echo WPCP_HTML::start_double_columns();
 
 		echo WPCP_HTML::select_input( array(

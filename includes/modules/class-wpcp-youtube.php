@@ -18,19 +18,14 @@ class WPCP_Youtube extends WPCP_Module {
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
 
 		//option fields
-		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_keyword_suggestion_field' );
-		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_keyword_field' );
-		add_action( 'wpcp_campaign_youtube_options_meta_fields', array( $this, 'add_campaign_fields' ) );
-		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_featured_image_field' );
-		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_strip_links_field' );
-		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_use_excerpt_field' );
-		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_external_link_field' );
-		add_action( 'wpcp_campaign_youtube_options_meta_fields', 'wpcp_featured_image_random_field' );
+		add_action( 'wpcp_youtube_campaign_options_meta_fields', 'wpcp_keyword_suggestion_field' );
+		add_action( 'wpcp_youtube_campaign_options_meta_fields', 'wpcp_keyword_field' );
+		add_action( 'wpcp_youtube_campaign_options_meta_fields', array( $this, 'add_campaign_fields' ) );
 
 		//admin notice
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
 
-		add_action( 'wpcp_update_campaign_settings_youtube', array( $this, 'save_campaign_meta' ), 10, 2 );
+		add_action( 'wpcp_youtube_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2 );
 	}
 
 	/**
@@ -105,6 +100,7 @@ EOT;
 	 * @param $post
 	 */
 	public function add_campaign_fields( $post ) {
+
 		echo WPCP_HTML::start_double_columns();
 
 		echo WPCP_HTML::select_input( array(
@@ -309,7 +305,7 @@ EOT;
 				}
 
 				$items = @$curl->response->items;
-				$item = array_pop( $items );
+				$item  = array_pop( $items );
 
 				$description = wpcp_remove_unauthorized_html( wpcp_remove_emoji( @$item->snippet->description ) );
 
@@ -324,8 +320,8 @@ EOT;
 					$transcript = wpcp_pro_get_youtube_transcript( $link );
 				}
 
-				$hyperlink_description = wpcp_get_post_meta( $this->campaign_id, '_youtube_description_hyperlink', '');
-				if('on' == $hyperlink_description){
+				$hyperlink_description = wpcp_get_post_meta( $this->campaign_id, '_youtube_description_hyperlink', '' );
+				if ( 'on' == $hyperlink_description ) {
 					$description = wpcp_hyperlink_text( $description );
 				}
 
@@ -403,10 +399,10 @@ EOT;
 			'order'             => $orderby,
 			'pageToken'         => $next_page_token,
 		);
-		$endpoint = 'https://www.googleapis.com/youtube/v3/search';
+		$endpoint   = 'https://www.googleapis.com/youtube/v3/search';
 		if ( $search_type === 'channel' && ! empty( $channel_id ) ) {
 			$query_args['playlistId'] = $channel_id;
-			$endpoint = 'https://www.googleapis.com/youtube/v3/playlistItems';
+			$endpoint                 = 'https://www.googleapis.com/youtube/v3/playlistItems';
 		}
 
 
@@ -415,9 +411,9 @@ EOT;
 		$curl = $this->setup_curl();
 		$curl->get( $endpoint );
 		if ( $curl->isError() ) {
-			$response = json_decode( $curl->getRawResponse() );
+			$response      = json_decode( $curl->getRawResponse() );
 			$error_message = array_pop( $response->error->errors );
-			$message = sprintf( __( 'Youtube api request failed response [%s]', 'wp-content-pilot' ), $error_message->message );
+			$message       = sprintf( __( 'Youtube api request failed response [%s]', 'wp-content-pilot' ), $error_message->message );
 			wpcp_logger()->error( $message );
 
 			return false;
@@ -440,9 +436,9 @@ EOT;
 		$inserted = 0;
 		foreach ( $items as $item ) {
 			$video_id = '';
-			if( stristr($endpoint,'playlistItems' ) ){
+			if ( stristr( $endpoint, 'playlistItems' ) ) {
 				$video_id = $item->snippet->resourceId->videoId;
-			}else{
+			} else {
 				$video_id = $item->id->videoId;
 			}
 

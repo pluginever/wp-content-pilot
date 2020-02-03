@@ -19,16 +19,9 @@ class WPCP_Article extends WPCP_Campaign {
 	public function __construct() {
 		//campaign settings
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
-		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_keyword_suggestion_field' );
-		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_keyword_field' );
-		add_action( 'wpcp_campaign_article_options_meta_fields', array( $this, 'campaign_option_fields' ) );
-		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_featured_image_field' );
-		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_strip_links_field' );
-		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_use_excerpt_field' );
-		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_use_original_date_field' );
-		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_external_link_field' );
-		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_featured_image_random_field' );
-		add_action( 'wpcp_campaign_article_options_meta_fields', 'wpcp_canonical_link_field' );
+		add_action( 'wpcp_article_campaign_options_meta_fields', 'wpcp_keyword_suggestion_field' );
+		add_action( 'wpcp_article_campaign_options_meta_fields', 'wpcp_keyword_field' );
+		add_action( 'wpcp_article_campaign_options_meta_fields', array( $this, 'campaign_option_fields' ) );
 		add_action( 'wpcp_update_campaign_settings_article', array( $this, 'update_campaign_settings' ), 10, 2 );
 		add_action( 'wpcp_fetching_campaign_contents', array( $this, 'prepare_contents' ) );
 

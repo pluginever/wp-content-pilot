@@ -17,14 +17,9 @@ class WPCP_Feed extends WPCP_Module {
 	public function __construct() {
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
 
-		add_action( 'wpcp_campaign_feed_options_meta_fields', array( $this, 'add_campaign_fields' ) );
-		add_action( 'wpcp_campaign_feed_options_meta_fields', 'wpcp_use_excerpt_field' );
-		add_action( 'wpcp_campaign_feed_options_meta_fields', 'wpcp_featured_image_field' );
-		add_action( 'wpcp_campaign_feed_options_meta_fields', 'wpcp_strip_links_field' );
-		add_action( 'wpcp_campaign_feed_options_meta_fields', 'wpcp_external_link_field' );
-		add_action( 'wpcp_campaign_feed_options_meta_fields', 'wpcp_featured_image_random_field' );
+		add_action( 'wpcp_feed_campaign_options_meta_fields', array( $this, 'add_campaign_fields' ) );
 
-		add_action( 'wpcp_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2 );
+		add_action( 'wpcp_feed_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2 );
 
 		add_action( 'wp_feed_options', array( $this, 'set_feed_options' ) );
 		add_action( 'http_response', array( $this, 'trim_feed_content' ) );
@@ -89,6 +84,7 @@ EOT;
 	 * @param $post
 	 */
 	public function add_campaign_fields( $post ) {
+
 		echo WPCP_HTML::textarea_input( array(
 			'name'        => '_feed_links',
 			'label'       => __( 'Feed Links', 'wp-content-pilot' ),

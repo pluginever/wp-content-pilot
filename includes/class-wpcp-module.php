@@ -197,7 +197,12 @@ abstract class WPCP_Module {
 			$article['content'] = preg_replace( '/<img[^>]+\>/mi', '', html_entity_decode( $article['content'] ) );
 		}
 
-		//open links in new tab
+		//open links in new tab & add rel nofollow
+		if ( 'on' == wpcp_get_post_meta( $this->campaign_id, '_add_rel_no_follow_target', '' )
+		     && function_exists( 'wpcp_pro_add_no_follow_blank_target' ) ) {
+			$article['content'] = wpcp_pro_add_no_follow_blank_target( $article['content'] );
+		}
+
 
 		//translate
 
@@ -226,31 +231,29 @@ abstract class WPCP_Module {
 		//taxonomies
 		$post_tax = [];
 		//category handles
-		$categories = wpcp_get_post_meta( $this->campaign_id, '_categories', []);
-		if(!empty( $categories)){
-			$post_tax['category'] = array_map( 'intval', $categories);
+		$categories = wpcp_get_post_meta( $this->campaign_id, '_categories', [] );
+		if ( ! empty( $categories ) ) {
+			$post_tax['category'] = array_map( 'intval', $categories );
 		}
 		//tags handles
-		$tags = wpcp_get_post_meta( $this->campaign_id, '_tags', []);
-		if(!empty( $tags)){
-			$post_tax['post_tag'] = array_map( 'intval', $tags);
+		$tags = wpcp_get_post_meta( $this->campaign_id, '_tags', [] );
+		if ( ! empty( $tags ) ) {
+			$post_tax['post_tag'] = array_map( 'intval', $tags );
 		}
 
 		//Pending for transation fail
 
 		//prepare author
 
-		//fix html entities
+		//fix invalid utf chars
+		$title   = wpcp_fix_utf8( $title );
+		$content = wpcp_fix_utf8( $content );
+
 
 		//fix emoji
+		$title   = wpcp_remove_emoji( $title );
+		$content = wpcp_remove_emoji( $content );
 
-		//wpml internal cron patch
-
-		//wpml integration
-
-		//setting categories for custom post types
-
-		//if link canonical _yoast_wpseo_canonical
 
 		// add featured image
 
@@ -262,20 +265,21 @@ abstract class WPCP_Module {
 
 		//populate custom fields
 
+
 		//summery
 		$summary        = '';
 		$insert_excerpt = wpcp_get_post_meta( $this->campaign_id, '_excerpt', '' );
 		if ( 'on' == $insert_excerpt ) {
 			$excerpt_length = wpcp_get_post_meta( $this->campaign_id, '_excerpt_length', 55 );
 			$summary        = empty( $article['excerpt'] ) ? $article['content'] : $article['excerpt'];
-			$summary = strip_tags( $summary );
-			$summary = strip_shortcodes( $summary );
+			$summary        = strip_tags( $summary );
+			$summary        = strip_shortcodes( $summary );
 			$summary        = wp_trim_words( $summary, $excerpt_length );
 		}
 
 		//author id
 		$author_id = get_post_field( 'post_author', $this->campaign_id, 'edit' );
-		$author_id = wpcp_get_post_meta( $this->campaign_id, '_author', $author_id);
+		$author_id = wpcp_get_post_meta( $this->campaign_id, '_author', $author_id );
 
 		//post time
 		$post_time = current_time( 'mysql' );
@@ -332,27 +336,47 @@ abstract class WPCP_Module {
 		$post_id = wp_insert_post( $postarr, true );
 
 		if ( is_wp_error( $post_id ) ) {
-			do_action( 'wpcp_post_insertion_failed', $this->campaign_id);
+			do_action( 'wpcp_post_insertion_failed', $this->campaign_id );
+
 			return $post_id;
 		}
 
 		//set featured image
 		$is_set_featured_image = wpcp_get_post_meta( $this->campaign_id, '_set_featured_image', 0 );
-		if ( 'on' === $is_set_featured_image && ! empty( $article['image_url'] ) ) {
-			wpcp_logger()->debug( 'Setting featured image');
-			$attachment_id = wpcp_download_image( html_entity_decode( $article['image_url'] ) );
-			var_dump( $attachment_id );
-			if ( $attachment_id ) {
-				update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
+		if ( 'on' === $is_set_featured_image ) {
+			if ( ! empty( $article['image_url'] ) ) {
+				wpcp_logger()->debug( 'Setting featured image' );
+				$attachment_id = wpcp_download_image( html_entity_decode( $article['image_url'] ) );
+				if ( $attachment_id ) {
+					set_post_thumbnail( $post_id, $attachment_id );
+					update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
+				}
+			} else {
+				if ( 'on' == wpcp_get_post_meta( $this->campaign_id, '_random_featured_image', '' ) && function_exists( 'wpcp_pro_set_random_featured_image' ) ) {
+					wpcp_pro_set_random_featured_image( $post_id );
+				}
 			}
 		}
 
+
+		//wpml internal cron patch
+
+		//wpml integration
+
+		//setting categories for custom post types
+
+		//if link canonical _yoast_wpseo_canonical
+		if ( 'on' == wpcp_get_post_meta( $this->campaign_id, '_canonical_tag', '' ) && function_exists( 'wpcp_pro_add_canonical_tag' ) ) {
+			wpcp_pro_add_canonical_tag( $post_id, $article['source_url'] );
+		}
+
+
 		update_post_meta( $this->campaign_id, '_last_post', $post_id );
-		update_post_meta( $this->campaign_id, '_last_run', current_time( 'mysql') );
-		update_post_meta( $this->campaign_id, 'wpcp_last_ran_campaign', current_time( 'mysql') );
+		update_post_meta( $this->campaign_id, '_last_run', current_time( 'mysql' ) );
+		update_post_meta( $this->campaign_id, 'wpcp_last_ran_campaign', current_time( 'mysql' ) );
 		$posted = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
 		update_post_meta( $campaign_id, '_post_count', ( $posted + 1 ) );
-		do_action( 'wpcp_after_post_publish', $post_id, $this->campaign_id, $article);
+		do_action( 'wpcp_after_post_publish', $post_id, $this->campaign_id, $article );
 
 		return $post_id;
 	}
@@ -466,11 +490,6 @@ abstract class WPCP_Module {
 		global $wpdb;
 
 		return $wpdb->update( $wpdb->wpcp_links, $data, [ 'id' => absint( $id ) ] );
-	}
-
-
-	public function sanitize_gmt_date( $date ) {
-
 	}
 
 }
