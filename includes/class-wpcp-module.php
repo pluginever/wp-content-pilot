@@ -34,9 +34,9 @@ abstract class WPCP_Module {
 	protected $curl;
 
 	/**
-	 * @var WP_Http
+	 * @var array
 	 */
-	protected $request;
+	protected $errors;
 
 	/**
 	 * @return string
@@ -69,7 +69,7 @@ abstract class WPCP_Module {
 	 *
 	 * @return void
 	 */
-	abstract public function add_campaign_fields( $post );
+	abstract public function add_campaign_option_fields( $post );
 
 	/**
 	 * Save campaign meta
@@ -98,13 +98,6 @@ abstract class WPCP_Module {
 	 * @return array
 	 */
 	abstract public function get_setting_fields( $fields );
-
-	/**
-	 * Save settings
-	 *
-	 * @return void
-	 */
-	abstract public function save_settings();
 
 
 	/**

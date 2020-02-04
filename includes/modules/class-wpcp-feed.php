@@ -17,7 +17,7 @@ class WPCP_Feed extends WPCP_Module {
 	public function __construct() {
 		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
 
-		add_action( 'wpcp_feed_campaign_options_meta_fields', array( $this, 'add_campaign_fields' ) );
+		add_action( 'wpcp_feed_campaign_options_meta_fields', array( $this, 'add_campaign_option_fields' ) );
 
 		add_action( 'wpcp_feed_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2 );
 
@@ -83,7 +83,7 @@ EOT;
 	/**
 	 * @param $post
 	 */
-	public function add_campaign_fields( $post ) {
+	public function add_campaign_option_fields( $post ) {
 
 		echo WPCP_HTML::textarea_input( array(
 			'name'        => '_feed_links',
@@ -125,7 +125,7 @@ EOT;
 	 * @return array
 	 * @since 1.2.0
 	 */
-	public function get_setting_section( $section ) {
+	public function get_setting_section( $sections ) {
 		return $section;
 	}
 
@@ -140,13 +140,6 @@ EOT;
 	}
 
 	/**
-	 * @since 1.2.0
-	 */
-	public function save_settings() {
-
-	}
-
-	/**
 	 * @return array|WP_Error
 	 * @since 1.2.0
 	 */
@@ -155,20 +148,18 @@ EOT;
 		if ( empty( $feed_urls ) ) {
 			$feed_urls = get_post_meta( $this->campaign_id, '_keywords', true );
 			if ( empty( $feed_urls ) ) {
-				$message = __( 'Campaign do not have feel link to proceed, please set feed link', 'wp-content-pilot' );
+				$message = __( 'Campaign do not have feed link to proceed, please set feed link', 'wp-content-pilot' );
 				wpcp_logger()->error( $message );
-
 				return new WP_Error( 'missing-data', $message );
 			}
 		}
 
 		$feed_urls = wpcp_string_to_array( $feed_urls );
 		if ( empty( $feed_urls ) ) {
-			return new WP_Error( 'missing-data', __( 'Campaign do not have feel link to proceed, please set feed link', 'wp-content-pilot' ) );
+			return new WP_Error( 'missing-data', __( 'Campaign do not have feed link to proceed, please set feed link', 'wp-content-pilot' ) );
 		}
 
 		$last_keyword = wpcp_get_post_meta( $this->campaign_id, '_last_keyword', '' );
-
 
 		foreach ( $feed_urls as $feed_url ) {
 			wpcp_logger()->debug( sprintf( 'Looping through feed link [ %s ]', $feed_url ) );
@@ -179,14 +170,17 @@ EOT;
 			}
 
 			if ( $this->is_deactivated_key( $this->campaign_id, $feed_url ) ) {
-				wpcp_logger()->debug( sprintf( 'The feed url is deactivated for 1 hr because last time could not find any article with url [%s]', $feed_url ) );
+				$message = sprintf( 'The feed url is deactivated for 1 hr because last time could not find any article with url [%s]', $feed_url );
+				wpcp_logger()->debug( $message );
+				$this->errors[] = $message;
+				continue;
 			}
 
 			//get links from database
 			$links = $this->get_links( $feed_url );
 			if ( empty( $links ) ) {
 				wpcp_logger()->debug( 'No generated links now need to generate new links' );
-				$discovered_link = $this->discover_links( $feed_url );
+				$this->discover_links( $feed_url );
 				$links           = $this->get_links( $feed_url );
 			}
 
@@ -194,6 +188,7 @@ EOT;
 				$message = __( 'No links to process the campaign, will run again after 1 hour' );
 				wpcp_logger()->error( $message );
 				$this->deactivate_key( $this->campaign_id, $feed_url );
+				$this->errors[] = $message;
 				return new WP_Error( 'no-links', $message );
 			}
 
@@ -202,7 +197,7 @@ EOT;
 			foreach ( $links as $key => $link ) {
 				wpcp_logger()->info( sprintf( 'Running campaign from generated %d time link [%s]', $key + 1, $link->url ) );
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
-				$article = [];
+
 				$curl = $this->setup_curl();
 				$curl->get( $link->url );
 
@@ -236,6 +231,9 @@ EOT;
 
 			}
 		}
+		if(is_array( $this->errors) && count( $this->errors) > 1){
+			return new WP_Error('wpcp-error', array_pop( $this->errors ));
+		}
 
 		return new WP_Error( 'campaign-error', __( 'Could not generate any article, try later', 'wp-content-pilot' ) );
 	}
@@ -247,7 +245,6 @@ EOT;
 
 		if ( is_wp_error( $rss ) ) {
 			wpcp_logger()->info( sprintf( 'Failed fetching feeds [%s]', $rss->get_error_message() ) );
-
 			return $rss;
 		}
 
@@ -282,6 +279,10 @@ EOT;
 
 
 			if ( wpcp_is_duplicate_url( $url ) ) {
+				continue;
+			}
+
+			if(wpcp_is_duplicate_title( $title)){
 				continue;
 			}
 

@@ -18,7 +18,7 @@ class WPCP_Flickr extends WPCP_Module {
 		add_action( 'wpcp_flickr_campaign_options_meta_fields', 'wpcp_keyword_suggestion_field' );
 		add_action( 'wpcp_flickr_campaign_options_meta_fields', 'wpcp_keyword_field' );
 
-		add_action( 'wpcp_campaign_flickr_options_meta_fields', array( $this, 'add_campaign_fields' ) );
+		add_action( 'wpcp_campaign_flickr_options_meta_fields', array( $this, 'add_campaign_option_fields' ) );
 		add_action( 'wpcp_update_campaign_settings_youtube', array( $this, 'save_campaign_meta' ), 10, 2 );
 	}
 
@@ -92,7 +92,7 @@ EOT;
 	/**
 	 * @param $post
 	 */
-	public function add_campaign_fields( $post ) {
+	public function add_campaign_option_fields( $post ) {
 
 	}
 
@@ -110,7 +110,7 @@ EOT;
 	 * @return array
 	 * @since 1.2.0
 	 */
-	public function get_setting_section( $section ) {
+	public function get_setting_section( $sections ) {
 		return $section;
 	}
 
@@ -122,13 +122,6 @@ EOT;
 	 */
 	public function get_setting_fields( $fields ) {
 		return $fields;
-	}
-
-	/**
-	 * @since 1.2.0
-	 */
-	public function save_settings() {
-
 	}
 
 	/**

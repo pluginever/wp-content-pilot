@@ -123,7 +123,7 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 ) );
 ?>
 <style>
-	#wpcp-campaign-actions, #side-sortables {
+	#wpcp-campaign-actions, #side-sortables, #post-body-content {
 		display: none;
 	}
 

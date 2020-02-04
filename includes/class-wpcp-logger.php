@@ -49,6 +49,16 @@ class WPCP_Logger {
 			new WP_Error( 'write-protected',"ERROR: Unable to write to file!", 1 );
 		}
 	}
+	/**
+	 * Debug method (write debug message)
+	 *
+	 * @param string $message
+	 *
+	 * @return void
+	 */
+	public function debug( $message ) {
+		$this->writeLog( $message, 'DEBUG' );
+	}
 
 	/**
 	 * Info method (write info message)
@@ -59,17 +69,6 @@ class WPCP_Logger {
 	 */
 	public function info( $message ) {
 		$this->writeLog( $message, 'INFO' );
-	}
-
-	/**
-	 * Debug method (write debug message)
-	 *
-	 * @param string $message
-	 *
-	 * @return void
-	 */
-	public function debug( $message ) {
-		$this->writeLog( $message, 'DEBUG' );
 	}
 
 	/**

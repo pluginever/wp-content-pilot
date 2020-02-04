@@ -20,7 +20,7 @@ class WPCP_Youtube extends WPCP_Module {
 		//option fields
 		add_action( 'wpcp_youtube_campaign_options_meta_fields', 'wpcp_keyword_suggestion_field' );
 		add_action( 'wpcp_youtube_campaign_options_meta_fields', 'wpcp_keyword_field' );
-		add_action( 'wpcp_youtube_campaign_options_meta_fields', array( $this, 'add_campaign_fields' ) );
+		add_action( 'wpcp_youtube_campaign_options_meta_fields', array( $this, 'add_campaign_option_fields' ) );
 
 		//admin notice
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
@@ -99,7 +99,7 @@ EOT;
 	/**
 	 * @param $post
 	 */
-	public function add_campaign_fields( $post ) {
+	public function add_campaign_option_fields( $post ) {
 
 		echo WPCP_HTML::start_double_columns();
 
@@ -215,7 +215,7 @@ EOT;
 	 * @return array
 	 * @since 1.2.0
 	 */
-	public function get_setting_section( $section ) {
+	public function get_setting_section( $sections ) {
 		return $section;
 	}
 
@@ -227,13 +227,6 @@ EOT;
 	 */
 	public function get_setting_fields( $fields ) {
 		return $fields;
-	}
-
-	/**
-	 * @since 1.2.0
-	 */
-	public function save_settings() {
-
 	}
 
 	/**

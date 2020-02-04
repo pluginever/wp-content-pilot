@@ -81,7 +81,7 @@ EOT;
 	/**
 	 * @param $post
 	 */
-	public function add_campaign_fields( $post ) {
+	public function add_campaign_option_fields( $post ) {
 
 	}
 
@@ -99,7 +99,7 @@ EOT;
 	 * @return array
 	 * @since 1.2.0
 	 */
-	public function get_setting_section( $section ) {
+	public function get_setting_section( $sections ) {
 		return $section;
 	}
 
@@ -113,12 +113,6 @@ EOT;
 		return $fields;
 	}
 
-	/**
-	 * @since 1.2.0
-	 */
-	public function save_settings() {
-
-	}
 
 	/**
 	 * @return mixed|void
