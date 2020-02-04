@@ -100,7 +100,7 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_setting_section( $sections ) {
-		return $section;
+		return $sections;
 	}
 
 	/**

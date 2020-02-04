@@ -112,7 +112,7 @@ abstract class WPCP_Module {
 	 * @param $campaign_id
 	 * @param string $user
 	 *
-	 * @return array|WP_Error
+	 * @return int|WP_Error
 	 * @since 1.2.0
 	 */
 	public function process_campaign( $campaign_id, $keyword = null, $user = 'cron' ) {
