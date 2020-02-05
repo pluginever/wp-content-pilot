@@ -238,7 +238,8 @@ EOT;
 		if ( empty( $api_key ) ) {
 			wpcp_disable_campaign( $this->campaign_id );
 
-			$notice = __( 'Youtube api key is not set with the campaign wont run, disabling campaign.', 'wp-content-pilot-pro' );
+			$notice = __( 'The YouTube api key is not set by the campaign won\'t run, disabling campaign.', 'wp-content-pilot-pro' );
+
 			wpcp_logger()->error( $notice, $this->campaign_id );
 
 			return new WP_Error( 'missing-data', $notice );
@@ -250,22 +251,26 @@ EOT;
 			wpcp_logger()->debug( sprintf( 'Looping through keywords [ %s ]', $keyword ) );
 			//if more than 1 then unset last one
 			if ( count( $keywords ) > 1 && $last_keyword == $keyword ) {
-				wpcp_logger()->debug( sprintf( 'Keywords more than 1 and [ %s ] this keywords used last time so skipping it ', $keyword ) );
+				wpcp_logger()->debug( sprintf( 'Keywords more than 1 and [ %s ] this keywords used last time so skipping it ', $keyword ),$this->campaign_id );
 				continue;
 			}
+
+
 
 			//get links from database
 			$links = $this->get_links( $keyword );
 			if ( empty( $links ) ) {
-				wpcp_logger()->debug( 'No generated links now need to generate new links' );
+				wpcp_logger()->debug( 'No generated links now need to generate new links',$this->campaign_id );
 				$discovered_link = $this->discover_links( $this->campaign_id, $keyword );
 				$links           = $this->get_links( $keyword );
 			}
 
-			wpcp_logger()->debug( 'Starting to process youtube article' );
+			wpcp_logger()->debug( 'Starting to process youtube article',$this->campaign_id );
+
+			wpcp_logger()->info( 'Campaign Started', $this->campaign_id );
 
 			foreach ( $links as $link ) {
-				wpcp_logger()->debug( sprintf( 'Youtube link#[%s]', $link->url ) );
+				wpcp_logger()->debug( sprintf( 'Youtube link#[%s]', $link->url ),$this->campaign_id );
 				$link_parts = explode( 'v=', $link->url );
 				$video_id   = $link_parts[1];
 
@@ -277,7 +282,7 @@ EOT;
 				$curl->get( $endpoint );
 
 				if ( $curl->error ) {
-					wpcp_logger()->warning( sprintf( 'Request error in grabbing video details error [ %s ]', $curl->errorMessage ) );
+					wpcp_logger()->warning( sprintf( 'Request error in grabbing video details error [ %s ]', $curl->errorMessage ), $this->campaign_id );
 					continue;
 				}
 
@@ -326,12 +331,13 @@ EOT;
 					'transcript'     => $transcript,
 				);
 
-				wpcp_logger()->debug( 'successfully generated youtube article' );
+				wpcp_logger()->info( 'Successfully generated youtube article',$this->campaign_id );
 				wpcp_update_post_meta( $this->campaign_id, '_last_keyword', $keyword );
 
 				return $article;
 			}
 		}
+		return new WP_Error( 'campaign-error', __( 'No youtube article generated check log for details.', 'wp-content-pilot' ) );
 
 
 	}
@@ -440,7 +446,7 @@ EOT;
 			}
 		}
 
-		wpcp_logger()->debug( sprintf( 'Total found links [%d] and accepted [%d]', count( $items ), $inserted ) );
+		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $items ), $inserted ), $campaign_id );
 
 		return $inserted;
 	}
