@@ -67,6 +67,7 @@ class WPCP_Readability {
 		$content = wpcp_remove_emoji( $content );
 		$content = force_balance_tags( $content );
 		$content = wpcp_remove_unauthorized_html( $content );
+		$content = wpcp_remove_continue_reading( $content );
 
 		//final content
 		$this->content = $content;

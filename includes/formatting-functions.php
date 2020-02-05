@@ -179,7 +179,6 @@ function wpcp_remove_empty_tags_recursive( $str, $replace_with = null ) {
 }
 
 
-
 /**
  * clean emoji from content
  * since 1.0.0
@@ -234,17 +233,77 @@ function wpcp_clean_title( $title ) {
 
 /**
  * Fix utf8
- * @since 1.2.0
+ *
  * @param $content
  *
  * @return string
+ * @since 1.2.0
  */
-function wpcp_fix_utf8($content){
+function wpcp_fix_utf8( $content ) {
 	if ( 1 === @preg_match( '/^./us', $content ) ) {
 		return $content;
 	}
-	if(function_exists('iconv')){
+	if ( function_exists( 'iconv' ) ) {
 		return iconv( 'utf-8', 'utf-8//IGNORE', $content );
 	}
+
 	return $content;
+}
+
+/**
+ * @param $list
+ *
+ * @return string
+ * @since 1.2.0
+ */
+function wpcp_array_to_html( $list ) {
+	if ( ! is_array( $list ) || empty( $list ) ) {
+		return '';
+	}
+	$html = '';
+	foreach ( $list as $key => $item ) {
+		$item_html = '';
+		if ( ! is_numeric( $key ) ) {
+			$item_html .= sprintf( '<strong>%s : </strong>', strip_tags( $key ) );
+		}
+
+		if ( empty( $item ) ) {
+			$item = '&mdash;';
+		}
+
+		$item_html .= $item;
+
+		$html .= sprintf( '<li>%s</li>', strip_tags( $item_html) );
+	}
+
+	return sprintf( '<ul>%s</ul>', $html );
+}
+
+/**
+ * @since 1.2.0
+ * @param $amount
+ * @param string $currency
+ *
+ * @return string
+ */
+function wpcp_price( $amount, $currency = '$' ) {
+	return sprintf( '%s%s', $currency, number_format_i18n( $amount, 2 ) );
+}
+
+/**
+ * @since 1.2.0
+ * @param $content
+ *
+ * @return mixed
+ */
+function wpcp_remove_continue_reading($content){
+	$dom = wpcp_str_get_html( $content );
+	/* @var $node simple_html_dom_node */
+	foreach ($dom->find( 'a') as $node){
+		if(in_array( strtolower( trim( $node->text())), ['continue reading', 'read more'])){
+			$node->remove();
+		}
+	}
+
+	return $dom;
 }

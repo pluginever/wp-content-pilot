@@ -233,29 +233,13 @@ EOT;
 	 * @return mixed|void
 	 */
 	public function get_post( $keywords = null ) {
-		//if empty get from meta
-		if ( empty( $keywords ) ) {
-			$keywords = get_post_meta( $this->campaign_id, '_keywords', true );
-			if ( empty( $keywords ) ) {
-				$message = __( 'Campaign do not have keywords to proceed, please set keyword', 'wp-content-pilot' );
-				wpcp_logger()->error( $message );
-
-				return new WP_Error( 'missing-data', $message );
-			}
-		}
-
-		$keywords = wpcp_string_to_array( $keywords );
-		if ( empty( $keywords ) ) {
-			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
-		}
-
 		//if api not set bail
 		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_youtube', '' );
 		if ( empty( $api_key ) ) {
 			wpcp_disable_campaign( $this->campaign_id );
 
 			$notice = __( 'Youtube api key is not set with the campaign wont run, disabling campaign.', 'wp-content-pilot-pro' );
-			wpcp_logger()->error( $notice );
+			wpcp_logger()->error( $notice, $this->campaign_id );
 
 			return new WP_Error( 'missing-data', $notice );
 		}

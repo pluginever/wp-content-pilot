@@ -100,8 +100,9 @@ function wpcp_is_duplicate_url( $url ) {
 
 
 /**
- * @since 1.2.0
  * @param $camp_id
+ *
+ * @since 1.2.0
  */
 function wpcp_disable_campaign( $camp_id ) {
 	wpcp_update_post_meta( $camp_id, '_campaign_status', 'inactive' );
@@ -146,6 +147,7 @@ function wpcp_update_post_meta( $post_id, $key, $value ) {
 /**
  * Get admin view
  * since 1.0.0
+ *
  * @param $template_name
  * @param array $args
  */
@@ -158,7 +160,6 @@ function wpcp_get_views( $template_name, $args = [] ) {
 		include WPCP_INCLUDES . '/views/' . $template_name;
 	}
 }
-
 
 
 /**
@@ -193,6 +194,7 @@ function wpcp_get_post_tags() {
 	];
 
 	$tags = get_terms( $args );
+
 	return wp_list_pluck( $tags, 'name', 'term_id' );
 }
 
@@ -250,7 +252,7 @@ function wpcp_hyperlink_text( $text ) {
 	return preg_replace( '@(https?://([-\w\.]+[-\w])+(:\d+)?(/([\w/_\.#-]*(\?\S+)?[^\.\s])?)?)@', '<a href="$1" target="_blank">$0</a>', $text );
 }
 
-                                        /**
+/**
  * allow html tag when string from content
  *
  * @param $content
@@ -334,12 +336,33 @@ function wpcp_download_image( $url, $description = '' ) {
 /**
  * Add admin notice
  * since 1.2.0
+ *
  * @param $notice
  * @param string $type
  * @param bool $dismissible
  */
 function wpcp_admin_notice( $notice, $type = 'success', $dismissible = true ) {
 	$notices = WPCP_Admin_Notices::instance();
-	$notices->add($notice, $type, $dismissible);
+	$notices->add( $notice, $type, $dismissible );
+}
+
+/**
+ * @param $message
+ * @param string $level
+ * @param string $camp_id
+ *
+ * @since 1.2.0
+ */
+function wpcp_insert_log( $message, $level = 'info', $camp_id = '0' ) {
+	global $wpdb;
+	$wpdb->insert(
+		"$wpdb->wpcp_logs",
+		array(
+			'camp_id'    => $camp_id,
+			'level'      => $level,
+			'message'    => strip_tags( $message ),
+			'created_at' => current_time( 'mysql' ),
+		)
+	);
 }
 

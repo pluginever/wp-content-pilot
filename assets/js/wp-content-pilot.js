@@ -24,6 +24,7 @@ jQuery(document).ready(function ($) {
 			$('.wpcp-select2').select2({
 				theme: 'default wpcp-select2'
 			});
+
 		},
 		youtube: function () {
 			$('#_youtube_search_type').on('change', function () {
@@ -34,8 +35,16 @@ jQuery(document).ready(function ($) {
 					channnelField.show();
 				}
 			}).change();
+		},
+		spinner:function () {
+			$(this).hide();
+			$(this).prev('.spinner').show().addClass('is-active');
+			$('.publishing-action-btn .button').attr('disabled', 'disabled');
 		}
+
 	};
 	$.wp_content_pilot.init();
 	$.wp_content_pilot.youtube();
+	$('#wpcp-run-campaign').on('click', $.wp_content_pilot.spinner);
+
 });

@@ -43,16 +43,14 @@ class WPCP_Install {
 
 
 
-//			"CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}wpcp_logs` (
-//                `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-//                `camp_id` int(11) DEFAULT NULL,
-//                `keyword` varchar(191) DEFAULT NULL,
-//                `log_level` varchar(20) NOT NULL DEFAULT '',
-//                `message` varchar(191) DEFAULT NULL,
-//                `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-//                `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-//                PRIMARY KEY (`id`)
-//            )  CHARACTER SET utf8 COLLATE utf8_general_ci;",
+			"CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}wpcp_logs` (
+                `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                `camp_id` int(11) DEFAULT NULL,
+                `level` varchar(20) NOT NULL DEFAULT '',
+                `message` varchar(191) DEFAULT NULL,
+                `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                PRIMARY KEY (`id`)
+            )  CHARACTER SET utf8 COLLATE utf8_general_ci;",
 		];
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		foreach ( $table_schema as $table ) {

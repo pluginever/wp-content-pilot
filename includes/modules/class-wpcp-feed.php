@@ -144,20 +144,6 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_post( $feed_urls = null ) {
-		//if empty get from meta
-		if ( empty( $feed_urls ) ) {
-			$feed_urls = get_post_meta( $this->campaign_id, '_keywords', true );
-			if ( empty( $feed_urls ) ) {
-				$message = __( 'Campaign do not have feed link to proceed, please set feed link', 'wp-content-pilot' );
-				wpcp_logger()->error( $message );
-				return new WP_Error( 'missing-data', $message );
-			}
-		}
-
-		$feed_urls = wpcp_string_to_array( $feed_urls );
-		if ( empty( $feed_urls ) ) {
-			return new WP_Error( 'missing-data', __( 'Campaign do not have feed link to proceed, please set feed link', 'wp-content-pilot' ) );
-		}
 
 		$last_keyword = wpcp_get_post_meta( $this->campaign_id, '_last_keyword', '' );
 
@@ -333,6 +319,17 @@ EOT;
 		$args['body'] = trim( $args['body'] );
 
 		return $args;
+	}
+
+
+	/**
+	 * @since 1.2.0
+	 * @param $campaign_id
+	 *
+	 * @return array|string|null
+	 */
+	public function get_keywords( $campaign_id ) {
+		return wpcp_get_post_meta( $this->campaign_id, '_feed_links', '' );
 	}
 
 	/**

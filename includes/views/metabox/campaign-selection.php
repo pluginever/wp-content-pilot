@@ -31,6 +31,12 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/envato.png' )
 	),
 	array(
+		'name'     => 'Amazon',
+		'keywords' => 'bestbuy, affiliation, affiliate',
+		'disabled' => true,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/amazon.png' )
+	),
+	array(
 		'name'     => 'BestBuy',
 		'keywords' => 'bestbuy, affiliation, affiliate',
 		'disabled' => true,

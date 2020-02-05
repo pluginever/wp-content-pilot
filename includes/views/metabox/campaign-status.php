@@ -43,6 +43,7 @@ $last_post     = wpcp_get_post_meta( $post->ID, '_last_post', '' );
 
 	<div class="wpcp-campaign-statue-item">
 		<h2 class="wpcp-campaign-statue-title">Run Campaign</h2>
-		<a class="button button-secondary" href="<?php echo esc_url( $run_campaign_url ); ?>">Run Now</a>
+		<span class="spinner" style="float: none;margin-left: 0;display: none;"></span>
+		<a id="wpcp-run-campaign" class="button button-secondary" href="<?php echo esc_url( $run_campaign_url ); ?>">Run Now</a>
 	</div>
 </div>

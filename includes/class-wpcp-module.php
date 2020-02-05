@@ -108,6 +108,7 @@ abstract class WPCP_Module {
 	 */
 	abstract public function get_post( $keyword );
 
+
 	/**
 	 * @param $campaign_id
 	 * @param string $user
@@ -115,8 +116,8 @@ abstract class WPCP_Module {
 	 * @return int|WP_Error
 	 * @since 1.2.0
 	 */
-	public function process_campaign( $campaign_id, $keyword = null, $user = 'cron' ) {
-		wpcp_logger()->debug( sprintf( 'Processing campaign id# [%d] Keyword#[%s] and user#[%s]', $campaign_id, $keyword, $user ) );
+	public function process_campaign( $campaign_id, $keywords = null, $user = 'cron' ) {
+		wpcp_logger()->debug( sprintf( 'Processing campaign id# [%d] Keyword#[%s] and user#[%s]', $campaign_id, $keywords, $user ) );
 
 		//todo uncomment this
 //		$wp_post = get_post( $campaign_id );
@@ -135,12 +136,31 @@ abstract class WPCP_Module {
 		$this->campaign_type = $this->get_campaign_type();
 		$this->initiator     = sanitize_text_field( $user );
 
+		if ( empty( $keywords ) ) {
+			$keywords = $this->get_keywords( $this->campaign_id );
+			if ( empty( $keywords ) ) {
+				$message = __( 'Campaign do not have keywords to proceed, please set keyword', 'wp-content-pilot' );
+				wpcp_logger()->error( $message, $this->campaign_id );
 
-		$article = $this->get_post( $keyword );
+				return new WP_Error( 'missing-data', $message );
+			}
+		}
+
+		$keywords = wpcp_string_to_array( $keywords );
+
+		if ( empty( $keywords ) ) {
+			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
+		}
+
+		$article = $this->get_post( $keywords );
 		if ( is_wp_error( $article ) ) {
 			wpcp_logger()->error( $article->get_error_message() );
 
 			return $article;
+		}
+
+		if ( ! $article ) {
+			return new WP_Error( 'no-response', __( 'Content Pilot did not responded for the action', 'wp-content-pilot' ) );
 		}
 
 		$article = wp_parse_args( $article, array(
@@ -485,4 +505,14 @@ abstract class WPCP_Module {
 		return $wpdb->update( $wpdb->wpcp_links, $data, [ 'id' => absint( $id ) ] );
 	}
 
+
+	/**
+	 * @since 1.2.0
+	 * @param $campaign_id
+	 *
+	 * @return array|string|null
+	 */
+	public function get_keywords( $campaign_id ) {
+		return wpcp_get_post_meta( $this->campaign_id, '_keywords', '' );
+	}
 }

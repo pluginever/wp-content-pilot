@@ -118,63 +118,50 @@ EOT;
 	 * @return mixed|void
 	 */
 	public function get_post( $keywords = null ) {
-		//if empty get from meta
-		if ( empty( $keywords ) ) {
-			$keywords = get_post_meta( $this->campaign_id, '_keywords', true );
-			if ( empty( $keywords ) ) {
-				$message = __( 'Campaign do not have keywords to proceed, please set keyword', 'wp-content-pilot' );
-				wpcp_logger()->error( $message );
 
-				return new WP_Error( 'missing-data', $message );
-			}
-		}
-
-		$keywords = wpcp_string_to_array( $keywords );
-		if ( empty( $keywords ) ) {
-			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
-		}
-
+		//set last keyword
 		$last_keyword = wpcp_get_post_meta( $this->campaign_id, '_last_keyword', '' );
 
+		//loop through keywords
 		foreach ( $keywords as $keyword ) {
-			wpcp_logger()->debug( sprintf( 'Looping through keywords [ %s ]', $keyword ) );
+			wpcp_logger()->debug( sprintf( 'Looping through keywords [ %s ]', $keyword ), $this->campaign_id );
 
 			if ( $this->is_deactivated_key( $this->campaign_id, $keyword ) ) {
-				wpcp_logger()->debug( sprintf( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s]', $keyword ) );
+				wpcp_logger()->debug( sprintf( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s]', $keyword ), $this->campaign_id );
 			}
 
 			//if more than 1 then unset last one
 			if ( count( $keywords ) > 1 && $last_keyword == $keyword ) {
-				wpcp_logger()->debug( sprintf( 'The keyword [%s] already used last time rotating it to different one', $keyword ) );
+				wpcp_logger()->debug( sprintf( 'The keyword [%s] already used last time rotating it to different one if available', $keyword ), $this->campaign_id );
 				continue;
 			}
 
 			//get links from database
 			$links = $this->get_links( $keyword );
 			if ( empty( $links ) ) {
-				wpcp_logger()->debug( 'No generated links now need to generate new links' );
+				wpcp_logger()->info( 'No generated links in store. Generating new links...', $this->campaign_id  );
 				$discovered_link = $this->discover_links( $this->campaign_id, $keyword );
 				$links           = $this->get_links( $keyword );
 			}
 
 			if ( empty( $links ) ) {
 				$message = __( 'No links to process the campaign, waiting to run later...' );
-				wpcp_logger()->error( $message );
+				wpcp_logger()->error( $message, $this->campaign_id );
 				$this->deactivate_key( $this->campaign_id, $keyword );
 
 				return new WP_Error( 'no-links', $message );
 			}
 
-			wpcp_logger()->debug( 'Starting to process campaign article' );
+			wpcp_logger()->debug( 'Starting to process campaign article', $this->campaign_id );
 
 			foreach ( $links as $link ) {
-				wpcp_logger()->debug( sprintf( 'Grabbing article from #[%s]', $link->url ) );
+				wpcp_logger()->debug( sprintf( 'Grabbing article from #[%s]', $link->url ), $this->campaign_id );
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 				$curl = $this->setup_curl();
 				$curl->get( $link->url );
 
 				if ( $curl->isError() && $this->initiator != 'cron') {
-					wpcp_logger()->info( sprintf( "Failed processing link reason [%s]", $curl->getErrorMessage() ) );
+					wpcp_logger()->info( sprintf( "Failed processing link reason [%s]", $curl->getErrorMessage() ), $this->campaign_id );
 					continue;
 				}
 
@@ -182,7 +169,7 @@ EOT;
 				$readability = new WPCP_Readability();
 				$readable    = $readability->parse( $html, $link->url );
 				if ( is_wp_error( $readable ) ) {
-					wpcp_logger()->info( sprintf( "Failed readability reason [%s]", $readable->get_error_message() ) );
+					wpcp_logger()->info( sprintf( "Failed readability reason [%s]", $readable->get_error_message() ), $this->campaign_id );
 					continue;
 				}
 
@@ -196,7 +183,7 @@ EOT;
 					'source_url' => $link->url,
 				);
 
-				wpcp_logger()->debug( 'successfully generated article' );
+				wpcp_logger()->info( 'successfully generated article', $this->campaign_id );
 				wpcp_update_post_meta( $this->campaign_id, '_last_keyword', $keyword );
 
 				return $article;
@@ -204,7 +191,7 @@ EOT;
 
 		}
 
-		return new WP_Error( 'campaign-error', __( 'Could not generate any article', 'wp-content-pilot' ) );
+		return new WP_Error( 'campaign-error', __( 'No article generated check log for details.', 'wp-content-pilot' ) );
 	}
 
 
@@ -228,13 +215,14 @@ EOT;
 			'first'  => ( $page_number * 10 ),
 		), 'https://www.bing.com/search' );
 
-		wpcp_logger()->info( sprintf( 'Searching page url [%s]', $endpoint ) );
+		wpcp_logger()->debug( sprintf( 'Searching page url [%s]', $endpoint ) );
 
 		$curl = $this->setup_curl();
 
 		$response = $curl->get( $endpoint );
 		if ( $curl->isError() ) {
-			wpcp_logger()->error( $curl->errorMessage );
+			wpcp_logger()->error( $curl->errorMessage, $campaign_id );
+			$this->deactivate_key( $campaign_id, $keyword);
 			return $response;
 		}
 
@@ -247,9 +235,9 @@ EOT;
 
 		//check if links exist
 		if ( empty( $response ) || ! isset( $response['channel'] ) || ! isset( $response['channel']['item'] ) || empty( $response['channel']['item'] ) ) {
-			$message = __( 'Could not find any links from search engine,waiting...', 'wp-content-pilot' );
-			wpcp_logger()->info( $message );
-
+			$message = __( 'Could not find any links from search engine, deactivating keyword for an hour.', 'wp-content-pilot' );
+			wpcp_logger()->info( $message , $campaign_id);
+			$this->deactivate_key( $campaign_id, $keyword);
 			return new WP_Error( 'no-links-found', $message );
 		}
 
@@ -289,13 +277,13 @@ EOT;
 		}
 
 		if ( $inserted < 1 ) {
-			wpcp_logger()->info( 'Could not find any links' );
-
+			wpcp_logger()->info( 'Could not find any links', $campaign_id );
+			$this->deactivate_key( $campaign_id, $keyword);
 			return false;
 		}
 
 		wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1);
-		wpcp_logger()->debug( sprintf( 'Total found links [%d] and accepted [%d]', count( $items ), $inserted ) );
+		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $items ), $inserted ), $campaign_id );
 
 		return true;
 	}
