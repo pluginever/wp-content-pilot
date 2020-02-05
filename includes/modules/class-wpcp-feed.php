@@ -146,6 +146,7 @@ EOT;
 	public function get_post( $feed_urls = null ) {
 
 		$last_keyword = wpcp_get_post_meta( $this->campaign_id, '_last_keyword', '' );
+		
 
 		foreach ( $feed_urls as $feed_url ) {
 			wpcp_logger()->debug( sprintf( 'Looping through feed link [ %s ]', $feed_url ) );
@@ -165,7 +166,7 @@ EOT;
 			//get links from database
 			$links = $this->get_links( $feed_url );
 			if ( empty( $links ) ) {
-				wpcp_logger()->debug( 'No generated links now need to generate new links' );
+				wpcp_logger()->info( 'No generated links now need to generate new links',$this->campaign_id );
 				$this->discover_links( $feed_url );
 				$links           = $this->get_links( $feed_url );
 			}
@@ -178,17 +179,19 @@ EOT;
 				return new WP_Error( 'no-links', $message );
 			}
 
-			wpcp_logger()->debug( 'Starting to process youtube article' );
+			wpcp_logger()->debug( 'Starting to process feed article',$this->campaign_id );
+
+			wpcp_logger()->info( 'Campaign Started', $this->campaign_id);
 
 			foreach ( $links as $key => $link ) {
-				wpcp_logger()->info( sprintf( 'Running campaign from generated %d time link [%s]', $key + 1, $link->url ) );
+				wpcp_logger()->info( sprintf( 'Running campaign from generated %d time link [%s]', $key + 1, $link->url ),$this->campaign_id );
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
 				$curl = $this->setup_curl();
 				$curl->get( $link->url );
 
 				if ( $curl->isError() && $this->initiator != 'cron') {
-					wpcp_logger()->info( sprintf( "Failed processing link reason [%s]", $curl->getErrorMessage() ) );
+					wpcp_logger()->info( sprintf( "Failed processing link reason [%s]", $curl->getErrorMessage() ),$this->campaign_id );
 					continue;
 				}
 
@@ -196,7 +199,7 @@ EOT;
 				$readability = new WPCP_Readability();
 				$readable    = $readability->parse( $html, $link->url );
 				if ( is_wp_error( $readable ) ) {
-					wpcp_logger()->info( sprintf( "Failed readability reason [%s]", $readable->get_error_message() ) );
+					wpcp_logger()->info( sprintf( "Failed readability reason [%s]", $readable->get_error_message() ),$this->campaign_id );
 					continue;
 				}
 
@@ -210,7 +213,7 @@ EOT;
 					'source_url' => $link->url,
 				), $readability, $this->campaign_id );
 
-				wpcp_logger()->debug( 'successfully generated article' );
+				wpcp_logger()->info( 'successfully generated article',$this->campaign_id );
 				wpcp_update_post_meta( $this->campaign_id, '_last_keyword', $feed_url );
 				$this->update_link( $link->id, [ 'status' => 'success' ] );
 				return $article;
@@ -288,7 +291,7 @@ EOT;
 			return false;
 		}
 
-		wpcp_logger()->debug( sprintf( 'Total found links [%d] and accepted [%d]', count( $rss_items ), $inserted ) );
+		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $rss_items ), $inserted ),$campaign_id );
 
 		return $inserted;
 	}
