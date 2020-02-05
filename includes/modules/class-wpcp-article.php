@@ -121,7 +121,7 @@ EOT;
 
 		//set last keyword
 		$last_keyword = wpcp_get_post_meta( $this->campaign_id, '_last_keyword', '' );
-
+		wpcp_logger()->info( 'Campaign Started', $this->campaign_id );
 		//loop through keywords
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->debug( sprintf( 'Looping through keywords [ %s ]', $keyword ), $this->campaign_id );
@@ -138,6 +138,7 @@ EOT;
 
 			//get links from database
 			$links = $this->get_links( $keyword );
+			
 			if ( empty( $links ) ) {
 				wpcp_logger()->info( 'No generated links in store. Generating new links...', $this->campaign_id  );
 				$discovered_link = $this->discover_links( $this->campaign_id, $keyword );
@@ -154,6 +155,7 @@ EOT;
 
 			wpcp_logger()->debug( 'Starting to process campaign article', $this->campaign_id );
 
+			
 			foreach ( $links as $link ) {
 				wpcp_logger()->debug( sprintf( 'Grabbing article from #[%s]', $link->url ), $this->campaign_id );
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
@@ -215,13 +217,13 @@ EOT;
 			'first'  => ( $page_number * 10 ),
 		), 'https://www.bing.com/search' );
 
-		wpcp_logger()->debug( sprintf( 'Searching page url [%s]', $endpoint ) );
+		wpcp_logger()->debug( sprintf( 'Searching page url [%s]', $endpoint ),$campaign_id );
 
 		$curl = $this->setup_curl();
 
 		$response = $curl->get( $endpoint );
 		if ( $curl->isError() ) {
-			wpcp_logger()->error( $curl->errorMessage, $campaign_id );
+			wpcp_logger()->error( $curl->errorMessage, $this->campaign_id );
 			$this->deactivate_key( $campaign_id, $keyword);
 			return $response;
 		}
