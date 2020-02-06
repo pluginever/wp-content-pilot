@@ -113,6 +113,7 @@ final class ContentPilot {
 		define( 'WPCP_PATH', dirname( WPCP_FILE ) );
 		define( 'WPCP_INCLUDES', WPCP_PATH . '/includes' );
 		define( 'WPCP_MODULES', WPCP_PATH . '/modules' );
+		define( 'WPCP_LIBRARY', WPCP_INCLUDES . '/library' );
 		define( 'WPCP_URL', plugins_url( '', WPCP_FILE ) );
 		define( 'WPCP_VIEWS', WPCP_PATH . '/views' );
 		define( 'WPCP_ASSETS_URL', WPCP_URL . '/assets' );
@@ -144,7 +145,6 @@ final class ContentPilot {
 	public function includes() {
 		//boot
 		require_once( WPCP_INCLUDES . '/class-install.php' );
-		require_once( WPCP_INCLUDES . '/library/readability/Readability.php' );
 		require_once( WPCP_PATH . '/vendor/autoload.php' );
 
 		//functions
@@ -156,6 +156,7 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/class-wpcp-html.php';
 
 		//core files
+		require_once( WPCP_LIBRARY . '/readability/Readability.php' );
 		require_once( WPCP_INCLUDES . '/wp-async-request.php' );
 		require_once( WPCP_INCLUDES . '/wp-background-process.php' );
 		require_once( WPCP_INCLUDES . '/class-automatic-campaign.php' );

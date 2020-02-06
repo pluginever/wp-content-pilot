@@ -580,18 +580,6 @@ function wpcp_get_ready_campaign_links( $campaign_id, $campaign_type = null ) {
 	return $link;
 }
 
-/**
- * convert cents into usd
- *
- * @param $cent
- *
- * @return string
- * @since 1.0.0
- *
- */
-function wpcp_cent_to_usd( $cent ) {
-	return number_format( ( $cent / 100 ), 2, '.', ' ' );
-}
 
 /**
  * returns the modules that support keyword suggestion

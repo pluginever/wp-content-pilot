@@ -200,7 +200,7 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 	 */
 	public function get_sortable_columns() {
 		return array(
-			'campaign' => array( 'campaign_id', false ),
+			'campaign' => array( 'camp_id', false ),
 			'level'    => array( 'level', false ),
 			'log'      => array( 'message', false ),
 			'date'     => array( 'created_at', false )

@@ -307,3 +307,17 @@ function wpcp_remove_continue_reading($content){
 
 	return $dom;
 }
+
+
+/**
+ * convert cents into usd
+ *
+ * @param $cent
+ *
+ * @return string
+ * @since 1.0.0
+ *
+ */
+function wpcp_cent_to_usd( $cent ) {
+	return number_format( ( $cent / 100 ), 2, '.', ' ' );
+}

@@ -23,7 +23,10 @@ function wpcp_get_logs( $args = array(), $count = false ) {
 	//ordering
 	$order         = isset( $args['order'] ) ? esc_sql( strtoupper( $args['order'] ) ) : 'ASC';
 	$order_by      = esc_sql( $args['orderby'] );
-	$query_orderby = sprintf( " ORDER BY %s %s ", $order_by, $order );
+	$query_orderby = sprintf( " ORDER BY %s %s", $order_by, $order );
+	if($args['orderby'] !== 'id'){
+		$query_orderby .= ' , id DESC ';
+	}
 
 	// limit
 	if ( isset( $args['per_page'] ) && $args['per_page'] > 0 ) {
