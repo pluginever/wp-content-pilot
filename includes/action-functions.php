@@ -44,7 +44,6 @@ add_action( 'admin_post_wpcp_run_campaign', 'wpcp_handle_manual_campaign' );
  * @since 1.0.0
  */
 function wpcp_run_automatic_campaign() {
-	wpcp_logger()->debug( 'wpcp_run_automatic_campaign' );
 	global $wpdb;
 	$sql       = "select * from {$wpdb->posts} p  left join {$wpdb->postmeta} m on p.id = m.post_id having m.meta_key = '_campaign_status' AND m.meta_value = 'active'";
 	$campaigns = $wpdb->get_results( $sql );
