@@ -34,12 +34,12 @@ echo WPCP_HTML::select_input( array(
 	'tooltip'     => __( 'Select author', 'wp-content-pilot' ),
 ) );
 
-echo WPCP_HTML::text_input( array(
-	'label'       => __( 'Post Format', 'wp-content-pilot' ),
-	'name'        => '_post_format',
-	'placeholder' => 'audio',
-	'tooltip'     => __( 'Select post format', 'wp-content-pilot' ),
-) );
+//echo WPCP_HTML::text_input( array(
+//	'label'       => __( 'Post Format', 'wp-content-pilot' ),
+//	'name'        => '_post_format',
+//	'placeholder' => 'audio',
+//	'tooltip'     => __( 'Select post format', 'wp-content-pilot' ),
+//) );
 
 echo WPCP_HTML::select_input( array(
 	'label'   => __( 'Post Category', 'wp-content-pilot' ),
