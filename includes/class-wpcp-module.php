@@ -29,25 +29,38 @@ abstract class WPCP_Module {
 	protected $initiator;
 
 	/**
-	 * @var \Curl\Curl
+	 * @param $campaign_type
+	 *
+	 * @since 1.2.0
+	 * WPCP_Module constructor.
 	 */
-	protected $curl;
+	public function __construct( $campaign_type ) {
+
+		$this->campaign_type = $campaign_type;
+
+		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
+
+		$hook_name = 'wpcp_' . $this->campaign_type;
+
+		add_action( $hook_name . '_campaign_options_meta_fields', array( $this, 'add_campaign_option_fields' ) );
+		add_action( $hook_name . '_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2 );
+
+		//setting
+		add_filter( 'wpcp_settings_sections', array( $this, 'get_setting_section' ), 10 );
+		add_filter( 'wpcp_settings_fields', array( $this, 'get_setting_fields' ), 10 );
+	}
 
 	/**
-	 * @var array
-	 */
-	protected $errors;
-
-	/**
-	 * @return string
+	 * @param $modules
+	 *
+	 * @return array
 	 * @since 1.2.0
 	 */
-	abstract public function get_campaign_type();
+	public function register_module( $modules ) {
+		$modules[ $this->campaign_type ] = get_called_class();
 
-	/**
-	 * @return array
-	 */
-	abstract public function register_module( $modules );
+		return $modules;
+	}
 
 	/**
 	 * @return string
@@ -101,13 +114,13 @@ abstract class WPCP_Module {
 
 
 	/**
-	 * @param $keyword
-	 *
-	 * @return array|WP_Error
 	 * @since 1.2.0
+	 * @param int $campaign_id
+	 * @param array $keywords
+	 *
+	 * @return mixed
 	 */
-	abstract public function get_post( $keyword );
-
+	abstract public function get_post( $campaign_id, $keywords);
 
 	/**
 	 * @param $campaign_id
@@ -117,7 +130,7 @@ abstract class WPCP_Module {
 	 * @since 1.2.0
 	 */
 	public function process_campaign( $campaign_id, $keywords = null, $user = 'cron' ) {
-		wpcp_logger()->debug( sprintf( 'Processing campaign id# [%d] Keyword#[%s] and user#[%s]', $campaign_id, $keywords, $user ) );
+		wpcp_logger()->debug( sprintf( 'Processing campaign id# [%d] Keyword#[%s] and user#[%s]', $campaign_id, $keywords, $user ), $campaign_id );
 
 		//todo uncomment this
 //		$wp_post = get_post( $campaign_id );
@@ -127,20 +140,19 @@ abstract class WPCP_Module {
 //		}
 //
 //		$campaign_type = get_post_meta( $campaign_id, '_campaign_type', true );
-//		if ( $campaign_type !== $this->get_campaign_type() ) {
+//		if ( $campaign_type !== $this->campaign_type ) {
 //			wpcp_logger()->error( 'Campaign type mismatch');
 //			return new WP_Error( 'invalid-campaign-id', __( 'Campaign type mismatch', 'wp-content-pilot' ) );
 //		}
 
-		$this->campaign_id   = absint( $campaign_id );
-		$this->campaign_type = $this->get_campaign_type();
-		$this->initiator     = sanitize_text_field( $user );
+		$this->campaign_id = absint( $campaign_id );
+		$this->initiator   = sanitize_text_field( $user );
 
 		if ( empty( $keywords ) ) {
 			$keywords = $this->get_keywords( $this->campaign_id );
 			if ( empty( $keywords ) ) {
 				$message = __( 'Campaign do not have keywords to proceed, please set keyword', 'wp-content-pilot' );
-				wpcp_logger()->error( $message, $this->campaign_id );
+				wpcp_logger()->error( $message, $campaign_id );
 
 				return new WP_Error( 'missing-data', $message );
 			}
@@ -152,7 +164,7 @@ abstract class WPCP_Module {
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}
 
-		$article = $this->get_post( $keywords );
+		$article = $this->get_post($campaign_id,  $keywords );
 		if ( is_wp_error( $article ) ) {
 			wpcp_logger()->error( $article->get_error_message() );
 
@@ -178,7 +190,7 @@ abstract class WPCP_Module {
 		if ( ! $accepted ) {
 			wpcp_logger()->debug( 'Article failed in acceptance test' );
 
-			return $this->process_campaign( $campaign_id, $keyword, $user );
+			return $this->process_campaign( $campaign_id, $keywords, $user );
 		}
 
 
@@ -383,6 +395,8 @@ abstract class WPCP_Module {
 			wpcp_pro_add_canonical_tag( $post_id, $article['source_url'] );
 		}
 
+		//save campaign data
+		update_post_meta( $post_id, '_campaign_id', $campaign_id);
 
 		update_post_meta( $this->campaign_id, '_last_post', $post_id );
 		update_post_meta( $this->campaign_id, '_last_run', current_time( 'mysql' ) );
@@ -398,7 +412,7 @@ abstract class WPCP_Module {
 	 * @return \Curl\Curl
 	 * @since 1.2.0
 	 */
-	public function setup_curl() {
+	protected function setup_curl() {
 		$curl = new Curl\Curl();
 		$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
 		$curl->setOpt( CURLOPT_TIMEOUT, 30 );
@@ -419,7 +433,7 @@ abstract class WPCP_Module {
 	 *
 	 * @since 1.2.0
 	 */
-	public function deactivate_key( $campaign_id, $keyword, $hours = 1 ) {
+	protected function deactivate_key( $campaign_id, $keyword, $hours = 1 ) {
 		$deactivated_until = current_time( 'timestamp' ) + ( $hours * HOUR_IN_SECONDS );
 		update_post_meta( $campaign_id, '_' . md5( $keyword ), $deactivated_until );
 	}
@@ -433,7 +447,7 @@ abstract class WPCP_Module {
 	 * @return bool
 	 * @since 1.2.0
 	 */
-	public function is_deactivated_key( $campaign_id, $keyword ) {
+	protected function is_deactivated_key( $campaign_id, $keyword ) {
 		$deactivated_until = wpcp_get_post_meta( $campaign_id, '_' . md5( $keyword ), '' );
 		if ( empty( $deactivated_until ) || $deactivated_until < current_time( 'timestamp' ) ) {
 			return false;
@@ -446,15 +460,33 @@ abstract class WPCP_Module {
 	 * Get unique string for the campaign
 	 *
 	 * @param string $keyword
-	 * @param string $extra
 	 *
 	 * @return string
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 */
-	public function get_unique_key( $keyword = '', $extra = '' ) {
-		$key = '_wpcp_' . $this->campaign_id . '-' . $this->campaign_type . '-' . $keyword . '-' . $extra;
+	protected function get_unique_key( $keyword = 'page' ) {
+		$key = '_wpcp_' . $keyword . '_' . md5( $keyword );
 
 		return sanitize_title( $key );
+	}
+
+	/**
+	 * @since 1.2.0
+	 * @param $campaign_id
+	 *
+	 * @return array|string|null
+	 */
+	protected function get_last_keyword($campaign_id){
+		return wpcp_get_post_meta( $this->campaign_id, '_last_keyword', '' );
+	}
+
+	/**
+	 * @since 1.2.0
+	 * @param $campaign_id
+	 * @param $keyword
+	 */
+	protected function set_last_keyword($campaign_id, $keyword){
+		wpcp_update_post_meta( $campaign_id, '_last_keyword', $keyword );
 	}
 
 	/**
@@ -464,7 +496,7 @@ abstract class WPCP_Module {
 	 * @return array|object|void|null
 	 * @since 1.2.0
 	 */
-	public function get_links( $keyword, $status = 'new', $count = 5 ) {
+	protected function get_links( $keyword, $status = 'new', $count = 5 ) {
 		global $wpdb;
 
 		return $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE keyword=%s AND camp_id=%d AND status=%s LIMIT %d", $keyword, $this->campaign_id, $status, $count ) );
@@ -476,7 +508,7 @@ abstract class WPCP_Module {
 	 * @return false|int
 	 * @since 1.2.0
 	 */
-	public function insert_link( $data ) {
+	protected function insert_link( $data ) {
 		$data = wp_parse_args( $data, array(
 			'camp_id'      => $this->campaign_id,
 			'camp_type'    => $this->campaign_type,
@@ -499,7 +531,7 @@ abstract class WPCP_Module {
 	 * @return false|int
 	 * @since 1.2.0
 	 */
-	public function update_link( $id, $data = array() ) {
+	protected function update_link( $id, $data = array() ) {
 		global $wpdb;
 
 		return $wpdb->update( $wpdb->wpcp_links, $data, [ 'id' => absint( $id ) ] );
@@ -507,12 +539,12 @@ abstract class WPCP_Module {
 
 
 	/**
-	 * @since 1.2.0
 	 * @param $campaign_id
 	 *
 	 * @return array|string|null
+	 * @since 1.2.0
 	 */
-	public function get_keywords( $campaign_id ) {
+	protected function get_keywords( $campaign_id ) {
 		return wpcp_get_post_meta( $this->campaign_id, '_keywords', '' );
 	}
 }

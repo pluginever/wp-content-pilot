@@ -1,15 +1,28 @@
 <?php
-defined('ABSPATH')|| exit();
+defined( 'ABSPATH' ) || exit();
 
+/**
+ * Class WPCP_Settings
+ */
 class WPCP_Settings {
+	/**
+	 * @var Ever_WP_Settings_API
+	 */
 	private $settings_api;
 
+	/**
+	 * @since 1.2.0
+	 * WPCP_Settings constructor.
+	 */
 	function __construct() {
 		$this->settings_api = new Ever_WP_Settings_API();
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'admin_menu', array( $this, 'admin_menu' ), 99 );
 	}
 
+	/**
+	 * @since 1.2.0
+	 */
 	function admin_init() {
 		//set the settings
 		$this->settings_api->set_sections( $this->get_settings_sections() );
@@ -18,6 +31,9 @@ class WPCP_Settings {
 		$this->settings_api->admin_init();
 	}
 
+	/**
+	 * @since 1.2.0
+	 */
 	function admin_menu() {
 		add_submenu_page( 'edit.php?post_type=wp_content_pilot', __( 'Settings', 'wp-content-pilot' ), __( 'Settings', 'wp-content-pilot' ), 'manage_options', 'wpcp-settings', array(
 			$this,
@@ -25,6 +41,10 @@ class WPCP_Settings {
 		) );
 	}
 
+	/**
+	 * @since 1.2.0
+	 * @return mixed|void
+	 */
 	function get_settings_sections() {
 		$sections = array(
 			array(
@@ -102,18 +122,18 @@ class WPCP_Settings {
 					'default' => ''
 				),
 			),
-			'wpcp_settings_misc' => array(
+			'wpcp_settings_misc'    => array(
 				array(
 					'name'    => 'uninstall_on_delete',
 					'label'   => __( 'Remove Data on Uninstall?', 'wp-content-pilot' ),
-					'desc' => __( 'Check this box if you would like to completely remove all of its data when the plugin is deleted.', 'wp-content-pilot' ),
+					'desc'    => __( 'Check this box if you would like to completely remove all of its data when the plugin is deleted.', 'wp-content-pilot' ),
 					'type'    => 'checkbox',
 					'default' => ''
 				),
 				array(
 					'name'    => 'post_publish_mail',
 					'label'   => __( 'Post Publish mail', 'wp-content-pilot' ),
-					'desc' => __( 'Send mail After post publish', 'wp-content-pilot' ),
+					'desc'    => __( 'Send mail After post publish', 'wp-content-pilot' ),
 					'type'    => 'checkbox',
 					'default' => ''
 				),

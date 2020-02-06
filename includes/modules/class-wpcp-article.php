@@ -15,31 +15,10 @@ class WPCP_Article extends WPCP_Module {
 	 * WPCP_Module constructor.
 	 */
 	public function __construct() {
-		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
-
 		//option fields
 		add_action( 'wpcp_article_campaign_options_meta_fields', 'wpcp_keyword_suggestion_field' );
 		add_action( 'wpcp_article_campaign_options_meta_fields', 'wpcp_keyword_field' );
-	}
-
-	/**
-	 * @return string
-	 * @since 1.2.0
-	 */
-	public function get_campaign_type() {
-		return 'article';
-	}
-
-	/**
-	 * @param $modules
-	 *
-	 * @return array
-	 * @since 1.2.0
-	 */
-	public function register_module( $modules ) {
-		$modules['article'] = __CLASS__;
-
-		return $modules;
+		parent::__construct( 'article' );
 	}
 
 	/**
@@ -115,55 +94,57 @@ EOT;
 
 
 	/**
-	 * @return mixed|void
+	 * @param int $campaign_id
+	 * @param array $keywords
+	 *
+	 * @return array|mixed|WP_Error
+	 * @since 1.2.0
 	 */
-	public function get_post( $keywords = null ) {
-
+	public function get_post( $campaign_id, $keywords ) {
 		//set last keyword
-		$last_keyword = wpcp_get_post_meta( $this->campaign_id, '_last_keyword', '' );
-		wpcp_logger()->info( 'Campaign Started', $this->campaign_id );
+		$last_keyword = $this->get_last_keyword( $campaign_id );
+
+		wpcp_logger()->info( 'Article Campaign Started', $campaign_id );
+
 		//loop through keywords
 		foreach ( $keywords as $keyword ) {
-			wpcp_logger()->debug( sprintf( 'Looping through keywords [ %s ]', $keyword ), $this->campaign_id );
+			wpcp_logger()->info( sprintf( 'Looping through keywords now trying with keyword [ %s ]', $keyword ), $campaign_id );
 
-			if ( $this->is_deactivated_key( $this->campaign_id, $keyword ) ) {
-				wpcp_logger()->debug( sprintf( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s]', $keyword ), $this->campaign_id );
+			if ( $this->is_deactivated_key( $campaign_id, $keyword ) ) {
+				wpcp_logger()->debug( sprintf( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s]', $keyword ), $campaign_id );
 			}
 
 			//if more than 1 then unset last one
 			if ( count( $keywords ) > 1 && $last_keyword == $keyword ) {
-				wpcp_logger()->debug( sprintf( 'The keyword [%s] already used last time rotating it to different one if available', $keyword ), $this->campaign_id );
+				wpcp_logger()->debug( sprintf( 'The keyword [%s] already used last time changing to different one if available', $keyword ), $campaign_id );
 				continue;
 			}
 
 			//get links from database
 			$links = $this->get_links( $keyword );
-			
+
 			if ( empty( $links ) ) {
-				wpcp_logger()->info( 'No generated links in store. Generating new links...', $this->campaign_id  );
-				$discovered_link = $this->discover_links( $this->campaign_id, $keyword );
-				$links           = $this->get_links( $keyword );
+				wpcp_logger()->info( 'No cached links in store. Generating new links...', $campaign_id );
+				$this->discover_links( $campaign_id, $keyword );
+				$links = $this->get_links( $keyword );
 			}
 
 			if ( empty( $links ) ) {
 				$message = __( 'No links to process the campaign, waiting to run later...' );
-				wpcp_logger()->error( $message, $this->campaign_id );
-				$this->deactivate_key( $this->campaign_id, $keyword );
+				wpcp_logger()->error( $message, $campaign_id );
+				$this->deactivate_key( $campaign_id, $keyword );
 
 				return new WP_Error( 'no-links', $message );
 			}
 
-			wpcp_logger()->debug( 'Starting to process campaign article', $this->campaign_id );
-
-			
 			foreach ( $links as $link ) {
-				wpcp_logger()->debug( sprintf( 'Grabbing article from #[%s]', $link->url ), $this->campaign_id );
+				wpcp_logger()->info( sprintf( 'Grabbing article from [%s]', $link->url ), $campaign_id );
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 				$curl = $this->setup_curl();
 				$curl->get( $link->url );
 
-				if ( $curl->isError() && $this->initiator != 'cron') {
-					wpcp_logger()->info( sprintf( "Failed processing link reason [%s]", $curl->getErrorMessage() ), $this->campaign_id );
+				if ( $curl->isError() && $this->initiator != 'cron' ) {
+					wpcp_logger()->info( sprintf( "Failed processing link reason [%s]", $curl->getErrorMessage() ), $campaign_id );
 					continue;
 				}
 
@@ -171,7 +152,7 @@ EOT;
 				$readability = new WPCP_Readability();
 				$readable    = $readability->parse( $html, $link->url );
 				if ( is_wp_error( $readable ) ) {
-					wpcp_logger()->info( sprintf( "Failed readability reason [%s]", $readable->get_error_message() ), $this->campaign_id );
+					wpcp_logger()->info( sprintf( "Failed readability reason [%s] changing to different link", $readable->get_error_message() ), $campaign_id );
 					continue;
 				}
 
@@ -185,9 +166,9 @@ EOT;
 					'source_url' => $link->url,
 				);
 
-				wpcp_logger()->info( 'successfully generated article', $this->campaign_id );
-				wpcp_update_post_meta( $this->campaign_id, '_last_keyword', $keyword );
+				wpcp_logger()->info( 'hurray! successfully generated article', $campaign_id );
 
+				$this->set_last_keyword( $campaign_id, $keyword);
 				return $article;
 			}
 
@@ -198,14 +179,14 @@ EOT;
 
 
 	/**
-	 * @since 1.2.0
 	 * @param $campaign_id
 	 * @param $keyword
 	 *
 	 * @return bool|mixed|WP_Error
+	 * @since 1.2.0
 	 */
 	protected function discover_links( $campaign_id, $keyword ) {
-		$page_key    = sanitize_key( '_page_' . $campaign_id . '_' . md5( $keyword ) );
+		$page_key    = $this->get_unique_key($keyword);
 		$page_number = wpcp_get_post_meta( $campaign_id, $page_key, 0 );
 
 
@@ -217,14 +198,15 @@ EOT;
 			'first'  => ( $page_number * 10 ),
 		), 'https://www.bing.com/search' );
 
-		wpcp_logger()->debug( sprintf( 'Searching page url [%s]', $endpoint ),$campaign_id );
+		wpcp_logger()->debug( sprintf( 'Searching page url [%s]', $endpoint ), $campaign_id );
 
 		$curl = $this->setup_curl();
 
 		$response = $curl->get( $endpoint );
 		if ( $curl->isError() ) {
-			wpcp_logger()->error( $curl->errorMessage, $this->campaign_id );
-			$this->deactivate_key( $campaign_id, $keyword);
+			wpcp_logger()->error( $curl->errorMessage, $campaign_id );
+			$this->deactivate_key( $campaign_id, $keyword );
+
 			return $response;
 		}
 
@@ -238,16 +220,17 @@ EOT;
 		//check if links exist
 		if ( empty( $response ) || ! isset( $response['channel'] ) || ! isset( $response['channel']['item'] ) || empty( $response['channel']['item'] ) ) {
 			$message = __( 'Could not find any links from search engine, deactivating keyword for an hour.', 'wp-content-pilot' );
-			wpcp_logger()->info( $message , $campaign_id);
-			$this->deactivate_key( $campaign_id, $keyword);
+			wpcp_logger()->info( $message, $campaign_id );
+			$this->deactivate_key( $campaign_id, $keyword );
+
 			return new WP_Error( 'no-links-found', $message );
 		}
 
-		$inserted = 0;
-		$items =  $response['channel']['item'];
+		$inserted     = 0;
+		$items        = $response['channel']['item'];
 		$banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article' );
 		$banned_hosts = preg_split( '/\n/', $banned_hosts );
-		$banned_hosts = array_merge( $banned_hosts, array('youtube.com', 'wikipedia', 'dictionary', 'youtube'));
+		$banned_hosts = array_merge( $banned_hosts, array( 'youtube.com', 'wikipedia', 'dictionary', 'youtube' ) );
 		foreach ( $items as $item ) {
 
 			foreach ( $banned_hosts as $banned_host ) {
@@ -280,11 +263,12 @@ EOT;
 
 		if ( $inserted < 1 ) {
 			wpcp_logger()->info( 'Could not find any links', $campaign_id );
-			$this->deactivate_key( $campaign_id, $keyword);
+			$this->deactivate_key( $campaign_id, $keyword );
+
 			return false;
 		}
 
-		wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1);
+		wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $items ), $inserted ), $campaign_id );
 
 		return true;

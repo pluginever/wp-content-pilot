@@ -15,34 +15,9 @@ class WPCP_Feed extends WPCP_Module {
 	 * WPCP_Module constructor.
 	 */
 	public function __construct() {
-		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
-
-		add_action( 'wpcp_feed_campaign_options_meta_fields', array( $this, 'add_campaign_option_fields' ) );
-
-		add_action( 'wpcp_feed_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2 );
-
+		parent::__construct( 'feed' );
 		add_action( 'wp_feed_options', array( $this, 'set_feed_options' ) );
 		add_action( 'http_response', array( $this, 'trim_feed_content' ) );
-	}
-
-	/**
-	 * @return string
-	 * @since 1.2.0
-	 */
-	public function get_campaign_type() {
-		return 'feed';
-	}
-
-	/**
-	 * @param $modules
-	 *
-	 * @return array
-	 * @since 1.2.0
-	 */
-	public function register_module( $modules ) {
-		$modules['feed'] = __CLASS__;
-
-		return $modules;
 	}
 
 	/**
@@ -93,10 +68,10 @@ EOT;
 		) );
 
 		echo WPCP_HTML::checkbox_input( array(
-			'name'        => '_fetch_full_content',
-			'label'       => __( 'Feed fetch full content', 'wp-content-pilot' ),
+			'name'          => '_fetch_full_content',
+			'label'         => __( 'Feed fetch full content', 'wp-content-pilot' ),
 			'wrapper_class' => 'pro',
-			'attrs'=> array(
+			'attrs'         => array(
 				'disabled' => 'disabled'
 			)
 		) );
@@ -143,55 +118,51 @@ EOT;
 	 * @return array|WP_Error
 	 * @since 1.2.0
 	 */
-	public function get_post( $feed_urls = null ) {
+	public function get_post( $campaign_id, $feed_urls ) {
 
-		$last_keyword = wpcp_get_post_meta( $this->campaign_id, '_last_keyword', '' );
-		
+		$last_keyword = $this->get_last_keyword( $campaign_id );
+
+		wpcp_logger()->info( 'Feed Campaign Started', $campaign_id );
 
 		foreach ( $feed_urls as $feed_url ) {
-			wpcp_logger()->debug( sprintf( 'Looping through feed link [ %s ]', $feed_url ) );
+			wpcp_logger()->info( sprintf( 'Looping through feed link now trying with [ %s ]', $feed_url ), $campaign_id );
 			//if more than 1 then unset last one
 			if ( count( $feed_urls ) > 1 && $last_keyword == $feed_url ) {
-				wpcp_logger()->debug( sprintf( 'feed links more than 1 and [ %s ] this link used last time so skipping it ', $feed_url ) );
+				wpcp_logger()->info( sprintf( 'feed links more than 1 and [ %s ] this link used last time so skipping it ', $feed_url ), $campaign_id );
 				continue;
 			}
 
-			if ( $this->is_deactivated_key( $this->campaign_id, $feed_url ) ) {
+			if ( $this->is_deactivated_key( $campaign_id, $feed_url ) ) {
 				$message = sprintf( 'The feed url is deactivated for 1 hr because last time could not find any article with url [%s]', $feed_url );
-				wpcp_logger()->debug( $message );
-				$this->errors[] = $message;
+				wpcp_logger()->info( $message, $campaign_id );
 				continue;
 			}
 
 			//get links from database
 			$links = $this->get_links( $feed_url );
 			if ( empty( $links ) ) {
-				wpcp_logger()->info( 'No generated links now need to generate new links',$this->campaign_id );
-				$this->discover_links( $feed_url );
-				$links           = $this->get_links( $feed_url );
+				wpcp_logger()->info( 'No generated links now need to generate new links', $campaign_id );
+				$this->discover_links( $feed_url, $campaign_id );
+				$links = $this->get_links( $feed_url );
 			}
 
 			if ( empty( $links ) ) {
-				$message = __( 'No links to process the campaign, will run again after 1 hour' );
-				wpcp_logger()->error( $message );
-				$this->deactivate_key( $this->campaign_id, $feed_url );
-				$this->errors[] = $message;
+				$message = __( 'No links to process the campaign, will run again after 1 hour', $campaign_id );
+				wpcp_logger()->error( $message, $campaign_id );
+				$this->deactivate_key( $campaign_id, $feed_url );
+
 				return new WP_Error( 'no-links', $message );
 			}
 
-			wpcp_logger()->debug( 'Starting to process feed article',$this->campaign_id );
-
-			wpcp_logger()->info( 'Campaign Started', $this->campaign_id);
-
 			foreach ( $links as $key => $link ) {
-				wpcp_logger()->info( sprintf( 'Running campaign from generated %d time link [%s]', $key + 1, $link->url ),$this->campaign_id );
+				wpcp_logger()->info( sprintf( 'Running campaign from generated %d time link [%s]', $key + 1, $link->url ), $campaign_id );
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
 				$curl = $this->setup_curl();
 				$curl->get( $link->url );
 
-				if ( $curl->isError() && $this->initiator != 'cron') {
-					wpcp_logger()->info( sprintf( "Failed processing link reason [%s]", $curl->getErrorMessage() ),$this->campaign_id );
+				if ( $curl->isError() && $this->initiator != 'cron' ) {
+					wpcp_logger()->info( sprintf( "Failed processing link reason [%s]", $curl->getErrorMessage() ), $campaign_id );
 					continue;
 				}
 
@@ -199,11 +170,11 @@ EOT;
 				$readability = new WPCP_Readability();
 				$readable    = $readability->parse( $html, $link->url );
 				if ( is_wp_error( $readable ) ) {
-					wpcp_logger()->info( sprintf( "Failed readability reason [%s]", $readable->get_error_message() ),$this->campaign_id );
+					wpcp_logger()->info( sprintf( "Failed readability reason [%s]", $readable->get_error_message() ), $campaign_id );
 					continue;
 				}
 
-				$article = apply_filters('wpcp_feed_article', array(
+				$article = apply_filters( 'wpcp_feed_article', array(
 					'title'      => $readability->get_title(),
 					'author'     => $readability->get_author(),
 					'image_url'  => $readability->get_image(),
@@ -211,36 +182,35 @@ EOT;
 					'language'   => $readability->get_language(),
 					'content'    => $readability->get_excerpt(),
 					'source_url' => $link->url,
-				), $readability, $this->campaign_id );
+				), $readability, $campaign_id );
 
-				wpcp_logger()->info( 'successfully generated article',$this->campaign_id );
-				wpcp_update_post_meta( $this->campaign_id, '_last_keyword', $feed_url );
+				wpcp_logger()->info( 'successfully generated article', $campaign_id );
+				wpcp_update_post_meta( $campaign_id, '_last_keyword', $feed_url );
 				$this->update_link( $link->id, [ 'status' => 'success' ] );
+
 				return $article;
 
 			}
 		}
-		if(is_array( $this->errors) && count( $this->errors) > 1){
-			return new WP_Error('wpcp-error', array_pop( $this->errors ));
-		}
 
-		return new WP_Error( 'campaign-error', __( 'Could not generate any article, try later', 'wp-content-pilot' ) );
+		return new WP_Error( 'campaign-error', __( 'No article generated check log for details.', 'wp-content-pilot' ) );
 	}
 
 
-	public function discover_links( $feed_link ) {
+	public function discover_links( $feed_link, $campaign_id ) {
 		include_once( ABSPATH . WPINC . '/feed.php' );
 		$rss = fetch_feed( $feed_link );
 
 		if ( is_wp_error( $rss ) ) {
-			wpcp_logger()->info( sprintf( 'Failed fetching feeds [%s]', $rss->get_error_message() ) );
+			wpcp_logger()->warning( sprintf( 'Failed fetching feeds [%s]', $rss->get_error_message() ), $campaign_id );
+
 			return $rss;
 		}
 
 		$max_items = $rss->get_item_quantity();
 		$rss_items = $rss->get_items( 0, $max_items );
 		if ( ! isset( $max_items ) || $max_items == 0 ) {
-			wpcp_logger()->info( 'Could not find any article, waiting...' );
+			wpcp_logger()->info( 'Could not find any article, waiting...', $campaign_id );
 
 			return new WP_Error( 'feed-error', __( 'Could not find any article, waiting...', 'wp-content-pilot' ) );
 		}
@@ -271,7 +241,7 @@ EOT;
 				continue;
 			}
 
-			if(wpcp_is_duplicate_title( $title)){
+			if ( wpcp_is_duplicate_title( $title ) ) {
 				continue;
 			}
 
@@ -291,7 +261,7 @@ EOT;
 			return false;
 		}
 
-		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $rss_items ), $inserted ),$campaign_id );
+		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $rss_items ), $inserted ), $campaign_id );
 
 		return $inserted;
 	}
@@ -326,13 +296,13 @@ EOT;
 
 
 	/**
-	 * @since 1.2.0
 	 * @param $campaign_id
 	 *
 	 * @return array|string|null
+	 * @since 1.2.0
 	 */
 	public function get_keywords( $campaign_id ) {
-		return wpcp_get_post_meta( $this->campaign_id, '_feed_links', '' );
+		return wpcp_get_post_meta( $campaign_id, '_feed_links', '' );
 	}
 
 	/**

@@ -154,7 +154,6 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/post-types.php';
 		require_once WPCP_INCLUDES . '/script-functions.php';
 		require_once WPCP_INCLUDES . '/class-wpcp-html.php';
-		require_once WPCP_INCLUDES . '/metabox-functions.php';
 
 		//core files
 		require_once( WPCP_INCLUDES . '/wp-async-request.php' );
@@ -167,21 +166,16 @@ final class ContentPilot {
 		require_once( WPCP_INCLUDES . '/class-wpcp-module.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-notices.php' );
 
-		//settings
-		require_once WPCP_INCLUDES . '/class-admin-menu.php';
-		require_once WPCP_INCLUDES . '/class-settings-api.php';
-		require_once WPCP_INCLUDES . '/class-settings.php';
-
-		//misc
-		require_once WPCP_INCLUDES . '/class-help.php';
-		require_once WPCP_INCLUDES . '/class-promotion.php';
-
 		//modules
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-article.php' );
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-feed.php' );
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-youtube.php' );
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-envato.php' );
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-flickr.php' );
+
+		if(is_admin()){
+			require_once( WPCP_INCLUDES . '/admin/class-wpcp-admin.php' );
+		}
 	}
 
 	/**
@@ -195,7 +189,6 @@ final class ContentPilot {
 		register_activation_hook( __FILE__, array( $this, 'activate_cron' ) );
 		add_action( 'init', array( $this, 'localization_setup' ) );
 		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ), 20 );
-		add_action( 'admin_init', array( $this, 'plugin_upgrades' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 		add_action( 'admin_init', array( $this, 'check_if_cron_running' ) );
 	}
@@ -253,25 +246,6 @@ final class ContentPilot {
 		);
 
 		return $schedules;
-	}
-
-	/**
-	 * Do plugin upgrades
-	 *
-	 * @return void
-	 * @since 1.0.0
-	 *
-	 */
-	public function plugin_upgrades() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-		require_once( dirname( __FILE__ ) . '/includes/class-upgrades.php' );
-		$upgrader = new ContentPilot_Upgrades();
-
-		if ( $upgrader->needs_update() ) {
-			$upgrader->perform_updates();
-		}
 	}
 
 	/**

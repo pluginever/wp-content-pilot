@@ -17,21 +17,22 @@ function wpcp_handle_manual_campaign() {
 
 	$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
 
-	$article_id = content_pilot()->modules()->load( $campaign_type )->process_campaign( $campaign_id, '', 'user');
-	if(is_wp_error( $article_id )){
-		wpcp_admin_notice($article_id->get_error_message(), 'error');
+	$article_id = content_pilot()->modules()->load( $campaign_type )->process_campaign( $campaign_id, '', 'user' );
+	if ( is_wp_error( $article_id ) ) {
+		wpcp_admin_notice( $article_id->get_error_message(), 'error' );
 		wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
+		exit();
 	}
-
 
 
 	$article_title = '<strong><a href="' . get_the_permalink( $article_id ) . '" target="_blank">' . get_the_title( $article_id ) . '</a></strong>';
 	$message       = sprintf( __( 'A post successfully created by %s titled %s', 'wp-content-pilot' ), '<strong>' . get_the_title( $campaign_id ) . '</strong>', $article_title );
 
-	wpcp_admin_notice($message);
+	wpcp_admin_notice( $message );
 	wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
-
+	exit();
 }
+
 add_action( 'admin_post_wpcp_run_campaign', 'wpcp_handle_manual_campaign' );
 
 
@@ -43,13 +44,14 @@ add_action( 'admin_post_wpcp_run_campaign', 'wpcp_handle_manual_campaign' );
  * @since 1.0.0
  */
 function wpcp_run_automatic_campaign() {
-	wpcp_logger()->debug( 'wpcp_run_automatic_campaign');
+	wpcp_logger()->debug( 'wpcp_run_automatic_campaign' );
 	global $wpdb;
 	$sql       = "select * from {$wpdb->posts} p  left join {$wpdb->postmeta} m on p.id = m.post_id having m.meta_key = '_campaign_status' AND m.meta_value = 'active'";
 	$campaigns = $wpdb->get_results( $sql );
 
 	if ( empty( $campaigns ) ) {
-		wpcp_logger()->debug( 'No campaign found in scheduled task');
+		wpcp_logger()->debug( 'No campaign found in scheduled task' );
+
 		return;
 	}
 
@@ -75,14 +77,14 @@ function wpcp_run_automatic_campaign() {
 			}
 
 			if ( $posted >= $target ) {
-				wpcp_logger()->debug( 'Reached target stopping campaign');
+				wpcp_logger()->debug( 'Reached target stopping campaign' );
 				wpcp_disable_campaign( $campaign_id );
 				continue;
 			}
 
-			$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', '');
-			if(!empty( $campaign_type)){
-				content_pilot()->modules()->load( $campaign_type)->process_campaign( $campaign_id, '', 'cron');
+			$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', '' );
+			if ( ! empty( $campaign_type ) ) {
+				content_pilot()->modules()->load( $campaign_type )->process_campaign( $campaign_id, '', 'cron' );
 			}
 
 //			$automatic_campaign->push_to_queue( $campaign_id );
@@ -98,3 +100,45 @@ add_action( 'wp_wpcp_automatic_campaign_cron', 'wpcp_run_automatic_campaign' );
 add_action( 'wp_privacy_delete_old_export_files', 'wpcp_run_automatic_campaign' );
 
 
+function wpcp_delete_all_campaign_posts() {
+	if ( ! isset( $_REQUEST['nonce'] ) || ! isset( $_REQUEST['camp_id'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_delete_posts' ) ) {
+		wp_send_json_error( 'Unauthorized!!!' );
+	}
+
+	$camp_id = isset( $_REQUEST['camp_id'] ) && ! empty( $_REQUEST['camp_id'] ) ? $_REQUEST['camp_id'] : false;
+	if ( ! $camp_id ) {
+		wp_send_json_error( 'Invalid campaign ID.' );
+	}
+
+	$args = array(
+		'meta_key'       => '_campaign_id',
+		'meta_value'     => $camp_id,
+		'posts_per_page' => - 1,
+		'post_type'      => wpcp_get_post_meta( $camp_id, '_post_type', 'post' ),
+
+	);
+
+	$posts = wpcp_get_posts( $args );
+
+	if ( is_array( $posts ) && count( $posts ) ) {
+		foreach ( $posts as $post ) {
+			wp_delete_post( $post->ID, true );
+		}
+	}
+
+	wp_send_json_success( 'Done' );
+}
+
+add_action( 'wp_ajax_wpcp_delete_all_campaign_posts', 'wpcp_delete_all_campaign_posts' );
+
+function wpcp_clear_logs(){
+	error_log( print_r( $_REQUEST, true ));
+	if ( ! isset( $_REQUEST['nonce'] )|| ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_clear_logs' ) ) {
+		wp_send_json_error( 'Unauthorized!!!' );
+	}
+
+	global $wpdb;
+	$wpdb->query( "TRUNCATE TABLE $wpdb->wpcp_logs");
+	wp_send_json_success('success');
+}
+add_action( 'wp_ajax_wpcp_clear_logs', 'wpcp_clear_logs' );

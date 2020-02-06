@@ -7,13 +7,16 @@ $run_campaign_url = add_query_arg( array(
 	'campaign_id' => $post->ID,
 	'nonce'       => wp_create_nonce( 'wpcp_run_campaign' )
 ), esc_url( admin_url( 'admin-post.php' ) ) );
-$last_run     = wpcp_get_post_meta( $post->ID, '_last_run', 0 );
+$last_run         = wpcp_get_post_meta( $post->ID, '_last_run', 0 );
 if ( $last_run ) {
 	$last_run = date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $last_run );
 }
 $campaign_type = wpcp_get_post_meta( $post->ID, '_campaign_type', '' );
 $status        = wpcp_get_post_meta( $post->ID, '_campaign_status', '' );
 $last_post     = wpcp_get_post_meta( $post->ID, '_last_post', '' );
+if ( ! empty( $last_post ) && $last_post = get_post( $last_post ) ) {
+	$last_post = get_post( $last_post );
+}
 ?>
 <div class="wpcp-campaign-status-wrap">
 	<div class="wpcp-campaign-statue-item">
@@ -44,6 +47,7 @@ $last_post     = wpcp_get_post_meta( $post->ID, '_last_post', '' );
 	<div class="wpcp-campaign-statue-item">
 		<h2 class="wpcp-campaign-statue-title">Run Campaign</h2>
 		<span class="spinner" style="float: none;margin-left: 0;display: none;"></span>
-		<a id="wpcp-run-campaign" class="button button-secondary" href="<?php echo esc_url( $run_campaign_url ); ?>">Run Now</a>
+		<a id="wpcp-run-campaign" class="button button-secondary" href="<?php echo esc_url( $run_campaign_url ); ?>">Run
+			Now</a>
 	</div>
 </div>

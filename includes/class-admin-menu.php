@@ -23,10 +23,7 @@ class WPCP_Admin {
 
 
 	function admin_menu() {
-		add_submenu_page( 'edit.php?post_type=wp_content_pilot', __( 'Status', 'wp-content-pilot' ), __( 'Status', 'wp-content-pilot' ), 'manage_options', 'wpcp-status', array(
-			$this,
-			'status_page'
-		) );
+		add_submenu_page( 'edit.php?post_type=wp_content_pilot', __( 'Status', 'wp-content-pilot' ), __( 'Status', 'wp-content-pilot' ), 'manage_options', 'wpcp-status', array( $this, 'status_page' ) );
 
 		add_submenu_page( 'edit.php?post_type=wp_content_pilot', __( 'Logs', 'wp-content-pilot' ), __( 'Logs', 'wp-content-pilot' ), 'manage_options', 'wpcp-logs', array(
 			$this,

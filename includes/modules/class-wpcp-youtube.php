@@ -15,37 +15,14 @@ class WPCP_Youtube extends WPCP_Module {
 	 * WPCP_Module constructor.
 	 */
 	public function __construct() {
-		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
-
 		//option fields
 		add_action( 'wpcp_youtube_campaign_options_meta_fields', 'wpcp_keyword_suggestion_field' );
 		add_action( 'wpcp_youtube_campaign_options_meta_fields', 'wpcp_keyword_field' );
-		add_action( 'wpcp_youtube_campaign_options_meta_fields', array( $this, 'add_campaign_option_fields' ) );
+
+		parent::__construct( 'youtube' );
 
 		//admin notice
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
-
-		add_action( 'wpcp_youtube_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2 );
-	}
-
-	/**
-	 * @return string
-	 * @since 1.2.0
-	 */
-	public function get_campaign_type() {
-		return 'youtube';
-	}
-
-	/**
-	 * @param $modules
-	 *
-	 * @return array
-	 * @since 1.2.0
-	 */
-	public function register_module( $modules ) {
-		$modules['youtube'] = __CLASS__;
-
-		return $modules;
 	}
 
 	/**
@@ -188,7 +165,7 @@ EOT;
 		echo WPCP_HTML::end_double_columns();
 
 		echo WPCP_HTML::checkbox_input( array(
-			'label' => __( 'Auto hyperlink urls within the youtube description', 'wp-content-pilot' ),
+			'label' => __( 'Youtube - Auto hyperlink urls within the description', 'wp-content-pilot' ),
 			'name'  => '_youtube_description_hyperlink',
 		) );
 	}
@@ -232,49 +209,43 @@ EOT;
 	/**
 	 * @return mixed|void
 	 */
-	public function get_post( $keywords = null ) {
+	public function get_post( $campaign_id, $keywords = null ) {
 		//if api not set bail
 		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_youtube', '' );
 		if ( empty( $api_key ) ) {
-			wpcp_disable_campaign( $this->campaign_id );
+			wpcp_disable_campaign( $campaign_id );
 
-			$notice = __( 'The YouTube api key is not set by the campaign won\'t run, disabling campaign.', 'wp-content-pilot-pro' );
+			$notice = __( 'The YouTube api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot-pro' );
 
-			wpcp_logger()->error( $notice, $this->campaign_id );
+			wpcp_logger()->error( $notice, $campaign_id );
 
 			return new WP_Error( 'missing-data', $notice );
 		}
 
-		$last_keyword = wpcp_get_post_meta( $this->campaign_id, '_last_keyword', '' );
+		$last_keyword = $this->get_last_keyword( $campaign_id );
 
 		foreach ( $keywords as $keyword ) {
-			wpcp_logger()->debug( sprintf( 'Looping through keywords [ %s ]', $keyword ) );
+			wpcp_logger()->debug( sprintf( 'Looping through keywords [ %s ]', $keyword ), $campaign_id );
 			//if more than 1 then unset last one
 			if ( count( $keywords ) > 1 && $last_keyword == $keyword ) {
-				wpcp_logger()->debug( sprintf( 'Keywords more than 1 and [ %s ] this keywords used last time so skipping it ', $keyword ),$this->campaign_id );
+				wpcp_logger()->debug( sprintf( 'Keywords more than 1 and [ %s ] this keywords used last time so skipping it ', $keyword ), $campaign_id );
 				continue;
 			}
-
 
 
 			//get links from database
 			$links = $this->get_links( $keyword );
 			if ( empty( $links ) ) {
-				wpcp_logger()->debug( 'No generated links now need to generate new links',$this->campaign_id );
-				$discovered_link = $this->discover_links( $this->campaign_id, $keyword );
-				$links           = $this->get_links( $keyword );
+				wpcp_logger()->debug( 'No generated links now need to generate new links', $campaign_id );
+				$this->discover_links( $campaign_id, $keyword );
+				$links = $this->get_links( $keyword );
 			}
 
-			wpcp_logger()->debug( 'Starting to process youtube article',$this->campaign_id );
-
-			wpcp_logger()->info( 'Campaign Started', $this->campaign_id );
-
 			foreach ( $links as $link ) {
-				wpcp_logger()->debug( sprintf( 'Youtube link#[%s]', $link->url ),$this->campaign_id );
+				wpcp_logger()->debug( sprintf( 'Youtube link#[%s]', $link->url ), $campaign_id );
 				$link_parts = explode( 'v=', $link->url );
 				$video_id   = $link_parts[1];
 
-				$article = [];
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
 				$curl     = $this->setup_curl();
@@ -282,7 +253,7 @@ EOT;
 				$curl->get( $endpoint );
 
 				if ( $curl->error ) {
-					wpcp_logger()->warning( sprintf( 'Request error in grabbing video details error [ %s ]', $curl->errorMessage ), $this->campaign_id );
+					wpcp_logger()->warning( sprintf( 'Request error in grabbing video details error [ %s ]', $curl->errorMessage ), $campaign_id );
 					continue;
 				}
 
@@ -302,7 +273,7 @@ EOT;
 					$transcript = wpcp_pro_get_youtube_transcript( $link );
 				}
 
-				$hyperlink_description = wpcp_get_post_meta( $this->campaign_id, '_youtube_description_hyperlink', '' );
+				$hyperlink_description = wpcp_get_post_meta( $campaign_id, '_youtube_description_hyperlink', '' );
 				if ( 'on' == $hyperlink_description ) {
 					$description = wpcp_hyperlink_text( $description );
 				}
@@ -331,14 +302,14 @@ EOT;
 					'transcript'     => $transcript,
 				);
 
-				wpcp_logger()->info( 'Successfully generated youtube article',$this->campaign_id );
-				wpcp_update_post_meta( $this->campaign_id, '_last_keyword', $keyword );
+				wpcp_logger()->info( 'Successfully generated youtube article', $campaign_id );
+				$this->set_last_keyword( $campaign_id, $keyword );
 
 				return $article;
 			}
 		}
-		return new WP_Error( 'campaign-error', __( 'No youtube article generated check log for details.', 'wp-content-pilot' ) );
 
+		return new WP_Error( 'campaign-error', __( 'No youtube article generated check log for details.', 'wp-content-pilot' ) );
 
 	}
 

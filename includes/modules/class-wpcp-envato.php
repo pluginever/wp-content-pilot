@@ -15,43 +15,15 @@ class WPCP_Envato extends WPCP_Module {
 	 * WPCP_Module constructor.
 	 */
 	public function __construct() {
-		add_filter( 'wpcp_modules', array( $this, 'register_module' ) );
 		add_action( 'wpcp_envato_campaign_options_meta_fields', 'wpcp_keyword_suggestion_field' );
 		add_action( 'wpcp_envato_campaign_options_meta_fields', 'wpcp_keyword_field' );
-		add_action( 'wpcp_envato_campaign_options_meta_fields', array( $this, 'add_campaign_option_fields' ) );
 
-		add_action( 'wpcp_envato_campaign_options_meta_fields', array( $this, 'add_campaign_option_fields' ) );
-		add_action( 'wpcp_update_campaign_settings_youtube', array( $this, 'save_campaign_meta' ), 10, 2 );
+		parent::__construct( 'envato' );
 	}
 
-
-	/**
-	 * @return string
-	 * @since 1.2.0
-	 */
-	public function get_campaign_type() {
-		return 'envato';
-	}
-
-	/**
-	 * @param $modules
-	 *
-	 * @return array
-	 * @since 1.2.0
-	 */
-	public function register_module( $modules ) {
-		$modules['envato'] = __CLASS__;
-
-		return $modules;
-	}
-
-	/**
-	 * @return string
-	 */
 	public function get_module_icon() {
-		return '';
+		// TODO: Implement get_module_icon() method.
 	}
-
 
 	/**
 	 * @return array
@@ -163,7 +135,13 @@ EOT;
 	 * @param $posted
 	 */
 	public function save_campaign_meta( $campaign_id, $posted ) {
-
+		$price_range        = empty( $posted['_price_range'] ) ? '' : sanitize_text_field( $posted['_price_range'] );
+		$price_range_ranges = wpcp_string_to_array( $price_range, '|', array( 'trim', 'intval' ) );
+		$price_range_ranges = empty( $price_range_ranges ) ? '' : implode( '|', $price_range_ranges );
+		update_post_meta( $campaign_id, '_platform', empty( $posted['_platform'] ) ? 'no' : sanitize_text_field( $posted['_platform'] ) );
+		update_post_meta( $campaign_id, '_price_range', $price_range_ranges );
+		update_post_meta( $campaign_id, '_envato_sort_by', empty( $posted['_envato_sort_by'] ) ? 'no' : sanitize_text_field( $posted['_envato_sort_by'] ) );
+		update_post_meta( $campaign_id, '_envato_sort_direction', empty( $posted['_envato_sort_direction'] ) ? 'no' : sanitize_text_field( $posted['_envato_sort_direction'] ) );
 	}
 
 	/**
@@ -190,8 +168,47 @@ EOT;
 	/**
 	 * @return mixed|void
 	 */
-	public function get_post( $keywords = null ) {
+	public function get_post( $campaign_id, $keywords ) {
+		$token                = wpcp_get_settings( 'token', 'wpcp_settings_envato', '' );
+		$envato_impact_radius = wpcp_get_settings( 'envato_impact_radius', 'wpcp_settings_envato', '' );
 
+		if ( empty( $api_key ) ) {
+			$notice = __( 'The Envato api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot-pro' );
+
+			wpcp_logger()->error( $notice, $campaign_id );
+			wpcp_disable_campaign( $campaign_id );
+
+			return new WP_Error( 'missing-data', $notice );
+		}
+
+		$last_keyword = $this->get_last_keyword( $campaign_id );
+
+		foreach ( $keywords as $keyword ) {
+			wpcp_logger()->debug( sprintf( 'Looping through keywords [ %s ]', $keyword ), $campaign_id );
+			//if more than 1 then unset last one
+			if ( count( $keywords ) > 1 && $last_keyword == $keyword ) {
+				wpcp_logger()->debug( sprintf( 'Keywords more than 1 and [ %s ] this keywords used last time so skipping it ', $keyword ), $campaign_id );
+				continue;
+			}
+
+
+			$total_page_key = $this->get_unique_key( "$keyword-total-page" );
+			$page_key       = $this->get_unique_key( $keyword );
+			$total_page     = wpcp_get_post_meta( $campaign_id, $total_page_key, '' );
+			$page_number    = wpcp_get_post_meta( $campaign_id, $page_key, 1 );
+			$site           = wpcp_get_post_meta( $this->campaign_id, '_platform', null );
+			$sort_by        = wpcp_get_post_meta( $this->campaign_id, '_envato_sort_by', 'relevance' );
+			$sort_direction = wpcp_get_post_meta( $this->campaign_id, '_envato_sort_direction', 'asc' );
+			$price_range    = wpcp_get_post_meta( $this->campaign_id, '_price_range', '' );
+
+			$price_range = explode( '|', $price_range );
+			$min_price   = ! empty( $price_range[0] ) ? trim( $price_range[0] ) : 0;
+			$max_price   = ! empty( $price_range[1] ) ? trim( $price_range[1] ) : 0;
+
+
+
+
+		}
 	}
 
 	/**
