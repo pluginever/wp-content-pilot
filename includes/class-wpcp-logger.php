@@ -103,7 +103,7 @@ class WPCP_Logger {
 	 *
 	 * @return void
 	 */
-	public function error( $message, $campaign_id = 0  ) {
+	public function error( $message, $campaign_id = 0 ) {
 		$this->writeLog( $message, 'ERROR', $campaign_id = 0 );
 	}
 
@@ -129,7 +129,12 @@ class WPCP_Logger {
 			fwrite( $this->file, "[$time] : [$severity] - $message" . PHP_EOL );
 		}
 
-		if ( in_array( $severity, [ 'INFO', 'WARNING', 'ERROR' ] ) ) {
+		$severities = [ 'INFO', 'WARNING', 'ERROR' ];
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			$severities[] = 'DEBUG';
+		}
+
+		if ( in_array( $severity, $severities ) ) {
 			wpcp_insert_log( $message, $severity, $campaign_id );
 		}
 

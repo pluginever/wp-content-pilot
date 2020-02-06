@@ -112,7 +112,7 @@ EOT;
 	 */
 	public function get_post( $campaign_id, $keywords ) {
 		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
-
+		wpcp_logger()->info( 'Flickr Campaign Started', $campaign_id );
 		if ( empty( $api_key ) ) {
 			wpcp_disable_campaign( $campaign_id );
 
@@ -126,10 +126,10 @@ EOT;
 		$last_keyword = $this->get_last_keyword( $campaign_id );
 
 		foreach ( $keywords as $keyword ) {
-			wpcp_logger()->debug( sprintf( 'Looping through keywords [ %s ]', $keyword ), $campaign_id );
+			wpcp_logger()->info( sprintf( 'Looping through keywords [ %s ]', $keyword ), $campaign_id );
 			//if more than 1 then unset last one
 			if ( count( $keywords ) > 1 && $last_keyword == $keyword ) {
-				wpcp_logger()->debug( sprintf( 'Keywords more than 1 and [ %s ] this keywords used last time so skipping it ', $keyword ), $campaign_id );
+				wpcp_logger()->info( sprintf( 'Keywords more than 1 and [ %s ] this keywords used last time so skipping it ', $keyword ), $campaign_id );
 				continue;
 			}
 
@@ -202,7 +202,7 @@ EOT;
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 				continue;
 			}
-
+			wpcp_logger()->info( sprintf( 'Generating flickr article from [ %s ]', $source_url), $campaign_id);
 			$article = array(
 				'title'      => $title,
 				'content'    => $description,
@@ -218,19 +218,19 @@ EOT;
 
 			$this->insert_link( array(
 				'keyword' => $keyword,
+				'title'   => $title,
 				'url'     => $source_url,
 			) );
 			wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
+
+			wpcp_logger()->info( 'hurray! successfully generated article', $campaign_id );
+
 			return $article;
 		}
 
 		return new WP_Error( 'campaign-error', __( 'No flickr article generated check log for details.', 'wp-content-pilot' ) );
 	}
 
-	public function discover_links( $campaign_id, $keyword, $api_key ) {
-
-
-	}
 
 	/**
 	 * Main WPCP_Flickr Instance.

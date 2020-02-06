@@ -100,7 +100,7 @@ function wp_content_pilot_columns( $columns ) {
 	unset( $columns['date'] );
 	$columns['status']    = __( 'Status', 'wp-content-pilot' );
 	$columns['type']      = __( 'Type', 'wp-content-pilot' );
-	$columns['target']    = __( 'Target', 'wp-content-pilot' );
+	$columns['target']    = __( 'Posts/Target', 'wp-content-pilot' );
 	$columns['frequency'] = __( 'Frequency', 'wp-content-pilot' );
 	$columns['last_run']  = __( 'Last Run', 'wp-content-pilot' );
 
@@ -135,8 +135,9 @@ function wp_content_pilot_column_content( $column_name, $post_ID ) {
 		case 'frequency':
 			$frenquency = wpcp_get_post_meta( $post_ID, '_campaign_frequency', 0 );
 			$frenquency_unit = wpcp_get_post_meta( $post_ID, '_frequency_unit', 'hour' );
+
 			if ( $frenquency ) {
-				echo sprintf('%d/%s', $frenquency, $frenquency_unit);
+				echo sprintf('Every %d %s', $frenquency, $frenquency_unit);
 			} else {
 				echo ' - ';
 			}

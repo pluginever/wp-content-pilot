@@ -273,9 +273,9 @@ EOT;
 				if ( @$item->tags ) {
 					$tags = $tags;
 				}
-				$tags = wpcp_array_to_html( $tags );
+				$tags  = wpcp_array_to_html( $tags );
 				$price = wpcp_cent_to_usd( @$item->price_cents );
-				wpcp_logger()->info( sprintf( 'Generating envato article from [ %s ]', $item->url), $campaign_id);
+				wpcp_logger()->info( sprintf( 'Generating envato article from [ %s ]', $item->url ), $campaign_id );
 				$article = [
 					'title'              => $item->name,
 					'content'            => $item->description_html,
@@ -283,7 +283,7 @@ EOT;
 					'source_url'         => $item->url,
 					'classification'     => sanitize_text_field( @$item->classification ),
 					'classification_url' => sanitize_text_field( @$item->classification ),
-					'price'              => wpcp_price( $price),
+					'price'              => wpcp_price( $price ),
 					'number_of_sales'    => intval( @$item->number_of_sales ),
 					'author_username'    => sanitize_key( @$item->author_username ),
 					'author_url'         => esc_url( @$item->author_url ),
@@ -295,7 +295,14 @@ EOT;
 				];
 				wpcp_logger()->info( 'hurray! successfully generated article', $campaign_id );
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-				$this->set_last_keyword( $campaign_id, $keyword);
+				$this->set_last_keyword( $campaign_id, $keyword );
+
+				$this->insert_link( array(
+					'keyword' => $keyword,
+					'title'   => $item->name,
+					'url'     => $item->url,
+				) );
+
 				return $article;
 			}
 		}

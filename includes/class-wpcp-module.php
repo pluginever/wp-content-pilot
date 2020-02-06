@@ -130,20 +130,18 @@ abstract class WPCP_Module {
 	 * @since 1.2.0
 	 */
 	public function process_campaign( $campaign_id, $keywords = null, $user = 'cron' ) {
-		wpcp_logger()->debug( sprintf( 'Processing campaign id# [%d] Keyword#[%s] and user#[%s]', $campaign_id, $keywords, $user ), $campaign_id );
-
 		//todo uncomment this
-//		$wp_post = get_post( $campaign_id );
-//		if ( ! $wp_post || 'wp-content-pilot' !== $wp_post->post_type || 'publish' !== $wp_post->post_status ) {
-//			wpcp_logger()->error( 'Could not find any campaign with the provided id');
-//			return new WP_Error( 'invalid-campaign-id', __( 'Could not find any campaign with the provided id', 'wp-content-pilot' ) );
-//		}
-//
-//		$campaign_type = get_post_meta( $campaign_id, '_campaign_type', true );
-//		if ( $campaign_type !== $this->campaign_type ) {
-//			wpcp_logger()->error( 'Campaign type mismatch');
-//			return new WP_Error( 'invalid-campaign-id', __( 'Campaign type mismatch', 'wp-content-pilot' ) );
-//		}
+		$wp_post = get_post( $campaign_id );
+		if ( ! $wp_post || 'wp-content-pilot' !== $wp_post->post_type  ) {
+			wpcp_logger()->error( 'Could not find any campaign with the provided id', $campaign_id);
+			return new WP_Error( 'invalid-campaign-id', __( 'Could not find the campaign', 'wp-content-pilot' ) );
+		}
+
+		$campaign_type = get_post_meta( $campaign_id, '_campaign_type', true );
+		if ( $campaign_type !== $this->campaign_type ) {
+			wpcp_logger()->error( 'Campaign type mismatch', $campaign_id);
+			return new WP_Error( 'invalid-campaign-id', __( 'Campaign type mismatch', 'wp-content-pilot' ) );
+		}
 
 		$this->campaign_id = absint( $campaign_id );
 		$this->initiator   = sanitize_text_field( $user );
