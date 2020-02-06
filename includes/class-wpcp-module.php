@@ -114,13 +114,13 @@ abstract class WPCP_Module {
 
 
 	/**
-	 * @since 1.2.0
 	 * @param int $campaign_id
 	 * @param array $keywords
 	 *
 	 * @return mixed
+	 * @since 1.2.0
 	 */
-	abstract public function get_post( $campaign_id, $keywords);
+	abstract public function get_post( $campaign_id, $keywords );
 
 	/**
 	 * @param $campaign_id
@@ -159,12 +159,12 @@ abstract class WPCP_Module {
 		}
 
 		$keywords = wpcp_string_to_array( $keywords );
-
+		shuffle( $keywords );
 		if ( empty( $keywords ) ) {
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}
 
-		$article = $this->get_post($campaign_id,  $keywords );
+		$article = $this->get_post( $campaign_id, $keywords );
 		if ( is_wp_error( $article ) ) {
 			wpcp_logger()->error( $article->get_error_message() );
 
@@ -396,7 +396,7 @@ abstract class WPCP_Module {
 		}
 
 		//save campaign data
-		update_post_meta( $post_id, '_campaign_id', $campaign_id);
+		update_post_meta( $post_id, '_campaign_id', $campaign_id );
 
 		update_post_meta( $this->campaign_id, '_last_post', $post_id );
 		update_post_meta( $this->campaign_id, '_last_run', current_time( 'mysql' ) );
@@ -471,21 +471,22 @@ abstract class WPCP_Module {
 	}
 
 	/**
-	 * @since 1.2.0
 	 * @param $campaign_id
 	 *
 	 * @return array|string|null
+	 * @since 1.2.0
 	 */
-	protected function get_last_keyword($campaign_id){
+	protected function get_last_keyword( $campaign_id ) {
 		return wpcp_get_post_meta( $this->campaign_id, '_last_keyword', '' );
 	}
 
 	/**
-	 * @since 1.2.0
 	 * @param $campaign_id
 	 * @param $keyword
+	 *
+	 * @since 1.2.0
 	 */
-	protected function set_last_keyword($campaign_id, $keyword){
+	protected function set_last_keyword( $campaign_id, $keyword ) {
 		wpcp_update_post_meta( $campaign_id, '_last_keyword', $keyword );
 	}
 
