@@ -223,7 +223,7 @@ EOT;
 			) );
 			wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 
-			wpcp_logger()->info( 'hurray! successfully generated article', $campaign_id );
+			wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
 
 			return $article;
 		}

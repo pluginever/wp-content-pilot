@@ -29,6 +29,16 @@ abstract class WPCP_Module {
 	protected $initiator;
 
 	/**
+	 * @var int
+	 */
+	protected $max_try = 3;
+
+	/**
+	 * @var int
+	 */
+	protected $try_count = 0;
+
+	/**
 	 * @param $campaign_type
 	 *
 	 * @since 1.2.0
@@ -132,15 +142,24 @@ abstract class WPCP_Module {
 	public function process_campaign( $campaign_id, $keywords = null, $user = 'cron' ) {
 		//todo uncomment this
 		$wp_post = get_post( $campaign_id );
-		if ( ! $wp_post || 'wp-content-pilot' !== $wp_post->post_type  ) {
-			wpcp_logger()->error( 'Could not find any campaign with the provided id', $campaign_id);
+		if ( ! $wp_post || 'wp_content_pilot' !== $wp_post->post_type ) {
+			wpcp_logger()->error( 'Could not find any campaign with the provided id', $campaign_id );
+
 			return new WP_Error( 'invalid-campaign-id', __( 'Could not find the campaign', 'wp-content-pilot' ) );
 		}
 
 		$campaign_type = get_post_meta( $campaign_id, '_campaign_type', true );
 		if ( $campaign_type !== $this->campaign_type ) {
-			wpcp_logger()->error( 'Campaign type mismatch', $campaign_id);
+			wpcp_logger()->error( 'Campaign type mismatch', $campaign_id );
+
 			return new WP_Error( 'invalid-campaign-id', __( 'Campaign type mismatch', 'wp-content-pilot' ) );
+		}
+
+		if ( $this->try_count > $this->max_try ) {
+			$message = __( 'Tried maximum time but could not generate article check log', 'wp-content-pilot' );
+			wpcp_logger()->error( $message, $campaign_id );
+
+			return new WP_Error( 'time-out', __( 'Tried maximum time but could not generate article check log', 'wp-content-pilot' ) );
 		}
 
 		$this->campaign_id = absint( $campaign_id );
@@ -184,17 +203,19 @@ abstract class WPCP_Module {
 		) );
 
 		//check if acceptance passed if not then return this method again
-		$accepted = apply_filters( 'wpcp_acceptance_check', true, $article, $this->campaign_id, $this );
+		$accepted = apply_filters( 'wpcp_acceptance_check', true, $article, $campaign_id, $this );
 		if ( ! $accepted ) {
-			wpcp_logger()->debug( 'Article failed in acceptance test' );
+			wpcp_logger()->debug( 'Article failed in acceptance test', $campaign_id );
+			$this->try_count ++;
 
-			return $this->process_campaign( $campaign_id, $keywords, $user );
+			return $this->process_campaign( $campaign_id, '', $user );
 		}
 
 
 		//truncate content
 		$limit_title = wpcp_get_post_meta( $this->campaign_id, '_title_limit', 0 );
 		if ( ! empty( $limit_title ) && $limit_title > 0 ) {
+			wpcp_logger()->debug( 'Limiting title', $campaign_id );
 			$article['title'] = wp_trim_words( $article['title'], $limit_title );
 		}
 
@@ -202,12 +223,14 @@ abstract class WPCP_Module {
 		if ( ! empty( $limit_content ) && $limit_content > 0 ) {
 			//previously use wp_trim_words but it remove all html tag from content
 			//that's why use custom function wpcp_truncate_content from allow html in content
+			wpcp_logger()->debug( 'Limiting content', $campaign_id );
 			$article['content'] = wpcp_truncate_content( $article['content'], $limit_content );
 		}
 
 		//strip links
 		$remove_hyper_links = wpcp_get_post_meta( $this->campaign_id, '_strip_links', 0 );
 		if ( 'on' === $remove_hyper_links ) {
+			wpcp_logger()->debug( 'Stripping links', $campaign_id );
 			//keep text
 			$article['content'] = preg_replace( '#<a.*?>(.*?)</a>#i', '\1', html_entity_decode( $article['content'] ) );
 			//remove text
@@ -217,16 +240,9 @@ abstract class WPCP_Module {
 		//remove images links
 		$remove_image_links = wpcp_get_post_meta( $this->campaign_id, '_remove_images', 0 );
 		if ( 'on' === $remove_image_links ) {
+			wpcp_logger()->debug( 'Removing image from links', $campaign_id );
 			$article['content'] = preg_replace( '/<img[^>]+\>/mi', '', html_entity_decode( $article['content'] ) );
 		}
-
-		//open links in new tab & add rel nofollow
-		if ( 'on' == wpcp_get_post_meta( $this->campaign_id, '_add_rel_no_follow_target', '' )
-		     && function_exists( 'wpcp_pro_add_no_follow_blank_target' ) ) {
-			$article['content'] = wpcp_pro_add_no_follow_blank_target( $article['content'] );
-		}
-
-
 		//translate
 
 		//make template of title,content,meta
@@ -251,13 +267,14 @@ abstract class WPCP_Module {
 
 		//spin
 
-		//taxonomies
+
 		$post_tax = [];
 		//category handles
 		$categories = wpcp_get_post_meta( $this->campaign_id, '_categories', [] );
 		if ( ! empty( $categories ) ) {
 			$post_tax['category'] = array_map( 'intval', $categories );
 		}
+
 		//tags handles
 		$tags = wpcp_get_post_meta( $this->campaign_id, '_tags', [] );
 		if ( ! empty( $tags ) ) {
@@ -291,9 +308,9 @@ abstract class WPCP_Module {
 
 		//summery
 		$summary        = '';
-		$insert_excerpt = wpcp_get_post_meta( $this->campaign_id, '_excerpt', '' );
+		$insert_excerpt = wpcp_get_post_meta( $campaign_id, '_excerpt', '' );
 		if ( 'on' == $insert_excerpt ) {
-			$excerpt_length = wpcp_get_post_meta( $this->campaign_id, '_excerpt_length', 55 );
+			$excerpt_length = wpcp_get_post_meta( $campaign_id, '_excerpt_length', 55 );
 			$summary        = empty( $article['excerpt'] ) ? $article['content'] : $article['excerpt'];
 			$summary        = strip_tags( $summary );
 			$summary        = strip_shortcodes( $summary );
@@ -301,27 +318,27 @@ abstract class WPCP_Module {
 		}
 
 		//author id
-		$author_id = get_post_field( 'post_author', $this->campaign_id, 'edit' );
-		$author_id = wpcp_get_post_meta( $this->campaign_id, '_author', $author_id );
+		$author_id = get_post_field( 'post_author', $campaign_id, 'edit' );
+		$author_id = wpcp_get_post_meta( $campaign_id, '_author', $author_id );
 
 		//post time
 		$post_time = current_time( 'mysql' );
 
 		//post
-		do_action( 'wpcp_before_post_insert', $this->campaign_id, $article );
-		$post_type      = wpcp_get_post_meta( $this->campaign_id, '_post_type', 'post' );
-		$post_status    = wpcp_get_post_meta( $this->campaign_id, '_post_status', 'post' );
-		$title          = apply_filters( 'wpcp_post_title', $title, $this->campaign_id, $article );
-		$post_content   = apply_filters( 'wpcp_post_content', $content, $this->campaign_id, $article );
-		$post_excerpt   = apply_filters( 'wpcp_post_excerpt', $summary, $this->campaign_id, $article );
-		$post_author    = apply_filters( 'wpcp_post_author', $author_id, $this->campaign_id, $article );
-		$post_type      = apply_filters( 'wpcp_post_type', $post_type, $this->campaign_id, $article );
-		$post_status    = apply_filters( 'wpcp_post_status', $post_status, $this->campaign_id, $article );
-		$post_meta      = apply_filters( 'wpcp_post_meta', [], $this->campaign_id, $article );
-		$post_tax       = apply_filters( 'wpcp_post_taxonomy', $post_tax, $this->campaign_id, $article );
-		$post_time      = apply_filters( 'wpcp_post_time', $post_time, $this->campaign_id, $article );
-		$comment_status = apply_filters( 'wpcp_post_comment_status', get_default_comment_status( $post_type ), $this->campaign_id, $article );
-		$ping_status    = apply_filters( 'wpcp_post_ping_status', get_default_comment_status( $post_type, 'pingback' ), $this->campaign_id, $article );
+		do_action( 'wpcp_before_post_insert', $campaign_id, $article );
+		$post_type      = wpcp_get_post_meta( $campaign_id, '_post_type', 'post' );
+		$post_status    = wpcp_get_post_meta( $campaign_id, '_post_status', 'post' );
+		$title          = apply_filters( 'wpcp_post_title', $title, $campaign_id, $article );
+		$post_content   = apply_filters( 'wpcp_post_content', $content, $campaign_id, $article );
+		$post_excerpt   = apply_filters( 'wpcp_post_excerpt', $summary, $campaign_id, $article );
+		$post_author    = apply_filters( 'wpcp_post_author', $author_id, $campaign_id, $article );
+		$post_type      = apply_filters( 'wpcp_post_type', $post_type, $campaign_id, $article );
+		$post_status    = apply_filters( 'wpcp_post_status', $post_status, $campaign_id, $article );
+		$post_meta      = apply_filters( 'wpcp_post_meta', [], $campaign_id, $article );
+		$post_tax       = apply_filters( 'wpcp_post_taxonomy', $post_tax, $campaign_id, $article );
+		$post_time      = apply_filters( 'wpcp_post_time', $post_time, $campaign_id, $article );
+		$comment_status = apply_filters( 'wpcp_post_comment_status', get_default_comment_status( $post_type ), $campaign_id, $article );
+		$ping_status    = apply_filters( 'wpcp_post_ping_status', get_default_comment_status( $post_type, 'pingback' ), $campaign_id, $article );
 
 
 		/**
@@ -345,7 +362,7 @@ abstract class WPCP_Module {
 			'tax_input'      => $post_tax,
 			'comment_status' => $comment_status,
 			'ping_status'    => $ping_status,
-		], $this->campaign_id, $article );
+		], $campaign_id, $article );
 
 		/**
 		 * @since 1.0.8
@@ -359,25 +376,19 @@ abstract class WPCP_Module {
 		$post_id = wp_insert_post( $postarr, true );
 
 		if ( is_wp_error( $post_id ) ) {
-			do_action( 'wpcp_post_insertion_failed', $this->campaign_id );
+			do_action( 'wpcp_post_insertion_failed', $campaign_id );
 
 			return $post_id;
 		}
 
 		//set featured image
-		$is_set_featured_image = wpcp_get_post_meta( $this->campaign_id, '_set_featured_image', 0 );
-		if ( 'on' === $is_set_featured_image ) {
-			if ( ! empty( $article['image_url'] ) ) {
-				wpcp_logger()->debug( 'Setting featured image' );
-				$attachment_id = wpcp_download_image( html_entity_decode( $article['image_url'] ) );
-				if ( $attachment_id ) {
-					set_post_thumbnail( $post_id, $attachment_id );
-					update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
-				}
-			} else {
-				if ( 'on' == wpcp_get_post_meta( $this->campaign_id, '_random_featured_image', '' ) && function_exists( 'wpcp_pro_set_random_featured_image' ) ) {
-					wpcp_pro_set_random_featured_image( $post_id );
-				}
+		$is_set_featured_image = wpcp_get_post_meta( $campaign_id, '_set_featured_image', 0 );
+		if ( 'on' === $is_set_featured_image && !empty( $article['image_url'] )) {
+			wpcp_logger()->debug( 'Setting featured image' );
+			$attachment_id = wpcp_download_image( html_entity_decode( $article['image_url'] ) );
+			if ( $attachment_id ) {
+				set_post_thumbnail( $post_id, $attachment_id );
+				update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
 			}
 		}
 
@@ -396,13 +407,14 @@ abstract class WPCP_Module {
 		//save campaign data
 		update_post_meta( $post_id, '_campaign_id', $campaign_id );
 
-		update_post_meta( $this->campaign_id, '_last_post', $post_id );
-		update_post_meta( $this->campaign_id, '_last_run', current_time( 'mysql' ) );
-		update_post_meta( $this->campaign_id, 'wpcp_last_ran_campaign', current_time( 'mysql' ) );
+		update_post_meta( $campaign_id, '_last_post', $post_id );
+		update_post_meta( $campaign_id, '_last_run', current_time( 'mysql' ) );
+		update_post_meta( $campaign_id, 'wpcp_last_ran_campaign', current_time( 'mysql' ) );
 		$posted = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
 		update_post_meta( $campaign_id, '_post_count', ( $posted + 1 ) );
-		do_action( 'wpcp_after_post_publish', $post_id, $this->campaign_id, $article );
-
+		do_action( 'wpcp_after_post_publish', $post_id, $campaign_id, $article );
+		do_action( 'wpcp_'.$campaign_type.'_after_post_publish', $post_id, $campaign_id, $article );
+		wpcp_logger()->info( 'hurray! successfully generated article', $campaign_id );
 		return $post_id;
 	}
 
@@ -489,16 +501,17 @@ abstract class WPCP_Module {
 	}
 
 	/**
-	 * @param $keyword
-	 * @param string $status
-	 *
-	 * @return array|object|void|null
 	 * @since 1.2.0
+	 * @param $keyword
+	 * @param $campaign_id
+	 * @param string $status
+	 * @param int $count
+	 *
+	 * @return array|object|null
 	 */
-	protected function get_links( $keyword, $status = 'new', $count = 5 ) {
+	protected function get_links( $keyword, $campaign_id, $status = 'new', $count = 5 ) {
 		global $wpdb;
-
-		return $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE keyword=%s AND camp_id=%d AND status=%s LIMIT %d", $keyword, $this->campaign_id, $status, $count ) );
+		return $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE keyword=%s AND camp_id=%d AND status=%s LIMIT %d", $keyword, $campaign_id, $status, $count ) );
 	}
 
 	/**

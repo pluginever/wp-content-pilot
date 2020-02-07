@@ -293,7 +293,7 @@ EOT;
 					'description_html'   => wp_kses_post( @$item->description_html ),
 					'affiliate_url'      => esc_url( $affiliate_url ),
 				];
-				wpcp_logger()->info( 'hurray! successfully generated article', $campaign_id );
+				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 				$this->set_last_keyword( $campaign_id, $keyword );
 

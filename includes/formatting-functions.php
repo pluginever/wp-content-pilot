@@ -228,7 +228,25 @@ function wpcp_clean_title( $title ) {
 	//$title = str_replace( ' ', '-', $title ); // Replaces all spaces with hyphens.
 	$title = preg_replace( '/[^A-Za-z0-9\-\s\.\,]/', '', $title ); // Removes special chars.
 
-	return preg_replace( '/-+/', '-', $title ); // Replaces multiple hyphens with single one.
+	$title = preg_replace( '/-+/', '-', $title ); // Replaces multiple hyphens with single one.
+
+	$title = remove_accents( wp_trim_words( $title, 10, '' ) );
+
+	if ( stristr( $title, '.' ) ) {
+		$title_parts = explode( '.', $title );
+		if ( str_word_count( $title_parts[0] ) > 3 ) {
+			$title = $title_parts[0];
+		}
+	}
+
+	if ( preg_match( '/ [\|\-\\\\\/>»] /i', $title ) ) {
+		$title = preg_replace( '/(.*)[\|\-\\\\\/>»] .*/i', '$1', $title );
+	}
+	if ( count( preg_split( '/\s+/', $title ) ) < 3 ) {
+		$title = preg_replace( '/[^\|\-\\\\\/>»]*[\|\-\\\\\/>»](.*)/i', '$1', $title );
+	}
+
+	return $title;
 }
 
 /**
@@ -273,34 +291,34 @@ function wpcp_array_to_html( $list ) {
 
 		$item_html .= $item;
 
-		$html .= sprintf( '<li>%s</li>', strip_tags( $item_html) );
+		$html .= sprintf( '<li>%s</li>', strip_tags( $item_html ) );
 	}
 
 	return sprintf( '<ul>%s</ul>', $html );
 }
 
 /**
- * @since 1.2.0
  * @param $amount
  * @param string $currency
  *
  * @return string
+ * @since 1.2.0
  */
 function wpcp_price( $amount, $currency = '$' ) {
 	return sprintf( '%s%s', $currency, number_format_i18n( $amount, 2 ) );
 }
 
 /**
- * @since 1.2.0
  * @param $content
  *
  * @return mixed
+ * @since 1.2.0
  */
-function wpcp_remove_continue_reading($content){
+function wpcp_remove_continue_reading( $content ) {
 	$dom = wpcp_str_get_html( $content );
 	/* @var $node simple_html_dom_node */
-	foreach ($dom->find( 'a') as $node){
-		if(in_array( strtolower( trim( $node->text())), ['continue reading', 'read more'])){
+	foreach ( $dom->find( 'a' ) as $node ) {
+		if ( in_array( strtolower( trim( $node->text() ) ), [ 'continue reading', 'read more' ] ) ) {
 			$node->remove();
 		}
 	}
@@ -320,4 +338,40 @@ function wpcp_remove_continue_reading($content){
  */
 function wpcp_cent_to_usd( $cent ) {
 	return number_format( ( $cent / 100 ), 2, '.', ' ' );
+}
+
+/**
+ *
+ * since 1.0.0
+ *
+ * @param     $content
+ * @param int $length
+ *
+ * @return bool|null|string|string[]
+ */
+function wpcp_generate_title_from_content( $content, $length = 80 ) {
+	$cleanContent = wpcp_remove_emoji( wpcp_strip_urls( strip_tags( $content ) ) );
+
+	if ( function_exists( 'mb_substr' ) ) {
+		$newTitle = ( mb_substr( $cleanContent, 0, $length ) );
+	} else {
+		$newTitle = ( substr( $cleanContent, 0, $length ) );
+	}
+
+	$newTitle = preg_replace( '{RT @.*?: }', '', $newTitle );
+
+	return wpcp_clean_title( $newTitle );
+}
+
+
+/**
+ * Remove url from content
+ * since 1.0.0
+ *
+ * @param $content
+ *
+ * @return string
+ */
+function wpcp_strip_urls( $content ) {
+	return preg_replace( '{http[s]?://[^\s]*}', '', $content );
 }

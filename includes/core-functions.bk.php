@@ -596,28 +596,7 @@ function wpcp_get_keyword_suggestion_supported_modules() {
 
 
 
-/**
- *
- * since 1.0.0
- *
- * @param     $content
- * @param int $length
- *
- * @return bool|null|string|string[]
- */
-function wpcp_generate_title_from_content( $content, $length = 80 ) {
-	$cleanContent = wpcp_remove_emoji( wpcp_strip_urls( strip_tags( $content ) ) );
 
-	if ( function_exists( 'mb_substr' ) ) {
-		$newTitle = ( mb_substr( $cleanContent, 0, $length ) );
-	} else {
-		$newTitle = ( substr( $cleanContent, 0, $length ) );
-	}
-
-	$newTitle = preg_replace( '{RT @.*?: }', '', $newTitle );
-
-	return wpcp_clean_title( $newTitle );
-}
 
 /**
  * get random user agent

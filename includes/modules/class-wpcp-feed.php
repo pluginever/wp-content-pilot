@@ -184,7 +184,7 @@ EOT;
 					'source_url' => $link->url,
 				), $readability, $campaign_id );
 
-				wpcp_logger()->info( 'successfully generated article', $campaign_id );
+				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
 				wpcp_update_post_meta( $campaign_id, '_last_keyword', $feed_url );
 				$this->update_link( $link->id, [ 'status' => 'success' ] );
 

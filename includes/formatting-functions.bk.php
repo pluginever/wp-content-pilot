@@ -151,17 +151,6 @@ function wpcp_get_all_image_urls( $content ) {
 }
 
 
-/**
- * Remove url from content
- * since 1.0.0
- *
- * @param $content
- *
- * @return string
- */
-function wpcp_strip_urls( $content ) {
-	return preg_replace( '{http[s]?://[^\s]*}', '', $content );
-}
 
 /**
  * sort a multi dimensional array

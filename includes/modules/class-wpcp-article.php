@@ -121,12 +121,12 @@ EOT;
 			}
 
 			//get links from database
-			$links = $this->get_links( $keyword );
+			$links = $this->get_links( $keyword, $campaign_id );
 
 			if ( empty( $links ) ) {
 				wpcp_logger()->info( 'No cached links in store. Generating new links...', $campaign_id );
 				$this->discover_links( $campaign_id, $keyword );
-				$links = $this->get_links( $keyword );
+				$links = $this->get_links( $keyword, $campaign_id );
 			}
 
 			if ( empty( $links ) ) {
@@ -166,8 +166,8 @@ EOT;
 					'source_url' => $link->url,
 				);
 
-				wpcp_logger()->info( 'hurray! successfully generated article', $campaign_id );
-
+				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
+				$this->update_link( $link->id, [ 'status' => 'success' ] );
 				$this->set_last_keyword( $campaign_id, $keyword);
 				return $article;
 			}
@@ -230,7 +230,7 @@ EOT;
 		$items        = $response['channel']['item'];
 		$banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article' );
 		$banned_hosts = preg_split( '/\n/', $banned_hosts );
-		$banned_hosts = array_merge( $banned_hosts, array( 'youtube.com', 'wikipedia', 'dictionary', 'youtube' ) );
+		$banned_hosts = array_merge( $banned_hosts, array( 'youtube.com', 'wikipedia', 'dictionary', 'youtube', 'wikihow' ) );
 		foreach ( $items as $item ) {
 
 			foreach ( $banned_hosts as $banned_host ) {

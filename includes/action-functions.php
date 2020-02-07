@@ -131,7 +131,6 @@ function wpcp_delete_all_campaign_posts() {
 add_action( 'wp_ajax_wpcp_delete_all_campaign_posts', 'wpcp_delete_all_campaign_posts' );
 
 function wpcp_clear_logs(){
-	error_log( print_r( $_REQUEST, true ));
 	if ( ! isset( $_REQUEST['nonce'] )|| ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_clear_logs' ) ) {
 		wp_send_json_error( 'Unauthorized!!!' );
 	}

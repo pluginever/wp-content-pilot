@@ -234,11 +234,11 @@ EOT;
 
 
 			//get links from database
-			$links = $this->get_links( $keyword );
+			$links = $this->get_links( $keyword, $campaign_id );
 			if ( empty( $links ) ) {
 				wpcp_logger()->debug( 'No generated links now need to generate new links', $campaign_id );
 				$this->discover_links( $campaign_id, $keyword );
-				$links = $this->get_links( $keyword );
+				$links = $this->get_links( $keyword, $campaign_id );
 			}
 
 			foreach ( $links as $link ) {
@@ -302,7 +302,7 @@ EOT;
 					'transcript'     => $transcript,
 				);
 
-				wpcp_logger()->info( 'Successfully generated youtube article', $campaign_id );
+				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
 				$this->set_last_keyword( $campaign_id, $keyword );
 
 				return $article;

@@ -368,8 +368,8 @@ function wpcp_insert_log( $message, $level = 'info', $camp_id = '0' ) {
 
 
 /**
- * @since 1.2.0
  * @return array|bool|WP_Error
+ * @since 1.2.0
  */
 function wpcp_check_cron_status() {
 	global $wp_version;
@@ -423,3 +423,80 @@ function wpcp_check_cron_status() {
 
 }
 
+/**
+ * create & return terms
+ *
+ * @param $terms
+ * @param string $taxonomy
+ *
+ * @return array
+ * @since 1.2.0
+ */
+function wpcp_get_terms( $terms, $taxonomy = 'category' ) {
+	$term_ids = [];
+	if ( ! is_array( $terms ) ) {
+		$terms = wpcp_string_to_array( $terms );
+	}
+	foreach ( $terms as $term ) {
+		$t = get_term_by( 'name', $term, $taxonomy );
+		if ( false == $t ) {
+			$t = wp_insert_term( $term, $taxonomy );
+		}
+
+		if ( is_wp_error( $t ) ) {
+			continue;
+		}
+
+		if ( is_array( $t ) && isset( $t['term_id'] ) ) {
+			$term_ids[] = $t['term_id'];
+		}
+
+		if ( $t instanceof WP_Term ) {
+			$term_ids[] = $t->term_id;
+		}
+	}
+
+	return array_map( 'intval', $term_ids );
+}
+
+/**
+ * @since 1.2.0
+ * @param $terms
+ * @param $post_id
+ * @param $taxonomy
+ * @param bool $append
+ *
+ * @return array|bool|false|WP_Error
+ */
+function wpcp_set_post_terms( $terms, $post_id, $taxonomy, $append = true ) {
+	if ( ! is_array( $terms ) ) {
+		$terms = wpcp_string_to_array( $terms );
+	}
+	$terms = array_filter( $terms );
+	$terms = array_unique( $terms );
+	$terms = wpcp_get_terms( $terms, $taxonomy );
+	if ( ! is_array( $terms ) || empty( $terms ) ) {
+		return false;
+	}
+
+	return wp_set_post_terms( $post_id, $terms, $taxonomy, $append );
+}
+
+/**
+ * @param $content
+ * @param $word
+ *
+ * @return bool
+ * @since 1.2.0
+ */
+function wpcp_content_contains_word( $content, $word ) {
+	if ( empty( $word ) ) {
+		return false;
+	}
+
+	if ( strpos( $content, $word ) !== false ) {
+		return true;
+	}
+
+	return false;
+}

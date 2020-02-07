@@ -205,3 +205,26 @@
 		}
 	}
 }
+
+
+//repeater
+.wpcp-repeater{
+	margin-top: 20px;
+
+	.wpcp-label{
+		margin-bottom: 10px;
+		&:after{
+			margin: 0 5px;
+		}
+	}
+
+	.wp-list-table{
+		max-width: 95%;
+		margin-bottom: 10px;
+	}
+
+	&+.wpcp-repeater{
+		margin-top: 20px;
+	}
+
+}

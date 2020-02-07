@@ -136,6 +136,7 @@ class WPCP_Readability {
 		foreach ( $docuemnt->find( 'img' ) as $img ) {
 			$urls = [
 				$img->getAttribute( 'data-lazy-src' ),
+				$img->getAttribute( 'srcset' ),
 				$img->getAttribute( 'src' ),
 				$img->getAttribute( 'data-src' ),
 				$img->getAttribute( 'data-original' ),
@@ -143,10 +144,13 @@ class WPCP_Readability {
 				$img->getAttribute( 'data-url' ),
 			];
 
-			$src  = array_filter( $urls );
-			$src  = reset( $src );
+			$src = array_filter( $urls );
+			$src = reset( $src );
 			$img->setAttribute( 'src', $this->to_absolute_uri( $src, $url ) );
 			$img->removeAttribute( 'class' );
+			if ( empty( $img->getAttribute( 'src' ) ) ) {
+				$img->remove();
+			}
 		}
 
 		//fix relative url
