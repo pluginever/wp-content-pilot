@@ -101,8 +101,6 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_post( $campaign_id, $keywords ) {
-		//set last keyword
-		$last_keyword = $this->get_last_keyword( $campaign_id );
 
 		wpcp_logger()->info( 'Article Campaign Started', $campaign_id );
 
@@ -112,34 +110,23 @@ EOT;
 
 			if ( $this->is_deactivated_key( $campaign_id, $keyword ) ) {
 				wpcp_logger()->debug( sprintf( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s]', $keyword ), $campaign_id );
-			}
-
-			//if more than 1 then unset last one
-			if ( count( $keywords ) > 1 && $last_keyword == $keyword ) {
-				wpcp_logger()->debug( sprintf( 'The keyword [%s] already used last time changing to different one if available', $keyword ), $campaign_id );
 				continue;
 			}
 
 			//get links from database
 			$links = $this->get_links( $keyword, $campaign_id );
-
 			if ( empty( $links ) ) {
 				wpcp_logger()->info( 'No cached links in store. Generating new links...', $campaign_id );
 				$this->discover_links( $campaign_id, $keyword );
 				$links = $this->get_links( $keyword, $campaign_id );
 			}
 
-			if ( empty( $links ) ) {
-				$message = __( 'No links to process the campaign, waiting to run later...' );
-				wpcp_logger()->error( $message, $campaign_id );
-				$this->deactivate_key( $campaign_id, $keyword );
-
-				return new WP_Error( 'no-links', $message );
-			}
 
 			foreach ( $links as $link ) {
 				wpcp_logger()->info( sprintf( 'Grabbing article from [%s]', $link->url ), $campaign_id );
-				$this->update_link( $link->id, [ 'status' => 'failed' ] );
+
+				$this->update_link( $link->id, ['status' => 'failed'] );
+
 				$curl = $this->setup_curl();
 				$curl->get( $link->url );
 
@@ -167,8 +154,7 @@ EOT;
 				);
 
 				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
-				$this->update_link( $link->id, [ 'status' => 'success' ] );
-				$this->set_last_keyword( $campaign_id, $keyword);
+				$this->update_link( $link->id, ['status' => 'success'] );
 				return $article;
 			}
 
@@ -186,7 +172,7 @@ EOT;
 	 * @since 1.2.0
 	 */
 	protected function discover_links( $campaign_id, $keyword ) {
-		$page_key    = $this->get_unique_key($keyword);
+		$page_key    = $this->get_unique_key( $keyword );
 		$page_number = wpcp_get_post_meta( $campaign_id, $page_key, 0 );
 
 
@@ -200,8 +186,7 @@ EOT;
 
 		wpcp_logger()->debug( sprintf( 'Searching page url [%s]', $endpoint ), $campaign_id );
 
-		$curl = $this->setup_curl();
-
+		$curl     = $this->setup_curl();
 		$response = $curl->get( $endpoint );
 		if ( $curl->isError() ) {
 			wpcp_logger()->error( $curl->errorMessage, $campaign_id );
@@ -226,11 +211,12 @@ EOT;
 			return new WP_Error( 'no-links-found', $message );
 		}
 
-		$inserted     = 0;
 		$items        = $response['channel']['item'];
 		$banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article' );
 		$banned_hosts = preg_split( '/\n/', $banned_hosts );
 		$banned_hosts = array_merge( $banned_hosts, array( 'youtube.com', 'wikipedia', 'dictionary', 'youtube', 'wikihow' ) );
+
+		$links = [];
 		foreach ( $items as $item ) {
 
 			foreach ( $banned_hosts as $banned_host ) {
@@ -251,25 +237,18 @@ EOT;
 				continue;
 			}
 
-			$this->insert_link( array(
-				'url'          => esc_url( $item['link'] ),
-				'title'        => $item['title'],
-				'keyword'      => $keyword,
-				'pub_date_gmt' => empty( $item['pubDate'] ) ? '' : date( 'Y-m-d H:i:s', strtotime( $item['pubDate'] ) ),
-			) );
-
-			$inserted ++;
+			$links[] = [
+				'url'     => esc_url( $item['link'] ),
+				'title'   => $item['title'],
+				'keyword' => $keyword,
+				'camp_id' => $campaign_id
+			];
 		}
 
-		if ( $inserted < 1 ) {
-			wpcp_logger()->info( 'Could not find any links', $campaign_id );
-			$this->deactivate_key( $campaign_id, $keyword );
-
-			return false;
-		}
+		$total_inserted = $this->inset_links( $links );
 
 		wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $items ), $inserted ), $campaign_id );
+		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $links ), $total_inserted ), $campaign_id );
 
 		return true;
 	}

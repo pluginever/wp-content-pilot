@@ -142,8 +142,9 @@ function wpcp_remove_unauthorized_html( $content ) {
 	];
 
 	$allowed_tags = apply_filters( 'wpcp_allowed_html_tags', $default_allowed_tags );
+	$content      = wp_kses( $content, $allowed_tags );
 
-	return wp_kses( $content, $allowed_tags );
+	return trim( $content );
 }
 
 

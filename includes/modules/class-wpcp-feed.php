@@ -120,17 +120,10 @@ EOT;
 	 */
 	public function get_post( $campaign_id, $feed_urls ) {
 
-		$last_keyword = $this->get_last_keyword( $campaign_id );
-
 		wpcp_logger()->info( 'Feed Campaign Started', $campaign_id );
 
 		foreach ( $feed_urls as $feed_url ) {
 			wpcp_logger()->info( sprintf( 'Looping through feed link now trying with [ %s ]', $feed_url ), $campaign_id );
-			//if more than 1 then unset last one
-			if ( count( $feed_urls ) > 1 && $last_keyword == $feed_url ) {
-				wpcp_logger()->info( sprintf( 'feed links more than 1 and [ %s ] this link used last time so skipping it ', $feed_url ), $campaign_id );
-				continue;
-			}
 
 			if ( $this->is_deactivated_key( $campaign_id, $feed_url ) ) {
 				$message = sprintf( 'The feed url is deactivated for 1 hr because last time could not find any article with url [%s]', $feed_url );
@@ -146,16 +139,10 @@ EOT;
 				$links = $this->get_links( $feed_url, $campaign_id );
 			}
 
-			if ( empty( $links ) ) {
-				$message = __( 'No links to process the campaign, will run again after 1 hour', $campaign_id );
-				wpcp_logger()->error( $message, $campaign_id );
-				$this->deactivate_key( $campaign_id, $feed_url );
 
-				return new WP_Error( 'no-links', $message );
-			}
+			foreach ( $links as $link ) {
+				wpcp_logger()->info( sprintf( 'Grabbing feed from [%s]', $link->url ), $campaign_id );
 
-			foreach ( $links as $key => $link ) {
-				wpcp_logger()->info( sprintf( 'Running campaign from generated %d time link [%s]', $key + 1, $link->url ), $campaign_id );
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
 				$curl = $this->setup_curl();
@@ -185,11 +172,9 @@ EOT;
 				), $readability, $campaign_id );
 
 				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
-				wpcp_update_post_meta( $campaign_id, '_last_keyword', $feed_url );
 				$this->update_link( $link->id, [ 'status' => 'success' ] );
 
 				return $article;
-
 			}
 		}
 
@@ -215,7 +200,7 @@ EOT;
 			return new WP_Error( 'feed-error', __( 'Could not find any article, waiting...', 'wp-content-pilot' ) );
 		}
 
-		$inserted = 0;
+		$links = [];
 		foreach ( $rss_items as $rss_item ) {
 			$url = esc_url( $rss_item->get_permalink() );
 			if ( stristr( $url, 'news.google' ) ) {
@@ -245,25 +230,18 @@ EOT;
 				continue;
 			}
 
-			$this->insert_link( array(
-				'url'          => esc_url( $url ),
-				'title'        => $title,
-				'keyword'      => $feed_link,
-				'pub_date_gmt' => '',
-			) );
-
-			$inserted ++;
+			$links[] = [
+				'url'     => esc_url( $url ),
+				'title'   => $title,
+				'keyword' => $feed_link,
+				'camp_id' => $campaign_id,
+			];
 		}
 
-		if ( $inserted < 1 ) {
-			wpcp_logger()->info( 'Could not find any links' );
+		$total_inserted = $this->inset_links( $links );
+		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $links ), $total_inserted ), $campaign_id );
 
-			return false;
-		}
-
-		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $rss_items ), $inserted ), $campaign_id );
-
-		return $inserted;
+		return true;
 	}
 
 	/**

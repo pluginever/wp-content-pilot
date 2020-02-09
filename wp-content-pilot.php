@@ -144,7 +144,7 @@ final class ContentPilot {
 	 */
 	public function includes() {
 		//boot
-		require_once( WPCP_INCLUDES . '/class-install.php' );
+		require_once( WPCP_INCLUDES . '/class-wpcp-install.php' );
 		require_once( WPCP_PATH . '/vendor/autoload.php' );
 
 		//functions

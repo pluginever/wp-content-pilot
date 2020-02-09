@@ -167,11 +167,10 @@ EOT;
 	 * @return mixed|void
 	 */
 	public function get_post( $campaign_id, $keywords ) {
-		$token                = wpcp_get_settings( 'token', 'wpcp_settings_envato', '' );
-		$envato_impact_radius = wpcp_get_settings( 'envato_impact_radius', 'wpcp_settings_envato', '' );
-
 		wpcp_logger()->info( 'Envato Campaign Started', $campaign_id );
 
+		$token                = wpcp_get_settings( 'token', 'wpcp_settings_envato', '' );
+		$envato_impact_radius = wpcp_get_settings( 'envato_impact_radius', 'wpcp_settings_envato', '' );
 		if ( empty( $token ) || empty( $envato_impact_radius ) ) {
 			$notice = __( 'The Envato api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot' );
 
@@ -181,16 +180,9 @@ EOT;
 			return new WP_Error( 'missing-data', $notice );
 		}
 
-		$last_keyword = $this->get_last_keyword( $campaign_id );
-
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->info( sprintf( 'Looping through keywords [ %s ]', $keyword ), $campaign_id );
 
-			//if more than 1 then unset last one
-			if ( count( $keywords ) > 1 && $last_keyword == $keyword ) {
-				wpcp_logger()->debug( sprintf( 'Keywords more than 1 and [ %s ] this keywords used last time so skipping it ', $keyword ), $campaign_id );
-				continue;
-			}
 
 			$total_page_key = $this->get_unique_key( "$keyword-total-page" );
 			$page_key       = $this->get_unique_key( $keyword );
@@ -229,11 +221,11 @@ EOT;
 			$curl = $this->setup_curl();
 			$curl->setHeader( 'Authorization', sprintf( 'bearer %s', trim( $token ) ) );
 			$curl->get( $endpoint );
+
 			if ( $curl->isError() ) {
 				$message = sprintf( __( 'Envato api request failed response [ %s ]', 'wp-content-pilot' ), $curl->getResponse()->error );
 				wpcp_logger()->error( $message, $campaign_id );
-
-				//wpcp_disable_campaign( $campaign_id);
+				wpcp_disable_campaign( $campaign_id);
 				return new WP_Error( 'missing-data', $message );
 			}
 
@@ -295,12 +287,12 @@ EOT;
 				];
 				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-				$this->set_last_keyword( $campaign_id, $keyword );
 
 				$this->insert_link( array(
 					'keyword' => $keyword,
 					'title'   => $item->name,
 					'url'     => $item->url,
+					'camp_id'      => $campaign_id,
 				) );
 
 				return $article;

@@ -111,32 +111,26 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_post( $campaign_id, $keywords ) {
-		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
 		wpcp_logger()->info( 'Flickr Campaign Started', $campaign_id );
+
+		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
 		if ( empty( $api_key ) ) {
 			wpcp_disable_campaign( $campaign_id );
-
 			$notice = __( 'The Flickr api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot-pro' );
-
 			wpcp_logger()->error( $notice, $campaign_id );
 
 			return new WP_Error( 'missing-data', $notice );
 		}
 
-		$last_keyword = $this->get_last_keyword( $campaign_id );
 
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->info( sprintf( 'Looping through keywords [ %s ]', $keyword ), $campaign_id );
-			//if more than 1 then unset last one
-			if ( count( $keywords ) > 1 && $last_keyword == $keyword ) {
-				wpcp_logger()->info( sprintf( 'Keywords more than 1 and [ %s ] this keywords used last time so skipping it ', $keyword ), $campaign_id );
-				continue;
-			}
 
 			$total_page_key = $this->get_unique_key( "$keyword-total-page" );
 			$page_key       = $this->get_unique_key( $keyword );
 			$total_page     = wpcp_get_post_meta( $campaign_id, $total_page_key, '' );
 			$page_number    = wpcp_get_post_meta( $campaign_id, $page_key, 1 );
+
 			if ( $page_number >= $total_page && ! empty( $total_page ) ) {
 				$msg = sprintf( __( 'Maximum page number reached for the keyword [%s] deactivating the keyword for a week', 'wp-content-pilot' ), $keyword );
 				wpcp_logger()->error( $msg, $campaign_id );
@@ -202,7 +196,7 @@ EOT;
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 				continue;
 			}
-			wpcp_logger()->info( sprintf( 'Generating flickr article from [ %s ]', $source_url), $campaign_id);
+			wpcp_logger()->info( sprintf( 'Generating flickr article from [ %s ]', $source_url ), $campaign_id );
 			$article = array(
 				'title'      => $title,
 				'content'    => $description,
@@ -220,6 +214,7 @@ EOT;
 				'keyword' => $keyword,
 				'title'   => $title,
 				'url'     => $source_url,
+				'camp_id' => $campaign_id,
 			) );
 			wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 

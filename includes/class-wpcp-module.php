@@ -140,7 +140,6 @@ abstract class WPCP_Module {
 	 * @since 1.2.0
 	 */
 	public function process_campaign( $campaign_id, $keywords = null, $user = 'cron' ) {
-		//todo uncomment this
 		$wp_post = get_post( $campaign_id );
 		if ( ! $wp_post || 'wp_content_pilot' !== $wp_post->post_type ) {
 			wpcp_logger()->error( 'Could not find any campaign with the provided id', $campaign_id );
@@ -197,7 +196,6 @@ abstract class WPCP_Module {
 			'author'     => '',
 			'image_url'  => '',
 			'excerpt'    => '',
-			'language'   => '',
 			'content'    => '',
 			'source_url' => '',
 		) );
@@ -383,7 +381,7 @@ abstract class WPCP_Module {
 
 		//set featured image
 		$is_set_featured_image = wpcp_get_post_meta( $campaign_id, '_set_featured_image', 0 );
-		if ( 'on' === $is_set_featured_image && !empty( $article['image_url'] )) {
+		if ( 'on' === $is_set_featured_image && ! empty( $article['image_url'] ) ) {
 			wpcp_logger()->debug( 'Setting featured image' );
 			$attachment_id = wpcp_download_image( html_entity_decode( $article['image_url'] ) );
 			if ( $attachment_id ) {
@@ -413,8 +411,9 @@ abstract class WPCP_Module {
 		$posted = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
 		update_post_meta( $campaign_id, '_post_count', ( $posted + 1 ) );
 		do_action( 'wpcp_after_post_publish', $post_id, $campaign_id, $article );
-		do_action( 'wpcp_'.$campaign_type.'_after_post_publish', $post_id, $campaign_id, $article );
+		do_action( 'wpcp_' . $campaign_type . '_after_post_publish', $post_id, $campaign_id, $article );
 		wpcp_logger()->info( 'hurray! successfully generated article', $campaign_id );
+
 		return $post_id;
 	}
 
@@ -444,6 +443,7 @@ abstract class WPCP_Module {
 	 * @since 1.2.0
 	 */
 	protected function deactivate_key( $campaign_id, $keyword, $hours = 1 ) {
+		wpcp_logger()->warning( sprintf( 'Deactivating key [%s] for [%d] hour', $keyword, $hours ), $campaign_id );
 		$deactivated_until = current_time( 'timestamp' ) + ( $hours * HOUR_IN_SECONDS );
 		update_post_meta( $campaign_id, '_' . md5( $keyword ), $deactivated_until );
 	}
@@ -501,16 +501,29 @@ abstract class WPCP_Module {
 	}
 
 	/**
+	 * @param $campaign_id
+	 * @param $keyword
+	 * @param $default
+	 *
 	 * @since 1.2.0
+	 */
+	protected function get_page_number( $campaign_id, $keyword, $default ) {
+		$key = '_wpcp_' . sanitize_key( $keyword ) . '_' . md5( $keyword );
+		wpcp_get_post_meta( $campaign_id, $key, $default );
+	}
+
+	/**
 	 * @param $keyword
 	 * @param $campaign_id
 	 * @param string $status
 	 * @param int $count
 	 *
 	 * @return array|object|null
+	 * @since 1.2.0
 	 */
 	protected function get_links( $keyword, $campaign_id, $status = 'new', $count = 5 ) {
 		global $wpdb;
+
 		return $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE keyword=%s AND camp_id=%d AND status=%s LIMIT %d", $keyword, $campaign_id, $status, $count ) );
 	}
 
@@ -522,18 +535,38 @@ abstract class WPCP_Module {
 	 */
 	protected function insert_link( $data ) {
 		$data = wp_parse_args( $data, array(
-			'camp_id'      => $this->campaign_id,
-			'camp_type'    => $this->campaign_type,
-			'url'          => '',
-			'title'        => '',
-			'keyword'      => '',
-			'pub_date_gmt' => '',
-			'status'       => 'new',
-			'date_created' => current_time( 'mysql' ),
+			'camp_id'   => '',
+			'url'       => '',
+			'title'     => '',
+			'keyword'   => '',
+			'status'    => 'new',
 		) );
 		global $wpdb;
 
-		return $wpdb->insert( $wpdb->wpcp_links, $data );
+		$inserted = $wpdb->insert( $wpdb->wpcp_links, $data );
+
+		return $inserted == false ? false : $wpdb->insert_id;
+	}
+
+	/**
+	 * Insert links
+	 *
+	 * @param $links
+	 *
+	 * @return int
+	 *
+	 * @since 1.0.0
+	 *
+	 */
+	protected function inset_links( $links ) {
+		$counter = 0;
+		foreach ( $links as $link ) {
+			if ( $this->insert_link( $link ) ) {
+				$counter ++;
+			}
+		}
+
+		return $counter;
 	}
 
 	/**
@@ -549,11 +582,10 @@ abstract class WPCP_Module {
 		return $wpdb->update( $wpdb->wpcp_links, $data, [ 'id' => absint( $id ) ] );
 	}
 
-
 	/**
 	 * @param $campaign_id
 	 *
-	 * @return array|string|null
+	 * @return string
 	 * @since 1.2.0
 	 */
 	protected function get_keywords( $campaign_id ) {

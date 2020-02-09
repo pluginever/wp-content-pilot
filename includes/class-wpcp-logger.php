@@ -40,7 +40,7 @@ class WPCP_Logger {
 	 * @since 1.2.0
 	 * WPCP_Logger constructor.
 	 */
-	public function __construct( $log_file = 'content-pilot.log', $params = array() ) {
+	public function __construct( $log_file = 'debug.log', $params = array() ) {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			$this->debug = true;
 		}

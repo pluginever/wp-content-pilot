@@ -93,9 +93,9 @@ EOT;
 
 		echo WPCP_HTML::text_input( array(
 			'name'        => '_youtube_channel_id',
-			'placeholder' => __( 'Example: UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
-			'label'       => __( 'Youtube Channel ID', 'wp-content-pilot' ),
-			'tooltip'     => __( 'eg. channel id is "UCIQOOX3ReApm-KTZ66eMVzQ" for https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
+			'placeholder' => __( 'Example: PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
+			'label'       => __( 'Youtube Playlist ID', 'wp-content-pilot' ),
+			'tooltip'     => __( 'eg. channel id is "PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs" for https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
 		) );
 
 		echo WPCP_HTML::select_input( array(
@@ -326,7 +326,7 @@ EOT;
 		$category     = wpcp_get_post_meta( $campaign_id, '_youtube_category', 'all' );
 		$orderby      = wpcp_get_post_meta( $campaign_id, '_youtube_search_orderby', 'relevance' );
 		$search_type  = wpcp_get_post_meta( $campaign_id, '_youtube_search_type', 'global' );
-		$channel_id   = wpcp_get_post_meta( $campaign_id, '_youtube_channel_id', '' );
+		$playlist_id  = wpcp_get_post_meta( $campaign_id, '_youtube_channel_id', '' );
 		$license_type = wpcp_get_post_meta( $campaign_id, '_youtube_license', '' );
 		$duration     = wpcp_get_post_meta( $campaign_id, '_youtube_duration', 'any' );
 		$definition   = wpcp_get_post_meta( $campaign_id, '_youtube_definition', 'any' );
@@ -354,16 +354,17 @@ EOT;
 			'pageToken'         => $next_page_token,
 		);
 		$endpoint   = 'https://www.googleapis.com/youtube/v3/search';
-		if ( $search_type === 'channel' && ! empty( $channel_id ) ) {
-			$query_args['playlistId'] = $channel_id;
+		if ( $search_type === 'channel' && ! empty( $playlist_id ) ) {
+			$query_args['playlistId'] = $playlist_id;
 			$endpoint                 = 'https://www.googleapis.com/youtube/v3/playlistItems';
 		}
 
-
 		$endpoint = add_query_arg( $query_args, $endpoint );
 		wpcp_logger()->debug( sprintf( 'Requesting urls from Youtube [%s]', $endpoint ) );
+
 		$curl = $this->setup_curl();
 		$curl->get( $endpoint );
+
 		if ( $curl->isError() ) {
 			$response      = json_decode( $curl->getRawResponse() );
 			$error_message = array_pop( $response->error->errors );
@@ -387,7 +388,7 @@ EOT;
 			return false;
 		}
 
-		$inserted = 0;
+		$links = [];
 		foreach ( $items as $item ) {
 			$video_id = '';
 			if ( stristr( $endpoint, 'playlistItems' ) ) {
@@ -408,18 +409,20 @@ EOT;
 				continue;
 			}
 
-			if ( false != $this->insert_link( array(
-					'title'   => wpcp_remove_emoji( $title ),
-					'url'     => $url,
-					'keyword' => $keyword,
-				) ) ) {
-				$inserted ++;
-			}
+			$links[] = [
+				'title'   => wpcp_remove_emoji( $title ),
+				'url'     => $url,
+				'keyword' => $keyword,
+				'camp_id' => $campaign_id,
+			];
 		}
 
-		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $items ), $inserted ), $campaign_id );
+		$total_inserted = $this->inset_links( $links );
 
-		return $inserted;
+		wpcp_update_post_meta( $campaign_id, $token_key, $response->nextPageToken );
+		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $links ), $total_inserted ), $campaign_id );
+
+		return true;
 	}
 
 	/**
