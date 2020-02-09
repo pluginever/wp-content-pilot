@@ -139,11 +139,11 @@ EOT;
 			}
 
 			//get links from database
-			$links = $this->get_links( $feed_url );
+			$links = $this->get_links( $feed_url, $campaign_id );
 			if ( empty( $links ) ) {
 				wpcp_logger()->info( 'No generated links now need to generate new links', $campaign_id );
 				$this->discover_links( $feed_url, $campaign_id );
-				$links = $this->get_links( $feed_url );
+				$links = $this->get_links( $feed_url, $campaign_id );
 			}
 
 			if ( empty( $links ) ) {
