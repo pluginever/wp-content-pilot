@@ -493,7 +493,7 @@ function wpcp_content_contains_word( $content, $word ) {
 	if ( empty( $word ) ) {
 		return false;
 	}
-
+	$content = strip_tags( $content );
 	if ( strpos( $content, $word ) !== false ) {
 		return true;
 	}
