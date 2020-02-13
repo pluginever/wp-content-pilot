@@ -1,127 +1,147 @@
 <?php
 $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 	array(
-		'name'     => 'Article',
+		'label'    => 'Article',
+		'name'     => 'article',
 		'keywords' => 'article, articles, blog, posts, news',
 		'disabled' => false,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/article.png' )
 	),
 	array(
-		'name'     => 'Feed',
+		'label'    => 'Feed',
+		'name'     => 'feed',
 		'keywords' => 'job',
 		'disabled' => false,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/feed.png' )
 	),
 	array(
+		'label'    => 'Youtube',
 		'name'     => 'youtube',
 		'keywords' => 'job',
 		'disabled' => false,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/youtube.png' )
 	),
 	array(
-		'name'     => 'Flickr',
+		'label'    => 'Flickr',
+		'name'     => 'flickr',
 		'keywords' => 'job',
 		'disabled' => false,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/flickr.png' )
 	),
 	array(
-		'name'     => 'Envato',
+		'label'    => 'Envato',
+		'name'     => 'envato',
 		'keywords' => 'job',
 		'disabled' => false,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/envato.png' )
 	),
 	array(
-		'name'     => 'Amazon',
+		'label'    => 'Amazon',
+		'name'     => 'amazon',
 		'keywords' => 'bestbuy, affiliation, affiliate',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/amazon.png' )
 	),
 	array(
-		'name'     => 'BestBuy',
+		'label'    => 'BestBuy',
+		'name'     => 'bestBuy',
 		'keywords' => 'bestbuy, affiliation, affiliate',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/bestbuy.png' )
 	),
 	array(
-		'name'     => 'CareerJet',
+		'label'    => 'CareerJet',
+		'name'     => 'careerjet',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/careerjet.png' )
 	),
 	array(
-		'name'     => 'ClickBank',
+		'label'    => 'ClickBank',
+		'name'     => 'clickBank',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/clickbank.png' )
 	),
 	array(
-		'name'     => 'Craigslist',
+		'label'    => 'Craigslist',
+		'name'     => 'craigslist',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/craigslist.png' )
 	),
 	array(
-		'name'     => 'Ebay',
+		'label'    => 'Ebay',
+		'name'     => 'ebay',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/ebay.png' )
 	),
 	array(
-		'name'     => 'Ezine Articles',
+		'label'    => 'Ezine Articles',
+		'name'     => 'ezine-articles',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/ezine.png' )
 	),
 	array(
-		'name'     => 'FaceBook',
+		'label'    => 'FaceBook',
+		'name'     => 'faceBook',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/facebook.png' )
 	),
 	array(
-		'name'     => 'Instragram',
+		'label'    => 'Instagram',
+		'name'     => 'instagram',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/instragram.png' )
 	),
 	array(
-		'name'     => 'Itunes',
+		'label'    => 'Itunes',
+		'name'     => 'itunes',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/itunes.png' )
 	),
 	array(
-		'name'     => 'Pinterest',
+		'label'    => 'Pinterest',
+		'name'     => 'pinterest',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/pinterest.png' )
 	),
 	array(
-		'name'     => 'Quora',
+		'label'    => 'Quora',
+		'name'     => 'quora',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/quora.png' )
 	),
 	array(
-		'name'     => 'Reddit',
+		'label'    => 'Reddit',
+		'name'     => 'reddit',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/reddit.png' )
 	),
 	array(
-		'name'     => 'Twitter',
+		'label'    => 'Twitter',
+		'name'     => 'twitter',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/twitter.png' )
 	),
+//	array(
+//		'name'     => 'SoundCloud',
+//		'keywords' => 'job',
+//		'disabled' => true,
+//		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/soundcloud.png' )
+//	),
 	array(
-		'name'     => 'SoundCloud',
-		'keywords' => 'job',
-		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/soundcloud.png' )
-	),
-	array(
-		'name'     => 'Walmart',
+		'label'    => 'Walmart',
+		'name'     => 'walmart',
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/walmart.png' )

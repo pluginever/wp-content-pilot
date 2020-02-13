@@ -49,8 +49,6 @@ function wpcp_run_automatic_campaign() {
 	$campaigns = $wpdb->get_results( $sql );
 
 	if ( empty( $campaigns ) ) {
-		wpcp_logger()->debug( 'No campaign found in scheduled task' );
-
 		return;
 	}
 
@@ -140,3 +138,44 @@ function wpcp_clear_logs(){
 	wp_send_json_success('success');
 }
 add_action( 'wp_ajax_wpcp_clear_logs', 'wpcp_clear_logs' );
+
+
+// TODO: Keyword Suggestion https://www.google.com/complete/search?q=w&cp=1&client=psy-ab&xssi=t&gs_ri=gws-wiz&hl=en-BD&authuser=0&psi=4oO9XIj8ONm89QOY2LCgDA.1555923942084&ei=4oO9XIj8ONm89QOY2LCgDA
+function wpcp_pro_get_keyword_suggestion(){
+	$word = $_REQUEST['input'];
+
+	$curl = new Curl\Curl();
+	$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
+	$curl->setOpt( CURLOPT_TIMEOUT, 30 );
+	$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
+	$curl->setOpt( CURLOPT_REFERER, 'http://www.bing.com/' );
+	$curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );
+	$curl->get( 'http://suggestqueries.google.com/complete/search', array(
+		'output' => 'toolbar',
+		'hl=en&q=sultan' => 'en',
+		'q' => $word,
+		'client' => 'firefox',
+	));
+
+	if(is_wp_error($curl->isError())){
+		wp_send_json_success([]);
+	}
+	$response = $curl->getResponse();
+	$suggestion = [];
+	$list = json_decode( $response );
+	if ( is_array( $list ) && isset( $list[ 1 ] ) ) {
+		$list = $list[ 1 ];
+	}
+	if ( is_array( $list ) && count( $list ) ) {
+		foreach ($list as $item){
+			$str = preg_replace('/[^a-z0-9.]+/i', '', $item);
+			// if(!empty($str)){
+			$suggestion[] = $item;
+			// }
+		}
+	}
+
+	$suggestion = array_unique($suggestion);
+	wp_send_json_success($suggestion);
+}
+add_action('wp_ajax_wpcp_pro_get_keyword_suggestion', 'wpcp_pro_get_keyword_suggestion');

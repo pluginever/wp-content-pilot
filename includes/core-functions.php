@@ -104,27 +104,27 @@ function wpcp_is_duplicate_url( $url ) {
  *
  * @since 1.2.0
  */
-function wpcp_disable_campaign( $camp_id ) {
-	wpcp_update_post_meta( $camp_id, '_campaign_status', 'inactive' );
-	do_action( 'wpcp_disable_campaign', $camp_id );
+function wpcp_disable_campaign( $campaign_id ) {
+	wpcp_update_post_meta( $campaign_id, '_campaign_status', 'inactive' );
+	do_action( 'wpcp_disable_campaign', $campaign_id );
 }
 
 /**
  * Returns wpcp meta values
  *
- * @param      $post_id
+ * @param      $campaign_id
  * @param      $key
  * @param null $default
  *
  * @return null|string|array
  */
-function wpcp_get_post_meta( $post_id, $key, $default = null ) {
-	$meta_value = get_post_meta( $post_id, $key, true );
+function wpcp_get_post_meta( $campaign_id, $key, $default = null ) {
+	$meta_value = get_post_meta( $campaign_id, $key, true );
 
 	if ( $meta_value === false || $meta_value === '' ) {
 		$value = $default;
 	} else {
-		$value = get_post_meta( $post_id, $key, true );
+		$value = get_post_meta( $campaign_id, $key, true );
 	}
 
 	return is_string( $value ) ? trim( $value ) : $value;

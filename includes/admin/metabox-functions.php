@@ -62,6 +62,7 @@ function wpcp_conditional_metabox_remove( $post_type, $context, $post ) {
 		remove_meta_box( 'wpcp-campaign-actions', 'wp_content_pilot', 'normal' );
 	}
 }
+
 add_action( 'do_meta_boxes', 'wpcp_conditional_metabox_remove', 10, 3 );
 
 /**
@@ -102,22 +103,23 @@ function wpcp_posts_filter_metabox_callback( $post ) {
 
 function wpcp_advanced_settings_metabox_callback( $post ) {
 	wpcp_get_views( 'metabox/advanced-settings.php' );
+	do_action( 'wpcp_advanced_settings_metabox', $post );
 }
 
 function wpcp_campaign_action_metabox_callback( $post ) {
 	wpcp_get_views( 'metabox/action-metabox.php' );
 }
 
-function wpcp_campaign_details_metabox_callback($post){
+function wpcp_campaign_details_metabox_callback( $post ) {
 
 }
 
-function wpcp_campaign_miscellaneous_metabox_callback($post){
-	wpcp_get_views( 'metabox/campaign-miscellaneous.php', ['campaign_id' => $post->ID] );
+function wpcp_campaign_miscellaneous_metabox_callback( $post ) {
+	wpcp_get_views( 'metabox/campaign-miscellaneous.php', [ 'campaign_id' => $post->ID ] );
 }
 
-function wpcp_campaign_posts_metabox_callback($post){
-	wpcp_get_views( 'metabox/campaign-posts.php', ['campaign_id' => $post->ID] );
+function wpcp_campaign_posts_metabox_callback( $post ) {
+	wpcp_get_views( 'metabox/campaign-posts.php', [ 'campaign_id' => $post->ID ] );
 }
 
 function wpcp_update_campaign_settings( $post_id ) {
@@ -213,8 +215,10 @@ function wpcp_keyword_suggestion_field() {
 		'name'          => '_keyword_suggestion',
 		'placeholder'   => 'Enter Keyword Here',
 		'wrapper_class' => 'pro',
+		'after'         => '<span id="wpcp-keyword-suggester"></span>',
 		'attrs'         => array(
 			'disabled' => 'disabled',
+			'list'     => 'wpcp-keyword-suggester',
 		)
 	) );
 }
@@ -307,3 +311,62 @@ add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_external_link_field', 20 
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_featured_image_random_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_canonical_link_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_target_rel_field', 20 );
+
+
+function wpcp_search_replace_metafield( $post ) {
+	?>
+	<div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_field-field pro">
+		<label class="wpcp-label">Search Replace</label>
+
+		<table class="striped widefat wp-list-table">
+			<thead>
+			<tr>
+				<th>Search</th>
+				<th>Replace</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody data-repeater-list="_wpcp_search_n_replace">
+			<tr data-repeater-item>
+				<td><input type="text" name="search" placeholder="Search" disabled/></td>
+				<td><input type="text" name="replace" placeholder="Replace" disabled/></td>
+				<td><input data-repeater-delete type="button" value="Delete" class="button" disabled/></td>
+			</tr>
+			</tbody>
+		</table>
+		<button data-repeater-create type="button" class="button" disabled>Add New</button>
+	</div>
+	<?php
+}
+
+add_action( 'wpcp_advanced_settings_metabox', 'wpcp_search_replace_metafield' );
+
+
+function wpcp_post_meta_metafield( $post ) {
+	?>
+	<div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_field-field pro">
+		<label class="wpcp-label">Post Meta</label>
+
+		<table class="striped widefat wp-list-table">
+			<thead>
+			<tr>
+				<th>Meta Key</th>
+				<th>Meta Value</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody data-repeater-list="_wpcp_custom_meta_field">
+			<tr data-repeater-item>
+				<td><input type="text" name="meta_key" placeholder="Meta Key" disabled/></td>
+				<td><input type="text" name="meta_value" placeholder="Meta Value" disabled/></td>
+				<td><input data-repeater-delete type="button" value="Delete" class="button" disabled/></td>
+			</tr>
+			</tbody>
+		</table>
+
+		<button data-repeater-create type="button" class="button" disabled>Add New</button>
+	</div>
+	<?php
+}
+
+add_action( 'wpcp_advanced_settings_metabox', 'wpcp_post_meta_metafield' );

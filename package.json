@@ -15,21 +15,15 @@
   },
   "scripts": {
     "build": "grunt",
-    "build-watch": "grunt watch"
+    "build-watch": "grunt watch",
+    "makepot": "composer run-script makepot",
+    "packages:fix:textdomain": "node ./bin/package-update-textdomain.js",
+    "git:update-hooks": "rm -r .git/hooks && mkdir -p .git/hooks && node ./node_modules/husky/husky.js install"
   },
   "devDependencies": {
     "autoprefixer": "~8.6.2",
-    "babel": "^6.5.2",
-    "babel-cli": "^6.14.0",
-    "babel-eslint": "^8.2.3",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.14.0",
-    "babel-preset-stage-2": "^6.13.0",
-    "braces": ">=2.3.1",
-    "config": "^1.24.0",
-    "cross-env": "^5.1.6",
-    "fstream": ">=1.0.12",
     "grunt": "^1.0.3",
+    "grunt-babel": "^8.0.0",
     "grunt-checktextdomain": "~1.0.1",
     "grunt-contrib-clean": "~1.1.0",
     "grunt-contrib-compress": "^1.4.3",
@@ -45,9 +39,11 @@
     "grunt-sass": "~2.1.0",
     "grunt-stylelint": "~0.10.0",
     "grunt-wp-i18n": "~1.0.1",
-    "js-yaml": ">=3.13.1",
-    "stylelint": "~9.2.1",
-    "tar": ">=2.2.2"
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.7",
+    "node-sass": "^4.12.0",
+    "stylelint": "~9.10.1",
+    "susy": "2.2.14"
   },
   "keywords": []
 }

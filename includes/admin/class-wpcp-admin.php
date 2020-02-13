@@ -26,10 +26,11 @@ class WPCP_Admin {
 	 */
 	public function includes() {
 		require_once( dirname( __FILE__ ) . '/admin-functions.php' );
-		//require_once ( dirname( __FILE__ ). '/class-wpcp-upgrades.php');
+		require_once ( dirname( __FILE__ ). '/class-wpcp-updater.php');
 		require_once( dirname( __FILE__ ) . '/class-settings-api.php' );
 		require_once( dirname( __FILE__ ) . '/class-wpcp-settings.php' );
 		require_once( dirname( __FILE__ ) . '/class-wpcp-settings.php' );
+		require_once( dirname( __FILE__ ) . '/class-wpcp-promotion.php' );
 		require_once( dirname( __FILE__ ) . '/metabox-functions.php' );
 	}
 
@@ -58,24 +59,24 @@ class WPCP_Admin {
 	 * status page
 	 * @since 1.2.0
 	 */
-	public function status_page(){
-		wpcp_get_views( 'page/status-page.php');
+	public function status_page() {
+		wpcp_get_views( 'page/status-page.php' );
 	}
 
 	/**
 	 * Logs page
 	 * @since 1.2.0
 	 */
-	public function logs_page(){
-		wpcp_get_views( 'page/logs-page.php');
+	public function logs_page() {
+		wpcp_get_views( 'page/logs-page.php' );
 	}
 
 	/**
 	 * Help Page
 	 * @since 1.2.0
 	 */
-	public function help_page(){
-		wpcp_get_views( 'page/help-page.php');
+	public function help_page() {
+		wpcp_get_views( 'page/help-page.php' );
 	}
 
 	/**
@@ -115,11 +116,11 @@ class WPCP_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-//		$upgrader = new ContentPilot_Upgrades();
-//
-//		if ( $upgrader->needs_update() ) {
-//			$upgrader->perform_updates();
-//		}
+		$upgrader = new WPCP_Updater();
+
+		if ( $upgrader->needs_update() ) {
+			$upgrader->perform_updates();
+		}
 	}
 
 	/**

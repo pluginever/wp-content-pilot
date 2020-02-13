@@ -2,6 +2,7 @@
 module.exports = function (grunt) {
 	'use strict';
 	var pkg = grunt.file.readJSON('package.json');
+	var sass = require( 'node-sass' );
 
 	grunt.initConfig({
 
@@ -10,7 +11,8 @@ module.exports = function (grunt) {
 			css: 'assets/css',
 			fonts: 'assets/fonts',
 			images: 'assets/images',
-			js: 'assets/js'
+			js: 'assets/js',
+			php: 'includes'
 		},
 
 		// JavaScript linting with JSHint.
@@ -46,24 +48,7 @@ module.exports = function (grunt) {
 					comments: /@license|@preserve|^!/
 				}
 			},
-			admin: {
-				files: [{
-					expand: true,
-					cwd: '<%= dirs.js %>/admin/',
-					src: [
-						'*.js',
-						'!*.min.js'
-					],
-					dest: '<%= dirs.js %>/admin/',
-					ext: '.min.js'
-				}]
-			},
-			vendor: {
-				files: {
-					// '<%= dirs.js %>/file.min.js': ['<%= dirs.js %>/file.js'],
-				}
-			},
-			frontend: {
+			main: {
 				files: [{
 					expand: true,
 					cwd: '<%= dirs.js %>/',
@@ -104,21 +89,12 @@ module.exports = function (grunt) {
 			}
 		},
 
-		// Concatenate files.
-		concat: {
-			admin: {
-				files: {
-					// '<%= dirs.css %>/admin.css' : ['<%= dirs.css %>/select2.css', '<%= dirs.css %>/admin.css'],
-					// '<%= dirs.css %>/admin-rtl.css' : ['<%= dirs.css %>/select2.css', '<%= dirs.css %>/admin-rtl.css']
-				}
-			}
-		},
 
 		// Watch changes for assets.
 		watch: {
 			css: {
 				files: ['<%= dirs.css %>/**/*.scss'],
-				tasks: ['sass', 'postcss', 'cssmin', 'concat']
+				tasks: ['sass', 'postcss', 'cssmin']
 			},
 			js: {
 				files: [
@@ -329,8 +305,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('css', [
 		'sass',
 		'postcss',
-		'cssmin',
-		'concat'
+		'cssmin'
 	]);
 
 	// Only an alias to 'default' task.

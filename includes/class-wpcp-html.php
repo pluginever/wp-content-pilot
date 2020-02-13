@@ -20,6 +20,7 @@ class WPCP_HTML {
 			'tooltip'       => '',
 			'desc'          => '',
 			'css'           => '',
+			'after'         => '',
 			'attrs'         => array(),
 		) ) );
 
@@ -43,6 +44,7 @@ class WPCP_HTML {
 		$html = sprintf( '<p class="form-field wpcp-field %1$s-field %2$s-input %3$s">', sanitize_html_class( $args['id'] ), $args['type'], sanitize_html_class( $args['wrapper_class'] ) );
 		$html .= ! empty( $args['label'] ) ? sprintf( '<label for="%1$s" class="wpcp-label">%2$s %3$s</label>', $args['id'], $args['label'], $args['tooltip'] ) : '';
 		$html .= sprintf( '<input type="%1$s" class="wpcp-input %2$s-text %3$s" id="%4$s" name="%5$s" value="%6$s" autocomplete="off" %7$s/>', $args['type'], $args['size'], $args['class'], $args['id'], $args['name'], $args['value'], $attributes );
+		$html .= ! empty( $args['after'] ) ? $args['after'] : '';
 		$html .= ! empty( $args['desc'] ) ? sprintf( '<span class="wpcp-desc description">%s</span>', wp_kses_post( $args['desc'] ) ) : '';
 		$html .= '</p>';
 
@@ -306,6 +308,7 @@ class WPCP_HTML {
 
 		if ( is_array( $options ) ) {
 			$options = array_map( 'intval', $options );
+
 			return selected( in_array( $value, $options, true ), true, false );
 		}
 
@@ -329,20 +332,20 @@ class WPCP_HTML {
 	}
 
 	/**
-	 * @since 1.2.0
 	 * @param string $class
 	 *
 	 * @return string
+	 * @since 1.2.0
 	 */
-	public static function start_double_columns($class = ''){
-		return sprintf( '<div class="wpcp-dc %s">', sanitize_html_class( $class));
+	public static function start_double_columns( $class = '' ) {
+		return sprintf( '<div class="wpcp-dc %s">', sanitize_html_class( $class ) );
 	}
 
 	/**
-	 * @since 1.2.0
 	 * @return string
+	 * @since 1.2.0
 	 */
-	public static function end_double_columns(){
+	public static function end_double_columns() {
 		return '</div><!--wpcp-dc-->';
 	}
 

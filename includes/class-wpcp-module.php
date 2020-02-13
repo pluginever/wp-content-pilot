@@ -543,9 +543,7 @@ abstract class WPCP_Module {
 		) );
 		global $wpdb;
 
-		$inserted = $wpdb->insert( $wpdb->wpcp_links, $data );
-
-		return $inserted == false ? false : $wpdb->insert_id;
+		return $wpdb->insert( $wpdb->wpcp_links, $data );
 	}
 
 	/**

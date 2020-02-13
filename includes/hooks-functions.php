@@ -1,5 +1,6 @@
 <?php
 defined('ABSPATH')|| exit();
+
 function wpcp_set_post_taxonomy( $taxonomies, $campaign_id ) {
 	$categories = wpcp_get_post_meta( $campaign_id, '_categories', [] );
 

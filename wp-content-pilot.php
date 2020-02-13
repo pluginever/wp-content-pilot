@@ -157,9 +157,6 @@ final class ContentPilot {
 
 		//core files
 		require_once( WPCP_LIBRARY . '/readability/Readability.php' );
-		require_once( WPCP_INCLUDES . '/wp-async-request.php' );
-		require_once( WPCP_INCLUDES . '/wp-background-process.php' );
-		require_once( WPCP_INCLUDES . '/class-automatic-campaign.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-readability.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-logger.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-dom.php' );
