@@ -326,7 +326,7 @@ function wpcp_search_replace_metafield( $post ) {
 				<th></th>
 			</tr>
 			</thead>
-			<tbody data-repeater-list="_wpcp_search_n_replace">
+			<tbody data-repeater-list="_wpcp_search_replaces">
 			<tr data-repeater-item>
 				<td><input type="text" name="search" placeholder="Search" disabled/></td>
 				<td><input type="text" name="replace" placeholder="Replace" disabled/></td>
