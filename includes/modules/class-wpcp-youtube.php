@@ -369,7 +369,7 @@ EOT;
 			$response      = json_decode( $curl->getRawResponse() );
 			$error_message = array_pop( $response->error->errors );
 			$message       = sprintf( __( 'Youtube api request failed response [%s]', 'wp-content-pilot' ), $error_message->message );
-			wpcp_logger()->error( $message );
+			wpcp_logger()->error( $message, $campaign_id );
 
 			return false;
 		}

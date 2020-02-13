@@ -31,6 +31,7 @@ class WPCP_Readability {
 	 * WPCP_Readability constructor.
 	 */
 	public function __construct() {
+
 	}
 
 
@@ -44,11 +45,8 @@ class WPCP_Readability {
 		//set properties
 		$this->url = esc_url( $url );
 
-		//set document
-		$document = wpcp_str_get_html( $html );
-
 		//process full document
-		$html = $this->pre_process_html( $document, $this->url );
+		$html = $this->pre_process_html( $html, $this->url );
 
 		$readability                          = new Readability( $html, $this->url );
 		$readability->debug                   = false;
@@ -62,7 +60,6 @@ class WPCP_Readability {
 		}
 
 		$title = $readability->getTitle()->textContent;
-
 		$content = wpcp_remove_empty_tags_recursive( $readability->getContent()->innerHTML );
 		$content = wpcp_remove_emoji( $content );
 		$content = force_balance_tags( $content );
@@ -130,7 +127,6 @@ class WPCP_Readability {
 		if ( ! $docuemnt instanceof simple_html_dom ) {
 			$docuemnt = wpcp_str_get_html( $docuemnt );
 		}
-
 		//fix image link
 		/* @var $img simple_html_dom_node */
 		foreach ( $docuemnt->find( 'img' ) as $img ) {
@@ -158,7 +154,7 @@ class WPCP_Readability {
 			$a->setAttribute( 'href', $this->to_absolute_uri( $a->getAttribute( 'href' ), $url ) );
 		}
 
-		return $docuemnt;
+		return $docuemnt->outertext;
 	}
 
 	/**

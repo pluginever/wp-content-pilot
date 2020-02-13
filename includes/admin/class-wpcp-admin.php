@@ -43,6 +43,7 @@ class WPCP_Admin {
 		add_action( 'admin_menu', array( $this, 'get_pro_link' ), 502 );
 		add_action( 'admin_init', array( $this, 'go_pro_redirect' ) );
 		add_action( 'admin_init', array( $this, 'plugin_upgrades' ) );
+		add_action( 'admin_footer_text', array( $this, 'admin_footer_note' ) );
 	}
 
 	/**
@@ -121,6 +122,23 @@ class WPCP_Admin {
 		if ( $upgrader->needs_update() ) {
 			$upgrader->perform_updates();
 		}
+	}
+
+	/**
+	 * 5 Star Rating banner.
+	 *
+	 * since 1.2.0
+	 * @return string
+	 */
+	public function admin_footer_note(){
+		$screen = get_current_screen();
+
+		if ( 'wp_content_pilot' == $screen->post_type ) {
+			$star_url = 'https://wordpress.org/support/plugin/wp-content-pilot/reviews/?filter=5#new-post';
+			$text     = sprintf( __( 'If you like <strong>WP Content Pilot</strong> please leave us a <a href="%s" target="_blank">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. Your Review is very important to us as it helps us to grow more.', 'wp-content-pilot' ), $star_url );
+			return $text;
+		}
+
 	}
 
 	/**

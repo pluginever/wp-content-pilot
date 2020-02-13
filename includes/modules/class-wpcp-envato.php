@@ -216,7 +216,7 @@ EOT;
 
 			$api_url  = 'https://api.envato.com/v1/discovery/search/search/item';
 			$endpoint = add_query_arg( $query_args, $api_url );
-			wpcp_logger()->debug( sprintf( 'Searching for items url [ %s ]', $endpoint ) );
+			wpcp_logger()->debug( sprintf( 'Searching for items url [ %s ]', $endpoint ), $campaign_id );
 
 			$curl = $this->setup_curl();
 			$curl->setHeader( 'Authorization', sprintf( 'bearer %s', trim( $token ) ) );

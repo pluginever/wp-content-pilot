@@ -152,7 +152,7 @@ EOT;
 				'method'         => 'flickr.photos.search',
 			);
 			$endpoint   = add_query_arg( $query_args, 'https://api.flickr.com/services/rest/' );
-			wpcp_logger()->debug( sprintf( 'Looking for data from [%s]', $endpoint ) );
+			wpcp_logger()->debug( sprintf( 'Looking for data from [%s]', $endpoint ) , $campaign_id);
 			$curl = $this->setup_curl();
 			$curl->get( $endpoint );
 

@@ -315,7 +315,7 @@ add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_target_rel_field', 20 );
 
 function wpcp_search_replace_metafield( $post ) {
 	?>
-	<div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_field-field pro">
+	<div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_fields-field pro">
 		<label class="wpcp-label">Search Replace</label>
 
 		<table class="striped widefat wp-list-table">
@@ -344,7 +344,7 @@ add_action( 'wpcp_advanced_settings_metabox', 'wpcp_search_replace_metafield' );
 
 function wpcp_post_meta_metafield( $post ) {
 	?>
-	<div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_field-field pro">
+	<div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_fields-field pro">
 		<label class="wpcp-label">Post Meta</label>
 
 		<table class="striped widefat wp-list-table">
@@ -355,7 +355,7 @@ function wpcp_post_meta_metafield( $post ) {
 				<th></th>
 			</tr>
 			</thead>
-			<tbody data-repeater-list="_wpcp_custom_meta_field">
+			<tbody data-repeater-list="_wpcp_custom_meta_fields">
 			<tr data-repeater-item>
 				<td><input type="text" name="meta_key" placeholder="Meta Key" disabled/></td>
 				<td><input type="text" name="meta_value" placeholder="Meta Value" disabled/></td>

@@ -4,6 +4,7 @@
   "description": "The Best WordPress Plugin ever made!",
   "version": "1.1.4",
   "homepage": "https://www.pluginever.com",
+  "keywords": [],
   "author": {
     "name": "pluginever",
     "email": "support@pluginever.com",
@@ -45,5 +46,29 @@
     "stylelint": "~9.10.1",
     "susy": "2.2.14"
   },
-  "keywords": []
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "post-merge": "./bin/post-merge.sh"
+    }
+  },
+  "lint-staged": {
+    "*.php": [
+      "php -d display_errors=1 -l",
+      "composer run-script phpcs-pre-commit"
+    ],
+    "*.scss": [
+      "stylelint --syntax=scss --fix",
+      "git add"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "browserslist": [
+    "> 0.1%",
+    "ie 8",
+    "ie 9"
+  ]
 }

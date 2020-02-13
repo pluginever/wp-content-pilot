@@ -182,7 +182,7 @@ abstract class WPCP_Module {
 
 		$article = $this->get_post( $campaign_id, $keywords );
 		if ( is_wp_error( $article ) ) {
-			wpcp_logger()->error( $article->get_error_message() );
+			wpcp_logger()->error( $article->get_error_message(), $campaign_id);
 
 			return $article;
 		}
@@ -199,6 +199,26 @@ abstract class WPCP_Module {
 			'content'    => '',
 			'source_url' => '',
 		) );
+//		echo $article['content'];
+//		wp_die();
+		//fix utf chars & emoji
+//		foreach ( $article as $tag => $tag_content ) {
+//			$article[ $tag ] = wpcp_fix_utf8( $tag_content );
+//			$article[ $tag ] = wpcp_remove_emoji( $tag_content );
+//		}
+		//error_log(print_r($article, true ));
+
+
+		$post_title    = wpcp_get_post_meta( $this->campaign_id, '_post_title', '' );
+		$post_content  = wpcp_get_post_meta( $this->campaign_id, '_post_template', '' );
+		$post_type     = 'post';
+		$post_status   = 'publish';
+		$post_excerpt  = '';
+		$post_author   = get_post_field( 'post_author', $campaign_id, 'edit' );
+		$post_meta     = [];
+		$post_taxonomy = [];
+		$post_time     = current_time( 'mysql' );
+
 
 		//check if acceptance passed if not then return this method again
 		$accepted = apply_filters( 'wpcp_acceptance_check', true, $article, $campaign_id, $this );
@@ -246,17 +266,17 @@ abstract class WPCP_Module {
 		//make template of title,content,meta
 
 		//translate template
-		$content = wpcp_get_post_meta( $this->campaign_id, '_post_template', '' );
-		$title   = wpcp_get_post_meta( $this->campaign_id, '_post_title', '' );
-		$tags    = array_keys( $this->get_template_tags() );
+		$post_content = wpcp_get_post_meta( $this->campaign_id, '_post_template', '' );
+		$post_title   = wpcp_get_post_meta( $this->campaign_id, '_post_title', '' );
+		$tags         = array_keys( $this->get_template_tags() );
 		foreach ( $tags as $tag ) {
 			if ( array_key_exists( $tag, $article ) ) {
-				$content = str_replace( '{' . $tag . '}', $article[ $tag ], $content );
-				$title   = str_replace( '{' . $tag . '}', $article[ $tag ], $title );
+				$post_content = str_replace( '{' . $tag . '}', $article[ $tag ], $post_content );
+				$post_title   = str_replace( '{' . $tag . '}', $article[ $tag ], $post_title );
 			}
 
-			$content = html_entity_decode( $content );
-			$title   = html_entity_decode( $title );
+			$post_content = html_entity_decode( $post_content );
+			$post_title   = html_entity_decode( $post_title );
 		}
 
 		// replacing the keywords with affiliate links
@@ -266,34 +286,25 @@ abstract class WPCP_Module {
 		//spin
 
 
-		$post_tax = [];
 		//category handles
 		$categories = wpcp_get_post_meta( $this->campaign_id, '_categories', [] );
 		if ( ! empty( $categories ) ) {
-			$post_tax['category'] = array_map( 'intval', $categories );
+			$post_taxonomy['category'] = array_map( 'intval', $categories );
 		}
 
 		//tags handles
 		$tags = wpcp_get_post_meta( $this->campaign_id, '_tags', [] );
 		if ( ! empty( $tags ) ) {
-			$post_tax['post_tag'] = array_map( 'intval', $tags );
+			$post_taxonomy['post_tag'] = array_map( 'intval', $tags );
 		}
 
 		//Pending for transation fail
 
 		//prepare author
-
-		//fix invalid utf chars
-		$title   = wpcp_fix_utf8( $title );
-		$content = wpcp_fix_utf8( $content );
-
-
-		//fix emoji
-		$title   = wpcp_remove_emoji( $title );
-		$content = wpcp_remove_emoji( $content );
-
-
-		// add featured image
+		$custom_author = wpcp_get_post_meta( $campaign_id, '_author', 1 );
+		if ( ! empty( $custom_author ) ) {
+			$post_author = intval( $custom_author );
+		}
 
 		//delete first image from content
 
@@ -301,43 +312,30 @@ abstract class WPCP_Module {
 
 		//amazon woocommerce integration
 
-		//populate custom fields
-
-
 		//summery
-		$summary        = '';
 		$insert_excerpt = wpcp_get_post_meta( $campaign_id, '_excerpt', '' );
 		if ( 'on' == $insert_excerpt ) {
 			$excerpt_length = wpcp_get_post_meta( $campaign_id, '_excerpt_length', 55 );
-			$summary        = empty( $article['excerpt'] ) ? $article['content'] : $article['excerpt'];
-			$summary        = strip_tags( $summary );
-			$summary        = strip_shortcodes( $summary );
-			$summary        = wp_trim_words( $summary, $excerpt_length );
+			$post_excerpt   = empty( $post_excerpt ) ? $post_content : $post_excerpt;
+			$post_excerpt   = strip_tags( $post_excerpt );
+			$post_excerpt   = strip_shortcodes( $post_excerpt );
+			$post_excerpt   = wp_trim_words( $post_excerpt, $excerpt_length );
 		}
-
-		//author id
-		$author_id = get_post_field( 'post_author', $campaign_id, 'edit' );
-		$author_id = wpcp_get_post_meta( $campaign_id, '_author', $author_id );
-
-		//post time
-		$post_time = current_time( 'mysql' );
 
 		//post
 		do_action( 'wpcp_before_post_insert', $campaign_id, $article );
-		$post_type      = wpcp_get_post_meta( $campaign_id, '_post_type', 'post' );
-		$post_status    = wpcp_get_post_meta( $campaign_id, '_post_status', 'post' );
-		$title          = apply_filters( 'wpcp_post_title', $title, $campaign_id, $article );
-		$post_content   = apply_filters( 'wpcp_post_content', $content, $campaign_id, $article );
-		$post_excerpt   = apply_filters( 'wpcp_post_excerpt', $summary, $campaign_id, $article );
-		$post_author    = apply_filters( 'wpcp_post_author', $author_id, $campaign_id, $article );
+
+		$title          = apply_filters( 'wpcp_post_title', $post_title, $campaign_id, $article );
+		$post_content   = apply_filters( 'wpcp_post_content', $post_content, $campaign_id, $article );
+		$post_excerpt   = apply_filters( 'wpcp_post_excerpt', $post_excerpt, $campaign_id, $article );
+		$post_author    = apply_filters( 'wpcp_post_author', $post_author, $campaign_id, $article );
 		$post_type      = apply_filters( 'wpcp_post_type', $post_type, $campaign_id, $article );
 		$post_status    = apply_filters( 'wpcp_post_status', $post_status, $campaign_id, $article );
-		$post_meta      = apply_filters( 'wpcp_post_meta', [], $campaign_id, $article );
-		$post_tax       = apply_filters( 'wpcp_post_taxonomy', $post_tax, $campaign_id, $article );
+		$post_meta      = apply_filters( 'wpcp_post_meta', $post_meta, $campaign_id, $article );
+		$post_tax       = apply_filters( 'wpcp_post_taxonomy', $post_taxonomy, $campaign_id, $article );
 		$post_time      = apply_filters( 'wpcp_post_time', $post_time, $campaign_id, $article );
 		$comment_status = apply_filters( 'wpcp_post_comment_status', get_default_comment_status( $post_type ), $campaign_id, $article );
 		$ping_status    = apply_filters( 'wpcp_post_ping_status', get_default_comment_status( $post_type, 'pingback' ), $campaign_id, $article );
-
 
 		/**
 		 * Filter to manipulate postarr param before insert a post
@@ -382,7 +380,7 @@ abstract class WPCP_Module {
 		//set featured image
 		$is_set_featured_image = wpcp_get_post_meta( $campaign_id, '_set_featured_image', 0 );
 		if ( 'on' === $is_set_featured_image && ! empty( $article['image_url'] ) ) {
-			wpcp_logger()->debug( 'Setting featured image' );
+			wpcp_logger()->debug( 'Setting featured image', $campaign_id );
 			$attachment_id = wpcp_download_image( html_entity_decode( $article['image_url'] ) );
 			if ( $attachment_id ) {
 				set_post_thumbnail( $post_id, $attachment_id );
@@ -390,21 +388,14 @@ abstract class WPCP_Module {
 			}
 		}
 
-
 		//wpml internal cron patch
 
 		//wpml integration
 
 		//setting categories for custom post types
 
-		//if link canonical _yoast_wpseo_canonical
-		if ( 'on' == wpcp_get_post_meta( $this->campaign_id, '_canonical_tag', '' ) && function_exists( 'wpcp_pro_add_canonical_tag' ) ) {
-			wpcp_pro_add_canonical_tag( $post_id, $article['source_url'] );
-		}
-
 		//save campaign data
 		update_post_meta( $post_id, '_campaign_id', $campaign_id );
-
 		update_post_meta( $campaign_id, '_last_post', $post_id );
 		update_post_meta( $campaign_id, '_last_run', current_time( 'mysql' ) );
 		update_post_meta( $campaign_id, 'wpcp_last_ran_campaign', current_time( 'mysql' ) );
@@ -535,11 +526,11 @@ abstract class WPCP_Module {
 	 */
 	protected function insert_link( $data ) {
 		$data = wp_parse_args( $data, array(
-			'camp_id'   => '',
-			'url'       => '',
-			'title'     => '',
-			'keyword'   => '',
-			'status'    => 'new',
+			'camp_id' => '',
+			'url'     => '',
+			'title'   => '',
+			'keyword' => '',
+			'status'  => 'new',
 		) );
 		global $wpdb;
 

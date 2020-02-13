@@ -74,7 +74,7 @@ function wpcp_run_automatic_campaign() {
 			}
 
 			if ( $posted >= $target ) {
-				wpcp_logger()->debug( 'Reached target stopping campaign' );
+				wpcp_logger()->debug( 'Reached target stopping campaign', $campaign_id );
 				wpcp_disable_campaign( $campaign_id );
 				continue;
 			}
@@ -179,3 +179,56 @@ function wpcp_pro_get_keyword_suggestion(){
 	wp_send_json_success($suggestion);
 }
 add_action('wp_ajax_wpcp_pro_get_keyword_suggestion', 'wpcp_pro_get_keyword_suggestion');
+
+/**
+ * Send notification mail after post insert
+ *
+ * @param $post_id
+ * @param $campaign_id
+ * @param $article
+ * @param $keyword
+ *
+ * @since 1.0.9
+ *
+ */
+function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article ) {
+	$send_mail = wpcp_get_settings( 'post_publish_mail', 'wpcp_settings_misc', '' );
+	if ( $send_mail != 'on' ) {
+		return;
+	}
+	$author_id = get_post_field( 'post_author', $post_id );
+	$to        = get_the_author_meta( 'user_email', $author_id );
+	$title     = $article['title'];
+	//when excerpt is not available
+	if ( empty( $article['excerpt'] ) ) {
+		$summary = wp_trim_words( $article['content'], 55 );
+		$summary = strip_tags( $summary );
+		$excerpt = strip_shortcodes( $summary );
+	} else {
+		$excerpt = $article['excerpt'];
+	}
+
+	$post_link = get_the_permalink( $post_id );
+	$subject   = __( 'Post Publish', 'wp-content-pilot' );
+	$body      = sprintf( __( "<h4>Post Title: %s</h4>
+                    <h5>Post Excerpt</h5>
+                    <p>%s</p>
+                    <a href='%s'>View Post</a>", 'wp-content-pilot' ), esc_html( $title ), $excerpt, esc_url( $post_link )
+	);
+	$headers   = array( 'Content-Type: text/html; charset=UTF-8' );
+
+	wp_mail( $to, $subject, $body, $headers );
+}
+
+add_action( 'wpcp_after_post_publish', 'wpcp_post_publish_mail_notification', 10, 3 );
+
+/**
+ * Delete old logs longer than 2 days
+ * since 1.2.0
+ */
+function wpcp_wp_scheduled_delete(){
+	global $wpdb;
+	$date =  date('Y-m-d H:i:s', strtotime('2 days ago'));
+	$wpdb->query($wpdb->prepare("DELETE  FROM $wpdb->wpcp_logs WHERE created_at<=%s", $date));
+}
+add_action('wp_scheduled_delete', 'wpcp_wp_scheduled_delete');
