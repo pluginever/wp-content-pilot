@@ -85,7 +85,7 @@ function wpcp_campaign_status_metabox_callback( $post ) {
 
 function wpcp_campaign_options_metabox_callback( $post ) {
 	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
-	do_action( 'wpcp_' . esc_attr__( $campaign_type ) . '_campaign_options_meta_fields', $post );
+	do_action( 'wpcp_' . sanitize_key( $campaign_type ) . '_campaign_options_meta_fields', $post );
 	do_action( 'wpcp_campaign_options_meta_fields', $campaign_type, $post );
 }
 
@@ -190,7 +190,7 @@ function wpcp_update_campaign_settings( $post_id ) {
 	update_post_meta( $post_id, '_title_limit', empty( $posted['_title_limit'] ) ? '' : esc_attr( $posted['_title_limit'] ) );
 	update_post_meta( $post_id, '_content_limit', empty( $posted['_content_limit'] ) ? '' : esc_attr( $posted['_content_limit'] ) );
 	do_action( 'wpcp_update_campaign_settings', $post_id, $posted );
-	do_action( 'wpcp_' . esc_attr__( $posted['_campaign_type'] ) . '_update_campaign_settings', $post_id, $posted );
+	do_action( 'wpcp_' . sanitize_key( $posted['_campaign_type'] ) . '_update_campaign_settings', $post_id, $posted );
 }
 
 add_action( 'save_post_wp_content_pilot', 'wpcp_update_campaign_settings' );

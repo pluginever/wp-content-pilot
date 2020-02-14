@@ -83,11 +83,7 @@ function wpcp_run_automatic_campaign() {
 			if ( ! empty( $campaign_type ) ) {
 				content_pilot()->modules()->load( $campaign_type )->process_campaign( $campaign_id, '', 'cron' );
 			}
-
-//			$automatic_campaign->push_to_queue( $campaign_id );
-
 		}
-//		$automatic_campaign->save()->dispatch();
 	}
 
 }

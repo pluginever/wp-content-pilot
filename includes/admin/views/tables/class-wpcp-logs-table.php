@@ -170,7 +170,7 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 
 	function extra_tablenav( $which ) {
 		if ( $which == "top" ){
-			echo sprintf( '<a href="#" class="button button-secondary" id="wpcp-clear-logs" data-nonce="%s">%s</a>',  wp_create_nonce('wpcp_clear_logs'), __('Clear Logs', 'wpc-content-pilot'));
+			echo sprintf( '<a href="#" class="button button-secondary" id="wpcp-clear-logs" data-nonce="%s">%s</a>',  wp_create_nonce('wpcp_clear_logs'), __('Clear Logs', 'wp-content-pilot'));
 		}
 	}
 

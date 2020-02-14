@@ -92,7 +92,7 @@ EOT;
 	public function get_setting_section( $sections ) {
 		$sections[] = [
 			'id'    => 'wpcp_settings_flickr',
-			'title' => __( 'Flickr Settings', 'wp-content-pilot-pro' )
+			'title' => __( 'Flickr Settings', 'wp-content-pilot' )
 		];
 
 		return $sections;
@@ -131,7 +131,7 @@ EOT;
 		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
 		if ( empty( $api_key ) ) {
 			wpcp_disable_campaign( $campaign_id );
-			$notice = __( 'The Flickr api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot-pro' );
+			$notice = __( 'The Flickr api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot' );
 			wpcp_logger()->error( $notice, $campaign_id );
 
 			return new WP_Error( 'missing-data', $notice );

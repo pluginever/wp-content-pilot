@@ -200,9 +200,6 @@ abstract class WPCP_Module {
 			'source_url' => '',
 		)), $campaign_id, $campaign_type);
 
-		error_log( print_r( $article, true ));
-//		echo $article['content'];
-//		wp_die();
 //		fix utf chars & emoji
 		foreach ( $article as $tag => $tag_content ) {
 			$article[ $tag ] = wpcp_fix_utf8( $tag_content );

@@ -174,7 +174,7 @@ class WPCP_HTML {
 			'tooltip'       => '',
 			'css'           => '',
 			'size'          => 'large',
-			'placeholder'   => __( '-- Please Select --', 'wp-ever-accounting' ),
+			'placeholder'   => __( '-- Please Select --', 'wp-content-pilot' ),
 			'multiple'      => false,
 			'attrs'         => array()
 		) ) );

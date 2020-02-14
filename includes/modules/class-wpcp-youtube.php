@@ -195,7 +195,7 @@ EOT;
 	public function get_setting_section( $sections ) {
 		$sections[] = [
 			'id'    => 'wpcp_settings_youtube',
-			'title' => __( 'Youtube Settings', 'wp-content-pilot-pro' )
+			'title' => __( 'Youtube Settings', 'wp-content-pilot' )
 		];
 
 		return $sections;
@@ -230,7 +230,7 @@ EOT;
 		if ( empty( $api_key ) ) {
 			wpcp_disable_campaign( $campaign_id );
 
-			$notice = __( 'The YouTube api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot-pro' );
+			$notice = __( 'The YouTube api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot' );
 
 			wpcp_logger()->error( $notice, $campaign_id );
 
@@ -533,11 +533,10 @@ EOT;
 			}
 
 			$class   = 'notice notice-error';
-			$message = __( 'Youtube campaign wont run because you did not set the API details yet.', 'sample-text-domain' );
+			$message = __( 'Youtube campaign wont run because you did not set the API details yet.', 'wp-content-pilot' );
 			printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
 		}
 	}
-
 
 	/**
 	 * Main WPCP_Youtube Instance.
