@@ -29,7 +29,6 @@ class WPCP_Admin {
 		require_once ( dirname( __FILE__ ). '/class-wpcp-updater.php');
 		require_once( dirname( __FILE__ ) . '/class-settings-api.php' );
 		require_once( dirname( __FILE__ ) . '/class-wpcp-settings.php' );
-		require_once( dirname( __FILE__ ) . '/class-wpcp-settings.php' );
 		require_once( dirname( __FILE__ ) . '/class-wpcp-promotion.php' );
 		require_once( dirname( __FILE__ ) . '/metabox-functions.php' );
 	}

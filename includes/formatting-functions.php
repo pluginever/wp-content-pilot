@@ -14,6 +14,9 @@ defined( 'ABSPATH' ) || exit();
  *
  */
 function wpcp_string_to_array( $string, $separator = ',', $callbacks = array() ) {
+	if ( is_array( $string ) ) {
+		return $string;
+	}
 	$default   = array(
 		'trim',
 	);

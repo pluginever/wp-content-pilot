@@ -79,6 +79,11 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_setting_section( $sections ) {
+		$sections[] = [
+			'id'    => 'wpcp_settings_article',
+			'title' => __( 'Article Settings', 'wp-content-pilot-pro' )
+		];
+
 		return $sections;
 	}
 
@@ -89,6 +94,16 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_setting_fields( $fields ) {
+		$fields['wpcp_settings_article'] = [
+			array(
+				'name'        => 'banned_hosts',
+				'label'       => __( 'Banned Hosts', 'wp-content-pilot' ),
+				'desc'        => __( 'Articles from the above hosts will be rejected. put single url/host per line.', 'wp-content-pilot' ),
+				'placeholder' => __( "example.com \n example1.com", 'wp-content-pilot' ),
+				'type'        => 'textarea',
+			),
+		];
+
 		return $fields;
 	}
 

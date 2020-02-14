@@ -191,26 +191,26 @@ abstract class WPCP_Module {
 			return new WP_Error( 'no-response', __( 'Content Pilot did not responded for the action', 'wp-content-pilot' ) );
 		}
 
-		$article = wp_parse_args( $article, array(
+		$article = apply_filters('wpcp_article', wp_parse_args( $article, array(
 			'title'      => '',
 			'author'     => '',
 			'image_url'  => '',
 			'excerpt'    => '',
 			'content'    => '',
 			'source_url' => '',
-		) );
+		)), $campaign_id, $campaign_type);
+
+		error_log( print_r( $article, true ));
 //		echo $article['content'];
 //		wp_die();
-		//fix utf chars & emoji
-//		foreach ( $article as $tag => $tag_content ) {
-//			$article[ $tag ] = wpcp_fix_utf8( $tag_content );
-//			$article[ $tag ] = wpcp_remove_emoji( $tag_content );
-//		}
+//		fix utf chars & emoji
+		foreach ( $article as $tag => $tag_content ) {
+			$article[ $tag ] = wpcp_fix_utf8( $tag_content );
+			$article[ $tag ] = wpcp_remove_emoji( $tag_content );
+		}
 		//error_log(print_r($article, true ));
 
 
-		$post_title    = wpcp_get_post_meta( $this->campaign_id, '_post_title', '' );
-		$post_content  = wpcp_get_post_meta( $this->campaign_id, '_post_template', '' );
 		$post_type     = 'post';
 		$post_status   = 'publish';
 		$post_excerpt  = '';

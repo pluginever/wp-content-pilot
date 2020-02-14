@@ -48,22 +48,6 @@ class WPCP_Settings {
 	function get_settings_sections() {
 		$sections = array(
 			array(
-				'id'    => 'wpcp_settings_article',
-				'title' => __( 'Article Settings', 'wp-content-pilot' )
-			),
-			array(
-				'id'    => 'wpcp_settings_youtube',
-				'title' => __( 'Youtube Settings', 'wp-content-pilot' )
-			),
-			array(
-				'id'    => 'wpcp_settings_flickr',
-				'title' => __( 'Flickr Settings', 'wp-content-pilot' )
-			),
-			array(
-				'id'    => 'wpcp_settings_envato',
-				'title' => __( 'Envato Settings', 'wp-content-pilot' )
-			),
-			array(
 				'id'    => 'wpcp_settings_misc',
 				'title' => __( 'Misc Settings', 'wp-content-pilot' )
 			)
@@ -79,49 +63,6 @@ class WPCP_Settings {
 	 */
 	function get_settings_fields() {
 		$settings_fields = array(
-			'wpcp_settings_article' => array(
-				array(
-					'name'        => 'banned_hosts',
-					'label'       => __( 'Banned Hosts', 'wp-content-pilot' ),
-					'desc'        => __( 'Articles from the above hosts will be rejected. put single url/host per line.', 'wp-content-pilot' ),
-					'placeholder' => __( "example.com \n example1.com", 'wp-content-pilot' ),
-					'type'        => 'textarea',
-				),
-			),
-			'wpcp_settings_youtube' => array(
-				array(
-					'name'    => 'api_key',
-					'label'   => __( 'Youtube API Key', 'wp-content-pilot' ),
-					'desc'    => sprintf( __( 'Youtube campaigns won\'t run without API key. <a href="%s" target="_blank">Learn how to get one</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/set-up-youtube-api-key-for-wp-content-pilot/' ),
-					'type'    => 'password',
-					'default' => ''
-				),
-			),
-			'wpcp_settings_flickr'  => array(
-				array(
-					'name'    => 'api_key',
-					'label'   => __( 'Flickr API Key', 'wp-content-pilot' ),
-					'desc'    => sprintf( __( 'Get your Flickr API key by following this <a href="%s" target="_blank">link</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/flickr-campaign-settings/' ),
-					'type'    => 'password',
-					'default' => ''
-				),
-			),
-			'wpcp_settings_envato'  => array(
-				array(
-					'name'    => 'token',
-					'label'   => __( 'Envato Token', 'wp-content-pilot' ),
-					'desc'    => sprintf( __( 'Check this tutorial to get your <a href="%s" target="_blank">Envato token</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/how-to-create-envato-token/' ),
-					'type'    => 'password',
-					'default' => ''
-				),
-				array(
-					'name'    => 'envato_impact_radius',
-					'label'   => __( 'Impact Radius affiliate URL', 'wp-content-pilot' ),
-					'desc'    => sprintf( __( 'Learn how to get your Impact Radius affiliate URL <a href="%s">here</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/get-your-envato-impact-radius-affiliate-url/' ),
-					'type'    => 'text',
-					'default' => ''
-				),
-			),
 			'wpcp_settings_misc'    => array(
 				array(
 					'name'    => 'uninstall_on_delete',

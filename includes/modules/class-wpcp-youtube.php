@@ -193,6 +193,11 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_setting_section( $sections ) {
+		$sections[] = [
+			'id'    => 'wpcp_settings_youtube',
+			'title' => __( 'Youtube Settings', 'wp-content-pilot-pro' )
+		];
+
 		return $sections;
 	}
 
@@ -203,6 +208,16 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_setting_fields( $fields ) {
+		$fields['wpcp_settings_youtube'] = [
+			array(
+				'name'    => 'api_key',
+				'label'   => __( 'Youtube API Key', 'wp-content-pilot' ),
+				'desc'    => sprintf( __( 'Youtube campaigns won\'t run without API key. <a href="%s" target="_blank">Learn how to get one</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/set-up-youtube-api-key-for-wp-content-pilot/' ),
+				'type'    => 'password',
+				'default' => ''
+			),
+		];
+
 		return $fields;
 	}
 
@@ -301,6 +316,7 @@ EOT;
 					'embed_html'     => @$item->player->embedHtml,
 					'transcript'     => $transcript,
 				);
+				$this->update_link( $link->id, [ 'status' => 'success' ] );
 
 				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
 				$this->set_last_keyword( $campaign_id, $keyword );

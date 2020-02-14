@@ -149,6 +149,11 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_setting_section( $sections ) {
+		$sections[] = [
+			'id'    => 'wpcp_settings_envato',
+			'title' => __( 'Envato Settings', 'wp-content-pilot-pro' )
+		];
+
 		return $sections;
 	}
 
@@ -159,6 +164,23 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_setting_fields( $fields ) {
+		$fields['wpcp_settings_envato'] = [
+			array(
+				'name'    => 'token',
+				'label'   => __( 'Envato Token', 'wp-content-pilot' ),
+				'desc'    => sprintf( __( 'Check this tutorial to get your <a href="%s" target="_blank">Envato token</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/how-to-create-envato-token/' ),
+				'type'    => 'password',
+				'default' => ''
+			),
+			array(
+				'name'    => 'envato_impact_radius',
+				'label'   => __( 'Impact Radius affiliate URL', 'wp-content-pilot' ),
+				'desc'    => sprintf( __( 'Learn how to get your Impact Radius affiliate URL <a href="%s">here</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/get-your-envato-impact-radius-affiliate-url/' ),
+				'type'    => 'text',
+				'default' => ''
+			),
+		];
+
 		return $fields;
 	}
 
