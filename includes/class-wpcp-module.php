@@ -208,8 +208,8 @@ abstract class WPCP_Module {
 		//error_log(print_r($article, true ));
 
 
-		$post_type     = 'post';
-		$post_status   = 'publish';
+		$post_type     = wpcp_get_post_meta( $this->campaign_id, '_post_type', '' );
+		$post_status   = wpcp_get_post_meta( $this->campaign_id, '_post_status', '' );
 		$post_excerpt  = '';
 		$post_author   = get_post_field( 'post_author', $campaign_id, 'edit' );
 		$post_meta     = [];
@@ -356,6 +356,7 @@ abstract class WPCP_Module {
 			'comment_status' => $comment_status,
 			'ping_status'    => $ping_status,
 		], $campaign_id, $article );
+
 
 		/**
 		 * @since 1.0.8
