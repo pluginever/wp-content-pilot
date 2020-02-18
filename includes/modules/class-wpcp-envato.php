@@ -186,14 +186,17 @@ EOT;
 
 
 	/**
+	 * @param $campaign_id, $keywords
+	 *
 	 * @return mixed|void
+	 * @throws ErrorException
 	 */
 	public function get_post( $campaign_id, $keywords ) {
 		wpcp_logger()->info( 'Envato Campaign Started', $campaign_id );
 
 		$token                = wpcp_get_settings( 'token', 'wpcp_settings_envato', '' );
 		$envato_impact_radius = wpcp_get_settings( 'envato_impact_radius', 'wpcp_settings_envato', '' );
-		if ( empty( $token ) || empty( $envato_impact_radius ) ) {
+		if ( empty( $token )  ) {
 			$notice = __( 'The Envato api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot' );
 
 			wpcp_logger()->error( $notice, $campaign_id );
@@ -201,6 +204,16 @@ EOT;
 
 			return new WP_Error( 'missing-data', $notice );
 		}
+
+		if( empty( $envato_impact_radius ) ) {
+			$affiliate_url = admin_url('/edit.php?post_type=wp_content_pilot&page=wpcp-settings#wpcp_settings_envato');
+
+			$warning = sprintf("The Impact  Radius affiliate url is not set. Set it from <a href='%s'>here</a>", $affiliate_url);
+
+			wpcp_admin_notice( $warning );
+		}
+
+
 
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->info( sprintf( 'Looping through keywords [ %s ]', $keyword ), $campaign_id );
