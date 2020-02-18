@@ -245,3 +245,25 @@ function wpcp_wp_scheduled_delete() {
 }
 
 add_action( 'wp_scheduled_delete', 'wpcp_wp_scheduled_delete' );
+
+/**
+ * Trigger reset campaigns
+ *
+ *
+ * @since 1.2.0
+ */
+
+function wpcp_campaign_reset_search_campaign () {
+	global $wpdb;
+	if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_campaign_reset_search' ) ) {
+		wp_die( __( 'No Cheating', 'wp-content-pilot' ) );
+	}
+
+	$campaign_id = intval( $_REQUEST['campaign_id'] );
+
+	$delete_query = "DELETE FROM {$wpdb->postmeta} where post_id=$campaign_id AND meta_key NOT IN ('_post_count','_campaign_type','_post_status','_campaign_target','_last_run','_last_post')";
+
+	$wpdb->query( $delete_query );
+	wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
+}
+add_action( 'admin_post_wpcp_campaign_reset_search', 'wpcp_campaign_reset_search_campaign' );
