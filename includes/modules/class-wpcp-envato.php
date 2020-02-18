@@ -84,7 +84,7 @@ EOT;
 				'codecanyon.net'   => 'CodeCanyon',
 				'photodune.net'    => 'PhotoDune',
 				'videohive.net'    => 'VideoHive',
-				'graphicrever.net' => 'GraphicsRever',
+				'graphicriver.net' => 'GraphicRiver',
 				'3docean.net'      => '3DOcean',
 			),
 			'tooltip'     => __( 'Select envato platform', 'wp-content-pilot' ),
