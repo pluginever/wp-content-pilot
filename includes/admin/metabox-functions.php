@@ -39,7 +39,10 @@ add_action( 'add_meta_boxes', 'wpcp_register_meta_boxes', 10 );
  * @param $post_type
  * @param $context
  * @param $post
+ *
+ * @return bool
  */
+
 function wpcp_conditional_metabox_remove( $post_type, $context, $post ) {
 	$post_type = 'wp_content_pilot';
 	remove_meta_box( 'submitdiv', 'wp_content_pilot', 'side' );

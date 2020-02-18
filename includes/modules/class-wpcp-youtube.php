@@ -223,6 +223,7 @@ EOT;
 
 	/**
 	 * @return mixed|void
+	 * @throws ErrorException
 	 */
 	public function get_post( $campaign_id, $keywords = null ) {
 		//if api not set bail
