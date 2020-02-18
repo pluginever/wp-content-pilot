@@ -126,7 +126,7 @@ class WPCP_Logger {
 			//Grab time - based on timezone in php.ini
 			$time = date( $this->params['dateFormat'] );
 			// Write time, url, & message to end of file
-			fwrite( $this->file, "[$time] : [$severity] - $message" . PHP_EOL );
+			fwrite( $this->file, strip_tags("[$time] : [$severity] - $message") . PHP_EOL );
 		}
 
 		$severities = [ 'INFO', 'WARNING', 'ERROR' ];

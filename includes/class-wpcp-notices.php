@@ -21,7 +21,7 @@ class WPCP_Admin_Notices {
 	protected static $_instance = null;
 
 	/**
-	 * Main EverAccounting Instance.
+	 * Main WPCP_Admin_Notices Instance.
 	 *
 	 * Ensures only one instance of EverAccounting is loaded or can be loaded.
 	 *
@@ -39,7 +39,7 @@ class WPCP_Admin_Notices {
 
 
 	/**
-	 * EAccounting_Notice constructor.
+	 * WPCP_Admin_Notices constructor.
 	 */
 	public function __construct() {
 		global $current_user;

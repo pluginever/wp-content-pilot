@@ -334,7 +334,8 @@ EOT;
 			}
 		}
 
-		return new WP_Error( 'campaign-error', __( 'No article generated check log for details.', 'wp-content-pilot' ) );
+		$log_url = admin_url('/edit.php?post_type=wp_content_pilot&page=wpcp-logs');
+		return new WP_Error( 'campaign-error', __( sprintf('No envato article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
 	}
 
 	/**
