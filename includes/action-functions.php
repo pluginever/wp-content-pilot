@@ -263,7 +263,10 @@ function wpcp_campaign_reset_search_campaign () {
 
 	$delete_query = "DELETE FROM {$wpdb->postmeta} where post_id=$campaign_id AND meta_key NOT IN ('_post_count','_campaign_type','_post_status','_campaign_target','_last_run','_last_post')";
 
+	$clear_query = "DELETE FROM {$wpdb->wpcp_links} where camp_id=$campaign_id";
+
 	$wpdb->query( $delete_query );
+	$wpdb->query( $clear_query );
 	wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
 }
 add_action( 'admin_post_wpcp_campaign_reset_search', 'wpcp_campaign_reset_search_campaign' );
