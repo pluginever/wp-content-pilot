@@ -182,7 +182,7 @@ abstract class WPCP_Module {
 
 		$article = $this->get_post( $campaign_id, $keywords );
 		if ( is_wp_error( $article ) ) {
-			wpcp_logger()->error( $article->get_error_message(), $campaign_id);
+			//wpcp_logger()->error( $article->get_error_message(), $campaign_id);
 
 			return $article;
 		}
