@@ -47,7 +47,7 @@ echo WPCP_HTML::select_input( array(
 		'my'    => __('Burmese', 'wp-content-pilot'),
 		'ca'    => __('Catalan', 'wp-content-pilot'),
 		'ceb'   => __('Cebuano', 'wp-content-pilot'),
-		'zh' 	=> __('Chinese)', 'wp-content-pilot'),
+		'zh' 	=> __('Chinese', 'wp-content-pilot'),
 		'hr'    => __('Croatian', 'wp-content-pilot'),
 		'cs'    => __('Czech', 'wp-content-pilot'),
 		'da'    => __('Danish', 'wp-content-pilot'),
