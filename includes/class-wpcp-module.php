@@ -250,12 +250,7 @@ abstract class WPCP_Module {
 			/*$content =  preg_replace( '#<a.*?>(.*?)</a>#i', '', $content );*/
 		}
 
-		//remove images links
-		$remove_image_links = wpcp_get_post_meta( $this->campaign_id, '_remove_images', 0 );
-		if ( 'on' === $remove_image_links ) {
-			wpcp_logger()->debug( 'Removing image from links', $campaign_id );
-			$article['content'] = preg_replace( '/<img[^>]+\>/mi', '', html_entity_decode( $article['content'] ) );
-		}
+
 		//translate
 
 		//make template of title,content,meta
@@ -307,7 +302,14 @@ abstract class WPCP_Module {
 
 		//amazon woocommerce integration
 
-		//
+
+		//remove images  from content
+		$remove_images = wpcp_get_post_meta( $this->campaign_id, '_remove_images', '' );
+
+		if ( 'on' == $remove_images ) {
+			wpcp_logger()->debug( 'Removing images from content', $campaign_id );
+			$post_content = preg_replace( '/<img[^>]+\>/mi', '', $post_content );
+		}
 
 		//summery
 		$insert_excerpt = wpcp_get_post_meta( $campaign_id, '_excerpt', '' );

@@ -265,6 +265,13 @@ function wpcp_featured_image_field() {
 	) );
 }
 
+function wpcp_remove_images() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label' => __( 'Remove images from content', 'wp-content-pilot' ),
+		'name'  => '_remove_images',
+	) );
+}
+
 function wpcp_featured_image_random_field() {
 	echo WPCP_HTML::checkbox_input( array(
 		'label'         => __( 'Set random featured image if no image exists', 'wp-content-pilot' ),
@@ -307,6 +314,7 @@ function wpcp_target_rel_field() {
 
 
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_featured_image_field', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_remove_images', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_strip_links_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_use_excerpt_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_use_original_date_field', 20 );
