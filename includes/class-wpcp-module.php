@@ -191,22 +191,20 @@ abstract class WPCP_Module {
 			return new WP_Error( 'no-response', __( 'Content Pilot did not responded for the action', 'wp-content-pilot' ) );
 		}
 
-		$article = apply_filters('wpcp_article', wp_parse_args( $article, array(
+		$article = apply_filters( 'wpcp_article', wp_parse_args( $article, array(
 			'title'      => '',
 			'author'     => '',
 			'image_url'  => '',
 			'excerpt'    => '',
 			'content'    => '',
 			'source_url' => '',
-		)), $campaign_id, $campaign_type);
+		) ), $campaign_id, $campaign_type );
 
 //		fix utf chars & emoji
 		foreach ( $article as $tag => $tag_content ) {
 			$article[ $tag ] = wpcp_fix_utf8( $tag_content );
 			$article[ $tag ] = wpcp_remove_emoji( $tag_content );
 		}
-		//error_log(print_r($article, true ));
-
 
 		$post_type     = wpcp_get_post_meta( $this->campaign_id, '_post_type', '' );
 		$post_status   = wpcp_get_post_meta( $this->campaign_id, '_post_status', '' );
@@ -309,6 +307,8 @@ abstract class WPCP_Module {
 
 		//amazon woocommerce integration
 
+		//
+
 		//summery
 		$insert_excerpt = wpcp_get_post_meta( $campaign_id, '_excerpt', '' );
 		if ( 'on' == $insert_excerpt ) {
@@ -408,18 +408,36 @@ abstract class WPCP_Module {
 
 	/**
 	 * @return \Curl\Curl
-	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	protected function setup_curl() {
 		$curl = new Curl\Curl();
 		$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
 		$curl->setOpt( CURLOPT_TIMEOUT, 30 );
+		$curl->setOpt( CURLOPT_MAXREDIRS, 3 );
 		$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
 		$curl->setOpt( CURLOPT_REFERER, 'http://www.bing.com/' );
 		$curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );
+		$jar = $this->get_cookie_jar();
+		@$curl->setOpt( CURLOPT_COOKIEJAR, untrailingslashit( WPCP_PATH ) . '/' . $jar );
+		@$curl->setOpt( CURLOPT_COOKIEJAR, $jar );
+		$curl->setOpt( CURLOPT_SSL_VERIFYPEER, false );
 
 		return $curl;
+	}
+
+	/**
+	 * @return string
+	 * @since 1.0.0
+	 */
+	protected function get_cookie_jar() {
+		$jar = get_option( 'wpcp_cookie_jar' );
+		if ( empty( $jar ) ) {
+			$jar = substr(md5( time() ), 0, 5);
+			update_option( 'wpcp_cookie_jar', $jar );
+		}
+
+		return $jar;
 	}
 
 

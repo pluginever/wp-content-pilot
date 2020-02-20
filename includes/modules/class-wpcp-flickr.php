@@ -197,6 +197,7 @@ EOT;
 			$curl->get( $url );
 
 			$response    = $curl->getResponse();
+
 			$description = @$response->photo->description->_content;
 			$tags        = ! empty( $response->photo->tags->tag ) ? implode( ', ', wp_list_pluck( @$response->photo->tags->tag, 'raw' ) ) : '';
 			$image_url   = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}.jpg";
@@ -207,10 +208,10 @@ EOT;
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 				continue;
 			}
-			if ( wpcp_is_duplicate_title( $title ) ) {
-				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-				continue;
-			}
+//			if ( wpcp_is_duplicate_title( $title ) ) {
+//				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
+//				continue;
+//			}
 			wpcp_logger()->info( sprintf( 'Generating flickr article from [ %s ]', $source_url ), $campaign_id );
 			$article = array(
 				'title'      => $title,
