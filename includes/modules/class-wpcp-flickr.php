@@ -123,6 +123,7 @@ EOT;
 	 * @param array $keywords
 	 *
 	 * @return mixed|void
+	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	public function get_post( $campaign_id, $keywords ) {
@@ -167,9 +168,10 @@ EOT;
 				'method'         => 'flickr.photos.search',
 			);
 			$endpoint   = add_query_arg( $query_args, 'https://api.flickr.com/services/rest/' );
-			wpcp_logger()->debug( sprintf( 'Looking for data from [%s]', preg_replace( '/api_key=([^&]+)/m', 'api_key=X', $endpoint) ) , $campaign_id);
+			wpcp_logger()->debug( sprintf( 'Looking for data from [%s]', preg_replace( '/api_key=([^&]+)/m', 'api_key=X', $endpoint ) ), $campaign_id );
 			$curl = $this->setup_curl();
 			$curl->get( $endpoint );
+
 
 			if ( $curl->isError() ) {
 				$message = sprintf( __( 'Flickr api request failed response [%s]', 'wp-content-pilot' ), $curl->getErrorMessage() );
@@ -196,7 +198,7 @@ EOT;
 			$url   = esc_url_raw( "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key={$api_key}&photo_id={$photo->id}&secret={$photo->secret}&format=json&nojsoncallback=1}" );
 			$curl->get( $url );
 
-			$response    = $curl->getResponse();
+			$response = $curl->getResponse();
 
 			$description = @$response->photo->description->_content;
 			$tags        = ! empty( $response->photo->tags->tag ) ? implode( ', ', wp_list_pluck( @$response->photo->tags->tag, 'raw' ) ) : '';
@@ -208,10 +210,12 @@ EOT;
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 				continue;
 			}
+
 //			if ( wpcp_is_duplicate_title( $title ) ) {
 //				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 //				continue;
 //			}
+
 			wpcp_logger()->info( sprintf( 'Generating flickr article from [ %s ]', $source_url ), $campaign_id );
 			$article = array(
 				'title'      => $title,
@@ -239,8 +243,9 @@ EOT;
 			return $article;
 		}
 
-		$log_url = admin_url('/edit.php?post_type=wp_content_pilot&page=wpcp-logs');
-		return new WP_Error( 'campaign-error', __( sprintf('No flickr article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
+		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
+
+		return new WP_Error( 'campaign-error', __( sprintf( 'No flickr article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
 	}
 
 
