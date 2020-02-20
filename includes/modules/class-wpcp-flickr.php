@@ -123,6 +123,7 @@ EOT;
 	 * @param array $keywords
 	 *
 	 * @return mixed|void
+	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	public function get_post( $campaign_id, $keywords ) {
@@ -171,6 +172,7 @@ EOT;
 			$curl = $this->setup_curl();
 			$curl->get( $endpoint );
 
+
 			if ( $curl->isError() ) {
 				$message = sprintf( __( 'Flickr api request failed response [%s]', 'wp-content-pilot' ), $curl->getErrorMessage() );
 				wpcp_logger()->error( $message, $campaign_id );
@@ -204,10 +206,6 @@ EOT;
 			$tags        = wpcp_array_to_html( $tags );
 
 			if ( wpcp_is_duplicate_url( $source_url ) ) {
-				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-				continue;
-			}
-			if ( wpcp_is_duplicate_title( $title ) ) {
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 				continue;
 			}
