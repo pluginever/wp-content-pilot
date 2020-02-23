@@ -304,7 +304,7 @@ abstract class WPCP_Module {
 
 
 		//remove images  from content
-		$remove_images = wpcp_get_post_meta( $this->campaign_id, '_remove_images', '' );
+		$remove_images = wpcp_get_post_meta( $this->campaign_id, '_remove_images', 'off' );
 
 		if ( 'on' == $remove_images ) {
 			wpcp_logger()->debug( 'Removing images from content', $campaign_id );
