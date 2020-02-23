@@ -10,6 +10,7 @@ class WPCP_Updater {
 	private static $upgrades = array(
 		'1.0.4' => 'updates/update-1.0.4.php',
 		'1.1.2' => 'updates/update-1.1.2.php',
+		'1.2.0' => 'updates/update-1.2.0.php',
 	);
 
 	/**
@@ -27,7 +28,7 @@ class WPCP_Updater {
 	 * @return boolean
 	 */
 	public function needs_update() {
-
+		return true;
 		// may be it's the first install
 		if ( ! $this->get_version() ) {
 			return false;
