@@ -1,0 +1,230 @@
+.wpcp-field {
+	box-sizing: border-box;
+	padding: 0;
+	margin-bottom: 0.5em;
+	clear: both;
+
+	.wpcp-desc:empty {
+		display: none;
+	}
+
+	.wpcp-label {
+		vertical-align: middle;
+		display: block;
+		font-weight: 700;
+		margin: 0;
+		margin-bottom: 0.25em;
+	}
+
+	.wpcp-desc {
+		cursor: help;
+		font-style: italic;
+		display: inline-block;
+		font-weight: 400;
+		color: #999;
+	}
+
+	.wpcp-tooltip {
+		cursor: help;
+		margin: 0 3px;
+		font-weight: 400;
+		color: #999;
+	}
+
+	select {
+		width: 95%;
+	}
+
+	textarea ~ .wpcp-desc {
+		display: block;
+	}
+
+	select ~ .wpcp-desc {
+		display: block;
+	}
+
+	input[type="text"] ~ .wpcp-desc {
+		display: block;
+	}
+
+	&.wpcp-switch {
+		fieldset {
+			label {
+				display: inline-block;
+				margin-bottom: 4px;
+				margin-top: 4px;
+			}
+		}
+
+		.wpcp-switch {
+			display: block;
+			background-color: #fff;
+			border: 1px solid #72777c;
+			width: 40px;
+			height: 18px;
+			border-radius: 20px;
+			position: relative;
+			transition: all 0.3s;
+			margin-top: 5px;
+
+			&::after {
+				content: '';
+				display: block;
+				width: 16px;
+				height: 16px;
+				border-radius: 50%;
+				background-color: #72777c;
+				position: absolute;
+				top: 1px;
+				left: 1px;
+				transition: all 0.3s;
+			}
+		}
+
+		input[type="checkbox"] {
+			display: none;
+
+			&:checked {
+				+ .wpcp-switch {
+					background-color: #0073aa;
+					border-color: #0073aa;
+
+					&::after {
+						left: 23px;
+						background-color: #fff;
+					}
+				}
+			}
+		}
+	}
+
+	&.wpcp-checkbox {
+		display: block;
+		position: relative;
+		padding-left: 29px;
+		margin-bottom: 12px !important;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		line-height: 20px;
+
+		input {
+			position: absolute;
+			opacity: 0;
+			cursor: pointer;
+			display: none !important;
+
+			&:checked ~ .checkmark {
+				background-color: #0073aa;
+			}
+
+			&:checked ~ .checkmark:after {
+				display: block;
+			}
+		}
+
+		.checkmark {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 20px;
+			width: 20px;
+			background-color: #eee;
+
+			&:after {
+				content: "";
+				position: absolute;
+				display: none;
+			}
+
+			&:after {
+				left: 7px;
+				top: 4px;
+				width: 4px;
+				height: 8px;
+				border: solid #fff;
+				border-width: 0 2px 2px 0;
+				-webkit-transform: rotate(45deg);
+				-ms-transform: rotate(45deg);
+				transform: rotate(45deg);
+			}
+
+		}
+
+		&:hover input ~ .checkmark {
+			background-color: #ccc;
+		}
+
+		label.wpcp-label {
+			vertical-align: text-top;
+			display: inline-block;
+			font-weight: normal;
+			margin-bottom: 0;
+			//line-height: 1;
+		}
+	}
+
+	//range
+	.irs--round .irs-handle {
+		top: 28px;
+		width: 18px;
+		height: 18px;
+		border: 3px solid #007cba;
+	}
+}
+
+.wpcp-select2{
+	&.select2-container{
+		min-height: 30px;
+
+		.select2-selection{
+			border: 1px solid #7e8993;
+
+			li{
+				margin-bottom: 0;
+			}
+		}
+
+		.select2-search__field{
+			min-height: 20px !important;
+			line-height: 1;
+		}
+
+		.select2-selection--multiple{
+			min-height: 30px;
+		}
+
+		.select2-selection__choice{
+			border-radius: 0;
+		}
+
+		.select2-results__option--highlighted[aria-selected]{
+			background-color: #007cba;
+		}
+	}
+}
+
+
+//repeater
+.wpcp-repeater{
+	margin-top: 20px;
+
+	.wpcp-label{
+		margin-bottom: 10px;
+		&:after{
+			margin: 0 5px;
+		}
+	}
+
+	.wp-list-table{
+		max-width: 95%;
+		margin-bottom: 10px;
+	}
+
+	&+.wpcp-repeater{
+		margin-top: 20px;
+	}
+
+}

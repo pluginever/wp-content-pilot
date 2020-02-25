@@ -1,0 +1,24 @@
+.wpcp-log-table {
+	.column-campaign {
+		width: 12%;
+	}
+
+	.column-level {
+		width: 10%;
+		.info{
+			color: #155724;
+		}
+		.warning{
+			color: #856404;
+		}
+
+		.error{
+			color: #721c24;
+		}
+	}
+
+	.column-date {
+		width: 15%;
+	}
+
+}

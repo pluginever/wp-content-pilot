@@ -1,0 +1,11 @@
+.wpcp-field.pro{
+	.wpcp-label:after{
+		content: 'PRO';
+		font-size: 9px;
+		font-weight: normal;
+		background: red;
+		color: #fff;
+		padding: 0 5px;
+		line-height: 1;
+	}
+}

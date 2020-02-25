@@ -9,8 +9,11 @@
  * @since       1.2.0
  */
 
-defined('ABSPATH')|| exit();
-
+defined( 'ABSPATH' ) || exit();
+/**
+ * Register our content pilot post type.
+ * since 1.0.0
+ */
 function wpcp_setup_wpcp_post_types() {
 	$campaign_labels = array(
 		'name'                  => _x( 'Campaigns', 'campaign post type name', 'wp-content-pilot' ),
@@ -46,13 +49,19 @@ function wpcp_setup_wpcp_post_types() {
 		'hierarchical'       => false,
 		'supports'           => array( 'title' ),
 	);
-	register_post_type( 'wp_content_pilot', apply_filters( 'wpcp_campaign_post_type_args', $campaign_args ) );
-
+	register_post_type( 'wp_content_pilot', apply_filters( 'wpcp_campaign_post_type_args', $campaign_args ) );//phpcs:ignore
 }
 
 add_action( 'init', 'wpcp_setup_wpcp_post_types', 1 );
 
-add_filter( 'post_updated_messages', 'wpcp_post_types_messages' );
+/**
+ * Change default post types message.
+ * since 1.0.0
+ *
+ * @param $messages array
+ *
+ * @return mixed
+ */
 function wpcp_post_types_messages( $messages ) {
 	global $post, $post_ID;
 
@@ -68,14 +77,14 @@ function wpcp_post_types_messages( $messages ) {
 		7  => __( 'Campaign saved.', 'wp-content-pilot' ),
 		8  => __( 'Campaign submitted.', 'wp-content-pilot' ),
 		9  => sprintf( __( 'Campaign scheduled for: <strong>%1$s</strong>.', 'wp-content-pilot' ),
-			// translators: Publish box date format, see http://php.net/date
+			// translators: Publish box date format, see http://php.net/date.
 			date_i18n( __( 'M j, Y @ G:i', 'wp-content-pilot' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
 		10 => __( 'Campaign draft updated.', 'wp-content-pilot' ),
 	);
 
 	return $messages;
 }
-
+add_filter( 'post_updated_messages', 'wpcp_post_types_messages' );
 /**
  * Change default "Enter title here" input
  *
@@ -89,18 +98,25 @@ function wpcp_change_default_title( $title ) {
 	$screen = get_current_screen();
 
 	if ( 'wp_content_pilot' == $screen->post_type ) {
-		$title = __( 'Enter campaign name here', 'wp-content-pilot' );
+		$title = __( 'Campaign Title', 'wp-content-pilot' );
 	}
 
 	return $title;
 }
-
 add_filter( 'enter_title_here', 'wpcp_change_default_title' );
+
+/**
+ * Admin column
+ * since 1.0.0
+ * @param $columns
+ *
+ * @return mixed
+ */
 function wp_content_pilot_columns( $columns ) {
 	unset( $columns['date'] );
 	$columns['status']    = __( 'Status', 'wp-content-pilot' );
 	$columns['type']      = __( 'Type', 'wp-content-pilot' );
-	$columns['target']    = __( 'Target', 'wp-content-pilot' );
+	$columns['target']    = __( 'Posts/Target', 'wp-content-pilot' );
 	$columns['frequency'] = __( 'Frequency', 'wp-content-pilot' );
 	$columns['last_run']  = __( 'Last Run', 'wp-content-pilot' );
 
@@ -109,6 +125,12 @@ function wp_content_pilot_columns( $columns ) {
 
 add_action( 'manage_wp_content_pilot_posts_columns', 'wp_content_pilot_columns', 10 );
 
+/**
+ * Admin column content
+ * since 1.0.0
+ * @param $column_name
+ * @param $post_ID
+ */
 function wp_content_pilot_column_content( $column_name, $post_ID ) {
 	switch ( $column_name ) {
 		case 'status':
@@ -133,9 +155,11 @@ function wp_content_pilot_column_content( $column_name, $post_ID ) {
 			}
 			break;
 		case 'frequency':
-			$frenquency = wpcp_get_post_meta( $post_ID, '_campaign_frequency', 0 );
+			$frenquency      = wpcp_get_post_meta( $post_ID, '_campaign_frequency', 0 );
+			$frenquency_unit = wpcp_get_post_meta( $post_ID, '_frequency_unit', 'hour' );
+
 			if ( $frenquency ) {
-				echo 'Every ' . $frenquency / 3600 . ' Hour(s)';
+				echo sprintf( 'Every %d %s', $frenquency, $frenquency_unit );
 			} else {
 				echo ' - ';
 			}

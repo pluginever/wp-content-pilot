@@ -1,0 +1,26 @@
+.wpcp-campaign-posts{
+	li{
+		margin-bottom: 10px;
+		position: relative;
+		padding-left: 30px;
+		&::before{
+			position: absolute;
+			left: 0;
+			top: 4px;
+			content: "\f123";
+			color: #606a73;
+			font: normal 20px/1 dashicons;
+			speak: none;
+			display: inline-block;
+			padding: 0 10px 0 0;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			text-decoration: none !important;
+			vertical-align: top;
+		}
+
+		a{
+			text-decoration: none;
+		}
+	}
+}

@@ -1,0 +1,46 @@
+#wpcp-campaign-status {
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	box-sizing: border-box;
+
+	.handlediv, h2.hndle {
+		display: none;
+	}
+	.inside {
+		margin: 0;
+	}
+
+	.wpcp-campaign-status-wrap {
+		display: flex;
+		flex-wrap: wrap;
+		margin-left: -15px;
+		margin-right: -15px;
+		box-sizing: border-box;
+		justify-content: space-between;
+
+		.wpcp-campaign-statue-item {
+			flex-grow: 1;
+			position: relative;
+			border: 1px solid #ccd0d4;
+			background-color: #fff;
+			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+			width: 16%;
+			padding: 15px;
+			margin-right: 15px;
+			border-left: 3px solid #007cba;
+			min-height: 56px;
+			&:last-of-type {
+				margin-right: 0;
+			}
+		}
+
+		.wpcp-campaign-statue-title {
+			padding: 0;
+			margin: 0 0 8px;
+			font-size: 18px;
+			line-height: 1;
+		}
+	}
+
+}

@@ -1,0 +1,32 @@
+#wpcp-campaign-options,
+#wpcp-post-template,
+#wpcp-post-settings,
+#wpcp-post-filters,
+#wpcp-advanced-settings{
+	.inside{
+		padding-bottom: 20px;
+	}
+}
+
+
+.wpcp-template-tags{
+	max-width: 95%;
+	label{
+		font-weight: bold;
+		display: block;
+		margin-bottom: 5px;
+	}
+	code{
+		display: inline-block;
+		margin-bottom: .2em;
+		&:after{
+			content: ', ';
+		}
+
+		&:last-child{
+			&:after{
+				content: '';
+			}
+		}
+	}
+}

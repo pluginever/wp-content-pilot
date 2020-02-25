@@ -1,0 +1,27 @@
+#wpcp-keyword-suggester {
+	display: none;
+	//width: calc(50% - 14px);
+	position: absolute;
+	top: 50px;
+	z-index: 99;
+	left: 213px;
+	border: 1px solid #ddd;
+	box-shadow: 0 2px 5px rgba(221, 221, 221, 0.85);
+
+	&:empty {
+		display: none !important;
+	}
+
+	> span {
+		background-color: #fff;
+		padding: 5px 20px;
+		user-select: none;
+		cursor: pointer;
+		display: block;
+		left: 100px;
+		&:hover {
+			background-color: #0085ba;
+			color: #fff;
+		}
+	}
+}
