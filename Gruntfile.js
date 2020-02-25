@@ -154,6 +154,7 @@ module.exports = function (grunt) {
 					'**/*.php',               // Include all files
 					'!includes/admin/class-wpcp-insight.php',
 					'!apigen/**',             // Exclude apigen/
+					'!build/**',             // Exclude build/
 					'!includes/libraries/**', // Exclude libraries/
 					'!node_modules/**',       // Exclude node_modules/
 					'!tests/**',              // Exclude tests/
@@ -176,7 +177,8 @@ module.exports = function (grunt) {
 					'!node_modules/**',                                          // Exclude node_modules/
 					'!tests/cli/**',                                             // Exclude tests/cli/
 					'!tmp/**',                                                   // Exclude tmp/
-					'!vendor/**'                                                 // Exclude vendor/
+					'!vendor/**',                                                 // Exclude vendor/
+					'!build//**'                                                 // Exclude build/
 				]
 			}
 		},
