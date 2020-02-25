@@ -2,7 +2,7 @@
 module.exports = function (grunt) {
 	'use strict';
 	var pkg = grunt.file.readJSON('package.json');
-	var sass = require( 'node-sass' );
+	//var sass = require( 'node-sass' );
 
 	grunt.initConfig({
 
@@ -152,6 +152,7 @@ module.exports = function (grunt) {
 			files: {
 				src: [
 					'**/*.php',               // Include all files
+					'!includes/admin/class-wpcp-insight.php',
 					'!apigen/**',             // Exclude apigen/
 					'!includes/libraries/**', // Exclude libraries/
 					'!node_modules/**',       // Exclude node_modules/
@@ -212,14 +213,15 @@ module.exports = function (grunt) {
 					'**',
 					'!node_modules/**',
 					'!**/js/src/**',
-					'!**/css/src/**',
 					'!**/js/vendor/**',
 					'!**/css/vendor/**',
 					'!**/css/*.scss',
+					'!**/css/**/*.scss',
 					'!**/images/src/**',
 					'!**/sass/**',
 					'!**/test/**',
 					'!**/tests/**',
+					'!bin/**',
 					'!build/**',
 					'!**/*.md',
 					'!**/*.map',
@@ -298,8 +300,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('js', [
 		'jshint',
-		'uglify:admin',
-		'uglify:frontend'
+		'uglify'
 	]);
 
 	grunt.registerTask('css', [

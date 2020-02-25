@@ -56,10 +56,6 @@
     "*.scss": [
       "stylelint --syntax=scss --fix",
       "git add"
-    ],
-    "*.js": [
-      "eslint --fix",
-      "git add"
     ]
   },
   "browserslist": [
