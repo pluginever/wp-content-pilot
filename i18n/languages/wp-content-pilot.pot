@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.1.4\n"
+"Project-Id-Version: WP Content Pilot 1.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2020-02-25 06:56:39+00:00\n"
+"POT-Creation-Date: 2020-02-25 07:08:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,23 +13,25 @@ msgstr ""
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/action-functions.php:7 includes/action-functions.php:259
+#: build/includes/action-functions.php:7
+#: build/includes/action-functions.php:259 includes/action-functions.php:7
+#: includes/action-functions.php:259
 msgid "No Cheating"
 msgstr ""
 
-#: includes/action-functions.php:20
+#: build/includes/action-functions.php:20 includes/action-functions.php:20
 msgid "Invalid post action"
 msgstr ""
 
-#: includes/action-functions.php:41
+#: build/includes/action-functions.php:41 includes/action-functions.php:41
 msgid "A post successfully created by %s titled %s"
 msgstr ""
 
-#: includes/action-functions.php:224
+#: build/includes/action-functions.php:224 includes/action-functions.php:224
 msgid "Post Publish"
 msgstr ""
 
-#: includes/action-functions.php:225
+#: build/includes/action-functions.php:225 includes/action-functions.php:225
 msgid ""
 "<h4>Post Title: %s</h4>\n"
 "                    <h5>Post Excerpt</h5>\n"
@@ -37,25 +39,32 @@ msgid ""
 "                    <a href='%s'>View Post</a>"
 msgstr ""
 
+#: build/includes/admin/class-settings-api.php:354
 #: includes/admin/class-settings-api.php:354
 msgid "Choose File"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:53
+#: build/includes/admin/class-wpcp-admin.php:53
+#: build/includes/admin/views/metabox/post-settings.php:17
+#: build/includes/post-types.php:117 includes/admin/class-wpcp-admin.php:53
 #: includes/admin/views/metabox/post-settings.php:17
 #: includes/post-types.php:117
 msgid "Status"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-admin.php:54
+#: build/includes/admin/views/page/logs-page.php:10
 #: includes/admin/class-wpcp-admin.php:54
 #: includes/admin/views/page/logs-page.php:10
 msgid "Logs"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-admin.php:90
 #: includes/admin/class-wpcp-admin.php:90
 msgid "Go Pro"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-admin.php:137
 #: includes/admin/class-wpcp-admin.php:137
 msgid ""
 "If you like <strong>WP Content Pilot</strong> please leave us a <a "
@@ -63,380 +72,525 @@ msgid ""
 "rating. Your Review is very important to us as it helps us to grow more."
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:182
+#: build/includes/admin/views/page/help-page.php:7
 #: includes/admin/class-wpcp-help.php:182
 #: includes/admin/views/page/help-page.php:7
 msgid "Looking for Something?"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:183
+#: build/includes/admin/views/page/help-page.php:8
 #: includes/admin/class-wpcp-help.php:183
 #: includes/admin/views/page/help-page.php:8
 msgid "We have detailed documentation on every aspects of WP Content Pilot."
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:185
+#: build/includes/admin/views/page/help-page.php:10
 #: includes/admin/class-wpcp-help.php:185
 #: includes/admin/views/page/help-page.php:10
 msgid "Visit the Plugin Documentation"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:189
+#: build/includes/admin/views/page/help-page.php:14
 #: includes/admin/class-wpcp-help.php:189
 #: includes/admin/views/page/help-page.php:14
 msgid "Need Any Assistance?"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:190
+#: build/includes/admin/views/page/help-page.php:15
 #: includes/admin/class-wpcp-help.php:190
 #: includes/admin/views/page/help-page.php:15
 msgid "Our EXPERT Support Team is always ready to Help you out."
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:192
+#: build/includes/admin/views/page/help-page.php:17
 #: includes/admin/class-wpcp-help.php:192
 #: includes/admin/views/page/help-page.php:17
 msgid "Contact Support"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:196
+#: build/includes/admin/views/page/help-page.php:21
 #: includes/admin/class-wpcp-help.php:196
 #: includes/admin/views/page/help-page.php:21
 msgid "Found Any Bugs?"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:197
+#: build/includes/admin/views/page/help-page.php:22
 #: includes/admin/class-wpcp-help.php:197
 #: includes/admin/views/page/help-page.php:22
 msgid "OReport any Bug that you Discovered, Get Instant Solutions."
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:199
+#: build/includes/admin/views/page/help-page.php:24
 #: includes/admin/class-wpcp-help.php:199
 #: includes/admin/views/page/help-page.php:24
 msgid "Report to Github"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:203
+#: build/includes/admin/views/page/help-page.php:28
 #: includes/admin/class-wpcp-help.php:203
 #: includes/admin/views/page/help-page.php:28
 msgid "Require Customization?"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:204
+#: build/includes/admin/views/page/help-page.php:29
 #: includes/admin/class-wpcp-help.php:204
 #: includes/admin/views/page/help-page.php:29
 msgid "We would Love to hear your Integration and Customization Ideas."
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:206
+#: build/includes/admin/views/page/help-page.php:31
 #: includes/admin/class-wpcp-help.php:206
 #: includes/admin/views/page/help-page.php:31
 msgid "Contact Our Services"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:210
+#: build/includes/admin/views/page/help-page.php:35
 #: includes/admin/class-wpcp-help.php:210
 #: includes/admin/views/page/help-page.php:35
 msgid "Like The Plugin?"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:211
+#: build/includes/admin/views/page/help-page.php:36
 #: includes/admin/class-wpcp-help.php:211
 #: includes/admin/views/page/help-page.php:36
 msgid "Your Review is very important to us as it helps us to grow more."
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:213
+#: build/includes/admin/views/page/help-page.php:38
 #: includes/admin/class-wpcp-help.php:213
 #: includes/admin/views/page/help-page.php:38
 msgid "Review Us on WP.org"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:221
+#: build/includes/admin/views/page/help-page.php:43
 #: includes/admin/class-wpcp-help.php:221
 #: includes/admin/views/page/help-page.php:43
 msgid "Article"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:222
+#: build/includes/admin/views/page/help-page.php:44
 #: includes/admin/class-wpcp-help.php:222
 #: includes/admin/views/page/help-page.php:44
 msgid "Article module to auto import articles from web"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:227
+#: build/includes/admin/views/page/help-page.php:49
 #: includes/admin/class-wpcp-help.php:227
 #: includes/admin/views/page/help-page.php:49
 msgid "Envato"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:228
+#: build/includes/admin/views/page/help-page.php:50
 #: includes/admin/class-wpcp-help.php:228
 #: includes/admin/views/page/help-page.php:50
 msgid "Envato modules to import envato products and affiliation"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:233
+#: build/includes/admin/views/page/help-page.php:55
 #: includes/admin/class-wpcp-help.php:233
 #: includes/admin/views/page/help-page.php:55
 msgid "Youtube"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:234
+#: build/includes/admin/views/page/help-page.php:56
 #: includes/admin/class-wpcp-help.php:234
 #: includes/admin/views/page/help-page.php:56
 msgid "Youtube module to import youtube videos"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:239
+#: build/includes/admin/views/page/help-page.php:61
 #: includes/admin/class-wpcp-help.php:239
 #: includes/admin/views/page/help-page.php:61
 msgid "Feed"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:240
+#: build/includes/admin/views/page/help-page.php:62
 #: includes/admin/class-wpcp-help.php:240
 #: includes/admin/views/page/help-page.php:62
 msgid "RSS Feed module to import rss feeds"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:245
+#: build/includes/admin/views/page/help-page.php:67
 #: includes/admin/class-wpcp-help.php:245
 #: includes/admin/views/page/help-page.php:67
 msgid "Flickr"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:246
+#: build/includes/admin/views/page/help-page.php:68
 #: includes/admin/class-wpcp-help.php:246
 #: includes/admin/views/page/help-page.php:68
 msgid "Flickr module to import images"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:251
+#: build/includes/admin/views/page/help-page.php:73
 #: includes/admin/class-wpcp-help.php:251
 #: includes/admin/views/page/help-page.php:73
 msgid "Amazon"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:252
+#: build/includes/admin/views/page/help-page.php:74
 #: includes/admin/class-wpcp-help.php:252
 #: includes/admin/views/page/help-page.php:74
 msgid "Amazon module to import products & automatic affiliation"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:257
+#: build/includes/admin/views/page/help-page.php:79
 #: includes/admin/class-wpcp-help.php:257
 #: includes/admin/views/page/help-page.php:79
 msgid "ClickBank"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:258
+#: build/includes/admin/views/page/help-page.php:80
 #: includes/admin/class-wpcp-help.php:258
 #: includes/admin/views/page/help-page.php:80
 msgid "ClickBank module to import products & automatic affiliation"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:263
+#: build/includes/admin/views/page/help-page.php:85
 #: includes/admin/class-wpcp-help.php:263
 #: includes/admin/views/page/help-page.php:85
 msgid "Ebay"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:264
+#: build/includes/admin/views/page/help-page.php:86
 #: includes/admin/class-wpcp-help.php:264
 #: includes/admin/views/page/help-page.php:86
 msgid "Ebay module to import products & automatic affiliation"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:269
+#: build/includes/admin/views/page/help-page.php:91
 #: includes/admin/class-wpcp-help.php:269
 #: includes/admin/views/page/help-page.php:91
 msgid "Facebook"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:270
+#: build/includes/admin/views/page/help-page.php:92
 #: includes/admin/class-wpcp-help.php:270
 #: includes/admin/views/page/help-page.php:92
 msgid "Facebook module to import Facebook posts, events"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:275
+#: build/includes/admin/views/page/help-page.php:97
 #: includes/admin/class-wpcp-help.php:275
 #: includes/admin/views/page/help-page.php:97
 msgid "Twitter"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:276
+#: build/includes/admin/views/page/help-page.php:98
 #: includes/admin/class-wpcp-help.php:276
 #: includes/admin/views/page/help-page.php:98
 msgid "Twitter module to import twitter posts"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:281
+#: build/includes/admin/views/page/help-page.php:103
 #: includes/admin/class-wpcp-help.php:281
 #: includes/admin/views/page/help-page.php:103
 msgid "Walmart"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:282
+#: build/includes/admin/views/page/help-page.php:104
 #: includes/admin/class-wpcp-help.php:282
 #: includes/admin/views/page/help-page.php:104
 msgid "Walmart module to import products & automatic affiliation"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:287
+#: build/includes/admin/views/page/help-page.php:109
 #: includes/admin/class-wpcp-help.php:287
 #: includes/admin/views/page/help-page.php:109
 msgid "Bestbuy"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:288
+#: build/includes/admin/views/page/help-page.php:110
 #: includes/admin/class-wpcp-help.php:288
 #: includes/admin/views/page/help-page.php:110
 msgid "Bestbuy module to import products & automatic affiliation"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:293
+#: build/includes/admin/views/page/help-page.php:115
 #: includes/admin/class-wpcp-help.php:293
 #: includes/admin/views/page/help-page.php:115
 msgid "Craiglist"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:294
+#: build/includes/admin/views/page/help-page.php:116
 #: includes/admin/class-wpcp-help.php:294
 #: includes/admin/views/page/help-page.php:116
 msgid "Craiglist module to import Craiglist listings"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:299
+#: build/includes/admin/views/page/help-page.php:121
 #: includes/admin/class-wpcp-help.php:299
 #: includes/admin/views/page/help-page.php:121
 msgid "Itunes"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:300
+#: build/includes/admin/views/page/help-page.php:122
 #: includes/admin/class-wpcp-help.php:300
 #: includes/admin/views/page/help-page.php:122
 msgid "Itunes module to import products & automatic affiliation"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:305
+#: build/includes/admin/views/page/help-page.php:127
 #: includes/admin/class-wpcp-help.php:305
 #: includes/admin/views/page/help-page.php:127
 msgid "CareerJet"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:306
+#: build/includes/admin/views/page/help-page.php:128
 #: includes/admin/class-wpcp-help.php:306
 #: includes/admin/views/page/help-page.php:128
 msgid "CareerJet module to import jobs & automatic affiliation"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:311
+#: build/includes/admin/views/page/help-page.php:133
 #: includes/admin/class-wpcp-help.php:311
 #: includes/admin/views/page/help-page.php:133
 msgid "EzineArticles"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:312
+#: build/includes/admin/views/page/help-page.php:134
 #: includes/admin/class-wpcp-help.php:312
 #: includes/admin/views/page/help-page.php:134
 msgid "EzineArticles module to import articles"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:317
+#: build/includes/admin/views/page/help-page.php:139
 #: includes/admin/class-wpcp-help.php:317
 #: includes/admin/views/page/help-page.php:139
 msgid "Quora"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:318
+#: build/includes/admin/views/page/help-page.php:140
 #: includes/admin/class-wpcp-help.php:318
 #: includes/admin/views/page/help-page.php:140
 msgid "Quora module to import articles"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:323
+#: build/includes/admin/views/page/help-page.php:145
 #: includes/admin/class-wpcp-help.php:323
 #: includes/admin/views/page/help-page.php:145
 msgid "Reddit"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:324
+#: build/includes/admin/views/page/help-page.php:146
 #: includes/admin/class-wpcp-help.php:324
 #: includes/admin/views/page/help-page.php:146
 msgid "Reddit module to import articles"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:329
+#: build/includes/admin/views/page/help-page.php:151
 #: includes/admin/class-wpcp-help.php:329
 #: includes/admin/views/page/help-page.php:151
 msgid "SoundCloud"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:330
+#: build/includes/admin/views/page/help-page.php:152
 #: includes/admin/class-wpcp-help.php:330
 #: includes/admin/views/page/help-page.php:152
 msgid "SoundCloud module to import audios"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:335
+#: build/includes/admin/views/page/help-page.php:157
 #: includes/admin/class-wpcp-help.php:335
 #: includes/admin/views/page/help-page.php:157
 msgid "Instagram"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:336
+#: build/includes/admin/views/page/help-page.php:158
 #: includes/admin/class-wpcp-help.php:336
 #: includes/admin/views/page/help-page.php:158
 msgid "Instagram module to import photos"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:341
+#: build/includes/admin/views/page/help-page.php:163
 #: includes/admin/class-wpcp-help.php:341
 #: includes/admin/views/page/help-page.php:163
 msgid "Pinterest"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:342
+#: build/includes/admin/views/page/help-page.php:164
 #: includes/admin/class-wpcp-help.php:342
 #: includes/admin/views/page/help-page.php:164
 msgid "Pinterest module to import photos"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:347
+#: build/includes/admin/views/page/help-page.php:169
 #: includes/admin/class-wpcp-help.php:347
 #: includes/admin/views/page/help-page.php:169
 msgid "Search Replace"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:348
+#: build/includes/admin/views/page/help-page.php:170
 #: includes/admin/class-wpcp-help.php:348
 #: includes/admin/views/page/help-page.php:170
 msgid "Automatic search replace with regex support"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:353
+#: build/includes/admin/views/page/help-page.php:175
 #: includes/admin/class-wpcp-help.php:353
 #: includes/admin/views/page/help-page.php:175
 msgid "Custom Post Meta"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:354
+#: build/includes/admin/views/page/help-page.php:176
 #: includes/admin/class-wpcp-help.php:354
 #: includes/admin/views/page/help-page.php:176
 msgid "Insert custom post meta"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:359
+#: build/includes/admin/views/page/help-page.php:181
 #: includes/admin/class-wpcp-help.php:359
 #: includes/admin/views/page/help-page.php:181
 msgid "Readability"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:360
+#: build/includes/admin/views/page/help-page.php:182
 #: includes/admin/class-wpcp-help.php:360
 #: includes/admin/views/page/help-page.php:182
 msgid "Readability score controlled posts for clean articles"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:365
+#: build/includes/admin/metabox-functions.php:217
+#: build/includes/admin/views/page/help-page.php:187
 #: includes/admin/class-wpcp-help.php:365
 #: includes/admin/metabox-functions.php:217
 #: includes/admin/views/page/help-page.php:187
 msgid "Keyword Suggestion"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:366
+#: build/includes/admin/views/page/help-page.php:188
 #: includes/admin/class-wpcp-help.php:366
 #: includes/admin/views/page/help-page.php:188
 msgid "A tool to find a good keyword"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:371
+#: build/includes/admin/views/page/help-page.php:193
 #: includes/admin/class-wpcp-help.php:371
 #: includes/admin/views/page/help-page.php:193
 msgid "Translation Support"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-help.php:372
+#: build/includes/admin/views/page/help-page.php:194
 #: includes/admin/class-wpcp-help.php:372
 #: includes/admin/views/page/help-page.php:194
 msgid "Translate articles in other language"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-insight.php:279
 #: includes/admin/class-wpcp-insight.php:279
 msgid ""
 "Want to help make <strong>%s</strong> even more awesome? Allow Pluginever "
 "to collect non-sensitive diagnostic data and usage information."
 msgstr ""
 
+#: build/includes/admin/class-wpcp-insight.php:284
 #: includes/admin/class-wpcp-insight.php:284
 msgid "what we collect"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-insight.php:290
 #: includes/admin/class-wpcp-insight.php:290
 msgid "Allow"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-insight.php:291
 #: includes/admin/class-wpcp-insight.php:291
 msgid "No thanks"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-insight.php:468
 #: includes/admin/class-wpcp-insight.php:468
 msgid "Once Weekly"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-insight.php:604
 #: includes/admin/class-wpcp-insight.php:604
 msgid "If you have a moment, please let us know why you are deactivating:"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-insight.php:618
 #: includes/admin/class-wpcp-insight.php:618
 msgid "I rather wouldn't say"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-insight.php:619
 #: includes/admin/class-wpcp-insight.php:619
 msgid "Submit & Deactivate"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-insight.php:620
 #: includes/admin/class-wpcp-insight.php:620
 msgid "Canel"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-promotion.php:33
 #: includes/admin/class-wpcp-promotion.php:33
 msgid ""
 "Turn on Auto-Pilot For Automatic content generation and affiliation with "
@@ -445,40 +599,50 @@ msgid ""
 "<strong>10%</strong> discount if you upgrade to PRO now.</strong>"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-promotion.php:47
 #: includes/admin/class-wpcp-promotion.php:47
 msgid "Get Pro"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:38 wp-content-pilot.php:227
+#: build/includes/admin/class-wpcp-settings.php:38
+#: build/wp-content-pilot.php:227 includes/admin/class-wpcp-settings.php:38
+#: wp-content-pilot.php:227
 msgid "Settings"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-settings.php:52
 #: includes/admin/class-wpcp-settings.php:52
 msgid "Misc Settings"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-settings.php:69
 #: includes/admin/class-wpcp-settings.php:69
 msgid "Remove Data on Uninstall?"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-settings.php:70
 #: includes/admin/class-wpcp-settings.php:70
 msgid ""
 "Check this box if you would like to completely remove all of its data when "
 "the plugin is deleted."
 msgstr ""
 
+#: build/includes/admin/class-wpcp-settings.php:76
 #: includes/admin/class-wpcp-settings.php:76
 msgid "Post Publish mail"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-settings.php:77
 #: includes/admin/class-wpcp-settings.php:77
 msgid "Send mail After post publish"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-settings.php:91
 #: includes/admin/class-wpcp-settings.php:91
 msgid "WP Content Pilot Settings"
 msgstr ""
 
+#: build/includes/admin/class-wpcp-tracker.php:7
 #: includes/admin/class-wpcp-tracker.php:7
 msgid ""
 "Want to help make <strong>WP Content Pilot</strong> even more awesome? "
@@ -486,790 +650,990 @@ msgid ""
 "information."
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:21
 #: includes/admin/metabox-functions.php:21
 msgid "Select a campaign to start"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:22
+#: build/includes/admin/views/metabox/action-metabox.php:56
 #: includes/admin/metabox-functions.php:22
 #: includes/admin/views/metabox/action-metabox.php:56
 msgid "Campaign Status"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:23
 #: includes/admin/metabox-functions.php:23
 msgid "Campaign Options"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:24
+#: build/includes/admin/views/metabox/post-template.php:20
 #: includes/admin/metabox-functions.php:24
 #: includes/admin/views/metabox/post-template.php:20
 msgid "Post Template"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:25
 #: includes/admin/metabox-functions.php:25
 msgid "Post Settings"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:26
 #: includes/admin/metabox-functions.php:26
 msgid "Posts Filter"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:27
 #: includes/admin/metabox-functions.php:27
 msgid "Advanced Settings"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:28
 #: includes/admin/metabox-functions.php:28
 msgid "Actions"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:30
 #: includes/admin/metabox-functions.php:30
 msgid "Miscellaneous"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:31
 #: includes/admin/metabox-functions.php:31
 msgid "Campaign Posts"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:204
 #: includes/admin/metabox-functions.php:204
 msgid "Keywords"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:207
 #: includes/admin/metabox-functions.php:207
 msgid "Separate keywords by comma."
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:232
 #: includes/admin/metabox-functions.php:232
 msgid "Strip original links from the post"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:234
 #: includes/admin/metabox-functions.php:234
 msgid "Remove hyperlinks found in the article"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:240
 #: includes/admin/metabox-functions.php:240
 msgid "Make permalink link directly to the source"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:242
 #: includes/admin/metabox-functions.php:242
 msgid ""
 "Make post link directly to the source site, Posts will not load at your "
 "site."
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:252
 #: includes/admin/metabox-functions.php:252
 msgid "Add Canonical Tag with the original post link "
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:263
 #: includes/admin/metabox-functions.php:263
 msgid "Set First image as featured image"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:270
 #: includes/admin/metabox-functions.php:270
 msgid "Remove images from content"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:277
 #: includes/admin/metabox-functions.php:277
 msgid "Set random featured image if no image exists"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:288
 #: includes/admin/metabox-functions.php:288
 msgid "Use original date if possible"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:299
 #: includes/admin/metabox-functions.php:299
 msgid "Use summary as excerpt"
 msgstr ""
 
+#: build/includes/admin/metabox-functions.php:306
 #: includes/admin/metabox-functions.php:306
 msgid "Add rel nofollow & set target blank for all links"
 msgstr ""
 
+#: build/includes/admin/views/metabox/action-metabox.php:22
 #: includes/admin/views/metabox/action-metabox.php:22
 msgid "Campaign Target"
 msgstr ""
 
+#: build/includes/admin/views/metabox/action-metabox.php:31
 #: includes/admin/views/metabox/action-metabox.php:31
 msgid "Campaign Frequency"
 msgstr ""
 
+#: build/includes/admin/views/metabox/action-metabox.php:38
 #: includes/admin/views/metabox/action-metabox.php:38
 msgid "Frequency Unit"
 msgstr ""
 
+#: build/includes/admin/views/metabox/action-metabox.php:41
 #: includes/admin/views/metabox/action-metabox.php:41
 msgid "Minutes"
 msgstr ""
 
+#: build/includes/admin/views/metabox/action-metabox.php:42
 #: includes/admin/views/metabox/action-metabox.php:42
 msgid "Hours"
 msgstr ""
 
+#: build/includes/admin/views/metabox/action-metabox.php:43
 #: includes/admin/views/metabox/action-metabox.php:43
 msgid "Days"
 msgstr ""
 
+#: build/includes/admin/views/metabox/action-metabox.php:66
 #: includes/admin/views/metabox/action-metabox.php:66
 msgid "Move to Trash"
 msgstr ""
 
+#: build/includes/admin/views/metabox/action-metabox.php:68
 #: includes/admin/views/metabox/action-metabox.php:68
 msgid "Trash"
 msgstr ""
 
+#: build/includes/admin/views/metabox/action-metabox.php:76
 #: includes/admin/views/metabox/action-metabox.php:76
 msgid "Reset"
 msgstr ""
 
+#: build/includes/admin/views/metabox/action-metabox.php:80
 #: includes/admin/views/metabox/action-metabox.php:80
 msgid "Update"
 msgstr ""
 
+#: build/includes/admin/views/metabox/action-metabox.php:82
 #: includes/admin/views/metabox/action-metabox.php:82
 msgid "Update Campaign"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:6
 #: includes/admin/views/metabox/advanced-settings.php:6
 msgid "Limit Title"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:13
 #: includes/admin/views/metabox/advanced-settings.php:13
 msgid "Limit Content"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:20
 #: includes/admin/views/metabox/advanced-settings.php:20
 msgid "Excerpt Length"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:31
 #: includes/admin/views/metabox/advanced-settings.php:31
 msgid "Translate To"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:34
 #: includes/admin/views/metabox/advanced-settings.php:34
 msgid "No Translation"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:35
 #: includes/admin/views/metabox/advanced-settings.php:35
 msgid "Afrikaans"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:36
 #: includes/admin/views/metabox/advanced-settings.php:36
 msgid "Albanian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:37
 #: includes/admin/views/metabox/advanced-settings.php:37
 msgid "Amharic"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:38
 #: includes/admin/views/metabox/advanced-settings.php:38
 msgid "Arabic"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:39
 #: includes/admin/views/metabox/advanced-settings.php:39
 msgid "Armenian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:40
 #: includes/admin/views/metabox/advanced-settings.php:40
 msgid "Azerbaijani"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:41
 #: includes/admin/views/metabox/advanced-settings.php:41
 msgid "Bashkir"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:42
 #: includes/admin/views/metabox/advanced-settings.php:42
 msgid "Basque"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:43
 #: includes/admin/views/metabox/advanced-settings.php:43
 msgid "Belarusian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:44
 #: includes/admin/views/metabox/advanced-settings.php:44
 msgid "Bengali"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:45
 #: includes/admin/views/metabox/advanced-settings.php:45
 msgid "Bosnian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:46
 #: includes/admin/views/metabox/advanced-settings.php:46
 msgid "Bulgarian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:47
 #: includes/admin/views/metabox/advanced-settings.php:47
 msgid "Burmese"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:48
 #: includes/admin/views/metabox/advanced-settings.php:48
 msgid "Catalan"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:49
 #: includes/admin/views/metabox/advanced-settings.php:49
 msgid "Cebuano"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:50
 #: includes/admin/views/metabox/advanced-settings.php:50
 msgid "Chinese"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:51
 #: includes/admin/views/metabox/advanced-settings.php:51
 msgid "Croatian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:52
 #: includes/admin/views/metabox/advanced-settings.php:52
 msgid "Czech"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:53
 #: includes/admin/views/metabox/advanced-settings.php:53
 msgid "Danish"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:54
 #: includes/admin/views/metabox/advanced-settings.php:54
 msgid "Dutch"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:55
 #: includes/admin/views/metabox/advanced-settings.php:55
 msgid "English"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:56
 #: includes/admin/views/metabox/advanced-settings.php:56
 msgid "Esperanto"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:57
 #: includes/admin/views/metabox/advanced-settings.php:57
 msgid "Estonian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:58
 #: includes/admin/views/metabox/advanced-settings.php:58
 msgid "Finnish"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:59
 #: includes/admin/views/metabox/advanced-settings.php:59
 msgid "French"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:60
 #: includes/admin/views/metabox/advanced-settings.php:60
 msgid "Galician"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:61
 #: includes/admin/views/metabox/advanced-settings.php:61
 msgid "Georgian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:62
 #: includes/admin/views/metabox/advanced-settings.php:62
 msgid "German"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:63
 #: includes/admin/views/metabox/advanced-settings.php:63
 msgid "Greek"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:64
 #: includes/admin/views/metabox/advanced-settings.php:64
 msgid "Gujarati"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:65
 #: includes/admin/views/metabox/advanced-settings.php:65
 msgid "Haitian Creole"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:66
 #: includes/admin/views/metabox/advanced-settings.php:66
 msgid "Hebrew"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:67
 #: includes/admin/views/metabox/advanced-settings.php:67
 msgid "Hill Mari"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:68
 #: includes/admin/views/metabox/advanced-settings.php:68
 msgid "Hindi"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:69
 #: includes/admin/views/metabox/advanced-settings.php:69
 msgid "Hungarian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:70
 #: includes/admin/views/metabox/advanced-settings.php:70
 msgid "Icelandic"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:71
 #: includes/admin/views/metabox/advanced-settings.php:71
 msgid "Indonesian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:72
 #: includes/admin/views/metabox/advanced-settings.php:72
 msgid "Irish"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:73
 #: includes/admin/views/metabox/advanced-settings.php:73
 msgid "Italian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:74
 #: includes/admin/views/metabox/advanced-settings.php:74
 msgid "Japanese"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:75
 #: includes/admin/views/metabox/advanced-settings.php:75
 msgid "Javanese"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:76
 #: includes/admin/views/metabox/advanced-settings.php:76
 msgid "Kannada"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:77
 #: includes/admin/views/metabox/advanced-settings.php:77
 msgid "Kazakh"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:78
 #: includes/admin/views/metabox/advanced-settings.php:78
 msgid "Khmer"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:79
 #: includes/admin/views/metabox/advanced-settings.php:79
 msgid "Korean"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:80
 #: includes/admin/views/metabox/advanced-settings.php:80
 msgid "Kyrgyz"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:81
 #: includes/admin/views/metabox/advanced-settings.php:81
 msgid "Lao"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:82
 #: includes/admin/views/metabox/advanced-settings.php:82
 msgid "Latin"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:83
 #: includes/admin/views/metabox/advanced-settings.php:83
 msgid "Latvian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:84
 #: includes/admin/views/metabox/advanced-settings.php:84
 msgid "Lithuanian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:85
 #: includes/admin/views/metabox/advanced-settings.php:85
 msgid "Luxembourgish"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:86
 #: includes/admin/views/metabox/advanced-settings.php:86
 msgid "Macedonian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:87
 #: includes/admin/views/metabox/advanced-settings.php:87
 msgid "Malagasy"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:88
 #: includes/admin/views/metabox/advanced-settings.php:88
 msgid "Malay"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:89
 #: includes/admin/views/metabox/advanced-settings.php:89
 msgid "Malayalam"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:90
 #: includes/admin/views/metabox/advanced-settings.php:90
 msgid "Maltese"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:91
 #: includes/admin/views/metabox/advanced-settings.php:91
 msgid "Maori"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:92
 #: includes/admin/views/metabox/advanced-settings.php:92
 msgid "Marathi"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:93
 #: includes/admin/views/metabox/advanced-settings.php:93
 msgid "Mari"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:94
 #: includes/admin/views/metabox/advanced-settings.php:94
 msgid "Mongolian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:95
 #: includes/admin/views/metabox/advanced-settings.php:95
 msgid "Nepali"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:96
 #: includes/admin/views/metabox/advanced-settings.php:96
 msgid "Norwegian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:97
 #: includes/admin/views/metabox/advanced-settings.php:97
 msgid "Papiamento"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:98
 #: includes/admin/views/metabox/advanced-settings.php:98
 msgid "Persian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:99
 #: includes/admin/views/metabox/advanced-settings.php:99
 msgid "Polish"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:100
 #: includes/admin/views/metabox/advanced-settings.php:100
 msgid "Portuguese"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:101
 #: includes/admin/views/metabox/advanced-settings.php:101
 msgid "Punjabi"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:102
 #: includes/admin/views/metabox/advanced-settings.php:102
 msgid "Romanian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:103
 #: includes/admin/views/metabox/advanced-settings.php:103
 msgid "Russian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:104
 #: includes/admin/views/metabox/advanced-settings.php:104
 msgid "Scottish Gaelic"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:105
 #: includes/admin/views/metabox/advanced-settings.php:105
 msgid "Serbian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:106
 #: includes/admin/views/metabox/advanced-settings.php:106
 msgid "Sinhala"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:107
 #: includes/admin/views/metabox/advanced-settings.php:107
 msgid "Slovak"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:108
 #: includes/admin/views/metabox/advanced-settings.php:108
 msgid "Slovenian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:109
 #: includes/admin/views/metabox/advanced-settings.php:109
 msgid "Spanish"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:110
 #: includes/admin/views/metabox/advanced-settings.php:110
 msgid "Sundanese"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:111
 #: includes/admin/views/metabox/advanced-settings.php:111
 msgid "Swahili"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:112
 #: includes/admin/views/metabox/advanced-settings.php:112
 msgid "Swedish"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:113
 #: includes/admin/views/metabox/advanced-settings.php:113
 msgid "Tagalog"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:114
 #: includes/admin/views/metabox/advanced-settings.php:114
 msgid "Tajik"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:115
 #: includes/admin/views/metabox/advanced-settings.php:115
 msgid "Tamil"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:116
 #: includes/admin/views/metabox/advanced-settings.php:116
 msgid "Tatar"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:117
 #: includes/admin/views/metabox/advanced-settings.php:117
 msgid "Telugu"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:118
 #: includes/admin/views/metabox/advanced-settings.php:118
 msgid "Thai"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:119
 #: includes/admin/views/metabox/advanced-settings.php:119
 msgid "Turkish"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:120
 #: includes/admin/views/metabox/advanced-settings.php:120
 msgid "Udmurt"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:121
 #: includes/admin/views/metabox/advanced-settings.php:121
 msgid "Ukrainian"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:122
 #: includes/admin/views/metabox/advanced-settings.php:122
 msgid "Urdu"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:123
 #: includes/admin/views/metabox/advanced-settings.php:123
 msgid "Uzbek"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:124
 #: includes/admin/views/metabox/advanced-settings.php:124
 msgid "Vietnamese"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:125
 #: includes/admin/views/metabox/advanced-settings.php:125
 msgid "Welsh"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:126
 #: includes/admin/views/metabox/advanced-settings.php:126
 msgid "Xhosa"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:127
 #: includes/admin/views/metabox/advanced-settings.php:127
 msgid "Yiddish"
 msgstr ""
 
+#: build/includes/admin/views/metabox/advanced-settings.php:129
 #: includes/admin/views/metabox/advanced-settings.php:129
 msgid "Select a language to translate."
 msgstr ""
 
+#: build/includes/admin/views/metabox/campaign-miscellaneous.php:2
 #: includes/admin/views/metabox/campaign-miscellaneous.php:2
 msgid "Delete all posts by this campaign"
 msgstr ""
 
+#: build/includes/admin/views/metabox/campaign-posts.php:10
 #: includes/admin/views/metabox/campaign-posts.php:10
 msgid "No posts generated yet"
 msgstr ""
 
+#: build/includes/admin/views/metabox/campaign-selection.php:177
 #: includes/admin/views/metabox/campaign-selection.php:177
 msgid "Submit"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-filter.php:6
 #: includes/admin/views/metabox/post-filter.php:6
 msgid "Min Words"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-filter.php:10
 #: includes/admin/views/metabox/post-filter.php:10
 msgid "Min required words, otherwise posts will be rejected. (PRO)"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-filter.php:18
 #: includes/admin/views/metabox/post-filter.php:18
 msgid "Required Words"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-filter.php:20
 #: includes/admin/views/metabox/post-filter.php:20
 msgid "Fashion, Secret, Awesome"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-filter.php:21
 #: includes/admin/views/metabox/post-filter.php:21
 msgid "Must contain words, otherwise posts will be rejected. (PRO)"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-filter.php:29
 #: includes/admin/views/metabox/post-filter.php:29
 msgid "Banned Words"
 msgstr ""
 
-#: includes/admin/views/metabox/post-filter.php:31
+#: build/includes/admin/views/metabox/post-filter.php:31
 msgid "youtube, wikipedia, google"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-filter.php:32
 #: includes/admin/views/metabox/post-filter.php:32
 msgid "If a post contains the above words it will be rejected. (PRO)"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:6
 #: includes/admin/views/metabox/post-settings.php:6
 msgid "Post type"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:11
 #: includes/admin/views/metabox/post-settings.php:11
 msgid "Post"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:12
 #: includes/admin/views/metabox/post-settings.php:12
 msgid "Page"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:20
 #: includes/admin/views/metabox/post-settings.php:20
 msgid "Published"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:21
 #: includes/admin/views/metabox/post-settings.php:21
 msgid "Private"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:22
 #: includes/admin/views/metabox/post-settings.php:22
 msgid "Draft"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:23
 #: includes/admin/views/metabox/post-settings.php:23
 msgid "Pending"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:29
 #: includes/admin/views/metabox/post-settings.php:29
 msgid "Post Author"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:34
 #: includes/admin/views/metabox/post-settings.php:34
 msgid "Select author"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:45
 #: includes/admin/views/metabox/post-settings.php:45
 msgid "Post Category"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:49
 #: includes/admin/views/metabox/post-settings.php:49
 msgid "Select category for the post"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:56
 #: includes/admin/views/metabox/post-settings.php:56
 msgid "Keyword to category"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:59
+#: build/includes/admin/views/metabox/post-settings.php:82
 #: includes/admin/views/metabox/post-settings.php:59
 #: includes/admin/views/metabox/post-settings.php:82
 msgid "Separate with (,) comma"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:60
 #: includes/admin/views/metabox/post-settings.php:60
 msgid ""
 "This option will search the content for the keyword and if exists, it will "
 "assign & set category to the post"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:68
 #: includes/admin/views/metabox/post-settings.php:68
 msgid "Post Tags"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:72
 #: includes/admin/views/metabox/post-settings.php:72
 msgid "Select tags for the post"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:79
 #: includes/admin/views/metabox/post-settings.php:79
 msgid "Keyword to tag"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-settings.php:83
 #: includes/admin/views/metabox/post-settings.php:83
 msgid ""
 "This option will search the content for the keyword and if exists, it will "
 "assign & set tag to the post"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-template.php:14
 #: includes/admin/views/metabox/post-template.php:14
 msgid "Post Title"
 msgstr ""
 
+#: build/includes/admin/views/metabox/post-template.php:32
 #: includes/admin/views/metabox/post-template.php:32
 msgid "Supported Tags:"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:51
 #: includes/admin/views/page/status-page.php:51
 msgid "WordPress version"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:56
 #: includes/admin/views/page/status-page.php:56
 msgid "WP Content Pilot version"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:61
 #: includes/admin/views/page/status-page.php:61
 msgid "PHP version"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:66
 #: includes/admin/views/page/status-page.php:66
 msgid "MySQL version"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:71
 #: includes/admin/views/page/status-page.php:71
 msgid "cURL version"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:76
 #: includes/admin/views/page/status-page.php:76
 msgid "cURL SSL version"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:81
 #: includes/admin/views/page/status-page.php:81
 msgid "WP-Cron url"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:86
 #: includes/admin/views/page/status-page.php:86
 msgid "Document root"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:91
 #: includes/admin/views/page/status-page.php:91
 msgid "SERVER"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:96
 #: includes/admin/views/page/status-page.php:96
 msgid "Operating System"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:101
 #: includes/admin/views/page/status-page.php:101
 msgid "Maximum execution time"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:102
 #: includes/admin/views/page/status-page.php:102
 msgid "%s seconds"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:106
 #: includes/admin/views/page/status-page.php:106
 msgid "Language"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:111
 #: includes/admin/views/page/status-page.php:111
 msgid "MySQL Client encoding"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:116
 #: includes/admin/views/page/status-page.php:116
 msgid "Max Upload Size"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:121
 #: includes/admin/views/page/status-page.php:121
 msgid "Remote Post"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:126
 #: includes/admin/views/page/status-page.php:126
 msgid "Remote Get"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:132
 #: includes/admin/views/page/status-page.php:132
 msgid "Links Table"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:137
 #: includes/admin/views/page/status-page.php:137
 msgid "Log Table"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:142
 #: includes/admin/views/page/status-page.php:142
 msgid "Per Minute Cron Installed"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:147
 #: includes/admin/views/page/status-page.php:147
 msgid "Is CRON running"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:153
 #: includes/admin/views/page/status-page.php:153
 msgid "Loaded PHP Extensions"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:157
 #: includes/admin/views/page/status-page.php:157
 msgid "Required PHP Extensions"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:168
 #: includes/admin/views/page/status-page.php:168
 msgid "Total Campaigns"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:187
 #: includes/admin/views/page/status-page.php:187
 msgid "Status > WP Content Pilot"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:190
 #: includes/admin/views/page/status-page.php:190
 msgid ""
 "Experiencing an issue and need to contact WP Content Pilot support? Click "
 "the link below to get debug information you can send to us."
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:202
 #: includes/admin/views/page/status-page.php:202
 msgid "Get System Information"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:209
 #: includes/admin/views/page/status-page.php:209
 msgid "System Information"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:212
+#: build/includes/admin/views/page/status-page.php:219
 #: includes/admin/views/page/status-page.php:212
 #: includes/admin/views/page/status-page.php:219
 msgid "Setting"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:213
+#: build/includes/admin/views/page/status-page.php:220
+#: build/includes/admin/views/page/status-page.php:243
+#: build/includes/admin/views/page/status-page.php:250
 #: includes/admin/views/page/status-page.php:213
 #: includes/admin/views/page/status-page.php:220
 #: includes/admin/views/page/status-page.php:243
@@ -1277,112 +1641,138 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:239
 #: includes/admin/views/page/status-page.php:239
 msgid "Campaigns Information"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:242
+#: build/includes/admin/views/page/status-page.php:249
 #: includes/admin/views/page/status-page.php:242
 #: includes/admin/views/page/status-page.php:249
 msgid "Label"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:276
 #: includes/admin/views/page/status-page.php:276
 msgid "Copy System Information"
 msgstr ""
 
+#: build/includes/admin/views/page/status-page.php:287
 #: includes/admin/views/page/status-page.php:287
 msgid "Copied"
 msgstr ""
 
+#: build/includes/admin/views/tables/class-wpcp-logs-table.php:114
 #: includes/admin/views/tables/class-wpcp-logs-table.php:114
 msgid "No %s found."
 msgstr ""
 
+#: build/includes/admin/views/tables/class-wpcp-logs-table.php:162
 #: includes/admin/views/tables/class-wpcp-logs-table.php:162
 msgid "All"
 msgstr ""
 
+#: build/includes/admin/views/tables/class-wpcp-logs-table.php:163
 #: includes/admin/views/tables/class-wpcp-logs-table.php:163
 msgid "Info"
 msgstr ""
 
+#: build/includes/admin/views/tables/class-wpcp-logs-table.php:164
 #: includes/admin/views/tables/class-wpcp-logs-table.php:164
 msgid "Warning"
 msgstr ""
 
+#: build/includes/admin/views/tables/class-wpcp-logs-table.php:165
 #: includes/admin/views/tables/class-wpcp-logs-table.php:165
 msgid "Error"
 msgstr ""
 
+#: build/includes/admin/views/tables/class-wpcp-logs-table.php:173
 #: includes/admin/views/tables/class-wpcp-logs-table.php:173
 msgid "Clear Logs"
 msgstr ""
 
+#: build/includes/admin/views/tables/class-wpcp-logs-table.php:185
 #: includes/admin/views/tables/class-wpcp-logs-table.php:185
 msgid "Campaign"
 msgstr ""
 
+#: build/includes/admin/views/tables/class-wpcp-logs-table.php:186
 #: includes/admin/views/tables/class-wpcp-logs-table.php:186
 msgid "Level"
 msgstr ""
 
+#: build/includes/admin/views/tables/class-wpcp-logs-table.php:187
 #: includes/admin/views/tables/class-wpcp-logs-table.php:187
 msgid "Log"
 msgstr ""
 
+#: build/includes/admin/views/tables/class-wpcp-logs-table.php:188
+#: build/includes/modules/class-wpcp-envato.php:109
+#: build/includes/modules/class-wpcp-youtube.php:113
 #: includes/admin/views/tables/class-wpcp-logs-table.php:188
 #: includes/modules/class-wpcp-envato.php:109
 #: includes/modules/class-wpcp-youtube.php:113
 msgid "Date"
 msgstr ""
 
-#: includes/class-wpcp-html.php:177
+#: build/includes/class-wpcp-html.php:177 includes/class-wpcp-html.php:177
 msgid "-- Please Select --"
 msgstr ""
 
-#: includes/class-wpcp-module.php:147
+#: build/includes/class-wpcp-module.php:147 includes/class-wpcp-module.php:147
 msgid "Could not find the campaign"
 msgstr ""
 
-#: includes/class-wpcp-module.php:154
+#: build/includes/class-wpcp-module.php:154 includes/class-wpcp-module.php:154
 msgid "Campaign type mismatch"
 msgstr ""
 
-#: includes/class-wpcp-module.php:158 includes/class-wpcp-module.php:161
+#: build/includes/class-wpcp-module.php:158
+#: build/includes/class-wpcp-module.php:161 includes/class-wpcp-module.php:158
+#: includes/class-wpcp-module.php:161
 msgid "Tried maximum time but could not generate article check log"
 msgstr ""
 
-#: includes/class-wpcp-module.php:170
+#: build/includes/class-wpcp-module.php:170 includes/class-wpcp-module.php:170
 msgid "Campaign do not have keywords to proceed, please set keyword"
 msgstr ""
 
-#: includes/class-wpcp-module.php:180
+#: build/includes/class-wpcp-module.php:180 includes/class-wpcp-module.php:180
 msgid "Campaign do not have keyword to proceed, please set keyword"
 msgstr ""
 
-#: includes/class-wpcp-module.php:191
+#: build/includes/class-wpcp-module.php:191 includes/class-wpcp-module.php:191
 msgid "Content Pilot did not responded for the action"
 msgstr ""
 
+#: build/includes/class-wpcp-readability.php:59
 #: includes/class-wpcp-readability.php:59
 msgid "Content is not readable"
 msgstr ""
 
-#: includes/core-functions.php:379
+#: build/includes/core-functions.php:379 includes/core-functions.php:379
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true. WP-Cron spawning is disabled."
 msgstr ""
 
-#: includes/core-functions.php:384
+#: build/includes/core-functions.php:384 includes/core-functions.php:384
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true."
 msgstr ""
 
-#: includes/core-functions.php:415
+#: build/includes/core-functions.php:415 includes/core-functions.php:415
 #. translators: 1: The HTTP response code.
 msgid "Unexpected HTTP response code: %s"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-article.php:37
+#: build/includes/modules/class-wpcp-envato.php:34
+#: build/includes/modules/class-wpcp-feed.php:36
+#: build/includes/modules/class-wpcp-flickr.php:36
+#: build/includes/modules/class-wpcp-youtube.php:41
+#: build/includes/modules/class-wpcp-youtube.php:114
 #: includes/modules/class-wpcp-article.php:37
 #: includes/modules/class-wpcp-envato.php:34
 #: includes/modules/class-wpcp-feed.php:36
@@ -1392,12 +1782,20 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-article.php:38
+#: build/includes/modules/class-wpcp-feed.php:37
+#: build/includes/modules/class-wpcp-youtube.php:42
 #: includes/modules/class-wpcp-article.php:38
 #: includes/modules/class-wpcp-feed.php:37
 #: includes/modules/class-wpcp-youtube.php:42
 msgid "Summary"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-article.php:39
+#: build/includes/modules/class-wpcp-envato.php:35
+#: build/includes/modules/class-wpcp-feed.php:38
+#: build/includes/modules/class-wpcp-flickr.php:37
+#: build/includes/modules/class-wpcp-youtube.php:43
 #: includes/modules/class-wpcp-article.php:39
 #: includes/modules/class-wpcp-envato.php:35
 #: includes/modules/class-wpcp-feed.php:38
@@ -1406,6 +1804,11 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-article.php:40
+#: build/includes/modules/class-wpcp-envato.php:36
+#: build/includes/modules/class-wpcp-feed.php:39
+#: build/includes/modules/class-wpcp-flickr.php:39
+#: build/includes/modules/class-wpcp-youtube.php:44
 #: includes/modules/class-wpcp-article.php:40
 #: includes/modules/class-wpcp-envato.php:36
 #: includes/modules/class-wpcp-feed.php:39
@@ -1414,6 +1817,11 @@ msgstr ""
 msgid "Main image url"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-article.php:41
+#: build/includes/modules/class-wpcp-envato.php:37
+#: build/includes/modules/class-wpcp-feed.php:40
+#: build/includes/modules/class-wpcp-flickr.php:40
+#: build/includes/modules/class-wpcp-youtube.php:45
 #: includes/modules/class-wpcp-article.php:41
 #: includes/modules/class-wpcp-envato.php:37
 #: includes/modules/class-wpcp-feed.php:40
@@ -1422,537 +1830,637 @@ msgstr ""
 msgid "Source link"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-article.php:84
 #: includes/modules/class-wpcp-article.php:84
 msgid "Article Settings"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-article.php:100
 #: includes/modules/class-wpcp-article.php:100
 msgid "Banned Hosts"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-article.php:101
 #: includes/modules/class-wpcp-article.php:101
 msgid ""
 "Articles from the above hosts will be rejected. put single url/host per "
 "line."
 msgstr ""
 
+#: build/includes/modules/class-wpcp-article.php:102
 #: includes/modules/class-wpcp-article.php:102
 msgid ""
 "example.com \n"
 " example1.com"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-article.php:223
 #: includes/modules/class-wpcp-article.php:223
 msgid ""
 "Could not find any links from search engine, deactivating keyword for an "
 "hour."
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:38
 #: includes/modules/class-wpcp-envato.php:38
 msgid "Item classification"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:39
 #: includes/modules/class-wpcp-envato.php:39
 msgid "Item classification url"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:40
 #: includes/modules/class-wpcp-envato.php:40
 msgid "Price USD"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:41
 #: includes/modules/class-wpcp-envato.php:41
 msgid "Number of sales"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:42
 #: includes/modules/class-wpcp-envato.php:42
 msgid "Author user name"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:43
 #: includes/modules/class-wpcp-envato.php:43
 msgid "Author url"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:44
 #: includes/modules/class-wpcp-envato.php:44
 msgid "Author image url"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:45
 #: includes/modules/class-wpcp-envato.php:45
 msgid "Item summary"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:46
 #: includes/modules/class-wpcp-envato.php:46
 msgid "tags"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:47
 #: includes/modules/class-wpcp-envato.php:47
 msgid "HTML description"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:48
 #: includes/modules/class-wpcp-envato.php:48
 msgid "Affiliate URL"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:79
 #: includes/modules/class-wpcp-envato.php:79
 msgid "Platform"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:90
 #: includes/modules/class-wpcp-envato.php:90
 msgid "Select envato platform"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:94
 #: includes/modules/class-wpcp-envato.php:94
 msgid "Price Range"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:97
 #: includes/modules/class-wpcp-envato.php:97
 msgid "separate min max price with (|). e.g. 20|100"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:101
 #: includes/modules/class-wpcp-envato.php:101
 msgid "Sort By"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:104
+#: build/includes/modules/class-wpcp-youtube.php:112
 #: includes/modules/class-wpcp-envato.php:104
 #: includes/modules/class-wpcp-youtube.php:112
 msgid "Relevance"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:105
 #: includes/modules/class-wpcp-envato.php:105
 msgid "Following"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:106
+#: build/includes/modules/class-wpcp-youtube.php:116
 #: includes/modules/class-wpcp-envato.php:106
 #: includes/modules/class-wpcp-youtube.php:116
 msgid "Rating"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:107
 #: includes/modules/class-wpcp-envato.php:107
 msgid "Sales"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:108
 #: includes/modules/class-wpcp-envato.php:108
 msgid "Price"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:110
 #: includes/modules/class-wpcp-envato.php:110
 msgid "Updated"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:111
 #: includes/modules/class-wpcp-envato.php:111
 msgid "Name"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:112
 #: includes/modules/class-wpcp-envato.php:112
 msgid "Trending"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:114
 #: includes/modules/class-wpcp-envato.php:114
 msgid "Select how the result will be sorted"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:118
 #: includes/modules/class-wpcp-envato.php:118
 msgid "Sort Direction"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:121
 #: includes/modules/class-wpcp-envato.php:121
 msgid "ASC"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:122
 #: includes/modules/class-wpcp-envato.php:122
 msgid "DESC"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:124
 #: includes/modules/class-wpcp-envato.php:124
 msgid "Select sort direction for the result set"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:154
 #: includes/modules/class-wpcp-envato.php:154
 msgid "Envato Settings"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:170
 #: includes/modules/class-wpcp-envato.php:170
 msgid "Envato Token"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:171
 #: includes/modules/class-wpcp-envato.php:171
 msgid ""
 "Check this tutorial to get your <a href=\"%s\" target=\"_blank\">Envato "
 "token</a>."
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:177
 #: includes/modules/class-wpcp-envato.php:177
 msgid "Impact Radius affiliate URL"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:178
 #: includes/modules/class-wpcp-envato.php:178
 msgid "Learn how to get your Impact Radius affiliate URL <a href=\"%s\">here</a>."
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:200
 #: includes/modules/class-wpcp-envato.php:200
 msgid "The Envato api key is not set so the campaign won't run, disabling campaign."
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:261
 #: includes/modules/class-wpcp-envato.php:261
 msgid "Envato api request failed response [ %s ]"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-envato.php:270
 #: includes/modules/class-wpcp-envato.php:270
 msgid "No matching data found from api disabling the keyword for 1 hour"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-feed.php:65
 #: includes/modules/class-wpcp-feed.php:65
 msgid "Feed Links"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-feed.php:66
 #: includes/modules/class-wpcp-feed.php:66
 msgid "Example: http://example.com/feed"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-feed.php:67
 #: includes/modules/class-wpcp-feed.php:67
 msgid "Input feed links, Separate links with a comma (,)"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-feed.php:72
 #: includes/modules/class-wpcp-feed.php:72
 msgid "Feed fetch full content"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-feed.php:202
 #: includes/modules/class-wpcp-feed.php:202
 msgid "Could not find any article, waiting..."
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:38
 #: includes/modules/class-wpcp-flickr.php:38
 msgid "Published date"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:41
 #: includes/modules/class-wpcp-flickr.php:41
 msgid "Author Name"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:42
 #: includes/modules/class-wpcp-flickr.php:42
 msgid "Author Url"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:43
 #: includes/modules/class-wpcp-flickr.php:43
 msgid "Photo Tags"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:44
 #: includes/modules/class-wpcp-flickr.php:44
 msgid "Photo Views"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:45
 #: includes/modules/class-wpcp-flickr.php:45
 msgid "User Id"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:95
 #: includes/modules/class-wpcp-flickr.php:95
 msgid "Flickr Settings"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:111
 #: includes/modules/class-wpcp-flickr.php:111
 msgid "Flickr API Key"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:112
 #: includes/modules/class-wpcp-flickr.php:112
 msgid ""
 "Get your Flickr API key by following this <a href=\"%s\" "
 "target=\"_blank\">link</a>."
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:135
 #: includes/modules/class-wpcp-flickr.php:135
 msgid "The Flickr api key is not set so the campaign won't run, disabling campaign."
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:151
 #: includes/modules/class-wpcp-flickr.php:151
 msgid ""
 "Maximum page number reached for the keyword [%s] deactivating the keyword "
 "for a week"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:177
 #: includes/modules/class-wpcp-flickr.php:177
 msgid "Flickr api request failed response [%s]"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-flickr.php:190
 #: includes/modules/class-wpcp-flickr.php:190
 msgid "Could not find any result for the keyword %s"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:46
 #: includes/modules/class-wpcp-youtube.php:46
 msgid "Video Id"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:47
 #: includes/modules/class-wpcp-youtube.php:47
 msgid "Channel Id"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:48
 #: includes/modules/class-wpcp-youtube.php:48
 msgid "Channel Name"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:49
 #: includes/modules/class-wpcp-youtube.php:49
 msgid "Video Tags"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:50
+#: build/includes/modules/class-wpcp-youtube.php:133
 #: includes/modules/class-wpcp-youtube.php:50
 #: includes/modules/class-wpcp-youtube.php:133
 msgid "Video Duration"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:51
 #: includes/modules/class-wpcp-youtube.php:51
 msgid "Total Views"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:52
 #: includes/modules/class-wpcp-youtube.php:52
 msgid "Total Likes"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:53
 #: includes/modules/class-wpcp-youtube.php:53
 msgid "Total Dislikes"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:54
 #: includes/modules/class-wpcp-youtube.php:54
 msgid "Total Favourites"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:55
 #: includes/modules/class-wpcp-youtube.php:55
 msgid "Total Comments"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:56
 #: includes/modules/class-wpcp-youtube.php:56
 msgid "HTML Embed Code "
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:57
 #: includes/modules/class-wpcp-youtube.php:57
 msgid "Video transcript available in PRO"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:85
 #: includes/modules/class-wpcp-youtube.php:85
 msgid "Youtube Search Type"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:86
 #: includes/modules/class-wpcp-youtube.php:86
 msgid ""
 "Use global search for all result or use specific channel if you want to "
 "limit to that channel."
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:88
 #: includes/modules/class-wpcp-youtube.php:88
 msgid "Global"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:89
 #: includes/modules/class-wpcp-youtube.php:89
 msgid "From Specific Channel"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:96
 #: includes/modules/class-wpcp-youtube.php:96
 msgid "Example: PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:97
 #: includes/modules/class-wpcp-youtube.php:97
 msgid "Youtube Playlist ID"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:98
 #: includes/modules/class-wpcp-youtube.php:98
 msgid ""
 "eg. channel id is \"PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs\" for "
 "https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:103
 #: includes/modules/class-wpcp-youtube.php:103
 msgid "Youtube Category"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:110
 #: includes/modules/class-wpcp-youtube.php:110
 msgid "Youtube Search Order"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:115
 #: includes/modules/class-wpcp-youtube.php:115
 msgid "View Count"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:122
 #: includes/modules/class-wpcp-youtube.php:122
 msgid "Video License"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:145
 #: includes/modules/class-wpcp-youtube.php:145
 msgid "Video Definition"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:156
 #: includes/modules/class-wpcp-youtube.php:156
 msgid "Video Type"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:168
 #: includes/modules/class-wpcp-youtube.php:168
 msgid "Youtube - Auto hyperlink urls within the description"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:198
 #: includes/modules/class-wpcp-youtube.php:198
 msgid "Youtube Settings"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:214
 #: includes/modules/class-wpcp-youtube.php:214
 msgid "Youtube API Key"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:215
 #: includes/modules/class-wpcp-youtube.php:215
 msgid ""
 "Youtube campaigns won't run without API key. <a href=\"%s\" "
 "target=\"_blank\">Learn how to get one</a>."
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:234
 #: includes/modules/class-wpcp-youtube.php:234
 msgid ""
 "The YouTube api key is not set so the campaign won't run, disabling "
 "campaign."
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:389
 #: includes/modules/class-wpcp-youtube.php:389
 msgid "Youtube api request failed response [%s]"
 msgstr ""
 
+#: build/includes/modules/class-wpcp-youtube.php:538
 #: includes/modules/class-wpcp-youtube.php:538
 msgid "Youtube campaign wont run because you did not set the API details yet."
 msgstr ""
 
-#: includes/post-types.php:21
+#: build/includes/post-types.php:21 includes/post-types.php:21
 msgid "Add New"
 msgstr ""
 
-#: includes/post-types.php:22
+#: build/includes/post-types.php:22 includes/post-types.php:22
 msgid "Add New Campaign"
 msgstr ""
 
-#: includes/post-types.php:23
+#: build/includes/post-types.php:23 includes/post-types.php:23
 msgid "Edit Campaign"
 msgstr ""
 
-#: includes/post-types.php:24
+#: build/includes/post-types.php:24 includes/post-types.php:24
 msgid "New Campaign"
 msgstr ""
 
-#: includes/post-types.php:25
+#: build/includes/post-types.php:25 includes/post-types.php:25
 msgid "All Campaigns"
 msgstr ""
 
-#: includes/post-types.php:26
+#: build/includes/post-types.php:26 includes/post-types.php:26
 msgid "View Campaign"
 msgstr ""
 
-#: includes/post-types.php:27
+#: build/includes/post-types.php:27 includes/post-types.php:27
 msgid "Search Campaigns"
 msgstr ""
 
-#: includes/post-types.php:28
+#: build/includes/post-types.php:28 includes/post-types.php:28
 msgid "No Campaigns found"
 msgstr ""
 
-#: includes/post-types.php:29
+#: build/includes/post-types.php:29 includes/post-types.php:29
 msgid "No Campaigns found in Trash"
 msgstr ""
 
-#: includes/post-types.php:32
+#: build/includes/post-types.php:32 includes/post-types.php:32
 msgid "Campaign Attributes"
 msgstr ""
 
-#: includes/post-types.php:33
+#: build/includes/post-types.php:33 includes/post-types.php:33
 msgid "Filter Campaigns list"
 msgstr ""
 
-#: includes/post-types.php:34
+#: build/includes/post-types.php:34 includes/post-types.php:34
 msgid "Campaigns list navigation"
 msgstr ""
 
-#: includes/post-types.php:35
+#: build/includes/post-types.php:35 includes/post-types.php:35
 msgid "Campaigns list"
 msgstr ""
 
-#: includes/post-types.php:39
+#: build/includes/post-types.php:39 includes/post-types.php:39
 msgid "Campaigns of Wordpress Content Pilot"
 msgstr ""
 
+#: build/includes/post-types.php:70 build/includes/post-types.php:73
 #: includes/post-types.php:70 includes/post-types.php:73
 msgid "Campaign updated."
 msgstr ""
 
-#: includes/post-types.php:71
+#: build/includes/post-types.php:71 includes/post-types.php:71
 msgid "Custom field updated."
 msgstr ""
 
-#: includes/post-types.php:72
+#: build/includes/post-types.php:72 includes/post-types.php:72
 msgid "Custom field deleted."
 msgstr ""
 
-#: includes/post-types.php:75
+#: build/includes/post-types.php:75 includes/post-types.php:75
 #. translators: %s: date and time of the revision
 msgid "Campaign restored to revision from %s"
 msgstr ""
 
-#: includes/post-types.php:76
+#: build/includes/post-types.php:76 includes/post-types.php:76
 msgid "Campaign created."
 msgstr ""
 
-#: includes/post-types.php:77
+#: build/includes/post-types.php:77 includes/post-types.php:77
 msgid "Campaign saved."
 msgstr ""
 
-#: includes/post-types.php:78
+#: build/includes/post-types.php:78 includes/post-types.php:78
 msgid "Campaign submitted."
 msgstr ""
 
-#: includes/post-types.php:79
+#: build/includes/post-types.php:79 includes/post-types.php:79
 msgid "Campaign scheduled for: <strong>%1$s</strong>."
 msgstr ""
 
-#: includes/post-types.php:81
+#: build/includes/post-types.php:81 includes/post-types.php:81
 #. translators: Publish box date format, see http:php.net/date.
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: includes/post-types.php:82
+#: build/includes/post-types.php:82 includes/post-types.php:82
 msgid "Campaign draft updated."
 msgstr ""
 
-#: includes/post-types.php:101
+#: build/includes/post-types.php:101 includes/post-types.php:101
 msgid "Campaign Title"
 msgstr ""
 
-#: includes/post-types.php:118
+#: build/includes/post-types.php:118 includes/post-types.php:118
 msgid "Type"
 msgstr ""
 
-#: includes/post-types.php:119
+#: build/includes/post-types.php:119 includes/post-types.php:119
 msgid "Posts/Target"
 msgstr ""
 
-#: includes/post-types.php:120
+#: build/includes/post-types.php:120 includes/post-types.php:120
 msgid "Frequency"
 msgstr ""
 
-#: includes/post-types.php:121
+#: build/includes/post-types.php:121 includes/post-types.php:121
 msgid "Last Run"
 msgstr ""
 
-#: includes/post-types.php:139
+#: build/includes/post-types.php:139 includes/post-types.php:139
 msgid "Active"
 msgstr ""
 
-#: includes/post-types.php:141
+#: build/includes/post-types.php:141 includes/post-types.php:141
 msgid "Disabled"
 msgstr ""
 
-#: wp-content-pilot.php:80
+#: build/wp-content-pilot.php:80 wp-content-pilot.php:80
 msgid "Cloning is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:89
+#: build/wp-content-pilot.php:89 wp-content-pilot.php:89
 msgid "Universalizing instances of this class is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:229
+#: build/wp-content-pilot.php:229 wp-content-pilot.php:229
 msgid "Upgrade to PRO"
 msgstr ""
 
-#: wp-content-pilot.php:245
+#: build/wp-content-pilot.php:245 wp-content-pilot.php:245
 msgid "Once a Minute"
+msgstr ""
+
+#: includes/admin/views/metabox/post-filter.php:31
+msgid "Youtube, Wikipedia, Google"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -1973,17 +2481,17 @@ msgstr ""
 msgid "pluginever"
 msgstr ""
 
-#: includes/post-types.php:19
+#: build/includes/post-types.php:19 includes/post-types.php:19
 msgctxt "campaign post type name"
 msgid "Campaigns"
 msgstr ""
 
-#: includes/post-types.php:20
+#: build/includes/post-types.php:20 includes/post-types.php:20
 msgctxt "singular campaign post type name"
 msgid "Campaign"
 msgstr ""
 
-#: includes/post-types.php:31
+#: build/includes/post-types.php:31 includes/post-types.php:31
 msgctxt "wp content pilot post type menu name"
 msgid "WP Content Pilot"
 msgstr ""
