@@ -152,6 +152,7 @@ add_action( 'wp_ajax_wpcp_clear_logs', 'wpcp_clear_logs' );
 
 
 // TODO: Keyword Suggestion https://www.google.com/complete/search?q=w&cp=1&client=psy-ab&xssi=t&gs_ri=gws-wiz&hl=en-BD&authuser=0&psi=4oO9XIj8ONm89QOY2LCgDA.1555923942084&ei=4oO9XIj8ONm89QOY2LCgDA
+if(!function_exists( 'wpcp_pro_get_keyword_suggestion')):
 function wpcp_pro_get_keyword_suggestion() {
 	$word = $_REQUEST['input'];
 
@@ -189,7 +190,7 @@ function wpcp_pro_get_keyword_suggestion() {
 	$suggestion = array_unique( $suggestion );
 	wp_send_json_success( $suggestion );
 }
-
+endif;
 add_action( 'wp_ajax_wpcp_pro_get_keyword_suggestion', 'wpcp_pro_get_keyword_suggestion' );
 
 /**
