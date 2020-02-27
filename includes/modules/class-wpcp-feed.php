@@ -178,8 +178,9 @@ EOT;
 			}
 		}
 
-		$log_url = admin_url('/edit.php?post_type=wp_content_pilot&page=wpcp-logs');
-		return new WP_Error( 'campaign-error', __( sprintf('No feed article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
+		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
+
+		return new WP_Error( 'campaign-error', __( sprintf( 'No feed article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
 
 	}
 
@@ -228,9 +229,15 @@ EOT;
 				continue;
 			}
 
-			if ( wpcp_is_duplicate_title( $title ) ) {
-				continue;
+			//check duplicate title and don't publish the post with duplicate title
+			$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
+
+			if ( 'on' == $check_duplicate_title ) {
+				if ( wpcp_is_duplicate_title( $title ) ) {
+					continue;
+				}
 			}
+
 
 			$links[] = [
 				'url'     => esc_url( $url ),
