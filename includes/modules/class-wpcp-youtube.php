@@ -95,7 +95,7 @@ EOT;
 			'name'        => '_youtube_channel_id',
 			'placeholder' => __( 'Example: PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
 			'label'       => __( 'Youtube Playlist ID', 'wp-content-pilot' ),
-			'tooltip'     => __( 'eg. channel id is "PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs" for https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
+			'tooltip'     => __( 'eg. playlist id is "PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs" for https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
 		) );
 
 		echo WPCP_HTML::select_input( array(

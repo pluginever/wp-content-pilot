@@ -28,7 +28,7 @@ echo WPCP_HTML::text_input( array(
 echo WPCP_HTML::text_input( array(
 	'label'         => __( 'Banned Words', 'wp-content-pilot' ),
 	'name'          => '_banned_words',
-	'placeholder'   => __( 'Youtube, Wikipedia, Google', 'wp-content-pilot' ),
+	'placeholder'   => __( 'YouTube, Wikipedia, Google', 'wp-content-pilot' ),
 	'tooltip'       => __( 'If a post contains the above words it will be rejected. (PRO)', 'wp-content-pilot' ),
 	'wrapper_class' => 'pro',
 	'attrs'         => array(

@@ -211,6 +211,15 @@ EOT;
 				continue;
 			}
 
+//check duplicate title and don't publish the post with duplicate title
+			$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
+
+			if ( 'on' == $check_duplicate_title ) {
+				if ( wpcp_is_duplicate_title( $title ) ) {
+					wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
+					continue;
+				}
+			}
 //			if ( wpcp_is_duplicate_title( $title ) ) {
 //				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 //				continue;
