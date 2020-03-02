@@ -224,6 +224,15 @@ EOT;
 
 			$title = $rss_item->get_title();
 
+			//check if the clean title metabox is checked and perform title cleaning
+			$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
+
+			if ( 'on' == $check_clean_title ) {
+				$title = wpcp_clean_title( $title );
+			} else {
+				$title = html_entity_decode( $title, ENT_QUOTES );
+			}
+
 
 			if ( wpcp_is_duplicate_url( $url ) ) {
 				continue;

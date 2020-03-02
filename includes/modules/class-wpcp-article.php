@@ -158,6 +158,7 @@ EOT;
 					continue;
 				}
 
+
 				$article = array(
 					'title'      => $readability->get_title(),
 					'author'     => $readability->get_author(),
@@ -169,7 +170,7 @@ EOT;
 				);
 
 				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
-				$this->update_link( $link->id, [ 'status' => 'success' ] );
+				$this->update_link( $link->id, [ 'status' => 'new' ] );
 
 				return $article;
 			}

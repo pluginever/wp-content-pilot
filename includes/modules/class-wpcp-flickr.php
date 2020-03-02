@@ -194,14 +194,14 @@ EOT;
 			}
 
 			$photo = array_pop( $response->photos->photo );
-			$title = @$photo->title;
+			$title = $photo->title;
 			$url   = esc_url_raw( "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key={$api_key}&photo_id={$photo->id}&secret={$photo->secret}&format=json&nojsoncallback=1}" );
 			$curl->get( $url );
 
 			$response = $curl->getResponse();
 
-			$description = @$response->photo->description->_content;
-			$tags        = ! empty( $response->photo->tags->tag ) ? implode( ', ', wp_list_pluck( @$response->photo->tags->tag, 'raw' ) ) : '';
+			$description = $response->photo->description->_content;
+			$tags        = ! empty( $response->photo->tags->tag ) ? implode( ', ', wp_list_pluck( $response->photo->tags->tag, 'raw' ) ) : '';
 			$image_url   = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}.jpg";
 			$source_url  = $response->photo->urls->url[0]->_content;
 			$tags        = wpcp_array_to_html( $tags );
@@ -211,7 +211,16 @@ EOT;
 				continue;
 			}
 
-//check duplicate title and don't publish the post with duplicate title
+			//check if the clean title metabox is checked and perform title cleaning
+			$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
+
+			if ( 'on' == $check_clean_title ) {
+				$title = wpcp_clean_title( $title );
+			} else {
+				$title = html_entity_decode( $title, ENT_QUOTES );
+			}
+
+			//check duplicate title and don't publish the post with duplicate title
 			$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
 
 			if ( 'on' == $check_duplicate_title ) {

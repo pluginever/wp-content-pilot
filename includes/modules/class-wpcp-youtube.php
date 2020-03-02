@@ -273,15 +273,15 @@ EOT;
 					continue;
 				}
 
-				$items = @$curl->response->items;
+				$items = $curl->response->items;
 				$item  = array_pop( $items );
 
-				$description = wpcp_remove_unauthorized_html( wpcp_remove_emoji( @$item->snippet->description ) );
+				$description = wpcp_remove_unauthorized_html( wpcp_remove_emoji( $item->snippet->description ) );
 
 				$image_url = '';
 				if ( ! empty( $item->snippet->thumbnails ) && is_object( $item->snippet->thumbnails ) ) {
 					$last_image = end( $item->snippet->thumbnails );
-					$image_url  = @ ! empty( $last_image->url ) ? esc_url( $last_image->url ) : '';
+					$image_url  = ! empty( $last_image->url ) ? esc_url( $last_image->url ) : '';
 				}
 
 				$transcript = '';
@@ -294,8 +294,17 @@ EOT;
 					$description = wpcp_hyperlink_text( $description );
 				}
 
+
+				$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
+
+				if ( 'on' == $check_clean_title ) {
+					$title = wpcp_clean_title( $link->title );
+				} else {
+					$title = html_entity_decode( $link->title, ENT_QUOTES );
+				}
+
 				$article = array(
-					'title'        => wpcp_clean_title( $link->title ),
+					'title'        => $title,
 					'author'       => $item->snippet->channelTitle,
 					'image_url'    => $image_url,
 					'excerpt'      => $description,
@@ -417,7 +426,7 @@ EOT;
 			}
 
 			$url   = esc_url( 'https://www.youtube.com/watch?v=' . $video_id );
-			$title = @ ! empty( $item->snippet->title ) ? @sanitize_text_field( $item->snippet->title ) : '';
+			$title = ! empty( $item->snippet->title ) ? sanitize_text_field( $item->snippet->title ) : '';
 			if ( $title == 'Private video' ) {
 				continue;
 			}

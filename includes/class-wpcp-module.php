@@ -251,6 +251,7 @@ abstract class WPCP_Module {
 		}
 
 
+
 		//translate
 
 		//make template of title,content,meta
@@ -258,7 +259,7 @@ abstract class WPCP_Module {
 		//translate template
 		$post_content = wpcp_get_post_meta( $this->campaign_id, '_post_template', '' );
 		$post_title   = wpcp_get_post_meta( $this->campaign_id, '_post_title', '' );
-		$tags         = array_keys( $this->get_template_tags() );
+		$tags = array_keys( $this->get_template_tags() );
 		foreach ( $tags as $tag ) {
 			if ( array_key_exists( $tag, $article ) ) {
 				$post_content = str_replace( '{' . $tag . '}', $article[ $tag ], $post_content );
@@ -435,7 +436,7 @@ abstract class WPCP_Module {
 	protected function get_cookie_jar() {
 		$jar = get_option( 'wpcp_cookie_jar' );
 		if ( empty( $jar ) ) {
-			$jar = substr(md5( time() ), 0, 5);
+			$jar = substr( md5( time() ), 0, 5 );
 			update_option( 'wpcp_cookie_jar', $jar );
 		}
 

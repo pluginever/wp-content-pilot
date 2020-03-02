@@ -181,6 +181,7 @@ function wpcp_update_campaign_settings( $post_id ) {
 	update_post_meta( $post_id, '_use_original_date', empty( $posted['_use_original_date'] ) ? '' : sanitize_text_field( $posted['_use_original_date'] ) );
 	update_post_meta( $post_id, '_skip_no_image', empty( $posted['_skip_no_image'] ) ? '' : sanitize_text_field( $posted['_skip_no_image'] ) );
 	update_post_meta( $post_id, '_skip_duplicate_title', empty( $posted['_skip_duplicate_title'] ) ? '' : sanitize_text_field( $posted['_skip_duplicate_title'] ) );
+	update_post_meta( $post_id, '_clean_title', empty( $posted['_clean_title'] ) ? '' : sanitize_text_field( $posted['_clean_title'] ) );
 
 	update_post_meta( $post_id, '_post_title', empty( $posted['_post_title'] ) ? '' : sanitize_text_field( $posted['_post_title'] ) );
 	update_post_meta( $post_id, '_post_template', empty( $posted['_post_template'] ) ? '' : wp_kses_post( $posted['_post_template'] ) );
@@ -308,6 +309,13 @@ function wpcp_escape_duplicate_title() {
 	) );
 }
 
+function wpcp_clean_post_title() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label' => __( 'Clean title', 'wp-content-pilot' ),
+		'name'  => '_clean_title',
+	) );
+}
+
 function wpcp_target_rel_field() {
 	echo WPCP_HTML::checkbox_input( array(
 		'label'         => __( 'Add rel nofollow & set target blank for all links', 'wp-content-pilot' ),
@@ -325,6 +333,7 @@ add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_remove_images', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_strip_links_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_use_excerpt_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_escape_duplicate_title', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_clean_post_title', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_use_original_date_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_external_link_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_featured_image_random_field', 20 );
