@@ -170,7 +170,7 @@ EOT;
 				);
 
 				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
-				$this->update_link( $link->id, [ 'status' => 'new' ] );
+				$this->update_link( $link->id, [ 'status' => 'success' ] );
 
 				return $article;
 			}
