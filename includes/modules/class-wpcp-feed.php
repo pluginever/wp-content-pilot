@@ -143,7 +143,7 @@ EOT;
 			foreach ( $links as $link ) {
 				wpcp_logger()->info( sprintf( 'Grabbing feed from [%s]', $link->url ), $campaign_id );
 
-				//$this->update_link( $link->id, [ 'status' => 'failed' ] );
+				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
 				$curl = $this->setup_curl();
 				$curl->setOpt( CURLOPT_HTTPHEADER, 'accept-encoding: utf-8' );
