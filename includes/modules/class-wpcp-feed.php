@@ -143,7 +143,7 @@ EOT;
 			foreach ( $links as $link ) {
 				wpcp_logger()->info( sprintf( 'Grabbing feed from [%s]', $link->url ), $campaign_id );
 
-				$this->update_link( $link->id, [ 'status' => 'failed' ] );
+				//$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
 				$curl = $this->setup_curl();
 				$curl->setOpt( CURLOPT_HTTPHEADER, 'accept-encoding: utf-8' );
@@ -218,14 +218,14 @@ EOT;
 		$links = [];
 		foreach ( $rss_items as $rss_item ) {
 			$url = esc_url( $rss_item->get_permalink() );
-			if ( stristr( $url, 'news.google' ) ) {
+			if ( stristr( $feed_link, 'news.google' ) ) {
 				$urlParts   = explode( 'url=', $url );
 				$correctUrl = $urlParts[1];
 				$url        = $correctUrl;
 			}
 
 			//Google alerts links correction
-			if ( stristr( $url, 'alerts/feeds' ) && stristr( $url, 'google' ) ) {
+			if ( stristr( $feed_link, 'alerts/feeds' ) && stristr( $feed_link, 'google' ) ) {
 				preg_match( '{url\=(.*?)[&]}', $url, $urlMatches );
 				$correctUrl = $urlMatches[1];
 
