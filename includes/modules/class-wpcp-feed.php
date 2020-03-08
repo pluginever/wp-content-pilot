@@ -146,7 +146,10 @@ EOT;
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
 				$curl = $this->setup_curl();
+				$curl->setOpt( CURLOPT_HTTPHEADER, 'accept-encoding: utf-8' );
+				$curl->setOpt( CURLOPT_ENCODING, '' );
 				$curl->get( $link->url );
+
 
 				if ( $curl->isError() && $this->initiator != 'cron' ) {
 					wpcp_logger()->info( sprintf( "Failed processing link reason [%s]", $curl->getErrorMessage() ), $campaign_id );
