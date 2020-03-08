@@ -279,10 +279,17 @@ EOT;
 					continue;
 				}
 
-				if ( wpcp_is_duplicate_title( $item->name ) ) {
-					wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-					continue;
+				//check duplicate title and don't publish the post with duplicate title
+				$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
+
+				if ( 'on' == $check_duplicate_title ) {
+					if ( wpcp_is_duplicate_title( $item->name ) ) {
+						wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
+						continue;
+					}
 				}
+
+
 				$image  = '';
 				$images = $item->previews;
 				if ( ! empty( $images ) && ! empty( $images->landscape_preview ) ) {
@@ -303,8 +310,18 @@ EOT;
 				$tags  = wpcp_array_to_html( $tags );
 				$price = wpcp_cent_to_usd( @$item->price_cents );
 				wpcp_logger()->info( sprintf( 'Generating envato article from [ %s ]', $item->url ), $campaign_id );
+
+				//check if the clean title metabox is checked and perform title cleaning
+				$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
+
+				if ( 'on' == $check_clean_title ) {
+					$title = wpcp_clean_title( $item->name );
+				} else {
+					$title = html_entity_decode( $item->name, ENT_QUOTES );
+				}
+
 				$article = [
-					'title'              => $item->name,
+					'title'              => $title,
 					'content'            => $item->description_html,
 					'image_url'          => $image,
 					'source_url'         => $item->url,

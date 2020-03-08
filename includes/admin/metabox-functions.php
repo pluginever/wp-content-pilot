@@ -181,6 +181,7 @@ function wpcp_update_campaign_settings( $post_id ) {
 	update_post_meta( $post_id, '_use_original_date', empty( $posted['_use_original_date'] ) ? '' : sanitize_text_field( $posted['_use_original_date'] ) );
 	update_post_meta( $post_id, '_skip_no_image', empty( $posted['_skip_no_image'] ) ? '' : sanitize_text_field( $posted['_skip_no_image'] ) );
 	update_post_meta( $post_id, '_skip_duplicate_title', empty( $posted['_skip_duplicate_title'] ) ? '' : sanitize_text_field( $posted['_skip_duplicate_title'] ) );
+	update_post_meta( $post_id, '_clean_title', empty( $posted['_clean_title'] ) ? '' : sanitize_text_field( $posted['_clean_title'] ) );
 
 	update_post_meta( $post_id, '_post_title', empty( $posted['_post_title'] ) ? '' : sanitize_text_field( $posted['_post_title'] ) );
 	update_post_meta( $post_id, '_post_template', empty( $posted['_post_template'] ) ? '' : wp_kses_post( $posted['_post_template'] ) );
@@ -301,6 +302,20 @@ function wpcp_use_excerpt_field() {
 	) );
 }
 
+function wpcp_escape_duplicate_title() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label' => __( 'Skip post with duplicate title', 'wp-content-pilot' ),
+		'name'  => '_skip_duplicate_title',
+	) );
+}
+
+function wpcp_clean_post_title() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label' => __( 'Clean title', 'wp-content-pilot' ),
+		'name'  => '_clean_title',
+	) );
+}
+
 function wpcp_target_rel_field() {
 	echo WPCP_HTML::checkbox_input( array(
 		'label'         => __( 'Add rel nofollow & set target blank for all links', 'wp-content-pilot' ),
@@ -317,6 +332,8 @@ add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_featured_image_field', 20
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_remove_images', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_strip_links_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_use_excerpt_field', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_escape_duplicate_title', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_clean_post_title', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_use_original_date_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_external_link_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_featured_image_random_field', 20 );
@@ -326,27 +343,27 @@ add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_target_rel_field', 20 );
 
 function wpcp_search_replace_metafield( $post ) {
 	?>
-	<div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_fields-field pro">
-		<label class="wpcp-label">Search Replace</label>
+    <div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_fields-field pro">
+        <label class="wpcp-label">Search Replace</label>
 
-		<table class="striped widefat wp-list-table">
-			<thead>
-			<tr>
-				<th>Search</th>
-				<th>Replace</th>
-				<th></th>
-			</tr>
-			</thead>
-			<tbody data-repeater-list="_wpcp_search_replaces">
-			<tr data-repeater-item>
-				<td><input type="text" name="search" placeholder="Search" disabled/></td>
-				<td><input type="text" name="replace" placeholder="Replace" disabled/></td>
-				<td><input data-repeater-delete type="button" value="Delete" class="button" disabled/></td>
-			</tr>
-			</tbody>
-		</table>
-		<button data-repeater-create type="button" class="button" disabled>Add New</button>
-	</div>
+        <table class="striped widefat wp-list-table">
+            <thead>
+            <tr>
+                <th>Search</th>
+                <th>Replace</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody data-repeater-list="_wpcp_search_replaces">
+            <tr data-repeater-item>
+                <td><input type="text" name="search" placeholder="Search" disabled/></td>
+                <td><input type="text" name="replace" placeholder="Replace" disabled/></td>
+                <td><input data-repeater-delete type="button" value="Delete" class="button" disabled/></td>
+            </tr>
+            </tbody>
+        </table>
+        <button data-repeater-create type="button" class="button" disabled>Add New</button>
+    </div>
 	<?php
 }
 
@@ -355,28 +372,28 @@ add_action( 'wpcp_advanced_settings_metabox', 'wpcp_search_replace_metafield' );
 
 function wpcp_post_meta_metafield( $post ) {
 	?>
-	<div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_fields-field pro">
-		<label class="wpcp-label">Post Meta</label>
+    <div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_fields-field pro">
+        <label class="wpcp-label">Post Meta</label>
 
-		<table class="striped widefat wp-list-table">
-			<thead>
-			<tr>
-				<th>Meta Key</th>
-				<th>Meta Value</th>
-				<th></th>
-			</tr>
-			</thead>
-			<tbody data-repeater-list="_wpcp_custom_meta_fields">
-			<tr data-repeater-item>
-				<td><input type="text" name="meta_key" placeholder="Meta Key" disabled/></td>
-				<td><input type="text" name="meta_value" placeholder="Meta Value" disabled/></td>
-				<td><input data-repeater-delete type="button" value="Delete" class="button" disabled/></td>
-			</tr>
-			</tbody>
-		</table>
+        <table class="striped widefat wp-list-table">
+            <thead>
+            <tr>
+                <th>Meta Key</th>
+                <th>Meta Value</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody data-repeater-list="_wpcp_custom_meta_fields">
+            <tr data-repeater-item>
+                <td><input type="text" name="meta_key" placeholder="Meta Key" disabled/></td>
+                <td><input type="text" name="meta_value" placeholder="Meta Value" disabled/></td>
+                <td><input data-repeater-delete type="button" value="Delete" class="button" disabled/></td>
+            </tr>
+            </tbody>
+        </table>
 
-		<button data-repeater-create type="button" class="button" disabled>Add New</button>
-	</div>
+        <button data-repeater-create type="button" class="button" disabled>Add New</button>
+    </div>
 	<?php
 }
 

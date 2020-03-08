@@ -12,7 +12,7 @@ function wpcp_handle_manual_campaign() {
 
 	$target = wpcp_get_post_meta( $campaign_id, '_campaign_target', 0 );
 	$posted = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
-
+	$edit_link = admin_url(sprintf('post.php?post=%d&action=edit', $campaign_id));
 
 	$campaign_post = get_post( $campaign_id );
 
@@ -25,7 +25,7 @@ function wpcp_handle_manual_campaign() {
 	if ( $posted >= $target ) {
 		wpcp_disable_campaign( $campaign_id );
 		wpcp_admin_notice( 'Reached target stopping campaign' );
-		wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
+		wp_safe_redirect( $edit_link );
 		exit();
 	}
 
@@ -33,7 +33,7 @@ function wpcp_handle_manual_campaign() {
 
 	if ( is_wp_error( $article_id ) ) {
 		wpcp_admin_notice( $article_id->get_error_message(), 'error' );
-		wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
+		wp_safe_redirect( $edit_link );
 		exit();
 	}
 
@@ -42,7 +42,7 @@ function wpcp_handle_manual_campaign() {
 	wpcp_admin_notice( $message );
 
 
-	wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
+	wp_safe_redirect( $edit_link );
 	exit();
 }
 
@@ -152,44 +152,45 @@ add_action( 'wp_ajax_wpcp_clear_logs', 'wpcp_clear_logs' );
 
 
 // TODO: Keyword Suggestion https://www.google.com/complete/search?q=w&cp=1&client=psy-ab&xssi=t&gs_ri=gws-wiz&hl=en-BD&authuser=0&psi=4oO9XIj8ONm89QOY2LCgDA.1555923942084&ei=4oO9XIj8ONm89QOY2LCgDA
-function wpcp_pro_get_keyword_suggestion() {
-	$word = $_REQUEST['input'];
+if ( ! function_exists( 'wpcp_pro_get_keyword_suggestion' ) ):
+	function wpcp_pro_get_keyword_suggestion() {
+		$word = $_REQUEST['input'];
 
-	$curl = new Curl\Curl();
-	$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
-	$curl->setOpt( CURLOPT_TIMEOUT, 30 );
-	$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
-	$curl->setOpt( CURLOPT_REFERER, 'http://www.bing.com/' );
-	$curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );
-	$curl->get( 'http://suggestqueries.google.com/complete/search', array(
-		'output'         => 'toolbar',
-		'hl=en&q=sultan' => 'en',
-		'q'              => $word,
-		'client'         => 'firefox',
-	) );
+		$curl = new Curl\Curl();
+		$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
+		$curl->setOpt( CURLOPT_TIMEOUT, 30 );
+		$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
+		$curl->setOpt( CURLOPT_REFERER, 'http://www.bing.com/' );
+		$curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );
+		$curl->get( 'http://suggestqueries.google.com/complete/search', array(
+			'output'         => 'toolbar',
+			'hl=en&q=sultan' => 'en',
+			'q'              => $word,
+			'client'         => 'firefox',
+		) );
 
-	if ( is_wp_error( $curl->isError() ) ) {
-		wp_send_json_success( [] );
-	}
-	$response   = $curl->getResponse();
-	$suggestion = [];
-	$list       = json_decode( $response );
-	if ( is_array( $list ) && isset( $list[1] ) ) {
-		$list = $list[1];
-	}
-	if ( is_array( $list ) && count( $list ) ) {
-		foreach ( $list as $item ) {
-			$str = preg_replace( '/[^a-z0-9.]+/i', '', $item );
-			// if(!empty($str)){
-			$suggestion[] = $item;
-			// }
+		if ( is_wp_error( $curl->isError() ) ) {
+			wp_send_json_success( [] );
 		}
+		$response   = $curl->getResponse();
+		$suggestion = [];
+		$list       = json_decode( $response );
+		if ( is_array( $list ) && isset( $list[1] ) ) {
+			$list = $list[1];
+		}
+		if ( is_array( $list ) && count( $list ) ) {
+			foreach ( $list as $item ) {
+				$str = preg_replace( '/[^a-z0-9.]+/i', '', $item );
+				// if(!empty($str)){
+				$suggestion[] = $item;
+				// }
+			}
+		}
+
+		$suggestion = array_unique( $suggestion );
+		wp_send_json_success( $suggestion );
 	}
-
-	$suggestion = array_unique( $suggestion );
-	wp_send_json_success( $suggestion );
-}
-
+endif;
 add_action( 'wp_ajax_wpcp_pro_get_keyword_suggestion', 'wpcp_pro_get_keyword_suggestion' );
 
 /**
@@ -253,7 +254,7 @@ add_action( 'wp_scheduled_delete', 'wpcp_wp_scheduled_delete' );
  * @since 1.2.0
  */
 
-function wpcp_campaign_reset_search_campaign () {
+function wpcp_campaign_reset_search_campaign() {
 	global $wpdb;
 	if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_campaign_reset_search' ) ) {
 		wp_die( __( 'No Cheating', 'wp-content-pilot' ) );
@@ -269,4 +270,5 @@ function wpcp_campaign_reset_search_campaign () {
 	$wpdb->query( $clear_query );
 	wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
 }
+
 add_action( 'admin_post_wpcp_campaign_reset_search', 'wpcp_campaign_reset_search_campaign' );

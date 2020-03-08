@@ -161,8 +161,17 @@ EOT;
 					continue;
 				}
 
+				//check if the clean title metabox is checked and perform title cleaning
+				$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
+
+				if ( 'on' == $check_clean_title ) {
+					$title = wpcp_clean_title( $readability->get_title() );
+				} else {
+					$title = html_entity_decode( $readability->get_title(), ENT_QUOTES );
+				}
+
 				$article = apply_filters( 'wpcp_feed_article', array(
-					'title'      => $readability->get_title(),
+					'title'      => $title,
 					'author'     => $readability->get_author(),
 					'image_url'  => $readability->get_image(),
 					'excerpt'    => $readability->get_excerpt(),
@@ -178,8 +187,9 @@ EOT;
 			}
 		}
 
-		$log_url = admin_url('/edit.php?post_type=wp_content_pilot&page=wpcp-logs');
-		return new WP_Error( 'campaign-error', __( sprintf('No feed article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
+		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
+
+		return new WP_Error( 'campaign-error', __( sprintf( 'No feed article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
 
 	}
 
@@ -205,14 +215,14 @@ EOT;
 		$links = [];
 		foreach ( $rss_items as $rss_item ) {
 			$url = esc_url( $rss_item->get_permalink() );
-			if ( stristr( $url, 'news.google' ) ) {
+			if ( stristr( $feed_link, 'news.google' ) ) {
 				$urlParts   = explode( 'url=', $url );
 				$correctUrl = $urlParts[1];
 				$url        = $correctUrl;
 			}
 
 			//Google alerts links correction
-			if ( stristr( $url, 'alerts/feeds' ) && stristr( $url, 'google' ) ) {
+			if ( stristr( $feed_link, 'alerts/feeds' ) && stristr( $feed_link, 'google' ) ) {
 				preg_match( '{url\=(.*?)[&]}', $url, $urlMatches );
 				$correctUrl = $urlMatches[1];
 
@@ -224,13 +234,22 @@ EOT;
 			$title = $rss_item->get_title();
 
 
+
+
+
 			if ( wpcp_is_duplicate_url( $url ) ) {
 				continue;
 			}
 
-			if ( wpcp_is_duplicate_title( $title ) ) {
-				continue;
+			//check duplicate title and don't publish the post with duplicate title
+			$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
+
+			if ( 'on' == $check_duplicate_title ) {
+				if ( wpcp_is_duplicate_title( $title ) ) {
+					continue;
+				}
 			}
+
 
 			$links[] = [
 				'url'     => esc_url( $url ),

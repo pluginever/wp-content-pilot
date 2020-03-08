@@ -95,7 +95,7 @@ EOT;
 			'name'        => '_youtube_channel_id',
 			'placeholder' => __( 'Example: PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
 			'label'       => __( 'Youtube Playlist ID', 'wp-content-pilot' ),
-			'tooltip'     => __( 'eg. channel id is "PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs" for https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
+			'tooltip'     => __( 'eg. playlist id is "PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs" for https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
 		) );
 
 		echo WPCP_HTML::select_input( array(
@@ -273,15 +273,15 @@ EOT;
 					continue;
 				}
 
-				$items = @$curl->response->items;
+				$items = $curl->response->items;
 				$item  = array_pop( $items );
 
-				$description = wpcp_remove_unauthorized_html( wpcp_remove_emoji( @$item->snippet->description ) );
+				$description = wpcp_remove_unauthorized_html( wpcp_remove_emoji( $item->snippet->description ) );
 
 				$image_url = '';
 				if ( ! empty( $item->snippet->thumbnails ) && is_object( $item->snippet->thumbnails ) ) {
 					$last_image = end( $item->snippet->thumbnails );
-					$image_url  = @ ! empty( $last_image->url ) ? esc_url( $last_image->url ) : '';
+					$image_url  = ! empty( $last_image->url ) ? esc_url( $last_image->url ) : '';
 				}
 
 				$transcript = '';
@@ -294,8 +294,17 @@ EOT;
 					$description = wpcp_hyperlink_text( $description );
 				}
 
+
+				$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
+
+				if ( 'on' == $check_clean_title ) {
+					$title = wpcp_clean_title( $link->title );
+				} else {
+					$title = html_entity_decode( $link->title, ENT_QUOTES );
+				}
+
 				$article = array(
-					'title'        => wpcp_clean_title( $link->title ),
+					'title'        => $title,
 					'author'       => $item->snippet->channelTitle,
 					'image_url'    => $image_url,
 					'excerpt'      => $description,
@@ -326,8 +335,9 @@ EOT;
 			}
 		}
 
-		$log_url = admin_url('/edit.php?post_type=wp_content_pilot&page=wpcp-logs');
-		return new WP_Error( 'campaign-error', __( sprintf('No youtube article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
+		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
+
+		return new WP_Error( 'campaign-error', __( sprintf( 'No youtube article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
 
 	}
 
@@ -416,16 +426,23 @@ EOT;
 			}
 
 			$url   = esc_url( 'https://www.youtube.com/watch?v=' . $video_id );
-			$title = @ ! empty( $item->snippet->title ) ? @sanitize_text_field( $item->snippet->title ) : '';
+			$title = ! empty( $item->snippet->title ) ? sanitize_text_field( $item->snippet->title ) : '';
 			if ( $title == 'Private video' ) {
 				continue;
 			}
 			if ( wpcp_is_duplicate_url( $url ) ) {
 				continue;
 			}
-			if ( wpcp_is_duplicate_title( $title ) ) {
-				continue;
+
+			//check duplicate title and don't publish the post with duplicate title
+			$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
+
+			if ( 'on' == $check_duplicate_title ) {
+				if ( wpcp_is_duplicate_title( $title ) ) {
+					continue;
+				}
 			}
+
 
 			$links[] = [
 				'title'   => wpcp_remove_emoji( $title ),
