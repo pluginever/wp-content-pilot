@@ -98,7 +98,7 @@ final class ContentPilot {
 		$this->define_tables();
 		$this->includes();
 		$this->init_hooks();
-		do_action( 'content_pilot_loaded' );
+		do_action( 'content_pilot__loaded' );
 	}
 
 	/**
