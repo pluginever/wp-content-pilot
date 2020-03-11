@@ -61,7 +61,31 @@ EOT;
 	 * @param $post
 	 */
 	public function add_campaign_option_fields( $post ) {
+		echo WPCP_HTML::start_double_columns();
 
+		echo WPCP_HTML::select_input( array(
+			'name'          => '_article_region',
+			'label'         => __( 'Select Region to search article', 'wp-content-pilot' ),
+			'options'       => $this->get_article_region(),
+			'default'       => 'en-US',
+			'wrapper_class' => 'pro',
+			'attrs'         => array(
+				'disabled' => 'disabled',
+			)
+		) );
+
+		echo WPCP_HTML::select_input( array(
+			'name'          => '_article_language',
+			'label'         => __( 'Select language to search article', 'wp-content-pilot' ),
+			'options'       => $this->get_article_language(),
+			'default'       => 'en',
+			'wrapper_class' => 'pro',
+			'attrs'         => array(
+				'disabled' => 'disabled',
+			)
+		) );
+
+		echo WPCP_HTML::end_double_columns();
 	}
 
 	/**
@@ -194,19 +218,24 @@ EOT;
 		$page_key    = $this->get_unique_key( $keyword );
 		$page_number = wpcp_get_post_meta( $campaign_id, $page_key, 0 );
 
+		$args = apply_filters( 'wpcp_article_search_args', array(
+			'q'       => urlencode( $keyword ),
+			'count'   => 10,
+			'mkt'     => 'en-US',
+			'setLang' => 'en',
+			'format'  => 'rss',
+			'first'   => ( $page_number * 10 ),
+		), $campaign_id );
 
 		$endpoint = add_query_arg( array(
-			'q'      => urlencode( $keyword ),
-			'count'  => 10,
-			'loc'    => 'en',
-			'format' => 'rss',
-			'first'  => ( $page_number * 10 ),
+			$args,
 		), 'https://www.bing.com/search' );
 
 		wpcp_logger()->debug( sprintf( 'Searching page url [%s]', $endpoint ), $campaign_id );
 
 		$curl     = $this->setup_curl();
 		$response = $curl->get( $endpoint );
+
 		if ( $curl->isError() ) {
 			wpcp_logger()->error( $curl->errorMessage, $campaign_id );
 			$this->deactivate_key( $campaign_id, $keyword );
@@ -230,7 +259,9 @@ EOT;
 			return new WP_Error( 'no-links-found', $message );
 		}
 
-		$items        = $response['channel']['item'];
+		$items = $response['channel']['item'];
+
+
 		$banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article' );
 		$banned_hosts = preg_split( '/\n/', $banned_hosts );
 		$banned_hosts = array_merge( $banned_hosts, array(
@@ -248,6 +279,7 @@ EOT;
 				if ( stristr( $item['link'], $banned_host ) ) {
 					continue;
 				}
+
 			}
 
 			if ( stristr( $item['link'], 'wikipedia' ) ) {
@@ -257,7 +289,7 @@ EOT;
 			//check duplicate title and don't publish the post with duplicate title
 			$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
 
-			if('on' == $check_duplicate_title) {
+			if ( 'on' == $check_duplicate_title ) {
 				if ( wpcp_is_duplicate_title( $item['title'] ) ) {
 					continue;
 				}
@@ -282,6 +314,126 @@ EOT;
 		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $links ), $total_inserted ), $campaign_id );
 
 		return true;
+	}
+
+	/**
+	 * Get all supported regions for searching article
+	 *
+	 * @return array
+	 * @since 1.1.1
+	 *
+	 */
+
+	public function get_article_region() {
+		$regions = array(
+			'es-AR' => 'Spanish Argentina',
+			'en-AU' => 'English Australia',
+			'de-AT' => 'German Austria',
+			'nl-BE' => 'Dutch Belgium',
+			'fr-BE' => 'French Belgium',
+			'pt-BR' => 'Portuguese Brazil',
+			'en-CA' => 'English Canada',
+			'fr-CA' => 'French Canada',
+			'es-CL' => 'Spanish Chile',
+			'da-DK' => 'Danish Denmark',
+			'fi-FI' => 'Finnish Finland',
+			'fr-FR' => 'French France',
+			'de-DE' => 'German Germany',
+			'zh-HK' => 'Chinese Hong Kong',
+			'en-IN' => 'English India',
+			'en-ID' => 'English Indonesia',
+			'it-IT' => 'Italian Italy',
+			'ja-JP' => 'Japanese Japan',
+			'ko-KR' => 'Korean Korea',
+			'en-MY' => 'English Malaysia',
+			'es-MX' => 'Spanish Mexico',
+			'nl-NL' => 'Dutch Netherlands',
+			'en-NZ' => 'English New Zealand',
+			'no-NO' => 'Norwegian Norway',
+			'zh-CN' => 'Chinese China',
+			'pl-PL' => 'Polish Poland',
+			'en-PH' => 'English Philippines',
+			'ru-RU' => 'Russian Russia',
+			'en-ZA' => 'English South Africa',
+			'es-ES' => 'Spanish Spain',
+			'sv-SE' => 'Swedish Sweden',
+			'fr-CH' => 'French Switzerland',
+			'de-CH' => 'German Switzerland',
+			'zh-TW' => 'Chinese Taiwan',
+			'tr-TR' => 'Turkish Turkey',
+			'en-GB' => 'English United Kingdom',
+			'en-US' => 'English United States',
+			'es-US' => 'Spanish United States',
+
+
+		);
+
+		return $regions;
+	}
+
+	/**
+	 * Get all supported languages for searching article
+	 *
+	 * @return array
+	 * @since 1.1.1
+	 *
+	 */
+	public function get_article_language() {
+
+		$languages = array(
+			'ar'      => 'Arabic',
+			'eu'      => 'Basque',
+			'bn'      => "Bengali",
+			'bg'      => 'Bulgarian',
+			'ca'      => 'Catalan',
+			'zh-hans' => 'Simplified Chinese',
+			'zh-hant' => 'Traditional Chinese',
+			'hr'      => 'Croatian',
+			'cs'      => 'Czech',
+			'da'      => 'Danish',
+			'nl'      => 'Dutch',
+			'en'      => 'English',
+			'en-gb'   => 'English - United Kingdom',
+			'et'      => 'Estonian',
+			'fi'      => 'Finish',
+			'fr'      => 'French',
+			'gl'      => 'Galician',
+			'de'      => 'German',
+			'gu'      => 'Gujrati',
+			'he'      => 'Hebrew',
+			'hi'      => 'Hindi',
+			'hu'      => 'Hungarian',
+			'is'      => 'Icelandic',
+			'it'      => 'Italian',
+			'jp'      => 'Japanese',
+			'kn'      => 'Kannada',
+			'ko'      => 'Korean',
+			'lv'      => 'Latvian',
+			'lt'      => 'Lithunian',
+			'ms'      => 'Malay',
+			'ml'      => 'Malayalam',
+			'mr'      => 'Marathi',
+			'nb'      => 'Norwegian',
+			'pl'      => 'Polish',
+			'pt-br'   => 'Portugese Brazil',
+			'pt-pt'   => 'Portugese Portugal',
+			'pa'      => 'Punjabi',
+			'ro'      => 'Romanian',
+			'ru'      => 'Russian',
+			'sr'      => 'Serbian',
+			'sk'      => 'Slovak',
+			'sl'      => 'Slovenian',
+			'es'      => 'Spanish',
+			'sv'      => 'Swedish',
+			'ta'      => 'Tamil',
+			'te'      => 'Telegu',
+			'th'      => 'Thai',
+			'tr'      => 'Turkish',
+			'uk'      => 'Ukrainian',
+			'vi'      => 'Vietnamese',
+		);
+
+		return $languages;
 	}
 
 
