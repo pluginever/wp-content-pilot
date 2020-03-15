@@ -186,7 +186,7 @@ EOT;
 
 
 	/**
-	 * @param $campaign_id, $keywords
+	 * @param $campaign_id , $keywords
 	 *
 	 * @return mixed|void
 	 * @throws ErrorException
@@ -196,7 +196,7 @@ EOT;
 
 		$token                = wpcp_get_settings( 'token', 'wpcp_settings_envato', '' );
 		$envato_impact_radius = wpcp_get_settings( 'envato_impact_radius', 'wpcp_settings_envato', '' );
-		if ( empty( $token )  ) {
+		if ( empty( $token ) ) {
 			$notice = __( 'The Envato api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot' );
 
 			wpcp_logger()->error( $notice, $campaign_id );
@@ -205,14 +205,13 @@ EOT;
 			return new WP_Error( 'missing-data', $notice );
 		}
 
-		if( empty( $envato_impact_radius ) ) {
-			$affiliate_url = admin_url('/edit.php?post_type=wp_content_pilot&page=wpcp-settings#wpcp_settings_envato');
+		if ( empty( $envato_impact_radius ) ) {
+			$affiliate_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-settings#wpcp_settings_envato' );
 
-			$warning = sprintf("The Impact  Radius affiliate url is not set. Set it from <a href='%s'>here</a>", $affiliate_url);
+			$warning = sprintf( "The Impact  Radius affiliate url is not set. Set it from <a href='%s'>here</a>", $affiliate_url );
 
 			wpcp_admin_notice( $warning );
 		}
-
 
 
 		foreach ( $keywords as $keyword ) {
@@ -260,7 +259,8 @@ EOT;
 			if ( $curl->isError() ) {
 				$message = sprintf( __( 'Envato api request failed response [ %s ]', 'wp-content-pilot' ), $curl->getResponse()->error );
 				wpcp_logger()->error( $message, $campaign_id );
-				wpcp_disable_campaign( $campaign_id);
+				wpcp_disable_campaign( $campaign_id );
+
 				return new WP_Error( 'missing-data', $message );
 			}
 
@@ -274,16 +274,17 @@ EOT;
 			}
 
 			foreach ( $response->matches as $item ) {
-				if ( wpcp_is_duplicate_url( $item->url ) ) {
-					wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-					continue;
-				}
 
 				//check duplicate title and don't publish the post with duplicate title
-				$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
+				$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
 
-				if ( 'on' == $check_duplicate_title ) {
+				if ( 'on' == $skip_duplicate_title ) {
 					if ( wpcp_is_duplicate_title( $item->name ) ) {
+						wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
+						continue;
+					}
+
+					if ( wpcp_is_duplicate_url( $item->url ) ) {
 						wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 						continue;
 					}
@@ -344,15 +345,16 @@ EOT;
 					'keyword' => $keyword,
 					'title'   => $item->name,
 					'url'     => $item->url,
-					'camp_id'      => $campaign_id,
+					'camp_id' => $campaign_id,
 				) );
 
 				return $article;
 			}
 		}
 
-		$log_url = admin_url('/edit.php?post_type=wp_content_pilot&page=wpcp-logs');
-		return new WP_Error( 'campaign-error', __( sprintf('No envato article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
+		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
+
+		return new WP_Error( 'campaign-error', __( sprintf( 'No envato article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
 	}
 
 	/**

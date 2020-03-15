@@ -2326,46 +2326,49 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 		}
 	}
 
-	/**
-	 * @param $str
-	 * @param bool $lowercase
-	 * @param bool $forceTagsClosed
-	 * @param string $target_charset
-	 * @param bool $stripRN
-	 * @param string $defaultBRText
-	 * @param string $defaultSpanText
-	 *
-	 * @return simple_html_dom
-	 * @since 1.2.0
-	 */
-	function wpcp_str_get_html(
-		$str,
-		$lowercase = true,
-		$forceTagsClosed = true,
-		$target_charset = DEFAULT_TARGET_CHARSET,
-		$stripRN = true,
-		$defaultBRText = DEFAULT_BR_TEXT,
-		$defaultSpanText = DEFAULT_SPAN_TEXT
-	) {
-		$dom = new simple_html_dom(
-			null,
-			$lowercase,
-			$forceTagsClosed,
-			$target_charset,
-			$stripRN,
-			$defaultBRText,
-			$defaultSpanText
-		);
+	function wpcp_dump_html_tree( $node, $show_attr = true, $deep = 0 ) {
+		$node->dump( $node );
+	}
+endif;
+
+/**
+ * @param $str
+ * @param bool $lowercase
+ * @param bool $forceTagsClosed
+ * @param string $target_charset
+ * @param bool $stripRN
+ * @param string $defaultBRText
+ * @param string $defaultSpanText
+ *
+ * @return simple_html_dom
+ * @since 1.2.0
+ */
+function wpcp_str_get_html(
+	$str,
+	$lowercase = true,
+	$forceTagsClosed = true,
+	$target_charset = DEFAULT_TARGET_CHARSET,
+	$stripRN = true,
+	$defaultBRText = DEFAULT_BR_TEXT,
+	$defaultSpanText = DEFAULT_SPAN_TEXT
+) {
+	$dom = new simple_html_dom(
+		null,
+		$lowercase,
+		$forceTagsClosed,
+		$target_charset,
+		$stripRN,
+		$defaultBRText,
+		$defaultSpanText
+	);
 
 //		if ( empty( $str ) || strlen( $str ) > MAX_FILE_SIZE ) {
 //			$dom->clear();
 //			return false;
 //		}
 
-		return $dom->load( $str, $lowercase, $stripRN );
-	}
+	return $dom->load( $str, $lowercase, $stripRN );
+}
 
-	function wpcp_dump_html_tree( $node, $show_attr = true, $deep = 0 ) {
-		$node->dump( $node );
-	}
-endif;
+
+

@@ -236,19 +236,15 @@ EOT;
 
 			$title = $rss_item->get_title();
 
-
-
-
-
-			if ( wpcp_is_duplicate_url( $url ) ) {
-				continue;
-			}
-
 			//check duplicate title and don't publish the post with duplicate title
-			$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
+			$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
 
-			if ( 'on' == $check_duplicate_title ) {
+			if ( 'on' == $skip_duplicate_title ) {
 				if ( wpcp_is_duplicate_title( $title ) ) {
+					continue;
+				}
+
+				if ( wpcp_is_duplicate_url( $url ) ) {
 					continue;
 				}
 			}

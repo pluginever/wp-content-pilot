@@ -182,7 +182,6 @@ EOT;
 					continue;
 				}
 
-
 				$article = array(
 					'title'      => $readability->get_title(),
 					'author'     => $readability->get_author(),
@@ -287,18 +286,18 @@ EOT;
 			}
 
 			//check duplicate title and don't publish the post with duplicate title
-			$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
+			$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
 
-			if ( 'on' == $check_duplicate_title ) {
+			if ( 'on' == $skip_duplicate_title ) {
 				if ( wpcp_is_duplicate_title( $item['title'] ) ) {
+					continue;
+				}
+
+				if ( wpcp_is_duplicate_url( $item['link'] ) ) {
 					continue;
 				}
 			}
 
-
-			if ( wpcp_is_duplicate_url( $item['link'] ) ) {
-				continue;
-			}
 
 			$links[] = [
 				'url'     => esc_url( $item['link'] ),
