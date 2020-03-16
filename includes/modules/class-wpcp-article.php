@@ -61,18 +61,6 @@ EOT;
 	 * @param $post
 	 */
 	public function add_campaign_option_fields( $post ) {
-		//echo WPCP_HTML::start_double_columns();
-
-//		echo WPCP_HTML::select_input( array(
-//			'name'          => '_article_region',
-//			'label'         => __( 'Select Region to search article', 'wp-content-pilot' ),
-//			'options'       => $this->get_article_region(),
-//			'default'       => 'en-US',
-//			'wrapper_class' => 'pro',
-//			'attrs'         => array(
-//				'disabled' => 'disabled',
-//			)
-//		) );
 
 		echo WPCP_HTML::select_input( array(
 			'name'          => '_article_language',
@@ -85,7 +73,6 @@ EOT;
 			)
 		) );
 
-		//echo WPCP_HTML::end_double_columns();
 	}
 
 	/**
@@ -182,8 +169,17 @@ EOT;
 					continue;
 				}
 
+				//check if the clean title metabox is checked and perform title cleaning
+				$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
+
+				if ( 'on' == $check_clean_title ) {
+					$title = wpcp_clean_title( $readability->get_title() );
+				} else {
+					$title = html_entity_decode( $readability->get_title(), ENT_QUOTES );
+				}
+
 				$article = array(
-					'title'      => $readability->get_title(),
+					'title'      => $title,
 					'author'     => $readability->get_author(),
 					'image_url'  => $readability->get_image(),
 					'excerpt'    => $readability->get_excerpt(),
@@ -220,7 +216,6 @@ EOT;
 		$args = apply_filters( 'wpcp_article_search_args', array(
 			'q'       => urlencode( $keyword ),
 			'count'   => 10,
-//			'mkt'     => 'en-US',
 			'loc' => 'en',
 			'format'  => 'rss',
 			'first'   => ( $page_number * 10 ),
