@@ -146,8 +146,7 @@ EOT;
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
 				$curl = $this->setup_curl();
-				$curl->setOpt( CURLOPT_HTTPHEADER, 'accept-encoding: utf-8' );
-				$curl->setOpt( CURLOPT_ENCODING, '' );
+				$curl->setHeader( 'accept-encoding', 'utf-8' );
 				$curl->get( $link->url );
 
 
