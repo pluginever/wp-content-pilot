@@ -95,7 +95,7 @@ EOT;
 			'name'        => '_youtube_channel_id',
 			'placeholder' => __( 'Example: PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
 			'label'       => __( 'Youtube Playlist ID', 'wp-content-pilot' ),
-			'tooltip'     => __( 'eg. playlist id is "PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs" for https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ', 'wp-content-pilot' ),
+			'tooltip'     => __( 'eg. playlist id is PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
 		) );
 
 		echo WPCP_HTML::select_input( array(
@@ -430,19 +430,19 @@ EOT;
 			if ( $title == 'Private video' ) {
 				continue;
 			}
-			if ( wpcp_is_duplicate_url( $url ) ) {
-				continue;
-			}
 
 			//check duplicate title and don't publish the post with duplicate title
-			$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
+			$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
 
-			if ( 'on' == $check_duplicate_title ) {
+			if ( 'on' == $skip_duplicate_title ) {
 				if ( wpcp_is_duplicate_title( $title ) ) {
 					continue;
 				}
-			}
 
+				if ( wpcp_is_duplicate_url( $url ) ) {
+					continue;
+				}
+			}
 
 			$links[] = [
 				'title'   => wpcp_remove_emoji( $title ),

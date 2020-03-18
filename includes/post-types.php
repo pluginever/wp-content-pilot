@@ -73,7 +73,7 @@ function wpcp_post_types_messages( $messages ) {
 		4  => __( 'Campaign updated.', 'wp-content-pilot' ),
 		/* translators: %s: date and time of the revision */
 		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Campaign restored to revision from %s', 'wp-content-pilot' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6  => __( 'Campaign created.', 'wp-content-pilot' ),
+		6  => __( 'Campaign updated.', 'wp-content-pilot' ),
 		7  => __( 'Campaign saved.', 'wp-content-pilot' ),
 		8  => __( 'Campaign submitted.', 'wp-content-pilot' ),
 		9  => sprintf( __( 'Campaign scheduled for: <strong>%1$s</strong>.', 'wp-content-pilot' ),

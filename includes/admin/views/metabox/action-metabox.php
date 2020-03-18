@@ -26,6 +26,7 @@ $can_publish = true;
 		'attrs'   => array(
 			'required' => 'required',
 		),
+		'tooltip' => __( 'For better precision use keyboard arrows ', 'wp-content-pilot' ),
 
 	) );
 
@@ -35,6 +36,7 @@ $can_publish = true;
 		'default' => 10,
 		'min'     => '1',
 		'max'     => '100',
+		'tooltip' => __( 'For better precision use keyboard arrows ', 'wp-content-pilot' ),
 	) );
 
 	echo WPCP_HTML::select_input( array(
