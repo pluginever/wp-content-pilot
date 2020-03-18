@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.2.1\n"
+"Project-Id-Version: WP Content Pilot 1.2.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2020-03-08 05:52:43+00:00\n"
+"POT-Creation-Date: 2020-03-18 10:58:28+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -491,7 +491,7 @@ msgid "Select a campaign to start"
 msgstr ""
 
 #: includes/admin/metabox-functions.php:22
-#: includes/admin/views/metabox/action-metabox.php:59
+#: includes/admin/views/metabox/action-metabox.php:61
 msgid "Campaign Status"
 msgstr ""
 
@@ -594,43 +594,48 @@ msgstr ""
 msgid "Campaign Target"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:34
+#: includes/admin/views/metabox/action-metabox.php:29
+#: includes/admin/views/metabox/action-metabox.php:39
+msgid "For better precision use keyboard arrows "
+msgstr ""
+
+#: includes/admin/views/metabox/action-metabox.php:35
 msgid "Campaign Frequency"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:41
+#: includes/admin/views/metabox/action-metabox.php:43
 msgid "Frequency Unit"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:44
+#: includes/admin/views/metabox/action-metabox.php:46
 msgid "Minutes"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:45
+#: includes/admin/views/metabox/action-metabox.php:47
 msgid "Hours"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:46
+#: includes/admin/views/metabox/action-metabox.php:48
 msgid "Days"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:69
+#: includes/admin/views/metabox/action-metabox.php:71
 msgid "Move to Trash"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:71
+#: includes/admin/views/metabox/action-metabox.php:73
 msgid "Trash"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:79
+#: includes/admin/views/metabox/action-metabox.php:81
 msgid "Reset"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:84
+#: includes/admin/views/metabox/action-metabox.php:86
 msgid "Update"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:87
+#: includes/admin/views/metabox/action-metabox.php:89
 msgid "Update Campaign"
 msgstr ""
 
@@ -1430,27 +1435,31 @@ msgstr ""
 msgid "Source link"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:84
+#: includes/modules/class-wpcp-article.php:67
+msgid "Select language to search article"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:95
 msgid "Article Settings"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:100
+#: includes/modules/class-wpcp-article.php:111
 msgid "Banned Hosts"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:101
+#: includes/modules/class-wpcp-article.php:112
 msgid ""
 "Articles from the above hosts will be rejected. put single url/host per "
 "line."
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:102
+#: includes/modules/class-wpcp-article.php:113
 msgid ""
 "example.com \n"
 " example1.com"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:226
+#: includes/modules/class-wpcp-article.php:249
 msgid ""
 "Could not find any links from search engine, deactivating keyword for an "
 "hour."
@@ -1600,7 +1609,7 @@ msgstr ""
 msgid "The Envato api key is not set so the campaign won't run, disabling campaign."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:261
+#: includes/modules/class-wpcp-envato.php:260
 msgid "Envato api request failed response [ %s ]"
 msgstr ""
 
@@ -1624,7 +1633,7 @@ msgstr ""
 msgid "Feed fetch full content"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:212
+#: includes/modules/class-wpcp-feed.php:214
 msgid "Could not find any article, waiting..."
 msgstr ""
 
@@ -1760,9 +1769,7 @@ msgid "Youtube Playlist ID"
 msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:98
-msgid ""
-"eg. playlist id is \"PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs\" for "
-"https://www.youtube.com/channel/UCIQOOX3ReApm-KTZ66eMVzQ"
+msgid "eg. playlist id is PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs"
 msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:103
@@ -1878,6 +1885,7 @@ msgid "Campaigns of Wordpress Content Pilot"
 msgstr ""
 
 #: includes/post-types.php:70 includes/post-types.php:73
+#: includes/post-types.php:76
 msgid "Campaign updated."
 msgstr ""
 
@@ -1892,10 +1900,6 @@ msgstr ""
 #: includes/post-types.php:75
 #. translators: %s: date and time of the revision
 msgid "Campaign restored to revision from %s"
-msgstr ""
-
-#: includes/post-types.php:76
-msgid "Campaign created."
 msgstr ""
 
 #: includes/post-types.php:77

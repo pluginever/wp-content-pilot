@@ -198,6 +198,11 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.2.2 -> March 18, 2020 =
+* [Fix] title cleaner is not working
+* [Fix] Skip post with title is not working
+* 
+
 = v1.2.1 -> March 8, 2020 =
 * [Fix] Google alert feed links not working
 * [Fix] Campaign not redirecting after post publish
@@ -208,7 +213,7 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 
 = v1.2.0 -> February 25, 2020 =
 * [Enhance] New UI for better accessibility and user experience
-* [Enhance] Module classes rewritten for better performace
+* [Enhance] Module classes rewritten for better performance
 
 = v1.1.4 -> January 2, 2020 =
 * [Enhance] API key masked so nobody cant see saved API keys
