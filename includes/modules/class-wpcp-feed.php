@@ -147,6 +147,7 @@ EOT;
 
 				$curl = $this->setup_curl();
 				$curl->setHeader( 'accept-encoding', 'utf-8' );
+				$curl->setOpt( CURLOPT_ENCODING, '' );
 				$curl->get( $link->url );
 
 
