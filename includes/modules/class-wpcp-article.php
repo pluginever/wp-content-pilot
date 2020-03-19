@@ -62,16 +62,28 @@ EOT;
 	 */
 	public function add_campaign_option_fields( $post ) {
 
+		echo WPCP_HTML::start_double_columns();
 		echo WPCP_HTML::select_input( array(
-			'name'          => '_article_language',
-			'label'         => __( 'Select language to search article', 'wp-content-pilot' ),
-			'options'       => $this->get_article_language(),
-			'default'       => 'en',
+			'name'          => '_article_region',
+			'label'         => __( 'Select region to search article', 'wp-content-pilot' ),
+			'options'       => $this->get_article_region(),
+			'default'       => 'en-US',
 			'wrapper_class' => 'pro',
 			'attrs'         => array(
 				'disabled' => 'disabled',
 			)
 		) );
+//		echo WPCP_HTML::select_input( array(
+//			'name'          => '_article_language',
+//			'label'         => __( 'Select language to search article', 'wp-content-pilot' ),
+//			'options'       => $this->get_article_language(),
+//			'default'       => 'en',
+//			'wrapper_class' => 'pro',
+//			'attrs'         => array(
+//				'disabled' => 'disabled',
+//			)
+//		) );
+		echo WPCP_HTML::end_double_columns();
 
 	}
 
@@ -214,12 +226,14 @@ EOT;
 		$page_number = wpcp_get_post_meta( $campaign_id, $page_key, 0 );
 
 		$args = apply_filters( 'wpcp_article_search_args', array(
-			'q'       => urlencode( $keyword ),
-			'count'   => 10,
-			'loc' => 'en',
-			'format'  => 'rss',
-			'first'   => ( $page_number * 10 ),
+			'q'      => urlencode( $keyword ),
+			'count'  => 10,
+//			'loc'    => 'en',
+			'mkt'    => 'en-US',
+			'format' => 'rss',
+			'first'  => ( $page_number * 10 ),
 		), $campaign_id );
+
 
 		$endpoint = add_query_arg( array(
 			$args,
@@ -254,6 +268,8 @@ EOT;
 		}
 
 		$items = $response['channel']['item'];
+
+
 
 
 		$banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article' );
@@ -300,6 +316,8 @@ EOT;
 				'keyword' => $keyword,
 				'camp_id' => $campaign_id
 			];
+
+
 		}
 
 		$total_inserted = $this->inset_links( $links );
