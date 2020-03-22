@@ -67,7 +67,7 @@ EOT;
 			'name'          => '_article_region',
 			'label'         => __( 'Select region to search article', 'wp-content-pilot' ),
 			'options'       => $this->get_article_region(),
-			'default'       => 'en-US',
+			'default'       => 'global',
 			'wrapper_class' => 'pro',
 			'attrs'         => array(
 				'disabled' => 'disabled',
@@ -228,8 +228,7 @@ EOT;
 		$args = apply_filters( 'wpcp_article_search_args', array(
 			'q'      => urlencode( $keyword ),
 			'count'  => 10,
-//			'loc'    => 'en',
-			'mkt'    => 'en-US',
+			'loc'    => 'en',
 			'format' => 'rss',
 			'first'  => ( $page_number * 10 ),
 		), $campaign_id );
@@ -338,6 +337,7 @@ EOT;
 
 	public function get_article_region() {
 		$regions = array(
+			'global' => 'Global Search',
 			'es-AR' => 'Spanish Argentina',
 			'en-AU' => 'English Australia',
 			'de-AT' => 'German Austria',
