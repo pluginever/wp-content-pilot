@@ -269,8 +269,6 @@ EOT;
 		$items = $response['channel']['item'];
 
 
-
-
 		$banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article' );
 		$banned_hosts = preg_split( '/\n/', $banned_hosts );
 		$banned_hosts = array_merge( $banned_hosts, array(
@@ -294,6 +292,20 @@ EOT;
 			if ( stristr( $item['link'], 'wikipedia' ) ) {
 				continue;
 			}
+
+			//check global settings for skip url with duplicate title or url
+			$skip_global = wpcp_get_settings( 'skip_duplicate_url', 'wpcp_settings_misc', '' );
+
+			if ( 'on' == $skip_global ) {
+				if ( wpcp_is_duplicate_title( $item['title'] ) ) {
+					continue;
+				}
+
+				if ( wpcp_is_duplicate_url( $item['link'] ) ) {
+					continue;
+				}
+			}
+
 
 			//check duplicate title and don't publish the post with duplicate title
 			$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
@@ -338,44 +350,44 @@ EOT;
 	public function get_article_region() {
 		$regions = array(
 			'global' => 'Global Search',
-			'es-AR' => 'Spanish Argentina',
-			'en-AU' => 'English Australia',
-			'de-AT' => 'German Austria',
-			'nl-BE' => 'Dutch Belgium',
-			'fr-BE' => 'French Belgium',
-			'pt-BR' => 'Portuguese Brazil',
-			'en-CA' => 'English Canada',
-			'fr-CA' => 'French Canada',
-			'es-CL' => 'Spanish Chile',
-			'da-DK' => 'Danish Denmark',
-			'fi-FI' => 'Finnish Finland',
-			'fr-FR' => 'French France',
-			'de-DE' => 'German Germany',
-			'zh-HK' => 'Chinese Hong Kong',
-			'en-IN' => 'English India',
-			'en-ID' => 'English Indonesia',
-			'it-IT' => 'Italian Italy',
-			'ja-JP' => 'Japanese Japan',
-			'ko-KR' => 'Korean Korea',
-			'en-MY' => 'English Malaysia',
-			'es-MX' => 'Spanish Mexico',
-			'nl-NL' => 'Dutch Netherlands',
-			'en-NZ' => 'English New Zealand',
-			'no-NO' => 'Norwegian Norway',
-			'zh-CN' => 'Chinese China',
-			'pl-PL' => 'Polish Poland',
-			'en-PH' => 'English Philippines',
-			'ru-RU' => 'Russian Russia',
-			'en-ZA' => 'English South Africa',
-			'es-ES' => 'Spanish Spain',
-			'sv-SE' => 'Swedish Sweden',
-			'fr-CH' => 'French Switzerland',
-			'de-CH' => 'German Switzerland',
-			'zh-TW' => 'Chinese Taiwan',
-			'tr-TR' => 'Turkish Turkey',
-			'en-GB' => 'English United Kingdom',
-			'en-US' => 'English United States',
-			'es-US' => 'Spanish United States',
+			'es-AR'  => 'Spanish Argentina',
+			'en-AU'  => 'English Australia',
+			'de-AT'  => 'German Austria',
+			'nl-BE'  => 'Dutch Belgium',
+			'fr-BE'  => 'French Belgium',
+			'pt-BR'  => 'Portuguese Brazil',
+			'en-CA'  => 'English Canada',
+			'fr-CA'  => 'French Canada',
+			'es-CL'  => 'Spanish Chile',
+			'da-DK'  => 'Danish Denmark',
+			'fi-FI'  => 'Finnish Finland',
+			'fr-FR'  => 'French France',
+			'de-DE'  => 'German Germany',
+			'zh-HK'  => 'Chinese Hong Kong',
+			'en-IN'  => 'English India',
+			'en-ID'  => 'English Indonesia',
+			'it-IT'  => 'Italian Italy',
+			'ja-JP'  => 'Japanese Japan',
+			'ko-KR'  => 'Korean Korea',
+			'en-MY'  => 'English Malaysia',
+			'es-MX'  => 'Spanish Mexico',
+			'nl-NL'  => 'Dutch Netherlands',
+			'en-NZ'  => 'English New Zealand',
+			'no-NO'  => 'Norwegian Norway',
+			'zh-CN'  => 'Chinese China',
+			'pl-PL'  => 'Polish Poland',
+			'en-PH'  => 'English Philippines',
+			'ru-RU'  => 'Russian Russia',
+			'en-ZA'  => 'English South Africa',
+			'es-ES'  => 'Spanish Spain',
+			'sv-SE'  => 'Swedish Sweden',
+			'fr-CH'  => 'French Switzerland',
+			'de-CH'  => 'German Switzerland',
+			'zh-TW'  => 'Chinese Taiwan',
+			'tr-TR'  => 'Turkish Turkey',
+			'en-GB'  => 'English United Kingdom',
+			'en-US'  => 'English United States',
+			'es-US'  => 'Spanish United States',
 
 
 		);

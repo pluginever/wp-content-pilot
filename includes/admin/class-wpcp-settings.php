@@ -78,6 +78,13 @@ class WPCP_Settings {
 					'type'    => 'checkbox',
 					'default' => ''
 				),
+				array(
+					'name'    => 'skip_duplicate_url',
+					'label'   => __( 'Never post duplicate title', 'wp-content-pilot' ),
+					'desc'    => __( 'Skip post having duplicate url that are already in the database and already published posts.', 'wp-content-pilot' ),
+					'type'    => 'checkbox',
+					'default' => ''
+				),
 			),
 		);
 

@@ -275,6 +275,21 @@ EOT;
 
 			foreach ( $response->matches as $item ) {
 
+				//check global settings for skip url with duplicate title or url
+				$skip_global = wpcp_get_settings( 'skip_duplicate_url', 'wpcp_settings_misc', '' );
+
+				if ( 'on' == $skip_global ) {
+					if ( wpcp_is_duplicate_title( $item->name ) ) {
+						wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
+						continue;
+					}
+
+					if ( wpcp_is_duplicate_url( $item->url ) ) {
+						wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
+						continue;
+					}
+				}
+
 				//check duplicate title and don't publish the post with duplicate title
 				$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
 
