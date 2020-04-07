@@ -199,10 +199,20 @@ EOT;
 
 	public function discover_links( $feed_link, $campaign_id ) {
 		include_once( ABSPATH . WPINC . '/feed.php' );
+
+		// If force feed
+
 		$rss = fetch_feed( $feed_link );
 
 		if ( is_wp_error( $rss ) ) {
 			wpcp_logger()->warning( sprintf( 'Failed fetching feeds [%s]', $rss->get_error_message() ), $campaign_id );
+
+			if(! function_exists('wpcp_automatic_force_feed')){
+				add_action('wp_feed_options', 'wpcp_automatic_force_feed', 10, 1);
+				function wp_automatic_force_feed($rss) {
+					$rss->force_feed(true);
+				}
+			}
 
 			return $rss;
 		}

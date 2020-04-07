@@ -411,6 +411,7 @@ abstract class WPCP_Module {
 
 	/**
 	 * @return \Curl\Curl
+	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	protected function setup_curl() {
