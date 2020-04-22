@@ -165,6 +165,7 @@ EOT;
 
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
+
 				$curl = $this->setup_curl();
 				$curl->get( $link->url );
 
@@ -189,6 +190,7 @@ EOT;
 				} else {
 					$title = html_entity_decode( $readability->get_title(), ENT_QUOTES );
 				}
+
 
 				$article = array(
 					'title'      => $title,
@@ -219,6 +221,7 @@ EOT;
 	 * @param $keyword
 	 *
 	 * @return bool|mixed|WP_Error
+	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	protected function discover_links( $campaign_id, $keyword ) {
@@ -293,10 +296,9 @@ EOT;
 				continue;
 			}
 
-			//check global settings for skip url with duplicate title or url
-			$skip_global = wpcp_get_settings( 'skip_duplicate_url', 'wpcp_settings_misc', '' );
+			$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
 
-			if ( 'on' == $skip_global ) {
+			if ( 'on' == $skip_duplicate_title ) {
 				if ( wpcp_is_duplicate_title( $item['title'] ) ) {
 					continue;
 				}
@@ -306,18 +308,9 @@ EOT;
 				}
 			}
 
-
-			//check duplicate title and don't publish the post with duplicate title
-			$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
-
-			if ( 'off' == $skip_global && 'on' == $skip_duplicate_title ) {
-				if ( wpcp_is_duplicate_title( $item['title'] ) ) {
-					continue;
-				}
-
-				if ( wpcp_is_duplicate_url( $item['link'] ) ) {
-					continue;
-				}
+			$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $item['title'] );
+			if ( $skip ) {
+				continue;
 			}
 
 

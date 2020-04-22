@@ -500,3 +500,21 @@ function wpcp_content_contains_word( $content, $word ) {
 
 	return false;
 }
+
+/**
+ * Trigger skip duplicate title campaigns
+ *
+ *
+ * @param $skip
+ * @param $title
+ *
+ * @return bool
+ * @since 1.2.0
+ */
+function wpcp_maybe_skip_duplicate_title($skip, $title){
+	if('on' == $skip  ){
+		return wpcp_is_duplicate_title( $title ) == true;
+	}
+	return $skip;
+}
+add_filter('wpcp_skip_duplicate_title', 'wpcp_maybe_skip_duplicate_title',10,2);
