@@ -22,6 +22,9 @@ class WPCP_Promotion {
 //		if ( time() > strtotime('30-4-2018') ) {
 //			return;
 //		}
+		if(defined( 'WPCP_PRO_VERSION')){
+			return ;
+		}
 
 		// check if it has already been dismissed
 		$hide_notice = get_option( 'wpcp_pro_free2pro_promotion_1_2_0', 'no' );
