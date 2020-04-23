@@ -127,7 +127,8 @@ final class ContentPilot {
 		global $wpdb;
 		$tables = array(
 			'wpcp_links',
-			'wpcp_logs'
+			'wpcp_logs',
+			'wpcp_items',
 		);
 		foreach ( $tables as $table ) {
 			$wpdb->$table   = $wpdb->prefix . $table;
