@@ -250,17 +250,23 @@ final class ContentPilot {
 	}
 
 	/**
-	 * @return bool
+	 * @return void
 	 */
 	public function check_if_cron_running() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return false;
+		if (  current_user_can( 'manage_options' ) ) {
+//			$status = wpcp_check_cron_status();
+//			if ( is_wp_error( $status ) ) {
+//			$this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
+//			}
 		}
+	}
 
-		//$status = wpcp_check_cron_status();
-		//if ( is_wp_error( $status ) ) {
-		//$this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
-		//}
+	/**
+	 * @since 1.2.3
+	 * @return string
+	 */
+	public function get_version(){
+		return $this->version;
 	}
 
 	/**
@@ -274,6 +280,9 @@ final class ContentPilot {
 	}
 }
 
+/**
+ * @return ContentPilot
+ */
 function content_pilot() {
 	return ContentPilot::instance();
 }

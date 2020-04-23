@@ -296,16 +296,8 @@ EOT;
 				continue;
 			}
 
-			$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
-
-			if ( 'on' == $skip_duplicate_title ) {
-				if ( wpcp_is_duplicate_title( $item['title'] ) ) {
-					continue;
-				}
-
-				if ( wpcp_is_duplicate_url( $item['link'] ) ) {
-					continue;
-				}
+			if ( wpcp_is_duplicate_url( $item['link'] ) ) {
+				continue;
 			}
 
 			$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $item['title'] );
