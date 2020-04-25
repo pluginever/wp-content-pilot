@@ -300,7 +300,7 @@ EOT;
 				continue;
 			}
 
-			$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $item['title'] );
+			$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $item['title'], $campaign_id );
 			if ( $skip ) {
 				continue;
 			}

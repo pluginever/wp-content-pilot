@@ -279,7 +279,7 @@ EOT;
 					continue;
 				}
 
-				$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $item['title'] );
+				$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $item['title'], $campaign_id );
 				if ( $skip ) {
 					wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 					continue;

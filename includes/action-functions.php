@@ -36,8 +36,8 @@ function wpcp_handle_manual_campaign() {
 		wp_safe_redirect( $edit_link );
 		exit();
 	}
-
-	$article_title = '<strong><a href="' . get_the_permalink( $article_id ) . '" target="_blank">' . get_the_title( $article_id ) . '</a></strong>';
+	$title = empty(get_the_title( $article_id ))? 'Untitled': get_the_title( $article_id );
+	$article_title = '<strong><a href="' . get_the_permalink( $article_id ) . '" target="_blank">' . $title . '</a></strong>';
 	$message       = sprintf( __( 'A post successfully created by %s titled %s', 'wp-content-pilot' ), '<strong>' . get_the_title( $campaign_id ) . '</strong>', $article_title );
 	wpcp_admin_notice( $message );
 
