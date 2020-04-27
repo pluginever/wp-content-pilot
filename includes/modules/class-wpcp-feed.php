@@ -246,24 +246,14 @@ EOT;
 
 			$title = $rss_item->get_title();
 
-			$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
-
-			if ( 'on' == $skip_duplicate_title ) {
-				if ( wpcp_is_duplicate_title( $title ) ) {
-					continue;
-				}
-
-				if ( wpcp_is_duplicate_url( $url ) ) {
-					continue;
-				}
-			}
-
-
-			$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $title );
-			if ( $skip ) {
+			if ( wpcp_is_duplicate_url( $url ) ) {
 				continue;
 			}
 
+			$skip = apply_filters( 'wpcp_skip_duplicate_title', true, $title, $campaign_id );
+			if ( $skip ) {
+				continue;
+			}
 
 			$links[] = [
 				'url'     => esc_url( $url ),

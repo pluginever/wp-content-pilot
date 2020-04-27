@@ -251,7 +251,6 @@ abstract class WPCP_Module {
 		}
 
 
-
 		//translate
 
 		//make template of title,content,meta
@@ -259,7 +258,7 @@ abstract class WPCP_Module {
 		//translate template
 		$post_content = wpcp_get_post_meta( $this->campaign_id, '_post_template', '' );
 		$post_title   = wpcp_get_post_meta( $this->campaign_id, '_post_title', '' );
-		$tags = array_keys( $this->get_template_tags() );
+		$tags         = array_keys( $this->get_template_tags() );
 		foreach ( $tags as $tag ) {
 			if ( array_key_exists( $tag, $article ) ) {
 				$post_content = str_replace( '{' . $tag . '}', $article[ $tag ], $post_content );
@@ -535,8 +534,12 @@ abstract class WPCP_Module {
 	 */
 	protected function get_links( $keyword, $campaign_id, $status = 'new', $count = 5 ) {
 		global $wpdb;
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE keyword=%s AND camp_id=%d AND status=%s LIMIT %d", $keyword, $campaign_id, $status, $count ) );
+		foreach ( $results as $result ) {
+			$result->meta = maybe_unserialize( base64_decode( $result->meta ) );
+		}
 
-		return $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE keyword=%s AND camp_id=%d AND status=%s LIMIT %d", $keyword, $campaign_id, $status, $count ) );
+		return $results;
 	}
 
 	/**
@@ -551,11 +554,18 @@ abstract class WPCP_Module {
 			'url'     => '',
 			'title'   => '',
 			'keyword' => '',
+			'meta'    => '',
 			'status'  => 'new',
 		) );
 		global $wpdb;
 
-		return $wpdb->insert( $wpdb->wpcp_links, $data );
+		$data['meta'] = ! is_serialized( $data['meta'] ) ? base64_encode( serialize( $data['meta'] ) ) : base64_encode( $data['meta'] );
+
+		if ( false !== $wpdb->insert( $wpdb->wpcp_links, $data ) ) {
+			return $wpdb->insert_id;
+		}
+
+		return false;
 	}
 
 	/**
