@@ -38,6 +38,7 @@ class WPCP_Install {
                 `url` text DEFAULT NULL,
                 `title` text DEFAULT NULL,
                 `keyword` varchar(191) DEFAULT NULL,
+                `meta` text DEFAULT NULL,
                 `status` VARCHAR(100) NOT NULL,
                 PRIMARY KEY (`id`)
             )  CHARACTER SET utf8 COLLATE utf8_general_ci;",
