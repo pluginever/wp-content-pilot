@@ -4,6 +4,7 @@ $posts = get_posts( array(
 	'numberposts' => 10,
 	'meta_key'    => '_campaign_id',
 	'meta_value'  => $campaign_id,
+	'post_status' => array( 'publish', 'private', 'draft', 'pending' ),
 ) );
 
 if ( empty( $posts ) ) {

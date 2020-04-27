@@ -62,16 +62,28 @@ EOT;
 	 */
 	public function add_campaign_option_fields( $post ) {
 
+		echo WPCP_HTML::start_double_columns();
 		echo WPCP_HTML::select_input( array(
-			'name'          => '_article_language',
-			'label'         => __( 'Select language to search article', 'wp-content-pilot' ),
-			'options'       => $this->get_article_language(),
-			'default'       => 'en',
+			'name'          => '_article_region',
+			'label'         => __( 'Select region to search article', 'wp-content-pilot' ),
+			'options'       => $this->get_article_region(),
+			'default'       => 'global',
 			'wrapper_class' => 'pro',
 			'attrs'         => array(
 				'disabled' => 'disabled',
 			)
 		) );
+//		echo WPCP_HTML::select_input( array(
+//			'name'          => '_article_language',
+//			'label'         => __( 'Select language to search article', 'wp-content-pilot' ),
+//			'options'       => $this->get_article_language(),
+//			'default'       => 'en',
+//			'wrapper_class' => 'pro',
+//			'attrs'         => array(
+//				'disabled' => 'disabled',
+//			)
+//		) );
+		echo WPCP_HTML::end_double_columns();
 
 	}
 
@@ -153,6 +165,7 @@ EOT;
 
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
+
 				$curl = $this->setup_curl();
 				$curl->get( $link->url );
 
@@ -177,6 +190,7 @@ EOT;
 				} else {
 					$title = html_entity_decode( $readability->get_title(), ENT_QUOTES );
 				}
+
 
 				$article = array(
 					'title'      => $title,
@@ -207,6 +221,7 @@ EOT;
 	 * @param $keyword
 	 *
 	 * @return bool|mixed|WP_Error
+	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	protected function discover_links( $campaign_id, $keyword ) {
@@ -214,12 +229,13 @@ EOT;
 		$page_number = wpcp_get_post_meta( $campaign_id, $page_key, 0 );
 
 		$args = apply_filters( 'wpcp_article_search_args', array(
-			'q'       => urlencode( $keyword ),
-			'count'   => 10,
-			'loc' => 'en',
-			'format'  => 'rss',
-			'first'   => ( $page_number * 10 ),
+			'q'      => urlencode( $keyword ),
+			'count'  => 10,
+			'loc'    => 'en',
+			'format' => 'rss',
+			'first'  => ( $page_number * 10 ),
 		), $campaign_id );
+
 
 		$endpoint = add_query_arg( array(
 			$args,
@@ -280,17 +296,13 @@ EOT;
 				continue;
 			}
 
-			//check duplicate title and don't publish the post with duplicate title
-			$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
+			if ( wpcp_is_duplicate_url( $item['link'] ) ) {
+				continue;
+			}
 
-			if ( 'on' == $skip_duplicate_title ) {
-				if ( wpcp_is_duplicate_title( $item['title'] ) ) {
-					continue;
-				}
-
-				if ( wpcp_is_duplicate_url( $item['link'] ) ) {
-					continue;
-				}
+			$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $item['title'], $campaign_id );
+			if ( $skip ) {
+				continue;
 			}
 
 
@@ -300,6 +312,8 @@ EOT;
 				'keyword' => $keyword,
 				'camp_id' => $campaign_id
 			];
+
+
 		}
 
 		$total_inserted = $this->inset_links( $links );
@@ -320,44 +334,45 @@ EOT;
 
 	public function get_article_region() {
 		$regions = array(
-			'es-AR' => 'Spanish Argentina',
-			'en-AU' => 'English Australia',
-			'de-AT' => 'German Austria',
-			'nl-BE' => 'Dutch Belgium',
-			'fr-BE' => 'French Belgium',
-			'pt-BR' => 'Portuguese Brazil',
-			'en-CA' => 'English Canada',
-			'fr-CA' => 'French Canada',
-			'es-CL' => 'Spanish Chile',
-			'da-DK' => 'Danish Denmark',
-			'fi-FI' => 'Finnish Finland',
-			'fr-FR' => 'French France',
-			'de-DE' => 'German Germany',
-			'zh-HK' => 'Chinese Hong Kong',
-			'en-IN' => 'English India',
-			'en-ID' => 'English Indonesia',
-			'it-IT' => 'Italian Italy',
-			'ja-JP' => 'Japanese Japan',
-			'ko-KR' => 'Korean Korea',
-			'en-MY' => 'English Malaysia',
-			'es-MX' => 'Spanish Mexico',
-			'nl-NL' => 'Dutch Netherlands',
-			'en-NZ' => 'English New Zealand',
-			'no-NO' => 'Norwegian Norway',
-			'zh-CN' => 'Chinese China',
-			'pl-PL' => 'Polish Poland',
-			'en-PH' => 'English Philippines',
-			'ru-RU' => 'Russian Russia',
-			'en-ZA' => 'English South Africa',
-			'es-ES' => 'Spanish Spain',
-			'sv-SE' => 'Swedish Sweden',
-			'fr-CH' => 'French Switzerland',
-			'de-CH' => 'German Switzerland',
-			'zh-TW' => 'Chinese Taiwan',
-			'tr-TR' => 'Turkish Turkey',
-			'en-GB' => 'English United Kingdom',
-			'en-US' => 'English United States',
-			'es-US' => 'Spanish United States',
+			'global' => 'Global Search',
+			'es-AR'  => 'Spanish Argentina',
+			'en-AU'  => 'English Australia',
+			'de-AT'  => 'German Austria',
+			'nl-BE'  => 'Dutch Belgium',
+			'fr-BE'  => 'French Belgium',
+			'pt-BR'  => 'Portuguese Brazil',
+			'en-CA'  => 'English Canada',
+			'fr-CA'  => 'French Canada',
+			'es-CL'  => 'Spanish Chile',
+			'da-DK'  => 'Danish Denmark',
+			'fi-FI'  => 'Finnish Finland',
+			'fr-FR'  => 'French France',
+			'de-DE'  => 'German Germany',
+			'zh-HK'  => 'Chinese Hong Kong',
+			'en-IN'  => 'English India',
+			'en-ID'  => 'English Indonesia',
+			'it-IT'  => 'Italian Italy',
+			'ja-JP'  => 'Japanese Japan',
+			'ko-KR'  => 'Korean Korea',
+			'en-MY'  => 'English Malaysia',
+			'es-MX'  => 'Spanish Mexico',
+			'nl-NL'  => 'Dutch Netherlands',
+			'en-NZ'  => 'English New Zealand',
+			'no-NO'  => 'Norwegian Norway',
+			'zh-CN'  => 'Chinese China',
+			'pl-PL'  => 'Polish Poland',
+			'en-PH'  => 'English Philippines',
+			'ru-RU'  => 'Russian Russia',
+			'en-ZA'  => 'English South Africa',
+			'es-ES'  => 'Spanish Spain',
+			'sv-SE'  => 'Swedish Sweden',
+			'fr-CH'  => 'French Switzerland',
+			'de-CH'  => 'German Switzerland',
+			'zh-TW'  => 'Chinese Taiwan',
+			'tr-TR'  => 'Turkish Turkey',
+			'en-GB'  => 'English United Kingdom',
+			'en-US'  => 'English United States',
+			'es-US'  => 'Spanish United States',
 
 
 		);

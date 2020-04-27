@@ -3,7 +3,7 @@
  * Plugin Name: WP Content Pilot
  * Plugin URI:  https://www.pluginever.com
  * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:     1.2.2
+ * Version:     1.2.3
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
@@ -44,7 +44,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '1.2.2';
+	protected $version = '1.2.3';
 
 	/**
 	 * The single instance of the class.
@@ -127,7 +127,8 @@ final class ContentPilot {
 		global $wpdb;
 		$tables = array(
 			'wpcp_links',
-			'wpcp_logs'
+			'wpcp_logs',
+			'wpcp_items',
 		);
 		foreach ( $tables as $table ) {
 			$wpdb->$table   = $wpdb->prefix . $table;
@@ -249,17 +250,23 @@ final class ContentPilot {
 	}
 
 	/**
-	 * @return bool
+	 * @return void
 	 */
 	public function check_if_cron_running() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return false;
+		if (  current_user_can( 'manage_options' ) ) {
+//			$status = wpcp_check_cron_status();
+//			if ( is_wp_error( $status ) ) {
+//			$this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
+//			}
 		}
+	}
 
-		//$status = wpcp_check_cron_status();
-		//if ( is_wp_error( $status ) ) {
-		//$this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
-		//}
+	/**
+	 * @since 1.2.3
+	 * @return string
+	 */
+	public function get_version(){
+		return $this->version;
 	}
 
 	/**
@@ -273,6 +280,9 @@ final class ContentPilot {
 	}
 }
 
+/**
+ * @return ContentPilot
+ */
 function content_pilot() {
 	return ContentPilot::instance();
 }

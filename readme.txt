@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: autoblog, curatator, content pilot, auto post, feeds, flicker, youtube, envato, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
 Requires at least: 4.4
-Tested up to: 5.3.2
+Tested up to: 5.4
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -198,10 +198,15 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.2.3 -> April 27, 2020 =
+* [Fix] Duplicate post  publish
+* [Enhance] Campaign props meta to own table
+* [Enhance] Custom post status support
+
 = v1.2.2 -> March 18, 2020 =
 * [Fix] title cleaner is not working
 * [Fix] Skip post with title is not working
-* 
+
 
 = v1.2.1 -> March 8, 2020 =
 * [Fix] Google alert feed links not working

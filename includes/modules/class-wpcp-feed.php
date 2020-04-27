@@ -147,6 +147,7 @@ EOT;
 
 				$curl = $this->setup_curl();
 				$curl->setHeader( 'accept-encoding', 'utf-8' );
+				$curl->setOpt( CURLOPT_ENCODING, '' );
 				$curl->get( $link->url );
 
 
@@ -198,10 +199,20 @@ EOT;
 
 	public function discover_links( $feed_link, $campaign_id ) {
 		include_once( ABSPATH . WPINC . '/feed.php' );
+
+		// If force feed
+
 		$rss = fetch_feed( $feed_link );
 
 		if ( is_wp_error( $rss ) ) {
 			wpcp_logger()->warning( sprintf( 'Failed fetching feeds [%s]', $rss->get_error_message() ), $campaign_id );
+
+			if ( ! function_exists( 'wpcp_automatic_force_feed' ) ) {
+				add_action( 'wp_feed_options', 'wpcp_automatic_force_feed', 10, 1 );
+				function wp_automatic_force_feed( $rss ) {
+					$rss->force_feed( true );
+				}
+			}
 
 			return $rss;
 		}
@@ -235,19 +246,14 @@ EOT;
 
 			$title = $rss_item->get_title();
 
-			//check duplicate title and don't publish the post with duplicate title
-			$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
-
-			if ( 'on' == $skip_duplicate_title ) {
-				if ( wpcp_is_duplicate_title( $title ) ) {
-					continue;
-				}
-
-				if ( wpcp_is_duplicate_url( $url ) ) {
-					continue;
-				}
+			if ( wpcp_is_duplicate_url( $url ) ) {
+				continue;
 			}
 
+			$skip = apply_filters( 'wpcp_skip_duplicate_title', true, $title, $campaign_id );
+			if ( $skip ) {
+				continue;
+			}
 
 			$links[] = [
 				'url'     => esc_url( $url ),

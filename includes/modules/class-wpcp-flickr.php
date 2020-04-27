@@ -72,7 +72,6 @@ EOT;
 	 * @param $post
 	 */
 	public function add_campaign_option_fields( $post ) {
-
 	}
 
 	/**
@@ -84,7 +83,7 @@ EOT;
 	}
 
 	/**
-	 * @param $section
+	 * @param $sections
 	 *
 	 * @return array
 	 * @since 1.2.0
@@ -206,10 +205,6 @@ EOT;
 			$source_url  = $response->photo->urls->url[0]->_content;
 			$tags        = wpcp_array_to_html( $tags );
 
-			if ( wpcp_is_duplicate_url( $source_url ) ) {
-				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-				continue;
-			}
 
 			//check if the clean title metabox is checked and perform title cleaning
 			$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
@@ -220,19 +215,7 @@ EOT;
 				$title = html_entity_decode( $title, ENT_QUOTES );
 			}
 
-			//check duplicate title and don't publish the post with duplicate title
-			$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
 
-			if ( 'on' == $check_duplicate_title ) {
-				if ( wpcp_is_duplicate_title( $title ) ) {
-					wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-					continue;
-				}
-			}
-//			if ( wpcp_is_duplicate_title( $title ) ) {
-//				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-//				continue;
-//			}
 
 			wpcp_logger()->info( sprintf( 'Generating flickr article from [ %s ]', $source_url ), $campaign_id );
 			$article = array(

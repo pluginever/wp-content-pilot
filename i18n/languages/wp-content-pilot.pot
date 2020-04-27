@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.2.2\n"
+"Project-Id-Version: WP Content Pilot 1.2.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2020-03-18 10:58:28+00:00\n"
+"POT-Creation-Date: 2020-04-27 15:09:23+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -56,7 +56,7 @@ msgstr ""
 msgid "Go Pro"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:137
+#: includes/admin/class-wpcp-admin.php:136
 msgid ""
 "If you like <strong>WP Content Pilot</strong> please leave us a <a "
 "href=\"%s\" target=\"_blank\">&#9733;&#9733;&#9733;&#9733;&#9733;</a> "
@@ -421,35 +421,31 @@ msgstr ""
 msgid "Once Weekly"
 msgstr ""
 
-#: includes/admin/class-wpcp-insight.php:604
+#: includes/admin/class-wpcp-insight.php:606
 msgid "If you have a moment, please let us know why you are deactivating:"
 msgstr ""
 
-#: includes/admin/class-wpcp-insight.php:618
+#: includes/admin/class-wpcp-insight.php:620
 msgid "I rather wouldn't say"
 msgstr ""
 
-#: includes/admin/class-wpcp-insight.php:619
+#: includes/admin/class-wpcp-insight.php:621
 msgid "Submit & Deactivate"
 msgstr ""
 
-#: includes/admin/class-wpcp-insight.php:620
+#: includes/admin/class-wpcp-insight.php:622
 msgid "Canel"
 msgstr ""
 
-#: includes/admin/class-wpcp-promotion.php:33
+#: includes/admin/class-wpcp-promotion.php:34
 msgid ""
-"Turn on Auto-Pilot For Automatic content generation and affiliation with "
-"20+ Supported Campaign Types using <strong>WP Content Pilot "
-"Pro</strong><br> Use Coupon <strong>WPCPFREE2PRO</strong> to avail "
-"<strong>10%</strong> discount if you upgrade to PRO now.</strong>"
+"<b>WP Content Pilot</b> is powering <b>2000+ companies</b> in generating "
+"automatic contents and affiliation with its <b>20+</b> types of campaign. "
+"Upgrade to Pro now & get 10% discount using coupon "
+"<strong>WPCPFREE2PRO</strong>"
 msgstr ""
 
-#: includes/admin/class-wpcp-promotion.php:47
-msgid "Get Pro"
-msgstr ""
-
-#: includes/admin/class-wpcp-settings.php:38 wp-content-pilot.php:227
+#: includes/admin/class-wpcp-settings.php:38 wp-content-pilot.php:228
 msgid "Settings"
 msgstr ""
 
@@ -475,7 +471,7 @@ msgstr ""
 msgid "Send mail After post publish"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:91
+#: includes/admin/class-wpcp-settings.php:98
 msgid "WP Content Pilot Settings"
 msgstr ""
 
@@ -579,7 +575,7 @@ msgid "Use summary as excerpt"
 msgstr ""
 
 #: includes/admin/metabox-functions.php:307
-msgid "Skip post with duplicate title"
+msgid "Enable post with duplicate title"
 msgstr ""
 
 #: includes/admin/metabox-functions.php:314
@@ -1039,7 +1035,7 @@ msgstr ""
 msgid "Delete all posts by this campaign"
 msgstr ""
 
-#: includes/admin/views/metabox/campaign-posts.php:10
+#: includes/admin/views/metabox/campaign-posts.php:11
 msgid "No posts generated yet"
 msgstr ""
 
@@ -1381,17 +1377,17 @@ msgstr ""
 msgid "Content is not readable"
 msgstr ""
 
-#: includes/core-functions.php:379
+#: includes/core-functions.php:378
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true. WP-Cron spawning is disabled."
 msgstr ""
 
-#: includes/core-functions.php:384
+#: includes/core-functions.php:383
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true."
 msgstr ""
 
-#: includes/core-functions.php:415
+#: includes/core-functions.php:414
 #. translators: 1: The HTTP response code.
 msgid "Unexpected HTTP response code: %s"
 msgstr ""
@@ -1435,31 +1431,31 @@ msgstr ""
 msgid "Source link"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:67
-msgid "Select language to search article"
+#: includes/modules/class-wpcp-article.php:68
+msgid "Select region to search article"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:95
+#: includes/modules/class-wpcp-article.php:107
 msgid "Article Settings"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:111
+#: includes/modules/class-wpcp-article.php:123
 msgid "Banned Hosts"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:112
+#: includes/modules/class-wpcp-article.php:124
 msgid ""
 "Articles from the above hosts will be rejected. put single url/host per "
 "line."
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:113
+#: includes/modules/class-wpcp-article.php:125
 msgid ""
 "example.com \n"
 " example1.com"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:249
+#: includes/modules/class-wpcp-article.php:265
 msgid ""
 "Could not find any links from search engine, deactivating keyword for an "
 "hour."
@@ -1633,7 +1629,7 @@ msgstr ""
 msgid "Feed fetch full content"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:214
+#: includes/modules/class-wpcp-feed.php:225
 msgid "Could not find any article, waiting..."
 msgstr ""
 
@@ -1661,35 +1657,35 @@ msgstr ""
 msgid "User Id"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:95
+#: includes/modules/class-wpcp-flickr.php:94
 msgid "Flickr Settings"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:111
+#: includes/modules/class-wpcp-flickr.php:110
 msgid "Flickr API Key"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:112
+#: includes/modules/class-wpcp-flickr.php:111
 msgid ""
 "Get your Flickr API key by following this <a href=\"%s\" "
 "target=\"_blank\">link</a>."
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:135
+#: includes/modules/class-wpcp-flickr.php:134
 msgid "The Flickr api key is not set so the campaign won't run, disabling campaign."
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:151
+#: includes/modules/class-wpcp-flickr.php:150
 msgid ""
 "Maximum page number reached for the keyword [%s] deactivating the keyword "
 "for a week"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:177
+#: includes/modules/class-wpcp-flickr.php:176
 msgid "Flickr api request failed response [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:190
+#: includes/modules/class-wpcp-flickr.php:189
 msgid "Could not find any result for the keyword %s"
 msgstr ""
 
@@ -1824,7 +1820,7 @@ msgstr ""
 msgid "Youtube api request failed response [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:555
+#: includes/modules/class-wpcp-youtube.php:551
 msgid "Youtube campaign wont run because you did not set the API details yet."
 msgstr ""
 
@@ -1959,11 +1955,11 @@ msgstr ""
 msgid "Universalizing instances of this class is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:229
+#: wp-content-pilot.php:230
 msgid "Upgrade to PRO"
 msgstr ""
 
-#: wp-content-pilot.php:245
+#: wp-content-pilot.php:246
 msgid "Once a Minute"
 msgstr ""
 
