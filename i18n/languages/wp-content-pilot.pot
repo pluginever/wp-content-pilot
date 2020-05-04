@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.2.3\n"
+"Project-Id-Version: WP Content Pilot 1.2.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2020-04-27 15:09:23+00:00\n"
+"POT-Creation-Date: 2020-05-04 17:56:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,14 +27,6 @@ msgstr ""
 
 #: includes/action-functions.php:225
 msgid "Post Publish"
-msgstr ""
-
-#: includes/action-functions.php:226
-msgid ""
-"<h4>Post Title: %s</h4>\n"
-"                    <h5>Post Excerpt</h5>\n"
-"                    <p>%s</p>\n"
-"                    <a href='%s'>View Post</a>"
 msgstr ""
 
 #: includes/admin/class-settings-api.php:354
@@ -445,7 +437,7 @@ msgid ""
 "<strong>WPCPFREE2PRO</strong>"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:38 wp-content-pilot.php:228
+#: includes/admin/class-wpcp-settings.php:38 wp-content-pilot.php:229
 msgid "Settings"
 msgstr ""
 
@@ -1349,27 +1341,19 @@ msgstr ""
 msgid "-- Please Select --"
 msgstr ""
 
-#: includes/class-wpcp-module.php:147
+#: includes/class-wpcp-module.php:146
 msgid "Could not find the campaign"
 msgstr ""
 
-#: includes/class-wpcp-module.php:154
+#: includes/class-wpcp-module.php:153
 msgid "Campaign type mismatch"
 msgstr ""
 
-#: includes/class-wpcp-module.php:158 includes/class-wpcp-module.php:161
+#: includes/class-wpcp-module.php:157 includes/class-wpcp-module.php:160
 msgid "Tried maximum time but could not generate article check log"
 msgstr ""
 
-#: includes/class-wpcp-module.php:170
-msgid "Campaign do not have keywords to proceed, please set keyword"
-msgstr ""
-
-#: includes/class-wpcp-module.php:180
-msgid "Campaign do not have keyword to proceed, please set keyword"
-msgstr ""
-
-#: includes/class-wpcp-module.php:191
+#: includes/class-wpcp-module.php:189
 msgid "Content Pilot did not responded for the action"
 msgstr ""
 
@@ -1455,7 +1439,14 @@ msgid ""
 " example1.com"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:265
+#: includes/modules/class-wpcp-article.php:146
+#: includes/modules/class-wpcp-envato.php:217
+#: includes/modules/class-wpcp-flickr.php:141
+#: includes/modules/class-wpcp-youtube.php:248
+msgid "Campaign do not have keyword to proceed, please set keyword"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:268
 msgid ""
 "Could not find any links from search engine, deactivating keyword for an "
 "hour."
@@ -1605,11 +1596,11 @@ msgstr ""
 msgid "The Envato api key is not set so the campaign won't run, disabling campaign."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:260
+#: includes/modules/class-wpcp-envato.php:263
 msgid "Envato api request failed response [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:270
+#: includes/modules/class-wpcp-envato.php:273
 msgid "No matching data found from api disabling the keyword for 1 hour"
 msgstr ""
 
@@ -1629,7 +1620,11 @@ msgstr ""
 msgid "Feed fetch full content"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:225
+#: includes/modules/class-wpcp-feed.php:128
+msgid "Campaign do not have feed link to proceed, please set link"
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:233
 msgid "Could not find any article, waiting..."
 msgstr ""
 
@@ -1671,21 +1666,21 @@ msgid ""
 "target=\"_blank\">link</a>."
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:134
+#: includes/modules/class-wpcp-flickr.php:133
 msgid "The Flickr api key is not set so the campaign won't run, disabling campaign."
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:150
+#: includes/modules/class-wpcp-flickr.php:153
 msgid ""
 "Maximum page number reached for the keyword [%s] deactivating the keyword "
 "for a week"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:176
+#: includes/modules/class-wpcp-flickr.php:179
 msgid "Flickr api request failed response [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:189
+#: includes/modules/class-wpcp-flickr.php:192
 msgid "Could not find any result for the keyword %s"
 msgstr ""
 
@@ -1753,7 +1748,7 @@ msgid "Global"
 msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:89
-msgid "From Specific Channel"
+msgid "From Playlist"
 msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:96
@@ -1810,17 +1805,21 @@ msgid ""
 "target=\"_blank\">Learn how to get one</a>."
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:234
+#: includes/modules/class-wpcp-youtube.php:233
 msgid ""
 "The YouTube api key is not set so the campaign won't run, disabling "
 "campaign."
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:399
+#: includes/modules/class-wpcp-youtube.php:243
+msgid "Campaign do not have playlist URL to proceed, please set playlist URL"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:397
 msgid "Youtube api request failed response [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:551
+#: includes/modules/class-wpcp-youtube.php:549
 msgid "Youtube campaign wont run because you did not set the API details yet."
 msgstr ""
 
@@ -1955,12 +1954,16 @@ msgstr ""
 msgid "Universalizing instances of this class is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:230
+#: wp-content-pilot.php:231
 msgid "Upgrade to PRO"
 msgstr ""
 
-#: wp-content-pilot.php:246
+#: wp-content-pilot.php:247
 msgid "Once a Minute"
+msgstr ""
+
+#: wp-content-pilot.php:273
+msgid "%1$s in %2$s on line %3$s"
 msgstr ""
 
 #. Plugin Name of the plugin/theme

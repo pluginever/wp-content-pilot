@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: autoblog, curatator, content pilot, auto post, feeds, flicker, youtube, envato, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
 Requires at least: 4.4
-Tested up to: 5.4
+Tested up to: 5.4.1
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -198,6 +198,11 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.2.4 -> May 4, 2020 =
+* [Fix] Youtube playlist is not working
+* [Enhance] New column add
+* [Enhance] UI improvement
+
 = v1.2.3 -> April 27, 2020 =
 * [Fix] Duplicate post  publish
 * [Enhance] Campaign props meta to own table
