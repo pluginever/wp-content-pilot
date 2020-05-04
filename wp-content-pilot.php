@@ -3,7 +3,7 @@
  * Plugin Name: WP Content Pilot
  * Plugin URI:  https://www.pluginever.com
  * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:     1.2.2
+ * Version:     1.2.3
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
@@ -44,7 +44,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '1.2.2';
+	protected $version = '1.2.3';
 
 	/**
 	 * The single instance of the class.
@@ -169,10 +169,10 @@ final class ContentPilot {
 
 		//modules
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-article.php' );
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-feed.php' );
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-youtube.php' );
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-envato.php' );
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-flickr.php' );
+//		require_once( WPCP_INCLUDES . '/modules/class-wpcp-feed.php' );
+//		require_once( WPCP_INCLUDES . '/modules/class-wpcp-youtube.php' );
+//		require_once( WPCP_INCLUDES . '/modules/class-wpcp-envato.php' );
+//		require_once( WPCP_INCLUDES . '/modules/class-wpcp-flickr.php' );
 
 		if ( is_admin() ) {
 			require_once( WPCP_INCLUDES . '/admin/class-wpcp-admin.php' );

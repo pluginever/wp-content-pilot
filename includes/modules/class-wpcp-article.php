@@ -133,12 +133,22 @@ EOT;
 
 	/**
 	 * @param int $campaign_id
-	 * @param array $keywords
+	 * @param array $source
 	 *
 	 * @return array|mixed|WP_Error
 	 * @since 1.2.0
 	 */
-	public function get_post( $campaign_id, $keywords ) {
+	public function get_post( $campaign_id, $source ) {
+		//before it was getting keywords but now we are changing to source instead of keywords
+		//it can be anything
+		if ( empty( $source ) ) {
+			$keywords = $this->get_keywords( $this->campaign_id );
+		}
+
+		if ( empty( $keywords ) ) {
+			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
+		}
+
 
 		wpcp_logger()->info( 'Article Campaign Started', $campaign_id );
 
@@ -164,7 +174,6 @@ EOT;
 				wpcp_logger()->info( sprintf( 'Grabbing article from [%s]', $link->url ), $campaign_id );
 
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
-
 
 				$curl = $this->setup_curl();
 				$curl->get( $link->url );
@@ -309,7 +318,7 @@ EOT;
 			$links[] = [
 				'url'     => esc_url( $item['link'] ),
 				'title'   => $item['title'],
-				'keyword' => $keyword,
+				'source' => $keyword,
 				'camp_id' => $campaign_id
 			];
 

@@ -125,12 +125,12 @@ abstract class WPCP_Module {
 
 	/**
 	 * @param int $campaign_id
-	 * @param array $keywords
+	 * @param array $source
 	 *
 	 * @return mixed
 	 * @since 1.2.0
 	 */
-	abstract public function get_post( $campaign_id, $keywords );
+	abstract public function get_post( $campaign_id, $source );
 
 	/**
 	 * @param $campaign_id
@@ -139,7 +139,7 @@ abstract class WPCP_Module {
 	 * @return int|WP_Error
 	 * @since 1.2.0
 	 */
-	public function process_campaign( $campaign_id, $keywords = null, $user = 'cron' ) {
+	public function process_campaign( $campaign_id, $source = null, $user = 'cron' ) {
 		$wp_post = get_post( $campaign_id );
 		if ( ! $wp_post || 'wp_content_pilot' !== $wp_post->post_type ) {
 			wpcp_logger()->error( 'Could not find any campaign with the provided id', $campaign_id );
@@ -164,26 +164,25 @@ abstract class WPCP_Module {
 		$this->campaign_id = absint( $campaign_id );
 		$this->initiator   = sanitize_text_field( $user );
 
-		if ( empty( $keywords ) ) {
-			$keywords = $this->get_keywords( $this->campaign_id );
-			if ( empty( $keywords ) ) {
-				$message = __( 'Campaign do not have keywords to proceed, please set keyword', 'wp-content-pilot' );
-				wpcp_logger()->error( $message, $campaign_id );
+//		if ( empty( $keywords ) ) {
+//			$keywords = $this->get_keywords( $this->campaign_id );
+//			if ( empty( $keywords ) ) {
+//				$message = __( 'Campaign do not have keywords to proceed, please set keyword', 'wp-content-pilot' );
+//				wpcp_logger()->error( $message, $campaign_id );
+//
+//				return new WP_Error( 'missing-data', $message );
+//			}
+//		}
+//
+//		$keywords = wpcp_string_to_array( $keywords );
+//		shuffle( $keywords );
+//		if ( empty( $keywords ) ) {
+//			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
+//		}
 
-				return new WP_Error( 'missing-data', $message );
-			}
-		}
-
-		$keywords = wpcp_string_to_array( $keywords );
-		shuffle( $keywords );
-		if ( empty( $keywords ) ) {
-			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
-		}
-
-		$article = $this->get_post( $campaign_id, $keywords );
+		$article = $this->get_post( $campaign_id, $source );
 		if ( is_wp_error( $article ) ) {
 			//wpcp_logger()->error( $article->get_error_message(), $campaign_id);
-
 			return $article;
 		}
 
@@ -448,28 +447,28 @@ abstract class WPCP_Module {
 	 * Deactivate key for hours
 	 *
 	 * @param $campaign_id
-	 * @param $keyword
+	 * @param $source
 	 * @param int $hours
 	 *
 	 * @since 1.2.0
 	 */
-	protected function deactivate_key( $campaign_id, $keyword, $hours = 1 ) {
-		wpcp_logger()->warning( sprintf( 'Deactivating key [%s] for [%d] hour', $keyword, $hours ), $campaign_id );
+	protected function deactivate_key( $campaign_id, $source, $hours = 1 ) {
+		wpcp_logger()->warning( sprintf( 'Deactivating key [%s] for [%d] hour', $source, $hours ), $campaign_id );
 		$deactivated_until = current_time( 'timestamp' ) + ( $hours * HOUR_IN_SECONDS );
-		update_post_meta( $campaign_id, '_' . md5( $keyword ), $deactivated_until );
+		update_post_meta( $campaign_id, '_' . md5( $source ), $deactivated_until );
 	}
 
 	/**
-	 * Check if the keyword is deactivated
+	 * Check if the source is deactivated
 	 *
 	 * @param $campaign_id
-	 * @param $keyword
+	 * @param $source
 	 *
 	 * @return bool
 	 * @since 1.2.0
 	 */
-	protected function is_deactivated_key( $campaign_id, $keyword ) {
-		$deactivated_until = wpcp_get_post_meta( $campaign_id, '_' . md5( $keyword ), '' );
+	protected function is_deactivated_key( $campaign_id, $source ) {
+		$deactivated_until = wpcp_get_post_meta( $campaign_id, '_' . md5( $source ), '' );
 		if ( empty( $deactivated_until ) || $deactivated_until < current_time( 'timestamp' ) ) {
 			return false;
 		}
@@ -480,13 +479,13 @@ abstract class WPCP_Module {
 	/**
 	 * Get unique string for the campaign
 	 *
-	 * @param string $keyword
+	 * @param string $source
 	 *
 	 * @return string
 	 * @since 1.2.0
 	 */
-	protected function get_unique_key( $keyword = 'page' ) {
-		$key = '_wpcp_' . $keyword . '_' . md5( $keyword );
+	protected function get_unique_key( $source = 'page' ) {
+		$key = '_wpcp_' . $source . '_' . md5( $source );
 
 		return sanitize_title( $key );
 	}
@@ -524,7 +523,7 @@ abstract class WPCP_Module {
 	}
 
 	/**
-	 * @param $keyword
+	 * @param $source
 	 * @param $campaign_id
 	 * @param string $status
 	 * @param int $count
@@ -532,9 +531,9 @@ abstract class WPCP_Module {
 	 * @return array|object|null
 	 * @since 1.2.0
 	 */
-	protected function get_links( $keyword, $campaign_id, $status = 'new', $count = 5 ) {
+	protected function get_links( $source, $campaign_id, $status = 'new', $count = 5 ) {
 		global $wpdb;
-		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE keyword=%s AND camp_id=%d AND status=%s LIMIT %d", $keyword, $campaign_id, $status, $count ) );
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE source=%s AND camp_id=%d AND status=%s LIMIT %d", $source, $campaign_id, $status, $count ) );
 		foreach ( $results as $result ) {
 			$result->meta = maybe_unserialize( base64_decode( $result->meta ) );
 		}
@@ -553,7 +552,7 @@ abstract class WPCP_Module {
 			'camp_id' => '',
 			'url'     => '',
 			'title'   => '',
-			'keyword' => '',
+			'source'  => '',
 			'meta'    => '',
 			'status'  => 'new',
 		) );
@@ -571,7 +570,7 @@ abstract class WPCP_Module {
 	/**
 	 * Insert links
 	 *
-	 * @param $links
+	 * @param array $links
 	 *
 	 * @return int
 	 *
@@ -590,7 +589,7 @@ abstract class WPCP_Module {
 	}
 
 	/**
-	 * @param $id
+	 * @param int $id
 	 * @param array $data
 	 *
 	 * @return false|int
@@ -603,12 +602,20 @@ abstract class WPCP_Module {
 	}
 
 	/**
-	 * @param $campaign_id
+	 * @param int $campaign_id
+	 * @param bool $shuffle
 	 *
-	 * @return string
+	 * @return string|array
 	 * @since 1.2.0
+	 * @since 1.2.4 $shuffle added
 	 */
-	protected function get_keywords( $campaign_id ) {
-		return wpcp_get_post_meta( $this->campaign_id, '_keywords', '' );
+	protected function get_keywords( $campaign_id, $shuffle = true ) {
+		$keywords = wpcp_get_post_meta( $this->campaign_id, '_keywords', '' );
+		if ( ! $shuffle ) {
+			return $keywords;
+		}
+		$keywords = wpcp_string_to_array( $keywords );
+
+		return shuffle( $keywords );
 	}
 }
