@@ -80,12 +80,12 @@ EOT;
 			'name'        => '_platform',
 			'placeholder' => '',
 			'options'     => array(
-				'themeforest.net'     => 'ThemeForest',
-				'codecanyon.net'      => 'CodeCanyon',
-				'photodune.net'       => 'PhotoDune',
-				'videohive.net'       => 'VideoHive',
-				'graphicriver.net'    => 'GraphicRiver',
-				'3docean.net'         => '3DOcean',
+				'themeforest.net'  => 'ThemeForest',
+				'codecanyon.net'   => 'CodeCanyon',
+				'photodune.net'    => 'PhotoDune',
+				'videohive.net'    => 'VideoHive',
+				'graphicriver.net' => 'GraphicRiver',
+				'3docean.net'      => '3DOcean',
 			),
 			'tooltip'     => __( 'Select envato platform', 'wp-content-pilot' ),
 		) );
@@ -207,13 +207,12 @@ EOT;
 
 		if ( empty( $envato_impact_radius ) ) {
 			$affiliate_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-settings#wpcp_settings_envato' );
-
-			$warning = sprintf( "The Impact  Radius affiliate url is not set. Set it from <a href='%s'>here</a>", $affiliate_url );
+			$warning       = sprintf( "The Impact  Radius affiliate url is not set. Set it from <a href='%s'>here</a>", $affiliate_url );
 
 			wpcp_admin_notice( $warning );
 		}
 
-		$keywords = $this->get_sources( $this->campaign_id );
+		$keywords = $this->get_campaign_meta( $campaign_id );
 		if ( empty( $keywords ) ) {
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}
@@ -341,10 +340,12 @@ EOT;
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 
 				$this->insert_link( array(
-					'source'  => $keyword,
+					'for'     => $keyword,
 					'title'   => $item->name,
 					'url'     => $item->url,
 					'camp_id' => $campaign_id,
+					'status'  => 'success',
+					'meta'    => '',
 				) );
 
 				return $article;

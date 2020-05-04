@@ -55,7 +55,7 @@ jQuery(document).ready(function ($) {
 		},
 		youtube: function () {
 			$('#_youtube_search_type').on('change', function () {
-				var channnelField = $('._youtube_channel_id-field');
+				var channnelField = $('._youtube_playlist_id-field');
 				if('global' === $(this).val()){
 					channnelField.hide();
 					$.wp_content_pilot.showKeywordField();

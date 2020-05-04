@@ -136,7 +136,7 @@ EOT;
 			return new WP_Error( 'missing-data', $notice );
 		}
 
-		$keywords = $this->get_sources( $this->campaign_id );
+		$keywords = $this->get_campaign_meta( $campaign_id );
 		if ( empty( $keywords ) ) {
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}
@@ -234,10 +234,11 @@ EOT;
 			);
 
 			$this->insert_link( array(
-				'source'  => $keyword,
+				'for'     => $keyword,
 				'title'   => $title,
 				'url'     => $source_url,
 				'camp_id' => $campaign_id,
+				'status'  => 'success',
 			) );
 			wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 

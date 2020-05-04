@@ -37,7 +37,7 @@ class WPCP_Install {
                 `camp_id` INT(11) NOT NULL,
                 `url` text DEFAULT NULL,
                 `title` text DEFAULT NULL,
-                `source` text DEFAULT NULL,
+                `for` text DEFAULT NULL,
                 `meta` text DEFAULT NULL,
                 `status` VARCHAR(100) NOT NULL,
                 PRIMARY KEY (`id`)

@@ -122,8 +122,8 @@ EOT;
 	 * @throws ErrorException
 	 * @since  1.2.0
 	 */
-	public function get_post( $campaign_id) {
-		$sources = $this->get_sources( $campaign_id, '_feed_links' );
+	public function get_post( $campaign_id ) {
+		$sources = $this->get_campaign_meta( $campaign_id, '_feed_links' );
 		if ( empty( $sources ) ) {
 			return new WP_Error( 'missing-data', __( 'Campaign do not have feed link to proceed, please set link', 'wp-content-pilot' ) );
 		}
@@ -266,7 +266,7 @@ EOT;
 			$data = array(
 				'url'     => esc_url( $url ),
 				'title'   => $title,
-				'source'  => $source,
+				'for'     => $source,
 				'camp_id' => $campaign_id
 			);
 			if ( false !== $this->insert_link( $data ) ) {

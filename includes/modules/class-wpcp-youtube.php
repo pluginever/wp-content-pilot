@@ -85,7 +85,7 @@ EOT;
 			'label'   => __( 'Youtube Search Type', 'wp-content-pilot' ),
 			'tooltip' => __( 'Use global search for all result or use specific channel if you want to limit to that channel.', 'wp-content-pilot' ),
 			'options' => array(
-				'global'  => __( 'Global', 'wp-content-pilot' ),
+				'global'   => __( 'Global', 'wp-content-pilot' ),
 				'playlist' => __( 'From Playlist', 'wp-content-pilot' ),
 			),
 			'default' => 'global',
@@ -232,17 +232,18 @@ EOT;
 			wpcp_disable_campaign( $campaign_id );
 			$notice = __( 'The YouTube api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot' );
 			wpcp_logger()->error( $notice, $campaign_id );
+
 			return new WP_Error( 'missing-data', $notice );
 		}
 
 		$source_type = wpcp_get_post_meta( $campaign_id, '_youtube_search_type', 'global' );
 		if ( $source_type == "playlist" ) {
-			$sources = $this->get_sources($campaign_id, '_youtube_playlist_id');
+			$sources = $this->get_campaign_meta( $campaign_id, '_youtube_playlist_id' );
 			if ( empty( $sources ) ) {
 				return new WP_Error( 'missing-data', __( 'Campaign do not have playlist URL to proceed, please set playlist URL', 'wp-content-pilot' ) );
 			}
-		}else{
-			$sources = $this->get_sources($campaign_id);
+		} else {
+			$sources = $this->get_campaign_meta( $campaign_id );
 			if ( empty( $sources ) ) {
 				return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 			}
@@ -304,14 +305,14 @@ EOT;
 				}
 
 				$article = array(
-					'title'        => $title,
-					'author'       => $item->snippet->channelTitle,
-					'image_url'    => $image_url,
-					'excerpt'      => $description,
-					'language'     => '',
-					'content'      => $description,
-					'source_url'   => $link->url,
-					'published_at' => date( 'Y-m-d H:i:s', strtotime( @$item->snippet->publishedAt ) ),
+					'title'          => $title,
+					'author'         => $item->snippet->channelTitle,
+					'image_url'      => $image_url,
+					'excerpt'        => $description,
+					'language'       => '',
+					'content'        => $description,
+					'source_url'     => $link->url,
+					'published_at'   => date( 'Y-m-d H:i:s', strtotime( @$item->snippet->publishedAt ) ),
 					'video_id'       => sanitize_key( @$item->id ),
 					'channel_id'     => sanitize_key( @$item->snippet->channelId ),
 					'channel_title'  => sanitize_text_field( @$item->snippet->channelTitle ),
@@ -327,6 +328,7 @@ EOT;
 				);
 				$this->update_link( $link->id, [ 'status' => 'success' ] );
 				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
+
 				return $article;
 			}
 		}
@@ -422,7 +424,7 @@ EOT;
 			}
 
 			$url   = esc_url( 'https://www.youtube.com/watch?v=' . $video_id );
-			$title = ! empty( $item->snippet->title ) ? sanitize_text_field( $item->snippet->title ) : '';
+			$title = ! empty( $item->snippet->title ) ? sanitize_title( $item->snippet->title ) : '';
 			if ( $title == 'Private video' ) {
 				continue;
 			}
@@ -439,14 +441,14 @@ EOT;
 			$links[] = [
 				'title'   => wpcp_remove_emoji( $title ),
 				'url'     => $url,
-				'source'  => $source,
+				'for'     => $source,
 				'camp_id' => $campaign_id,
 			];
 		}
 
 		$total_inserted = $this->inset_links( $links );
 
-		wpcp_update_post_meta( $campaign_id, $token_key, $response->nextPageToken );
+		wpcp_update_post_meta( $campaign_id, $token_key, @$response->nextPageToken );
 		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $links ), $total_inserted ), $campaign_id );
 
 		return true;

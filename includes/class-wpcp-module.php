@@ -446,15 +446,15 @@ abstract class WPCP_Module {
 	 * Deactivate key for hours
 	 *
 	 * @param $campaign_id
-	 * @param $source
+	 * @param $key
 	 * @param int $hours
 	 *
 	 * @since 1.2.0
 	 */
-	protected function deactivate_key( $campaign_id, $source, $hours = 1 ) {
-		wpcp_logger()->warning( sprintf( 'Deactivating key [%s] for [%d] hour', $source, $hours ), $campaign_id );
+	protected function deactivate_key( $campaign_id, $key, $hours = 1 ) {
+		wpcp_logger()->warning( sprintf( 'Deactivating key [%s] for [%d] hour', $key, $hours ), $campaign_id );
 		$deactivated_until = current_time( 'timestamp' ) + ( $hours * HOUR_IN_SECONDS );
-		update_post_meta( $campaign_id, '_' . md5( $source ), $deactivated_until );
+		update_post_meta( $campaign_id, '_' . md5( $key ), $deactivated_until );
 	}
 
 	/**
@@ -466,8 +466,8 @@ abstract class WPCP_Module {
 	 * @return bool
 	 * @since 1.2.0
 	 */
-	protected function is_deactivated_key( $campaign_id, $source ) {
-		$deactivated_until = wpcp_get_post_meta( $campaign_id, '_' . md5( $source ), '' );
+	protected function is_deactivated_key( $campaign_id, $key ) {
+		$deactivated_until = wpcp_get_post_meta( $campaign_id, '_' . md5( $key ), '' );
 		if ( empty( $deactivated_until ) || $deactivated_until < current_time( 'timestamp' ) ) {
 			return false;
 		}
@@ -478,13 +478,13 @@ abstract class WPCP_Module {
 	/**
 	 * Get unique string for the campaign
 	 *
-	 * @param string $source
+	 * @param string $key
 	 *
 	 * @return string
 	 * @since 1.2.0
 	 */
-	protected function get_unique_key( $source = 'page' ) {
-		$key = '_wpcp_' . $source . '_' . md5( $source );
+	protected function get_unique_key( $key = 'page' ) {
+		$key = '_wpcp_' . $key . '_' . md5( $key );
 
 		return sanitize_title( $key );
 	}
@@ -530,9 +530,10 @@ abstract class WPCP_Module {
 	 * @return array|object|null
 	 * @since 1.2.0
 	 */
-	protected function get_links( $source, $campaign_id, $status = 'new', $count = 5 ) {
+	protected function get_links( $for, $campaign_id = null, $status = 'new', $count = 5 ) {
 		global $wpdb;
-		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE source=%s AND camp_id=%d AND status=%s LIMIT %d", $source, $campaign_id, $status, $count ) );
+
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE `for`=%s AND camp_id=%d AND status=%s LIMIT %d", $for, $campaign_id, $status, $count ) );
 		foreach ( $results as $result ) {
 			$result->meta = maybe_unserialize( base64_decode( $result->meta ) );
 		}
@@ -551,13 +552,13 @@ abstract class WPCP_Module {
 			'camp_id' => '',
 			'url'     => '',
 			'title'   => '',
-			'source'  => '',
+			'for'     => '',
 			'meta'    => '',
 			'status'  => 'new',
 		) );
 		global $wpdb;
 
-		$data['meta'] = ! is_serialized( $data['meta'] ) ? base64_encode( serialize( $data['meta'] ) ) : base64_encode( $data['meta'] );
+		$data['meta'] = ! is_serialized( $data['meta'] ) && !empty($data['meta']) ? base64_encode( serialize( $data['meta'] ) ) : base64_encode( $data['meta'] );
 
 		if ( false !== $wpdb->insert( $wpdb->wpcp_links, $data ) ) {
 			return $wpdb->insert_id;
@@ -601,6 +602,8 @@ abstract class WPCP_Module {
 	}
 
 	/**
+	 * Returns campaign meta mainly built for getting campaign keywords/links
+	 *
 	 * @param int $campaign_id
 	 * @param string $key
 	 * @param bool $shuffle
@@ -608,18 +611,19 @@ abstract class WPCP_Module {
 	 * @return string|array
 	 * @since 1.2.0
 	 * @since 1.2.4 $key added
+	 * @since 1.2.4 $default added
 	 * @since 1.2.4 $shuffle added
 	 */
-	protected function get_sources( $campaign_id, $key = "_keywords", $shuffle = true ) {
-		$sources = wpcp_get_post_meta( $campaign_id, $key, '' );
-		if ( empty( $sources ) ) {
-			return $sources;
+	protected function get_campaign_meta( $campaign_id, $key = '_keywords', $default = '', $shuffle = true ) {
+		$meta = wpcp_get_post_meta( $campaign_id, $key, $default );
+		if ( empty( $meta ) ) {
+			return $meta;
 		}
 		if ( $shuffle ) {
-			$sources = wpcp_string_to_array( $sources );
-			shuffle( $sources );
+			$metas = wpcp_string_to_array( $meta );
+			shuffle( $metas );
 		}
 
-		return $sources;
+		return $metas;
 	}
 }
