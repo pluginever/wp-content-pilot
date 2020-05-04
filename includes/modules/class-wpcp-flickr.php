@@ -119,13 +119,12 @@ EOT;
 
 	/**
 	 * @param int $campaign_id
-	 * @param array $keywords
 	 *
 	 * @return mixed|void
 	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
-	public function get_post( $campaign_id, $keywords ) {
+	public function get_post( $campaign_id ) {
 		wpcp_logger()->info( 'Flickr Campaign Started', $campaign_id );
 
 		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
@@ -137,6 +136,10 @@ EOT;
 			return new WP_Error( 'missing-data', $notice );
 		}
 
+		$keywords = $this->get_sources( $this->campaign_id );
+		if ( empty( $keywords ) ) {
+			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
+		}
 
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->info( sprintf( 'Looping through keywords [ %s ]', $keyword ), $campaign_id );
@@ -216,7 +219,6 @@ EOT;
 			}
 
 
-
 			wpcp_logger()->info( sprintf( 'Generating flickr article from [ %s ]', $source_url ), $campaign_id );
 			$article = array(
 				'title'      => $title,
@@ -232,7 +234,7 @@ EOT;
 			);
 
 			$this->insert_link( array(
-				'keyword' => $keyword,
+				'source'  => $keyword,
 				'title'   => $title,
 				'url'     => $source_url,
 				'camp_id' => $campaign_id,
