@@ -141,7 +141,7 @@ EOT;
 	public function get_post( $campaign_id) {
 		//before it was getting keywords but now we are changing to source instead of keywords
 		//it can be anything
-		$keywords = $this->get_keywords( $this->campaign_id );
+		$keywords = $this->get_sources( $this->campaign_id );
 		if ( empty( $keywords ) ) {
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}

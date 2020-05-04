@@ -123,14 +123,14 @@ EOT;
 	 * @since  1.2.0
 	 */
 	public function get_post( $campaign_id) {
-		$sources = wpcp_get_post_meta( $campaign_id, '_feed_links', '' );
+		$sources = $this->get_sources( $campaign_id, '_feed_links' );
 		if ( empty( $sources ) ) {
 			return new WP_Error( 'missing-data', __( 'Campaign do not have feed link to proceed, please set link', 'wp-content-pilot' ) );
 		}
 
 		wpcp_logger()->info( 'Feed Campaign Started', $campaign_id );
 
-		foreach ( (array) $sources as $source ) {
+		foreach ( $sources as $source ) {
 			wpcp_logger()->info( sprintf( 'Looping through feed link now trying with [ %s ]', $source ), $campaign_id );
 
 			if ( $this->is_deactivated_key( $campaign_id, $source ) ) {
