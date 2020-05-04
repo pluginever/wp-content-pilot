@@ -85,14 +85,14 @@ EOT;
 			'label'   => __( 'Youtube Search Type', 'wp-content-pilot' ),
 			'tooltip' => __( 'Use global search for all result or use specific channel if you want to limit to that channel.', 'wp-content-pilot' ),
 			'options' => array(
-				'global'  => __( 'Global', 'wp-content-pilot' ),
-				'channel' => __( 'From Specific Channel', 'wp-content-pilot' ),
+				'global'   => __( 'Global', 'wp-content-pilot' ),
+				'playlist' => __( 'From Playlist', 'wp-content-pilot' ),
 			),
 			'default' => 'global',
 		) );
 
 		echo WPCP_HTML::text_input( array(
-			'name'        => '_youtube_channel_id',
+			'name'        => '_youtube_playlist_id',
 			'placeholder' => __( 'Example: PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
 			'label'       => __( 'Youtube Playlist ID', 'wp-content-pilot' ),
 			'tooltip'     => __( 'eg. playlist id is PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
@@ -176,7 +176,7 @@ EOT;
 	 */
 	public function save_campaign_meta( $campaign_id, $posted ) {
 		wpcp_update_post_meta( $campaign_id, '_youtube_search_type', empty( $posted['_youtube_search_type'] ) ? '' : sanitize_text_field( $posted['_youtube_search_type'] ) );
-		wpcp_update_post_meta( $campaign_id, '_youtube_channel_id', empty( $posted['_youtube_channel_id'] ) ? '' : sanitize_text_field( $posted['_youtube_channel_id'] ) );
+		wpcp_update_post_meta( $campaign_id, '_youtube_playlist_id', empty( $posted['_youtube_playlist_id'] ) ? '' : sanitize_text_field( $posted['_youtube_playlist_id'] ) );
 		wpcp_update_post_meta( $campaign_id, '_youtube_category', empty( $posted['_youtube_category'] ) ? '' : sanitize_text_field( $posted['_youtube_category'] ) );
 		wpcp_update_post_meta( $campaign_id, '_youtube_search_orderby', empty( $posted['_youtube_search_orderby'] ) ? '' : sanitize_text_field( $posted['_youtube_search_orderby'] ) );
 		wpcp_update_post_meta( $campaign_id, '_youtube_license', empty( $posted['_youtube_license'] ) ? '' : sanitize_text_field( $posted['_youtube_license'] ) );
@@ -225,36 +225,37 @@ EOT;
 	 * @return mixed|void
 	 * @throws ErrorException
 	 */
-	public function get_post( $campaign_id, $keywords = null ) {
+	public function get_post( $campaign_id ) {
 		//if api not set bail
 		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_youtube', '' );
 		if ( empty( $api_key ) ) {
 			wpcp_disable_campaign( $campaign_id );
-
 			$notice = __( 'The YouTube api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot' );
-
 			wpcp_logger()->error( $notice, $campaign_id );
 
 			return new WP_Error( 'missing-data', $notice );
 		}
 
-		$last_keyword = $this->get_last_keyword( $campaign_id );
-
-		foreach ( $keywords as $keyword ) {
-			wpcp_logger()->debug( sprintf( 'Looping through keywords [ %s ]', $keyword ), $campaign_id );
-			//if more than 1 then unset last one
-			if ( count( $keywords ) > 1 && $last_keyword == $keyword ) {
-				wpcp_logger()->debug( sprintf( 'Keywords more than 1 and [ %s ] this keywords used last time so skipping it ', $keyword ), $campaign_id );
-				continue;
+		$source_type = wpcp_get_post_meta( $campaign_id, '_youtube_search_type', 'global' );
+		if ( $source_type == "playlist" ) {
+			$sources = $this->get_campaign_meta( $campaign_id, '_youtube_playlist_id' );
+			if ( empty( $sources ) ) {
+				return new WP_Error( 'missing-data', __( 'Campaign do not have playlist URL to proceed, please set playlist URL', 'wp-content-pilot' ) );
 			}
+		} else {
+			$sources = $this->get_campaign_meta( $campaign_id );
+			if ( empty( $sources ) ) {
+				return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
+			}
+		}
 
-
+		foreach ( $sources as $source ) {
 			//get links from database
-			$links = $this->get_links( $keyword, $campaign_id );
+			$links = $this->get_links( $source, $campaign_id );
 			if ( empty( $links ) ) {
 				wpcp_logger()->debug( 'No generated links now need to generate new links', $campaign_id );
-				$this->discover_links( $campaign_id, $keyword );
-				$links = $this->get_links( $keyword, $campaign_id );
+				$this->discover_links( $campaign_id, $source );
+				$links = $this->get_links( $source, $campaign_id );
 			}
 
 			foreach ( $links as $link ) {
@@ -304,15 +305,14 @@ EOT;
 				}
 
 				$article = array(
-					'title'        => $title,
-					'author'       => $item->snippet->channelTitle,
-					'image_url'    => $image_url,
-					'excerpt'      => $description,
-					'language'     => '',
-					'content'      => $description,
-					'source_url'   => $link->url,
-					'published_at' => date( 'Y-m-d H:i:s', strtotime( @$item->snippet->publishedAt ) ),
-
+					'title'          => $title,
+					'author'         => $item->snippet->channelTitle,
+					'image_url'      => $image_url,
+					'excerpt'        => $description,
+					'language'       => '',
+					'content'        => $description,
+					'source_url'     => $link->url,
+					'published_at'   => date( 'Y-m-d H:i:s', strtotime( @$item->snippet->publishedAt ) ),
 					'video_id'       => sanitize_key( @$item->id ),
 					'channel_id'     => sanitize_key( @$item->snippet->channelId ),
 					'channel_title'  => sanitize_text_field( @$item->snippet->channelTitle ),
@@ -327,9 +327,7 @@ EOT;
 					'transcript'     => $transcript,
 				);
 				$this->update_link( $link->id, [ 'status' => 'success' ] );
-
 				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
-				$this->set_last_keyword( $campaign_id, $keyword );
 
 				return $article;
 			}
@@ -338,30 +336,29 @@ EOT;
 		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
 
 		return new WP_Error( 'campaign-error', __( sprintf( 'No youtube article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
-
 	}
 
 	/**
 	 * Discover new youtube links
 	 *
 	 * @param $campaign_id
-	 * @param $keyword
+	 * @param $source
 	 *
 	 * @return bool
 	 * @since 1.2.0
 	 */
-	protected function discover_links( $campaign_id, $keyword ) {
+	protected function discover_links( $campaign_id, $source ) {
 		$category     = wpcp_get_post_meta( $campaign_id, '_youtube_category', 'all' );
 		$orderby      = wpcp_get_post_meta( $campaign_id, '_youtube_search_orderby', 'relevance' );
 		$search_type  = wpcp_get_post_meta( $campaign_id, '_youtube_search_type', 'global' );
-		$playlist_id  = wpcp_get_post_meta( $campaign_id, '_youtube_channel_id', '' );
+		$playlist_id  = wpcp_get_post_meta( $campaign_id, '_youtube_playlist_id', '' );
 		$license_type = wpcp_get_post_meta( $campaign_id, '_youtube_license', '' );
 		$duration     = wpcp_get_post_meta( $campaign_id, '_youtube_duration', 'any' );
 		$definition   = wpcp_get_post_meta( $campaign_id, '_youtube_definition', 'any' );
 		$video_type   = wpcp_get_post_meta( $campaign_id, '_youtube_video_type', 'any' );
 		$api_key      = wpcp_get_settings( 'api_key', 'wpcp_settings_youtube', 'any' );
 
-		$token_key       = sanitize_key( '_page_' . $campaign_id . '_' . md5( $keyword ) );
+		$token_key       = sanitize_key( '_page_' . $campaign_id . '_' . md5( $source ) );
 		$next_page_token = wpcp_get_post_meta( $campaign_id, $token_key, '' );
 
 
@@ -370,7 +367,7 @@ EOT;
 			'type'              => 'video',
 			'key'               => $api_key,
 			'maxResults'        => 50,
-			'q'                 => $keyword,
+			'q'                 => $source,
 			'category'          => $category,
 			'videoEmbeddable'   => 'true',
 			'videoType'         => $video_type,
@@ -382,9 +379,10 @@ EOT;
 			'pageToken'         => $next_page_token,
 		);
 		$endpoint   = 'https://www.googleapis.com/youtube/v3/search';
-		if ( $search_type === 'channel' && ! empty( $playlist_id ) ) {
+		if ( $search_type === 'playlist' && ! empty( $playlist_id ) ) {
 			$query_args['playlistId'] = $playlist_id;
-			$endpoint                 = 'https://www.googleapis.com/youtube/v3/playlistItems';
+			unset( $query_args['q'] );
+			$endpoint = 'https://www.googleapis.com/youtube/v3/playlistItems';
 		}
 
 		$endpoint = add_query_arg( $query_args, $endpoint );
@@ -406,12 +404,12 @@ EOT;
 		if ( isset( $response->nextPageToken ) && trim( $response->nextPageToken ) != '' ) {
 			wpcp_update_post_meta( $campaign_id, $token_key, $response->nextPageToken );
 		} else {
-			$this->deactivate_key( $campaign_id, $keyword );
+			$this->deactivate_key( $campaign_id, $source );
 		}
 
 		$items = $response->items;
 		if ( empty( $items ) ) {
-			$this->deactivate_key( $campaign_id, $keyword );
+			$this->deactivate_key( $campaign_id, $source );
 
 			return false;
 		}
@@ -426,35 +424,31 @@ EOT;
 			}
 
 			$url   = esc_url( 'https://www.youtube.com/watch?v=' . $video_id );
-			$title = ! empty( $item->snippet->title ) ? sanitize_text_field( $item->snippet->title ) : '';
+			$title = ! empty( $item->snippet->title ) ? sanitize_title( $item->snippet->title ) : '';
 			if ( $title == 'Private video' ) {
 				continue;
 			}
 
-			//check duplicate title and don't publish the post with duplicate title
-			$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
+			if ( wpcp_is_duplicate_url( $url ) ) {
+				continue;
+			}
 
-			if ( 'on' == $skip_duplicate_title ) {
-				if ( wpcp_is_duplicate_title( $title ) ) {
-					continue;
-				}
-
-				if ( wpcp_is_duplicate_url( $url ) ) {
-					continue;
-				}
+			$skip = apply_filters( 'wpcp_skip_duplicate_title', true, $title, $campaign_id );
+			if ( $skip ) {
+				continue;
 			}
 
 			$links[] = [
 				'title'   => wpcp_remove_emoji( $title ),
 				'url'     => $url,
-				'keyword' => $keyword,
+				'for'     => $source,
 				'camp_id' => $campaign_id,
 			];
 		}
 
 		$total_inserted = $this->inset_links( $links );
 
-		wpcp_update_post_meta( $campaign_id, $token_key, $response->nextPageToken );
+		wpcp_update_post_meta( $campaign_id, $token_key, @$response->nextPageToken );
 		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $links ), $total_inserted ), $campaign_id );
 
 		return true;

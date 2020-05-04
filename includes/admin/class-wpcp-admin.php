@@ -50,9 +50,9 @@ class WPCP_Admin {
 	 */
 	function admin_menu() {
 		$hook = 'edit.php?post_type=wp_content_pilot';
-		add_submenu_page( $hook, __( 'Status', 'wp-content-pilot' ), __( 'Status', 'wp-content-pilot' ), 'manage_options', 'wpcp-status', array( $this, 'status_page' ) );
-		add_submenu_page( $hook, __( 'Logs', 'wp-content-pilot' ), __( 'Logs', 'wp-content-pilot' ), 'manage_options', 'wpcp-logs', array( $this, 'logs_page' ) );
-		add_submenu_page( $hook, 'Help', '<span style="color:orange;">Help</span>', 'manage_options', 'wpcp-help', array( $this, 'help_page' ) );
+		add_submenu_page( $hook, __( 'Status', 'wp-content-pilot' ), __( 'Status', 'wp-content-pilot' ), 'edit_others_posts', 'wpcp-status', array( $this, 'status_page' ) );
+		add_submenu_page( $hook, __( 'Logs', 'wp-content-pilot' ), __( 'Logs', 'wp-content-pilot' ), 'edit_others_posts', 'wpcp-logs', array( $this, 'logs_page' ) );
+		add_submenu_page( $hook, 'Help', '<span style="color:orange;">Help</span>', 'edit_others_posts', 'wpcp-help', array( $this, 'help_page' ) );
 	}
 
 	/**
@@ -88,7 +88,7 @@ class WPCP_Admin {
 				'edit.php?post_type=wp_content_pilot',
 				'',
 				'<span style="color:#ff7a03;"><span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . __( 'Go Pro', 'wp-content-pilot' ) . '</span>',
-				'manage_options',
+				'edit_others_posts',
 				'go_wpcp_pro',
 				array( $this, 'go_pro_redirect' )
 			);
@@ -117,7 +117,6 @@ class WPCP_Admin {
 			return;
 		}
 		$upgrader = new WPCP_Updater();
-
 		if ( $upgrader->needs_update() ) {
 			$upgrader->perform_updates();
 		}

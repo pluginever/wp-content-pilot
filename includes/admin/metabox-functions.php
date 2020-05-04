@@ -304,8 +304,8 @@ function wpcp_use_excerpt_field() {
 
 function wpcp_escape_duplicate_title() {
 	echo WPCP_HTML::checkbox_input( array(
-		'label' => __( 'Skip post with duplicate title', 'wp-content-pilot' ),
-		'name'  => '_skip_duplicate_title',
+		'label' => __( 'Enable post with duplicate title', 'wp-content-pilot' ),
+		'name'  => '_enable_duplicate_title',
 	) );
 }
 

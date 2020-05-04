@@ -3,7 +3,7 @@
  * Plugin Name: WP Content Pilot
  * Plugin URI:  https://www.pluginever.com
  * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:     1.2.2
+ * Version:     1.2.4
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
@@ -44,7 +44,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '1.2.2';
+	protected $version = '1.2.4';
 
 	/**
 	 * The single instance of the class.
@@ -98,7 +98,7 @@ final class ContentPilot {
 		$this->define_tables();
 		$this->includes();
 		$this->init_hooks();
-		do_action( 'content_pilot__loaded' );
+		do_action( 'content__pilot__loaded' );
 	}
 
 	/**
@@ -127,7 +127,8 @@ final class ContentPilot {
 		global $wpdb;
 		$tables = array(
 			'wpcp_links',
-			'wpcp_logs'
+			'wpcp_logs',
+			'wpcp_items',
 		);
 		foreach ( $tables as $table ) {
 			$wpdb->$table   = $wpdb->prefix . $table;
@@ -191,6 +192,7 @@ final class ContentPilot {
 		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ), 20 );
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 		add_action( 'admin_init', array( $this, 'check_if_cron_running' ) );
+		register_shutdown_function( array( $this, 'log_errors' ) );
 	}
 
 	/**
@@ -249,17 +251,36 @@ final class ContentPilot {
 	}
 
 	/**
-	 * @return bool
+	 * @return void
 	 */
 	public function check_if_cron_running() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return false;
+		if (  current_user_can( 'manage_options' ) ) {
+//			$status = wpcp_check_cron_status();
+//			if ( is_wp_error( $status ) ) {
+//			$this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
+//			}
 		}
+	}
 
-		//$status = wpcp_check_cron_status();
-		//if ( is_wp_error( $status ) ) {
-		//$this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
-		//}
+	/**
+	 * Log fatal error
+	 *
+	 * @since 1.2.4
+	 */
+	public function log_errors() {
+		$error = error_get_last();
+		if ( $error && in_array( $error['type'], array( E_ERROR, E_PARSE, E_COMPILE_ERROR, E_USER_ERROR, E_RECOVERABLE_ERROR ), true ) ) {
+			wpcp_logger()->error( sprintf( __( '%1$s in %2$s on line %3$s', 'wp-content-pilot' ), $error['message'], $error['file'], $error['line'] ) . PHP_EOL);
+			do_action( 'wpcp_shutdown_error', $error );
+		}
+	}
+
+	/**
+	 * @since 1.2.3
+	 * @return string
+	 */
+	public function get_version(){
+		return $this->version;
 	}
 
 	/**
@@ -273,6 +294,9 @@ final class ContentPilot {
 	}
 }
 
+/**
+ * @return ContentPilot
+ */
 function content_pilot() {
 	return ContentPilot::instance();
 }

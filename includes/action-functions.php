@@ -24,7 +24,7 @@ function wpcp_handle_manual_campaign() {
 
 	if ( $posted >= $target ) {
 		wpcp_disable_campaign( $campaign_id );
-		wpcp_admin_notice( 'Reached target stopping campaign' );
+		wpcp_admin_notice( 'Campaign reached its targeted posts, automatically disabled.', 'error' );
 		wp_safe_redirect( $edit_link );
 		exit();
 	}
@@ -36,8 +36,8 @@ function wpcp_handle_manual_campaign() {
 		wp_safe_redirect( $edit_link );
 		exit();
 	}
-
-	$article_title = '<strong><a href="' . get_the_permalink( $article_id ) . '" target="_blank">' . get_the_title( $article_id ) . '</a></strong>';
+	$title = empty(get_the_title( $article_id ))? 'Untitled': get_the_title( $article_id );
+	$article_title = '<strong><a href="' . get_the_permalink( $article_id ) . '" target="_blank">' . $title . '</a></strong>';
 	$message       = sprintf( __( 'A post successfully created by %s titled %s', 'wp-content-pilot' ), '<strong>' . get_the_title( $campaign_id ) . '</strong>', $article_title );
 	wpcp_admin_notice( $message );
 
@@ -223,10 +223,10 @@ function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article )
 
 	$post_link = get_the_permalink( $post_id );
 	$subject   = __( 'Post Publish', 'wp-content-pilot' );
-	$body      = sprintf( __( "<h4>Post Title: %s</h4>
+	$body      = sprintf(  "<h4>Post Title: %s</h4>
                     <h5>Post Excerpt</h5>
                     <p>%s</p>
-                    <a href='%s'>View Post</a>", 'wp-content-pilot' ), esc_html( $title ), $excerpt, esc_url( $post_link )
+                    <a href='%s'>View Post</a>", esc_html( $title ), $excerpt, esc_url( $post_link )
 	);
 	$headers   = array( 'Content-Type: text/html; charset=UTF-8' );
 

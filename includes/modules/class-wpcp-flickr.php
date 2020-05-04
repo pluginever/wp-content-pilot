@@ -72,7 +72,6 @@ EOT;
 	 * @param $post
 	 */
 	public function add_campaign_option_fields( $post ) {
-
 	}
 
 	/**
@@ -84,7 +83,7 @@ EOT;
 	}
 
 	/**
-	 * @param $section
+	 * @param $sections
 	 *
 	 * @return array
 	 * @since 1.2.0
@@ -120,13 +119,12 @@ EOT;
 
 	/**
 	 * @param int $campaign_id
-	 * @param array $keywords
 	 *
 	 * @return mixed|void
 	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
-	public function get_post( $campaign_id, $keywords ) {
+	public function get_post( $campaign_id ) {
 		wpcp_logger()->info( 'Flickr Campaign Started', $campaign_id );
 
 		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
@@ -138,6 +136,10 @@ EOT;
 			return new WP_Error( 'missing-data', $notice );
 		}
 
+		$keywords = $this->get_campaign_meta( $campaign_id );
+		if ( empty( $keywords ) ) {
+			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
+		}
 
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->info( sprintf( 'Looping through keywords [ %s ]', $keyword ), $campaign_id );
@@ -206,10 +208,6 @@ EOT;
 			$source_url  = $response->photo->urls->url[0]->_content;
 			$tags        = wpcp_array_to_html( $tags );
 
-			if ( wpcp_is_duplicate_url( $source_url ) ) {
-				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-				continue;
-			}
 
 			//check if the clean title metabox is checked and perform title cleaning
 			$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
@@ -220,19 +218,6 @@ EOT;
 				$title = html_entity_decode( $title, ENT_QUOTES );
 			}
 
-			//check duplicate title and don't publish the post with duplicate title
-			$check_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
-
-			if ( 'on' == $check_duplicate_title ) {
-				if ( wpcp_is_duplicate_title( $title ) ) {
-					wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-					continue;
-				}
-			}
-//			if ( wpcp_is_duplicate_title( $title ) ) {
-//				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-//				continue;
-//			}
 
 			wpcp_logger()->info( sprintf( 'Generating flickr article from [ %s ]', $source_url ), $campaign_id );
 			$article = array(
@@ -249,10 +234,11 @@ EOT;
 			);
 
 			$this->insert_link( array(
-				'keyword' => $keyword,
+				'for'     => $keyword,
 				'title'   => $title,
 				'url'     => $source_url,
 				'camp_id' => $campaign_id,
+				'status'  => 'success',
 			) );
 			wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 

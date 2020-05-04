@@ -567,6 +567,8 @@ if ( ! class_exists( 'Pluginever_Insights' ) ) :
                 'reason_id'     => sanitize_text_field( $_POST['reason_id'] ),
                 'plugin'        => $this->slug,
                 'url'           => home_url(),
+				'name' => get_option('blogname'),
+				'admin_email' => get_option('admin_email'),
                 'user_email'    => $current_user->user_email,
                 'user_name'     => $current_user->display_name,
                 'reason_info'   => isset( $_REQUEST['reason_info'] ) ? trim( stripslashes( $_REQUEST['reason_info'] ) ) : '',

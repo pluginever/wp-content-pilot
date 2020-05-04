@@ -37,11 +37,11 @@ class WPCP_Install {
                 `camp_id` INT(11) NOT NULL,
                 `url` text DEFAULT NULL,
                 `title` text DEFAULT NULL,
-                `keyword` varchar(191) DEFAULT NULL,
+                `for` text DEFAULT NULL,
+                `meta` text DEFAULT NULL,
                 `status` VARCHAR(100) NOT NULL,
                 PRIMARY KEY (`id`)
             )  CHARACTER SET utf8 COLLATE utf8_general_ci;",
-
 
 			"CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}wpcp_logs` (
                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

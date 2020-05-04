@@ -82,8 +82,7 @@ function wpcp_update_settings( $field, $data ) {
  */
 function wpcp_is_duplicate_title( $title ) {
 	global $wpdb;
-
-	return $wpdb->get_var( $wpdb->prepare( "SELECT id from $wpdb->wpcp_links WHERE title=%s", sanitize_text_field( $title ) ) );
+	return !empty($wpdb->get_var( $wpdb->prepare( "SELECT id from $wpdb->wpcp_links WHERE title=%s", $title ) ));
 }
 
 /**
@@ -94,9 +93,9 @@ function wpcp_is_duplicate_title( $title ) {
  */
 function wpcp_is_duplicate_url( $url ) {
 	global $wpdb;
-
-	return $wpdb->get_var( $wpdb->prepare( "SELECT id from $wpdb->wpcp_links WHERE url=%s", sanitize_text_field( $url ) ) );
+	return $wpdb->get_row( $wpdb->prepare( "SELECT id from $wpdb->wpcp_links WHERE url=%s", $url ) );
 }
+
 
 
 /**
@@ -460,13 +459,13 @@ function wpcp_get_terms( $terms, $taxonomy = 'category' ) {
 }
 
 /**
- * @since 1.2.0
  * @param $terms
  * @param $post_id
  * @param $taxonomy
  * @param bool $append
  *
  * @return array|bool|false|WP_Error
+ * @since 1.2.0
  */
 function wpcp_set_post_terms( $terms, $post_id, $taxonomy, $append = true ) {
 	if ( ! is_array( $terms ) ) {
@@ -500,3 +499,23 @@ function wpcp_content_contains_word( $content, $word ) {
 
 	return false;
 }
+
+/**
+ * Trigger skip duplicate title campaigns
+ *
+ *
+ * @param $skip
+ * @param $title
+ *
+ * @return bool
+ * @since 1.2.0
+ */
+function wpcp_maybe_skip_duplicate_title( $skip, $title, $campaign_id ) {
+	if ( 'on' == wpcp_get_post_meta( $campaign_id, '_enable_duplicate_title' ) ) {
+		return false;
+	}
+
+	return wpcp_is_duplicate_title( $title );
+}
+
+add_filter( 'wpcp_skip_duplicate_title', 'wpcp_maybe_skip_duplicate_title', 10, 3 );

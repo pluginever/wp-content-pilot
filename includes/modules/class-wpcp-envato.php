@@ -191,7 +191,7 @@ EOT;
 	 * @return mixed|void
 	 * @throws ErrorException
 	 */
-	public function get_post( $campaign_id, $keywords ) {
+	public function get_post( $campaign_id ) {
 		wpcp_logger()->info( 'Envato Campaign Started', $campaign_id );
 
 		$token                = wpcp_get_settings( 'token', 'wpcp_settings_envato', '' );
@@ -207,12 +207,15 @@ EOT;
 
 		if ( empty( $envato_impact_radius ) ) {
 			$affiliate_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-settings#wpcp_settings_envato' );
-
-			$warning = sprintf( "The Impact  Radius affiliate url is not set. Set it from <a href='%s'>here</a>", $affiliate_url );
+			$warning       = sprintf( "The Impact  Radius affiliate url is not set. Set it from <a href='%s'>here</a>", $affiliate_url );
 
 			wpcp_admin_notice( $warning );
 		}
 
+		$keywords = $this->get_campaign_meta( $campaign_id );
+		if ( empty( $keywords ) ) {
+			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
+		}
 
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->info( sprintf( 'Looping through keywords [ %s ]', $keyword ), $campaign_id );
@@ -275,21 +278,16 @@ EOT;
 
 			foreach ( $response->matches as $item ) {
 
-				//check duplicate title and don't publish the post with duplicate title
-				$skip_duplicate_title = wpcp_get_post_meta( $campaign_id, '_skip_duplicate_title', 'off' );
-
-				if ( 'on' == $skip_duplicate_title ) {
-					if ( wpcp_is_duplicate_title( $item->name ) ) {
-						wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-						continue;
-					}
-
-					if ( wpcp_is_duplicate_url( $item->url ) ) {
-						wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
-						continue;
-					}
+				if ( wpcp_is_duplicate_url( $item->url ) ) {
+					wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
+					continue;
 				}
 
+				$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $item->name, $campaign_id );
+				if ( $skip ) {
+					wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
+					continue;
+				}
 
 				$image  = '';
 				$images = $item->previews;
@@ -306,7 +304,7 @@ EOT;
 
 				$tags = [];
 				if ( @$item->tags ) {
-					$tags = $tags;
+					$tags = $item->tags;
 				}
 				$tags  = wpcp_array_to_html( $tags );
 				$price = wpcp_cent_to_usd( @$item->price_cents );
@@ -342,10 +340,12 @@ EOT;
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 
 				$this->insert_link( array(
-					'keyword' => $keyword,
+					'for'     => $keyword,
 					'title'   => $item->name,
 					'url'     => $item->url,
 					'camp_id' => $campaign_id,
+					'status'  => 'success',
+					'meta'    => '',
 				) );
 
 				return $article;
