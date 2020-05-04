@@ -16,7 +16,7 @@ WP Content Pilot is an autoblogging and content curation plugin that allows you 
 You just have to set the keywords or targeted feed urls and WP Content Pilot will automatically posts contents from various sources until it meets the target that you set.
 It will keeps posting articles even while you are asleep.
 
-> [Get The PRO Version](https://www.pluginever.com/plugins/wp-content-pilot-pro/) | [Demo](http://demo.pluginever.com/wp-content-pilot)  |  [Support](https://www.pluginever.com/support/)  |  [Documentation ](https://www.pluginever.com/docs/wp-content-pilot/)
+> [Demo](http://demo.pluginever.xyz/wp-content-pilot) | [Get The PRO Version](https://www.pluginever.com/plugins/wp-content-pilot-pro/) |  [Support](https://www.pluginever.com/support/)  |  [Documentation ](https://www.pluginever.com/docs/wp-content-pilot/)
 
 https://www.youtube.com/watch?v=cNAEJqCqatg
 
