@@ -171,7 +171,7 @@ final class ContentPilot {
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-article.php' );
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-feed.php' );
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-youtube.php' );
-//		require_once( WPCP_INCLUDES . '/modules/class-wpcp-envato.php' );
+		require_once( WPCP_INCLUDES . '/modules/class-wpcp-envato.php' );
 //		require_once( WPCP_INCLUDES . '/modules/class-wpcp-flickr.php' );
 
 		if ( is_admin() ) {

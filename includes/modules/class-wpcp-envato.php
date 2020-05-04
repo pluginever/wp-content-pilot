@@ -80,12 +80,12 @@ EOT;
 			'name'        => '_platform',
 			'placeholder' => '',
 			'options'     => array(
-				'themeforest.net'  => 'ThemeForest',
-				'codecanyon.net'   => 'CodeCanyon',
-				'photodune.net'    => 'PhotoDune',
-				'videohive.net'    => 'VideoHive',
-				'graphicriver.net' => 'GraphicRiver',
-				'3docean.net'      => '3DOcean',
+				'themeforest.net'     => 'ThemeForest',
+				'codecanyon.net'      => 'CodeCanyon',
+				'photodune.net'       => 'PhotoDune',
+				'videohive.net'       => 'VideoHive',
+				'graphicriver.net'    => 'GraphicRiver',
+				'3docean.net'         => '3DOcean',
 			),
 			'tooltip'     => __( 'Select envato platform', 'wp-content-pilot' ),
 		) );
@@ -191,7 +191,7 @@ EOT;
 	 * @return mixed|void
 	 * @throws ErrorException
 	 */
-	public function get_post( $campaign_id, $keywords ) {
+	public function get_post( $campaign_id ) {
 		wpcp_logger()->info( 'Envato Campaign Started', $campaign_id );
 
 		$token                = wpcp_get_settings( 'token', 'wpcp_settings_envato', '' );
@@ -213,6 +213,10 @@ EOT;
 			wpcp_admin_notice( $warning );
 		}
 
+		$keywords = $this->get_sources( $this->campaign_id );
+		if ( empty( $keywords ) ) {
+			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
+		}
 
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->info( sprintf( 'Looping through keywords [ %s ]', $keyword ), $campaign_id );
@@ -274,12 +278,13 @@ EOT;
 			}
 
 			foreach ( $response->matches as $item ) {
-				if ( wpcp_is_duplicate_url( $item['link'] ) ) {
+
+				if ( wpcp_is_duplicate_url( $item->url ) ) {
 					wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 					continue;
 				}
 
-				$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $item['title'], $campaign_id );
+				$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $item->name, $campaign_id );
 				if ( $skip ) {
 					wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 					continue;
@@ -300,7 +305,7 @@ EOT;
 
 				$tags = [];
 				if ( @$item->tags ) {
-					$tags = $tags;
+					$tags = $item->tags;
 				}
 				$tags  = wpcp_array_to_html( $tags );
 				$price = wpcp_cent_to_usd( @$item->price_cents );
@@ -336,7 +341,7 @@ EOT;
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 
 				$this->insert_link( array(
-					'keyword' => $keyword,
+					'source'  => $keyword,
 					'title'   => $item->name,
 					'url'     => $item->url,
 					'camp_id' => $campaign_id,
