@@ -117,7 +117,6 @@ class WPCP_Admin {
 			return;
 		}
 		$upgrader = new WPCP_Updater();
-
 		if ( $upgrader->needs_update() ) {
 			$upgrader->perform_updates();
 		}
