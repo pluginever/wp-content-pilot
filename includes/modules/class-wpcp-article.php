@@ -141,7 +141,7 @@ EOT;
 	public function get_post( $campaign_id, $source ) {
 		//before it was getting keywords but now we are changing to source instead of keywords
 		//it can be anything
-		if ( empty( $source ) ) {
+		if ( empty( $source ) || !is_array($source)) {
 			$keywords = $this->get_keywords( $this->campaign_id );
 		}
 

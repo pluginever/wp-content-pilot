@@ -125,7 +125,7 @@ abstract class WPCP_Module {
 
 	/**
 	 * @param int $campaign_id
-	 * @param array $source
+	 * @param array|string $source
 	 *
 	 * @return mixed
 	 * @since 1.2.0

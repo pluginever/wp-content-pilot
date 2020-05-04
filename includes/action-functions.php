@@ -24,7 +24,7 @@ function wpcp_handle_manual_campaign() {
 
 	if ( $posted >= $target ) {
 		wpcp_disable_campaign( $campaign_id );
-		wpcp_admin_notice( 'Reached target stopping campaign' );
+		wpcp_admin_notice( 'Campaign reached its targeted posts, automatically disabled.', 'error' );
 		wp_safe_redirect( $edit_link );
 		exit();
 	}
