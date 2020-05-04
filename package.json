@@ -2,7 +2,7 @@
   "name": "wp-content-pilot",
   "title": "WP Content Pilot",
   "description": "The Best WordPress Plugin ever made!",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "homepage": "https://www.pluginever.com",
   "keywords": [],
   "author": {
@@ -42,7 +42,7 @@
     "grunt-wp-i18n": "~1.0.1",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.7",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.14.0",
     "stylelint": "~9.10.1",
     "susy": "2.2.14"
   },

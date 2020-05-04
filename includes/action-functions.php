@@ -223,10 +223,10 @@ function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article )
 
 	$post_link = get_the_permalink( $post_id );
 	$subject   = __( 'Post Publish', 'wp-content-pilot' );
-	$body      = sprintf( __( "<h4>Post Title: %s</h4>
+	$body      = sprintf(  "<h4>Post Title: %s</h4>
                     <h5>Post Excerpt</h5>
                     <p>%s</p>
-                    <a href='%s'>View Post</a>", 'wp-content-pilot' ), esc_html( $title ), $excerpt, esc_url( $post_link )
+                    <a href='%s'>View Post</a>", esc_html( $title ), $excerpt, esc_url( $post_link )
 	);
 	$headers   = array( 'Content-Type: text/html; charset=UTF-8' );
 
