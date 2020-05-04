@@ -125,12 +125,11 @@ abstract class WPCP_Module {
 
 	/**
 	 * @param int $campaign_id
-	 * @param array|string $source
 	 *
 	 * @return mixed
 	 * @since 1.2.0
 	 */
-	abstract public function get_post( $campaign_id, $source );
+	abstract public function get_post( $campaign_id );
 
 	/**
 	 * @param $campaign_id
@@ -180,7 +179,7 @@ abstract class WPCP_Module {
 //			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 //		}
 
-		$article = $this->get_post( $campaign_id, $source );
+		$article = $this->get_post( $campaign_id );
 		if ( is_wp_error( $article ) ) {
 			//wpcp_logger()->error( $article->get_error_message(), $campaign_id);
 			return $article;
@@ -603,22 +602,24 @@ abstract class WPCP_Module {
 
 	/**
 	 * @param int $campaign_id
+	 * @param string $key
 	 * @param bool $shuffle
 	 *
 	 * @return string|array
 	 * @since 1.2.0
+	 * @since 1.2.4 $key added
 	 * @since 1.2.4 $shuffle added
 	 */
-	protected function get_keywords( $campaign_id, $shuffle = true ) {
-		$keywords = wpcp_get_post_meta( $campaign_id, '_keywords', '' );
-		if ( empty( $keywords ) ) {
-			return $keywords;
+	protected function get_sources( $campaign_id, $key = "_keywords", $shuffle = true ) {
+		$sources = wpcp_get_post_meta( $campaign_id, $key, '' );
+		if ( empty( $sources ) ) {
+			return $sources;
 		}
 		if ( $shuffle ) {
-			$keywords = wpcp_string_to_array( $keywords );
-			shuffle( $keywords );
+			$sources = wpcp_string_to_array( $sources );
+			shuffle( $sources );
 		}
 
-		return $keywords;
+		return $sources;
 	}
 }

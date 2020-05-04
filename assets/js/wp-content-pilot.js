@@ -33,13 +33,35 @@ jQuery(document).ready(function ($) {
 			$(this).prev('.spinner').show().addClass('is-active');
 			$('.publishing-action-btn .button').attr('disabled', 'disabled');
 		},
+		hideKeywordField:function(){
+			var keywordInput = $('#_keywords');
+			var suggestionInput = $('#_keyword_suggestion');
+			var keywordWrapper = keywordInput.closest('p._keywords-field');
+			var suggestionWrapper = suggestionInput.closest('p._keyword_suggestion-field');
+			keywordInput.attr('disabled', 'disabled');
+			suggestionInput.attr('disabled', 'disabled');
+			keywordWrapper.hide();
+			suggestionWrapper.hide();
+		},
+		showKeywordField:function(){
+			var keywordInput = $('#_keywords');
+			var suggestionInput = $('#_keyword_suggestion');
+			var keywordWrapper = keywordInput.closest('p._keywords-field');
+			var suggestionWrapper = suggestionInput.closest('p._keyword_suggestion-field');
+			keywordInput.removeAttr('disabled');
+			suggestionInput.removeAttr('disabled');
+			keywordWrapper.show();
+			suggestionWrapper.show();
+		},
 		youtube: function () {
 			$('#_youtube_search_type').on('change', function () {
 				var channnelField = $('._youtube_channel_id-field');
 				if('global' === $(this).val()){
 					channnelField.hide();
+					$.wp_content_pilot.showKeywordField();
 				}else{
 					channnelField.show();
+					$.wp_content_pilot.hideKeywordField();
 				}
 			}).change();
 		},

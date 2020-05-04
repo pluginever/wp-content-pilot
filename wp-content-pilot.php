@@ -98,7 +98,7 @@ final class ContentPilot {
 		$this->define_tables();
 		$this->includes();
 		$this->init_hooks();
-		do_action( 'content_pilot__loaded' );
+		do_action( 'content__pilot__loaded' );
 	}
 
 	/**
@@ -170,7 +170,7 @@ final class ContentPilot {
 		//modules
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-article.php' );
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-feed.php' );
-//		require_once( WPCP_INCLUDES . '/modules/class-wpcp-youtube.php' );
+		require_once( WPCP_INCLUDES . '/modules/class-wpcp-youtube.php' );
 //		require_once( WPCP_INCLUDES . '/modules/class-wpcp-envato.php' );
 //		require_once( WPCP_INCLUDES . '/modules/class-wpcp-flickr.php' );
 
