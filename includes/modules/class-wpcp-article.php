@@ -149,7 +149,6 @@ EOT;
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}
 
-
 		wpcp_logger()->info( 'Article Campaign Started', $campaign_id );
 
 		//loop through keywords

@@ -27,7 +27,11 @@ jQuery(document).ready(function ($) {
 			$('.wpcp-select2').select2({
 				theme: 'default wpcp-select2'
 			});
-
+		},
+		spinner:function () {
+			$(this).hide();
+			$(this).prev('.spinner').show().addClass('is-active');
+			$('.publishing-action-btn .button').attr('disabled', 'disabled');
 		},
 		youtube: function () {
 			$('#_youtube_search_type').on('change', function () {
@@ -38,11 +42,6 @@ jQuery(document).ready(function ($) {
 					channnelField.show();
 				}
 			}).change();
-		},
-		spinner:function () {
-			$(this).hide();
-			$(this).prev('.spinner').show().addClass('is-active');
-			$('.publishing-action-btn .button').attr('disabled', 'disabled');
 		},
 		deleteCampaignPosts:function (e) {
 			e.preventDefault();

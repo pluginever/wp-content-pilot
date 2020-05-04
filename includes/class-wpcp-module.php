@@ -610,12 +610,15 @@ abstract class WPCP_Module {
 	 * @since 1.2.4 $shuffle added
 	 */
 	protected function get_keywords( $campaign_id, $shuffle = true ) {
-		$keywords = wpcp_get_post_meta( $this->campaign_id, '_keywords', '' );
-		if ( ! $shuffle ) {
+		$keywords = wpcp_get_post_meta( $campaign_id, '_keywords', '' );
+		if ( empty( $keywords ) ) {
 			return $keywords;
 		}
-		$keywords = wpcp_string_to_array( $keywords );
+		if ( $shuffle ) {
+			$keywords = wpcp_string_to_array( $keywords );
+			shuffle( $keywords );
+		}
 
-		return shuffle( $keywords );
+		return $keywords;
 	}
 }
