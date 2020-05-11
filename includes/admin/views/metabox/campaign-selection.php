@@ -92,6 +92,13 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/facebook.png' )
 	),
 	array(
+		'label'    => 'GearBest',
+		'name'     => 'gearbest',
+		'keywords' => 'job',
+		'disabled' => true,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/gearbest.png' )
+	),
+	array(
 		'label'    => 'Instagram',
 		'name'     => 'instagram',
 		'keywords' => 'job',
