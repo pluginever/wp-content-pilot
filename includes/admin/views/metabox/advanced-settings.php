@@ -35,6 +35,7 @@ echo WPCP_HTML::select_input( array(
 	'default'       => 'dropl',
 	'wrapper_class' => 'pro',
 	'options'       => array(
+		''       => __( 'No Translation', 'wp-content-pilot' ),
 		'yandex' => 'Yandex',
 		'deepl'  => 'deepL',
 	),
@@ -46,7 +47,7 @@ echo WPCP_HTML::select_input( array(
 echo WPCP_HTML::select_input( array(
 	'label'         => __( 'Translate To', 'wp-content-pilot' ),
 	'name'          => '_translate_to',
-	'class'          => 'wpcp-select2',
+	'class'         => 'wpcp-select2',
 	'options'       => array(
 		''    => __( 'No Translation', 'wp-content-pilot' ),
 		'af'  => __( 'Afrikaans', 'wp-content-pilot' ),
