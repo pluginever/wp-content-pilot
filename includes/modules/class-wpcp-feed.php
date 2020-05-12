@@ -215,9 +215,9 @@ EOT;
 		if ( is_wp_error( $rss ) ) {
 			wpcp_logger()->warning( sprintf( 'Failed fetching feeds [%s]', $rss->get_error_message() ), $campaign_id );
 
-			if ( ! function_exists( 'wpcp_automatic_force_feed' ) ) {
-				add_action( 'wp_feed_options', 'wpcp_automatic_force_feed', 10, 1 );
-				function wp_automatic_force_feed( $rss ) {
+			if ( ! function_exists( 'wpcp_force_feed' ) ) {
+				add_action( 'wp_feed_options', 'wpcp_force_feed', 10, 1 );
+				function wpcp_force_feed( $rss ) {
 					$rss->force_feed( true );
 				}
 			}

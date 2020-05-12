@@ -27,7 +27,7 @@ class WPCP_Admin {
 	public function includes() {
 		require_once( dirname( __FILE__ ) . '/admin-functions.php' );
 		require_once ( dirname( __FILE__ ). '/class-wpcp-updater.php');
-		require_once( dirname( __FILE__ ) . '/class-settings-api.php' );
+		require_once( dirname( __FILE__ ) . '/class-settings-framework.php' );
 		require_once( dirname( __FILE__ ) . '/class-wpcp-settings.php' );
 		require_once( dirname( __FILE__ ) . '/class-wpcp-promotion.php' );
 		require_once( dirname( __FILE__ ) . '/metabox-functions.php' );

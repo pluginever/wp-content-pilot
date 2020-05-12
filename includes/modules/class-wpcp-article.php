@@ -68,6 +68,7 @@ EOT;
 			'label'         => __( 'Select region to search article', 'wp-content-pilot' ),
 			'options'       => $this->get_article_region(),
 			'default'       => 'global',
+			'class'         => 'wpcp-select2',
 			'wrapper_class' => 'pro',
 			'attrs'         => array(
 				'disabled' => 'disabled',

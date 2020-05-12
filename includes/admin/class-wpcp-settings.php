@@ -6,7 +6,7 @@ defined( 'ABSPATH' ) || exit();
  */
 class WPCP_Settings {
 	/**
-	 * @var Ever_WP_Settings_API
+	 * @var Ever_Settings_Framework
 	 */
 	private $settings_api;
 
@@ -15,7 +15,7 @@ class WPCP_Settings {
 	 * WPCP_Settings constructor.
 	 */
 	function __construct() {
-		$this->settings_api = new Ever_WP_Settings_API();
+		$this->settings_api = new Ever_Settings_Framework();
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ), 99 );
 	}
@@ -42,8 +42,8 @@ class WPCP_Settings {
 	}
 
 	/**
-	 * @since 1.2.0
 	 * @return mixed|void
+	 * @since 1.2.0
 	 */
 	function get_settings_sections() {
 		$sections = array(
@@ -63,7 +63,7 @@ class WPCP_Settings {
 	 */
 	function get_settings_fields() {
 		$settings_fields = array(
-			'wpcp_settings_misc'    => array(
+			'wpcp_settings_misc' => array(
 				array(
 					'name'    => 'uninstall_on_delete',
 					'label'   => __( 'Remove Data on Uninstall?', 'wp-content-pilot' ),
@@ -93,11 +93,68 @@ class WPCP_Settings {
 
 	function settings_page() {
 		?>
+		<div class="wrap">
+			<?php echo sprintf( "<h2>%s</h2>", __( 'WP Content Pilot Settings', 'wp-content-pilot' ) ); ?>
+			<div id="poststuff">
+				<div id="post-body" class="columns-2">
+					<div id="post-body-content">
+						<?php $this->settings_api->show_settings(); ?>
+					</div>
+					<div id="postbox-container-1" class="postbox-container" style="margin-top: 15px;">
+
+						<div class="postbox" style="min-width: inherit;">
+							<h3 class="hndle"><label for="title"><?php _e( 'Upgrade to PRO', 'wp-content-pilot' ); ?></label></h3>
+							<div class="inside">
+								<?php
+								echo sprintf( __( 'Pro version support 15+ campaign sources with exclusive features, %supgrade to pro now%s.', 'wp-content-pilot' ), '<a href="https://pluginever.com/plugins/wp-content-pilot-pro/" target="_blank">', '</a>' )
+								?>
+							</div>
+						</div>
+
+
+						<div class="postbox" style="min-width: inherit;">
+							<h3 class="hndle"><label for="title"><?php _e( 'Documentation', 'wp-content-pilot' ); ?></label></h3>
+							<div class="inside">
+								<?php
+								echo sprintf( __( 'Please visit the %s WP Content Pilot %s  plugin\'s documentation page to learn how to use this plugin', 'wp-content-pilot' ), '<a href="https://pluginever.com/docs/wp-content-pilot/" target="_blank">', '</a>' )
+								?>
+							</div>
+						</div>
+
+						<div class="postbox" style="min-width: inherit;">
+							<h3 class="hndle"><label for="title"><?php _e( 'Support', 'wp-content-pilot' ); ?></label></h3>
+							<div class="inside">
+								<?php
+								echo sprintf( __( 'Having issues or difficulties? You can post your issue on the %s Support Forum.%s', 'wp-content-pilot' ), '<a href="https://pluginever.com/support/" target="_blank">', '</a>' )
+								?>
+
+							</div>
+						</div>
+
+						<div class="postbox" style="min-width: inherit;">
+							<h3 class="hndle"><label for="title">Rate Us</label></h3>
+							<div class="inside">
+								<?php
+								echo sprintf( __( 'Like the plugin? Please give us a  %s rating.%s', 'wp-content-pilot' ), '<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/#new-post" target="_blank">', '</a>' )
+								?>
+								<div class="ratings-stars-container">
+									<a href="https://wordpress.org/support/plugin/easy-wp-smtp/reviews/?filter=5"
+									   target="_blank"><span class="dashicons dashicons-star-filled"></span><span
+											class="dashicons dashicons-star-filled"></span><span
+											class="dashicons dashicons-star-filled"></span><span
+											class="dashicons dashicons-star-filled"></span><span
+											class="dashicons dashicons-star-filled"></span>
+									</a>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<br class="clear">
+			</div>
+		</div>
 		<?php
-		echo '<div class="wrap">';
-		echo sprintf( "<h2>%s</h2>", __( 'WP Content Pilot Settings', 'wp-content-pilot' ) );
-		$this->settings_api->show_settings();
-		echo '</div>';
 	}
 
 	/**
