@@ -423,7 +423,6 @@ abstract class WPCP_Module {
 		@$curl->setOpt( CURLOPT_COOKIEJAR, untrailingslashit( WPCP_PATH ) . '/' . $jar );
 		@$curl->setOpt( CURLOPT_COOKIEJAR, $jar );
 		$curl->setOpt( CURLOPT_SSL_VERIFYPEER, false );
-
 		return $curl;
 	}
 
