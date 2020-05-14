@@ -344,6 +344,12 @@ class WPCP_Help {
 		        'pro' => true,
 	        ],
 	        [
+		        'title' => __( 'Pixabay', 'wp-content-pilot' ),
+		        'desc' => __( 'Pixabay module to import photos and videos', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
 		        'title' => __( 'Search Replace', 'wp-content-pilot' ),
 		        'desc' => __( 'Automatic search replace with regex support', 'wp-content-pilot' ),
 		        'free' => false,

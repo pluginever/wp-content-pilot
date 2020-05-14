@@ -113,6 +113,13 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/pinterest.png' )
 	),
 	array(
+		'label'    => 'Pixabay',
+		'name'     => 'pixabay',
+		'keywords' => 'job',
+		'disabled' => true,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/pixabay.png' )
+	),
+	array(
 		'label'    => 'Quora',
 		'name'     => 'quora',
 		'keywords' => 'job',
