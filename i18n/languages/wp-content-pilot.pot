@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Content Pilot 1.2.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2020-05-04 17:56:14+00:00\n"
+"POT-Creation-Date: 2020-05-16 11:21:20+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/action-functions.php:7 includes/action-functions.php:260
+#: includes/action-functions.php:7 includes/action-functions.php:268
 msgid "No Cheating"
 msgstr ""
 
@@ -25,11 +25,11 @@ msgstr ""
 msgid "A post successfully created by %s titled %s"
 msgstr ""
 
-#: includes/action-functions.php:225
+#: includes/action-functions.php:233
 msgid "Post Publish"
 msgstr ""
 
-#: includes/admin/class-settings-api.php:354
+#: includes/admin/class-settings-framework.php:376
 msgid "Choose File"
 msgstr ""
 
@@ -371,7 +371,7 @@ msgid "Readability score controlled posts for clean articles"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:365
-#: includes/admin/metabox-functions.php:218
+#: includes/admin/metabox-functions.php:219
 #: includes/admin/views/page/help-page.php:187
 msgid "Keyword Suggestion"
 msgstr ""
@@ -437,7 +437,7 @@ msgid ""
 "<strong>WPCPFREE2PRO</strong>"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:38 wp-content-pilot.php:229
+#: includes/admin/class-wpcp-settings.php:38 wp-content-pilot.php:230
 msgid "Settings"
 msgstr ""
 
@@ -463,8 +463,42 @@ msgstr ""
 msgid "Send mail After post publish"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:98
+#: includes/admin/class-wpcp-settings.php:97
 msgid "WP Content Pilot Settings"
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:106 wp-content-pilot.php:232
+msgid "Upgrade to PRO"
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:109
+msgid ""
+"Pro version support 15+ campaign sources with exclusive features, %supgrade "
+"to pro now%s."
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:116
+msgid "Documentation"
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:119
+msgid ""
+"Please visit the %s WP Content Pilot %s  plugin's documentation page to "
+"learn how to use this plugin"
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:125
+msgid "Support"
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:128
+msgid ""
+"Having issues or difficulties? You can post your issue on the %s Support "
+"Forum.%s"
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:138
+msgid "Like the plugin? Please give us a  %s rating.%s"
 msgstr ""
 
 #: includes/admin/class-wpcp-tracker.php:7
@@ -516,65 +550,65 @@ msgstr ""
 msgid "Campaign Posts"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:205
+#: includes/admin/metabox-functions.php:206
 msgid "Keywords"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:208
+#: includes/admin/metabox-functions.php:209
 msgid "Separate keywords by comma."
 msgstr ""
 
-#: includes/admin/metabox-functions.php:233
+#: includes/admin/metabox-functions.php:234
 msgid "Strip original links from the post"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:235
+#: includes/admin/metabox-functions.php:236
 msgid "Remove hyperlinks found in the article"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:241
+#: includes/admin/metabox-functions.php:242
 msgid "Make permalink link directly to the source"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:243
+#: includes/admin/metabox-functions.php:244
 msgid ""
 "Make post link directly to the source site, Posts will not load at your "
 "site."
 msgstr ""
 
-#: includes/admin/metabox-functions.php:253
+#: includes/admin/metabox-functions.php:254
 msgid "Add Canonical Tag with the original post link "
 msgstr ""
 
-#: includes/admin/metabox-functions.php:264
+#: includes/admin/metabox-functions.php:265
 msgid "Set First image as featured image"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:271
+#: includes/admin/metabox-functions.php:272
 msgid "Remove images from content"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:278
+#: includes/admin/metabox-functions.php:279
 msgid "Set random featured image if no image exists"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:289
+#: includes/admin/metabox-functions.php:290
 msgid "Use original date if possible"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:300
+#: includes/admin/metabox-functions.php:301
 msgid "Use summary as excerpt"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:307
+#: includes/admin/metabox-functions.php:308
 msgid "Enable post with duplicate title"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:314
+#: includes/admin/metabox-functions.php:315
 msgid "Clean title"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:321
+#: includes/admin/metabox-functions.php:322
 msgid "Add rel nofollow & set target blank for all links"
 msgstr ""
 
@@ -639,387 +673,392 @@ msgstr ""
 msgid "Excerpt Length"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:31
-msgid "Translate To"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:34
-msgid "No Translation"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:35
-msgid "Afrikaans"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:36
-msgid "Albanian"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:37
-msgid "Amharic"
+#: includes/admin/views/metabox/advanced-settings.php:32
+msgid "Translator"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:38
-msgid "Arabic"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:39
-msgid "Armenian"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:40
-msgid "Azerbaijani"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:41
-msgid "Bashkir"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:42
-msgid "Basque"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:43
-msgid "Belarusian"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:44
-msgid "Bengali"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:45
-msgid "Bosnian"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:46
-msgid "Bulgarian"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:47
-msgid "Burmese"
+#: includes/admin/views/metabox/advanced-settings.php:52
+msgid "No Translation"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:48
-msgid "Catalan"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:49
-msgid "Cebuano"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:50
-msgid "Chinese"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:51
-msgid "Croatian"
-msgstr ""
-
-#: includes/admin/views/metabox/advanced-settings.php:52
-msgid "Czech"
+msgid "Translate To"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:53
-msgid "Danish"
+msgid "Afrikaans"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:54
-msgid "Dutch"
+msgid "Albanian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:55
-msgid "English"
+msgid "Amharic"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:56
-msgid "Esperanto"
+msgid "Arabic"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:57
-msgid "Estonian"
+msgid "Armenian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:58
-msgid "Finnish"
+msgid "Azerbaijani"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:59
-msgid "French"
+msgid "Bashkir"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:60
-msgid "Galician"
+msgid "Basque"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:61
-msgid "Georgian"
+msgid "Belarusian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:62
-msgid "German"
+msgid "Bengali"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:63
-msgid "Greek"
+msgid "Bosnian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:64
-msgid "Gujarati"
+msgid "Bulgarian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:65
-msgid "Haitian Creole"
+msgid "Burmese"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:66
-msgid "Hebrew"
+msgid "Catalan"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:67
-msgid "Hill Mari"
+msgid "Cebuano"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:68
-msgid "Hindi"
+msgid "Chinese"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:69
-msgid "Hungarian"
+msgid "Croatian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:70
-msgid "Icelandic"
+msgid "Czech"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:71
-msgid "Indonesian"
+msgid "Danish"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:72
-msgid "Irish"
+msgid "Dutch"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:73
-msgid "Italian"
+msgid "English"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:74
-msgid "Japanese"
+msgid "Esperanto"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:75
-msgid "Javanese"
+msgid "Estonian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:76
-msgid "Kannada"
+msgid "Finnish"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:77
-msgid "Kazakh"
+msgid "French"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:78
-msgid "Khmer"
+msgid "Galician"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:79
-msgid "Korean"
+msgid "Georgian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:80
-msgid "Kyrgyz"
+msgid "German"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:81
-msgid "Lao"
+msgid "Greek"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:82
-msgid "Latin"
+msgid "Gujarati"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:83
-msgid "Latvian"
+msgid "Haitian Creole"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:84
-msgid "Lithuanian"
+msgid "Hebrew"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:85
-msgid "Luxembourgish"
+msgid "Hill Mari"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:86
-msgid "Macedonian"
+msgid "Hindi"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:87
-msgid "Malagasy"
+msgid "Hungarian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:88
-msgid "Malay"
+msgid "Icelandic"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:89
-msgid "Malayalam"
+msgid "Indonesian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:90
-msgid "Maltese"
+msgid "Irish"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:91
-msgid "Maori"
+msgid "Italian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:92
-msgid "Marathi"
+msgid "Japanese"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:93
-msgid "Mari"
+msgid "Javanese"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:94
-msgid "Mongolian"
+msgid "Kannada"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:95
-msgid "Nepali"
+msgid "Kazakh"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:96
-msgid "Norwegian"
+msgid "Khmer"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:97
-msgid "Papiamento"
+msgid "Korean"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:98
-msgid "Persian"
+msgid "Kyrgyz"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:99
-msgid "Polish"
+msgid "Lao"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:100
-msgid "Portuguese"
+msgid "Latin"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:101
-msgid "Punjabi"
+msgid "Latvian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:102
-msgid "Romanian"
+msgid "Lithuanian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:103
-msgid "Russian"
+msgid "Luxembourgish"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:104
-msgid "Scottish Gaelic"
+msgid "Macedonian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:105
-msgid "Serbian"
+msgid "Malagasy"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:106
-msgid "Sinhala"
+msgid "Malay"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:107
-msgid "Slovak"
+msgid "Malayalam"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:108
-msgid "Slovenian"
+msgid "Maltese"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:109
-msgid "Spanish"
+msgid "Maori"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:110
-msgid "Sundanese"
+msgid "Marathi"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:111
-msgid "Swahili"
+msgid "Mari"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:112
-msgid "Swedish"
+msgid "Mongolian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:113
-msgid "Tagalog"
+msgid "Nepali"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:114
-msgid "Tajik"
+msgid "Norwegian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:115
-msgid "Tamil"
+msgid "Papiamento"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:116
-msgid "Tatar"
+msgid "Persian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:117
-msgid "Telugu"
+msgid "Polish"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:118
-msgid "Thai"
+msgid "Portuguese"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:119
-msgid "Turkish"
+msgid "Punjabi"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:120
-msgid "Udmurt"
+msgid "Romanian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:121
-msgid "Ukrainian"
+msgid "Russian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:122
-msgid "Urdu"
+msgid "Scottish Gaelic"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:123
-msgid "Uzbek"
+msgid "Serbian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:124
-msgid "Vietnamese"
+msgid "Sinhala"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:125
-msgid "Welsh"
+msgid "Slovak"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:126
-msgid "Xhosa"
+msgid "Slovenian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:127
-msgid "Yiddish"
+msgid "Spanish"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:128
+msgid "Sundanese"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:129
+msgid "Swahili"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:130
+msgid "Swedish"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:131
+msgid "Tagalog"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:132
+msgid "Tajik"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:133
+msgid "Tamil"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:134
+msgid "Tatar"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:135
+msgid "Telugu"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:136
+msgid "Thai"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:137
+msgid "Turkish"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:138
+msgid "Udmurt"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:139
+msgid "Ukrainian"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:140
+msgid "Urdu"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:141
+msgid "Uzbek"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:142
+msgid "Vietnamese"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:143
+msgid "Welsh"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:144
+msgid "Xhosa"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:145
+msgid "Yiddish"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:147
 msgid "Select a language to translate."
 msgstr ""
 
@@ -1031,7 +1070,7 @@ msgstr ""
 msgid "No posts generated yet"
 msgstr ""
 
-#: includes/admin/views/metabox/campaign-selection.php:177
+#: includes/admin/views/metabox/campaign-selection.php:183
 msgid "Submit"
 msgstr ""
 
@@ -1333,6 +1372,7 @@ msgstr ""
 
 #: includes/admin/views/tables/class-wpcp-logs-table.php:188
 #: includes/modules/class-wpcp-envato.php:109
+#: includes/modules/class-wpcp-vimeo.php:132
 #: includes/modules/class-wpcp-youtube.php:113
 msgid "Date"
 msgstr ""
@@ -1380,6 +1420,7 @@ msgstr ""
 #: includes/modules/class-wpcp-envato.php:34
 #: includes/modules/class-wpcp-feed.php:36
 #: includes/modules/class-wpcp-flickr.php:36
+#: includes/modules/class-wpcp-vimeo.php:42
 #: includes/modules/class-wpcp-youtube.php:41
 #: includes/modules/class-wpcp-youtube.php:114
 msgid "Title"
@@ -1387,6 +1428,7 @@ msgstr ""
 
 #: includes/modules/class-wpcp-article.php:38
 #: includes/modules/class-wpcp-feed.php:37
+#: includes/modules/class-wpcp-vimeo.php:43
 #: includes/modules/class-wpcp-youtube.php:42
 msgid "Summary"
 msgstr ""
@@ -1395,6 +1437,7 @@ msgstr ""
 #: includes/modules/class-wpcp-envato.php:35
 #: includes/modules/class-wpcp-feed.php:38
 #: includes/modules/class-wpcp-flickr.php:37
+#: includes/modules/class-wpcp-vimeo.php:44
 #: includes/modules/class-wpcp-youtube.php:43
 msgid "Content"
 msgstr ""
@@ -1403,6 +1446,7 @@ msgstr ""
 #: includes/modules/class-wpcp-envato.php:36
 #: includes/modules/class-wpcp-feed.php:39
 #: includes/modules/class-wpcp-flickr.php:39
+#: includes/modules/class-wpcp-vimeo.php:45
 #: includes/modules/class-wpcp-youtube.php:44
 msgid "Main image url"
 msgstr ""
@@ -1411,6 +1455,7 @@ msgstr ""
 #: includes/modules/class-wpcp-envato.php:37
 #: includes/modules/class-wpcp-feed.php:40
 #: includes/modules/class-wpcp-flickr.php:40
+#: includes/modules/class-wpcp-vimeo.php:46
 #: includes/modules/class-wpcp-youtube.php:45
 msgid "Source link"
 msgstr ""
@@ -1419,34 +1464,35 @@ msgstr ""
 msgid "Select region to search article"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:107
+#: includes/modules/class-wpcp-article.php:108
 msgid "Article Settings"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:123
+#: includes/modules/class-wpcp-article.php:124
 msgid "Banned Hosts"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:124
+#: includes/modules/class-wpcp-article.php:125
 msgid ""
 "Articles from the above hosts will be rejected. put single url/host per "
 "line."
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:125
+#: includes/modules/class-wpcp-article.php:126
 msgid ""
 "example.com \n"
 " example1.com"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:146
+#: includes/modules/class-wpcp-article.php:147
 #: includes/modules/class-wpcp-envato.php:217
 #: includes/modules/class-wpcp-flickr.php:141
+#: includes/modules/class-wpcp-vimeo.php:237
 #: includes/modules/class-wpcp-youtube.php:248
 msgid "Campaign do not have keyword to proceed, please set keyword"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:268
+#: includes/modules/class-wpcp-article.php:269
 msgid ""
 "Could not find any links from search engine, deactivating keyword for an "
 "hour."
@@ -1547,6 +1593,7 @@ msgid "Name"
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:112
+#: includes/modules/class-wpcp-vimeo.php:119
 msgid "Trending"
 msgstr ""
 
@@ -1559,10 +1606,12 @@ msgid "Sort Direction"
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:121
+#: includes/modules/class-wpcp-vimeo.php:95
 msgid "ASC"
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:122
+#: includes/modules/class-wpcp-vimeo.php:96
 msgid "DESC"
 msgstr ""
 
@@ -1684,6 +1733,180 @@ msgstr ""
 msgid "Could not find any result for the keyword %s"
 msgstr ""
 
+#: includes/modules/class-wpcp-vimeo.php:47
+msgid "User Name"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:48
+msgid "User Link"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:49
+msgid "User Bio"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:50
+msgid "User Short Bio"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:51
+#: includes/modules/class-wpcp-youtube.php:49
+msgid "Video Tags"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:52
+#: includes/modules/class-wpcp-youtube.php:50
+#: includes/modules/class-wpcp-youtube.php:133
+msgid "Video Duration"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:53
+#: includes/modules/class-wpcp-youtube.php:52
+msgid "Total Likes"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:54
+#: includes/modules/class-wpcp-youtube.php:55
+msgid "Total Comments"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:55
+#: includes/modules/class-wpcp-youtube.php:56
+msgid "HTML Embed Code "
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:56
+#: includes/modules/class-wpcp-youtube.php:57
+msgid "Video transcript available in PRO"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:92
+msgid "Vimeo Sort Direction"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:93
+msgid "The sort direction of the results."
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:104
+msgid "Vimeo Filter"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:105
+msgid ""
+"The attribute by which to filter the results. CC and related filters target "
+"videos with the corresponding Creative Commons licenses."
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:107
+msgid "CC"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:108
+msgid "CC-BY"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:109
+msgid "CC-BY-NC"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:110
+msgid "CC-BY-NC-ND"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:111
+msgid "CC-BY-NC-SA"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:112
+msgid "CC-BY-ND"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:113
+msgid "CC-BY-SA"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:114
+msgid "CC0"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:115
+msgid "Categories"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:116
+#: includes/modules/class-wpcp-vimeo.php:133
+msgid "Duration"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:117
+msgid "In progress"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:118
+msgid "Minimum likes"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:120
+msgid "Upload date"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:127
+msgid "Vimeo sort"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:128
+msgid "The way to sort the results."
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:130
+msgid "Alphabetical"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:131
+msgid "Comments"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:134
+msgid "Likes"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:135
+msgid "Plays"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:136
+msgid "Relevant"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:166
+msgid "Vimeo Settings"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:182
+msgid "Vimeo Access Token"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:183
+msgid ""
+"Vimeo campaigns won't run without Access Token key. <a href=\"%s\" "
+"target=\"_blank\">Create a Vimeo APP and get Access Token from here</a>."
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:226
+msgid ""
+"The Vimeo Access Token is not set so the campaign won't run, disabling "
+"campaign."
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:383
+msgid "Vimeo api request failed response [%s]"
+msgstr ""
+
+#: includes/modules/class-wpcp-vimeo.php:478
+msgid "Vimeo campaign wont run because you did not set the Access Token yet."
+msgstr ""
+
 #: includes/modules/class-wpcp-youtube.php:46
 msgid "Video Id"
 msgstr ""
@@ -1696,21 +1919,8 @@ msgstr ""
 msgid "Channel Name"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:49
-msgid "Video Tags"
-msgstr ""
-
-#: includes/modules/class-wpcp-youtube.php:50
-#: includes/modules/class-wpcp-youtube.php:133
-msgid "Video Duration"
-msgstr ""
-
 #: includes/modules/class-wpcp-youtube.php:51
 msgid "Total Views"
-msgstr ""
-
-#: includes/modules/class-wpcp-youtube.php:52
-msgid "Total Likes"
 msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:53
@@ -1719,18 +1929,6 @@ msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:54
 msgid "Total Favourites"
-msgstr ""
-
-#: includes/modules/class-wpcp-youtube.php:55
-msgid "Total Comments"
-msgstr ""
-
-#: includes/modules/class-wpcp-youtube.php:56
-msgid "HTML Embed Code "
-msgstr ""
-
-#: includes/modules/class-wpcp-youtube.php:57
-msgid "Video transcript available in PRO"
 msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:85
@@ -1815,11 +2013,11 @@ msgstr ""
 msgid "Campaign do not have playlist URL to proceed, please set playlist URL"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:397
+#: includes/modules/class-wpcp-youtube.php:400
 msgid "Youtube api request failed response [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:549
+#: includes/modules/class-wpcp-youtube.php:552
 msgid "Youtube campaign wont run because you did not set the API details yet."
 msgstr ""
 
@@ -1954,15 +2152,11 @@ msgstr ""
 msgid "Universalizing instances of this class is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:231
-msgid "Upgrade to PRO"
-msgstr ""
-
-#: wp-content-pilot.php:247
+#: wp-content-pilot.php:248
 msgid "Once a Minute"
 msgstr ""
 
-#: wp-content-pilot.php:273
+#: wp-content-pilot.php:274
 msgid "%1$s in %2$s on line %3$s"
 msgstr ""
 

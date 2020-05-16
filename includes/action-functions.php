@@ -131,6 +131,14 @@ function wpcp_delete_all_campaign_posts() {
 		foreach ( $posts as $post ) {
 			wp_delete_post( $post->ID, true );
 		}
+
+		/**
+		 * Setting Post count 0.
+		 * @author Mahedi Hasan <mahedihasannoman@gmail.com>
+		 * @since 1.2.4
+		 */
+		update_post_meta( $camp_id, '_post_count', 0 );
+
 	}
 
 	wp_send_json_success( 'Done' );

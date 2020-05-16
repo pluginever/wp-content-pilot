@@ -173,6 +173,7 @@ final class ContentPilot {
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-youtube.php' );
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-envato.php' );
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-flickr.php' );
+		require_once( WPCP_INCLUDES . '/modules/class-wpcp-vimeo.php' );
 
 		if ( is_admin() ) {
 			require_once( WPCP_INCLUDES . '/admin/class-wpcp-admin.php' );

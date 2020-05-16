@@ -20,6 +20,12 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'keywords' => 'job',
 		'disabled' => false,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/youtube.png' )
+	),array(
+		'label'    => 'Vimeo',
+		'name'     => 'vimeo',
+		'keywords' => 'bangladesh',
+		'disabled' => false,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/vimeo.png' )
 	),
 	array(
 		'label'    => 'Flickr',
