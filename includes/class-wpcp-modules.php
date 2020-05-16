@@ -48,7 +48,6 @@ class WPCP_Modules {
 	public function init_modules() {
 		$modules = apply_filters( 'wpcp_modules', array() );
 
-
 		/* @var $class WPCP_Module */
 		foreach ( $modules as $key => $class ) {
 			if ( class_exists( $class ) ) {

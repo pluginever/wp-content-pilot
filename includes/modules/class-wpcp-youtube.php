@@ -252,9 +252,6 @@ EOT;
 		foreach ( $sources as $source ) {
 			//get links from database
 			$links = $this->get_links( $source, $campaign_id );
-
-
-
 			if ( empty( $links ) ) {
 				wpcp_logger()->debug( 'No generated links now need to generate new links', $campaign_id );
 				$this->discover_links( $campaign_id, $source );
