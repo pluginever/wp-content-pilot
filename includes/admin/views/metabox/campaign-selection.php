@@ -85,6 +85,13 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/ezine.png' )
 	),
 	array(
+		'label'    => 'Etsy',
+		'name'     => 'etsy',
+		'keywords' => 'job',
+		'disabled' => true,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/etsy.png' )
+	),
+	array(
 		'label'    => 'FaceBook',
 		'name'     => 'faceBook',
 		'keywords' => 'job',
@@ -149,17 +156,17 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 ) );
 ?>
 <style>
-	#wpcp-campaign-actions, #side-sortables, #post-body-content {
-		display: none;
-	}
+    #wpcp-campaign-actions, #side-sortables, #post-body-content {
+        display: none;
+    }
 
-	#campaign-selection {
-		overflow: hidden;
-		padding-bottom: 30px;
-	}
+    #campaign-selection {
+        overflow: hidden;
+        padding-bottom: 30px;
+    }
 </style>
 <div class="wpcp-choose-campaign-wrap">
-	<div class="wpcp-choose-campaign-items">
+    <div class="wpcp-choose-campaign-items">
 		<?php
 		foreach ( $modules as $module ) {
 			$slug       = sanitize_title( $module['name'] );
@@ -171,9 +178,9 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 			echo sprintf( '<div class="wpcp-choose-campaign-item ' . $wrap_class . '">' . $input . $label . '</div>' );
 		}
 		?>
-	</div>
-	<p class="submit">
-		<input type="submit" name="submit" id="submit" class="button button-primary button-large"
-		       value="<?php _e( 'Submit', 'wp-content-pilot' ); ?>">
-	</p>
+    </div>
+    <p class="submit">
+        <input type="submit" name="submit" id="submit" class="button button-primary button-large"
+               value="<?php _e( 'Submit', 'wp-content-pilot' ); ?>">
+    </p>
 </div>
