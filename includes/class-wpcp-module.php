@@ -53,7 +53,7 @@ abstract class WPCP_Module {
 		$hook_name = 'wpcp_' . $this->campaign_type;
 
 		add_action( $hook_name . '_campaign_options_meta_fields', array( $this, 'add_campaign_option_fields' ) );
-		add_action( $hook_name . '_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2 );
+		add_action( $hook_name . '_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2);
 
 		//setting
 		add_filter( 'wpcp_settings_sections', array( $this, 'get_setting_section' ), 10 );
