@@ -344,6 +344,12 @@ class WPCP_Help {
 		        'pro' => true,
 	        ],
 	        [
+		        'title' => __( 'Vimeo', 'wp-content-pilot' ),
+		        'desc' => __( 'Vimeo module to import photos', 'wp-content-pilot' ),
+		        'free' => false,
+		        'pro' => true,
+	        ],
+	        [
 		        'title' => __( 'Search Replace', 'wp-content-pilot' ),
 		        'desc' => __( 'Automatic search replace with regex support', 'wp-content-pilot' ),
 		        'free' => false,
