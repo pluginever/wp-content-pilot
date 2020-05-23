@@ -521,4 +521,29 @@ function wpcp_maybe_skip_duplicate_title( $skip, $title, $campaign_id ) {
 
 add_filter( 'wpcp_skip_duplicate_title', 'wpcp_maybe_skip_duplicate_title', 10, 3 );
 
+/**
+ * Setup curl request
+ *
+ * @return \Curl\Curl
+ * @since 1.2.5
+ */
+function wpcp_setup_request( $referrer = 'http://www.bing.com/' ) {
+	$jar = get_option( 'wpcp_cookie_jar' );
+	if ( empty( $jar ) ) {
+		$jar = substr( md5( time() ), 0, 5 );
+		update_option( 'wpcp_cookie_jar', $jar );
+	}
 
+	$curl = new Curl\Curl();
+	$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
+	$curl->setOpt( CURLOPT_TIMEOUT, 30 );
+	$curl->setOpt( CURLOPT_MAXREDIRS, 3 );
+	$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
+	$curl->setOpt( CURLOPT_REFERER, $referrer );
+	$curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );
+	@$curl->setOpt( CURLOPT_COOKIEJAR, untrailingslashit( WPCP_PATH ) . '/' . $jar );
+	@$curl->setOpt( CURLOPT_COOKIEJAR, $jar );
+	$curl->setOpt( CURLOPT_SSL_VERIFYPEER, false );
+
+	return $curl;
+}

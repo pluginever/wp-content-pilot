@@ -412,33 +412,9 @@ abstract class WPCP_Module {
 	 * @since 1.2.0
 	 */
 	protected function setup_curl() {
-		$curl = new Curl\Curl();
-		$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
-		$curl->setOpt( CURLOPT_TIMEOUT, 30 );
-		$curl->setOpt( CURLOPT_MAXREDIRS, 3 );
-		$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
-		$curl->setOpt( CURLOPT_REFERER, 'http://www.bing.com/' );
-		$curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );
-		$jar = $this->get_cookie_jar();
-		@$curl->setOpt( CURLOPT_COOKIEJAR, untrailingslashit( WPCP_PATH ) . '/' . $jar );
-		@$curl->setOpt( CURLOPT_COOKIEJAR, $jar );
-		$curl->setOpt( CURLOPT_SSL_VERIFYPEER, false );
-		return $curl;
+		return wpcp_setup_request();
 	}
 
-	/**
-	 * @return string
-	 * @since 1.0.0
-	 */
-	protected function get_cookie_jar() {
-		$jar = get_option( 'wpcp_cookie_jar' );
-		if ( empty( $jar ) ) {
-			$jar = substr( md5( time() ), 0, 5 );
-			update_option( 'wpcp_cookie_jar', $jar );
-		}
-
-		return $jar;
-	}
 
 
 	/**
