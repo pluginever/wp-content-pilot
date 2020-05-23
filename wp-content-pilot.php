@@ -98,7 +98,6 @@ final class ContentPilot {
 		$this->define_tables();
 		$this->includes();
 		$this->init_hooks();
-		do_action( 'content__pilot__loaded' );
 	}
 
 	/**
@@ -188,12 +187,27 @@ final class ContentPilot {
 		register_activation_hook( __FILE__, array( 'WPCP_Install', 'activate' ) );
 		register_deactivation_hook( __FILE__, array( 'WPCP_Install', 'deactivate' ) );
 		register_activation_hook( __FILE__, array( $this, 'activate_cron' ) );
+		register_shutdown_function( array( $this, 'log_errors' ) );
+		add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ), -1 );
+
 		add_action( 'init', array( $this, 'localization_setup' ) );
 		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ), 20 );
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 		add_action( 'admin_init', array( $this, 'check_if_cron_running' ) );
-		register_shutdown_function( array( $this, 'log_errors' ) );
 	}
+
+	/**
+	 * When WP has loaded all plugins, trigger the `content__pilot__loaded` hook.
+	 *
+	 * This ensures `content__pilot__loaded` is called only after all other plugins
+	 * are loaded, to avoid issues caused by plugin directory naming changing
+	 *
+	 * @since 1.2.5
+	 */
+	public function on_plugins_loaded() {
+		do_action( 'content__pilot__loaded' );
+	}
+
 
 	/**
 	 * Initialize plugin for localization

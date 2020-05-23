@@ -44,7 +44,8 @@ function wpcp_get_host( $url, $base_domain = false ) {
 	$parseUrl = parse_url( trim( esc_url_raw( $url ) ) );
 
 	if ( $base_domain ) {
-		$host = trim( $parseUrl['host'] ? $parseUrl['host'] : array_shift( explode( '/', $parseUrl['path'], 2 ) ) );
+		$array = explode( '/', $parseUrl['path'], 2 );
+		$host  = trim( $parseUrl['host'] ? $parseUrl['host'] : array_shift( $array ) );
 	} else {
 		$scheme = ! isset( $parseUrl['scheme'] ) ? 'http' : $parseUrl['scheme'];
 
@@ -383,4 +384,27 @@ function wpcp_generate_title_from_content( $content, $length = 80 ) {
  */
 function wpcp_strip_urls( $content ) {
 	return preg_replace( '{http[s]?://[^\s]*}', '', $content );
+}
+
+
+
+/**
+ * Find numbers from string
+ *
+ * wpcp_get_numbers_from_string('Renewed from $369.99')
+ * wpcp_get_numbers_from_string('Showing 20 of 200', true)
+ *
+ * @param $string
+ * @param bool $multiple
+ *
+ * @return array|float|integer
+ * @since 1.2.5
+ */
+function wpcp_get_numbers_from_string( $string, $multiple = false ) {
+	if ( ! $multiple ) {
+		return preg_replace( '/[^\\d.]+/', '', $string );
+	}
+	preg_match_all( '!\d+!', $string, $matched );
+
+	return isset( $matched[0] ) ? $matched[0] : [];
 }

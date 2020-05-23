@@ -5,9 +5,14 @@ defined( 'ABSPATH' ) || exit();
 class WPCP_Article extends WPCP_Module {
 
 	/**
+	 * @var string
+	 */
+	protected $module = 'article';
+
+	/**
 	 * The single instance of the class
 	 *
-	 * @var $this ;
+	 * @var $this;
 	 */
 	protected static $_instance = null;
 
@@ -18,7 +23,7 @@ class WPCP_Article extends WPCP_Module {
 		//option fields
 		add_action( 'wpcp_article_campaign_options_meta_fields', 'wpcp_keyword_suggestion_field' );
 		add_action( 'wpcp_article_campaign_options_meta_fields', 'wpcp_keyword_field' );
-		parent::__construct( 'article' );
+		parent::__construct( $this->module );
 	}
 
 	/**

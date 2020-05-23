@@ -82,7 +82,8 @@ function wpcp_update_settings( $field, $data ) {
  */
 function wpcp_is_duplicate_title( $title ) {
 	global $wpdb;
-	return !empty($wpdb->get_var( $wpdb->prepare( "SELECT id from $wpdb->wpcp_links WHERE title=%s", $title ) ));
+
+	return ! empty( $wpdb->get_var( $wpdb->prepare( "SELECT id from $wpdb->wpcp_links WHERE title=%s", $title ) ) );
 }
 
 /**
@@ -93,9 +94,9 @@ function wpcp_is_duplicate_title( $title ) {
  */
 function wpcp_is_duplicate_url( $url ) {
 	global $wpdb;
+
 	return $wpdb->get_row( $wpdb->prepare( "SELECT id from $wpdb->wpcp_links WHERE url=%s", $url ) );
 }
-
 
 
 /**
@@ -519,3 +520,5 @@ function wpcp_maybe_skip_duplicate_title( $skip, $title, $campaign_id ) {
 }
 
 add_filter( 'wpcp_skip_duplicate_title', 'wpcp_maybe_skip_duplicate_title', 10, 3 );
+
+

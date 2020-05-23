@@ -143,7 +143,7 @@ function wp_content_pilot_column_content( $column_name, $post_ID ) {
 			break;
 		case 'type':
 			$campaign_type = wpcp_get_post_meta( $post_ID, '_campaign_type' );
-			echo ucfirst( $campaign_type );
+			echo ucfirst( str_replace('_', ' ', $campaign_type) );
 			break;
 		case 'target':
 			$target    = wpcp_get_post_meta( $post_ID, '_campaign_target', 0 );
