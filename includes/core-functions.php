@@ -533,7 +533,7 @@ function wpcp_setup_request( $referrer = 'http://www.bing.com/' ) {
 		$jar = substr( md5( time() ), 0, 5 );
 		update_option( 'wpcp_cookie_jar', $jar );
 	}
-
+	$upload_dir = wp_upload_dir();
 	$curl = new Curl\Curl();
 	$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
 	$curl->setOpt( CURLOPT_TIMEOUT, 30 );
@@ -541,9 +541,32 @@ function wpcp_setup_request( $referrer = 'http://www.bing.com/' ) {
 	$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
 	$curl->setOpt( CURLOPT_REFERER, $referrer );
 	$curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );
-	@$curl->setOpt( CURLOPT_COOKIEJAR, untrailingslashit( WPCP_PATH ) . '/' . $jar );
+	@$curl->setOpt( CURLOPT_COOKIEJAR, untrailingslashit( $upload_dir['basedir'] ) . '/' . $jar );
 	@$curl->setOpt( CURLOPT_COOKIEJAR, $jar );
 	$curl->setOpt( CURLOPT_SSL_VERIFYPEER, false );
 
 	return $curl;
+}
+
+/**
+ * Calculate discount percentage from sale price
+ *
+ * @since 1.2.5
+ * @param $original_price
+ * @param null $sale_price
+ *
+ * @return float|int
+ */
+function wpcp_calculate_discount_percent( $original_price, $sale_price = null ) {
+	if ( empty( $sale_price ) ) {
+		$sale_price = $original_price;
+	}
+
+	$sale_price     = preg_replace( '/[^\\d.]+/', '', $sale_price );
+	$original_price = preg_replace( '/[^\\d.]+/', '', $original_price );
+	if ( empty( $sale_price ) || empty( $original_price ) ) {
+		return 0;
+	}
+
+	return ( 100 - ( ( 100 / $original_price ) * $sale_price ) );
 }
