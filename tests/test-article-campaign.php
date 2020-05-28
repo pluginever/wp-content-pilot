@@ -33,7 +33,16 @@ class WPCP_Article_Campaign_Tests extends WP_UnitTestCase {
 	}
 
 	public function test_campaign_run() {
-		$this->assertInternalType( "int", WPCP_Helper_Campaign::run_campaign( $this->campaign->ID ), 'Message' );
+		$this->assertInternalType( "int", WPCP_Helper_Campaign::run_campaign( $this->campaign->ID ));
+	}
+
+	public function test_campaign_options(){
+		update_post_meta($this->campaign_id, '_set_featured_image', 'on');
+		$post_id = WPCP_Helper_Campaign::run_campaign( $this->campaign->ID );
+		$this->assertNotFalse(has_post_thumbnail($post_id));
+
+		$dom = wpcp_str_get_html(post_content);
+		$dom->find('a');
 	}
 
 	public function test_post_template() {
