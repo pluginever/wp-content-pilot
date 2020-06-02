@@ -168,6 +168,7 @@ rm -f trunk/deploy.sh
 rm -f trunk/package-lock.json
 rm -f trunk/phpcs.xml.dist
 rm -f trunk/tmp
+rm -f trunk/.phpcs.xml.dist
 
 # DO THE ADD ALL NOT KNOWN FILES UNIX COMMAND
 svn add --force * --auto-props --parents --depth infinity -q
