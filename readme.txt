@@ -198,6 +198,10 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.2.5 -> June 1, 2020 =
+* [Fix] Disappear action metabox
+* [Fix] Youtube chinese title getting broken
+
 = v1.2.4 -> May 4, 2020 =
 * [Fix] Youtube playlist is not working
 * [Enhance] New column add

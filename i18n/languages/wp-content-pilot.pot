@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.2.4\n"
+"Project-Id-Version: WP Content Pilot 1.2.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2020-05-24 10:40:14+00:00\n"
+"POT-Creation-Date: 2020-06-02 15:20:52+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -371,7 +371,7 @@ msgid "Readability score controlled posts for clean articles"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:365
-#: includes/admin/metabox-functions.php:219
+#: includes/admin/metabox-functions.php:206
 #: includes/admin/views/page/help-page.php:187
 msgid "Keyword Suggestion"
 msgstr ""
@@ -508,156 +508,156 @@ msgid ""
 "information."
 msgstr ""
 
-#: includes/admin/metabox-functions.php:21
+#: includes/admin/metabox-functions.php:23
 msgid "Select a campaign to start"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:22
-#: includes/admin/views/metabox/action-metabox.php:61
+#: includes/admin/metabox-functions.php:26
+#: includes/admin/views/metabox/action-metabox.php:62
 msgid "Campaign Status"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:23
+#: includes/admin/metabox-functions.php:27
 msgid "Campaign Options"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:24
+#: includes/admin/metabox-functions.php:28
 #: includes/admin/views/metabox/post-template.php:25
 msgid "Post Template"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:25
+#: includes/admin/metabox-functions.php:29
 msgid "Post Settings"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:26
+#: includes/admin/metabox-functions.php:30
 msgid "Posts Filter"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:27
+#: includes/admin/metabox-functions.php:31
 msgid "Advanced Settings"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:28
+#: includes/admin/metabox-functions.php:32
 msgid "Actions"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:30
+#: includes/admin/metabox-functions.php:34
 msgid "Miscellaneous"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:31
+#: includes/admin/metabox-functions.php:35
 msgid "Campaign Posts"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:206
+#: includes/admin/metabox-functions.php:193
 msgid "Keywords"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:209
+#: includes/admin/metabox-functions.php:196
 msgid "Separate keywords by comma."
 msgstr ""
 
-#: includes/admin/metabox-functions.php:234
+#: includes/admin/metabox-functions.php:221
 msgid "Strip original links from the post"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:236
+#: includes/admin/metabox-functions.php:223
 msgid "Remove hyperlinks found in the article"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:242
+#: includes/admin/metabox-functions.php:229
 msgid "Make permalink link directly to the source"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:244
+#: includes/admin/metabox-functions.php:231
 msgid ""
 "Make post link directly to the source site, Posts will not load at your "
 "site."
 msgstr ""
 
-#: includes/admin/metabox-functions.php:254
+#: includes/admin/metabox-functions.php:241
 msgid "Add Canonical Tag with the original post link "
 msgstr ""
 
-#: includes/admin/metabox-functions.php:265
+#: includes/admin/metabox-functions.php:252
 msgid "Set First image as featured image"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:272
+#: includes/admin/metabox-functions.php:259
 msgid "Remove images from content"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:279
+#: includes/admin/metabox-functions.php:266
 msgid "Set random featured image if no image exists"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:290
+#: includes/admin/metabox-functions.php:277
 msgid "Use original date if possible"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:301
+#: includes/admin/metabox-functions.php:288
 msgid "Use summary as excerpt"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:308
+#: includes/admin/metabox-functions.php:295
 msgid "Enable post with duplicate title"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:315
+#: includes/admin/metabox-functions.php:302
 msgid "Clean title"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:322
+#: includes/admin/metabox-functions.php:309
 msgid "Add rel nofollow & set target blank for all links"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:23
+#: includes/admin/views/metabox/action-metabox.php:24
 msgid "Campaign Target"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:29
-#: includes/admin/views/metabox/action-metabox.php:39
+#: includes/admin/views/metabox/action-metabox.php:30
+#: includes/admin/views/metabox/action-metabox.php:40
 msgid "For better precision use keyboard arrows "
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:35
+#: includes/admin/views/metabox/action-metabox.php:36
 msgid "Campaign Frequency"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:43
+#: includes/admin/views/metabox/action-metabox.php:44
 msgid "Frequency Unit"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:46
+#: includes/admin/views/metabox/action-metabox.php:47
 msgid "Minutes"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:47
+#: includes/admin/views/metabox/action-metabox.php:48
 msgid "Hours"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:48
+#: includes/admin/views/metabox/action-metabox.php:49
 msgid "Days"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:71
+#: includes/admin/views/metabox/action-metabox.php:72
 msgid "Move to Trash"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:73
+#: includes/admin/views/metabox/action-metabox.php:74
 msgid "Trash"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:81
+#: includes/admin/views/metabox/action-metabox.php:82
 msgid "Reset"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:86
+#: includes/admin/views/metabox/action-metabox.php:87
 msgid "Update"
 msgstr ""
 
-#: includes/admin/views/metabox/action-metabox.php:89
+#: includes/admin/views/metabox/action-metabox.php:90
 msgid "Update Campaign"
 msgstr ""
 
