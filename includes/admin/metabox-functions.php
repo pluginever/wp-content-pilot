@@ -17,8 +17,12 @@ defined( 'ABSPATH' ) || exit();
  *
  * @since 1.0.0
  */
-function wpcp_register_meta_boxes() {
-	add_meta_box( 'campaign-selection', __( 'Select a campaign to start', 'wp-content-pilot' ), 'wpcp_campaign_selection_metabox_callback', 'wp_content_pilot', 'normal', 'high' );
+function wpcp_register_meta_boxes( $post ) {
+	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
+	if ( empty( $campaign_type ) ) {
+		add_meta_box( 'campaign-selection', __( 'Select a campaign to start', 'wp-content-pilot' ), 'wpcp_campaign_selection_metabox_callback', 'wp_content_pilot', 'normal', 'high' );
+		return '';
+	}
 	add_meta_box( 'wpcp-campaign-status', __( 'Campaign Status', 'wp-content-pilot' ), 'wpcp_campaign_status_metabox_callback', 'wp_content_pilot', 'normal', 'high' );
 	add_meta_box( 'wpcp-campaign-options', __( 'Campaign Options', 'wp-content-pilot' ), 'wpcp_campaign_options_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-post-template', __( 'Post Template', 'wp-content-pilot' ), 'wpcp_post_template_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
@@ -31,7 +35,7 @@ function wpcp_register_meta_boxes() {
 	add_meta_box( 'wpcp-campaign-posts', __( 'Campaign Posts', 'wp-content-pilot' ), 'wpcp_campaign_posts_metabox_callback', 'wp_content_pilot', 'side', 'high' );
 }
 
-add_action( 'add_meta_boxes', 'wpcp_register_meta_boxes', 10 );
+add_action( 'add_meta_boxes_wp_content_pilot', 'wpcp_register_meta_boxes', 10 );
 
 /**
  * Conditionally render metabox
@@ -45,25 +49,10 @@ add_action( 'add_meta_boxes', 'wpcp_register_meta_boxes', 10 );
 
 function wpcp_conditional_metabox_remove( $post_type, $context, $post ) {
 	$post_type = 'wp_content_pilot';
-	remove_meta_box( 'submitdiv', 'wp_content_pilot', 'side' );
-	remove_meta_box( 'commentsdiv', 'wp_content_pilot', 'normal' );
-	remove_meta_box( 'commentstatusdiv', 'wp_content_pilot', 'normal' );
-	remove_meta_box( 'slugdiv', 'wp_content_pilot', 'normal' );
-
-	if ( $post_type !== 'wp_content_pilot' ) {
-		return false;
-	}
-	if ( isset( $post->ID ) && empty( get_post_meta( $post->ID, '_campaign_type', true ) ) ) {
-		remove_meta_box( 'wpcp-campaign-status', $post_type, 'normal' );
-		remove_meta_box( 'wpcp-campaign-options', $post_type, 'normal' );
-		remove_meta_box( 'wpcp-post-template', 'wp_content_pilot', 'normal' );
-		remove_meta_box( 'wpcp-post-settings', 'wp_content_pilot', 'normal' );
-		remove_meta_box( 'wpcp-post-filters', 'wp_content_pilot', 'normal' );
-		remove_meta_box( 'wpcp-advanced-settings', 'wp_content_pilot', 'normal' );
-	} else {
-		remove_meta_box( 'campaign-selection', 'wp_content_pilot', 'normal' );
-		remove_meta_box( 'wpcp-campaign-actions', 'wp_content_pilot', 'normal' );
-	}
+	remove_meta_box( 'submitdiv', $post_type, 'side' );
+	remove_meta_box( 'commentsdiv', $post_type, 'normal' );
+	remove_meta_box( 'commentstatusdiv', $post_type, 'normal' );
+	remove_meta_box( 'slugdiv', $post_type, 'normal' );
 }
 
 add_action( 'do_meta_boxes', 'wpcp_conditional_metabox_remove', 10, 3 );
@@ -344,27 +333,27 @@ add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_target_rel_field', 20 );
 
 function wpcp_search_replace_metafield( $post ) {
 	?>
-    <div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_fields-field pro">
-        <label class="wpcp-label">Search Replace</label>
+	<div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_fields-field pro">
+		<label class="wpcp-label">Search Replace</label>
 
-        <table class="striped widefat wp-list-table">
-            <thead>
-            <tr>
-                <th>Search</th>
-                <th>Replace</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody data-repeater-list="_wpcp_search_replaces">
-            <tr data-repeater-item>
-                <td><input type="text" name="search" placeholder="Search" disabled/></td>
-                <td><input type="text" name="replace" placeholder="Replace" disabled/></td>
-                <td><input data-repeater-delete type="button" value="Delete" class="button" disabled/></td>
-            </tr>
-            </tbody>
-        </table>
-        <button data-repeater-create type="button" class="button" disabled>Add New</button>
-    </div>
+		<table class="striped widefat wp-list-table">
+			<thead>
+			<tr>
+				<th>Search</th>
+				<th>Replace</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody data-repeater-list="_wpcp_search_replaces">
+			<tr data-repeater-item>
+				<td><input type="text" name="search" placeholder="Search" disabled/></td>
+				<td><input type="text" name="replace" placeholder="Replace" disabled/></td>
+				<td><input data-repeater-delete type="button" value="Delete" class="button" disabled/></td>
+			</tr>
+			</tbody>
+		</table>
+		<button data-repeater-create type="button" class="button" disabled>Add New</button>
+	</div>
 	<?php
 }
 
@@ -373,28 +362,28 @@ add_action( 'wpcp_advanced_settings_metabox', 'wpcp_search_replace_metafield' );
 
 function wpcp_post_meta_metafield( $post ) {
 	?>
-    <div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_fields-field pro">
-        <label class="wpcp-label">Post Meta</label>
+	<div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_fields-field pro">
+		<label class="wpcp-label">Post Meta</label>
 
-        <table class="striped widefat wp-list-table">
-            <thead>
-            <tr>
-                <th>Meta Key</th>
-                <th>Meta Value</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody data-repeater-list="_wpcp_custom_meta_fields">
-            <tr data-repeater-item>
-                <td><input type="text" name="meta_key" placeholder="Meta Key" disabled/></td>
-                <td><input type="text" name="meta_value" placeholder="Meta Value" disabled/></td>
-                <td><input data-repeater-delete type="button" value="Delete" class="button" disabled/></td>
-            </tr>
-            </tbody>
-        </table>
+		<table class="striped widefat wp-list-table">
+			<thead>
+			<tr>
+				<th>Meta Key</th>
+				<th>Meta Value</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody data-repeater-list="_wpcp_custom_meta_fields">
+			<tr data-repeater-item>
+				<td><input type="text" name="meta_key" placeholder="Meta Key" disabled/></td>
+				<td><input type="text" name="meta_value" placeholder="Meta Value" disabled/></td>
+				<td><input data-repeater-delete type="button" value="Delete" class="button" disabled/></td>
+			</tr>
+			</tbody>
+		</table>
 
-        <button data-repeater-create type="button" class="button" disabled>Add New</button>
-    </div>
+		<button data-repeater-create type="button" class="button" disabled>Add New</button>
+	</div>
 	<?php
 }
 
