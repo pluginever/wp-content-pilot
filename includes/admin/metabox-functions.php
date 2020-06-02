@@ -43,8 +43,6 @@ add_action( 'add_meta_boxes_wp_content_pilot', 'wpcp_register_meta_boxes', 10 );
  * @param $post_type
  * @param $context
  * @param $post
- *
- * @return bool
  */
 
 function wpcp_conditional_metabox_remove( $post_type, $context, $post ) {
