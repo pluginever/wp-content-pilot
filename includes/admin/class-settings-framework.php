@@ -1,8 +1,11 @@
 <?php
-defined('ABSPATH')|| exit();
 
-if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
-	class Ever_WP_Settings_API {
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} // Exit if accessed directly
+
+if ( ! class_exists( 'Ever_Settings_Framework' ) ):
+	class Ever_Settings_Framework {
 		/**
 		 * settings sections array
 		 *
@@ -33,11 +36,11 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 		/**
 		 * Set settings sections
 		 *
-		 * @since 1.0.0
-		 *
 		 * @param $sections
 		 *
 		 * @return $this
+		 *
+		 * @since 1.0.0
 		 *
 		 */
 		function set_sections( $sections ) {
@@ -49,11 +52,11 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 		/**
 		 * Add a single section
 		 *
-		 * @since 1.0.0
-		 *
 		 * @param $section
 		 *
 		 * @return $this
+		 *
+		 * @since 1.0.0
 		 *
 		 */
 		function add_section( $section ) {
@@ -65,11 +68,11 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 		/**
 		 * Set settings fields
 		 *
-		 * @since 1.0.0
-		 *
 		 * @param $fields
 		 *
 		 * @return $this
+		 *
+		 * @since 1.0.0
 		 *
 		 */
 		function set_fields( $fields ) {
@@ -81,12 +84,12 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 		/**
 		 * Set fields
 		 *
-		 * @since 1.0.0
-		 *
 		 * @param $section
 		 * @param $field
 		 *
 		 * @return $this
+		 *
+		 * @since 1.0.0
 		 *
 		 */
 		function add_field( $section, $field ) {
@@ -153,6 +156,9 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 						'max'               => isset( $option['max'] ) ? $option['max'] : '',
 						'step'              => isset( $option['step'] ) ? $option['step'] : '',
 					);
+					if ( isset( $option['disabled'] ) && $option['disabled'] == true ) {
+						$args['disabled'] = "disabled";
+					}
 					add_settings_field( "{$section}[{$name}]", $label, $callback, $section, $section, $args );
 				}
 			}
@@ -165,11 +171,11 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 		/**
 		 * Get field description for display
 		 *
-		 * @since 1.0.0
-		 *
 		 * @param $args
 		 *
 		 * @return string
+		 *
+		 * @since 1.0.0
 		 *
 		 */
 		public function get_field_description( $args ) {
@@ -192,7 +198,8 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 			$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$type        = isset( $args['type'] ) ? $args['type'] : 'text';
 			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
-			$html        = sprintf( '<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder );
+			$disabled    = isset( $args['disabled'] ) ? $args['disabled'] : '';
+			$html        = sprintf( '<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s%7$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder, $disabled );
 			$html        .= $this->get_field_description( $args );
 			echo $html;
 		}
@@ -215,12 +222,25 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 			$value       = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$type        = isset( $args['type'] ) ? $args['type'] : 'number';
+			$disabled    = isset( $args['disabled'] ) ? $args['disabled'] : '';
 			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 			$min         = ( $args['min'] == '' ) ? '' : ' min="' . $args['min'] . '"';
 			$max         = ( $args['max'] == '' ) ? '' : ' max="' . $args['max'] . '"';
 			$step        = ( $args['step'] == '' ) ? '' : ' step="' . $args['step'] . '"';
-			$html        = sprintf( '<input type="%1$s" class="%2$s-number" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s%7$s%8$s%9$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder, $min, $max, $step );
+			$html        = sprintf( '<input type="%1$s" class="%2$s-number" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s%7$s%8$s%9$s%10$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder, $min, $max, $step, $disabled );
 			$html        .= $this->get_field_description( $args );
+			echo $html;
+		}
+
+		/**
+		 * Displays a number field for a settings field
+		 *
+		 * @param array $args settings field args
+		 */
+		function callback_heading( $args ) {
+			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
+			$html  = sprintf( '<h2 class="ever-settings-heading">%1$s</h2>', $value );
+			$html  .= $this->get_field_description( $args );
 			echo $html;
 		}
 
@@ -230,13 +250,14 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 		 * @param array $args settings field args
 		 */
 		function callback_checkbox( $args ) {
-			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-			$html  = '<fieldset>';
-			$html  .= sprintf( '<label for="wpuf-%1$s[%2$s]">', $args['section'], $args['id'] );
-			$html  .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="off" />', $args['section'], $args['id'] );
-			$html  .= sprintf( '<input type="checkbox" class="checkbox" id="wpuf-%1$s[%2$s]" name="%1$s[%2$s]" value="on" %3$s />', $args['section'], $args['id'], checked( $value, 'on', false ) );
-			$html  .= sprintf( '%1$s</label>', $args['desc'] );
-			$html  .= '</fieldset>';
+			$value    = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
+			$disabled = isset( $args['disabled'] ) ? $args['disabled'] : '';
+			$html     = '<fieldset>';
+			$html     .= sprintf( '<label for="wpuf-%1$s[%2$s]">', $args['section'], $args['id'] );
+			$html     .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="off" />', $args['section'], $args['id'] );
+			$html     .= sprintf( '<input type="checkbox" class="checkbox" id="wpuf-%1$s[%2$s]" name="%1$s[%2$s]" value="on" %3$s %4$s />', $args['section'], $args['id'], checked( $value, 'on', false ), $disabled );
+			$html     .= sprintf( '%1$s</label>', $args['desc'] );
+			$html     .= '</fieldset>';
 			echo $html;
 		}
 
@@ -284,9 +305,10 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 		 * @param array $args settings field args
 		 */
 		function callback_select( $args ) {
-			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-			$size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
-			$html  = sprintf( '<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]">', $size, $args['section'], $args['id'] );
+			$value    = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
+			$size     = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+			$disabled = isset( $args['disabled'] ) ? $args['disabled'] : '';
+			$html     = sprintf( '<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]" %4$s>', $size, $args['section'], $args['id'], $disabled );
 			foreach ( $args['options'] as $key => $label ) {
 				$html .= sprintf( '<option value="%s"%s>%s</option>', $key, selected( $value, $key, false ), $label );
 			}
@@ -377,10 +399,11 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 		 * @param array $args settings field args
 		 */
 		function callback_color( $args ) {
-			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-			$size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
-			$html  = sprintf( '<input type="text" class="%1$s-text wp-color-picker-field" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s" data-default-color="%5$s" />', $size, $args['section'], $args['id'], $value, $args['std'] );
-			$html  .= $this->get_field_description( $args );
+			$value    = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
+			$size     = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+			$disabled = isset( $args['disabled'] ) ? $args['disabled'] : '';
+			$html     = sprintf( '<input type="text" class="%1$s-text wp-color-picker-field" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s" data-default-color="%5$s" %6$s/>', $size, $args['section'], $args['id'], $value, $args['std'], $disabled );
+			$html     .= $this->get_field_description( $args );
 			echo $html;
 		}
 
@@ -536,13 +559,13 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 					// Switches option sections
 					$('.group').hide();
 					var activetab = '';
-					if (typeof(localStorage) != 'undefined') {
+					if (typeof (localStorage) != 'undefined') {
 						activetab = localStorage.getItem("activetab");
 					}
 					//if url has section id as hash then set it as active or override the current local storage value
 					if (window.location.hash) {
 						activetab = window.location.hash;
-						if (typeof(localStorage) != 'undefined') {
+						if (typeof (localStorage) != 'undefined') {
 							localStorage.setItem("activetab", activetab);
 						}
 					}
@@ -564,8 +587,7 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 
 					if (activetab != '' && $(activetab + '-tab').length) {
 						$(activetab + '-tab').closest('li').addClass('active');
-					}
-					else {
+					} else {
 						$('.ever-settings-sidebar  li:first').addClass('active');
 					}
 
@@ -574,7 +596,7 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 						$(this).closest('li').addClass('active').blur();
 
 						var clicked_group = $(this).attr('href');
-						if (typeof(localStorage) != 'undefined') {
+						if (typeof (localStorage) != 'undefined') {
 							localStorage.setItem("activetab", $(this).attr('href'));
 						}
 						$('.group').hide();
@@ -688,12 +710,58 @@ if ( ! class_exists( 'Ever_WP_Settings_API' ) ):
 				}
 
 				.ever-settings-content h2 {
-					padding-bottom: 16px;
-					margin: 8px 0 16px;
-					font-size: 18px;
+					padding: 0 0 16px 0 !important;
+					margin: 8px 0 16px !important;
+					font-size: 18px !important;
 					font-weight: 300;
 					border-bottom: 1px solid #cccccc;
 
+				}
+
+				.ever-settings-heading {
+					position: relative;
+					left: -17%;
+				}
+
+				.ever-settings-container::after {
+					clear: both;
+				}
+
+				.ever-settings-container .ever-settings-main {
+					width: 80%;
+					display: inline-block;
+				}
+
+				.ever-settings-container .ever-settings-right-sidebar {
+					width: 19%;
+					float: right;
+					padding-top: 10px;
+					display: inline-block;
+				}
+
+				.ratings-stars-container {
+					text-align: center;
+					margin-top: 10px;
+				}
+
+				.ratings-stars-container span {
+					vertical-align: text-top;
+					color: #ffb900;
+				}
+
+				.ratings-stars-container a {
+					text-decoration: none;
+				}
+
+				.pro th label::after {
+					content: 'PRO';
+					font-size: 11px;
+					font-weight: 400;
+					background: red;
+					color: #fff;
+					padding: 0 5px;
+					line-height: 1;
+					margin-left: 5px;
 				}
 
 			</style>

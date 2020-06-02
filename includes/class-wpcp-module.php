@@ -53,7 +53,7 @@ abstract class WPCP_Module {
 		$hook_name = 'wpcp_' . $this->campaign_type;
 
 		add_action( $hook_name . '_campaign_options_meta_fields', array( $this, 'add_campaign_option_fields' ) );
-		add_action( $hook_name . '_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2 );
+		add_action( $hook_name . '_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2);
 
 		//setting
 		add_filter( 'wpcp_settings_sections', array( $this, 'get_setting_section' ), 10 );
@@ -412,34 +412,9 @@ abstract class WPCP_Module {
 	 * @since 1.2.0
 	 */
 	protected function setup_curl() {
-		$curl = new Curl\Curl();
-		$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
-		$curl->setOpt( CURLOPT_TIMEOUT, 30 );
-		$curl->setOpt( CURLOPT_MAXREDIRS, 3 );
-		$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
-		$curl->setOpt( CURLOPT_REFERER, 'http://www.bing.com/' );
-		$curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );
-		$jar = $this->get_cookie_jar();
-		@$curl->setOpt( CURLOPT_COOKIEJAR, untrailingslashit( WPCP_PATH ) . '/' . $jar );
-		@$curl->setOpt( CURLOPT_COOKIEJAR, $jar );
-		$curl->setOpt( CURLOPT_SSL_VERIFYPEER, false );
-
-		return $curl;
+		return wpcp_setup_request();
 	}
 
-	/**
-	 * @return string
-	 * @since 1.0.0
-	 */
-	protected function get_cookie_jar() {
-		$jar = get_option( 'wpcp_cookie_jar' );
-		if ( empty( $jar ) ) {
-			$jar = substr( md5( time() ), 0, 5 );
-			update_option( 'wpcp_cookie_jar', $jar );
-		}
-
-		return $jar;
-	}
 
 
 	/**

@@ -35,10 +35,10 @@ status "--------------------------------------------"
 status ""
 status "Before continuing, confirm that you have done the following :)"
 status ""
-read -p " - Added a changelog for "${VERSION}"?"
 read -p " - Set version in main file header to "${VERSION}"?"
 read -p " - Set version in main file PHP to "${VERSION}"?"
 read -p " - Set version in the package.json to "${VERSION}"?"
+read -p " - Included update file update-"${VERSION}".php?"
 read -p " - Added a changelog for "${VERSION}"?"
 read -p " - Updated the POT file?"
 read -p " - Committed all changes up to GITHUB?"
@@ -60,7 +60,7 @@ fi
 
 # Check for git tag (may need to allow for leading "v"?)
 # if git show-ref --tags --quiet --verify -- "refs/tags/$VERSION"
-if git show-ref --tags --quiet --verify -- "refs/tags/$VERSION"; then
+if git show-ref --tags --quiet --verify -- "refs/tags/v$VERSION"; then
 	status "Git tag $VERSION does exist. Let's continue..."
 else
 	error "$VERSION does not exist as a git tag. Aborting."
@@ -111,6 +111,12 @@ if [ -f ".gitmodules" ]; then
 			git submodule foreach --recursive 'git checkout-index -a -f --prefix=$SVNPATH/trunk/$path/'
 		done
 fi
+#install composer
+status "Installing PHP dependencies";
+cd $SVNPATH/trunk
+composer install --no-dev
+composer du -o
+
 
 # Support for the /assets folder on the .org repo, locally this will be /.wordpress-org
 status "Moving assets."
@@ -122,7 +128,14 @@ svn add --force $SVNPATH/assets/
 # REMOVE UNWANTED FILES & FOLDERS
 cd $SVNPATH
 status "Removing unwanted files"
+rm -Rf trunk/assets/css/*.scss
+rm -Rf trunk/assets/css/metabox/*.scss
+rm -Rf trunk/assets/*.scss
+rm -Rf trunk/bin
+rm -Rf trunk/**/.gitkeep
 rm -Rf trunk/.git
+rm -Rf trunk/.babelrc
+rm -Rf trunk/yarn.lock
 rm -Rf trunk/.github
 rm -Rf trunk/.wordpress-org
 rm -Rf trunk/.svnignore
@@ -154,6 +167,7 @@ rm -f trunk/README.md
 rm -f trunk/deploy.sh
 rm -f trunk/package-lock.json
 rm -f trunk/phpcs.xml.dist
+rm -f trunk/tmp
 
 # DO THE ADD ALL NOT KNOWN FILES UNIX COMMAND
 svn add --force * --auto-props --parents --depth infinity -q

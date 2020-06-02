@@ -82,7 +82,8 @@ function wpcp_update_settings( $field, $data ) {
  */
 function wpcp_is_duplicate_title( $title ) {
 	global $wpdb;
-	return !empty($wpdb->get_var( $wpdb->prepare( "SELECT id from $wpdb->wpcp_links WHERE title=%s", $title ) ));
+
+	return ! empty( $wpdb->get_var( $wpdb->prepare( "SELECT id from $wpdb->wpcp_links WHERE title=%s", $title ) ) );
 }
 
 /**
@@ -93,9 +94,9 @@ function wpcp_is_duplicate_title( $title ) {
  */
 function wpcp_is_duplicate_url( $url ) {
 	global $wpdb;
+
 	return $wpdb->get_row( $wpdb->prepare( "SELECT id from $wpdb->wpcp_links WHERE url=%s", $url ) );
 }
-
 
 
 /**
@@ -519,3 +520,53 @@ function wpcp_maybe_skip_duplicate_title( $skip, $title, $campaign_id ) {
 }
 
 add_filter( 'wpcp_skip_duplicate_title', 'wpcp_maybe_skip_duplicate_title', 10, 3 );
+
+/**
+ * Setup curl request
+ *
+ * @return \Curl\Curl
+ * @since 1.2.5
+ */
+function wpcp_setup_request( $referrer = 'http://www.bing.com/' ) {
+	$jar = get_option( 'wpcp_cookie_jar' );
+	if ( empty( $jar ) ) {
+		$jar = substr( md5( time() ), 0, 5 );
+		update_option( 'wpcp_cookie_jar', $jar );
+	}
+	$upload_dir = wp_upload_dir();
+	$curl = new Curl\Curl();
+	$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
+	$curl->setOpt( CURLOPT_TIMEOUT, 30 );
+	$curl->setOpt( CURLOPT_MAXREDIRS, 3 );
+	$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
+	$curl->setOpt( CURLOPT_REFERER, $referrer );
+	$curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );
+	@$curl->setOpt( CURLOPT_COOKIEJAR, untrailingslashit( $upload_dir['basedir'] ) . '/' . $jar );
+	@$curl->setOpt( CURLOPT_COOKIEJAR, $jar );
+	$curl->setOpt( CURLOPT_SSL_VERIFYPEER, false );
+
+	return $curl;
+}
+
+/**
+ * Calculate discount percentage from sale price
+ *
+ * @since 1.2.5
+ * @param $original_price
+ * @param null $sale_price
+ *
+ * @return float|int
+ */
+function wpcp_calculate_discount_percent( $original_price, $sale_price = null ) {
+	if ( empty( $sale_price ) ) {
+		$sale_price = $original_price;
+	}
+
+	$sale_price     = preg_replace( '/[^\\d.]+/', '', $sale_price );
+	$original_price = preg_replace( '/[^\\d.]+/', '', $original_price );
+	if ( empty( $sale_price ) || empty( $original_price ) ) {
+		return 0;
+	}
+
+	return ( 100 - ( ( 100 / $original_price ) * $sale_price ) );
+}

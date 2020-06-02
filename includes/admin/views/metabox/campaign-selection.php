@@ -145,6 +145,13 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/walmart.png' )
+	),
+	array(
+		'label'    => 'Gearbest',
+		'name'     => 'gearbest',
+		'keywords' => 'job',
+		'disabled' => true,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/gearbest.png' )
 	)
 ) );
 ?>

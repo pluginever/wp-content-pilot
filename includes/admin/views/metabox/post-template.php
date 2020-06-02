@@ -6,9 +6,14 @@ $campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
 if ( empty( $campaign_type ) ) {
 	return false;
 }
+$module = content_pilot()->modules()->load( $campaign_type );
 
-$template_tags    = content_pilot()->modules()->load( $campaign_type )->get_template_tags();
-$default_template = content_pilot()->modules()->load( $campaign_type )->get_default_template();
+if(! is_callable(array($module,'get_template_tags' ))){
+	_e('Could not find the module', 'wp-content-pilot');
+	return false;
+}
+$template_tags    = $module->get_template_tags();
+$default_template = $module->get_default_template();
 
 echo WPCP_HTML::text_input( array(
 	'label'    => __( 'Post Title', 'wp-content-pilot' ),

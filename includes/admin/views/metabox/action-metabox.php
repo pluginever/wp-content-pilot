@@ -13,6 +13,7 @@ $campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
 if ( empty( $campaign_type ) ) {
 	$campaign_type = 'feed';
 }
+
 $can_publish = true;
 ?>
 <div id="submitpost" class="submitbox wpcp-submitbox">

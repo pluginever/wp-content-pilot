@@ -424,7 +424,7 @@ EOT;
 			}
 
 			$url   = esc_url( 'https://www.youtube.com/watch?v=' . $video_id );
-			$title = ! empty( $item->snippet->title ) ? sanitize_title( $item->snippet->title ) : '';
+			$title = ! empty( $item->snippet->title ) ? $item->snippet->title : '';
 			if ( $title == 'Private video' ) {
 				continue;
 			}
