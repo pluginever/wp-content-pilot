@@ -138,7 +138,7 @@ class WPCP_Settings {
 								echo sprintf( __( 'Like the plugin? Please give us a  %s rating.%s', 'wp-content-pilot' ), '<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/#new-post" target="_blank">', '</a>' )
 								?>
 								<div class="ratings-stars-container">
-									<a href="https://wordpress.org/support/plugin/easy-wp-smtp/reviews/?filter=5"
+									<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/?filter=5"
 									   target="_blank"><span class="dashicons dashicons-star-filled"></span><span
 											class="dashicons dashicons-star-filled"></span><span
 											class="dashicons dashicons-star-filled"></span><span
