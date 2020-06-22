@@ -274,7 +274,7 @@ EOT;
 			}
 		}
 
-		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $links ), $inserted ), $campaign_id );
+		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $rss_items ), $inserted ), $campaign_id );
 
 		return true;
 	}
