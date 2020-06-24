@@ -116,6 +116,7 @@ echo WPCP_HTML::select_input( array(
 		'fa'  => __( 'Persian', 'wp-content-pilot' ),
 		'pl'  => __( 'Polish', 'wp-content-pilot' ),
 		'pt'  => __( 'Portuguese', 'wp-content-pilot' ),
+		'pt-BR' => __('Portuguese (Brazilian)','wp-content-pilot'),
 		'pa'  => __( 'Punjabi', 'wp-content-pilot' ),
 		'ro'  => __( 'Romanian', 'wp-content-pilot' ),
 		'ru'  => __( 'Russian', 'wp-content-pilot' ),
