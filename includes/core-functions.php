@@ -342,7 +342,7 @@ function wpcp_download_image( $url, $description = '' ) {
  * @param bool $dismissible
  */
 function wpcp_admin_notice( $notice, $type = 'success' ) {
-	WPCP_Admin_Notices::add_notice( $notice, [ 'type' => $type ], true  );
+	WPCP_Admin_Notices::add_notice( $notice, [ 'type' => $type ], true );
 }
 
 /**
@@ -357,10 +357,11 @@ function wpcp_insert_log( $message, $level = 'info', $camp_id = '0' ) {
 	$wpdb->insert(
 		"$wpdb->wpcp_logs",
 		array(
-			'camp_id'    => $camp_id,
-			'level'      => $level,
-			'message'    => strip_tags( $message ),
-			'created_at' => current_time( 'mysql' ),
+			'camp_id'     => $camp_id,
+			'level'       => $level,
+			'message'     => strip_tags( $message ),
+			'instance_id' => defined( 'WPCP_CAMPAIGN_INSTANCE' ) && WPCP_CAMPAIGN_INSTANCE ? WPCP_CAMPAIGN_INSTANCE : null,
+			'created_at'  => current_time( 'mysql' ),
 		)
 	);
 }

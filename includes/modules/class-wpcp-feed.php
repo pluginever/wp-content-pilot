@@ -142,11 +142,14 @@ EOT;
 			//get links from database
 			$links = $this->get_links( $source, $campaign_id );
 			if ( empty( $links ) ) {
-				wpcp_logger()->info( 'No generated links now need to generate new links', $campaign_id );
+				wpcp_logger()->info( 'There is no cached link lets find some new links.', $campaign_id );
 				$this->discover_links( $source, $campaign_id );
 				$links = $this->get_links( $source, $campaign_id );
 			}
 
+			if ( empty( $links ) ) {
+				wpcp_logger()->info( 'Could not find any new link, lets try later.', $campaign_id );
+			}
 
 			foreach ( $links as $link ) {
 				wpcp_logger()->info( sprintf( 'Grabbing feed from [%s]', $link->url ), $campaign_id );
@@ -201,7 +204,6 @@ EOT;
 		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
 
 		return new WP_Error( 'campaign-error', __( sprintf( 'No feed article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
-
 	}
 
 
@@ -274,7 +276,7 @@ EOT;
 			}
 		}
 
-		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $rss_items ), $inserted ), $campaign_id );
+		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d] and reject [%d]', count( $rss_items ), $inserted, ( count( $rss_items ) - $inserted ) ), $campaign_id );
 
 		return true;
 	}

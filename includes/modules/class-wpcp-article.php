@@ -151,14 +151,15 @@ EOT;
 		if ( empty( $keywords ) ) {
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}
-		wpcp_logger()->info( 'Article Campaign Started', $campaign_id );
+
+		wpcp_logger()->info( __('Loaded Article campaign', 'wp-content-pilot'), $campaign_id );
 
 		//loop through keywords
 		foreach ( $keywords as $keyword ) {
-			wpcp_logger()->info( sprintf( 'Looping through keywords now trying with keyword [ %s ]', $keyword ), $campaign_id );
+			wpcp_logger()->info( sprintf( 'Looping for article using keyword [ %s ]', $keyword ), $campaign_id );
 
 			if ( $this->is_deactivated_key( $campaign_id, $keyword ) ) {
-				wpcp_logger()->debug( sprintf( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s]', $keyword ), $campaign_id );
+				wpcp_logger()->info( sprintf( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s]', $keyword ), $campaign_id );
 				continue;
 			}
 
@@ -171,7 +172,7 @@ EOT;
 			}
 
 			foreach ( $links as $link ) {
-				wpcp_logger()->info( sprintf( 'Grabbing article from [%s]', $link->url ), $campaign_id );
+				wpcp_logger()->info( sprintf( 'Generating article from [%s]', $link->url ), $campaign_id );
 
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 

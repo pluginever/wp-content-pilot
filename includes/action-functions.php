@@ -10,9 +10,9 @@ function wpcp_handle_manual_campaign() {
 	$campaign_id = intval( $_REQUEST['campaign_id'] );
 
 
-	$target = wpcp_get_post_meta( $campaign_id, '_campaign_target', 0 );
-	$posted = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
-	$edit_link = admin_url(sprintf('post.php?post=%d&action=edit', $campaign_id));
+	$target    = wpcp_get_post_meta( $campaign_id, '_campaign_target', 0 );
+	$posted    = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
+	$edit_link = admin_url( sprintf( 'post.php?post=%d&action=edit', $campaign_id ) );
 
 	$campaign_post = get_post( $campaign_id );
 
@@ -36,7 +36,7 @@ function wpcp_handle_manual_campaign() {
 		wp_safe_redirect( $edit_link );
 		exit();
 	}
-	$title = empty(get_the_title( $article_id ))? 'Untitled': get_the_title( $article_id );
+	$title         = empty( get_the_title( $article_id ) ) ? 'Untitled' : get_the_title( $article_id );
 	$article_title = '<strong><a href="' . get_the_permalink( $article_id ) . '" target="_blank">' . $title . '</a></strong>';
 	$message       = sprintf( __( 'A post successfully created by %s titled %s', 'wp-content-pilot' ), '<strong>' . get_the_title( $campaign_id ) . '</strong>', $article_title );
 	wpcp_admin_notice( $message );
@@ -223,7 +223,7 @@ function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article )
 
 	$post_link = get_the_permalink( $post_id );
 	$subject   = __( 'Post Publish', 'wp-content-pilot' );
-	$body      = sprintf(  "<h4>Post Title: %s</h4>
+	$body      = sprintf( "<h4>Post Title: %s</h4>
                     <h5>Post Excerpt</h5>
                     <p>%s</p>
                     <a href='%s'>View Post</a>", esc_html( $title ), $excerpt, esc_url( $post_link )
@@ -272,3 +272,81 @@ function wpcp_campaign_reset_search_campaign() {
 }
 
 add_action( 'admin_post_wpcp_campaign_reset_search', 'wpcp_campaign_reset_search_campaign' );
+
+function wpcp_ajax_run_manual_campaign() {
+	if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'ajax_action' ) ) {
+		wp_send_json( [
+			'message' => __( 'Cheating?', 'wp-content-pilot' ),
+			'level'   => 'ERROR',
+			'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
+		] );
+	}
+
+	$campaign_id = intval( $_REQUEST['campaign_id'] );
+	$instance    = intval( $_REQUEST['instance'] );
+	if ( ! defined( 'WPCP_CAMPAIGN_INSTANCE' ) ) {
+		define( 'WPCP_CAMPAIGN_INSTANCE', $instance );
+	}
+
+	$campaign_post = get_post( $campaign_id );
+	if ( empty( $campaign_post ) || 'wp_content_pilot' !== $campaign_post->post_type ) {
+		wp_send_json( [
+			'message' => __( 'Invalid post action', 'wp-content-pilot' ),
+			'level'   => 'ERROR',
+			'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
+		] );
+	}
+
+	global $current_user;
+	wpcp_logger()->info( sprintf( __( 'Campaign <strong>%s</strong> manually initiated by <strong>%s</strong>', 'wp-content-pilot' ), get_the_title( $campaign_id ), $current_user->display_name ) );
+
+	$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
+	$article_id    = content_pilot()->modules()->load( $campaign_type )->process_campaign( $campaign_id, '', 'user' );
+	if ( is_wp_error( $article_id ) ) {
+		wp_send_json( [
+			'message' => $article_id->get_error_message(),
+			'level'   => 'ERROR',
+			'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
+		] );
+	}
+	$title         = empty( get_the_title( $article_id ) ) ? 'Untitled' : get_the_title( $article_id );
+	$article_title = '<a href="' . get_the_permalink( $article_id ) . '" target="_blank">' . $title . '</a>';
+	$message       = sprintf( __( 'A post successfully created by campaign %s titled %s', 'wp-content-pilot' ), '<strong>' . get_the_title( $campaign_id ) . '</strong>', $article_title );
+	wp_send_json( [
+		'message' => $message,
+		'link'    => $article_title,
+		'level'   => 'INFO',
+		'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
+	] );
+}
+
+add_action( 'wp_ajax_wpcp_run_manual_campaign', 'wpcp_ajax_run_manual_campaign' );
+
+function wpcp_get_campaign_instance_log() {
+	if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'ajax_action' ) ) {
+		wp_send_json( [
+			[
+				'message' => __( 'Cheating?', 'wp-content-pilot' ),
+				'level'   => 'ERROR',
+				'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
+			]
+		] );
+	}
+	$campaign_id = absint( $_REQUEST['campaign_id'] );
+	$instance    = absint( $_REQUEST['instance'] );
+	if ( empty( $campaign_id ) || empty( $instance ) ) {
+		wp_send_json( [
+			[
+				'message' => __( 'Something wrong, please try again.', 'wp-content-pilot' ),
+				'level'   => 'ERROR',
+				'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
+			]
+		] );
+	}
+
+	global $wpdb;
+	$data = $wpdb->get_results( "select `level`, message, DATE_FORMAT(created_at, '%H:%i:%s') as time from {$wpdb->prefix}wpcp_logs where instance_id={$instance} order by id DESC" );
+	wp_send_json( $data );
+}
+
+add_action( 'wp_ajax_wpcp_get_campaign_instance_log', 'wpcp_get_campaign_instance_log' );
