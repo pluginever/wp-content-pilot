@@ -171,6 +171,7 @@ function wpcp_update_campaign_settings( $post_id ) {
 	update_post_meta( $post_id, '_skip_duplicate_title', empty( $posted['_skip_duplicate_title'] ) ? '' : sanitize_text_field( $posted['_skip_duplicate_title'] ) );
 	update_post_meta( $post_id, '_clean_title', empty( $posted['_clean_title'] ) ? '' : sanitize_text_field( $posted['_clean_title'] ) );
 
+	update_post_meta( $post_id, '_spin_article', empty( $posted['_spin_article'] ) ? '' : sanitize_text_field( $posted['_spin_article'] ) );
 	update_post_meta( $post_id, '_post_title', empty( $posted['_post_title'] ) ? '' : sanitize_text_field( $posted['_post_title'] ) );
 	update_post_meta( $post_id, '_post_template', empty( $posted['_post_template'] ) ? '' : wp_kses_post( $posted['_post_template'] ) );
 	update_post_meta( $post_id, '_post_type', empty( $posted['_post_type'] ) ? 'post' : wp_kses_post( $posted['_post_type'] ) );

@@ -15,6 +15,13 @@ if(! is_callable(array($module,'get_template_tags' ))){
 $template_tags    = $module->get_template_tags();
 $default_template = $module->get_default_template();
 
+echo sprintf( '<label style="font-weight: 700;display: block;margin-bottom: 5px;">%s</label>', __( 'Spin Article', 'wp-content-pilot' ) );
+echo WPCP_HTML::checkbox_input( array(
+	'label'    =>  sprintf(__( 'Spin article using using spinrewriter, if you do not have account please %ssign up%s and set in settings page.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>'),
+	'name'     => '_spin_article',
+	'required' => false,
+) );
+
 echo WPCP_HTML::text_input( array(
 	'label'    => __( 'Post Title', 'wp-content-pilot' ),
 	'name'     => '_post_title',

@@ -53,7 +53,7 @@ abstract class WPCP_Module {
 		$hook_name = 'wpcp_' . $this->campaign_type;
 
 		add_action( $hook_name . '_campaign_options_meta_fields', array( $this, 'add_campaign_option_fields' ) );
-		add_action( $hook_name . '_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2);
+		add_action( $hook_name . '_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2 );
 
 		//setting
 		add_filter( 'wpcp_settings_sections', array( $this, 'get_setting_section' ), 10 );
@@ -319,6 +319,13 @@ abstract class WPCP_Module {
 			$post_excerpt   = wp_trim_words( $post_excerpt, $excerpt_length );
 		}
 
+		//spin
+		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
+		if ( 'on' == $spin_article ) {
+			wpcp_logger()->debug( 'Spinning article content...', $campaign_id );
+			$post_content = wpcp_spin_article($post_content);
+		}
+
 		//post
 		do_action( 'wpcp_before_post_insert', $campaign_id, $article );
 
@@ -414,7 +421,6 @@ abstract class WPCP_Module {
 	protected function setup_curl() {
 		return wpcp_setup_request();
 	}
-
 
 
 	/**
@@ -533,7 +539,7 @@ abstract class WPCP_Module {
 		) );
 		global $wpdb;
 
-		$data['meta'] = ! is_serialized( $data['meta'] ) && !empty($data['meta']) ? base64_encode( serialize( $data['meta'] ) ) : base64_encode( $data['meta'] );
+		$data['meta'] = ! is_serialized( $data['meta'] ) && ! empty( $data['meta'] ) ? base64_encode( serialize( $data['meta'] ) ) : base64_encode( $data['meta'] );
 
 		if ( false !== $wpdb->insert( $wpdb->wpcp_links, $data ) ) {
 			return $wpdb->insert_id;

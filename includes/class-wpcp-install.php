@@ -22,6 +22,7 @@ class WPCP_Install {
 		if ( false == get_option( 'wpcp_install_date' ) ) {
 			update_option( 'wpcp_install_date', current_time( 'timestamp' ) );
 		}
+
 	}
 
 	/**
