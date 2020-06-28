@@ -301,6 +301,7 @@ function wpcp_ajax_run_manual_campaign() {
 	wpcp_logger()->info( sprintf( __( 'Campaign <strong>%s</strong> manually initiated by <strong>%s</strong>', 'wp-content-pilot' ), get_the_title( $campaign_id ), $current_user->display_name ) );
 
 	$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
+
 	$article_id    = content_pilot()->modules()->load( $campaign_type )->process_campaign( $campaign_id, '', 'user' );
 	if ( is_wp_error( $article_id ) ) {
 		wp_send_json( [
@@ -334,6 +335,7 @@ function wpcp_get_campaign_instance_log() {
 	}
 	$campaign_id = absint( $_REQUEST['campaign_id'] );
 	$instance    = absint( $_REQUEST['instance'] );
+	$offset    = absint( $_REQUEST['offset'] );
 	if ( empty( $campaign_id ) || empty( $instance ) ) {
 		wp_send_json( [
 			[
@@ -345,7 +347,7 @@ function wpcp_get_campaign_instance_log() {
 	}
 
 	global $wpdb;
-	$data = $wpdb->get_results( "select `level`, message, DATE_FORMAT(created_at, '%H:%i:%s') as time from {$wpdb->prefix}wpcp_logs where instance_id={$instance} order by id DESC" );
+	$data = $wpdb->get_results( "select `level`, message, DATE_FORMAT(created_at, '%H:%i:%s') as time from {$wpdb->prefix}wpcp_logs where instance_id={$instance} order by id ASC limit 9999 offset {$offset}" );
 	wp_send_json( $data );
 }
 

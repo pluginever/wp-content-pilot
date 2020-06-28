@@ -134,50 +134,57 @@ jQuery(document).ready(function ($) {
 			var campaign_id = parseInt($button.attr('data-campaign_id'), 10);
 			var instance = parseInt($button.attr('data-instance'), 10);
 			var link_wrapper = $('.wpcp-last-article-link');
-			$log_list.html('');
-			$metabox.fadeIn('slow', function () {
-
-			});
+			var request, logger;
+			window.wpcp_interval;
+			window.wpcp_logger_offset = 0;
 			window.wpcp_run_instance = instance;
+			$log_list.html('');
 
-			var request;
+			$metabox.fadeIn('slow');
+
 			request = wp.ajax.post('wpcp_run_manual_campaign', {
 				'nonce': wp_content_pilot_i10n.nonce,
 				'campaign_id': campaign_id,
 				'instance': instance
 			});
 
-			window.wpcp_instance = setInterval(function () {
-				var logger = wp.ajax.post('wpcp_get_campaign_instance_log', {
+			window.wpcp_interval = setInterval(function () {
+				logger = wp.ajax.post('wpcp_get_campaign_instance_log', {
 					'nonce': wp_content_pilot_i10n.nonce,
 					'campaign_id': campaign_id,
-					'instance': instance
+					'instance': instance,
+					'offset': wpcp_logger_offset,
 				});
 
 				logger.always(function (logs) {
-					if (logs && window.wpcp_instance) {
-						console.log(logs);
-						$log_list.html('');
+					window.wpcp_logger_offset += logs.length;
+					if (logs.length) {
 						logs.forEach(function (log) {
 							$log_list.append(build_log_line(log));
 						});
 					}
 				});
 
-			}, 200);
+				if (!window.wpcp_run_instance) {
+					clearInterval(window.wpcp_interval);
+					window.wpcp_logger_offset = 0;
+				}
+
+			}, 500);
 
 			request.always(function (response) {
-				clearInterval(window.wpcp_instance);
 				$button.removeAttr('disabled');
 				$button.prev('.spinner').hide();
 				$button.show();
 				$button.attr('data-instance', Math.floor(Date.now() / 1000));
-				$log_list.prepend(build_log_line(response));
-				if(response.link){
+				$log_list.append(build_log_line(response));
+				if (response.link) {
 					link_wrapper.find('a').remove();
 					link_wrapper.append(response.link);
 					link_wrapper.find('a').addClass('wpcp-blink');
 				}
+
+				delete window.wpcp_run_instance;
 			});
 
 			function build_log_line(data) {
