@@ -177,6 +177,7 @@ EOT;
 				$links = $this->get_links( $keyword, $campaign_id );
 			}
 
+			wpcp_logger()->info( __( 'Looping through cached links for publishing article', 'wp-content-pilot' ), $campaign_id );
 			foreach ( $links as $link ) {
 				wpcp_logger()->info( sprintf( __( 'Generating article from [%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
 
@@ -305,7 +306,7 @@ EOT;
 
 		$links = [];
 
-		wpcp_logger()->info( __( 'Creating links from response and inserting into database', 'wp-content-pilot' ), $campaign_id );
+		wpcp_logger()->info( __( 'Finding links from response and inserting into database', 'wp-content-pilot' ), $campaign_id );
 		foreach ( $items as $item ) {
 
 			foreach ( $banned_hosts as $banned_host ) {
