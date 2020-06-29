@@ -12,7 +12,7 @@ class WPCP_Article extends WPCP_Module {
 	/**
 	 * The single instance of the class
 	 *
-	 * @var $this;
+	 * @var $this ;
 	 */
 	protected static $_instance = null;
 
@@ -142,6 +142,7 @@ EOT;
 	 * @param array $source
 	 *
 	 * @return array|mixed|WP_Error
+	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	public function get_post( $campaign_id ) {
@@ -149,23 +150,29 @@ EOT;
 		//it can be anything
 		$keywords = $this->get_campaign_meta( $campaign_id );
 		if ( empty( $keywords ) ) {
+			wpcp_logger()->error( __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ), $campaign_id );
+
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}
 
-		wpcp_logger()->info( __('Loaded Article campaign', 'wp-content-pilot'), $campaign_id );
+		wpcp_logger()->info( __( 'Loaded Article campaign', 'wp-content-pilot' ), $campaign_id );
 
 		//loop through keywords
 		foreach ( $keywords as $keyword ) {
-			wpcp_logger()->info( sprintf( __('Looking for article for the keyword [ %s ]', 'wp-content-pilot'), $keyword ), $campaign_id );
+			wpcp_logger()->info( sprintf( __( 'Looking for article for the keyword [ %s ]', 'wp-content-pilot' ), $keyword ), $campaign_id );
 
 			if ( $this->is_deactivated_key( $campaign_id, $keyword ) ) {
-				$reactivate_keyword_action = add_query_arg(['campaign_id' => $campaign_id, 'keyword'=> $keyword, 'action' => 'wpcp_reactivate_keyword'], admin_url('admin-post.php'));
-				wpcp_logger()->info( sprintf( __('The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s] %s reactivate keyword %s'), $keyword, '<a href="'.$reactivate_keyword_action.'">', '</a>' ), $campaign_id );
+				$reactivate_keyword_action = add_query_arg( [
+					'campaign_id' => $campaign_id,
+					'keyword'     => $keyword,
+					'action'      => 'wpcp_reactivate_keyword'
+				], admin_url( 'admin-post.php' ) );
+				wpcp_logger()->info( sprintf( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s] %s reactivate keyword %s' ), $keyword, '<a href="' . $reactivate_keyword_action . '">', '</a>' ), $campaign_id );
 				continue;
 			}
 
 			//get links from database
-
+			wpcp_logger()->info( __( 'Getting cached links from store', 'wp-content-pilot' ), $campaign_id );
 			$links = $this->get_links( $keyword, $campaign_id );
 			if ( empty( $links ) ) {
 				wpcp_logger()->info( 'No cached links in store. Generating new links...', $campaign_id );
@@ -198,6 +205,7 @@ EOT;
 				$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
 
 				if ( 'on' == $check_clean_title ) {
+					wpcp_logger()->info( __( 'Cleaning title', 'wp-content-pilot' ), $campaign_id );
 					$title = wpcp_clean_title( $readability->get_title() );
 				} else {
 					$title = html_entity_decode( $readability->get_title(), ENT_QUOTES );
@@ -253,7 +261,8 @@ EOT;
 			$args,
 		), 'https://www.bing.com/search' );
 
-		wpcp_logger()->debug( sprintf( 'Searching page url [%s]', $endpoint ), $campaign_id );
+		//wpcp_logger()->debug( sprintf( 'Searching page url [%s]', $endpoint ), $campaign_id );
+		wpcp_logger()->info( sprintf( 'Searching page url [%s]', $endpoint ), $campaign_id );
 
 		$curl     = $this->setup_curl();
 		$response = $curl->get( $endpoint );
@@ -301,7 +310,6 @@ EOT;
 				if ( stristr( $item['link'], $banned_host ) ) {
 					continue;
 				}
-
 			}
 
 			if ( stristr( $item['link'], 'wikipedia' ) ) {
