@@ -49,6 +49,7 @@ class WPCP_Install {
                 `camp_id` int(11) DEFAULT NULL,
                 `level` varchar(20) NOT NULL DEFAULT '',
                 `message` text DEFAULT NULL,
+                `instance_id` varchar(30) DEFAULT NULL,
                 `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
                 PRIMARY KEY (`id`)
             )  CHARACTER SET utf8 COLLATE utf8_general_ci;",

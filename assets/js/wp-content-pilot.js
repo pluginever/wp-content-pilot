@@ -162,6 +162,7 @@ jQuery(document).ready(function ($) {
 						logs.forEach(function (log) {
 							$log_list.append(build_log_line(log));
 						});
+						$log_list.scrollTop($log_list.height());
 					}
 				});
 
