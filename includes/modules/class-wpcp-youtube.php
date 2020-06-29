@@ -222,8 +222,11 @@ EOT;
 	}
 
 	/**
+	 * @param $campaign_id
+	 *
 	 * @return mixed|void
 	 * @throws ErrorException
+	 * @since 1.2.0
 	 */
 	public function get_post( $campaign_id ) {
 		//if api not set bail
@@ -235,7 +238,9 @@ EOT;
 
 			return new WP_Error( 'missing-data', $notice );
 		}
+		wpcp_logger()->info( __( 'Loaded Youtube campaign', 'wp-content-pilot' ), $campaign_id );
 
+		wpcp_logger()->info( __( 'Checking youtube search type...', 'wp-content-pilot' ), $campaign_id );
 		$source_type = wpcp_get_post_meta( $campaign_id, '_youtube_search_type', 'global' );
 		if ( $source_type == "playlist" ) {
 			$sources = $this->get_campaign_meta( $campaign_id, '_youtube_playlist_id' );
@@ -251,45 +256,55 @@ EOT;
 
 		foreach ( $sources as $source ) {
 			//get links from database
+			wpcp_logger()->info( __( 'Checking for links in store...', 'wp-content-pilot' ), $campaign_id );
+
 			$links = $this->get_links( $source, $campaign_id );
 			if ( empty( $links ) ) {
-				wpcp_logger()->debug( 'No generated links now need to generate new links', $campaign_id );
+				wpcp_logger()->info( __( 'No cached links in store. Generating new links...', 'wp-content-pilot' ), $campaign_id );
 				$this->discover_links( $campaign_id, $source );
 				$links = $this->get_links( $source, $campaign_id );
 			}
 
+			wpcp_logger()->info( __( 'Looping through cached links for article', 'wp-content-pilot' ), $campaign_id );
+
 			foreach ( $links as $link ) {
-				wpcp_logger()->debug( sprintf( 'Youtube link#[%s]', $link->url ), $campaign_id );
+				wpcp_logger()->info( sprintf( __( 'Youtube link#[%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
 				$link_parts = explode( 'v=', $link->url );
 				$video_id   = $link_parts[1];
 
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
+				wpcp_logger()->info( __( 'Making request for getting youtube video content', 'wp-content-pilot' ), $campaign_id );
 				$curl     = $this->setup_curl();
 				$endpoint = "https://www.googleapis.com/youtube/v3/videos?id={$video_id}&key={$api_key}&part=id,snippet,contentDetails,statistics,player";
 				$curl->get( $endpoint );
 
 				if ( $curl->error ) {
-					wpcp_logger()->warning( sprintf( 'Request error in grabbing video details error [ %s ]', $curl->errorMessage ), $campaign_id );
+					wpcp_logger()->error( sprintf( __( 'Request error in grabbing video details error [ %s ]', 'wp-content-pilot' ), $curl->errorMessage ), $campaign_id );
 					continue;
 				}
 
+				wpcp_logger()->info( __( 'Extracting article content from response', 'wp-content-pilot' ), $campaign_id );
 				$items = $curl->response->items;
 				$item  = array_pop( $items );
 
+				wpcp_logger()->info( __( 'Removing unauthorized html content from description', 'wp-content-pilot' ), $campaign_id );
 				$description = wpcp_remove_unauthorized_html( wpcp_remove_emoji( $item->snippet->description ) );
 
+				wpcp_logger()->info( __( 'Extracting thumbnail', 'wp-content-pilot' ), $campaign_id );
 				$image_url = '';
 				if ( ! empty( $item->snippet->thumbnails ) && is_object( $item->snippet->thumbnails ) ) {
 					$last_image = end( $item->snippet->thumbnails );
 					$image_url  = ! empty( $last_image->url ) ? esc_url( $last_image->url ) : '';
 				}
 
+				wpcp_logger()->info( __( 'Extracting transcript', 'wp-content-pilot' ), $campaign_id );
 				$transcript = '';
 				if ( function_exists( 'wpcp_pro_get_youtube_transcript' ) ) {
 					$transcript = wpcp_pro_get_youtube_transcript( $link );
 				}
 
+				wpcp_logger()->info( __( 'Extracting hyperlink description', 'wp-content-pilot' ), $campaign_id );
 				$hyperlink_description = wpcp_get_post_meta( $campaign_id, '_youtube_description_hyperlink', '' );
 				if ( 'on' == $hyperlink_description ) {
 					$description = wpcp_hyperlink_text( $description );
@@ -299,11 +314,13 @@ EOT;
 				$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
 
 				if ( 'on' == $check_clean_title ) {
+					wpcp_logger()->info( __( 'Cleaning title', 'wp-content-pilot' ), $campaign_id );
 					$title = wpcp_clean_title( $link->title );
 				} else {
 					$title = html_entity_decode( $link->title, ENT_QUOTES );
 				}
 
+				wpcp_logger()->info( __( 'Preparing different parts for article', 'wp-content-pilot' ), $campaign_id );
 				$article = array(
 					'title'          => $title,
 					'author'         => $item->snippet->channelTitle,
@@ -327,7 +344,7 @@ EOT;
 					'transcript'     => $transcript,
 				);
 				$this->update_link( $link->id, [ 'status' => 'success' ] );
-				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
+				wpcp_logger()->info( __( 'Article processed from campaign', 'wp-content-pilot' ), $campaign_id );
 
 				return $article;
 			}
@@ -345,6 +362,7 @@ EOT;
 	 * @param $source
 	 *
 	 * @return bool
+	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	protected function discover_links( $campaign_id, $source ) {
@@ -386,7 +404,7 @@ EOT;
 		}
 
 		$endpoint = add_query_arg( $query_args, $endpoint );
-		wpcp_logger()->debug( sprintf( 'Requesting urls from Youtube [%s]', $endpoint ) );
+		wpcp_logger()->info( sprintf( __( 'Requesting urls from Youtube [%s]', 'wp-content-pilot' ), $endpoint ) );
 
 		$curl = $this->setup_curl();
 		$curl->get( $endpoint );
@@ -400,6 +418,7 @@ EOT;
 			return false;
 		}
 
+		wpcp_logger()->info( __( 'Extracting response from request', 'wp-content-pilot' ), $campaign_id );
 		$response = $curl->response;
 		if ( isset( $response->nextPageToken ) && trim( $response->nextPageToken ) != '' ) {
 			wpcp_update_post_meta( $campaign_id, $token_key, $response->nextPageToken );
@@ -415,6 +434,7 @@ EOT;
 		}
 
 		$links = [];
+		wpcp_logger()->info( __( 'Finding links from response and storing.....', 'wp-content-pilot' ), $campaign_id );
 		foreach ( $items as $item ) {
 			$video_id = '';
 			if ( stristr( $endpoint, 'playlistItems' ) ) {
