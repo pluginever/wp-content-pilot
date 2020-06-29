@@ -216,7 +216,7 @@ abstract class WPCP_Module {
 		//check if acceptance passed if not then return this method again
 		$accepted = apply_filters( 'wpcp_acceptance_check', true, $article, $campaign_id, $this );
 		if ( ! $accepted ) {
-			wpcp_logger()->debug( 'Article failed in acceptance test', $campaign_id );
+			wpcp_logger()->error( __( 'Article failed in acceptance test', 'wp-content-pilot' ), $campaign_id );
 			$this->try_count ++;
 
 			return $this->process_campaign( $campaign_id, '', $user );
@@ -226,7 +226,7 @@ abstract class WPCP_Module {
 		//truncate content
 		$limit_title = wpcp_get_post_meta( $this->campaign_id, '_title_limit', 0 );
 		if ( ! empty( $limit_title ) && $limit_title > 0 ) {
-			wpcp_logger()->debug( 'Limiting title', $campaign_id );
+			wpcp_logger()->info( __( 'Limiting title', 'wp-content-pilot' ), $campaign_id );
 			$article['title'] = wp_trim_words( $article['title'], $limit_title );
 		}
 
@@ -234,14 +234,14 @@ abstract class WPCP_Module {
 		if ( ! empty( $limit_content ) && $limit_content > 0 ) {
 			//previously use wp_trim_words but it remove all html tag from content
 			//that's why use custom function wpcp_truncate_content from allow html in content
-			wpcp_logger()->debug( 'Limiting content', $campaign_id );
+			wpcp_logger()->info( __( 'Limiting content', 'wp-content-pilot' ), $campaign_id );
 			$article['content'] = wpcp_truncate_content( $article['content'], $limit_content );
 		}
 
 		//strip links
 		$remove_hyper_links = wpcp_get_post_meta( $this->campaign_id, '_strip_links', 0 );
 		if ( 'on' === $remove_hyper_links ) {
-			wpcp_logger()->debug( 'Stripping links', $campaign_id );
+			wpcp_logger()->info( __( 'Stripping links', 'wp-content-pilot' ), $campaign_id );
 			//keep text
 			$article['content'] = preg_replace( '#<a.*?>(.*?)</a>#i', '\1', html_entity_decode( $article['content'] ) );
 			//remove text
@@ -305,7 +305,7 @@ abstract class WPCP_Module {
 		$remove_images = wpcp_get_post_meta( $this->campaign_id, '_remove_images', 'off' );
 
 		if ( 'on' == $remove_images ) {
-			wpcp_logger()->debug( 'Removing images from content', $campaign_id );
+			wpcp_logger()->info( __( 'Removing images from content', 'wp-content-pilot' ), $campaign_id );
 			$post_content = preg_replace( '/<img[^>]+\>/mi', '', $post_content );
 		}
 
@@ -322,8 +322,8 @@ abstract class WPCP_Module {
 		//spin
 		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
 		if ( 'on' == $spin_article ) {
-			wpcp_logger()->debug( 'Spinning article content...', $campaign_id );
-			$post_content = wpcp_spin_article($post_content);
+			wpcp_logger()->info( __( 'Spinning article content...', 'wp-content-pilot' ), $campaign_id );
+			$post_content = wpcp_spin_article( $post_content );
 		}
 
 		//post
@@ -385,7 +385,7 @@ abstract class WPCP_Module {
 		//set featured image
 		$is_set_featured_image = wpcp_get_post_meta( $campaign_id, '_set_featured_image', 0 );
 		if ( 'on' === $is_set_featured_image && ! empty( $article['image_url'] ) ) {
-			wpcp_logger()->debug( 'Setting featured image', $campaign_id );
+			wpcp_logger()->info( __( 'Setting featured image','wp-content-pilot' ), $campaign_id );
 			$attachment_id = wpcp_download_image( html_entity_decode( $article['image_url'] ) );
 			if ( $attachment_id ) {
 				set_post_thumbnail( $post_id, $attachment_id );
@@ -415,7 +415,6 @@ abstract class WPCP_Module {
 
 	/**
 	 * @return \Curl\Curl
-	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	protected function setup_curl() {

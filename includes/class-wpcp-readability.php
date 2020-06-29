@@ -54,7 +54,7 @@ class WPCP_Readability {
 		$result                               = $readability->init();
 
 		if ( ! $result ) {
-			wpcp_logger()->error( sprintf( 'Not readable [%s]', $this->url ) );
+			wpcp_logger()->error( sprintf( __('Not readable [%s]','wp-content-pilot'), $this->url ) );
 
 			return new WP_Error( 'readability-error', __( 'Content is not readable', 'wp-content-pilot' ) );
 		}
