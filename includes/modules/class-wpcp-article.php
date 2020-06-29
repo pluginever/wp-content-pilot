@@ -139,7 +139,6 @@ EOT;
 
 	/**
 	 * @param int $campaign_id
-	 * @param array $source
 	 *
 	 * @return array|mixed|WP_Error
 	 * @throws ErrorException
@@ -150,8 +149,6 @@ EOT;
 		//it can be anything
 		$keywords = $this->get_campaign_meta( $campaign_id );
 		if ( empty( $keywords ) ) {
-			wpcp_logger()->error( __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ), $campaign_id );
-
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}
 
@@ -167,21 +164,21 @@ EOT;
 					'keyword'     => $keyword,
 					'action'      => 'wpcp_reactivate_keyword'
 				], admin_url( 'admin-post.php' ) );
-				wpcp_logger()->info( sprintf( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s] %s reactivate keyword %s' ), $keyword, '<a href="' . $reactivate_keyword_action . '">', '</a>' ), $campaign_id );
+				wpcp_logger()->info( sprintf( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s] %s reactivate keyword %s', 'wp-content-pilot' ), $keyword, '<a href="' . $reactivate_keyword_action . '">', '</a>' ), $campaign_id );
 				continue;
 			}
 
 			//get links from database
-			wpcp_logger()->info( __( 'Getting cached links from store', 'wp-content-pilot' ), $campaign_id );
+			wpcp_logger()->info( __( 'Checking for cached links in store', 'wp-content-pilot' ), $campaign_id );
 			$links = $this->get_links( $keyword, $campaign_id );
 			if ( empty( $links ) ) {
-				wpcp_logger()->info( 'No cached links in store. Generating new links...', $campaign_id );
+				wpcp_logger()->info( __( 'No cached links in store. Generating new links...', 'wp-content-pilot' ), $campaign_id );
 				$this->discover_links( $campaign_id, $keyword );
 				$links = $this->get_links( $keyword, $campaign_id );
 			}
 
 			foreach ( $links as $link ) {
-				wpcp_logger()->info( sprintf( 'Generating article from [%s]', $link->url ), $campaign_id );
+				wpcp_logger()->info( sprintf( __( 'Generating article from [%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
 
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
@@ -189,15 +186,17 @@ EOT;
 				$curl->get( $link->url );
 
 				if ( $curl->isError() && $this->initiator != 'cron' ) {
-					wpcp_logger()->info( sprintf( "Failed processing link reason [%s]", $curl->getErrorMessage() ), $campaign_id );
+					wpcp_logger()->error( sprintf( __( "Failed processing link reason [%s]", 'wp-content-pilot' ), $curl->getErrorMessage() ), $campaign_id );
 					continue;
 				}
+
+				wpcp_logger()->info( __( "Extracting post content from request", 'wp-content-pilot' ), $campaign_id );
 
 				$html        = $curl->response;
 				$readability = new WPCP_Readability();
 				$readable    = $readability->parse( $html, $link->url );
 				if ( is_wp_error( $readable ) ) {
-					wpcp_logger()->info( sprintf( "Failed readability reason [%s] changing to different link", $readable->get_error_message() ), $campaign_id );
+					wpcp_logger()->error( sprintf( __( "Failed readability reason [%s] changing to different link", 'wp-content-pilot' ), $readable->get_error_message() ), $campaign_id );
 					continue;
 				}
 
@@ -211,7 +210,7 @@ EOT;
 					$title = html_entity_decode( $readability->get_title(), ENT_QUOTES );
 				}
 
-
+				wpcp_logger()->info( __( 'Making article content from response', 'wp-content-pilot' ), $campaign_id );
 				$article = array(
 					'title'      => $title,
 					'author'     => $readability->get_author(),
@@ -262,7 +261,7 @@ EOT;
 		), 'https://www.bing.com/search' );
 
 		//wpcp_logger()->debug( sprintf( 'Searching page url [%s]', $endpoint ), $campaign_id );
-		wpcp_logger()->info( sprintf( 'Searching page url [%s]', $endpoint ), $campaign_id );
+		wpcp_logger()->info( sprintf( __( 'Searching page url [%s]', 'wp-content-pilot' ), $endpoint ), $campaign_id );
 
 		$curl     = $this->setup_curl();
 		$response = $curl->get( $endpoint );
@@ -278,13 +277,14 @@ EOT;
 			$response = simplexml_load_string( $response );
 		}
 
+		wpcp_logger()->info( __( 'Extracting response from request', 'wp-content-pilot' ), $campaign_id );
 		$response = json_encode( $response );
 		$response = json_decode( $response, true );
 
 		//check if links exist
 		if ( empty( $response ) || ! isset( $response['channel'] ) || ! isset( $response['channel']['item'] ) || empty( $response['channel']['item'] ) ) {
 			$message = __( 'Could not find any links from search engine, deactivating keyword for an hour.', 'wp-content-pilot' );
-			wpcp_logger()->info( $message, $campaign_id );
+			wpcp_logger()->error( $message, $campaign_id );
 			$this->deactivate_key( $campaign_id, $keyword );
 
 			return new WP_Error( 'no-links-found', $message );
@@ -292,7 +292,7 @@ EOT;
 
 		$items = $response['channel']['item'];
 
-
+		wpcp_logger()->info( __( 'Getting banned hosts for skipping links', 'wp-content-pilot' ), $campaign_id );
 		$banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article' );
 		$banned_hosts = preg_split( '/\n/', $banned_hosts );
 		$banned_hosts = array_merge( $banned_hosts, array(
@@ -304,6 +304,8 @@ EOT;
 		) );
 
 		$links = [];
+
+		wpcp_logger()->info( __( 'Creating links from response and inserting into database', 'wp-content-pilot' ), $campaign_id );
 		foreach ( $items as $item ) {
 
 			foreach ( $banned_hosts as $banned_host ) {
