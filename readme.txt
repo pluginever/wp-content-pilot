@@ -144,6 +144,8 @@ WP Content Pilot can automatically import products from Walmart by keyword optio
 = BestBuy =
 WP Content Pilot can automatically import products from BestBuy by keyword optionally by setting filtering category, price. The plugin set the affiliate link automatically to ensure you get the commissions from sale.
 
+= GearBest =
+WP Content Pilot can automatically import products from GearBest by keyword. The plugin sets the affiliate link automatically to ensure you get the commissions from sale.
 
 = Contribute =
 This may have bugs and lack of many features. If you want to contribute to this project, you are more than welcome. Please open an issue [here](https://github.com/pluginever/wp-content-pilot/issues)
