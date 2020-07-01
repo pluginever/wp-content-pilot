@@ -39,6 +39,7 @@ read -p " - Set version in main file header to "${VERSION}"?"
 read -p " - Set version in main file PHP to "${VERSION}"?"
 read -p " - Set version in the package.json to "${VERSION}"?"
 read -p " - Included update file update-"${VERSION}".php?"
+read -p " - Added update file in array for "${VERSION}".php?"
 read -p " - Added a changelog for "${VERSION}"?"
 read -p " - Updated the POT file?"
 read -p " - Committed all changes up to GITHUB?"
@@ -231,14 +232,7 @@ echo ""
 # Allow user cancellation
 if [ $(echo "$PROCEED" | tr [:upper:] [:lower:]) == "y" ]; then
 	status "Creating new SVN tag and committing it."
-	cd $SVNPATH
-	svn copy --quiet trunk/ tags/$VERSION/
-	# Remove trunk directories from tag directory
-	svn delete --force --quiet $SVNPATH/tags/$VERSION/trunk
-	svn update --quiet --accept working $SVNPATH/tags/$VERSION
-	svn resolve --accept working $SVNPATH/tags/$VERSION/*
-	cd $SVNPATH/tags/$VERSION
-	svn commit --username=$SVNUSER -m "Tagging version $VERSION"
+	svn cp -m"tagging v$VERSION" https://plugins.svn.wordpress.org/wp-content-pilot/trunk https://plugins.svn.wordpress.org/wp-content-pilot/tags/$VERSION
 else
 	warning "Aboring tag..."
 fi
