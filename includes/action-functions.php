@@ -89,7 +89,7 @@ function wpcp_run_automatic_campaign() {
 			}
 
 			if ( $posted >= $target ) {
-				wpcp_logger()->debug( 'Reached target stopping campaign', $campaign_id );
+				wpcp_logger()->info( __( 'Reached campaign post limit. So campaign stopping publish new post', 'wp-content-pilot' ), $campaign_id );
 				wpcp_disable_campaign( $campaign_id );
 				continue;
 			}
@@ -303,7 +303,7 @@ function wpcp_ajax_run_manual_campaign() {
 
 	$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
 
-	$article_id    = content_pilot()->modules()->load( $campaign_type )->process_campaign( $campaign_id, '', 'user' );
+	$article_id = content_pilot()->modules()->load( $campaign_type )->process_campaign( $campaign_id, '', 'user' );
 	if ( is_wp_error( $article_id ) ) {
 		wp_send_json( [
 			'message' => $article_id->get_error_message(),
@@ -336,7 +336,7 @@ function wpcp_get_campaign_instance_log() {
 	}
 	$campaign_id = absint( $_REQUEST['campaign_id'] );
 	$instance    = absint( $_REQUEST['instance'] );
-	$offset    = absint( $_REQUEST['offset'] );
+	$offset      = absint( $_REQUEST['offset'] );
 	if ( empty( $campaign_id ) || empty( $instance ) ) {
 		wp_send_json( [
 			[

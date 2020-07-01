@@ -471,8 +471,7 @@ EOT;
 
 		wpcp_update_post_meta( $campaign_id, $token_key, @$response->nextPageToken );
 
-		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $links ), $total_inserted ), $campaign_id );
-
+		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d] and rejected [%d]', count( $links ), $total_inserted, ( count( $links ) - $total_inserted ) ), $campaign_id );
 		return true;
 	}
 

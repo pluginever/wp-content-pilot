@@ -121,7 +121,6 @@ EOT;
 	 * @param int $campaign_id
 	 *
 	 * @return mixed|void
-	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	public function get_post( $campaign_id ) {
