@@ -9,6 +9,7 @@
 /*jslint browser: true */
 /*global jQuery:false */
 /*global confirm:false */
+/*global wpcp_logger_offset:false */
 /*global wp_content_pilot_i10n:false */
 jQuery(document).ready(function ($) {
 	'use strict';
@@ -153,7 +154,7 @@ jQuery(document).ready(function ($) {
 					'nonce': wp_content_pilot_i10n.nonce,
 					'campaign_id': campaign_id,
 					'instance': instance,
-					'offset': wpcp_logger_offset,
+					'offset': wpcp_logger_offset
 				});
 
 				logger.always(function (logs) {
