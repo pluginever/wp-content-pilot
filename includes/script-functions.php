@@ -29,6 +29,11 @@ function wpcp_load_admin_scripts( $hook ) {
 
 	wp_enqueue_style( 'wp-content-pilot', $css_dir . 'wp-content-pilot' . $suffix . '.css', array(), WPCP_VERSION );
 	wp_enqueue_script( 'wp-content-pilot', $js_dir . 'wp-content-pilot' . $suffix . '.js', array( 'jquery' ), WPCP_VERSION, false );
+
+	wp_localize_script( 'wp-content-pilot', 'wp_content_pilot_i10n', array(
+		'nonce'    => wp_create_nonce( 'ajax_action' ),
+		'ajax_url' => admin_url( 'admin-ajax.php' ),
+	) );
 }
 
 add_action( 'admin_enqueue_scripts', 'wpcp_load_admin_scripts' );

@@ -21,10 +21,12 @@ function wpcp_register_meta_boxes( $post ) {
 	$campaign_type = get_post_meta( $post->ID, '_campaign_type', true );
 	if ( empty( $campaign_type ) ) {
 		add_meta_box( 'campaign-selection', __( 'Select a campaign to start', 'wp-content-pilot' ), 'wpcp_campaign_selection_metabox_callback', 'wp_content_pilot', 'normal', 'high' );
+
 		return '';
 	}
 	add_meta_box( 'wpcp-campaign-status', __( 'Campaign Status', 'wp-content-pilot' ), 'wpcp_campaign_status_metabox_callback', 'wp_content_pilot', 'normal', 'high' );
 	add_meta_box( 'wpcp-campaign-options', __( 'Campaign Options', 'wp-content-pilot' ), 'wpcp_campaign_options_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
+	add_meta_box( 'wpcp-campaign-log', __( 'Campaign Log', 'wp-content-pilot' ), 'wpcp_campaign_log_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-post-template', __( 'Post Template', 'wp-content-pilot' ), 'wpcp_post_template_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-post-settings', __( 'Post Settings', 'wp-content-pilot' ), 'wpcp_post_settings_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-post-filters', __( 'Posts Filter', 'wp-content-pilot' ), 'wpcp_posts_filter_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
@@ -55,6 +57,7 @@ function wpcp_conditional_metabox_remove( $post_type, $context, $post ) {
 
 add_action( 'do_meta_boxes', 'wpcp_conditional_metabox_remove', 10, 3 );
 
+
 /**
  * Campaign selection metabox
  *
@@ -71,6 +74,12 @@ function wpcp_campaign_selection_metabox_callback( $post ) {
  */
 function wpcp_campaign_status_metabox_callback( $post ) {
 	wpcp_get_views( 'metabox/campaign-status.php', array( 'post' => $post ) );
+}
+
+function wpcp_campaign_log_metabox_callback( $post ) {
+	?>
+	<div class="wpcp-campaign-log-list"></div>
+	<?php
 }
 
 function wpcp_campaign_options_metabox_callback( $post ) {
@@ -171,6 +180,7 @@ function wpcp_update_campaign_settings( $post_id ) {
 	update_post_meta( $post_id, '_skip_duplicate_title', empty( $posted['_skip_duplicate_title'] ) ? '' : sanitize_text_field( $posted['_skip_duplicate_title'] ) );
 	update_post_meta( $post_id, '_clean_title', empty( $posted['_clean_title'] ) ? '' : sanitize_text_field( $posted['_clean_title'] ) );
 
+	update_post_meta( $post_id, '_spin_article', empty( $posted['_spin_article'] ) ? '' : sanitize_text_field( $posted['_spin_article'] ) );
 	update_post_meta( $post_id, '_post_title', empty( $posted['_post_title'] ) ? '' : sanitize_text_field( $posted['_post_title'] ) );
 	update_post_meta( $post_id, '_post_template', empty( $posted['_post_template'] ) ? '' : wp_kses_post( $posted['_post_template'] ) );
 	update_post_meta( $post_id, '_post_type', empty( $posted['_post_type'] ) ? 'post' : wp_kses_post( $posted['_post_type'] ) );

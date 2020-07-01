@@ -50,6 +50,10 @@ class WPCP_Settings {
 			array(
 				'id'    => 'wpcp_settings_misc',
 				'title' => __( 'Misc Settings', 'wp-content-pilot' )
+			),
+			array(
+				'id'    => 'wpcp_article_spinner',
+				'title' => __( 'Article Spinner', 'wp-content-pilot' )
 			)
 		);
 
@@ -85,6 +89,29 @@ class WPCP_Settings {
 //					'type'    => 'checkbox',
 //					'default' => ''
 //				),
+			),
+			'wpcp_article_spinner' => array(
+				array(
+					'name'    => 'spinrewriter_head',
+					'label'   => __( 'SpinreWriter', 'wp-content-pilot' ),
+					'desc'    => sprintf(__( 'SpinreWriter is one of the best Article Spinner, if you do not have account please %ssign up%s.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>'),
+					'type'    => 'html',
+					'default' => ''
+				),
+				array(
+					'name'    => 'spinrewriter_email',
+					'label'   => __( 'Email', 'wp-content-pilot' ),
+					'desc'    => __( 'Input your email address of SpinreWriter.', 'wp-content-pilot' ),
+					'type'    => 'text',
+					'default' => ''
+				),
+				array(
+					'name'    => 'spinrewriter_api_key',
+					'label'   => __( 'API Key', 'wp-content-pilot' ),
+					'desc'    => __( 'Input API key of SpinreWriter.', 'wp-content-pilot' ),
+					'type'    => 'text',
+					'default' => ''
+				),
 			),
 		);
 
@@ -138,7 +165,7 @@ class WPCP_Settings {
 								echo sprintf( __( 'Like the plugin? Please give us a  %s rating.%s', 'wp-content-pilot' ), '<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/#new-post" target="_blank">', '</a>' )
 								?>
 								<div class="ratings-stars-container">
-									<a href="https://wordpress.org/support/plugin/easy-wp-smtp/reviews/?filter=5"
+									<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/?filter=5"
 									   target="_blank"><span class="dashicons dashicons-star-filled"></span><span
 											class="dashicons dashicons-star-filled"></span><span
 											class="dashicons dashicons-star-filled"></span><span

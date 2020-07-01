@@ -1,0 +1,22 @@
+.wpcp-campaign-log-list {
+	border: 1px solid #AAAAAA;
+	height: 300px;
+	overflow: auto;
+
+	p {
+		margin: 0;
+		padding: 3px 5px;
+
+		&:nth-child(odd) {
+			background: #dfdfdf;
+		}
+
+		.ERROR{
+			color: red;
+		}
+	}
+}
+
+#wpcp-campaign-log{
+	display: none;
+}

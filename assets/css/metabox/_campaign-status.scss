@@ -7,6 +7,7 @@
 	.handlediv, h2.hndle {
 		display: none;
 	}
+
 	.inside {
 		margin: 0;
 	}
@@ -31,6 +32,7 @@
 			border-left: 3px solid #007cba;
 			min-height: 56px;
 			box-sizing: border-box;
+
 			&:last-of-type {
 				margin-right: 0;
 			}
@@ -44,4 +46,22 @@
 		}
 	}
 
+}
+
+
+@-webkit-keyframes blink {
+	from {
+		opacity: 1.0;
+	}
+	to {
+		opacity: 0.0;
+	}
+}
+
+.wpcp-blink {
+	-webkit-animation-name: blink;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: cubic-bezier(1.0, 0, 0, 1.0);
+	-webkit-animation-duration: 1s;
+	animation-iteration-count: 3;
 }

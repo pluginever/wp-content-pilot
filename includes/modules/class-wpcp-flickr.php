@@ -121,11 +121,12 @@ EOT;
 	 * @param int $campaign_id
 	 *
 	 * @return mixed|void
-	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	public function get_post( $campaign_id ) {
-		wpcp_logger()->info( 'Flickr Campaign Started', $campaign_id );
+		wpcp_logger()->info( __( 'Loaded Flickr Campaign', 'wp-content-pilot' ), $campaign_id );
+
+		wpcp_logger()->info( __( 'Checking flick api key for authentication', 'wp-content-pilot' ), $campaign_id );
 
 		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
 		if ( empty( $api_key ) ) {
@@ -170,7 +171,7 @@ EOT;
 				'method'         => 'flickr.photos.search',
 			);
 			$endpoint   = add_query_arg( $query_args, 'https://api.flickr.com/services/rest/' );
-			wpcp_logger()->debug( sprintf( 'Looking for data from [%s]', preg_replace( '/api_key=([^&]+)/m', 'api_key=X', $endpoint ) ), $campaign_id );
+			wpcp_logger()->info( sprintf( 'Looking for data from [%s]', preg_replace( '/api_key=([^&]+)/m', 'api_key=X', $endpoint ) ), $campaign_id );
 			$curl = $this->setup_curl();
 			$curl->get( $endpoint );
 
@@ -182,6 +183,7 @@ EOT;
 				continue;
 			}
 
+			wpcp_logger()->info( __( 'Extracting response from request', 'wp-content-pilot' ), $campaign_id );
 			$response = $curl->getResponse();
 
 			if ( isset( $response->photos->pages ) && empty( $total_page ) ) {
@@ -197,11 +199,13 @@ EOT;
 
 			$photo = array_pop( $response->photos->photo );
 			$title = $photo->title;
-			$url   = esc_url_raw( "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key={$api_key}&photo_id={$photo->id}&secret={$photo->secret}&format=json&nojsoncallback=1}" );
+			wpcp_logger()->info( __( 'Requesting for images from flickr by title', 'wp-content-pilot' ), $campaign_id );
+			$url = esc_url_raw( "https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key={$api_key}&photo_id={$photo->id}&secret={$photo->secret}&format=json&nojsoncallback=1}" );
 			$curl->get( $url );
 
 			$response = $curl->getResponse();
 
+			wpcp_logger()->info( __( 'Extracting content from response', 'wp-content-pilot' ), $campaign_id );
 			$description = $response->photo->description->_content;
 			$tags        = ! empty( $response->photo->tags->tag ) ? implode( ', ', wp_list_pluck( $response->photo->tags->tag, 'raw' ) ) : '';
 			$image_url   = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}.jpg";
@@ -213,13 +217,14 @@ EOT;
 			$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
 
 			if ( 'on' == $check_clean_title ) {
+				wpcp_logger()->info( __( 'Cleaning title', 'wp-content-pilot' ), $campaign_id );
 				$title = wpcp_clean_title( $title );
 			} else {
 				$title = html_entity_decode( $title, ENT_QUOTES );
 			}
 
 
-			wpcp_logger()->info( sprintf( 'Generating flickr article from [ %s ]', $source_url ), $campaign_id );
+			wpcp_logger()->info( sprintf( __( 'Generating flickr article from [ %s ]', 'wp-content-pilot' ), $source_url ), $campaign_id );
 			$article = array(
 				'title'      => $title,
 				'content'    => $description,
@@ -233,6 +238,7 @@ EOT;
 				'user_id'    => $response->photo->owner->nsid,
 			);
 
+			wpcp_logger()->info( __( 'Inserting links into store....', 'wp-content-pilot' ), $campaign_id );
 			$this->insert_link( array(
 				'for'     => $keyword,
 				'title'   => $title,
@@ -242,7 +248,7 @@ EOT;
 			) );
 			wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 
-			wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
+			wpcp_logger()->info( __( 'Article processed from campaign', 'wp-content-pilot' ), $campaign_id );
 
 			return $article;
 		}

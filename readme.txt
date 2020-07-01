@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: autoblog, curatator, content pilot, auto post, feeds, flicker, youtube, envato, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
 Requires at least: 4.4
-Tested up to: 5.4.1
+Tested up to: 5.4.2
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -198,6 +198,12 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.2.6 -> July 1, 2020 =
+* [Feature] - Add spintax support
+* [Enhance] - Real time logging
+* [Fix] - Bug fixed.
+* [Enhance] - Compatibility ensured with 5.4.2
+
 = v1.2.5 -> June 1, 2020 =
 * [Fix] Disappear action metabox
 * [Fix] Youtube chinese title getting broken

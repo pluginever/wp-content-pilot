@@ -128,28 +128,33 @@ EOT;
 			return new WP_Error( 'missing-data', __( 'Campaign do not have feed link to proceed, please set link', 'wp-content-pilot' ) );
 		}
 
-		wpcp_logger()->info( 'Feed Campaign Started', $campaign_id );
+		wpcp_logger()->info( 'Loaded Feed Campaign', $campaign_id );
 
 		foreach ( $sources as $source ) {
-			wpcp_logger()->info( sprintf( 'Looping through feed link now trying with [ %s ]', $source ), $campaign_id );
+			wpcp_logger()->info( sprintf( __( 'Looping through feed link now trying with [ %s ]', 'wp-content-pilot' ), $source ), $campaign_id );
 
 			if ( $this->is_deactivated_key( $campaign_id, $source ) ) {
-				$message = sprintf( 'The feed url is deactivated for 1 hr because last time could not find any article with url [%s]', $source );
+				$message = sprintf( __( 'The feed url is deactivated for 1 hr because last time could not find any article with url [%s]', 'wp-content-pilot' ), $source );
 				wpcp_logger()->info( $message, $campaign_id );
 				continue;
 			}
 
 			//get links from database
+			wpcp_logger()->info( __( 'Checking cached links in store', 'wp-content-pilot' ), $campaign_id );
 			$links = $this->get_links( $source, $campaign_id );
 			if ( empty( $links ) ) {
-				wpcp_logger()->info( 'No generated links now need to generate new links', $campaign_id );
+				wpcp_logger()->info( __( 'No cached links in store.Generating new links....', 'wp-content-pilot' ), $campaign_id );
 				$this->discover_links( $source, $campaign_id );
 				$links = $this->get_links( $source, $campaign_id );
 			}
 
+			if ( empty( $links ) ) {
+				wpcp_logger()->error( __( 'Could not find any new link, lets try later.', 'wp-content-pilot' ), $campaign_id );
+			}
 
+			wpcp_logger()->info( __( 'Looping through cached links for publishing article', 'wp-content-pilot' ), $campaign_id );
 			foreach ( $links as $link ) {
-				wpcp_logger()->info( sprintf( 'Grabbing feed from [%s]', $link->url ), $campaign_id );
+				wpcp_logger()->info( sprintf( __( 'Grabbing feed from [%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
 
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
@@ -160,15 +165,17 @@ EOT;
 
 
 				if ( $curl->isError() && $this->initiator != 'cron' ) {
-					wpcp_logger()->info( sprintf( "Failed processing link reason [%s]", $curl->getErrorMessage() ), $campaign_id );
+					wpcp_logger()->error( sprintf( __( "Failed processing link reason [%s]", 'wp-content-pilot' ), $curl->getErrorMessage() ), $campaign_id );
 					continue;
 				}
+
+				wpcp_logger()->info( __( "Extracting post response from request", 'wp-content-pilot' ), $campaign_id );
 
 				$html        = $curl->response;
 				$readability = new WPCP_Readability();
 				$readable    = $readability->parse( $html, $link->url );
 				if ( is_wp_error( $readable ) ) {
-					wpcp_logger()->info( sprintf( "Failed readability reason [%s]", $readable->get_error_message() ), $campaign_id );
+					wpcp_logger()->error( sprintf( __( "Failed readability reason [%s]", 'wp-content-pilot' ), $readable->get_error_message() ), $campaign_id );
 					continue;
 				}
 
@@ -176,10 +183,13 @@ EOT;
 				$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
 
 				if ( 'on' == $check_clean_title ) {
+					wpcp_logger()->info( __( 'Cleaning post title', 'wp-content-pilot' ), $campaign_id );
 					$title = wpcp_clean_title( $readability->get_title() );
 				} else {
 					$title = html_entity_decode( $readability->get_title(), ENT_QUOTES );
 				}
+
+				wpcp_logger()->info( __( 'Making article content from response', 'wp-content-pilot' ), $campaign_id );
 
 				$article = apply_filters( 'wpcp_feed_article', array(
 					'title'      => $title,
@@ -191,7 +201,7 @@ EOT;
 					'source_url' => $link->url,
 				), $readability, $campaign_id );
 
-				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
+				wpcp_logger()->info( __( 'Article processed from campaign', 'wp-content-pilot' ), $campaign_id );
 				$this->update_link( $link->id, [ 'status' => 'success' ] );
 
 				return $article;
@@ -201,7 +211,6 @@ EOT;
 		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
 
 		return new WP_Error( 'campaign-error', __( sprintf( 'No feed article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
-
 	}
 
 
@@ -213,8 +222,9 @@ EOT;
 		$rss = fetch_feed( $source );
 
 		if ( is_wp_error( $rss ) ) {
-			wpcp_logger()->warning( sprintf( 'Failed fetching feeds [%s]', $rss->get_error_message() ), $campaign_id );
+			wpcp_logger()->error( sprintf( __( 'Failed fetching feeds [%s]', 'wp-content-pilot' ), $rss->get_error_message() ), $campaign_id );
 
+			wpcp_logger()->info( __( 'Checking for force feed and initiating force feed', 'wp-content-pilot' ), $campaign_id );
 			if ( ! function_exists( 'wpcp_force_feed' ) ) {
 				add_action( 'wp_feed_options', 'wpcp_force_feed', 10, 1 );
 				function wpcp_force_feed( $rss ) {
@@ -228,13 +238,15 @@ EOT;
 		$max_items = $rss->get_item_quantity();
 		$rss_items = $rss->get_items( 0, $max_items );
 		if ( ! isset( $max_items ) || $max_items == 0 ) {
-			wpcp_logger()->info( 'Could not find any article, waiting...', $campaign_id );
+			wpcp_logger()->error( __( 'Could not find any article, waiting...', 'wp-content-pilot' ), $campaign_id );
 
 			return new WP_Error( 'feed-error', __( 'Could not find any article, waiting...', 'wp-content-pilot' ) );
 		}
 
 		$links    = [];
 		$inserted = 0;
+		wpcp_logger()->info( __( 'Finding links from response and inserting into database', 'wp-content-pilot' ), $campaign_id );
+
 		foreach ( $rss_items as $rss_item ) {
 			$url = esc_url( $rss_item->get_permalink() );
 			if ( stristr( $source, 'news.google' ) ) {
@@ -274,7 +286,7 @@ EOT;
 			}
 		}
 
-		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $links ), $inserted ), $campaign_id );
+		wpcp_logger()->info( sprintf( __( 'Total found links [%d] and accepted [%d] and reject [%d]', 'wp-content-pilot' ), count( $rss_items ), $inserted, ( count( $rss_items ) - $inserted ) ), $campaign_id );
 
 		return true;
 	}
