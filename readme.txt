@@ -151,14 +151,15 @@ WP Content Pilot can automatically import products from GearBest by keyword. The
 This may have bugs and lack of many features. If you want to contribute to this project, you are more than welcome. Please open an issue [here](https://github.com/pluginever/wp-content-pilot/issues)
 
 == Screenshots ==
-1. Campaign List Page
-2. Campaign Type Selection
+1. Available campaign types
+2. Campaign List Page
 3. Campaign Option Settings
-4. Campaign Post Settings
+4. Campaign Post Template Settings
 5. Campaign Advanced Settings
 6. Settings Page
 7. Campaign Log Page
-
+8. Campaign Actions
+9. Post property settings
 
 == Installation ==
 ###Automatic Install From WordPress Dashboard
@@ -200,6 +201,9 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.2.7 -> July 1, 2020 =
+* [Fix] - Updater did not run on previous version.
+
 = v1.2.6 -> July 1, 2020 =
 * [Feature] - Add spintax support
 * [Enhance] - Real time logging
