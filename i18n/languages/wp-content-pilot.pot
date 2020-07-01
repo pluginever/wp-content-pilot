@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Content Pilot 1.2.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2020-06-02 15:20:52+00:00\n"
+"POT-Creation-Date: 2020-07-01 11:02:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,42 +13,63 @@ msgstr ""
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/action-functions.php:7 includes/action-functions.php:260
+#: includes/action-functions.php:7 includes/action-functions.php:261
 msgid "No Cheating"
 msgstr ""
 
-#: includes/action-functions.php:20
+#: includes/action-functions.php:20 includes/action-functions.php:295
 msgid "Invalid post action"
 msgstr ""
 
-#: includes/action-functions.php:41
+#: includes/action-functions.php:42
 msgid "A post successfully created by %s titled %s"
 msgstr ""
 
-#: includes/action-functions.php:225
+#: includes/action-functions.php:92
+msgid "Reached campaign post limit. So campaign stopping publish new post"
+msgstr ""
+
+#: includes/action-functions.php:226
 msgid "Post Publish"
+msgstr ""
+
+#: includes/action-functions.php:280 includes/action-functions.php:331
+msgid "Cheating?"
+msgstr ""
+
+#: includes/action-functions.php:302
+msgid "Campaign <strong>%s</strong> manually initiated by <strong>%s</strong>"
+msgstr ""
+
+#: includes/action-functions.php:316
+msgid "A post successfully created by campaign %s titled %s"
+msgstr ""
+
+#: includes/action-functions.php:343
+msgid "Something wrong, please try again."
 msgstr ""
 
 #: includes/admin/class-settings-framework.php:376
 msgid "Choose File"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:53
+#: includes/admin/class-wpcp-admin.php:52
+#: includes/admin/views/metabox/campaign-status.php:23
 #: includes/admin/views/metabox/post-settings.php:17
 #: includes/post-types.php:117
 msgid "Status"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:54
+#: includes/admin/class-wpcp-admin.php:53
 #: includes/admin/views/page/logs-page.php:10
 msgid "Logs"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:90
+#: includes/admin/class-wpcp-admin.php:89
 msgid "Go Pro"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:136
+#: includes/admin/class-wpcp-admin.php:135
 msgid ""
 "If you like <strong>WP Content Pilot</strong> please leave us a <a "
 "href=\"%s\" target=\"_blank\">&#9733;&#9733;&#9733;&#9733;&#9733;</a> "
@@ -371,7 +392,7 @@ msgid "Readability score controlled posts for clean articles"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:365
-#: includes/admin/metabox-functions.php:206
+#: includes/admin/metabox-functions.php:216
 #: includes/admin/views/page/help-page.php:187
 msgid "Keyword Suggestion"
 msgstr ""
@@ -429,14 +450,6 @@ msgstr ""
 msgid "Canel"
 msgstr ""
 
-#: includes/admin/class-wpcp-promotion.php:34
-msgid ""
-"<b>WP Content Pilot</b> is powering <b>2000+ companies</b> in generating "
-"automatic contents and affiliation with its <b>20+</b> types of campaign. "
-"Upgrade to Pro now & get 10% discount using coupon "
-"<strong>WPCPFREE2PRO</strong>"
-msgstr ""
-
 #: includes/admin/class-wpcp-settings.php:38 wp-content-pilot.php:243
 msgid "Settings"
 msgstr ""
@@ -445,59 +458,89 @@ msgstr ""
 msgid "Misc Settings"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:69
+#: includes/admin/class-wpcp-settings.php:56
+msgid "Article Spinner"
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:73
 msgid "Remove Data on Uninstall?"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:70
+#: includes/admin/class-wpcp-settings.php:74
 msgid ""
 "Check this box if you would like to completely remove all of its data when "
 "the plugin is deleted."
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:76
+#: includes/admin/class-wpcp-settings.php:80
 msgid "Post Publish mail"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:77
+#: includes/admin/class-wpcp-settings.php:81
 msgid "Send mail After post publish"
 msgstr ""
 
+#: includes/admin/class-wpcp-settings.php:96
+msgid "SpinreWriter"
+msgstr ""
+
 #: includes/admin/class-wpcp-settings.php:97
+msgid ""
+"SpinreWriter is one of the best Article Spinner, if you do not have account "
+"please %ssign up%s."
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:103
+msgid "Email"
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:104
+msgid "Input your email address of SpinreWriter."
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:110
+msgid "API Key"
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:111
+msgid "Input API key of SpinreWriter."
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:124
 msgid "WP Content Pilot Settings"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:106 wp-content-pilot.php:245
+#: includes/admin/class-wpcp-settings.php:133 wp-content-pilot.php:245
 msgid "Upgrade to PRO"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:109
+#: includes/admin/class-wpcp-settings.php:136
 msgid ""
 "Pro version support 15+ campaign sources with exclusive features, %supgrade "
 "to pro now%s."
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:116
+#: includes/admin/class-wpcp-settings.php:143
 msgid "Documentation"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:119
+#: includes/admin/class-wpcp-settings.php:146
 msgid ""
 "Please visit the %s WP Content Pilot %s  plugin's documentation page to "
 "learn how to use this plugin"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:125
+#: includes/admin/class-wpcp-settings.php:152
 msgid "Support"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:128
+#: includes/admin/class-wpcp-settings.php:155
 msgid ""
 "Having issues or difficulties? You can post your issue on the %s Support "
 "Forum.%s"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:138
+#: includes/admin/class-wpcp-settings.php:165
 msgid "Like the plugin? Please give us a  %s rating.%s"
 msgstr ""
 
@@ -512,103 +555,107 @@ msgstr ""
 msgid "Select a campaign to start"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:26
+#: includes/admin/metabox-functions.php:27
 #: includes/admin/views/metabox/action-metabox.php:62
 msgid "Campaign Status"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:27
+#: includes/admin/metabox-functions.php:28
 msgid "Campaign Options"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:28
-#: includes/admin/views/metabox/post-template.php:25
-msgid "Post Template"
-msgstr ""
-
 #: includes/admin/metabox-functions.php:29
-msgid "Post Settings"
+msgid "Campaign Log"
 msgstr ""
 
 #: includes/admin/metabox-functions.php:30
-msgid "Posts Filter"
+#: includes/admin/views/metabox/post-template.php:32
+msgid "Post Template"
 msgstr ""
 
 #: includes/admin/metabox-functions.php:31
-msgid "Advanced Settings"
+msgid "Post Settings"
 msgstr ""
 
 #: includes/admin/metabox-functions.php:32
-msgid "Actions"
+msgid "Posts Filter"
+msgstr ""
+
+#: includes/admin/metabox-functions.php:33
+msgid "Advanced Settings"
 msgstr ""
 
 #: includes/admin/metabox-functions.php:34
+msgid "Actions"
+msgstr ""
+
+#: includes/admin/metabox-functions.php:36
 msgid "Miscellaneous"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:35
+#: includes/admin/metabox-functions.php:37
 msgid "Campaign Posts"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:193
+#: includes/admin/metabox-functions.php:203
 msgid "Keywords"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:196
+#: includes/admin/metabox-functions.php:206
 msgid "Separate keywords by comma."
 msgstr ""
 
-#: includes/admin/metabox-functions.php:221
+#: includes/admin/metabox-functions.php:231
 msgid "Strip original links from the post"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:223
+#: includes/admin/metabox-functions.php:233
 msgid "Remove hyperlinks found in the article"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:229
+#: includes/admin/metabox-functions.php:239
 msgid "Make permalink link directly to the source"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:231
+#: includes/admin/metabox-functions.php:241
 msgid ""
 "Make post link directly to the source site, Posts will not load at your "
 "site."
 msgstr ""
 
-#: includes/admin/metabox-functions.php:241
+#: includes/admin/metabox-functions.php:251
 msgid "Add Canonical Tag with the original post link "
 msgstr ""
 
-#: includes/admin/metabox-functions.php:252
+#: includes/admin/metabox-functions.php:262
 msgid "Set First image as featured image"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:259
+#: includes/admin/metabox-functions.php:269
 msgid "Remove images from content"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:266
+#: includes/admin/metabox-functions.php:276
 msgid "Set random featured image if no image exists"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:277
+#: includes/admin/metabox-functions.php:287
 msgid "Use original date if possible"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:288
+#: includes/admin/metabox-functions.php:298
 msgid "Use summary as excerpt"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:295
+#: includes/admin/metabox-functions.php:305
 msgid "Enable post with duplicate title"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:302
+#: includes/admin/metabox-functions.php:312
 msgid "Clean title"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:309
+#: includes/admin/metabox-functions.php:319
 msgid "Add rel nofollow & set target blank for all links"
 msgstr ""
 
@@ -951,114 +998,118 @@ msgid "Portuguese"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:119
-msgid "Punjabi"
+msgid "Portuguese (Brazilian)"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:120
-msgid "Romanian"
+msgid "Punjabi"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:121
-msgid "Russian"
+msgid "Romanian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:122
-msgid "Scottish Gaelic"
+msgid "Russian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:123
-msgid "Serbian"
+msgid "Scottish Gaelic"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:124
-msgid "Sinhala"
+msgid "Serbian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:125
-msgid "Slovak"
+msgid "Sinhala"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:126
-msgid "Slovenian"
+msgid "Slovak"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:127
-msgid "Spanish"
+msgid "Slovenian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:128
-msgid "Sundanese"
+msgid "Spanish"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:129
-msgid "Swahili"
+msgid "Sundanese"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:130
-msgid "Swedish"
+msgid "Swahili"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:131
-msgid "Tagalog"
+msgid "Swedish"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:132
-msgid "Tajik"
+msgid "Tagalog"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:133
-msgid "Tamil"
+msgid "Tajik"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:134
-msgid "Tatar"
+msgid "Tamil"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:135
-msgid "Telugu"
+msgid "Tatar"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:136
-msgid "Thai"
+msgid "Telugu"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:137
-msgid "Turkish"
+msgid "Thai"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:138
-msgid "Udmurt"
+msgid "Turkish"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:139
-msgid "Ukrainian"
+msgid "Udmurt"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:140
-msgid "Urdu"
+msgid "Ukrainian"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:141
-msgid "Uzbek"
+msgid "Urdu"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:142
-msgid "Vietnamese"
+msgid "Uzbek"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:143
-msgid "Welsh"
+msgid "Vietnamese"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:144
-msgid "Xhosa"
+msgid "Welsh"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:145
+msgid "Xhosa"
+msgstr ""
+
+#: includes/admin/views/metabox/advanced-settings.php:146
 msgid "Yiddish"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:147
+#: includes/admin/views/metabox/advanced-settings.php:148
 msgid "Select a language to translate."
 msgstr ""
 
@@ -1072,6 +1123,27 @@ msgstr ""
 
 #: includes/admin/views/metabox/campaign-selection.php:184
 msgid "Submit"
+msgstr ""
+
+#: includes/admin/views/metabox/campaign-status.php:28
+msgid "Campaign Type"
+msgstr ""
+
+#: includes/admin/views/metabox/campaign-status.php:33
+#: includes/post-types.php:121
+msgid "Last Run"
+msgstr ""
+
+#: includes/admin/views/metabox/campaign-status.php:37
+msgid "Last Post"
+msgstr ""
+
+#: includes/admin/views/metabox/campaign-status.php:48
+msgid "Run Campaign"
+msgstr ""
+
+#: includes/admin/views/metabox/campaign-status.php:50
+msgid "Run Now"
 msgstr ""
 
 #: includes/admin/views/metabox/post-filter.php:6
@@ -1187,11 +1259,21 @@ msgstr ""
 msgid "Could not find the module"
 msgstr ""
 
-#: includes/admin/views/metabox/post-template.php:19
+#: includes/admin/views/metabox/post-template.php:18
+msgid "Spin Article"
+msgstr ""
+
+#: includes/admin/views/metabox/post-template.php:20
+msgid ""
+"Spin article using using spinrewriter, if you do not have account please "
+"%ssign up%s and set in settings page."
+msgstr ""
+
+#: includes/admin/views/metabox/post-template.php:26
 msgid "Post Title"
 msgstr ""
 
-#: includes/admin/views/metabox/post-template.php:37
+#: includes/admin/views/metabox/post-template.php:44
 msgid "Supported Tags:"
 msgstr ""
 
@@ -1400,6 +1482,53 @@ msgstr ""
 msgid "Content Pilot did not responded for the action"
 msgstr ""
 
+#: includes/class-wpcp-module.php:219
+msgid "Article failed in acceptance test"
+msgstr ""
+
+#: includes/class-wpcp-module.php:229
+msgid "Limiting title"
+msgstr ""
+
+#: includes/class-wpcp-module.php:237
+msgid "Limiting content"
+msgstr ""
+
+#: includes/class-wpcp-module.php:244
+msgid "Stripping links"
+msgstr ""
+
+#: includes/class-wpcp-module.php:316
+msgid "Removing images from content"
+msgstr ""
+
+#: includes/class-wpcp-module.php:333
+msgid "Spinning article content..."
+msgstr ""
+
+#: includes/class-wpcp-module.php:396
+msgid "Setting featured image"
+msgstr ""
+
+#: includes/class-wpcp-notices.php:253
+msgid ""
+"<b>WP Content Pilot</b> is powering <b>2000+ companies</b> in generating "
+"automatic contents and affiliation with its <b>20+</b> types of campaign. "
+"Upgrade to Pro now & get 10% discount using coupon "
+"<strong>WPCPFREE2PRO</strong>"
+msgstr ""
+
+#: includes/class-wpcp-notices.php:265
+msgid ""
+"The most wanted feature <b>article spinner</b> is now available with <b>WP "
+"Content Pilot</b>. We have integrated spinrewriter support. If you do not "
+"have account %ssignup now%s and configure in settings page."
+msgstr ""
+
+#: includes/class-wpcp-readability.php:57
+msgid "Not readable [%s]"
+msgstr ""
+
 #: includes/class-wpcp-readability.php:59
 msgid "Content is not readable"
 msgstr ""
@@ -1417,6 +1546,18 @@ msgstr ""
 #: includes/core-functions.php:415
 #. translators: 1: The HTTP response code.
 msgid "Unexpected HTTP response code: %s"
+msgstr ""
+
+#: includes/core-functions.php:599
+msgid "spinwritter API details is not set, aborting article spinner"
+msgstr ""
+
+#: includes/core-functions.php:608
+msgid "Spinwritter could not send API request, aborting article spinner"
+msgstr ""
+
+#: includes/core-functions.php:615
+msgid "Aborting article spinner Because [%s]"
 msgstr ""
 
 #: includes/modules/class-wpcp-article.php:42
@@ -1483,16 +1624,92 @@ msgid ""
 msgstr ""
 
 #: includes/modules/class-wpcp-article.php:152
-#: includes/modules/class-wpcp-envato.php:217
-#: includes/modules/class-wpcp-flickr.php:141
-#: includes/modules/class-wpcp-youtube.php:248
+#: includes/modules/class-wpcp-envato.php:222
+#: includes/modules/class-wpcp-flickr.php:142
+#: includes/modules/class-wpcp-youtube.php:253
 msgid "Campaign do not have keyword to proceed, please set keyword"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:274
+#: includes/modules/class-wpcp-article.php:155
+msgid "Loaded Article campaign"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:159
+msgid "Looking for article for the keyword [ %s ]"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:168
+msgid ""
+"The keyword is deactivated for 1 hr because last time could not find any "
+"article with keyword [%s]"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:173
+msgid "Checking for cached links in store"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:176
+#: includes/modules/class-wpcp-youtube.php:263
+msgid "No cached links in store. Generating new links..."
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:181
+#: includes/modules/class-wpcp-feed.php:155
+msgid "Looping through cached links for publishing article"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:183
+msgid "Generating article from [%s]"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:191
+#: includes/modules/class-wpcp-feed.php:168
+msgid "Failed processing link reason [%s]"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:195
+msgid "Extracting post content from request"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:201
+msgid "Failed readability reason [%s] changing to different link"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:209
+#: includes/modules/class-wpcp-envato.php:326
+#: includes/modules/class-wpcp-flickr.php:220
+#: includes/modules/class-wpcp-youtube.php:318
+msgid "Cleaning title"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:215
+#: includes/modules/class-wpcp-feed.php:192
+msgid "Making article content from response"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:266
+msgid "Searching page url [%s]"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:282
+#: includes/modules/class-wpcp-flickr.php:186
+#: includes/modules/class-wpcp-youtube.php:422
+msgid "Extracting response from request"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:288
 msgid ""
 "Could not find any links from search engine, deactivating keyword for an "
 "hour."
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:297
+msgid "Getting banned hosts for skipping links"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:310
+#: includes/modules/class-wpcp-feed.php:248
+msgid "Finding links from response and inserting into database"
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:38
@@ -1636,15 +1853,72 @@ msgid "Learn how to get your Impact Radius affiliate URL <a href=\"%s\">here</a>
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:200
+msgid "Checking envato api key and impact radius url for authentication.."
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:202
 msgid "The Envato api key is not set so the campaign won't run, disabling campaign."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:263
+#: includes/modules/class-wpcp-envato.php:212
+msgid ""
+"The Impact  Radius affiliate url is not set. Set it from <a "
+"href='%s'>here</a>"
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:218
+msgid "Loaded Envato campaign"
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:226
+msgid "Looping through keywords [ %s ]"
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:261
+msgid "Searching for items url [ %s ]"
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:268
 msgid "Envato api request failed response [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:273
+#: includes/modules/class-wpcp-envato.php:278
 msgid "No matching data found from api disabling the keyword for 1 hour"
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:286
+msgid "Checking duplicate links in store..."
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:298
+msgid "Finding images from item preview"
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:308
+msgid "Making affiliate url"
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:313
+msgid "Extracting tags from item"
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:320
+msgid "Generating envato article from [ %s ]"
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:332
+msgid "Combining all parts for article"
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:350
+#: includes/modules/class-wpcp-feed.php:204
+#: includes/modules/class-wpcp-flickr.php:251
+#: includes/modules/class-wpcp-youtube.php:348
+msgid "Article processed from campaign"
+msgstr ""
+
+#: includes/modules/class-wpcp-envato.php:353
+msgid "Inserting link into store..."
 msgstr ""
 
 #: includes/modules/class-wpcp-feed.php:65
@@ -1667,8 +1941,59 @@ msgstr ""
 msgid "Campaign do not have feed link to proceed, please set link"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:233
+#: includes/modules/class-wpcp-feed.php:134
+msgid "Looping through feed link now trying with [ %s ]"
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:137
+msgid ""
+"The feed url is deactivated for 1 hr because last time could not find any "
+"article with url [%s]"
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:143
+msgid "Checking cached links in store"
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:146
+msgid "No cached links in store.Generating new links...."
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:152
+msgid "Could not find any new link, lets try later."
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:157
+msgid "Grabbing feed from [%s]"
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:172
+msgid "Extracting post response from request"
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:178
+msgid "Failed readability reason [%s]"
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:186
+msgid "Cleaning post title"
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:225
+msgid "Failed fetching feeds [%s]"
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:227
+msgid "Checking for force feed and initiating force feed"
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:241
+#: includes/modules/class-wpcp-feed.php:243
 msgid "Could not find any article, waiting..."
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:289
+msgid "Total found links [%d] and accepted [%d] and reject [%d]"
 msgstr ""
 
 #: includes/modules/class-wpcp-flickr.php:38
@@ -1709,22 +2034,46 @@ msgid ""
 "target=\"_blank\">link</a>."
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:133
+#: includes/modules/class-wpcp-flickr.php:127
+msgid "Loaded Flickr Campaign"
+msgstr ""
+
+#: includes/modules/class-wpcp-flickr.php:129
+msgid "Checking flick api key for authentication"
+msgstr ""
+
+#: includes/modules/class-wpcp-flickr.php:134
 msgid "The Flickr api key is not set so the campaign won't run, disabling campaign."
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:153
+#: includes/modules/class-wpcp-flickr.php:154
 msgid ""
 "Maximum page number reached for the keyword [%s] deactivating the keyword "
 "for a week"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:179
+#: includes/modules/class-wpcp-flickr.php:180
 msgid "Flickr api request failed response [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:192
+#: includes/modules/class-wpcp-flickr.php:194
 msgid "Could not find any result for the keyword %s"
+msgstr ""
+
+#: includes/modules/class-wpcp-flickr.php:202
+msgid "Requesting for images from flickr by title"
+msgstr ""
+
+#: includes/modules/class-wpcp-flickr.php:208
+msgid "Extracting content from response"
+msgstr ""
+
+#: includes/modules/class-wpcp-flickr.php:227
+msgid "Generating flickr article from [ %s ]"
+msgstr ""
+
+#: includes/modules/class-wpcp-flickr.php:241
+msgid "Inserting links into store...."
 msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:46
@@ -1848,21 +2197,81 @@ msgid ""
 "target=\"_blank\">Learn how to get one</a>."
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:233
+#: includes/modules/class-wpcp-youtube.php:236
 msgid ""
 "The YouTube api key is not set so the campaign won't run, disabling "
 "campaign."
 msgstr ""
 
+#: includes/modules/class-wpcp-youtube.php:241
+msgid "Loaded Youtube campaign"
+msgstr ""
+
 #: includes/modules/class-wpcp-youtube.php:243
+msgid "Checking youtube search type..."
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:248
 msgid "Campaign do not have playlist URL to proceed, please set playlist URL"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:397
+#: includes/modules/class-wpcp-youtube.php:259
+msgid "Checking for links in store..."
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:269
+msgid "Looping through cached links for article"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:272
+msgid "Youtube link#[%s]"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:278
+msgid "Making request for getting youtube video content"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:284
+msgid "Request error in grabbing video details error [ %s ]"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:288
+msgid "Extracting article content from response"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:292
+msgid "Removing unauthorized html content from description"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:295
+msgid "Extracting thumbnail"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:302
+msgid "Extracting transcript"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:308
+msgid "Extracting hyperlink description"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:324
+msgid "Preparing different parts for article"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:408
+msgid "Requesting urls from Youtube [%s]"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:416
 msgid "Youtube api request failed response [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:549
+#: includes/modules/class-wpcp-youtube.php:438
+msgid "Finding links from response and storing....."
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:570
 msgid "Youtube campaign wont run because you did not set the API details yet."
 msgstr ""
 
@@ -1975,10 +2384,6 @@ msgstr ""
 
 #: includes/post-types.php:120
 msgid "Frequency"
-msgstr ""
-
-#: includes/post-types.php:121
-msgid "Last Run"
 msgstr ""
 
 #: includes/post-types.php:139
