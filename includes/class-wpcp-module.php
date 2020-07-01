@@ -272,7 +272,15 @@ abstract class WPCP_Module {
 		//replacing patterns
 
 		//spin
-
+		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
+		if ( 'on' == $spin_article ) {
+			wpcp_logger()->debug( 'Spinning article ...', $campaign_id );
+			$separator   = str_repeat('#', ceil( rand( 10, 20 ) ));
+			$spinable     = $post_title . $separator . $post_content;
+			$spinned      = explode( $separator, wpcp_spin_article( $spinable ), 2 );
+			$post_title   = $spinned[0];
+			$post_content = $spinned[1];
+		}
 
 		//category handles
 		$categories = wpcp_get_post_meta( $this->campaign_id, '_categories', [] );
@@ -317,13 +325,6 @@ abstract class WPCP_Module {
 			$post_excerpt   = strip_tags( $post_excerpt );
 			$post_excerpt   = strip_shortcodes( $post_excerpt );
 			$post_excerpt   = wp_trim_words( $post_excerpt, $excerpt_length );
-		}
-
-		//spin
-		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
-		if ( 'on' == $spin_article ) {
-			wpcp_logger()->debug( 'Spinning article content...', $campaign_id );
-			$post_content = wpcp_spin_article($post_content);
 		}
 
 		//post

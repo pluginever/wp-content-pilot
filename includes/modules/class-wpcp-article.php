@@ -159,12 +159,13 @@ EOT;
 			wpcp_logger()->info( sprintf( __( 'Looking for article for the keyword [ %s ]', 'wp-content-pilot' ), $keyword ), $campaign_id );
 
 			if ( $this->is_deactivated_key( $campaign_id, $keyword ) ) {
-				$reactivate_keyword_action = add_query_arg( [
-					'campaign_id' => $campaign_id,
-					'keyword'     => $keyword,
-					'action'      => 'wpcp_reactivate_keyword'
-				], admin_url( 'admin-post.php' ) );
-				wpcp_logger()->info( sprintf( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s] %s reactivate keyword %s', 'wp-content-pilot' ), $keyword, '<a href="' . $reactivate_keyword_action . '">', '</a>' ), $campaign_id );
+//				$reactivate_keyword_action = add_query_arg( [
+//					'campaign_id' => $campaign_id,
+//					'keyword'     => $keyword,
+//					'action'      => 'wpcp_reactivate_keyword'
+//				], admin_url( 'admin-post.php' ) );
+//				wpcp_logger()->info( sprintf( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s] %s reactivate keyword %s', 'wp-content-pilot' ), $keyword, '<a href="' . $reactivate_keyword_action . '">', '</a>' ), $campaign_id );
+				wpcp_logger()->info( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s]', 'wp-content-pilot' ), $campaign_id );
 				continue;
 			}
 

@@ -263,6 +263,7 @@ EOT;
 				wpcp_logger()->info( __( 'No cached links in store. Generating new links...', 'wp-content-pilot' ), $campaign_id );
 				$this->discover_links( $campaign_id, $source );
 				$links = $this->get_links( $source, $campaign_id );
+
 			}
 
 			wpcp_logger()->info( __( 'Looping through cached links for article', 'wp-content-pilot' ), $campaign_id );
@@ -469,6 +470,7 @@ EOT;
 		$total_inserted = $this->inset_links( $links );
 
 		wpcp_update_post_meta( $campaign_id, $token_key, @$response->nextPageToken );
+
 		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d]', count( $links ), $total_inserted ), $campaign_id );
 
 		return true;
