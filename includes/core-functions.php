@@ -618,7 +618,7 @@ function wpcp_spin_article( $content ) {
 	}
 
 	if ( isset( $response->status ) && $response->status == 'OK' && ! empty( $response->response ) ) {
-		return $response->response;
+		return force_balance_tags($response->response);
 	}
 
 
