@@ -1,6 +1,6 @@
 === WP Content Pilot - Autoblog & Affiliate Marketing Plugin ===
 Contributors: pluginever,manikmist09
-Tags: autoblog, curatator, content pilot, auto post, feeds, flicker, youtube, envato, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
+Tags: RSS import, RSS aggregator, feed import, content curation, feed to post, news aggregator, autoblog, rss to post, content syndication, feeds, rss feeds, rss importer, feed importer, post importer, news importer, affiliate, content pilot, auto post, feeds, flicker, youtube, envato, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
 Requires at least: 4.4
 Tested up to: 5.4.2
 Requires PHP: 5.6
@@ -12,143 +12,71 @@ WP Content Pilot automatically posts contents from various sources based on the 
 
 == Description ==
 
-WP Content Pilot is an autoblogging and content curation plugin that allows you to create high-quality WordPress blog posts automatically and inject your affiliate link automatically.
-You just have to set the keywords or targeted feed urls and WP Content Pilot will automatically posts contents from various sources until it meets the target that you set.
-It will keeps posting articles even while you are asleep.
+**[WP Content Pilot](https://pluginever.com/plugins/wp-content-pilot-pro/)** is the best autoblogging and content curation plugin. It helps you to create high-quality WordPress blog posts and inject your affiliate link automatically.
 
-> [Demo](http://demo.pluginever.xyz/wp-content-pilot) | [Get The PRO Version](https://www.pluginever.com/plugins/wp-content-pilot-pro/) |  [Support](https://www.pluginever.com/support/)  |  [Documentation ](https://www.pluginever.com/docs/wp-content-pilot/)
+The plugin keeps posting articles on your site at a predefined interval using your chosen keywords and sources and maintaining your website fresh and updated. WP Content Pilot also inserts your affiliate links automatically, so you get your commission from the vendor.
 
-https://www.youtube.com/watch?v=cNAEJqCqatg
+= Best autoblogging and content curation plugin for WordPress =
+👉 Plugin Demo: [WP Content Pilot Demo](http://pluginever.xyz/wp-content-pilot?pwd=whtXdsXMY3fahv5kgE55wxrTjzuxrtBd)
+👉 WP Content Pilot PRO: [WP Content Pilot PRO](https://pluginever.com/plugins/wp-content-pilot-pro)
+👉 Documentation : [Documentation](https://www.pluginever.com/docs/wp-content-pilot/)
 
-== How It Works ==
-1. Set keywords or feed links
-2. Select campaign type
-3. Set how frequently it will ran  and set target
-4. WP Content Pilot will automatically search for the keyword, grab the article and will set your affiliate ID.
+= WP Content Pilot Features: =
+Here is the detailed breakdown of all the features that we ship with WP Content Content Pilot to make it suitable for various cases!
 
-Just install the plugin and configure it as per your requirements and the plugin will work just like your assistant for posting contents on your site at a scheduled time.
+* **[Content Spinner](https://pluginever.com/plugins/wp-content-pilot-pro)**: Integration of spinning software which makes it possible to create unique automatic content.
+* **[Template Editor](https://pluginever.com/plugins/wp-content-pilot-pro)**:  Control how auto-published posts will look using the supported template tags of the module.
+* **[Post Categories](https://pluginever.com/plugins/wp-content-pilot-pro)**:  The plugin will automatically insert these categories with newly published posts.
+* **[Post Tags](https://pluginever.com/plugins/wp-content-pilot-pro)**:  The plugin will automatically insert these tags with newly published posts.
+* **[Post Translation](https://pluginever.com/plugins/wp-content-pilot-pro) (PRO)**:  Translate any article from any language to your selected language on the fly.
+* **[Post Meta](https://pluginever.com/plugins/wp-content-pilot-pro) (PRO)**:  Make use of post meta to suit best with your theme and 3rd party plugins.
+* **[Search Replace](https://pluginever.com/plugins/wp-content-pilot-pro) (PRO)**:  Run search-replace in the auto-publish post to better control your need.
+* **[Automatic Affiliation](https://pluginever.com/plugins/wp-content-pilot-pro) (PRO)**:  Automatically insert your affiliate code to boost your affiliate commissions.
 
-= Features: =
-* RSS/Feed Automatic Post to WordPress
-* Envato Products Auto Posting to WordPress
-* Youtube Videos Posting to WordPress
-* Flickr images to WordPress
-* Minimum words filter, which will skip posts if contents have fewer words
-* Set image as featured image
-* Skip if not image found
-* Remove all images from post content.
-* Remove hyper links from post content.
-* Skip duplicate posting
-* Custom post title
-* Custom content template
-* Custom post types
-* Custom post status
-* Custom author setting
+👉 [CLICK HERE TO LEARN MORE](https://pluginever.com/plugins/wp-content-pilot-pro) 👈
 
-= WP Content Pilot Pro Features Demo: =
+= All Autoblogging Modules =
+* **[RSS Feed](https://pluginever.com/plugins/wp-content-pilot-pro)**: Automatically post RSS Feed on your site whenever a new post is published on target site.
+* **[Envato Products](https://pluginever.com/plugins/wp-content-pilot-pro)**: Auto import from Envato markets ThemeForest, CodeCanyon, GraphicRiver, PhotoDune products and insert as posts injecting your affiliate code.
+* **[YouTube Videos](https://pluginever.com/plugins/wp-content-pilot-pro)**: Post videos from YouTube by keyword, username, or from a specific playlist to your website.
+* **[Flickr Photos](https://pluginever.com/plugins/wp-content-pilot-pro)**: Automatically post Flickr photos in your website based on your predefined keywords.
+* **[Amazon Products](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Auto import amazon products and insert as posts based on your predefined keywords and injecting your affiliate code.
+* **[Tweeter Tweets](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Auto import Tweets from Twitter as WordPress posts based on your keywords or from any specific user.
+* **[eBay Products](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Auto import eBay deals and insert as posts based on your predefined keywords and injecting your affiliate code.
+* **[Facebook Posts](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Auto import Facebook posts from timeline, page or groups even that is private and post on your site.
+* **[ClickBank Products](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**:  Fetch and post products as WordPress posts from the ClickBank site. The plugin will take care of the product description and affiliate links.
+* **[Ezine Articles](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: WP Content Pilot can fetch and automatically post articles to your WordPress site from EzineArticles.
+* **[Pinterest Pins](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Import Pinterest pins and post them to your WordPress site. You can target specific pins by keyword, board, or from a particular user profile. You will also be able to apply custom filters to the result.
+* **[Instagram Posts](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Import Instagram posts and publish them to your WordPress site with WP Content Pilot. You can target posts with specific keywords, hashtag and also a particular profile to generate desired posts.
+* **[Reddit Posts](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Auto post reddits or subreddit. Our plugin will also enable you to fetch comments with support for videos and GIFs..
+* **[Quora Posts](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Grab articles from Quora and auto-publish as post on your site. You can insert any keyword to get posts from Quora.
+* **[CareerJet Posts](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Auto import jobs from CareerJet and insert as posts injecting your affiliate code.
+* **[Itunes Items](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Automatically import products from Itunes by keyword and insert as posts injecting your affiliate code.
+* **[Craigslist listings](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Import listings from Craigslist and insert as posts keeping your site always up to date.
+* **[Walmart products](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Auto import products from Walmart and insert as posts injecting your affiliate code.
+* **[BestBuy products](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Import products from BestBuy and insert as posts injecting your affiliate code.
+* **[GearBest products](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**: Automatically import products from GearBest by keyword and insert as posts injecting your affiliate code.
 
-https://www.youtube.com/watch?v=QPEvHGbc58E
-
-= WP Content Pilot Pro Features: =
-* Auto post Amazon products to WordPress
-* Auto post from Facebook to WordPress
-* Auto post from Twitter to WordPress
-* Auto post eBay auctions to WordPress
-* Auto post ClickBank products to WordPress
-* Auto post EzineArticles to WordPress
-* Auto post from SoundCloud to WordPress
-* Auto post from Pinterest to WordPress
-* Auto post from Instagram to WordPress
-* Auto post from Reddit to WordPress
-* Auto post from Quora to WordPress
-* Auto post Craigslist listings to WordPress
-* Auto post Itunes to WordPress 
-* Auto post Craigslist listings to WordPress
-* Auto post Walmart products to WordPress
-* Auto post BestBuy products to WordPress
-* Search Replace with regular expression support
-* Custom Post Meta support
-* Readability Analyzing support
-* Keyword Suggestion tool
-* Automatic Translation Support
-* Banned Word Support           
-* Required Words Support
-* Custom Category
-* Custom Tag
-
-[Upgrade To PRO Now](https://www.pluginever.com/plugins/wp-content-pilot-pro/)
-
-== Free Modules ==
-
-= RSS/Feed =
-https://www.youtube.com/watch?v=8LUrdHH-FJk
-WP Content Pilot can can keep track of the defined feed links and whenever a new post is found it will automatically start posting content from that site to your site.It can import the full content, author, tags, categories and set the featured image.
-
-= Article =
-WP Content Pilot can search entire web based on your keyword and analyse the articles readability using its AI then post every x hour until it meets the defined target.It can import the full content, author, tags, categories and set the featured image.
-
-= Envato =
-WP Content Pilot can import from Envato markets like ThemeForest, CodeCanyon, GraphicRiver, PhotoDune by keyword, tag, category or a specific seller. It automatically include affiliate links making sure you get the commissions from products sold via your referrals.
-
-= Youtube =
-https://www.youtube.com/watch?v=GCoO2YCmLFU
-WP Content Pilot can search YouTube for videos matching your keywords and post them to your WordPress site.You can post videos from YouTube by keyword, username or by a specific playlist and auto publish them to your website with this WP Content Pilot WordPress plugin.
-
-= Flickr =
-https://www.youtube.com/watch?v=PsepKjH9F_Q
-WP Content Pilot can search flickr images for keywords you specify and will post the images and caption as a post on your site. It can also post from a specific flickr user by searching that user items for specified keywords or without filtering.
+👉 [CLICK HERE TO LEARN MORE](https://pluginever.com/plugins/wp-content-pilot-pro) 👈
 
 
-== Pro Modules ==
-Over 20+ Supported Campaign Types
+https://www.youtube.com/watch?v=5A3gx0f6PJk
 
-= Amazon =
-WP Content Pilot can search Amazon for products matching your keywords, post them and add your affiliate links automatically so you can make commissions from products sold via your referrals.
+👉 [CLICK HERE TO LEARN MORE](https://pluginever.com/plugins/wp-content-pilot-pro) 👈
 
-= Facebook =
-WP Content Pilot can Plugin can post from Facebook pages, Facebook open groups, closed groups or personal profiles and each new post from Facebook will be added as a post to WordPress automatically. where it can post full sized images shared on the page, videos and links.
 
-= Twitter =
-WP Content Pilot can import Tweets from Twitter to WordPress. It can import Tweets based on keyword, hashtag or from a specific profile. It will automatically publish those on your site as regular WordPress posts.
+## WP Content Pilot has received lots of love from its users:
 
-= eBay = 
-Automatically post eBay auctions to your WordPress site with WP Content Pilot. The importer works both on specific keyword and seller. You will also be able to add extra filter on top of specific sellers. The plugin will automatically take care of your affiliate links.
+**jeffinmass**
+> [I am not a programmer. I am not a WordPress programmer/user, I’m flying by the seat of my pants and learning every step of the way…. painfully but worth it. It’s a great piece of software. Now about WP-Content Pro – it does exactly what it states it does and makes my life with one less very important task to maintain. I need fresh content always for my site visits to see constant new ideas and fresh looks to entice new possibilities. I just received tech support. The chat went very well. My problem was quickly identified and provided a suggestion on how I could cure it. I made the first change and then evidentially with the new update there was a setting I needed to change and then poof! My blog was back up and generating new content. 👏👏](https://wordpress.org/support/topic/practically-maintenance-free-blog-makes-me-look-great/)
 
-= ClickBank =
-Effortlessly publish ClickBank products to your WordPress site with WP Content Pilot. Fetch and post products as WordPress posts from the ClickBank site for specific keywords. Product description and affiliate links will be taken care by the plugin.
+**jeremycroes**
+> [The application does exactly what is promised! It automatically translates also.
+> Even though the info for setting everything up could be more up to date, the online help is great!
+> It’s a worthy experiment to see if it brings the results you are working towards.
+> I’d recommend it to my friends. 👏👏](https://wordpress.org/support/topic/great-solution-for-autoblogging-and-translating/)
 
-= EzineArticles =
-EzineArticles is a great source of quality articles. WP Content Pilot can fetch and automatically post articles to your WordPress site from EzineArticles. You have to just add your desired keyword and our plugin will take care of everything else. It will fetch quality articles from EzineArticles that matches your campaign quality.
-
-= SoundCloud = 
-Automatically post audio (music, podcast) from SoundCloud to your WordPress site with WP Content Pilot. It can fetch sounds based on specific keywords, username or by specific playlist.
-
-= Pinterest =
-WP Content Pilot can import Pinterest pins and post them to your WordPress site. You can target specific pins by keyword, board or from a specific user profile. You will also be able to apply custom filter on the user.
-
-= Instagram =
-Import Instagram posts and publish them to your WordPress site with WP Content Pilot. You can target posts with specific keyword, hashtag and also a specific profile to generate desired posts.
-
-= Reddit =
-Import posts from Reddit to your WordPress site with WP Content Pilot. You will be able to run campaign by searching specific user reddits or subreddit. Our plugin will also enable you to fetch comments with support for videos and GIFs.
-
-= Quora =
-Quora has earned great reputation as an excellent question answer site. WP Content pilot can grab articles from Quora and auto publish as post on your site. You can insert any keyword to get posts from Quora.
-
-= Craigslist =
-WP Content Pilot can import Itunes items to WordPress automatically by keyword or artist so it can post apps, songs, movies, ebooks, podcasts and more from Itunes. The plugin automatically insert your affiliate link to ensure you get the commissions from sale.
-
-= Walmart =
-WP Content Pilot can automatically import products from Walmart by keyword optionally by setting filtering category, price. The plugin set the affiliate link automatically to ensure you get the commissions from sale.
-
-= BestBuy =
-WP Content Pilot can automatically import products from BestBuy by keyword optionally by setting filtering category, price. The plugin set the affiliate link automatically to ensure you get the commissions from sale.
-
-= GearBest =
-WP Content Pilot can automatically import products from GearBest by keyword. The plugin sets the affiliate link automatically to ensure you get the commissions from sale.
-
-= Contribute =
-This may have bugs and lack of many features. If you want to contribute to this project, you are more than welcome. Please open an issue [here](https://github.com/pluginever/wp-content-pilot/issues)
+👉 [CLICK HERE TO LEARN MORE](https://pluginever.com/plugins/wp-content-pilot-pro) 👈
 
 == Screenshots ==
 1. Available campaign types
@@ -174,7 +102,7 @@ This may have bugs and lack of many features. If you want to contribute to this 
 If your server is not connected to the Internet, then you can use this method-
 
 1. Download the plugin by clicking on the red button above. A ZIP file will be downloaded.
-2. Login to your siteÃ¢â‚¬â„¢s admin panel and navigate to Plugins -> Add New -> Upload.
+2. Login to your site admin panel and navigate to Plugins -> Add New -> Upload.
 3. Click choose file, select the plugin file and click install
 
 ###Install Using FTP
