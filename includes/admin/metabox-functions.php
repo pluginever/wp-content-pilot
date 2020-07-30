@@ -27,6 +27,7 @@ function wpcp_register_meta_boxes( $post ) {
 	add_meta_box( 'wpcp-campaign-status', __( 'Campaign Status', 'wp-content-pilot' ), 'wpcp_campaign_status_metabox_callback', 'wp_content_pilot', 'normal', 'high' );
 	add_meta_box( 'wpcp-campaign-options', __( 'Campaign Options', 'wp-content-pilot' ), 'wpcp_campaign_options_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-campaign-log', __( 'Campaign Log', 'wp-content-pilot' ), 'wpcp_campaign_log_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
+	add_meta_box('wpcp-spinner-settings',__('Spinner Settings','wp-content-pilot'),'wpcp_spinner_metabox_callback','wp_content_pilot','normal','low');
 	add_meta_box( 'wpcp-post-template', __( 'Post Template', 'wp-content-pilot' ), 'wpcp_post_template_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-post-settings', __( 'Post Settings', 'wp-content-pilot' ), 'wpcp_post_settings_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-post-filters', __( 'Posts Filter', 'wp-content-pilot' ), 'wpcp_posts_filter_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
@@ -87,7 +88,9 @@ function wpcp_campaign_options_metabox_callback( $post ) {
 	do_action( 'wpcp_' . sanitize_key( $campaign_type ) . '_campaign_options_meta_fields', $post );
 	do_action( 'wpcp_campaign_options_meta_fields', $campaign_type, $post );
 }
-
+function wpcp_spinner_metabox_callback($post){
+	wpcp_get_views('metabox/spinner-settings.php');
+}
 function wpcp_post_template_metabox_callback( $post ) {
 	wpcp_get_views( 'metabox/post-template.php' );
 }
@@ -191,6 +194,17 @@ function wpcp_update_campaign_settings( $post_id ) {
 
 	update_post_meta( $post_id, '_title_limit', empty( $posted['_title_limit'] ) ? '' : esc_attr( $posted['_title_limit'] ) );
 	update_post_meta( $post_id, '_content_limit', empty( $posted['_content_limit'] ) ? '' : esc_attr( $posted['_content_limit'] ) );
+	
+	update_post_meta($post_id,'_spinner_action',empty($posted['_spinner_action']) ? 'api_quota': sanitize_key($posted['_spinner_action']));
+	update_post_meta($post_id,'_spinner_auto_protected_terms',empty($posted['_spinner_auto_protected_terms']) ? false: sanitize_key($posted['_spinner_auto_protected_terms']));
+	update_post_meta($post_id,'_spinner_confidence_level',empty($posted['_spinner_confidence_level']) ? 'medium': sanitize_key($posted['_spinner_confidence_level']));
+	update_post_meta($post_id,'_spinner_nested_spintax',empty($posted['_spinner_nested_spintax']) ? false: sanitize_key($posted['_spinner_nested_spintax']));
+	update_post_meta($post_id,'_spinner_auto_sentences',empty($posted['_spinner_auto_sentences']) ? false: sanitize_key($posted['_spinner_auto_sentences']));
+	update_post_meta($post_id,'_spinner_auto_paragraphs',empty($posted['_spinner_auto_paragraphs']) ? false: sanitize_key($posted['_spinner_auto_paragraphs']));
+	update_post_meta($post_id,'_spinner_auto_new_paragraphs',empty($posted['_spinner_auto_new_paragraphsv']) ? false: sanitize_key($posted['_spinner_auto_new_paragraphs']));
+	update_post_meta($post_id,'_spinner_auto_sentence_trees',empty($posted['_spinner_auto_sentence_trees']) ? false: sanitize_key($posted['_spinner_auto_sentence_trees']));
+	update_post_meta($post_id,'_spinner_use_only_synonyms',empty($posted['_spinner_use_only_synonyms']) ? false: sanitize_key($posted['_spinner_use_only_synonyms']));
+	update_post_meta($post_id,'_spinner_reorder_paragraphs',empty($posted['_spinner_reorder_paragraphs']) ? false: sanitize_key($posted['_spinner_reorder_paragraphs']));
 	do_action( 'wpcp_update_campaign_settings', $post_id, $posted );
 	do_action( 'wpcp_' . sanitize_key( $posted['_campaign_type'] ) . '_update_campaign_settings', $post_id, $posted );
 }

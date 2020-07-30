@@ -525,6 +525,7 @@ add_filter( 'wpcp_skip_duplicate_title', 'wpcp_maybe_skip_duplicate_title', 10, 
  * Setup curl request
  *
  * @return \Curl\Curl
+ * @throws ErrorException
  * @since 1.2.5
  */
 function wpcp_setup_request( $referrer = 'http://www.bing.com/' ) {
@@ -574,25 +575,27 @@ function wpcp_calculate_discount_percent( $original_price, $sale_price = null ) 
 
 /**
  * @param $content
+ * @param $campaign_id
  *
  * @return mixed
+ * @throws ErrorException
  * @since 1.2.6
  */
-function wpcp_spin_article( $content ) {
+function wpcp_spin_article( $campaign_id,$content ) {
 	$args = apply_filters( 'wpcp_spinwritter_request_args', [
 		'email_address'        => wpcp_get_settings( 'spinrewriter_email', 'wpcp_article_spinner' ),
 		'api_key'              => wpcp_get_settings( 'spinrewriter_api_key', 'wpcp_article_spinner' ),
-		'action'               => 'unique_variation',
+		'action'               => wpcp_get_post_meta($campaign_id,'_spinner_action','api_quota'),
 		'text'                 => $content,
-		'auto_protected_terms' => false,
-		'confidence_level'     => 'high',
-		'auto_sentences'       => false,
-		'auto_paragraphs'      => false,
-		'auto_new_paragraphs'  => false,
-		'auto_sentence_trees'  => false,
-		'use_only_synonyms'    => false,
-		'reorder_paragraphs'   => false,
-		'nested_spintax'       => true,
+		'auto_protected_terms' => wpcp_get_post_meta($campaign_id,'_spinner_auto_protected_terms',false),
+		'confidence_level'     => wpcp_get_post_meta($campaign_id,'_spinner_confidence_level','medium'),
+		'auto_sentences'       => wpcp_get_post_meta($campaign_id,'_spinner_auto_sentences',false),
+		'auto_paragraphs'      => wpcp_get_post_meta($campaign_id,'_spinner_auto_paragraphs',false),
+		'auto_new_paragraphs'  => wpcp_get_post_meta($campaign_id,'_spinner_auto_new_paragraphs',false),
+		'auto_sentence_trees'  => wpcp_get_post_meta($campaign_id,'_spinner_auto_sentence_trees',false),
+		'use_only_synonyms'    => wpcp_get_post_meta($campaign_id,'_spinner_use_only_synonyms',false),
+		'reorder_paragraphs'   => wpcp_get_post_meta($campaign_id,'_spinner_reorder_paragraphs',false),
+		'nested_spintax'       => wpcp_get_post_meta($campaign_id,'_spinner_nested_spintax',false),
 	] );
 
 	if ( empty( $args['email_address'] ) || empty( $args['api_key'] ) ) {
@@ -600,10 +603,13 @@ function wpcp_spin_article( $content ) {
 
 		return $content;
 	}
+	
 	@set_time_limit( 150 );
 	$curl     = wpcp_setup_request();
 	$endpoint = 'http://www.spinrewriter.com/action/api';
 	$curl->post( $endpoint, $args );
+	error_log("curl");
+	error_log(print_r($curl,true));
 	if ( $curl->isError() ) {
 		wpcp_logger()->error( __( 'Spinwritter could not send API request, aborting article spinner', 'wp-content-pilot' ) );
 
@@ -619,8 +625,8 @@ function wpcp_spin_article( $content ) {
 
 	if ( isset( $response->status ) && $response->status == 'OK' && ! empty( $response->response ) ) {
 		return force_balance_tags($response->response);
+		
 	}
-
-
+	
 	return $content;
 }

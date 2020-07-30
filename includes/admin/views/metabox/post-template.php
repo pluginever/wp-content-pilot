@@ -22,6 +22,7 @@ echo WPCP_HTML::checkbox_input( array(
 	'required' => false,
 ) );
 
+
 echo WPCP_HTML::text_input( array(
 	'label'    => __( 'Post Title', 'wp-content-pilot' ),
 	'name'     => '_post_title',

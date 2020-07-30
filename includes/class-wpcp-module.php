@@ -274,10 +274,10 @@ abstract class WPCP_Module {
 		//spin
 		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
 		if ( 'on' == $spin_article ) {
-			wpcp_logger()->debug( 'Spinning article ...', $campaign_id );
+			wpcp_logger()->info( __('Spinning article ...','wp-content-pilot'), $campaign_id );
 			$separator   = str_repeat('#', ceil( rand( 10, 20 ) ));
 			$spinable     = $post_title . $separator . $post_content;
-			$spinned      = explode( $separator, wpcp_spin_article( $spinable ), 2 );
+			$spinned      = explode( $separator, wpcp_spin_article( $campaign_id,$spinable ), 2 );
 			$post_title   = $spinned[0];
 			$post_content = $spinned[1];
 		}
@@ -328,11 +328,11 @@ abstract class WPCP_Module {
 		}
 
 		//spin
-		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
-		if ( 'on' == $spin_article ) {
-			wpcp_logger()->info( __( 'Spinning article content...', 'wp-content-pilot' ), $campaign_id );
-			$post_content = wpcp_spin_article( $post_content );
-		}
+//		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
+//		if ( 'on' == $spin_article ) {
+//			wpcp_logger()->info( __( 'Spinning article content...', 'wp-content-pilot' ), $campaign_id );
+//			$post_content = wpcp_spin_article( $post_content,$campaign_id );
+//		}
 
 		//post
 		do_action( 'wpcp_before_post_insert', $campaign_id, $article );
@@ -420,9 +420,10 @@ abstract class WPCP_Module {
 
 		return $post_id;
 	}
-
+	
 	/**
 	 * @return \Curl\Curl
+	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	protected function setup_curl() {
@@ -444,12 +445,12 @@ abstract class WPCP_Module {
 		$deactivated_until = current_time( 'timestamp' ) + ( $hours * HOUR_IN_SECONDS );
 		update_post_meta( $campaign_id, '_' . md5( $key ), $deactivated_until );
 	}
-
+	
 	/**
 	 * Check if the source is deactivated
 	 *
 	 * @param $campaign_id
-	 * @param $source
+	 * @param $key
 	 *
 	 * @return bool
 	 * @since 1.2.0
