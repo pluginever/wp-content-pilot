@@ -37,7 +37,7 @@ class WPCP_Feed extends WPCP_Module {
 			'excerpt'    => __( 'Summary', 'wp-content-pilot' ),
 			'content'    => __( 'Content', 'wp-content-pilot' ),
 			'image_url'  => __( 'Main image url', 'wp-content-pilot' ),
-			'source_url' => __( 'Source link', 'wp-content-pilot' ),
+			'source_url' => __( 'Read More', 'wp-content-pilot' ),
 		);
 	}
 
