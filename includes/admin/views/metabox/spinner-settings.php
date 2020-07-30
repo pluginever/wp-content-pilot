@@ -12,7 +12,7 @@ echo WPCP_HTML::select_input(array(
 		'unique_variation_from_spintax' => __('Unique Variation from Spintax','wp-content-pilot'),
 	),
 	'class' => 'wpcp-select2',
-	'default' => 'api_quota',
+	'default' => 'unique_variation',
 	'desc' => __('The action that you\'re requesting from the Spin Rewriter server.','wp-content-pilot'),
 ));
 echo WPCP_HTML::select_input(array(
@@ -34,7 +34,7 @@ echo WPCP_HTML::select_input(array(
 		'high' => __('High','wp-content-pilot'),
 	),
 	'class' => 'wpcp-select2',
-	'default' =>'medium',
+	'default' =>'high',
 	'desc'=> __('The confidence level of the One-Click Rewrite process.','wp-content-pilot'),
 	
 ));
