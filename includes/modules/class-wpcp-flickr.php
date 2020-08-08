@@ -210,7 +210,8 @@ EOT;
 			$tags        = ! empty( $response->photo->tags->tag ) ? implode( ', ', wp_list_pluck( $response->photo->tags->tag, 'raw' ) ) : '';
 			$image_url   = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}.jpg";
 			$source_url  = $response->photo->urls->url[0]->_content;
-			$tags        = wpcp_array_to_html( $tags );
+			//$tags        = wpcp_array_to_html( $tags );
+			$date = $response->photo->dates->taken;
 
 
 			//check if the clean title metabox is checked and perform title cleaning
@@ -228,7 +229,7 @@ EOT;
 			$article = array(
 				'title'      => $title,
 				'content'    => $description,
-				'date'       => '',
+				'date'       => $date,
 				'image_url'  => $image_url,
 				'source_url' => $source_url,
 				'tags'       => $tags,
