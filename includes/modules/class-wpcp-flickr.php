@@ -55,7 +55,7 @@ class WPCP_Flickr extends WPCP_Module {
 			= <<<EOT
 <img src="{image_url}" alt="">
 <br>
-<a href="{image_url}">Posted</a> by <a href="http://flicker.com/{author_url}">{author}</a>
+<a href="{image_url}">Posted</a> by <a href="{author_url}">{author}</a>
 <br>
 {content}
 <br>
@@ -233,7 +233,7 @@ EOT;
 				'image_url'  => $image_url,
 				'source_url' => $source_url,
 				'tags'       => $tags,
-				'author'     => $response->photo->owner->realname,
+				'author'     => ($response->photo->owner->realname != '') ? $response->photo->owner->realname : $response->photo->owner->username,
 				'author_url' => "https://www.flickr.com/photos/{$response->photo->owner->nsid}/",
 				'views'      => $response->photo->views,
 				'user_id'    => $response->photo->owner->nsid,
