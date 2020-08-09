@@ -46,6 +46,7 @@ class WPCP_Envato extends WPCP_Module {
 			'tags'               => __( 'tags', 'wp-content-pilot' ),
 			'description_html'   => __( 'HTML description', 'wp-content-pilot' ),
 			'affiliate_url'      => __( 'Affiliate URL', 'wp-content-pilot' ),
+			'affiliate_live_preview' => __('Affiliate Live Preview URL','wp-content-pilot')
 		);
 	}
 
@@ -58,7 +59,7 @@ class WPCP_Envato extends WPCP_Module {
 			= <<<EOT
 <img src="{image_url}" alt="">
 <br>
-<a target="_blank" href="{affiliate_url}">LIVE PREVIEW</a>
+<a target="_blank" href="{affiliate_live_preview}">LIVE PREVIEW</a>
 <a target="_blank" href="{affiliate_url}">BUY FOR {price}</a>
 {content}
 <br>
@@ -263,6 +264,7 @@ EOT;
 			$curl = $this->setup_curl();
 			$curl->setHeader( 'Authorization', sprintf( 'bearer %s', trim( $token ) ) );
 			$curl->get( $endpoint );
+			
 
 			if ( $curl->isError() ) {
 				$message = sprintf( __( 'Envato api request failed response [ %s ]', 'wp-content-pilot' ), $curl->getResponse()->error );
@@ -273,7 +275,7 @@ EOT;
 			}
 
 			$response = $curl->getResponse();
-
+			
 			if ( empty( $response->matches ) ) {
 				$message = __( 'No matching data found from api disabling the keyword for 1 hour', 'wp-content-pilot' );
 				$this->deactivate_key( $campaign_id, $keyword );
@@ -306,10 +308,15 @@ EOT;
 				}
 
 				wpcp_logger()->info( __( 'Making affiliate url', 'wp-content-pilot' ), $campaign_id );
-				$affiliate_url = add_query_arg( array(
-					'u' => urlencode( $item->url )
-				), $envato_impact_radius );
-
+				$affiliate_url = $item->url;
+				$affiliate_preview_url = isset($item->previews->live_site->url) ? $item->previews->live_site->url : '';
+				
+				//check if the envato impact radius is not empty and change the url with impact radius
+				if($envato_impact_radius != ''){
+					$affiliate_url = add_query_arg( array( 'u' => urlencode( $item->url ) ), $envato_impact_radius );
+					$affiliate_preview_url = isset($item->previews->live_site->url) ? add_query_arg(array( 'u' => urlencode($item->previews->live_site->url) ),$envato_impact_radius) : '';
+				}
+				
 				wpcp_logger()->info( __( 'Extracting tags from item', 'wp-content-pilot' ), $campaign_id );
 				$tags = [];
 				if ( @$item->tags ) {
@@ -346,6 +353,7 @@ EOT;
 					'tags'               => $tags,
 					'description_html'   => wp_kses_post( @$item->description_html ),
 					'affiliate_url'      => esc_url( $affiliate_url ),
+					'affiliate_live_preview' => esc_url($affiliate_preview_url),
 				];
 				wpcp_logger()->info( __( 'Article processed from campaign', 'wp-content-pilot' ), $campaign_id );
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
