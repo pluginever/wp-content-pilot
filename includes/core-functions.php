@@ -596,7 +596,9 @@ function wpcp_spin_article( $campaign_id,$content ) {
 		'use_only_synonyms'    => wpcp_get_post_meta($campaign_id,'_spinner_use_only_synonyms',false),
 		'reorder_paragraphs'   => wpcp_get_post_meta($campaign_id,'_spinner_reorder_paragraphs',false),
 		'nested_spintax'       => wpcp_get_post_meta($campaign_id,'_spinner_nested_spintax',false),
+		
 	] );
+	
 
 	if ( empty( $args['email_address'] ) || empty( $args['api_key'] ) ) {
 		wpcp_logger()->error( __( 'spinwritter API details is not set, aborting article spinner', 'wp-content-pilot' ) );
@@ -614,7 +616,6 @@ function wpcp_spin_article( $campaign_id,$content ) {
 		return $content;
 	}
 	$response = json_decode( $curl->getResponse() );
-
 	if ( isset( $response->status ) && $response->status == 'ERROR' ) {
 		wpcp_logger()->error( sprintf( __( 'Aborting article spinner Because [%s]', 'wp-content-pilot' ), $response->response ) );
 
@@ -622,7 +623,10 @@ function wpcp_spin_article( $campaign_id,$content ) {
 	}
 
 	if ( isset( $response->status ) && $response->status == 'OK' && ! empty( $response->response ) ) {
-		return force_balance_tags($response->response);
+		$pattern = "#< iframe[^>]+>#is";
+		$iframeCheck = preg_match($pattern,$response->response);
+		$new_response = ($iframeCheck == 1) ? preg_replace($pattern,"",$response->response) : $response->response;
+		return force_balance_tags($new_response);
 		
 	}
 	
