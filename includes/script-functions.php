@@ -21,7 +21,7 @@ function wpcp_load_admin_scripts( $hook ) {
 	wp_enqueue_script( 'jquery-tiptip', $vendor_dir . 'tiptip/jquery.tiptip.min.js', array( 'jquery' ), WPCP_VERSION );
 
 	wp_enqueue_style( 'wpcp-select2', $vendor_dir . 'select2/select2' . $suffix . '.css', array(), WPCP_VERSION );
-	wp_enqueue_script( 'wpcp-select2', $vendor_dir . 'select2/select2' . $suffix . '.js', array( 'jquery' ), WPCP_VERSION );
+	wp_enqueue_script( 'wpcp-select2', $vendor_dir . 'select2/select2' . $suffix . '.js', array( 'jquery' ), WPCP_VERSION,true );
 
 	wp_enqueue_style( 'wpcp-ionslider', $vendor_dir . 'ionslider/ion.rangeSlider' . $suffix . '.css', array(), WPCP_VERSION, false );
 	wp_enqueue_script( 'wpcp-ionslider', $vendor_dir . 'ionslider/ion.rangeSlider' . $suffix . '.js', array( 'jquery' ), WPCP_VERSION, false );
