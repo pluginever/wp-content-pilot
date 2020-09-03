@@ -9,7 +9,7 @@ $run_campaign_url = add_query_arg( array(
 ), esc_url( admin_url( 'admin-post.php' ) ) );
 $last_run         = wpcp_get_post_meta( $post->ID, '_last_run', 0 );
 if ( $last_run ) {
-	$last_run = date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $last_run );
+	$last_run = date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $last_run ) );
 }
 $campaign_type = wpcp_get_post_meta( $post->ID, '_campaign_type', '' );
 $status        = wpcp_get_post_meta( $post->ID, '_campaign_status', '' );
