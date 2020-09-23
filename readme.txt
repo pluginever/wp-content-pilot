@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: RSS import, RSS aggregator, feed import, content curation, feed to post, news aggregator, autoblog, rss to post, content syndication, feeds, rss feeds, rss importer, feed importer, post importer, news importer, affiliate, content pilot, auto post, feeds, flicker, youtube, envato, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
 Requires at least: 4.4
-Tested up to: 5.4.2
+Tested up to: 5.5.1
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -129,6 +129,11 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.2.8 -> September 23, 2020 =
+* [Fix] - Last run is showing same date for every campaign #94
+* [Fix] - Campaign frequency throwing notice #87
+* [Fix] - Yoast seo select2 script conflict
+
 = v1.2.7 -> July 1, 2020 =
 * [Fix] - Updater did not run on previous version.
 
