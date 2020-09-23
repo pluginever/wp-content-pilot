@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 1.2.7\n"
+"Project-Id-Version: WP Content Pilot 1.2.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2020-07-01 14:49:51+00:00\n"
+"POT-Creation-Date: 2020-09-23 11:41:57+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -392,7 +392,7 @@ msgid "Readability score controlled posts for clean articles"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:365
-#: includes/admin/metabox-functions.php:216
+#: includes/admin/metabox-functions.php:217
 #: includes/admin/views/page/help-page.php:187
 msgid "Keyword Suggestion"
 msgstr ""
@@ -597,65 +597,65 @@ msgstr ""
 msgid "Campaign Posts"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:203
+#: includes/admin/metabox-functions.php:204
 msgid "Keywords"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:206
+#: includes/admin/metabox-functions.php:207
 msgid "Separate keywords by comma."
 msgstr ""
 
-#: includes/admin/metabox-functions.php:231
+#: includes/admin/metabox-functions.php:232
 msgid "Strip original links from the post"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:233
+#: includes/admin/metabox-functions.php:234
 msgid "Remove hyperlinks found in the article"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:239
+#: includes/admin/metabox-functions.php:240
 msgid "Make permalink link directly to the source"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:241
+#: includes/admin/metabox-functions.php:242
 msgid ""
 "Make post link directly to the source site, Posts will not load at your "
 "site."
 msgstr ""
 
-#: includes/admin/metabox-functions.php:251
+#: includes/admin/metabox-functions.php:252
 msgid "Add Canonical Tag with the original post link "
 msgstr ""
 
-#: includes/admin/metabox-functions.php:262
+#: includes/admin/metabox-functions.php:263
 msgid "Set First image as featured image"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:269
+#: includes/admin/metabox-functions.php:270
 msgid "Remove images from content"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:276
+#: includes/admin/metabox-functions.php:277
 msgid "Set random featured image if no image exists"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:287
+#: includes/admin/metabox-functions.php:288
 msgid "Use original date if possible"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:298
+#: includes/admin/metabox-functions.php:299
 msgid "Use summary as excerpt"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:305
+#: includes/admin/metabox-functions.php:306
 msgid "Enable post with duplicate title"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:312
+#: includes/admin/metabox-functions.php:313
 msgid "Clean title"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:319
+#: includes/admin/metabox-functions.php:320
 msgid "Add rel nofollow & set target blank for all links"
 msgstr ""
 

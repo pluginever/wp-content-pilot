@@ -162,7 +162,8 @@ function wpcp_update_campaign_settings( $post_id ) {
 	update_post_meta( $post_id, '_campaign_target', $campaign_target );
 	update_post_meta( $post_id, '_campaign_frequency', $campaign_frequency );
 	update_post_meta( $post_id, '_frequency_unit', $frequency_unit );
-	update_post_meta( $post_id, '_run_every', ( $every * absint( $posted['_campaign_frequency'] ) ) );
+	//update_post_meta( $post_id, '_run_every', ( $every * absint( $posted['_campaign_frequency'] ) ) );
+	update_post_meta( $post_id, '_run_every', ( $every * $campaign_frequency ) );
 	update_post_meta( $post_id, '_campaign_status', empty( $posted['_campaign_status'] ) ? 'inactive' : sanitize_text_field( $posted['_campaign_status'] ) );
 
 	update_post_meta( $post_id, '_keywords', empty( $posted['_keywords'] ) ? '' : sanitize_text_field( $posted['_keywords'] ) );

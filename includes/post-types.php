@@ -167,7 +167,7 @@ function wp_content_pilot_column_content( $column_name, $post_ID ) {
 		case 'last_run':
 			$last_run = wpcp_get_post_meta( $post_ID, '_last_run', 0 );
 			if ( $last_run ) {
-				echo date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $last_run );
+				echo date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime($last_run) );
 			} else {
 				echo ' - ';
 			}
