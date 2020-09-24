@@ -343,6 +343,12 @@ class WPCP_Help {
 		        'free' => false,
 		        'pro' => true,
 	        ],
+			[
+				'title' => __( 'Commission Junction', 'wp-content-pilot' ),
+				'desc' => __( 'Commission Junction module to import links', 'wp-content-pilot' ),
+				'free' => false,
+				'pro' => true,
+			],
 	        [
 		        'title' => __( 'Search Replace', 'wp-content-pilot' ),
 		        'desc' => __( 'Automatic search replace with regex support', 'wp-content-pilot' ),
