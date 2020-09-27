@@ -368,6 +368,12 @@ class WPCP_Help {
 				'pro'   => true,
 			],
 			[
+				'title' => __( 'Eventful', 'wp-content-pilot' ),
+				'desc'  => __( 'Eventful module to import events', 'wp-content-pilot' ),
+				'free'  => false,
+				'pro'   => true,
+			],
+			[
 				'title' => __( 'Search Replace', 'wp-content-pilot' ),
 				'desc'  => __( 'Automatic search replace with regex support', 'wp-content-pilot' ),
 				'free'  => false,
