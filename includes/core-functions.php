@@ -541,8 +541,8 @@ function wpcp_setup_request( $referrer = 'http://www.bing.com/' ) {
 	$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
 	$curl->setOpt( CURLOPT_REFERER, $referrer );
 	$curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );
-	@$curl->setOpt( CURLOPT_COOKIEJAR, untrailingslashit( $upload_dir['basedir'] ) . '/' . $jar );
-	@$curl->setOpt( CURLOPT_COOKIEJAR, $jar );
+	$curl->setOpt( CURLOPT_COOKIEJAR, untrailingslashit( $upload_dir['basedir'] ) . '/' . $jar );
+	$curl->setOpt( CURLOPT_COOKIEJAR, $jar );
 	$curl->setOpt( CURLOPT_SSL_VERIFYPEER, false );
 
 	return $curl;
