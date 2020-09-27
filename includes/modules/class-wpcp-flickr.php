@@ -75,27 +75,27 @@ EOT;
 		echo WPCP_HTML::start_double_columns();
 		echo WPCP_HTML::select_input(
 			array(
-				'name' => '_search_order',
-				'label' => __('Sort Order','wp-content-pilot'),
+				'name'    => '_search_order',
+				'label'   => __( 'Sort Order', 'wp-content-pilot' ),
 				'options' => array(
-					'relevance' => __('Relevance','wp-content-pilot'),
-					'date-posted-asc' => __('Date Posted ASC','wp-content-pilot'),
-					'date-posted-desc' => __('Date Posted DESC','wp-content-pilot'),
-					'date-taken-asc' => __('Date Taken ASC','wp-content-pilot'),
-					'date-taken-desc' => __('Date Taken DESC','wp-content-pilot'),
-					'interestingness-desc' => __('Interestingness DESC','wp-content-pilot'),
-					'interestingness-asc' => __('Interestingness ASC','wp-content-pilot'),
+					'relevance'            => __( 'Relevance', 'wp-content-pilot' ),
+					'date-posted-asc'      => __( 'Date Posted ASC', 'wp-content-pilot' ),
+					'date-posted-desc'     => __( 'Date Posted DESC', 'wp-content-pilot' ),
+					'date-taken-asc'       => __( 'Date Taken ASC', 'wp-content-pilot' ),
+					'date-taken-desc'      => __( 'Date Taken DESC', 'wp-content-pilot' ),
+					'interestingness-desc' => __( 'Interestingness DESC', 'wp-content-pilot' ),
+					'interestingness-asc'  => __( 'Interestingness ASC', 'wp-content-pilot' ),
 				),
-				'desc' => __('Sort order for flickr','wp-content-pilot'),
+				'desc'    => __( 'Sort order for flickr', 'wp-content-pilot' ),
 				'default' => 'relevance',
-				'class' => 'wpcp-select2',
+				'class'   => 'wpcp-select2',
 			)
 		);
-		echo WPCP_HTML::text_input(array(
-			'name' => '_user_id',
-			'label' => __('Specific User ID',''),
-			'desc' => __('Make flickr user id <a target="_blank" href="http://idgettr.com/">here</a>. Example id : 75866656@N00')
-		));
+		echo WPCP_HTML::text_input( array(
+			'name'  => '_user_id',
+			'label' => __( 'Specific User ID', '' ),
+			'desc'  => __( 'Make flickr user id <a target="_blank" href="http://idgettr.com/">here</a>. Example id : 75866656@N00' )
+		) );
 		echo WPCP_HTML::end_double_columns();
 	}
 
@@ -104,8 +104,8 @@ EOT;
 	 * @param $posted
 	 */
 	public function save_campaign_meta( $campaign_id, $posted ) {
-		update_post_meta($campaign_id,'_search_order',empty($posted['_search_order']) ? 'relevance' : sanitize_key($posted['_search_order']));
-		update_post_meta($campaign_id,'_user_id',empty($posted['_user_id']) ? '' : $posted['_user_id']);
+		update_post_meta( $campaign_id, '_search_order', empty( $posted['_search_order'] ) ? 'relevance' : sanitize_key( $posted['_search_order'] ) );
+		update_post_meta( $campaign_id, '_user_id', empty( $posted['_user_id'] ) ? '' : $posted['_user_id'] );
 	}
 
 	/**
@@ -154,9 +154,9 @@ EOT;
 
 		wpcp_logger()->info( __( 'Checking flick api key for authentication', 'wp-content-pilot' ), $campaign_id );
 
-		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
-		$sort_order = wpcp_get_post_meta($campaign_id,'_search_order','relevance');
-		$user_id = wpcp_get_post_meta($campaign_id,'_user_id','');
+		$api_key    = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
+		$sort_order = wpcp_get_post_meta( $campaign_id, '_search_order', 'relevance' );
+		$user_id    = wpcp_get_post_meta( $campaign_id, '_user_id', '' );
 
 		if ( empty( $api_key ) ) {
 			wpcp_disable_campaign( $campaign_id );
@@ -191,7 +191,7 @@ EOT;
 				'text'           => $keyword,
 				'api_key'        => $api_key,
 				'content_type'   => 'photos',
-				'sort' => $sort_order,
+				'sort'           => $sort_order,
 				'media'          => 'photos',
 				'per_page'       => 1,
 				'page'           => $page_number,
@@ -199,11 +199,11 @@ EOT;
 				'nojsoncallback' => '1',
 				'method'         => 'flickr.photos.search',
 			);
-			if($user_id != ''){
+			if ( $user_id != '' ) {
 				$query_args['user_id'] = $user_id;
 			}
-			$endpoint   = add_query_arg( $query_args, 'https://api.flickr.com/services/rest/' );
-			wpcp_logger()->info( sprintf( __('Looking for data from [%s]','wp-content-pilot'), preg_replace( '/api_key=([^&]+)/m', 'api_key=X', $endpoint ) ), $campaign_id );
+			$endpoint = add_query_arg( $query_args, 'https://api.flickr.com/services/rest/' );
+			wpcp_logger()->info( sprintf( __( 'Looking for data from [%s]', 'wp-content-pilot' ), preg_replace( '/api_key=([^&]+)/m', 'api_key=X', $endpoint ) ), $campaign_id );
 			$curl = $this->setup_curl();
 			$curl->get( $endpoint );
 
@@ -265,7 +265,7 @@ EOT;
 				'image_url'  => $image_url,
 				'source_url' => $source_url,
 				'tags'       => $tags,
-				'author'     => ($response->photo->owner->realname != '') ? $response->photo->owner->realname : $response->photo->owner->username,
+				'author'     => ( $response->photo->owner->realname != '' ) ? $response->photo->owner->realname : $response->photo->owner->username,
 				'author_url' => "https://www.flickr.com/photos/{$response->photo->owner->nsid}/",
 				'views'      => $response->photo->views,
 				'user_id'    => $response->photo->owner->nsid,
