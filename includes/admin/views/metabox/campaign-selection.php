@@ -174,6 +174,13 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/eventful.png' )
 	),
+	array(
+		'label'    => 'Etsy',
+		'name'     => 'etsy',
+		'keywords' => 'job',
+		'disabled' => true,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/etsy.png' )
+	),
 ) );
 ?>
 <style>

@@ -374,6 +374,12 @@ class WPCP_Help {
 				'pro'   => true,
 			],
 			[
+				'title' => __( 'Etsy', 'wp-content-pilot' ),
+				'desc'  => __( 'Etsy module to import products', 'wp-content-pilot' ),
+				'free'  => false,
+				'pro'   => true,
+			],
+			[
 				'title' => __( 'Search Replace', 'wp-content-pilot' ),
 				'desc'  => __( 'Automatic search replace with regex support', 'wp-content-pilot' ),
 				'free'  => false,
