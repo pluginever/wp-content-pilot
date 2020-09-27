@@ -152,7 +152,14 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/gearbest.png' )
-	)
+	),
+	array(
+		'label'    => 'Vimeo',
+		'name'     => 'vimeo',
+		'keywords' => 'job',
+		'disabled' => true,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/vimeo.png' )
+	),
 ) );
 ?>
 <style>
