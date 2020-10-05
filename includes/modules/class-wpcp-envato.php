@@ -309,7 +309,7 @@ EOT;
 //				), $envato_impact_radius );
 
 				$affiliate_url         = $item->url;
-				$affiliate_preview_url = isset( $item->previews->live_site->url ) ? $item->previews->live_site->url : '';
+				$affiliate_preview_url = isset( $item->previews->live_site->url ) ? $item->previews->live_site->url : $affiliate_url;
 
 				//check if the envato impact radius is not empty and change the url with impact radius
 				if ( $envato_impact_radius != '' ) {
