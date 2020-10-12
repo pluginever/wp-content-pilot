@@ -578,21 +578,21 @@ function wpcp_calculate_discount_percent( $original_price, $sale_price = null ) 
  * @return mixed
  * @since 1.2.6
  */
-function wpcp_spin_article( $campaign_id,$content ) {
+function wpcp_spin_article( $campaign_id, $content ) {
 	$args = apply_filters( 'wpcp_spinwritter_request_args', [
 		'email_address'        => wpcp_get_settings( 'spinrewriter_email', 'wpcp_article_spinner' ),
 		'api_key'              => wpcp_get_settings( 'spinrewriter_api_key', 'wpcp_article_spinner' ),
-		'action'               => wpcp_get_post_meta($campaign_id,'_spinner_action','unique_variation'),
+		'action'               => wpcp_get_post_meta( $campaign_id, '_spinner_action', 'unique_variation' ),
 		'text'                 => $content,
-		'auto_protected_terms' => wpcp_get_post_meta($campaign_id,'_spinner_auto_protected_terms',false),
-		'confidence_level'     => wpcp_get_post_meta($campaign_id,'_spinner_confidence_level','high'),
-		'auto_sentences'       => wpcp_get_post_meta($campaign_id,'_spinner_auto_sentences',false),
-		'auto_paragraphs'      => wpcp_get_post_meta($campaign_id,'_spinner_auto_paragraphs',false),
-		'auto_new_paragraphs'  => wpcp_get_post_meta($campaign_id,'_spinner_auto_new_paragraphs',false),
-		'auto_sentence_trees'  => wpcp_get_post_meta($campaign_id,'_spinner_auto_sentence_trees',false),
-		'use_only_synonyms'    => wpcp_get_post_meta($campaign_id,'_spinner_use_only_synonyms',false),
-		'reorder_paragraphs'   => wpcp_get_post_meta($campaign_id,'_spinner_reorder_paragraphs',false),
-		'nested_spintax'       => wpcp_get_post_meta($campaign_id,'_spinner_nested_spintax',false),
+		'auto_protected_terms' => wpcp_get_post_meta( $campaign_id, '_spinner_auto_protected_terms', false ),
+		'confidence_level'     => wpcp_get_post_meta( $campaign_id, '_spinner_confidence_level', 'high' ),
+		'auto_sentences'       => wpcp_get_post_meta( $campaign_id, '_spinner_auto_sentences', false ),
+		'auto_paragraphs'      => wpcp_get_post_meta( $campaign_id, '_spinner_auto_paragraphs', false ),
+		'auto_new_paragraphs'  => wpcp_get_post_meta( $campaign_id, '_spinner_auto_new_paragraphs', false ),
+		'auto_sentence_trees'  => wpcp_get_post_meta( $campaign_id, '_spinner_auto_sentence_trees', false ),
+		'use_only_synonyms'    => wpcp_get_post_meta( $campaign_id, '_spinner_use_only_synonyms', false ),
+		'reorder_paragraphs'   => wpcp_get_post_meta( $campaign_id, '_spinner_reorder_paragraphs', false ),
+		'nested_spintax'       => wpcp_get_post_meta( $campaign_id, '_spinner_nested_spintax', false ),
 	] );
 
 	if ( empty( $args['email_address'] ) || empty( $args['api_key'] ) ) {
@@ -618,7 +618,12 @@ function wpcp_spin_article( $campaign_id,$content ) {
 	}
 
 	if ( isset( $response->status ) && $response->status == 'OK' && ! empty( $response->response ) ) {
-		return force_balance_tags($response->response);
+		$pattern      = "#< iframe[^>]+>#is";
+		$iframeCheck  = preg_match( $pattern, $response->response );
+		$new_response = ( $iframeCheck == 1 ) ? preg_replace( $pattern, "", $response->response ) : $response->response;
+
+		return force_balance_tags( $new_response );
+		//return force_balance_tags($response->response);
 	}
 
 
