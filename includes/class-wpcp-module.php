@@ -275,9 +275,9 @@ abstract class WPCP_Module {
 		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
 		if ( 'on' == $spin_article ) {
 			wpcp_logger()->debug( 'Spinning article ...', $campaign_id );
-			$separator   = str_repeat('#', ceil( rand( 10, 20 ) ));
+			$separator    = str_repeat( '#', ceil( rand( 10, 20 ) ) );
 			$spinable     = $post_title . $separator . $post_content;
-			$spinned      = explode( $separator, wpcp_spin_article( $spinable ), 2 );
+			$spinned      = explode( $separator, wpcp_spin_article( $campaign_id, $spinable ), 2 );
 			$post_title   = $spinned[0];
 			$post_content = $spinned[1];
 		}
@@ -328,11 +328,11 @@ abstract class WPCP_Module {
 		}
 
 		//spin
-		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
-		if ( 'on' == $spin_article ) {
-			wpcp_logger()->info( __( 'Spinning article content...', 'wp-content-pilot' ), $campaign_id );
-			$post_content = wpcp_spin_article( $post_content );
-		}
+//		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
+//		if ( 'on' == $spin_article ) {
+//			wpcp_logger()->info( __( 'Spinning article content...', 'wp-content-pilot' ), $campaign_id );
+//			$post_content = wpcp_spin_article( $post_content );
+//		}
 
 		//post
 		do_action( 'wpcp_before_post_insert', $campaign_id, $article );
@@ -393,7 +393,7 @@ abstract class WPCP_Module {
 		//set featured image
 		$is_set_featured_image = wpcp_get_post_meta( $campaign_id, '_set_featured_image', 0 );
 		if ( 'on' === $is_set_featured_image && ! empty( $article['image_url'] ) ) {
-			wpcp_logger()->info( __( 'Setting featured image','wp-content-pilot' ), $campaign_id );
+			wpcp_logger()->info( __( 'Setting featured image', 'wp-content-pilot' ), $campaign_id );
 			$attachment_id = wpcp_download_image( html_entity_decode( $article['image_url'] ) );
 			if ( $attachment_id ) {
 				set_post_thumbnail( $post_id, $attachment_id );

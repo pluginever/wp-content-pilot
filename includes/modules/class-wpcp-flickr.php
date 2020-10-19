@@ -55,7 +55,7 @@ class WPCP_Flickr extends WPCP_Module {
 			= <<<EOT
 <img src="{image_url}" alt="">
 <br>
-<a href="{image_url}">Posted</a> by <a href="http://flicker.com/{author_url}">{author}</a>
+<a href="{image_url}">Posted</a> by <a href="{author_url}">{author}</a>
 <br>
 {content}
 <br>
@@ -72,6 +72,31 @@ EOT;
 	 * @param $post
 	 */
 	public function add_campaign_option_fields( $post ) {
+		echo WPCP_HTML::start_double_columns();
+		echo WPCP_HTML::select_input(
+			array(
+				'name'    => '_search_order',
+				'label'   => __( 'Sort Order', 'wp-content-pilot' ),
+				'options' => array(
+					'relevance'            => __( 'Relevance', 'wp-content-pilot' ),
+					'date-posted-asc'      => __( 'Date Posted ASC', 'wp-content-pilot' ),
+					'date-posted-desc'     => __( 'Date Posted DESC', 'wp-content-pilot' ),
+					'date-taken-asc'       => __( 'Date Taken ASC', 'wp-content-pilot' ),
+					'date-taken-desc'      => __( 'Date Taken DESC', 'wp-content-pilot' ),
+					'interestingness-desc' => __( 'Interestingness DESC', 'wp-content-pilot' ),
+					'interestingness-asc'  => __( 'Interestingness ASC', 'wp-content-pilot' ),
+				),
+				'desc'    => __( 'Sort order for flickr', 'wp-content-pilot' ),
+				'default' => 'relevance',
+				'class'   => 'wpcp-select2',
+			)
+		);
+		echo WPCP_HTML::text_input( array(
+			'name'  => '_user_id',
+			'label' => __( 'Specific User ID', 'wp-content-pilot' ),
+			'desc'  => 'Make flickr user id <a target="_blank" href="http://idgettr.com/">here</a>. Example id : 75866656@N00',
+		) );
+		echo WPCP_HTML::end_double_columns();
 	}
 
 	/**
@@ -79,7 +104,8 @@ EOT;
 	 * @param $posted
 	 */
 	public function save_campaign_meta( $campaign_id, $posted ) {
-
+		update_post_meta( $campaign_id, '_search_order', empty( $posted['_search_order'] ) ? 'relevance' : sanitize_key( $posted['_search_order'] ) );
+		update_post_meta( $campaign_id, '_user_id', empty( $posted['_user_id'] ) ? '' : $posted['_user_id'] );
 	}
 
 	/**
@@ -128,7 +154,10 @@ EOT;
 
 		wpcp_logger()->info( __( 'Checking flick api key for authentication', 'wp-content-pilot' ), $campaign_id );
 
-		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
+		$api_key    = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
+		$sort_order = wpcp_get_post_meta( $campaign_id, '_search_order', 'relevance' );
+		$user_id    = wpcp_get_post_meta( $campaign_id, '_user_id', '' );
+
 		if ( empty( $api_key ) ) {
 			wpcp_disable_campaign( $campaign_id );
 			$notice = __( 'The Flickr api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot' );
@@ -161,8 +190,8 @@ EOT;
 			$query_args = array(
 				'text'           => $keyword,
 				'api_key'        => $api_key,
-				'sort'           => 'relevance',
 				'content_type'   => 'photos',
+				'sort'           => $sort_order,
 				'media'          => 'photos',
 				'per_page'       => 1,
 				'page'           => $page_number,
@@ -170,8 +199,11 @@ EOT;
 				'nojsoncallback' => '1',
 				'method'         => 'flickr.photos.search',
 			);
-			$endpoint   = add_query_arg( $query_args, 'https://api.flickr.com/services/rest/' );
-			wpcp_logger()->info( sprintf( 'Looking for data from [%s]', preg_replace( '/api_key=([^&]+)/m', 'api_key=X', $endpoint ) ), $campaign_id );
+			if ( $user_id != '' ) {
+				$query_args['user_id'] = $user_id;
+			}
+			$endpoint = add_query_arg( $query_args, 'https://api.flickr.com/services/rest/' );
+			wpcp_logger()->info( sprintf( __( 'Looking for data from [%s]', 'wp-content-pilot' ), preg_replace( '/api_key=([^&]+)/m', 'api_key=X', $endpoint ) ), $campaign_id );
 			$curl = $this->setup_curl();
 			$curl->get( $endpoint );
 
@@ -210,7 +242,8 @@ EOT;
 			$tags        = ! empty( $response->photo->tags->tag ) ? implode( ', ', wp_list_pluck( $response->photo->tags->tag, 'raw' ) ) : '';
 			$image_url   = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}.jpg";
 			$source_url  = $response->photo->urls->url[0]->_content;
-			$tags        = wpcp_array_to_html( $tags );
+			//$tags        = wpcp_array_to_html( $tags );
+			$date = $response->photo->dates->taken;
 
 
 			//check if the clean title metabox is checked and perform title cleaning
@@ -228,11 +261,11 @@ EOT;
 			$article = array(
 				'title'      => $title,
 				'content'    => $description,
-				'date'       => '',
+				'date'       => $date,
 				'image_url'  => $image_url,
 				'source_url' => $source_url,
 				'tags'       => $tags,
-				'author'     => $response->photo->owner->realname,
+				'author'     => ( $response->photo->owner->realname != '' ) ? $response->photo->owner->realname : $response->photo->owner->username,
 				'author_url' => "https://www.flickr.com/photos/{$response->photo->owner->nsid}/",
 				'views'      => $response->photo->views,
 				'user_id'    => $response->photo->owner->nsid,

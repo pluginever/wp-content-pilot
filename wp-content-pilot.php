@@ -3,7 +3,7 @@
  * Plugin Name: WP Content Pilot
  * Plugin URI:  https://www.pluginever.com
  * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:     1.2.8
+ * Version:     1.2.9
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
@@ -44,7 +44,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '1.2.8';
+	protected $version = '1.2.9';
 
 	/**
 	 * The single instance of the class.
@@ -156,6 +156,7 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/class-wpcp-html.php';
 
 		//core files
+		//require_once( WPCP_LIBRARY . '/readability/Readability_OLD.php' );
 		require_once( WPCP_LIBRARY . '/readability/Readability.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-readability.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-logger.php' );
@@ -188,7 +189,7 @@ final class ContentPilot {
 		register_deactivation_hook( __FILE__, array( 'WPCP_Install', 'deactivate' ) );
 		register_activation_hook( __FILE__, array( $this, 'activate_cron' ) );
 		register_shutdown_function( array( $this, 'log_errors' ) );
-		add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ), -1 );
+		add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ), - 1 );
 
 		add_action( 'init', array( $this, 'localization_setup' ) );
 		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ), 20 );
@@ -268,7 +269,7 @@ final class ContentPilot {
 	 * @return void
 	 */
 	public function check_if_cron_running() {
-		if (  current_user_can( 'manage_options' ) ) {
+		if ( current_user_can( 'manage_options' ) ) {
 //			$status = wpcp_check_cron_status();
 //			if ( is_wp_error( $status ) ) {
 //			$this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
@@ -284,16 +285,16 @@ final class ContentPilot {
 	public function log_errors() {
 		$error = error_get_last();
 		if ( $error && in_array( $error['type'], array( E_ERROR, E_PARSE, E_COMPILE_ERROR, E_USER_ERROR, E_RECOVERABLE_ERROR ), true ) ) {
-			wpcp_logger()->error( sprintf( __( '%1$s in %2$s on line %3$s', 'wp-content-pilot' ), $error['message'], $error['file'], $error['line'] ) . PHP_EOL);
+			wpcp_logger()->error( sprintf( __( '%1$s in %2$s on line %3$s', 'wp-content-pilot' ), $error['message'], $error['file'], $error['line'] ) . PHP_EOL );
 			do_action( 'wpcp_shutdown_error', $error );
 		}
 	}
 
 	/**
-	 * @since 1.2.3
 	 * @return string
+	 * @since 1.2.3
 	 */
-	public function get_version(){
+	public function get_version() {
 		return $this->version;
 	}
 

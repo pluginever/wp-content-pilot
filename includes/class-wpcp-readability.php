@@ -54,13 +54,15 @@ class WPCP_Readability {
 		$result                               = $readability->init();
 
 		if ( ! $result ) {
-			wpcp_logger()->error( sprintf( __('Not readable [%s]','wp-content-pilot'), $this->url ) );
+			wpcp_logger()->error( sprintf( __( 'Not readable [%s]', 'wp-content-pilot' ), $this->url ) );
 
 			return new WP_Error( 'readability-error', __( 'Content is not readable', 'wp-content-pilot' ) );
 		}
 
+//		$title   = $readability->getTitle()->textContent;
+//		$content = wpcp_remove_empty_tags_recursive( $readability->getContent()->innerHTML );
 		$title = $readability->getTitle()->textContent;
-		$content = wpcp_remove_empty_tags_recursive( $readability->getContent()->innerHTML );
+		$content = wpcp_remove_empty_tags_recursive($readability->getContent()->innerHTML);
 		$content = wpcp_remove_emoji( $content );
 		$content = force_balance_tags( $content );
 		$content = wpcp_remove_unauthorized_html( $content );
