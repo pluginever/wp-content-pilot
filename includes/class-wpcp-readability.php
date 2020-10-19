@@ -47,7 +47,6 @@ class WPCP_Readability {
 
 		//process full document
 		$html = $this->pre_process_html( $html, $this->url );
-		error_log(print_r($html,true));
 
 		$readability                          = new Readability( $html, $this->url );
 		$readability->debug                   = false;
