@@ -3,7 +3,7 @@ defined( 'ABSPATH' ) || exit();
 global $post;
 echo WPCP_HTML::start_double_columns();
 echo WPCP_HTML::select_input(array(
-	'label' => __('Action','wp-content-pilotwp-content-pilot'),
+	'label' => __('Action','wp-content-pilot'),
 	'name' => '_spinner_action',
 	'options' => array(
 		'api_quota' => __('Api Quota','wp-content-pilot'),
@@ -36,7 +36,7 @@ echo WPCP_HTML::select_input(array(
 	'class' => 'wpcp-select2',
 	'default' =>'high',
 	'desc'=> __('The confidence level of the One-Click Rewrite process.','wp-content-pilot'),
-	
+
 ));
 echo WPCP_HTML::select_input(array(
 	'label' => __('Nested spintax','wp-content-pilot'),

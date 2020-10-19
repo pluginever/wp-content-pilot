@@ -1,5 +1,5 @@
 === WP Content Pilot - Autoblog & Affiliate Marketing Plugin ===
-Contributors: pluginever,manikmist09
+Contributors: pluginever
 Tags: RSS import, RSS aggregator, feed import, content curation, feed to post, news aggregator, autoblog, rss to post, content syndication, feeds, rss feeds, rss importer, feed importer, post importer, news importer, affiliate, content pilot, auto post, feeds, flicker, youtube, envato, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
 Requires at least: 4.4
 Tested up to: 5.5.1
@@ -129,6 +129,15 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.2.9 -> October 19, 2020 =
+* [Fix] - Flickr Campaign tags and dates are not showing
+* [Fix] - Envato Campaign affiliate live url not showing
+* [Fix] - Campaign selection box min-height issue
+* [Enhance] - Rewrite the readability functions
+* [Enhance] - Flick campaign find image from specific user
+* [Enhance] - Flickr campaign category update
+* [Enhance] - Spinner Settings updated
+
 = v1.2.8 -> September 23, 2020 =
 * [Fix] - Last run is showing same date for every campaign #94
 * [Fix] - Campaign frequency throwing notice #87
