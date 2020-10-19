@@ -93,8 +93,8 @@ EOT;
 		);
 		echo WPCP_HTML::text_input( array(
 			'name'  => '_user_id',
-			'label' => __( 'Specific User ID', '' ),
-			'desc'  => __( 'Make flickr user id <a target="_blank" href="http://idgettr.com/">here</a>. Example id : 75866656@N00' )
+			'label' => __( 'Specific User ID', 'wp-content-pilot' ),
+			'desc'  => 'Make flickr user id <a target="_blank" href="http://idgettr.com/">here</a>. Example id : 75866656@N00',
 		) );
 		echo WPCP_HTML::end_double_columns();
 	}
