@@ -54,12 +54,20 @@ jQuery(document).ready(function ($) {
 		},
 		youtube: function () {
 			$('#_youtube_search_type').on('change', function () {
-				var channnelField = $('._youtube_playlist_id-field');
+				var playlistField = $('._youtube_playlist_id-field');
+				var channelField = $('._youtube_channel_id-field');
+				console.log($(this).val());
 				if ('global' === $(this).val()) {
-					channnelField.hide();
+					playlistField.hide();
+					channelField.hide();
 					$.wp_content_pilot.showKeywordField();
+				} else if ('channel' === $(this).val()) {
+					channelField.show();
+					playlistField.hide();
+					$.wp_content_pilot.hideKeywordField();
 				} else {
-					channnelField.show();
+					playlistField.show();
+					channelField.hide();
 					$.wp_content_pilot.hideKeywordField();
 				}
 			}).change();
