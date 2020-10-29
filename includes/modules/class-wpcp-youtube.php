@@ -177,6 +177,8 @@ EOT;
 			'label' => __( 'Youtube - Auto hyperlink urls within the description', 'wp-content-pilot' ),
 			'name'  => '_youtube_description_hyperlink',
 		) );
+
+
 	}
 
 	/**
@@ -415,7 +417,8 @@ EOT;
 			'order'             => $orderby,
 			'pageToken'         => $next_page_token,
 		);
-		$endpoint   = 'https://www.googleapis.com/youtube/v3/search';
+
+		$endpoint = 'https://www.googleapis.com/youtube/v3/search';
 		if ( $search_type === 'playlist' && ! empty( $playlist_id ) ) {
 			$query_args['playlistId'] = $playlist_id;
 			unset( $query_args['q'] );
