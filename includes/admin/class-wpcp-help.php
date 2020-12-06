@@ -325,12 +325,12 @@ class WPCP_Help {
 				'free'  => false,
 				'pro'   => true,
 			],
-			[
-				'title' => __( 'Quora', 'wp-content-pilot' ),
-				'desc'  => __( 'Quora module to import articles', 'wp-content-pilot' ),
-				'free'  => false,
-				'pro'   => true,
-			],
+//			[
+//				'title' => __( 'Quora', 'wp-content-pilot' ),
+//				'desc'  => __( 'Quora module to import articles', 'wp-content-pilot' ),
+//				'free'  => false,
+//				'pro'   => true,
+//			],
 			[
 				'title' => __( 'Reddit', 'wp-content-pilot' ),
 				'desc'  => __( 'Reddit module to import articles', 'wp-content-pilot' ),
