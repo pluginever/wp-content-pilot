@@ -181,6 +181,13 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/etsy.png' )
 	),
+	array(
+		'label'    => 'Daily Motion',
+		'name'     => 'dailymotion',
+		'keywords' => 'job',
+		'disabled' => true,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/dailymotion.png' )
+	),
 ) );
 ?>
 <style>
