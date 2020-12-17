@@ -311,7 +311,6 @@ EOT;
 					$description = wpcp_hyperlink_text( $description );
 				}
 
-
 				$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
 
 				if ( 'on' == $check_clean_title ) {
