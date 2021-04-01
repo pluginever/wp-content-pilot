@@ -112,13 +112,13 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/pinterest.png' )
 	),
-	array(
-		'label'    => 'Quora',
-		'name'     => 'quora',
-		'keywords' => 'job',
-		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/quora.png' )
-	),
+//	array(
+//		'label'    => 'Quora',
+//		'name'     => 'quora',
+//		'keywords' => 'job',
+//		'disabled' => true,
+//		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/quora.png' )
+//	),
 	array(
 		'label'    => 'Reddit',
 		'name'     => 'reddit',
