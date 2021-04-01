@@ -223,12 +223,11 @@ EOT;
 					'source_url' => $link->url,
 				);
 
-				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
+				wpcp_logger()->info( __( 'Article processed from campaign', 'wp-content-pilot' ), $campaign_id );
 				$this->update_link( $link->id, [ 'status' => 'success', 'meta' => '' ] );
 
 				return $article;
 			}
-
 		}
 
 		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );

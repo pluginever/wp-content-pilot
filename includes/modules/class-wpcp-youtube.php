@@ -122,9 +122,9 @@ EOT;
 			'label'   => __( 'Video License', 'wp-content-pilot' ),
 			'default' => 'any',
 			'options' => array(
-				'any'            => 'Any',
-				'creativeCommon' => 'Creative Common',
-				'youtube'        => 'Standard',
+				'any'            => __( 'Any', 'wp-content-pilot' ),
+				'creativeCommon' => __( 'Creative Common', 'wp-content-pilot' ),
+				'youtube'        => __( 'Standard', 'wp-content-pilot' ),
 			)
 		) );
 
@@ -133,10 +133,10 @@ EOT;
 			'label'   => __( 'Video Duration', 'wp-content-pilot' ),
 			'default' => 'any',
 			'options' => array(
-				'any'    => 'Any',
-				'long'   => 'Long (longer than 20 minutes)',
-				'medium' => 'Medium (between four and 20 minutes)',
-				'short'  => 'Short (less than four minutes)',
+				'any'    => __( 'Any', 'wp-content-pilot' ),
+				'long'   => __( 'Long (longer than 20 minutes)', 'wp-content-pilot' ),
+				'medium' => __( 'Medium (between four and 20 minutes)', 'wp-content-pilot' ),
+				'short'  => __( 'Short (less than four minutes)', 'wp-content-pilot' ),
 			)
 		) );
 
@@ -145,9 +145,9 @@ EOT;
 			'label'   => __( 'Video Definition', 'wp-content-pilot' ),
 			'default' => 'any',
 			'options' => array(
-				'any'      => 'Any',
-				'high'     => 'High',
-				'standard' => 'Standard',
+				'any'      => __( 'Any', 'wp-content-pilot' ),
+				'high'     => __( 'High', 'wp-content-pilot' ),
+				'standard' => __( 'Standard', 'wp-content-pilot' ),
 			)
 		) );
 
@@ -156,9 +156,9 @@ EOT;
 			'label'   => __( 'Video Type', 'wp-content-pilot' ),
 			'default' => 'any',
 			'options' => array(
-				'any'     => 'Any',
-				'episode' => 'Episode',
-				'movie'   => 'Movie',
+				'any'     => __( 'Any', 'wp-content-pilot' ),
+				'episode' => __( 'Episode', 'wp-content-pilot' ),
+				'movie'   => __( 'Movie', 'wp-content-pilot' ),
 			)
 		) );
 
@@ -241,6 +241,7 @@ EOT;
 		wpcp_logger()->info( __( 'Loaded Youtube campaign', 'wp-content-pilot' ), $campaign_id );
 
 		wpcp_logger()->info( __( 'Checking youtube search type...', 'wp-content-pilot' ), $campaign_id );
+
 		$source_type = wpcp_get_post_meta( $campaign_id, '_youtube_search_type', 'global' );
 		if ( $source_type == "playlist" ) {
 			$sources = $this->get_campaign_meta( $campaign_id, '_youtube_playlist_id' );
@@ -257,6 +258,14 @@ EOT;
 		foreach ( $sources as $source ) {
 			//get links from database
 			wpcp_logger()->info( __( 'Checking for links in store...', 'wp-content-pilot' ), $campaign_id );
+
+			if ( $this->is_deactivated_key( $campaign_id, $source ) ) {
+				$message = sprintf( __( 'This keyword deactivated for 1 hr because last time could not find any article with url [%s]', 'wp-content-pilot' ), $source );
+				wpcp_logger()->info( $message, $campaign_id );
+				continue;
+			}
+
+			wpcp_logger()->info( __( 'Checking cached links in store', 'wp-content-pilot' ), $campaign_id );
 
 			$links = $this->get_links( $source, $campaign_id );
 			if ( empty( $links ) ) {
@@ -386,7 +395,7 @@ EOT;
 			'type'              => 'video',
 			'key'               => $api_key,
 			'maxResults'        => 50,
-			'q'                 => $source,
+			'q'                 => urlencode( $source ),
 			'category'          => $category,
 			'videoEmbeddable'   => 'true',
 			'videoType'         => $video_type,
@@ -471,7 +480,8 @@ EOT;
 
 		wpcp_update_post_meta( $campaign_id, $token_key, @$response->nextPageToken );
 
-		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d] and rejected [%d]', count( $links ), $total_inserted, ( count( $links ) - $total_inserted ) ), $campaign_id );
+		wpcp_logger()->info( sprintf( __( 'Total found links [%d] and accepted [%d] and rejected [%d]', 'wp-content-pilot' ), count( $links ), $total_inserted, ( count( $links ) - $total_inserted ) ), $campaign_id );
+
 		return true;
 	}
 

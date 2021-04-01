@@ -240,7 +240,7 @@ EOT;
 
 			$query_args = [
 				'site'           => $site,
-				'term'           => $keyword,
+				'term'           => urlencode( $keyword ),
 				'category'       => '',
 				'page'           => $page_number,
 				'page_size'      => 1,

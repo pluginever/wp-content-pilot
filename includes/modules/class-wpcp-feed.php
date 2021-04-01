@@ -213,7 +213,14 @@ EOT;
 		return new WP_Error( 'campaign-error', __( sprintf( 'No feed article generated check <a href="%s">log</a> for details.', $log_url ), 'wp-content-pilot' ) );
 	}
 
-
+	/**
+	 * @param $campaign_id
+	 * @param $keyword
+	 *
+	 * @return bool|mixed|WP_Error
+	 * @throws ErrorException
+	 * @since 1.2.0
+	 */
 	public function discover_links( $source, $campaign_id ) {
 		include_once( ABSPATH . WPINC . '/feed.php' );
 

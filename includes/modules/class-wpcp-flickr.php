@@ -188,7 +188,7 @@ EOT;
 			}
 
 			$query_args = array(
-				'text'           => $keyword,
+				'text'           => urlencode( $keyword ),
 				'api_key'        => $api_key,
 				'content_type'   => 'photos',
 				'sort'           => $sort_order,
