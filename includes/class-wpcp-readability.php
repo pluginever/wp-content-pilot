@@ -133,8 +133,8 @@ class WPCP_Readability {
 		/* @var $img simple_html_dom_node */
 		foreach ( $docuemnt->find( 'img' ) as $img ) {
 			$urls = [
-				$img->getAttribute( 'srcset' ),
 				$img->getAttribute( 'src' ),
+				$img->getAttribute( 'srcset' ),
 				$img->getAttribute( 'data-src' ),
 				$img->getAttribute( 'data-original' ),
 				$img->getAttribute( 'data-orig' ),
