@@ -260,11 +260,11 @@ EOT;
 			//get links from database
 			wpcp_logger()->info( __( 'Checking for links in store...', 'wp-content-pilot' ), $campaign_id );
 			
-//			if ( $this->is_deactivated_key( $campaign_id, $source ) ) {
-//				$message = sprintf( __( 'This keyword deactivated for 1 hr because last time could not find any article with url [%s]', 'wp-content-pilot' ), $source );
-//				wpcp_logger()->info( $message, $campaign_id );
-//				continue;
-//			}
+			if ( $this->is_deactivated_key( $campaign_id, $source ) ) {
+				$message = sprintf( __( 'This keyword deactivated for 1 hr because last time could not find any article with url [%s]', 'wp-content-pilot' ), $source );
+				wpcp_logger()->info( $message, $campaign_id );
+				continue;
+			}
 			
 			wpcp_logger()->info( __( 'Checking cached links in store', 'wp-content-pilot' ), $campaign_id );
 			
