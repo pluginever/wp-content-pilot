@@ -181,6 +181,14 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/etsy.png' )
 	),
+    
+    array(
+        'label'    => 'Tiktok',
+        'name'     => 'tiktok',
+        'keywords' => 'job',
+        'disabled' => true,
+        'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/tiktok.png' )
+    ),
 ) );
 ?>
 <style>
