@@ -134,7 +134,7 @@ EOT;
             array(
                 'name'              => 'api_key',
                 'label'             => __( 'Google Custom Search API key', 'wp-content-pilot-pro' ),
-                'desc'              => sprintf( __( 'Learn to create your Google Custom Search API API key <a href="%s" target="_blank">here</a>.', 'wp-content-pilot' ), '' ),
+                'desc'              => sprintf( __( 'Learn to create your Google Custom Search API API key <a href="%s" target="_blank">here</a>.', 'wp-content-pilot' ), 'https://pluginever.com/docs/wp-content-pilot/how-to-create-google-custom-search-api/' ),
                 'type'              => 'password',
                 'default'           => '',
                 'sanitize_callback' => 'esc_html',
