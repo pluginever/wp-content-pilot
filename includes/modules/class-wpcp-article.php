@@ -68,6 +68,28 @@ EOT;
     public function add_campaign_option_fields( $post ) {
         
         echo WPCP_HTML::start_double_columns();
+        echo WPCP_HTML::text_input( array(
+        	'name' => '_article_origin',
+	        'label' => __('Put the country codes for specific search of article','wp-content-pilot'),
+	        'default' => 'us',
+	        'wrapper_class' => 'pro',
+	        'attrs'         => array(
+                'disabled' => 'disabled',
+            ),
+	        'desc' => sprintf(__('Check this link to get the <a href="%s" target="_blank">Country Codes</a>.','wp-content-pilot'), 'https://developers.google.com/custom-search/docs/xml_results_appendices#countryCodes'),
+	        
+        ));
+//	    echo WPCP_HTML::text_input( array(
+//		    'name' => '_article_restrict',
+//		    'label' => __('Restrict search results for specific regions','wp-content-pilot'),
+//		    'wrapper_class' => 'pro',
+//		    'attrs'         => array(
+//			    'disabled' => 'disabled',
+//		    ),
+//		    'desc' => sprintf(__('Check this link to get the <a href="%s" target="_blank">Restricted Country Codes</a>.','wp-content-pilot'), 'https://developers.google.com/custom-search/docs/xml_results_appendices#countryCollections'),
+//
+//	    ));
+     
 //        echo WPCP_HTML::select_input( array(
 //            'name'          => '_article_region',
 //            'label'         => __( 'Select region to search article', 'wp-content-pilot' ),
@@ -270,15 +292,19 @@ EOT;
         $google_custom_id = '359394892d6b9fe2c';
         $host             = 'google.com';
         $url              = "https://www.googleapis.com/customsearch/v1";
-        $endpoint         = add_query_arg(
-            array(
-                'key'        => urlencode( trim( $api_key ) ),
-                'cx'         => urlencode( trim( $google_custom_id ) ),
-                'q'          => urlencode( trim( $keyword ) ),
-                'googlehost' => urlencode( $host ),
-                'start'      => ( $page_number * 10 ),
-            ), $url
+        
+        $args = apply_filters( 'wpcp_article_search_args' ,
+        	array(
+		        'key'        => urlencode( trim( $api_key ) ),
+		        'cx'         => urlencode( trim( $google_custom_id ) ),
+		        'q'          => urlencode( trim( $keyword ) ),
+		        'gl'          => 'us',
+		        'googlehost' => urlencode( $host ),
+		        'start'      => ( $page_number * 10 ),
+	        ),
+            $campaign_id
         );
+	    $endpoint = add_query_arg( array( $args ), $url );
         
         //wpcp_logger()->debug( sprintf( 'Searching page url [%s]', $endpoint ), $campaign_id );
         wpcp_logger()->info( sprintf( __( 'Searching page url [%s]', 'wp-content-pilot' ), $endpoint ), $campaign_id );
@@ -322,7 +348,7 @@ EOT;
             'youtube',
             'wikihow',
             'yahoo',
-            'bing'
+            'bing',
         ) );
         
         $links = [];
@@ -340,11 +366,15 @@ EOT;
             
             foreach ( $banned_hosts as $banned_host ) {
                 if ( stristr( $link, $banned_host ) ) {
-                    continue;
+	                continue;
                 }
             }
             
-            if ( stristr( $link, 'wikipedia' ) ) {
+            if ( stristr( $link,'tripadvisor' ) || stristr( $link, 'bing' ) ) {
+            	continue;
+            }
+	        
+	        if ( stristr( $link, 'wikipedia' ) ) {
                 continue;
             }
             
@@ -363,7 +393,6 @@ EOT;
                 'for'     => $keyword,
                 'camp_id' => $campaign_id
             ];
-            
         }
         
         $total_inserted = $this->inset_links( $links );
