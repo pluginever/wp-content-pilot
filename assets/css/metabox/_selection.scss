@@ -15,6 +15,10 @@
 	overflow-x: hidden;
 	overflow-y: scroll;
 
+	@media screen and (max-width: 1366px) {
+		max-height: 1024px;
+	}
+
 	.wpcp-choose-campaign-item {
 		padding: 0 13px;
 		margin-bottom: 25px;
