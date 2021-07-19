@@ -158,7 +158,6 @@ EOT;
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->info( sprintf( __( 'Looking for article for the keyword [ %s ]', 'wp-content-pilot' ), $keyword ), $campaign_id );
 
-
 			if ( $this->is_deactivated_key( $campaign_id, $keyword ) ) {
 //				$reactivate_keyword_action = add_query_arg( [
 //					'campaign_id' => $campaign_id,
@@ -169,7 +168,6 @@ EOT;
 				wpcp_logger()->info( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s]', 'wp-content-pilot' ), $campaign_id );
 				continue;
 			}
-
 
 			//get links from database
 			wpcp_logger()->info( __( 'Checking for cached links in store', 'wp-content-pilot' ), $campaign_id );
@@ -280,7 +278,7 @@ EOT;
 //		}
 
 		wpcp_logger()->info( __( 'Extracting response from request', 'wp-content-pilot' ), $campaign_id );
-		$dom     = wpcp_str_get_html( $response );
+		$dom = wpcp_str_get_html( $response );
 		$matches = array();
 		for ( $i = 0; $i < 10; $i ++ ) {
 			if ( $dom->getElementsByTagName( '<h2>', $i ) ) {
@@ -288,11 +286,11 @@ EOT;
 			}
 		}
 
-		//preg_match_all( '/<h2><a href="([^"]+)"\s*h="ID=SERP,[0-9]{4}\.1"/', $response, $matches );
-		//preg_match_all( '/<h2><a href="([^"]+)"\s*h="ID=SERP,[0-9]{4}\.1">([^"]+)</', $response, $match );
+		// preg_match_all( '/<h2><a href="([^"]+)"\s*h="ID=SERP,[0-9]{4}\.1"/', $response, $matches );
+		// preg_match_all( '/<h2><a href="([^"]+)"\s*h="ID=SERP,[0-9]{4}\.1">([^"]+)</', $dom, $matches );
 
-//		$response = json_encode( $response );
-//		$response = json_decode( $response, true );
+		// $response = json_encode( $response );
+		// $response = json_decode( $response, true );
 
 		//check if links exist
 		if ( empty( $response ) || ! isset( $matches ) || ! isset( $matches ) || empty( $matches ) ) {
@@ -302,9 +300,6 @@ EOT;
 
 			return new WP_Error( 'no-links-found', $message );
 		}
-
-//		$matched_links  = $matches[1];
-//		$matched_titles = $matches[2];
 
 		$items = $matches;
 
@@ -326,7 +321,7 @@ EOT;
 			preg_match( '/href="([^"]*)"/i', $item, $link );
 			preg_match( '#<a[^>]*>([^<]*)<\/a>#i', $item, $title );
 			$link  = $link[1];
-			$title = ( isset( $title[1] ) && ! empty( $title[1] )) ? $title[1] : '';
+			$title = ( isset( $title[1] ) && ! empty( $title[1] ) ) ? $title[1] : '';
 			foreach ( $banned_hosts as $banned_host ) {
 				if ( stristr( $link, $banned_host ) ) {
 					continue;
@@ -346,19 +341,15 @@ EOT;
 				continue;
 			}
 
-
 			$links[] = [
 				'url'     => $link,
 				'title'   => $title,
 				'for'     => $keyword,
 				'camp_id' => $campaign_id
 			];
-
 		}
 
-
 		$total_inserted = $this->inset_links( $links );
-
 		wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d] and rejected [%d]', count( $links ), $total_inserted, ( count( $links ) - $total_inserted ) ), $campaign_id );
 
