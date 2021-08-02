@@ -133,12 +133,12 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/twitter.png' )
 	),
-//	array(
-//		'name'     => 'SoundCloud',
-//		'keywords' => 'job',
-//		'disabled' => true,
-//		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/soundcloud.png' )
-//	),
+	array(
+		'name'     => 'SoundCloud',
+		'keywords' => 'job',
+		'disabled' => true,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/soundcloud.png' )
+	),
 	array(
 		'label'    => 'Walmart',
 		'name'     => 'walmart',
@@ -181,14 +181,21 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/etsy.png' )
 	),
+	array(
+		'label'    => 'Daily Motion',
+		'name'     => 'dailymotion',
+		'keywords' => 'job',
+		'disabled' => true,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/dailymotion.png' ),
 	
+	),
 	array(
 		'label'    => 'Tiktok',
 		'name'     => 'tiktok',
 		'keywords' => 'tiktok,video',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/tiktok.png' )
-	),
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/tiktok.png' ),
+	)
 ) );
 ?>
 <style>

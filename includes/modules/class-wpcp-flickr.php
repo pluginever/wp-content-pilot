@@ -33,16 +33,28 @@ class WPCP_Flickr extends WPCP_Module {
 	 */
 	public function get_template_tags() {
 		return array(
-			'title'      => __( 'Title', 'wp-content-pilot' ),
-			'content'    => __( 'Content', 'wp-content-pilot' ),
-			'date'       => __( 'Published date', 'wp-content-pilot' ),
-			'image_url'  => __( 'Main image url', 'wp-content-pilot' ),
-			'source_url' => __( 'Source link', 'wp-content-pilot' ),
-			'author'     => __( 'Author Name', 'wp-content-pilot' ),
-			'author_url' => __( 'Author Url', 'wp-content-pilot' ),
-			'tags'       => __( 'Photo Tags', 'wp-content-pilot' ),
-			'views'      => __( 'Photo Views', 'wp-content-pilot' ),
-			'user_id'    => __( 'User Id', 'wp-content-pilot' ),
+			'title'            => __( 'Title', 'wp-content-pilot' ),
+			'content'          => __( 'Content', 'wp-content-pilot' ),
+			'date'             => __( 'Published date', 'wp-content-pilot' ),
+			'image_url'        => __( 'Main image url', 'wp-content-pilot' ),
+			'source_url'       => __( 'Source link', 'wp-content-pilot' ),
+			'author'           => __( 'Author Name', 'wp-content-pilot' ),
+			'author_url'       => __( 'Author Url', 'wp-content-pilot' ),
+			'tags'             => __( 'Photo Tags', 'wp-content-pilot' ),
+			'views'            => __( 'Photo Views', 'wp-content-pilot' ),
+			'date_taken'       => __( 'Photo Taken Date', 'wp-content-pilot' ),
+			'date_posted'      => __( 'Photo Posted Date', 'wp-content-pilot' ),
+			'user_id'          => __( 'User Id', 'wp-content-pilot' ),
+			'square_img'       => __( 'Square Image Url', 'wp-content-pilot' ),
+			'large_square_img' => __( 'Large Square Image Url', 'wp-content-pilot' ),
+			'thumbnail_img'    => __( 'Thumbnail Image Url', 'wp-content-pilot' ),
+			'small_img'        => __( 'Small Image Url', 'wp-content-pilot' ),
+			'small_320_img'    => __( 'Small 320 Image Url', 'wp-content-pilot' ),
+			'medium_img'       => __( 'Medium Image Url', 'wp-content-pilot' ),
+			'medium_640_img'   => __( 'Medium 640 Image Url', 'wp-content-pilot' ),
+			'medium_800_img'   => __( 'Medium 800 Image Url', 'wp-content-pilot' ),
+			'large_img'        => __( 'Large Image Url', 'wp-content-pilot' ),
+			'original_img'     => __( 'Original Image Url', 'wp-content-pilot' ),
 		);
 	}
 
@@ -96,6 +108,29 @@ EOT;
 			'label' => __( 'Specific User ID', 'wp-content-pilot' ),
 			'desc'  => 'Make flickr user id <a target="_blank" href="http://idgettr.com/">here</a>. Example id : 75866656@N00',
 		) );
+		echo WPCP_HTML::select_input( array(
+			'name'    => '_flickr_licenses[]',
+			'label'   => __( 'Choose License', 'wp-content-pilot' ),
+			'options' => array(
+				0  => __( 'All Rights Reserved', 'wp-content-pilot' ),
+				1  => __( 'Attribution-NonCommercial-ShareAlike License', 'wp-content-pilot' ),
+				2  => __( 'Attribution-NonCommercial License', 'wp-content-pilot' ),
+				3  => __( 'Attribution-NonCommercial-NoDerivs License', 'wp-content-pilot' ),
+				4  => __( 'Attribution License', 'wp-content-pilot' ),
+				5  => __( 'Attribution-ShareAlike License', 'wp-content-pilot' ),
+				6  => __( 'Attribution-NoDerivs License', 'wp-content-pilot' ),
+				7  => __( 'No known copyright restrictions', 'wp-content-pilot' ),
+				8  => __( 'United States Government Work', 'wp-content-pilot' ),
+				9  => __( 'Public Domain Dedication (CC0)', 'wp-content-pilot' ),
+				10 => __( 'Public Domain Mark', 'wp-content-pilot' ),
+			),
+			'desc'    => __( 'License Restrictions flickr', 'wp-content-pilot' ),
+			'default' => 7,
+			'class'   => 'wpcp-select2',
+			'attrs'   => array(
+				'multiple' => true
+			),
+		) );
 		echo WPCP_HTML::end_double_columns();
 	}
 
@@ -104,8 +139,10 @@ EOT;
 	 * @param $posted
 	 */
 	public function save_campaign_meta( $campaign_id, $posted ) {
+		$flickr_licenses = $posted['_flickr_licenses'];
 		update_post_meta( $campaign_id, '_search_order', empty( $posted['_search_order'] ) ? 'relevance' : sanitize_key( $posted['_search_order'] ) );
 		update_post_meta( $campaign_id, '_user_id', empty( $posted['_user_id'] ) ? '' : $posted['_user_id'] );
+		update_post_meta( $campaign_id, '_flickr_licenses', empty( $posted['_flickr_licenses'] ) ? 7 : $flickr_licenses );
 	}
 
 	/**
@@ -157,6 +194,7 @@ EOT;
 		$api_key    = wpcp_get_settings( 'api_key', 'wpcp_settings_flickr', '' );
 		$sort_order = wpcp_get_post_meta( $campaign_id, '_search_order', 'relevance' );
 		$user_id    = wpcp_get_post_meta( $campaign_id, '_user_id', '' );
+		$licenses   = wpcp_get_post_meta( $campaign_id, '_flickr_licenses', 7 );
 
 		if ( empty( $api_key ) ) {
 			wpcp_disable_campaign( $campaign_id );
@@ -198,7 +236,9 @@ EOT;
 				'format'         => 'json',
 				'nojsoncallback' => '1',
 				'method'         => 'flickr.photos.search',
+				'licenses'       => implode( ",", $licenses )
 			);
+
 			if ( $user_id != '' ) {
 				$query_args['user_id'] = $user_id;
 			}
@@ -238,10 +278,20 @@ EOT;
 			$response = $curl->getResponse();
 
 			wpcp_logger()->info( __( 'Extracting content from response', 'wp-content-pilot' ), $campaign_id );
-			$description = $response->photo->description->_content;
-			$tags        = ! empty( $response->photo->tags->tag ) ? implode( ', ', wp_list_pluck( $response->photo->tags->tag, 'raw' ) ) : '';
-			$image_url   = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}.jpg";
-			$source_url  = $response->photo->urls->url[0]->_content;
+			$description            = $response->photo->description->_content;
+			$tags                   = ! empty( $response->photo->tags->tag ) ? implode( ', ', wp_list_pluck( $response->photo->tags->tag, 'raw' ) ) : '';
+			$image_url              = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}.jpg";
+			$square_image_url       = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_s.jpg";
+			$large_square_image_url = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_q.jpg";
+			$thumb_image_url        = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_t.jpg";
+			$small_image_url        = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_n.jpg";
+			$small_320_image_url    = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_n.jpg";
+			$medium_image_url       = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_m.jpg";
+			$medium_640_image_url   = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_z.jpg";
+			$medium_800_image_url   = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_c.jpg";
+			$large_image_url        = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_b.jpg";
+			$original_image_url     = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_o.jpg";
+			$source_url             = $response->photo->urls->url[0]->_content;
 			//$tags        = wpcp_array_to_html( $tags );
 			$date = $response->photo->dates->taken;
 
@@ -259,16 +309,26 @@ EOT;
 
 			wpcp_logger()->info( sprintf( __( 'Generating flickr article from [ %s ]', 'wp-content-pilot' ), $source_url ), $campaign_id );
 			$article = array(
-				'title'      => $title,
-				'content'    => $description,
-				'date'       => $date,
-				'image_url'  => $image_url,
-				'source_url' => $source_url,
-				'tags'       => $tags,
-				'author'     => ( $response->photo->owner->realname != '' ) ? $response->photo->owner->realname : $response->photo->owner->username,
-				'author_url' => "https://www.flickr.com/photos/{$response->photo->owner->nsid}/",
-				'views'      => $response->photo->views,
-				'user_id'    => $response->photo->owner->nsid,
+				'title'            => $title,
+				'content'          => $description,
+				'date'             => $date,
+				'image_url'        => $image_url,
+				'source_url'       => $source_url,
+				'tags'             => $tags,
+				'author'           => ( $response->photo->owner->realname != '' ) ? $response->photo->owner->realname : $response->photo->owner->username,
+				'author_url'       => "https://www.flickr.com/photos/{$response->photo->owner->nsid}/",
+				'views'            => $response->photo->views,
+				'user_id'          => $response->photo->owner->nsid,
+				'square_img'       => $square_image_url,
+				'large_square_img' => $large_square_image_url,
+				'thumbnail_img'    => $thumb_image_url,
+				'small_img'        => $small_image_url,
+				'small_320_img'    => $small_320_image_url,
+				'medium_img'       => $medium_image_url,
+				'medium_640_img'   => $medium_640_image_url,
+				'medium_800_img'   => $medium_800_image_url,
+				'large_img'        => $large_image_url,
+				'original_img'     => $original_image_url,
 			);
 
 			wpcp_logger()->info( __( 'Inserting links into store....', 'wp-content-pilot' ), $campaign_id );
