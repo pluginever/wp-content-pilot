@@ -186,22 +186,30 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'name'     => 'dailymotion',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/dailymotion.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/dailymotion.png' ),
+	
 	),
+	array(
+		'label'    => 'Tiktok',
+		'name'     => 'tiktok',
+		'keywords' => 'tiktok,video',
+		'disabled' => true,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/tiktok.png' ),
+	)
 ) );
 ?>
 <style>
-	#wpcp-campaign-actions, #side-sortables, #post-body-content {
-		display: none;
-	}
+    #wpcp-campaign-actions, #side-sortables, #post-body-content {
+        display: none;
+    }
 
-	#campaign-selection {
-		overflow: hidden;
-		padding-bottom: 30px;
-	}
+    #campaign-selection {
+        overflow: hidden;
+        padding-bottom: 30px;
+    }
 </style>
 <div class="wpcp-choose-campaign-wrap">
-	<div class="wpcp-choose-campaign-items">
+    <div class="wpcp-choose-campaign-items">
 		<?php
 		foreach ( $modules as $module ) {
 			$slug       = sanitize_title( $module['name'] );
@@ -213,9 +221,9 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 			echo sprintf( '<div class="wpcp-choose-campaign-item ' . $wrap_class . '">' . $input . $label . '</div>' );
 		}
 		?>
-	</div>
-	<p class="submit">
-		<input type="submit" name="submit" id="submit" class="button button-primary button-large"
-			   value="<?php _e( 'Submit', 'wp-content-pilot' ); ?>">
-	</p>
+    </div>
+    <p class="submit">
+        <input type="submit" name="submit" id="submit" class="button button-primary button-large"
+               value="<?php _e( 'Submit', 'wp-content-pilot' ); ?>">
+    </p>
 </div>
