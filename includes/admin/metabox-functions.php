@@ -27,7 +27,6 @@ function wpcp_register_meta_boxes( $post ) {
 	add_meta_box( 'wpcp-campaign-status', __( 'Campaign Status', 'wp-content-pilot' ), 'wpcp_campaign_status_metabox_callback', 'wp_content_pilot', 'normal', 'high' );
 	add_meta_box( 'wpcp-campaign-options', __( 'Campaign Options', 'wp-content-pilot' ), 'wpcp_campaign_options_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-campaign-log', __( 'Campaign Log', 'wp-content-pilot' ), 'wpcp_campaign_log_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
-	add_meta_box( 'wpcp-spinner-settings', __( 'Spinner Settings', 'wp-content-pilot' ), 'wpcp_spinner_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-post-template', __( 'Post Template', 'wp-content-pilot' ), 'wpcp_post_template_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-post-settings', __( 'Post Settings', 'wp-content-pilot' ), 'wpcp_post_settings_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 	add_meta_box( 'wpcp-post-filters', __( 'Posts Filter', 'wp-content-pilot' ), 'wpcp_posts_filter_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
@@ -36,6 +35,7 @@ function wpcp_register_meta_boxes( $post ) {
 	//add_meta_box( 'wpcp-campaign-details', __( 'Campaign Details', 'wp-content-pilot' ), 'wpcp_campaign_details_metabox_callback', 'wp_content_pilot', 'side', 'high' );
 	add_meta_box( 'wpcp-campaign-misc', __( 'Miscellaneous', 'wp-content-pilot' ), 'wpcp_campaign_miscellaneous_metabox_callback', 'wp_content_pilot', 'side', 'high' );
 	add_meta_box( 'wpcp-campaign-posts', __( 'Campaign Posts', 'wp-content-pilot' ), 'wpcp_campaign_posts_metabox_callback', 'wp_content_pilot', 'side', 'high' );
+	add_meta_box( 'wpcp-spinner-settings', __( 'Spinner Settings', 'wp-content-pilot' ), 'wpcp_spinner_metabox_callback', 'wp_content_pilot', 'normal', 'low' );
 }
 
 add_action( 'add_meta_boxes_wp_content_pilot', 'wpcp_register_meta_boxes', 10 );

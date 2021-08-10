@@ -139,7 +139,7 @@ EOT;
 	 * @param $posted
 	 */
 	public function save_campaign_meta( $campaign_id, $posted ) {
-		$flickr_licenses = $posted['_flickr_licenses'];
+		$flickr_licenses = isset( $posted['_flickr_licenses'] )? sanitize_text_field( $posted['_flickr_licenses'] ): '';
 		update_post_meta( $campaign_id, '_search_order', empty( $posted['_search_order'] ) ? 'relevance' : sanitize_key( $posted['_search_order'] ) );
 		update_post_meta( $campaign_id, '_user_id', empty( $posted['_user_id'] ) ? '' : $posted['_user_id'] );
 		update_post_meta( $campaign_id, '_flickr_licenses', empty( $posted['_flickr_licenses'] ) ? 7 : $flickr_licenses );
