@@ -2,7 +2,7 @@
 Contributors: pluginever
 Tags: RSS import, RSS aggregator, feed import, content curation, feed to post, news aggregator, autoblog, rss to post, content syndication, feeds, rss feeds, rss importer, feed importer, post importer, news importer, affiliate, content pilot, auto post, feeds, flicker, youtube, envato, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
 Requires at least: 4.4
-Tested up to: 5.5.1
+Tested up to: 5.8
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -129,6 +129,15 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.3.0 -> August 10, 2020 =
+[Fix] - Article campaign bing search not working
+[Fix] - Logs pagination errors
+[Enhance] - Category and Author are added as search filters in Envato campaign
+[Enhance] - Audio jungle added as sites Envato campaign
+[Enhance] - Different image sizes options added in Flickr campaign post template
+[Enhance] - Youtube live video and safe search options added
+[Enhance] - Youtube search from channel added
+
 = v1.2.9 -> October 19, 2020 =
 * [Fix] - Flickr Campaign tags and dates are not showing
 * [Fix] - Envato Campaign affiliate live url not showing
