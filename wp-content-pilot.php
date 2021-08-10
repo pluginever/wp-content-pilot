@@ -3,7 +3,7 @@
  * Plugin Name: WP Content Pilot
  * Plugin URI:  https://www.pluginever.com
  * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:     1.2.9
+ * Version:     1.3.0
  * Author:      pluginever
  * Author URI:  https://www.pluginever.com
  * Donate link: https://www.pluginever.com
@@ -44,7 +44,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '1.2.9';
+	protected $version = '1.3.0';
 
 	/**
 	 * The single instance of the class.
@@ -194,6 +194,7 @@ final class ContentPilot {
 		add_action( 'init', array( $this, 'localization_setup' ) );
 		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ), 20 );
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
+		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
 		add_action( 'admin_init', array( $this, 'check_if_cron_running' ) );
 	}
 
@@ -244,6 +245,28 @@ final class ContentPilot {
 		$links[] = '<a href="' . admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-settings' ) . '">' . __( 'Settings', 'wp-content-pilot' ) . '</a>';
 		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
 			$links[] = '<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro" style="color: red;font-weight: bold;" target="_blank">' . __( 'Upgrade to PRO', 'wp-content-pilot' ) . '</a>';
+		}
+
+		return $links;
+	}
+
+	/**
+	 * Add plugin docs links in plugin row links
+	 *
+	 * @param mixed $links Links
+	 * @param mixed $file File
+	 *
+	 * @return array
+	 * @since 1.2.8
+	 */
+	public function plugin_row_meta( $links, $file ) {
+		if ( plugin_basename( __FILE__ ) === $file ) {
+
+			$row_meta = array(
+				'docs' => '<a href="' . esc_url( apply_filters( 'wpcp_docs_url', 'https://pluginever.com/docs/wp-content-pilot/' ) ) . '" aria-label="' . esc_attr__( 'View documentation', 'wp-content-pilot' ) . '">' . esc_html__( 'Docs', 'wp-content-pilot' ) . '</a>',
+			);
+
+			return array_merge( $links, $row_meta );
 		}
 
 		return $links;

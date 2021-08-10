@@ -3,7 +3,7 @@ defined( 'ABSPATH') || exit();
 require_once WPCP_INCLUDES . '/admin/views/tables/class-wpcp-logs-table.php';
 $list_table = new WPCP_Logs_List_Table();
 $list_table->prepare_items();
-$base_url = admin_url( 'admin.php?post_type=wp_content_pilot&page=wpcp-logs' );
+$base_url = admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
 
 ?>
 <div class="wrap">

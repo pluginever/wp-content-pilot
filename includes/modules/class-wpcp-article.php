@@ -52,8 +52,8 @@ class WPCP_Article extends WPCP_Module {
 	 * @since 1.2.0
 	 */
 	public function get_default_template() {
-		$template =
-			<<<EOT
+		$template
+			= <<<EOT
 <img src="{image_url}">
 {content}
 <br> <a href="{source_url}" target="_blank">Source</a>
@@ -223,12 +223,11 @@ EOT;
 					'source_url' => $link->url,
 				);
 
-				wpcp_logger()->info( 'Article processed from campaign', $campaign_id );
+				wpcp_logger()->info( __( 'Article processed from campaign', 'wp-content-pilot' ), $campaign_id );
 				$this->update_link( $link->id, [ 'status' => 'success', 'meta' => '' ] );
 
 				return $article;
 			}
-
 		}
 
 		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
@@ -250,11 +249,11 @@ EOT;
 		$page_number = wpcp_get_post_meta( $campaign_id, $page_key, 0 );
 
 		$args = apply_filters( 'wpcp_article_search_args', array(
-			'q'      => urlencode( $keyword ),
-			'count'  => 10,
-			'loc'    => 'en',
-			'format' => 'rss',
-			'first'  => ( $page_number * 10 ),
+			'q'     => urlencode( $keyword ),
+			'count' => 10,
+			'loc'   => 'en',
+			//'format' => 'rss',
+			'first' => ( $page_number * 10 ),
 		), $campaign_id );
 
 
@@ -267,7 +266,6 @@ EOT;
 
 		$curl     = $this->setup_curl();
 		$response = $curl->get( $endpoint );
-
 		if ( $curl->isError() ) {
 			wpcp_logger()->error( $curl->errorMessage, $campaign_id );
 			$this->deactivate_key( $campaign_id, $keyword );
@@ -275,16 +273,27 @@ EOT;
 			return $response;
 		}
 
-		if ( ! $response instanceof \SimpleXMLElement ) {
-			$response = simplexml_load_string( $response );
-		}
+//		if ( ! $response instanceof \SimpleXMLElement ) {
+//			$response = simplexml_load_string( $response );
+//		}
 
 		wpcp_logger()->info( __( 'Extracting response from request', 'wp-content-pilot' ), $campaign_id );
-		$response = json_encode( $response );
-		$response = json_decode( $response, true );
+		$dom = wpcp_str_get_html( $response );
+		$matches = array();
+		for ( $i = 0; $i < 10; $i ++ ) {
+			if ( $dom->getElementsByTagName( '<h2>', $i ) ) {
+				$matches[] = $dom->getElementsByTagName( '<h2>', $i )->innerText();
+			}
+		}
+
+		// preg_match_all( '/<h2><a href="([^"]+)"\s*h="ID=SERP,[0-9]{4}\.1"/', $response, $matches );
+		// preg_match_all( '/<h2><a href="([^"]+)"\s*h="ID=SERP,[0-9]{4}\.1">([^"]+)</', $dom, $matches );
+
+		// $response = json_encode( $response );
+		// $response = json_decode( $response, true );
 
 		//check if links exist
-		if ( empty( $response ) || ! isset( $response['channel'] ) || ! isset( $response['channel']['item'] ) || empty( $response['channel']['item'] ) ) {
+		if ( empty( $response ) || ! isset( $matches ) || ! isset( $matches ) || empty( $matches ) ) {
 			$message = __( 'Could not find any links from search engine, deactivating keyword for an hour.', 'wp-content-pilot' );
 			wpcp_logger()->error( $message, $campaign_id );
 			$this->deactivate_key( $campaign_id, $keyword );
@@ -292,7 +301,7 @@ EOT;
 			return new WP_Error( 'no-links-found', $message );
 		}
 
-		$items = $response['channel']['item'];
+		$items = $matches;
 
 		wpcp_logger()->info( __( 'Getting banned hosts for skipping links', 'wp-content-pilot' ), $campaign_id );
 		$banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article' );
@@ -309,38 +318,38 @@ EOT;
 
 		wpcp_logger()->info( __( 'Finding links from response and inserting into database', 'wp-content-pilot' ), $campaign_id );
 		foreach ( $items as $item ) {
-
+			preg_match( '/href="([^"]*)"/i', $item, $link );
+			preg_match( '#<a[^>]*>([^<]*)<\/a>#i', $item, $title );
+			$link  = $link[1];
+			$title = ( isset( $title[1] ) && ! empty( $title[1] ) ) ? $title[1] : '';
 			foreach ( $banned_hosts as $banned_host ) {
-				if ( stristr( $item['link'], $banned_host ) ) {
+				if ( stristr( $link, $banned_host ) ) {
 					continue;
 				}
 			}
 
-			if ( stristr( $item['link'], 'wikipedia' ) ) {
+			if ( stristr( $link, 'wikipedia' ) ) {
 				continue;
 			}
 
-			if ( wpcp_is_duplicate_url( $item['link'] ) ) {
+			if ( wpcp_is_duplicate_url( $link ) ) {
 				continue;
 			}
 
-			$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $item['title'], $campaign_id );
+			$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $title, $campaign_id );
 			if ( $skip ) {
 				continue;
 			}
 
-
 			$links[] = [
-				'url'     => esc_url( $item['link'] ),
-				'title'   => $item['title'],
+				'url'     => $link,
+				'title'   => $title,
 				'for'     => $keyword,
 				'camp_id' => $campaign_id
 			];
-
 		}
 
 		$total_inserted = $this->inset_links( $links );
-
 		wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d] and rejected [%d]', count( $links ), $total_inserted, ( count( $links ) - $total_inserted ) ), $campaign_id );
 

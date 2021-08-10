@@ -67,7 +67,7 @@ class WPCP_Settings {
 	 */
 	function get_settings_fields() {
 		$settings_fields = array(
-			'wpcp_settings_misc' => array(
+			'wpcp_settings_misc'   => array(
 				array(
 					'name'    => 'uninstall_on_delete',
 					'label'   => __( 'Remove Data on Uninstall?', 'wp-content-pilot' ),
@@ -94,7 +94,7 @@ class WPCP_Settings {
 				array(
 					'name'    => 'spinrewriter_head',
 					'label'   => __( 'SpinreWriter', 'wp-content-pilot' ),
-					'desc'    => sprintf(__( 'SpinreWriter is one of the best Article Spinner, if you do not have account please %ssign up%s.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>'),
+					'desc'    => sprintf( __( 'SpinreWriter is one of the best Article Spinner, if you do not have account please %ssign up%s.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>' ),
 					'type'    => 'html',
 					'default' => ''
 				),
@@ -128,16 +128,16 @@ class WPCP_Settings {
 						<?php $this->settings_api->show_settings(); ?>
 					</div>
 					<div id="postbox-container-1" class="postbox-container" style="margin-top: 15px;">
-
-						<div class="postbox" style="min-width: inherit;">
-							<h3 class="hndle"><label for="title"><?php _e( 'Upgrade to PRO', 'wp-content-pilot' ); ?></label></h3>
-							<div class="inside">
-								<?php
-								echo sprintf( __( 'Pro version support 15+ campaign sources with exclusive features, %supgrade to pro now%s.', 'wp-content-pilot' ), '<a href="https://pluginever.com/plugins/wp-content-pilot-pro/" target="_blank">', '</a>' )
-								?>
+						<?php if ( ! defined( 'WPCP_PRO_VERSION' ) ): ?>
+							<div class="postbox" style="min-width: inherit;">
+								<h3 class="hndle"><label for="title"><?php _e( 'Upgrade to PRO', 'wp-content-pilot' ); ?></label></h3>
+								<div class="inside">
+									<?php
+									echo sprintf( __( 'Pro version support 15+ campaign sources with exclusive features, %supgrade to pro now%s.', 'wp-content-pilot' ), '<a href="https://pluginever.com/plugins/wp-content-pilot-pro/" target="_blank">', '</a>' )
+									?>
+								</div>
 							</div>
-						</div>
-
+						<?php endif; ?>
 
 						<div class="postbox" style="min-width: inherit;">
 							<h3 class="hndle"><label for="title"><?php _e( 'Documentation', 'wp-content-pilot' ); ?></label></h3>

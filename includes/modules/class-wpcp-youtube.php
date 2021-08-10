@@ -48,12 +48,14 @@ class WPCP_Youtube extends WPCP_Module {
 			'channel_title'  => __( 'Channel Name', 'wp-content-pilot' ),
 			'tags'           => __( 'Video Tags', 'wp-content-pilot' ),
 			'duration'       => __( 'Video Duration', 'wp-content-pilot' ),
+			'rating'         => __( 'Video rating', 'wp-content-pilot' ),
 			'view_count'     => __( 'Total Views', 'wp-content-pilot' ),
 			'like_count'     => __( 'Total Likes', 'wp-content-pilot' ),
 			'dislike_count'  => __( 'Total Dislikes', 'wp-content-pilot' ),
 			'favorite_count' => __( 'Total Favourites', 'wp-content-pilot' ),
 			'comment_count'  => __( 'Total Comments', 'wp-content-pilot' ),
 			'embed_html'     => __( 'HTML Embed Code ', 'wp-content-pilot' ),
+			'download_url'   => __( 'Video Download url', 'wp-content-pilot' ),
 			'transcript'     => __( 'Video transcript available in PRO', 'wp-content-pilot' ),
 		);
 	}
@@ -87,6 +89,7 @@ EOT;
 			'options' => array(
 				'global'   => __( 'Global', 'wp-content-pilot' ),
 				'playlist' => __( 'From Playlist', 'wp-content-pilot' ),
+				'channel'  => __( 'From Channel', 'wp-content-pilot' ),
 			),
 			'default' => 'global',
 		) );
@@ -94,7 +97,7 @@ EOT;
 		echo WPCP_HTML::text_input( array(
 			'name'        => '_youtube_playlist_id',
 			'placeholder' => __( 'Example: PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
-			'label'       => __( 'Youtube Playlist ID', 'wp-content-pilot' ),
+			'label'       => __( 'Youtube Playlist/Channel ID', 'wp-content-pilot' ),
 			'tooltip'     => __( 'eg. playlist id is PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
 		) );
 
@@ -122,9 +125,9 @@ EOT;
 			'label'   => __( 'Video License', 'wp-content-pilot' ),
 			'default' => 'any',
 			'options' => array(
-				'any'            => 'Any',
-				'creativeCommon' => 'Creative Common',
-				'youtube'        => 'Standard',
+				'any'            => __( 'Any', 'wp-content-pilot' ),
+				'creativeCommon' => __( 'Creative Common', 'wp-content-pilot' ),
+				'youtube'        => __( 'Standard', 'wp-content-pilot' ),
 			)
 		) );
 
@@ -133,10 +136,10 @@ EOT;
 			'label'   => __( 'Video Duration', 'wp-content-pilot' ),
 			'default' => 'any',
 			'options' => array(
-				'any'    => 'Any',
-				'long'   => 'Long (longer than 20 minutes)',
-				'medium' => 'Medium (between four and 20 minutes)',
-				'short'  => 'Short (less than four minutes)',
+				'any'    => __( 'Any', 'wp-content-pilot' ),
+				'long'   => __( 'Long (longer than 20 minutes)', 'wp-content-pilot' ),
+				'medium' => __( 'Medium (between four and 20 minutes)', 'wp-content-pilot' ),
+				'short'  => __( 'Short (less than four minutes)', 'wp-content-pilot' ),
 			)
 		) );
 
@@ -145,9 +148,9 @@ EOT;
 			'label'   => __( 'Video Definition', 'wp-content-pilot' ),
 			'default' => 'any',
 			'options' => array(
-				'any'      => 'Any',
-				'high'     => 'High',
-				'standard' => 'Standard',
+				'any'      => __( 'Any', 'wp-content-pilot' ),
+				'high'     => __( 'High', 'wp-content-pilot' ),
+				'standard' => __( 'Standard', 'wp-content-pilot' ),
 			)
 		) );
 
@@ -156,9 +159,20 @@ EOT;
 			'label'   => __( 'Video Type', 'wp-content-pilot' ),
 			'default' => 'any',
 			'options' => array(
-				'any'     => 'Any',
-				'episode' => 'Episode',
-				'movie'   => 'Movie',
+				'any'     => __( 'Any', 'wp-content-pilot' ),
+				'episode' => __( 'Episode', 'wp-content-pilot' ),
+				'movie'   => __( 'Movie', 'wp-content-pilot' ),
+			)
+		) );
+
+		echo WPCP_HTML::select_input( array(
+			'name'    => '_youtube_safe_search',
+			'label'   => __( 'Safe Search', 'wp-content-pilot' ),
+			'default' => 'moderate',
+			'options' => array(
+				'moderate' => __( 'Moderate', 'wp-content-pilot' ),
+				'none'     => __( 'None (will not filter)', 'wp-content-pilot' ),
+				'strict'   => __( 'Strict (Exclude all restricted content)', 'wp-content-pilot' ),
 			)
 		) );
 
@@ -167,6 +181,16 @@ EOT;
 		echo WPCP_HTML::checkbox_input( array(
 			'label' => __( 'Youtube - Auto hyperlink urls within the description', 'wp-content-pilot' ),
 			'name'  => '_youtube_description_hyperlink',
+		) );
+
+		echo WPCP_HTML::checkbox_input( array(
+			'label' => __( 'Post only live videos only', 'wp-content-pilot' ),
+			'name'  => '_youtube_live_videos',
+		) );
+
+		echo WPCP_HTML::checkbox_input( array(
+			'label' => __( 'Post videos only with closed captions', 'wp-content-pilot' ),
+			'name'  => '_youtube_closed_captions',
 		) );
 	}
 
@@ -184,10 +208,13 @@ EOT;
 		wpcp_update_post_meta( $campaign_id, '_youtube_definition', empty( $posted['_youtube_definition'] ) ? '' : sanitize_text_field( $posted['_youtube_definition'] ) );
 		wpcp_update_post_meta( $campaign_id, '_youtube_video_type', empty( $posted['_youtube_video_type'] ) ? '' : sanitize_text_field( $posted['_youtube_video_type'] ) );
 		wpcp_update_post_meta( $campaign_id, '_youtube_description_hyperlink', empty( $posted['_youtube_description_hyperlink'] ) ? '' : sanitize_text_field( $posted['_youtube_description_hyperlink'] ) );
+		wpcp_update_post_meta( $campaign_id, '_youtube_safe_search', empty( $posted['_youtube_safe_search'] ) ? '' : sanitize_text_field( $posted['_youtube_safe_search'] ) );
+		wpcp_update_post_meta( $campaign_id, '_youtube_live_videos', empty( $posted['_youtube_live_videos'] ) ? '' : sanitize_key( $posted['_youtube_live_videos'] ) );
+		wpcp_update_post_meta( $campaign_id, '_youtube_closed_captions', empty( $posted['_youtube_closed_captions'] ) ? '' : sanitize_key( $posted['_youtube_closed_captions'] ) );
 	}
 
 	/**
-	 * @param $section
+	 * @param $sections
 	 *
 	 * @return array
 	 * @since 1.2.0
@@ -241,8 +268,9 @@ EOT;
 		wpcp_logger()->info( __( 'Loaded Youtube campaign', 'wp-content-pilot' ), $campaign_id );
 
 		wpcp_logger()->info( __( 'Checking youtube search type...', 'wp-content-pilot' ), $campaign_id );
+
 		$source_type = wpcp_get_post_meta( $campaign_id, '_youtube_search_type', 'global' );
-		if ( $source_type == "playlist" ) {
+		if ( $source_type == "playlist" || $source_type == "channel" ) {
 			$sources = $this->get_campaign_meta( $campaign_id, '_youtube_playlist_id' );
 			if ( empty( $sources ) ) {
 				return new WP_Error( 'missing-data', __( 'Campaign do not have playlist URL to proceed, please set playlist URL', 'wp-content-pilot' ) );
@@ -257,6 +285,14 @@ EOT;
 		foreach ( $sources as $source ) {
 			//get links from database
 			wpcp_logger()->info( __( 'Checking for links in store...', 'wp-content-pilot' ), $campaign_id );
+
+			if ( $this->is_deactivated_key( $campaign_id, $source ) ) {
+				$message = sprintf( __( 'This keyword deactivated for 1 hr because last time could not find any article with url [%s]', 'wp-content-pilot' ), $source );
+				wpcp_logger()->info( $message, $campaign_id );
+				continue;
+			}
+
+			wpcp_logger()->info( __( 'Checking cached links in store', 'wp-content-pilot' ), $campaign_id );
 
 			$links = $this->get_links( $source, $campaign_id );
 			if ( empty( $links ) ) {
@@ -311,7 +347,6 @@ EOT;
 					$description = wpcp_hyperlink_text( $description );
 				}
 
-
 				$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
 
 				if ( 'on' == $check_clean_title ) {
@@ -322,6 +357,7 @@ EOT;
 				}
 
 				wpcp_logger()->info( __( 'Preparing different parts for article', 'wp-content-pilot' ), $campaign_id );
+
 				$article = array(
 					'title'          => $title,
 					'author'         => $item->snippet->channelTitle,
@@ -343,7 +379,15 @@ EOT;
 					'comment_count'  => intval( @$item->statistics->commentCount ),
 					'embed_html'     => @$item->player->embedHtml,
 					'transcript'     => $transcript,
+					'download_url'   => 'https://www.youtubepp.com/watch?v=' . $item->id,
 				);
+
+				$rating = intval( @$item->statistics->likeCount ) / ( intval( @$item->statistics->likeCount ) + intval( @$item->statistics->dislikeCount ) );
+				$rating = $rating * 5;
+				$rating = number_format( $rating, 2 );
+
+				$article['rating'] = $rating;
+
 				$this->update_link( $link->id, [ 'status' => 'success' ] );
 				wpcp_logger()->info( __( 'Article processed from campaign', 'wp-content-pilot' ), $campaign_id );
 
@@ -363,7 +407,6 @@ EOT;
 	 * @param $source
 	 *
 	 * @return bool
-	 * @throws ErrorException
 	 * @since 1.2.0
 	 */
 	protected function discover_links( $campaign_id, $source ) {
@@ -379,14 +422,16 @@ EOT;
 
 		$token_key       = sanitize_key( '_page_' . $campaign_id . '_' . md5( $source ) );
 		$next_page_token = wpcp_get_post_meta( $campaign_id, $token_key, '' );
-
+		$safe_search     = wpcp_get_post_meta( $campaign_id, '_youtube_safe_search', 'moderate' );
+		$live_videos     = wpcp_get_post_meta( $campaign_id, '_youtube_live_videos', 'no' );
+		$closed_captions = wpcp_get_post_meta( $campaign_id, '_youtube_closed_captions', 'no' );
 
 		$query_args = array(
 			'part'              => 'snippet',
 			'type'              => 'video',
 			'key'               => $api_key,
 			'maxResults'        => 50,
-			'q'                 => $source,
+			'q'                 => urlencode( $source ),
 			'category'          => $category,
 			'videoEmbeddable'   => 'true',
 			'videoType'         => $video_type,
@@ -396,12 +441,24 @@ EOT;
 			'videoDefinition'   => $definition,
 			'order'             => $orderby,
 			'pageToken'         => $next_page_token,
+			'safeSearch'        => $safe_search
 		);
-		$endpoint   = 'https://www.googleapis.com/youtube/v3/search';
+		if ( 'on' == $live_videos ) {
+			$query_args['eventType'] = 'live';
+		}
+
+		if ( 'on' == $closed_captions ) {
+			$query_args['videoCaption'] = 'closedCaption';
+		}
+
+		$endpoint = 'https://www.googleapis.com/youtube/v3/search';
 		if ( $search_type === 'playlist' && ! empty( $playlist_id ) ) {
 			$query_args['playlistId'] = $playlist_id;
 			unset( $query_args['q'] );
 			$endpoint = 'https://www.googleapis.com/youtube/v3/playlistItems';
+		} elseif ( $search_type === 'channel' && ! empty( $playlist_id ) ) {
+			$query_args['channelId'] = $playlist_id;
+			unset( $query_args['q'] );
 		}
 
 		$endpoint = add_query_arg( $query_args, $endpoint );
@@ -421,6 +478,7 @@ EOT;
 
 		wpcp_logger()->info( __( 'Extracting response from request', 'wp-content-pilot' ), $campaign_id );
 		$response = $curl->response;
+
 		if ( isset( $response->nextPageToken ) && trim( $response->nextPageToken ) != '' ) {
 			wpcp_update_post_meta( $campaign_id, $token_key, $response->nextPageToken );
 		} else {
@@ -471,7 +529,8 @@ EOT;
 
 		wpcp_update_post_meta( $campaign_id, $token_key, @$response->nextPageToken );
 
-		wpcp_logger()->info( sprintf( 'Total found links [%d] and accepted [%d] and rejected [%d]', count( $links ), $total_inserted, ( count( $links ) - $total_inserted ) ), $campaign_id );
+		wpcp_logger()->info( sprintf( __( 'Total found links [%d] and accepted [%d] and rejected [%d]', 'wp-content-pilot' ), count( $links ), $total_inserted, ( count( $links ) - $total_inserted ) ), $campaign_id );
+
 		return true;
 	}
 

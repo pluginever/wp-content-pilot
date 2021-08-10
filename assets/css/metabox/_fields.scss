@@ -43,7 +43,7 @@
 		display: block;
 	}
 
-	input[type="text"] ~ .wpcp-desc {
+	input[type='text'] ~ .wpcp-desc {
 		display: block;
 	}
 
@@ -81,7 +81,7 @@
 			}
 		}
 
-		input[type="checkbox"] {
+		input[type='checkbox'] {
 			display: none;
 
 			&:checked {
@@ -120,7 +120,7 @@
 				background-color: #0073aa;
 			}
 
-			&:checked ~ .checkmark:after {
+			&:checked ~ .checkmark::after {
 				display: block;
 			}
 		}
@@ -133,13 +133,13 @@
 			width: 20px;
 			background-color: #eee;
 
-			&:after {
-				content: "";
+			&::after {
+				content: '';
 				position: absolute;
 				display: none;
 			}
 
-			&:after {
+			&::after {
 				left: 7px;
 				top: 4px;
 				width: 4px;
@@ -175,32 +175,32 @@
 	}
 }
 
-.wpcp-select2{
-	&.select2-container{
+.wpcp-select2 {
+	&.select2-container {
 		min-height: 30px;
 
-		.select2-selection{
+		.select2-selection {
 			border: 1px solid #7e8993;
 
-			li{
+			li {
 				margin-bottom: 0;
 			}
 		}
 
-		.select2-search__field{
+		.select2-search__field {
 			min-height: 20px !important;
 			line-height: 1;
 		}
 
-		.select2-selection--multiple{
+		.select2-selection--multiple {
 			min-height: 30px;
 		}
 
-		.select2-selection__choice{
+		.select2-selection__choice {
 			border-radius: 0;
 		}
 
-		.select2-results__option--highlighted[aria-selected]{
+		.select2-results__option--highlighted[aria-selected] {
 			background-color: #007cba;
 		}
 	}
@@ -208,27 +208,27 @@
 
 
 //repeater
-.wpcp-repeater{
+.wpcp-repeater {
 	margin-top: 20px;
 
-	.wpcp-label{
+	.wpcp-label {
 		margin-bottom: 10px;
-		&:after{
+		&::after {
 			margin: 0 5px;
 		}
 	}
 
-	.wp-list-table{
+	.wp-list-table {
 		max-width: 95%;
 		margin-bottom: 10px;
 	}
 
-	&+.wpcp-repeater{
+	& + .wpcp-repeater {
 		margin-top: 20px;
 	}
 
 }
 
-#select2-_translate_to-results [aria-disabled]{
+#select2-_translate_to-results [aria-disabled],#select2-_media_attributes-results [aria-disabled] {
 	display: none;
 }
