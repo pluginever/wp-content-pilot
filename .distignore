@@ -45,7 +45,7 @@ Thumbs.db
 #build files
 .build
 src
-bin
+/bin
 assets/css/metabox
 assets/css/_wpcp-log-table.scss
 assets/css/wp-content-pilot.scss

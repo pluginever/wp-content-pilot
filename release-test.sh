@@ -44,7 +44,7 @@ if [ -d "$SVN_DIR" ]; then rm -Rf $SVN_DIR; fi
 #build steps;
 echo "ℹ︎ Building plugin".
 npm install & npm run build
-
+composer install --no-dev
 #end builds;
 
 # Checkout just trunk and assets for efficiency
