@@ -109,10 +109,9 @@ EOT;
 			'desc'  => 'Make flickr user id <a target="_blank" href="http://idgettr.com/">here</a>. Example id : 75866656@N00',
 		) );
 		echo WPCP_HTML::select_input( array(
-			'name'    => '_flickr_licenses[]',
+			'name'    => '_flickr_licenses',
 			'label'   => __( 'Choose License', 'wp-content-pilot' ),
 			'options' => array(
-				0  => __( 'All Rights Reserved', 'wp-content-pilot' ),
 				1  => __( 'Attribution-NonCommercial-ShareAlike License', 'wp-content-pilot' ),
 				2  => __( 'Attribution-NonCommercial License', 'wp-content-pilot' ),
 				3  => __( 'Attribution-NonCommercial-NoDerivs License', 'wp-content-pilot' ),
@@ -127,9 +126,6 @@ EOT;
 			'desc'    => __( 'License Restrictions flickr', 'wp-content-pilot' ),
 			'default' => 7,
 			'class'   => 'wpcp-select2',
-			'attrs'   => array(
-				'multiple' => true
-			),
 		) );
 		echo WPCP_HTML::end_double_columns();
 	}
@@ -139,10 +135,9 @@ EOT;
 	 * @param $posted
 	 */
 	public function save_campaign_meta( $campaign_id, $posted ) {
-		$flickr_licenses = isset( $posted['_flickr_licenses'] )? sanitize_text_field( $posted['_flickr_licenses'] ): '';
 		update_post_meta( $campaign_id, '_search_order', empty( $posted['_search_order'] ) ? 'relevance' : sanitize_key( $posted['_search_order'] ) );
 		update_post_meta( $campaign_id, '_user_id', empty( $posted['_user_id'] ) ? '' : $posted['_user_id'] );
-		update_post_meta( $campaign_id, '_flickr_licenses', empty( $posted['_flickr_licenses'] ) ? 7 : $flickr_licenses );
+		update_post_meta( $campaign_id, '_flickr_licenses',  empty( $posted['_flickr_licenses'] ) ? 7 : $posted['_flickr_licenses'] );
 	}
 
 	/**
@@ -236,7 +231,7 @@ EOT;
 				'format'         => 'json',
 				'nojsoncallback' => '1',
 				'method'         => 'flickr.photos.search',
-				'licenses'       => implode( ",", $licenses )
+				'licenses'       =>  $licenses,
 			);
 
 			if ( $user_id != '' ) {
