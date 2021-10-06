@@ -229,7 +229,7 @@ EOT;
 		if ( empty( $envato_impact_radius ) ) {
 			$affiliate_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-settings#wpcp_settings_envato' );
 			$warning       = sprintf( __( "The Impact  Radius affiliate url is not set. Set it from <a href='%s'>here</a>", 'wp-content-pilot' ), $affiliate_url );
-			wpcp_logger()->error( $warning, $campaign_id );
+			wpcp_logger()->warning( $warning, $campaign_id );
 
 			wpcp_admin_notice( $warning );
 		}
