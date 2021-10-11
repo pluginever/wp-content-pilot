@@ -90,6 +90,7 @@ EOT;
 				'global'   => __( 'Global', 'wp-content-pilot' ),
 				'playlist' => __( 'From Playlist', 'wp-content-pilot' ),
 				'channel'  => __( 'From Channel', 'wp-content-pilot' ),
+				'video_id' => __( 'Video ID', 'wp-content-pilot' ),
 			),
 			'default' => 'global',
 		) );
@@ -97,7 +98,7 @@ EOT;
 		echo WPCP_HTML::text_input( array(
 			'name'        => '_youtube_playlist_id',
 			'placeholder' => __( 'Example: PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
-			'label'       => __( 'Youtube Playlist/Channel ID', 'wp-content-pilot' ),
+			'label'       => __( 'Youtube Video/Playlist/Channel ID', 'wp-content-pilot' ),
 			'tooltip'     => __( 'eg. playlist id is PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
 		) );
 
@@ -270,7 +271,7 @@ EOT;
 		wpcp_logger()->info( __( 'Checking youtube search type...', 'wp-content-pilot' ), $campaign_id );
 
 		$source_type = wpcp_get_post_meta( $campaign_id, '_youtube_search_type', 'global' );
-		if ( $source_type == "playlist" || $source_type == "channel" ) {
+		if ( $source_type == "playlist" || $source_type == "channel" || $source_type == "video_id" ) {
 			$sources = $this->get_campaign_meta( $campaign_id, '_youtube_playlist_id' );
 			if ( empty( $sources ) ) {
 				return new WP_Error( 'missing-data', __( 'Campaign do not have playlist URL to proceed, please set playlist URL', 'wp-content-pilot' ) );
@@ -308,6 +309,7 @@ EOT;
 				wpcp_logger()->info( sprintf( __( 'Youtube link#[%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
 				$link_parts = explode( 'v=', $link->url );
 				$video_id   = $link_parts[1];
+
 
 				$this->update_link( $link->id, [ 'status' => 'failed' ] );
 
@@ -382,7 +384,7 @@ EOT;
 					'download_url'   => 'https://www.youtubepp.com/watch?v=' . $item->id,
 				);
 
-				$rating = intval( @$item->statistics->likeCount ) / ( intval( @$item->statistics->likeCount ) + intval( @$item->statistics->dislikeCount ) );
+				$rating = ! empty( intval( @$item->statistics->likeCount ) ) ? intval( @$item->statistics->likeCount ) / ( intval( @$item->statistics->likeCount ) + intval( @$item->statistics->dislikeCount ) ) : 0;
 				$rating = $rating * 5;
 				$rating = number_format( $rating, 2 );
 
@@ -459,6 +461,11 @@ EOT;
 		} elseif ( $search_type === 'channel' && ! empty( $playlist_id ) ) {
 			$query_args['channelId'] = $playlist_id;
 			unset( $query_args['q'] );
+		} elseif ( $search_type === 'video_id' && ! empty( $playlist_id ) ) {
+			$query_args['id']   = urlencode( trim( $playlist_id ) );
+			$query_args['part'] = 'snippet';
+			unset( $query_args['q'] );
+			$endpoint = 'https://www.googleapis.com/youtube/v3/videos';
 		}
 
 		$endpoint = add_query_arg( $query_args, $endpoint );
@@ -498,6 +505,8 @@ EOT;
 			$video_id = '';
 			if ( stristr( $endpoint, 'playlistItems' ) ) {
 				$video_id = $item->snippet->resourceId->videoId;
+			} elseif ( $search_type === 'video_id' ) {
+				$video_id = $playlist_id;
 			} else {
 				$video_id = $item->id->videoId;
 			}
