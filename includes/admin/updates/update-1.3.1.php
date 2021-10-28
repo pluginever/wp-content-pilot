@@ -1,15 +1,23 @@
 <?php
 function content_pilot_update_1_3_1() {
-	global $wpdb;
-	$campaigns = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}posts where post_type= %s AND post_status= %s", 'wp_content_pilot', 'publish' ) );
+	$campaigns = get_posts(
+		array(
+			'post_type'      => 'wp_content_pilot',
+			'post_status'    => 'publish',
+			'posts_per_page' => - 1,
+			'meta_query'     => array(
+				array(
+					'key'   => '_campaign_type',
+					'value' => 'flickr',
+				),
+			),
+		)
+	);
 	$campaigns = wp_list_pluck( $campaigns, 'ID' );
 	if ( ! empty( $campaigns ) ) {
 		foreach ( $campaigns as $campaign ) {
-			$campaign_type = get_post_meta( $campaign, '_campaign_type', true );
-			if ( ! empty( $campaign_type ) && 'flickr' == $campaign_type ) {
-				$license = get_post_meta( $campaign, '_flickr_licenses[]', true );
-				update_post_meta( $campaign, '_flickr_licenses', $license );
-			}
+			$license = get_post_meta( $campaign, '_flickr_licenses[]', true );
+			update_post_meta( $campaign, '_flickr_licenses', $license );
 		}
 	}
 }
