@@ -384,9 +384,10 @@ EOT;
 					'download_url'   => 'https://www.youtubepp.com/watch?v=' . $item->id,
 				);
 
-				$rating = ! empty( intval( @$item->statistics->likeCount ) ) ? intval( @$item->statistics->likeCount ) / ( intval( @$item->statistics->likeCount ) + intval( @$item->statistics->dislikeCount ) ) : 0;
-				$rating = $rating * 5;
-				$rating = number_format( $rating, 2 );
+				$rating = ! empty( @$item->statistics->likeCount ) ? intval( @$item->statistics->likeCount ) / ( intval( @$item->statistics->likeCount ) + intval( @$item->statistics->dislikeCount ) ) : 0;
+				$rating = ! empty( $rating ) ? $rating * 5 : 0;
+				$rating = ! empty( $rating ) ? number_format( $rating, 2 ) : 0;
+
 
 				$article['rating'] = $rating;
 

@@ -14,6 +14,7 @@ class WPCP_Updater {
 		'1.2.3' => 'updates/update-1.2.3.php',
 		'1.2.4' => 'updates/update-1.2.4.php',
 		'1.2.7' => 'updates/update-1.2.7.php',
+		'1.3.1' => 'updates/update-1.3.1.php',
 	);
 
 	/**
