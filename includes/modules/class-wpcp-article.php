@@ -158,6 +158,7 @@ EOT;
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->info( sprintf( __( 'Looking for article for the keyword [ %s ]', 'wp-content-pilot' ), $keyword ), $campaign_id );
 
+
 			if ( $this->is_deactivated_key( $campaign_id, $keyword ) ) {
 //				$reactivate_keyword_action = add_query_arg( [
 //					'campaign_id' => $campaign_id,
@@ -261,23 +262,26 @@ EOT;
 			$args,
 		), 'https://www.bing.com/search' );
 
-		//wpcp_logger()->debug( sprintf( 'Searching page url [%s]', $endpoint ), $campaign_id );
 		wpcp_logger()->info( sprintf( __( 'Searching page url [%s]', 'wp-content-pilot' ), $endpoint ), $campaign_id );
 
-		$curl     = $this->setup_curl();
-		$response = $curl->get( $endpoint );
-		if ( $curl->isError() ) {
-			wpcp_logger()->error( $curl->errorMessage, $campaign_id );
+		// $curl     = $this->setup_curl();
+		// $response = $curl->get( $endpoint );
+		$request = wp_remote_get( $endpoint );
+
+		if ( $request->get_error_code() ) {
+			wpcp_logger()->error( $request->get_error_message(), $campaign_id );
 			$this->deactivate_key( $campaign_id, $keyword );
 
-			return $response;
+			return $request;
 		}
+
 
 //		if ( ! $response instanceof \SimpleXMLElement ) {
 //			$response = simplexml_load_string( $response );
 //		}
 
 		wpcp_logger()->info( __( 'Extracting response from request', 'wp-content-pilot' ), $campaign_id );
+		$response = wp_remote_retrieve_body( $request );
 		$dom = wpcp_str_get_html( $response );
 		$matches = array();
 		for ( $i = 0; $i < 10; $i ++ ) {
