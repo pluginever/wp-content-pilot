@@ -268,7 +268,7 @@ EOT;
 		// $response = $curl->get( $endpoint );
 		$request = wp_remote_get( $endpoint );
 
-		if ( $request->get_error_code() ) {
+		if ( is_wp_error( $request ) ) {
 			wpcp_logger()->error( $request->get_error_message(), $campaign_id );
 			$this->deactivate_key( $campaign_id, $keyword );
 
