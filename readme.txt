@@ -129,7 +129,7 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
-= v1.3.0 -> August 10, 2020 =
+= v1.3.0 -> August 10, 2021 =
 [Fix] - Article campaign bing search not working
 [Fix] - Logs pagination errors
 [Enhance] - Category and Author are added as search filters in Envato campaign
