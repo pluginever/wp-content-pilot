@@ -2,7 +2,7 @@
 Contributors: pluginever
 Tags: RSS import, RSS aggregator, feed import, content curation, feed to post, news aggregator, autoblog, rss to post, content syndication, feeds, rss feeds, rss importer, feed importer, post importer, news importer, affiliate, content pilot, auto post, feeds, flicker, youtube, envato, article, Auto content poster, wp auto pilot, wp content pilot, pluginever
 Requires at least: 4.4
-Tested up to: 5.8
+Tested up to: 5.8.2
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
