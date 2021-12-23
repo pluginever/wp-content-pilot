@@ -196,6 +196,16 @@ jQuery(document).ready(function ($) {
 				return $('<p>').addClass(data.level).html('[' + data.time + '] - ' + data.message + '');
 			}
 
+		},
+		polylang: function (e) {
+			var polylang_language_code_field = $('._polylang_language_code-field');
+			$('#_enable_polylang').on('change', function() {
+				if ( true === $(this).prop('checked') ) {
+					polylang_language_code_field.show();
+				} else {
+					polylang_language_code_field.hide();
+				}
+			}).change();
 		}
 
 	};
@@ -204,4 +214,5 @@ jQuery(document).ready(function ($) {
 	$('#wpcp-delete-campaign-posts').on('click', $.wp_content_pilot.deleteCampaignPosts);
 	$('#wpcp-clear-logs').on('click', $.wp_content_pilot.clearLogs);
 	$('#wpcp-run-campaign').on('click', $.wp_content_pilot.handle_manual_campaign);
+	$.wp_content_pilot.polylang();
 });
