@@ -207,6 +207,9 @@ function wpcp_update_campaign_settings( $post_id ) {
 	update_post_meta($post_id,'_spinner_use_only_synonyms',empty($posted['_spinner_use_only_synonyms']) ? false: sanitize_key($posted['_spinner_use_only_synonyms']));
 	update_post_meta($post_id,'_spinner_reorder_paragraphs',empty($posted['_spinner_reorder_paragraphs']) ? false: sanitize_key($posted['_spinner_reorder_paragraphs']));
 
+	update_post_meta($post_id,'_enable_polylang',empty($posted['_enable_polylang']) ? '': sanitize_text_field($posted['_enable_polylang']));
+	update_post_meta($post_id,'_polylang_language_code',empty($posted['_polylang_language_code']) ? '': sanitize_text_field($posted['_polylang_language_code']));
+
 	do_action( 'wpcp_update_campaign_settings', $post_id, $posted );
 	do_action( 'wpcp_' . sanitize_key( $posted['_campaign_type'] ) . '_update_campaign_settings', $post_id, $posted );
 }
