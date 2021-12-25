@@ -1,7 +1,9 @@
 /.wordpress-org
 /.git
 /.github
-/node_modules
+.gitattributes
+.gitkeep
+.gitmodules
 
 .distignore
 .gitignore
@@ -10,16 +12,21 @@
 .eslintignore
 .eslintrc.json
 .npmrc
-yarn.lock
 .svnignore
 .travis.yml
 .jshintrc
 .phpcs.xml.dist
 .stylelintrc
-deploy.sh
-.gitattributes
-.gitkeep
-
+package.json
+package-lock.json
+yarn.lock
+Gruntfile.js
+composer.json
+composer.lock
+/node_modules
+/bin
+gulpfile.js
+gruntfile.js
 
 #COMMON
 CONTRIBUTING.md
@@ -28,24 +35,20 @@ phpunit.xml.dist
 phpunit.xml
 phpcs.xml
 phpcs.xml.dist
-package.json
-package-lock.json
-Gruntfile.js
-composer.json
-composer.lock
 tests
 *.sql
 *.tar.gz
 *.zip
-
+*.sh
 
 #OS
 .DS_Store
 Thumbs.db
 
-#build files
-.build
-/bin
-assets/css/metabox
-assets/css/_wpcp-log-table.scss
-assets/css/wp-content-pilot.scss
+#WP
+.wordpress-org
+
+#Assets
+*.scss
+
+#Plugin specific
