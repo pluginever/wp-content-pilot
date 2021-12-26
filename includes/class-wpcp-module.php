@@ -409,7 +409,7 @@ abstract class WPCP_Module {
 		}
 
 		// set polylang plugin
-		if ( is_plugin_active( 'polylang/polylang.php' ) || is_plugin_active( 'polylang-pro/polylang.php' ) ) {
+		if ( function_exists( 'pll_set_post_language' ) ) {
 			$enable_polylang        = ! empty( wpcp_get_post_meta( $campaign_id, '_enable_polylang', 0 ) ) ? wpcp_get_post_meta( $campaign_id, '_enable_polylang', 0 ) : 0;
 			$polylang_language_code = wpcp_get_post_meta( $campaign_id, '_polylang_language_code', '' );
 			if ( 'on' === $enable_polylang && ! empty( $polylang_language_code ) ) {
