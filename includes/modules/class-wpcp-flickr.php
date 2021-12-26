@@ -236,7 +236,7 @@ EOT;
 				'format'         => 'json',
 				'nojsoncallback' => '1',
 				'method'         => 'flickr.photos.search',
-				'licenses'       => implode( ",", $licenses )
+				'licenses'       => $licenses
 			);
 
 			if ( $user_id != '' ) {
