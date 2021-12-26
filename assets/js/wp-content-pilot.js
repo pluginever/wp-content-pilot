@@ -197,7 +197,7 @@ jQuery(document).ready(function ($) {
 			}
 
 		},
-		polylang: function (e) {
+		polylang: function () {
 			var polylang_language_code_field = $('._polylang_language_code-field');
 			$('#_enable_polylang').on('change', function() {
 				if ( true === $(this).prop('checked') ) {

@@ -109,7 +109,6 @@ module.exports = function (grunt) {
 			}
 		},
 
-
 		// Check textdomain errors.
 		checktextdomain: {
 			options: {
@@ -182,7 +181,7 @@ module.exports = function (grunt) {
 
 		// Verify build
 		shell: {
-			command: [ 'cd../', 'rsync -rc --exclude-from="./wp-content-pilot/.distignore" "./wp-content-pilot/" "./wp-content-pilot-release/" --delete --delete-excluded' ].join('&&')
+			command: [ 'rm -rf @next', 'npm install', 'npm run build', 'composer install --no-dev', 'rsync -rc --exclude-from="./.distignore" "." "./@next/" --delete --delete-excluded', 'echo ', 'echo === NOW COMPARE WITH ORG/GIT VERSION===' ].join(' && ')
 		}
 
 	});
