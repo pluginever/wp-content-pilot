@@ -409,12 +409,13 @@ abstract class WPCP_Module {
 		}
 
 		// set polylang plugin
-
-		$enable_polylang        = !empty( wpcp_get_post_meta( $campaign_id, '_enable_polylang', 0 ) ) ? wpcp_get_post_meta( $campaign_id, '_enable_polylang', 0 ) : 0;
-		$polylang_language_code = wpcp_get_post_meta( $campaign_id, '_polylang_language_code', '' );
-		if ( 'on' === $enable_polylang && ! empty( $polylang_language_code ) ) {
-			wpcp_logger()->info( __( "Settings up polylang language", 'wp-content-pilot' ), $campaign_id );
-			pll_set_post_language( $post_id, $polylang_language_code );
+		if ( is_plugin_active( 'polylang/polylang.php' ) || is_plugin_active( 'polylang-pro/polylang.php' ) ) {
+			$enable_polylang        = ! empty( wpcp_get_post_meta( $campaign_id, '_enable_polylang', 0 ) ) ? wpcp_get_post_meta( $campaign_id, '_enable_polylang', 0 ) : 0;
+			$polylang_language_code = wpcp_get_post_meta( $campaign_id, '_polylang_language_code', '' );
+			if ( 'on' === $enable_polylang && ! empty( $polylang_language_code ) ) {
+				wpcp_logger()->info( __( "Settings up polylang language", 'wp-content-pilot' ), $campaign_id );
+				pll_set_post_language( $post_id, $polylang_language_code );
+			}
 		}
 
 		//wpml internal cron patch
