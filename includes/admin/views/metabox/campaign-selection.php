@@ -187,7 +187,7 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'keywords' => 'job',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/dailymotion.png' ),
-	
+
 	),
 	array(
 		'label'    => 'Tiktok',
@@ -195,6 +195,13 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'keywords' => 'tiktok,video',
 		'disabled' => true,
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/tiktok.png' ),
+	),
+	array(
+		'label'    => 'Single Page Scrapper',
+		'name'     => 'single-page',
+		'keywords' => 'article,scrapper',
+		'disabled' => true,
+		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/article.png' ),
 	)
 ) );
 ?>
