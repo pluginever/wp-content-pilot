@@ -171,7 +171,7 @@ EOT;
 			wpcp_disable_campaign( $campaign_id );
 
 			$notice = __( 'Google custom search api or search engine id is not set.So, the campaign wont run, disabling campaign.', 'wp-content-pilot' );
-			wpcp_logger()->error( $notice );
+			wpcp_logger()->error( $notice, $campaign_id );
 
 			return new WP_Error( 'missing-data', $notice );
 		}
@@ -180,6 +180,7 @@ EOT;
 		//it can be anything
 		$keywords = $this->get_campaign_meta( $campaign_id );
 		if ( empty( $keywords ) ) {
+			wpcp_logger()->notice( __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ), $campaign_id );
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}
 
@@ -187,7 +188,7 @@ EOT;
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->info( sprintf( __( 'Looking for article for the keyword [ %s ]', 'wp-content-pilot' ), $keyword ), $campaign_id );
 
-			/*
+			
 			if ( $this->is_deactivated_key( $campaign_id, $keyword ) ) {
 //				$reactivate_keyword_action = add_query_arg( [
 //					'campaign_id' => $campaign_id,
@@ -197,7 +198,7 @@ EOT;
 //				wpcp_logger()->info( sprintf( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s] %s reactivate keyword %s', 'wp-content-pilot' ), $keyword, '<a href="' . $reactivate_keyword_action . '">', '</a>' ), $campaign_id );
 				wpcp_logger()->info( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s]', 'wp-content-pilot' ), $campaign_id );
 				continue;
-			} */
+			} 
 
 			//get links from database
 			wpcp_logger()->info( __( 'Checking for cached links in store', 'wp-content-pilot' ), $campaign_id );
