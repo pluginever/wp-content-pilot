@@ -68,27 +68,27 @@ EOT;
 	public function add_campaign_option_fields( $post ) {
 
 		echo WPCP_HTML::start_double_columns();
-		echo WPCP_HTML::select_input( array(
-			'name'          => '_article_region',
-			'label'         => __( 'Select region to search article', 'wp-content-pilot' ),
-			'options'       => $this->get_article_region(),
-			'default'       => 'global',
-			'class'         => 'wpcp-select2',
-			'wrapper_class' => 'pro',
-			'attrs'         => array(
-				'disabled' => 'disabled',
-			)
-		) );
 //		echo WPCP_HTML::select_input( array(
-//			'name'          => '_article_language',
-//			'label'         => __( 'Select language to search article', 'wp-content-pilot' ),
-//			'options'       => $this->get_article_language(),
-//			'default'       => 'en',
+//			'name'          => '_article_region',
+//			'label'         => __( 'Select region to search article', 'wp-content-pilot' ),
+//			'options'       => $this->get_article_region(),
+//			'default'       => 'global',
+//			'class'         => 'wpcp-select2',
 //			'wrapper_class' => 'pro',
 //			'attrs'         => array(
 //				'disabled' => 'disabled',
 //			)
 //		) );
+		echo WPCP_HTML::select_input( array(
+			'name'          => '_article_language',
+			'label'         => __( 'Select language to search article', 'wp-content-pilot' ),
+			'options'       => $this->get_article_language(),
+			'default'       => 'lang_en',
+			'wrapper_class' => 'pro',
+			'attrs'         => array(
+				'disabled' => 'disabled',
+			)
+		) );
 		echo WPCP_HTML::end_double_columns();
 
 	}
@@ -131,6 +131,22 @@ EOT;
 				'placeholder' => __( "example.com \n example1.com", 'wp-content-pilot' ),
 				'type'        => 'textarea',
 			),
+			array(
+				'name'              => 'google_search_api_key',
+				'label'             => __( 'Google Search Api Key', 'wp-content-pilot' ),
+				'desc'              => __( 'Google custom search api key will be needed to get the result.', 'wp-content-pilot' ),
+				'type'              => 'password',
+				'default'           => '',
+				'sanitize_callback' => 'esc_html',
+			),
+			array(
+				'name'              => 'search_engine_id',
+				'label'             => __( 'Search Engine ID', 'wp-content-pilot' ),
+				'desc'              => __( 'Search engine id for searching the links', 'wp-content-pilot' ),
+				'type'              => 'text',
+				'default'           => '',
+				'sanitize_callback' => 'esc_html'
+			),
 		];
 
 		return $fields;
@@ -145,6 +161,21 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_post( $campaign_id ) {
+		wpcp_logger()->info( __( 'Loaded Article campaign', 'wp-content-pilot' ), $campaign_id );
+
+		$api_key          = wpcp_get_settings( 'google_search_api_key', 'wpcp_settings_article' );
+		$search_engine_id = wpcp_get_settings( 'search_engine_id', 'wpcp_settings_article' );
+
+		wpcp_logger()->info( __( 'Checking google search api key and search engine id for authentication', 'wp-content-pilot' ), $campaign_id );
+		if ( empty( $api_key ) || empty( $search_engine_id ) ) {
+			wpcp_disable_campaign( $campaign_id );
+
+			$notice = __( 'Google custom search api or search engine id is not set.So, the campaign wont run, disabling campaign.', 'wp-content-pilot' );
+			wpcp_logger()->error( $notice );
+
+			return new WP_Error( 'missing-data', $notice );
+		}
+
 		//before it was getting keywords but now we are changing to source instead of keywords
 		//it can be anything
 		$keywords = $this->get_campaign_meta( $campaign_id );
@@ -152,12 +183,11 @@ EOT;
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}
 
-		wpcp_logger()->info( __( 'Loaded Article campaign', 'wp-content-pilot' ), $campaign_id );
-
 		//loop through keywords
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->info( sprintf( __( 'Looking for article for the keyword [ %s ]', 'wp-content-pilot' ), $keyword ), $campaign_id );
 
+			/*
 			if ( $this->is_deactivated_key( $campaign_id, $keyword ) ) {
 //				$reactivate_keyword_action = add_query_arg( [
 //					'campaign_id' => $campaign_id,
@@ -167,7 +197,7 @@ EOT;
 //				wpcp_logger()->info( sprintf( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s] %s reactivate keyword %s', 'wp-content-pilot' ), $keyword, '<a href="' . $reactivate_keyword_action . '">', '</a>' ), $campaign_id );
 				wpcp_logger()->info( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s]', 'wp-content-pilot' ), $campaign_id );
 				continue;
-			}
+			} */
 
 			//get links from database
 			wpcp_logger()->info( __( 'Checking for cached links in store', 'wp-content-pilot' ), $campaign_id );
@@ -245,9 +275,12 @@ EOT;
 	 * @since 1.2.0
 	 */
 	protected function discover_links( $campaign_id, $keyword ) {
-		$page_key    = $this->get_unique_key( $keyword );
-		$page_number = wpcp_get_post_meta( $campaign_id, $page_key, 0 );
+		$page_key         = $this->get_unique_key( $keyword );
+		$page_number      = wpcp_get_post_meta( $campaign_id, $page_key, 0 );
+		$api_key          = wpcp_get_settings( 'google_search_api_key', 'wpcp_settings_article' );
+		$search_engine_id = wpcp_get_settings( 'search_engine_id', 'wpcp_settings_article' );
 
+		/*
 		$args = apply_filters( 'wpcp_article_search_args', array(
 			'q'     => urlencode( $keyword ),
 			'count' => 10,
@@ -291,7 +324,92 @@ EOT;
 
 		// $response = json_encode( $response );
 		// $response = json_decode( $response, true );
+		*/
+		$args = apply_filters( 'wpcp_article_search_args', array(
+			'key'    => $api_key,
+			'cx'     => ! empty( $search_engine_id ) ? $search_engine_id : '359394892d6b9fe2c',
+			'q'      => urlencode( $keyword ),
+			'number' => 10,
+			'lr'     => 'lang_en',
+		), $campaign_id );
 
+		if ( ! empty( $page_number ) ) {
+			$args['start'] = ( $page_number * 10 ) + 1;
+		}
+
+		$endpoint = add_query_arg( array(
+			$args
+		), 'https://customsearch.googleapis.com/customsearch/v1' );
+
+		wpcp_logger()->info( sprintf( __( 'Searching page url [%s]', 'wp-content-pilot' ), preg_replace( array( '/api_key=([^&]+)/m', '/cx=([^&]+)/m' ), array( 'key=X', 'cx=X' ), $endpoint ), $campaign_id ) );
+
+		$curl    = $this->setup_curl();
+		$request = $curl->get( $endpoint );
+
+		if ( $curl->isError() ) {
+			wpcp_logger()->error( $curl->errorMessage, $campaign_id );
+			$this->deactivate_key( $campaign_id, $keyword );
+
+			return $request;
+		}
+
+		wpcp_logger()->info( __( 'Extracting response from request', 'wp-content-pilot' ), $campaign_id );
+		$items = $curl->getResponse()->items;
+
+		if ( empty( $items ) ) {
+			$message = __( 'Could not find any links from search engine, deactivating keyword for an hour.', 'wp-content-pilot' );
+			wpcp_logger()->error( $message, $campaign_id );
+			$this->deactivate_key( $campaign_id, $keyword );
+
+			return new WP_Error( 'no-links-found', $message );
+		}
+
+		wpcp_logger()->info( __( 'Getting banned hosts for skipping links', 'wp-content-pilot' ), $campaign_id );
+		$banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article' );
+		$banned_hosts = preg_split( '/\n/', $banned_hosts );
+		$banned_hosts = array_merge( $banned_hosts, array(
+			'youtube.com',
+			'wikipedia',
+			'dictionary',
+			'youtube',
+			'wikihow'
+		) );
+
+		$links = [];
+		wpcp_logger()->info( __( 'Finding links from response and inserting into database', 'wp-content-pilot' ), $campaign_id );
+		foreach ( $items as $item ) {
+			$title = ! empty( $item->title ) ? $item->title : '';
+			$link  = ! empty( $item->link ) ? $item->link : '';
+
+			foreach ( $banned_hosts as $banned_host ) {
+				if ( stristr( $link, $banned_host ) ) {
+					continue;
+				}
+			}
+
+			if ( stristr( $link, 'wikipedia' ) ) {
+				continue;
+			}
+
+			if ( wpcp_is_duplicate_url( $link ) ) {
+				continue;
+			}
+
+			$skip = apply_filters( 'wpcp_skip_duplicate_title', false, $title, $campaign_id );
+			if ( $skip ) {
+				continue;
+			}
+
+
+			$links[] = array(
+				'url'     => $link,
+				'title'   => $title,
+				'for'     => $keyword,
+				'camp_id' => $campaign_id
+			);
+		}
+		error_log( print_r( $links, true ) );
+		/*
 		//check if links exist
 		if ( empty( $response ) || ! isset( $matches ) || ! isset( $matches ) || empty( $matches ) ) {
 			$message = __( 'Could not find any links from search engine, deactivating keyword for an hour.', 'wp-content-pilot' );
@@ -347,7 +465,7 @@ EOT;
 				'for'     => $keyword,
 				'camp_id' => $campaign_id
 			];
-		}
+		}*/
 
 		$total_inserted = $this->inset_links( $links );
 		wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
@@ -422,56 +540,39 @@ EOT;
 	public function get_article_language() {
 
 		$languages = array(
-			'ar'      => 'Arabic',
-			'eu'      => 'Basque',
-			'bn'      => "Bengali",
-			'bg'      => 'Bulgarian',
-			'ca'      => 'Catalan',
-			'zh-hans' => 'Simplified Chinese',
-			'zh-hant' => 'Traditional Chinese',
-			'hr'      => 'Croatian',
-			'cs'      => 'Czech',
-			'da'      => 'Danish',
-			'nl'      => 'Dutch',
-			'en'      => 'English',
-			'en-gb'   => 'English - United Kingdom',
-			'et'      => 'Estonian',
-			'fi'      => 'Finish',
-			'fr'      => 'French',
-			'gl'      => 'Galician',
-			'de'      => 'German',
-			'gu'      => 'Gujrati',
-			'he'      => 'Hebrew',
-			'hi'      => 'Hindi',
-			'hu'      => 'Hungarian',
-			'is'      => 'Icelandic',
-			'it'      => 'Italian',
-			'jp'      => 'Japanese',
-			'kn'      => 'Kannada',
-			'ko'      => 'Korean',
-			'lv'      => 'Latvian',
-			'lt'      => 'Lithunian',
-			'ms'      => 'Malay',
-			'ml'      => 'Malayalam',
-			'mr'      => 'Marathi',
-			'nb'      => 'Norwegian',
-			'pl'      => 'Polish',
-			'pt-br'   => 'Portugese Brazil',
-			'pt-pt'   => 'Portugese Portugal',
-			'pa'      => 'Punjabi',
-			'ro'      => 'Romanian',
-			'ru'      => 'Russian',
-			'sr'      => 'Serbian',
-			'sk'      => 'Slovak',
-			'sl'      => 'Slovenian',
-			'es'      => 'Spanish',
-			'sv'      => 'Swedish',
-			'ta'      => 'Tamil',
-			'te'      => 'Telegu',
-			'th'      => 'Thai',
-			'tr'      => 'Turkish',
-			'uk'      => 'Ukrainian',
-			'vi'      => 'Vietnamese',
+			'lang_ar'    => 'Arabic',
+			'lang_bg'    => 'Bulgarian',
+			'lang_ca'    => 'Catalan',
+			'lang_cs'    => 'Czech',
+			'lang_da'    => 'Danish',
+			'lang_de'    => 'German',
+			'lang_el'    => 'Greek',
+			'lang_en'    => 'English',
+			'lang_es'    => 'Spanish',
+			'lang_et'    => 'Estonian',
+			'lang_fi'    => 'Finish',
+			'lang_fr'    => 'French',
+			'lang_hu'    => 'Hungarian',
+			'lang_id'    => 'Indonesian',
+			'lang_is'    => 'Icelandic',
+			'lang_it'    => 'Italian',
+			'lang_iw'    => 'Hebrew',
+			'lang_ja'    => 'Japanese',
+			'lang_ko'    => 'Korean',
+			'lang_lv'    => 'Latvian',
+			'lang_nl'    => 'Dutch',
+			'lang_no'    => 'Norwegian',
+			'lang_pl'    => 'Polish',
+			'lang_pt'    => 'Portugese',
+			'lang_ro'    => 'Romanian',
+			'lang_ru'    => 'Russian',
+			'lang_sk'    => 'Slovak',
+			'lang_sl'    => 'Slovenian',
+			'lang_sr'    => 'Serbian',
+			'lang_sv'    => 'Swedish',
+			'lang_tr'    => 'Turkish',
+			'lang_zh-CN' => 'Chinese (Simplified)',
+			'lang_zh-TW' => 'Chinese (Traditional)',
 		);
 
 		return $languages;
