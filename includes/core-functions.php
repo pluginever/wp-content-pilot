@@ -209,7 +209,7 @@ function wpcp_get_post_tags() {
 function wpcp_get_authors() {
 	$result = [];
 	$users  = get_users( [ 'capability__in' => array('publish_posts') ] );
-	error_log( print_r( $users,true));
+
 	foreach ( $users as $user ) {
 		$result[ $user->ID ] = "{$user->display_name} ({$user->user_email})";
 	}
