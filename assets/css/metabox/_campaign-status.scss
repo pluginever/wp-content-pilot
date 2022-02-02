@@ -36,6 +36,15 @@
 			&:last-of-type {
 				margin-right: 0;
 			}
+
+			@media screen and (max-width: 767px){
+				width: 90%;
+				margin-top: 10px;
+				margin-right: 3px;
+				margin-left: 3px;
+			}
+
+
 		}
 
 		.wpcp-campaign-statue-title {
