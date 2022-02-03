@@ -141,21 +141,20 @@ abstract class WPCP_Module {
 	public function process_campaign( $campaign_id, $source = null, $user = 'cron' ) {
 		$wp_post = get_post( $campaign_id );
 		if ( ! $wp_post || 'wp_content_pilot' !== $wp_post->post_type ) {
-			wpcp_logger()->error( 'Could not find any campaign with the provided id', $campaign_id );
+			wpcp_logger()->error( __( 'Could not find any campaign with the provided id', 'wp-content-pilot' ), $campaign_id );
 
 			return new WP_Error( 'invalid-campaign-id', __( 'Could not find the campaign', 'wp-content-pilot' ) );
 		}
 
 		$campaign_type = get_post_meta( $campaign_id, '_campaign_type', true );
 		if ( $campaign_type !== $this->campaign_type ) {
-			wpcp_logger()->error( 'Campaign type mismatch', $campaign_id );
+			wpcp_logger()->error( __( 'Campaign type mismatch', 'wp-content-pilot' ), $campaign_id );
 
 			return new WP_Error( 'invalid-campaign-id', __( 'Campaign type mismatch', 'wp-content-pilot' ) );
 		}
 
 		if ( $this->try_count > $this->max_try ) {
-			$message = __( 'Tried maximum time but could not generate article check log', 'wp-content-pilot' );
-			wpcp_logger()->error( $message, $campaign_id );
+			wpcp_logger()->error( __( 'Tried maximum time but could not generate article check log', 'wp-content-pilot' ), $campaign_id );
 
 			return new WP_Error( 'time-out', __( 'Tried maximum time but could not generate article check log', 'wp-content-pilot' ) );
 		}
@@ -274,7 +273,7 @@ abstract class WPCP_Module {
 		//spin
 		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
 		if ( 'on' == $spin_article ) {
-			wpcp_logger()->debug( 'Spinning article ...', $campaign_id );
+			wpcp_logger()->debug( __( 'Spinning article ...', 'wp-content-pilot' ), $campaign_id );
 			$separator    = str_repeat( '#', ceil( rand( 10, 20 ) ) );
 			$spinable     = $post_title . $separator . $post_content;
 			$spinned      = explode( $separator, wpcp_spin_article( $campaign_id, $spinable ), 2 );
@@ -432,7 +431,7 @@ abstract class WPCP_Module {
 		update_post_meta( $campaign_id, '_post_count', ( $posted + 1 ) );
 		do_action( 'wpcp_after_post_publish', $post_id, $campaign_id, $article );
 		do_action( 'wpcp_' . $campaign_type . '_after_post_publish', $post_id, $campaign_id, $article );
-		wpcp_logger()->info( 'hurray! successfully generated article', $campaign_id );
+		wpcp_logger()->info( __( 'hurray! successfully generated article', 'wp-content-pilot' ), $campaign_id );
 
 		return $post_id;
 	}
@@ -456,7 +455,7 @@ abstract class WPCP_Module {
 	 * @since 1.2.0
 	 */
 	protected function deactivate_key( $campaign_id, $key, $hours = 1 ) {
-		wpcp_logger()->warning( sprintf( 'Deactivating key [%s] for [%d] hour', $key, $hours ), $campaign_id );
+		wpcp_logger()->warning( sprintf( __( 'Deactivating key [%s] for [%d] hour', 'wp-content-pilot' ), $key, $hours ), $campaign_id );
 		$deactivated_until = current_time( 'timestamp' ) + ( $hours * HOUR_IN_SECONDS );
 		update_post_meta( $campaign_id, '_' . md5( $key ), $deactivated_until );
 	}

@@ -462,7 +462,7 @@ EOT;
 		}
 
 		$endpoint = add_query_arg( $query_args, $endpoint );
-		wpcp_logger()->info( sprintf( __( 'Requesting urls from Youtube [%s]', 'wp-content-pilot' ), preg_replace( '/key=([^&]+)/m', 'key=X', $endpoint ) ) );
+		wpcp_logger()->info( sprintf( __( 'Requesting urls from Youtube [%s]', 'wp-content-pilot' ), preg_replace( '/key=([^&]+)/m', 'key=X', $endpoint ) ), $campaign_id );
 
 		$curl = $this->setup_curl();
 		$curl->get( $endpoint );

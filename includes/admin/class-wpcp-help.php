@@ -123,7 +123,7 @@ class WPCP_Help {
 		</style>
 		<div class="wrap">
 
-			<h2>WP Content Pilot - Help </h2>
+			<h2><?php echo esc_html__( 'WP Content Pilot - Help', 'wp-content-pilot' ); ?> </h2>
 
 			<div class="ever-help-page">
 				<?php foreach ( $blocks as $block ): ?>
@@ -140,12 +140,12 @@ class WPCP_Help {
 			</div>
 			<?php if ( ! defined( 'WPCP_PRO_VERSION' ) ): ?>
 				<div class="free-vs-pro">
-					<h3>Are you looking for more? Checkout our Pro Version.</h3>
+					<h3><?php echo esc_html__( 'Are you looking for more? Checkout our Pro Version.', 'wp-content-pilot' ); ?></h3>
 					<table class="widefat">
 						<tr>
-							<th>Features</th>
-							<th>Free</th>
-							<th>Pro</th>
+							<th><?php echo esc_html__( 'Features', 'wp-content-pilot' ); ?></th>
+							<th><?php echo esc_html__( 'Free', 'wp-content-pilot' ); ?></th>
+							<th><?php echo esc_html__( 'Pro', 'wp-content-pilot' ); ?></th>
 						</tr>
 						<?php foreach ( $features as $feature ): ?>
 							<tr>

@@ -361,13 +361,13 @@ add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_target_rel_field', 20 );
 function wpcp_search_replace_metafield( $post ) {
 	?>
 	<div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_fields-field pro">
-		<label class="wpcp-label">Search Replace</label>
+		<label class="wpcp-label"><?php echo esc_html__( 'Search Replace', 'wp-content-pilot' ); ?></label>
 
 		<table class="striped widefat wp-list-table">
 			<thead>
 			<tr>
-				<th>Search</th>
-				<th>Replace</th>
+				<th><?php echo esc_html__( 'Search', 'wp-content-pilot' ); ?></th>
+				<th><?php echo esc_html__( 'Replace', 'wp-content-pilot' ); ?></th>
 				<th></th>
 			</tr>
 			</thead>
@@ -379,7 +379,7 @@ function wpcp_search_replace_metafield( $post ) {
 			</tr>
 			</tbody>
 		</table>
-		<button data-repeater-create type="button" class="button" disabled>Add New</button>
+		<button data-repeater-create type="button" class="button" disabled><?php echo esc_html__( 'Add New', 'wp-content-pilot' ); ?></button>
 	</div>
 	<?php
 }
@@ -390,13 +390,13 @@ add_action( 'wpcp_advanced_settings_metabox', 'wpcp_search_replace_metafield' );
 function wpcp_post_meta_metafield( $post ) {
 	?>
 	<div class="wpcp-repeater form-field wpcp-field _wpcp_custom_meta_fields-field pro">
-		<label class="wpcp-label">Post Meta</label>
+		<label class="wpcp-label"><?php echo esc_html__( 'Post Meta', 'wp-content-pilot' ); ?></label>
 
 		<table class="striped widefat wp-list-table">
 			<thead>
 			<tr>
-				<th>Meta Key</th>
-				<th>Meta Value</th>
+				<th><?php echo esc_html__( 'Meta Key', 'wp-content-pilot' ); ?></th>
+				<th><?php echo esc_html__( 'Meta Value', 'wp-content-pilot' ); ?></th>
 				<th></th>
 			</tr>
 			</thead>
@@ -409,7 +409,7 @@ function wpcp_post_meta_metafield( $post ) {
 			</tbody>
 		</table>
 
-		<button data-repeater-create type="button" class="button" disabled>Add New</button>
+		<button data-repeater-create type="button" class="button" disabled><?php echo esc_html__( 'Add New', 'wp-content-pilot' ); ?></button>
 	</div>
 	<?php
 }
