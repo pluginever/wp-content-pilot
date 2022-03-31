@@ -129,6 +129,9 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= v1.3.2 -> April 11, 2022 =
+[Fix] - Compatibility with WP v5.9.2
+
 = v1.3.1 -> December 27, 2021 =
 [Enhance] - Add polylang support
 [Fix] - Skip deleted campaigns
