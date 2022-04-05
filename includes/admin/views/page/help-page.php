@@ -3,35 +3,35 @@ defined( 'ABSPATH') || exit();
 
 $blocks   = [
 	[
-		'image'       => WPCP_ASSETS_URL . '/images/help/docs.svg',
+		'image'       => WPCP_ASSETS_URL . '/dist/images/docs.svg',
 		'title'       => __( 'Looking for Something?', 'wp-content-pilot' ),
 		'desc'        => __( 'We have detailed documentation on every aspects of WP Content Pilot.', 'wp-content-pilot' ),
 		'url'         => 'https://www.pluginever.com/docs/wp-content-pilot/',
 		'button_text' => __( 'Visit the Plugin Documentation', 'wp-content-pilot' ),
 	],
 	[
-		'image'       => WPCP_ASSETS_URL . '/images/help/support.svg',
+		'image'       => WPCP_ASSETS_URL . '/dist/images/support.svg',
 		'title'       => __( 'Need Any Assistance?', 'wp-content-pilot' ),
 		'desc'        => __( 'Our EXPERT Support Team is always ready to Help you out.', 'wp-content-pilot' ),
 		'url'         => 'https://www.pluginever.com/support/',
 		'button_text' => __( 'Contact Support', 'wp-content-pilot' ),
 	],
 	[
-		'image'       => WPCP_ASSETS_URL . '/images/help/bugs.svg',
+		'image'       => WPCP_ASSETS_URL . '/dist/images/bugs.svg',
 		'title'       => __( 'Found Any Bugs?', 'wp-content-pilot' ),
 		'desc'        => __( 'OReport any Bug that you Discovered, Get Instant Solutions.', 'wp-content-pilot' ),
 		'url'         => 'https://github.com/pluginever/wp-content-pilot',
 		'button_text' => __( 'Report to Github', 'wp-content-pilot' ),
 	],
 	[
-		'image'       => WPCP_ASSETS_URL . '/images/help/customization.svg',
+		'image'       => WPCP_ASSETS_URL . '/dist/images/customization.svg',
 		'title'       => __( 'Require Customization?', 'wp-content-pilot' ),
 		'desc'        => __( 'We would Love to hear your Integration and Customization Ideas.', 'wp-content-pilot' ),
 		'url'         => 'https://www.pluginever.com/contact-us/',
 		'button_text' => __( 'Contact Our Services', 'wp-content-pilot' ),
 	],
 	[
-		'image'       => WPCP_ASSETS_URL . '/images/help/like.svg',
+		'image'       => WPCP_ASSETS_URL . '/dist/images/like.svg',
 		'title'       => __( 'Like The Plugin?', 'wp-content-pilot' ),
 		'desc'        => __( 'Your Review is very important to us as it helps us to grow more.', 'wp-content-pilot' ),
 		'url'         => 'https://wordpress.org/support/plugin/wp-content-pilot/reviews/?rate=5#new-post',

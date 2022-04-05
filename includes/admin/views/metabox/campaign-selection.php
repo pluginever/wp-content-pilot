@@ -5,196 +5,196 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'name'     => 'article',
 		'keywords' => 'article, articles, blog, posts, news',
 		'disabled' => false,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/article.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/article.png' )
 	),
 	array(
 		'label'    => 'Feed',
 		'name'     => 'feed',
 		'keywords' => 'job',
 		'disabled' => false,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/feed.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/dist/images/feed.png' )
 	),
 	array(
 		'label'    => 'Youtube',
 		'name'     => 'youtube',
 		'keywords' => 'job',
 		'disabled' => false,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/youtube.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/youtube.png' )
 	),
 	array(
 		'label'    => 'Flickr',
 		'name'     => 'flickr',
 		'keywords' => 'job',
 		'disabled' => false,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/flickr.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/flickr.png' )
 	),
 	array(
 		'label'    => 'Envato',
 		'name'     => 'envato',
 		'keywords' => 'job',
 		'disabled' => false,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/envato.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/envato.png' )
 	),
 	array(
 		'label'    => 'Amazon',
 		'name'     => 'amazon',
 		'keywords' => 'bestbuy, affiliation, affiliate',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/amazon.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/amazon.png' )
 	),
 	array(
 		'label'    => 'BestBuy',
 		'name'     => 'bestBuy',
 		'keywords' => 'bestbuy, affiliation, affiliate',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/bestbuy.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/bestbuy.png' )
 	),
 	array(
 		'label'    => 'CareerJet',
 		'name'     => 'careerjet',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/careerjet.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/careerjet.png' )
 	),
 	array(
 		'label'    => 'ClickBank',
 		'name'     => 'clickBank',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/clickbank.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/clickbank.png' )
 	),
 	array(
 		'label'    => 'Craigslist',
 		'name'     => 'craigslist',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/craigslist.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/craigslist.png' )
 	),
 	array(
 		'label'    => 'Ebay',
 		'name'     => 'ebay',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/ebay.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/ebay.png' )
 	),
 	array(
 		'label'    => 'Ezine Articles',
 		'name'     => 'ezine-articles',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/ezine.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/ezine.png' )
 	),
 	array(
 		'label'    => 'FaceBook',
 		'name'     => 'faceBook',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/facebook.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/facebook.png' )
 	),
 	array(
 		'label'    => 'Instagram',
 		'name'     => 'instagram',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/instragram.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/instragram.png' )
 	),
 	array(
 		'label'    => 'Itunes',
 		'name'     => 'itunes',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/itunes.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/itunes.png' )
 	),
 	array(
 		'label'    => 'Pinterest',
 		'name'     => 'pinterest',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/pinterest.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/pinterest.png' )
 	),
 //	array(
 //		'label'    => 'Quora',
 //		'name'     => 'quora',
 //		'keywords' => 'job',
 //		'disabled' => true,
-//		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/quora.png' )
+//		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/quora.png' )
 //	),
 	array(
 		'label'    => 'Reddit',
 		'name'     => 'reddit',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/reddit.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/reddit.png' )
 	),
 	array(
 		'label'    => 'Twitter',
 		'name'     => 'twitter',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/twitter.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/twitter.png' )
 	),
 	array(
 		'name'     => 'SoundCloud',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/soundcloud.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/soundcloud.png' )
 	),
 	array(
 		'label'    => 'Walmart',
 		'name'     => 'walmart',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/walmart.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/walmart.png' )
 	),
 	array(
 		'label'    => 'Gearbest',
 		'name'     => 'gearbest',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/gearbest.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/gearbest.png' )
 	),
 	array(
 		'label'    => 'Vimeo',
 		'name'     => 'vimeo',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/vimeo.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/vimeo.png' )
 	),
 	array(
 		'label'    => 'Yelp',
 		'name'     => 'yelp',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/yelp.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/yelp.png' )
 	),
 	array(
 		'label'    => 'Eventful',
 		'name'     => 'eventful',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/eventful.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/eventful.png' )
 	),
 	array(
 		'label'    => 'Etsy',
 		'name'     => 'etsy',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/etsy.png' )
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/etsy.png' )
 	),
 	array(
 		'label'    => 'Daily Motion',
 		'name'     => 'dailymotion',
 		'keywords' => 'job',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/dailymotion.png' ),
-	
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/dailymotion.png' ),
+
 	),
 	array(
 		'label'    => 'Tiktok',
 		'name'     => 'tiktok',
 		'keywords' => 'tiktok,video',
 		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/tiktok.png' ),
+		'image'    => esc_url( WPCP_ASSETS_URL . '/dist/images/tiktok.png' ),
 	)
 ) );
 ?>

@@ -14,57 +14,62 @@
 jQuery(document).ready(function ($) {
 	'use strict';
 	$.wp_content_pilot = {
-
-		init: function () {
+		init() {
 			$('.wpcp-tooltip').tipTip({
-				'attribute': 'data-tip',
-				'fadeIn': 50,
-				'fadeOut': 50,
-				'delay': 200
+				attribute: 'data-tip',
+				fadeIn: 50,
+				fadeOut: 50,
+				delay: 200,
 			});
 			$('.wpcp-range-slider').ionRangeSlider({
-				skin: 'round'
+				skin: 'round',
 			});
 
 			$('.wpcp-select2').select2({
-				theme: 'default wpcp-select2'
+				theme: 'default wpcp-select2',
 			});
 			//position log metabox
 			$('#wpcp-campaign-log').insertAfter($('#wpcp-campaign-status'));
 		},
-		hideKeywordField: function () {
+		hideKeywordField() {
 			var keywordInput = $('#_keywords');
 			var suggestionInput = $('#_keyword_suggestion');
 			var keywordWrapper = keywordInput.closest('p._keywords-field');
-			var suggestionWrapper = suggestionInput.closest('p._keyword_suggestion-field');
+			var suggestionWrapper = suggestionInput.closest(
+				'p._keyword_suggestion-field'
+			);
 			keywordInput.attr('disabled', 'disabled');
 			suggestionInput.attr('disabled', 'disabled');
 			keywordWrapper.hide();
 			suggestionWrapper.hide();
 		},
-		showKeywordField: function () {
+		showKeywordField() {
 			var keywordInput = $('#_keywords');
 			var suggestionInput = $('#_keyword_suggestion');
 			var keywordWrapper = keywordInput.closest('p._keywords-field');
-			var suggestionWrapper = suggestionInput.closest('p._keyword_suggestion-field');
+			var suggestionWrapper = suggestionInput.closest(
+				'p._keyword_suggestion-field'
+			);
 			keywordInput.removeAttr('disabled');
 			suggestionInput.removeAttr('disabled');
 			keywordWrapper.show();
 			suggestionWrapper.show();
 		},
-		youtube: function () {
-			$('#_youtube_search_type').on('change', function () {
-				var channnelField = $('._youtube_playlist_id-field');
-				if ('global' === $(this).val()) {
-					channnelField.hide();
-					$.wp_content_pilot.showKeywordField();
-				} else {
-					channnelField.show();
-					$.wp_content_pilot.hideKeywordField();
-				}
-			}).change();
+		youtube() {
+			$('#_youtube_search_type')
+				.on('change', function () {
+					var channnelField = $('._youtube_playlist_id-field');
+					if ($(this).val() === 'global') {
+						channnelField.hide();
+						$.wp_content_pilot.showKeywordField();
+					} else {
+						channnelField.show();
+						$.wp_content_pilot.hideKeywordField();
+					}
+				})
+				.change();
 		},
-		deleteCampaignPosts: function (e) {
+		deleteCampaignPosts(e) {
 			e.preventDefault();
 
 			if (!confirm('Are you sure?')) {
@@ -84,23 +89,23 @@ jQuery(document).ready(function ($) {
 			wp.ajax.send({
 				data: {
 					action: 'wpcp_delete_all_campaign_posts',
-					camp_id: camp_id,
-					nonce: nonce
+					camp_id,
+					nonce,
 				},
-				success: function () {
+				success() {
 					spinner.removeClass('active');
 					$el.attr('disabled', false);
 					spinner.removeClass('active');
 					$el.attr('disabled', false);
 					window.location.reload();
 				},
-				error: function (error) {
+				error(error) {
 					$el.attr('disabled', false);
 					console.log(error);
-				}
+				},
 			});
 		},
-		clearLogs: function (e) {
+		clearLogs(e) {
 			e.preventDefault();
 
 			if (!confirm('Are you sure?')) {
@@ -112,19 +117,19 @@ jQuery(document).ready(function ($) {
 			wp.ajax.send({
 				data: {
 					action: 'wpcp_clear_logs',
-					nonce: nonce
+					nonce,
 				},
-				success: function () {
+				success() {
 					$el.attr('disabled', false);
 					window.location.reload();
 				},
-				error: function (error) {
+				error(error) {
 					$el.attr('disabled', false);
 					console.log(error);
-				}
+				},
 			});
 		},
-		handle_manual_campaign: function (e) {
+		handle_manual_campaign(e) {
 			e.preventDefault();
 			var $button = $(this);
 			$button.hide();
@@ -144,17 +149,17 @@ jQuery(document).ready(function ($) {
 			$metabox.fadeIn('slow');
 
 			request = wp.ajax.post('wpcp_run_manual_campaign', {
-				'nonce': wp_content_pilot_i10n.nonce,
-				'campaign_id': campaign_id,
-				'instance': instance
+				nonce: wp_content_pilot_i10n.nonce,
+				campaign_id,
+				instance,
 			});
 
 			window.wpcp_interval = setInterval(function () {
 				logger = wp.ajax.post('wpcp_get_campaign_instance_log', {
-					'nonce': wp_content_pilot_i10n.nonce,
-					'campaign_id': campaign_id,
-					'instance': instance,
-					'offset': wpcp_logger_offset
+					nonce: wp_content_pilot_i10n.nonce,
+					campaign_id,
+					instance,
+					offset: wpcp_logger_offset,
 				});
 
 				logger.always(function (logs) {
@@ -171,7 +176,6 @@ jQuery(document).ready(function ($) {
 					clearInterval(window.wpcp_interval);
 					window.wpcp_logger_offset = 0;
 				}
-
 			}, 500);
 
 			request.always(function (response) {
@@ -193,26 +197,36 @@ jQuery(document).ready(function ($) {
 				if (!data.message) {
 					return '';
 				}
-				return $('<p>').addClass(data.level).html('[' + data.time + '] - ' + data.message + '');
+				return $('<p>')
+					.addClass(data.level)
+					.html('[' + data.time + '] - ' + data.message + '');
 			}
-
 		},
-		polylang: function () {
-			var polylang_language_code_field = $('._polylang_language_code-field');
-			$('#_enable_polylang').on('change', function() {
-				if ( true === $(this).prop('checked') ) {
-					polylang_language_code_field.show();
-				} else {
-					polylang_language_code_field.hide();
-				}
-			}).change();
-		}
-
+		polylang() {
+			var polylang_language_code_field = $(
+				'._polylang_language_code-field'
+			);
+			$('#_enable_polylang')
+				.on('change', function () {
+					if ($(this).prop('checked') === true) {
+						polylang_language_code_field.show();
+					} else {
+						polylang_language_code_field.hide();
+					}
+				})
+				.change();
+		},
 	};
 	$.wp_content_pilot.init();
 	$.wp_content_pilot.youtube();
-	$('#wpcp-delete-campaign-posts').on('click', $.wp_content_pilot.deleteCampaignPosts);
+	$('#wpcp-delete-campaign-posts').on(
+		'click',
+		$.wp_content_pilot.deleteCampaignPosts
+	);
 	$('#wpcp-clear-logs').on('click', $.wp_content_pilot.clearLogs);
-	$('#wpcp-run-campaign').on('click', $.wp_content_pilot.handle_manual_campaign);
+	$('#wpcp-run-campaign').on(
+		'click',
+		$.wp_content_pilot.handle_manual_campaign
+	);
 	$.wp_content_pilot.polylang();
 });

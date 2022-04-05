@@ -52,3 +52,10 @@ Thumbs.db
 *.scss
 
 #Plugin specific
+assets/css/
+assets/js/
+assets/blocks/
+assets/fonts/
+assets/images/
+scaffold.json
+readme.md

@@ -10,8 +10,8 @@
  */
 defined( 'ABSPATH' ) || exit();
 function wpcp_load_admin_scripts( $hook ) {
-	$js_dir     = WPCP_ASSETS_URL . '/js/';
-	$css_dir    = WPCP_ASSETS_URL . '/css/';
+	$js_dir     = WPCP_ASSETS_URL . '/dist/js/';
+	$css_dir    = WPCP_ASSETS_URL . '/dist/css/';
 	$vendor_dir = WPCP_ASSETS_URL . '/vendor/';
 
 	// Use minified libraries if SCRIPT_DEBUG is turned off

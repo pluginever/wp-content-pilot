@@ -42,7 +42,7 @@ function wpcp_setup_wpcp_post_types() {
 		'show_ui'            => true,
 		'show_in_menu'       => true,
 		'query_var'          => true,
-		'menu_icon'          => WPCP_ASSETS_URL . '/images/icons/logo.svg',
+		'menu_icon'          => WPCP_ASSETS_URL . '/dist/images/logo.svg',
 		'capability_type'    => 'post',
 		'map_meta_cap'       => true,
 		'has_archive'        => false,
