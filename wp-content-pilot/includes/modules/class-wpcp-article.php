@@ -198,7 +198,7 @@ EOT;
 //				wpcp_logger()->info( sprintf( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s] %s reactivate keyword %s', 'wp-content-pilot' ), $keyword, '<a href="' . $reactivate_keyword_action . '">', '</a>' ), $campaign_id );
 				wpcp_logger()->info( __( 'The keyword is deactivated for 1 hr because last time could not find any article with keyword [%s]', 'wp-content-pilot' ), $campaign_id );
 				continue;
-			}
+			} 
 
 			//get links from database
 			wpcp_logger()->info( __( 'Checking for cached links in store', 'wp-content-pilot' ), $campaign_id );
@@ -380,8 +380,7 @@ EOT;
 		wpcp_logger()->info( __( 'Finding links from response and inserting into database', 'wp-content-pilot' ), $campaign_id );
 		foreach ( $items as $item ) {
 			$title = ! empty( $item->title ) ? $item->title : '';
-			$link  = ! empty( $item->pagemap->metatags[0]->{'og:url'} ) ? $item->pagemap->metatags[0]->{'og:url'} : '';
-			//$link  = ! empty( $item->link ) ? $item->link : '';
+			$link  = ! empty( $item->link ) ? $item->link : '';
 
 			foreach ( $banned_hosts as $banned_host ) {
 				if ( stristr( $link, $banned_host ) ) {
