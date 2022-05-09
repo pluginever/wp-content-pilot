@@ -10,7 +10,7 @@
  * License:     GPLv2+
  * Text Domain: wp-content-pilot
  * Domain Path: /i18n/languages/
- * Tested up to: 5.9.2
+ * Tested up to: 5.9.3
  */
 
 /**
