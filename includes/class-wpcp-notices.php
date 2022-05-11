@@ -28,6 +28,7 @@ class WPCP_Admin_Notices {
 	private static $predefined_notices = array(
 		'upgrade_notice' => 'upgrade_notice',
 		//'spinner_notice' => 'spinner_notice',
+		'article_notice' => 'article_notice'
 	);
 
 	/**
@@ -265,6 +266,18 @@ class WPCP_Admin_Notices {
 		$notice = sprintf( __( 'The most wanted feature <b>article spinner</b> is now available with <b>WP Content Pilot</b>. We have integrated spinrewriter support. If you do not have account %ssignup now%s and configure in settings page.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>' );
 		self::add_dismissible_notice( $notice, array( 'type' => 'native notice-info', 'dismiss_class' => 'spinner_notice' ) );
 	}
+
+	/**
+	 * Add 'article_notice' notice
+	 *
+	 * @since 1.3.2
+	*/
+   public static function article_notice() {
+	   $notice = sprintf( __( 'Article search options will be changed from version 1.3.3. The old bing search will be replaced with <b>Google Custom Search</b> will be introduced. Follow this %sblog%s and configure in the settings page.', 'wp-content-pilot' ), '<a href="https://pluginever.com/docs/wp-content-pilot/how-to-create-google-custom-search-api/" target="_blank">', '</a>' );
+	   self::add_dismissible_notice( $notice, array( 'type' => 'native notice-info', 'dismiss_class' => 'article_notice' ) );
+   }
+
+
 
 
 }
