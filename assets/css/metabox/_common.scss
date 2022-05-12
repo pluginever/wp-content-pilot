@@ -30,3 +30,13 @@
 		}
 	}
 }
+._wpcp_custom_meta_fields-field {
+		.widefat td {
+			@media screen and (max-width: 767px) {
+				padding: 10px 4px;
+				font-size: 10px;
+				line-height: 1.1em;
+			}
+
+	}
+}
