@@ -222,7 +222,7 @@ EOT;
 	public function get_setting_section( $sections ) {
 		$sections[] = [
 			'id'    => 'wpcp_settings_youtube',
-			'title' => __( 'Youtube Settings', 'wp-content-pilot' )
+			'title' => __( 'Youtube', 'wp-content-pilot' )
 		];
 
 		return $sections;
