@@ -51,7 +51,7 @@ class WPCP_Admin {
 		$hook = 'edit.php?post_type=wp_content_pilot';
 		add_submenu_page( $hook, __( 'Status', 'wp-content-pilot' ), __( 'Status', 'wp-content-pilot' ), 'edit_others_posts', 'wpcp-status', array( $this, 'status_page' ) );
 		add_submenu_page( $hook, __( 'Logs', 'wp-content-pilot' ), __( 'Logs', 'wp-content-pilot' ), 'edit_others_posts', 'wpcp-logs', array( $this, 'logs_page' ) );
-		add_submenu_page( $hook, 'Help', '<span style="color:orange;">Help</span>', 'edit_others_posts', 'wpcp-help', array( $this, 'help_page' ) );
+		// add_submenu_page( 'edit.php?post_type=wp_content_pilot', 'Help', '<span style="color:orange;">Help</span>', 'edit_others_posts', 'wpcp-help', array( $this, 'help_page' ) );
 	}
 
 	/**
