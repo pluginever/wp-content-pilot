@@ -186,15 +186,15 @@ EOT;
 		$fields['wpcp_settings_envato'] = [
 			array(
 				'name'    => 'token',
-				'label'   => __( 'Envato Token', 'wp-content-pilot' ),
+				'label'   => __( 'Envato token', 'wp-content-pilot' ),
 				'desc'    => sprintf( __( 'Check this tutorial to get your <a href="%s" target="_blank">Envato token</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/how-to-create-envato-token/' ),
 				'type'    => 'password',
 				'default' => ''
 			),
 			array(
 				'name'    => 'envato_impact_radius',
-				'label'   => __( 'Impact Radius affiliate URL', 'wp-content-pilot' ),
-				'desc'    => sprintf( __( 'Learn how to get your Impact Radius affiliate URL <a href="%s">here</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/get-your-envato-impact-radius-affiliate-url/' ),
+				'label'   => __( 'Impact radius affiliate url', 'wp-content-pilot' ),
+				'desc'    => sprintf( __( 'Learn how to get your impact radius affiliate url <a href="%s">here</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/get-your-envato-impact-radius-affiliate-url/' ),
 				'type'    => 'text',
 				'default' => ''
 			),

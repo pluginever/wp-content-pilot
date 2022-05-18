@@ -70,15 +70,15 @@ class WPCP_Settings {
 			'wpcp_settings_misc'   => array(
 				array(
 					'name'    => 'uninstall_on_delete',
-					'label'   => __( 'Remove Data on Uninstall?', 'wp-content-pilot' ),
+					'label'   => __( 'Remove data on uninstall?', 'wp-content-pilot' ),
 					'desc'    => __( 'Check this box if you would like to completely remove all of its data when the plugin is deleted.', 'wp-content-pilot' ),
 					'type'    => 'checkbox',
 					'default' => ''
 				),
 				array(
 					'name'    => 'post_publish_mail',
-					'label'   => __( 'Post Publish mail', 'wp-content-pilot' ),
-					'desc'    => __( 'Send mail After post publish', 'wp-content-pilot' ),
+					'label'   => __( 'Post publish mail', 'wp-content-pilot' ),
+					'desc'    => __( 'Send mail after post publish', 'wp-content-pilot' ),
 					'type'    => 'checkbox',
 					'default' => ''
 				),
@@ -94,21 +94,21 @@ class WPCP_Settings {
 				array(
 					'name'    => 'spinrewriter_head',
 					'label'   => __( 'SpinreWriter', 'wp-content-pilot' ),
-					'desc'    => sprintf( __( 'SpinreWriter is one of the best Article Spinner, if you do not have account please %ssign up%s.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>' ),
+					'desc'    => sprintf( __( 'Spin rewriter is one of the best Article Spinner, if you do not have account please %ssign up%s.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>' ),
 					'type'    => 'html',
 					'default' => ''
 				),
 				array(
 					'name'    => 'spinrewriter_email',
 					'label'   => __( 'Email', 'wp-content-pilot' ),
-					'desc'    => __( 'Input your email address of SpinreWriter.', 'wp-content-pilot' ),
+					'desc'    => __( 'Input your email address of Spin rewriter.', 'wp-content-pilot' ),
 					'type'    => 'text',
 					'default' => ''
 				),
 				array(
 					'name'    => 'spinrewriter_api_key',
 					'label'   => __( 'API Key', 'wp-content-pilot' ),
-					'desc'    => __( 'Input API key of SpinreWriter.', 'wp-content-pilot' ),
+					'desc'    => __( 'Input API key of Spin rewriter.', 'wp-content-pilot' ),
 					'type'    => 'text',
 					'default' => ''
 				),
