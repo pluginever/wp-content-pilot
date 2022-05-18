@@ -596,7 +596,7 @@ function wpcp_spin_article( $campaign_id, $content ) {
 	] );
 
 	if ( empty( $args['email_address'] ) || empty( $args['api_key'] ) ) {
-		wpcp_logger()->error( __( 'spinwritter API details is not set, aborting article spinner', 'wp-content-pilot' ) );
+		wpcp_logger()->error( __( 'spinwritter API details is not set, aborting article spinner', 'wp-content-pilot' ), $campaign_id );
 
 		return $content;
 	}
@@ -605,14 +605,14 @@ function wpcp_spin_article( $campaign_id, $content ) {
 	$endpoint = 'http://www.spinrewriter.com/action/api';
 	$curl->post( $endpoint, $args );
 	if ( $curl->isError() ) {
-		wpcp_logger()->error( __( 'Spinwritter could not send API request, aborting article spinner', 'wp-content-pilot' ) );
+		wpcp_logger()->error( __( 'Spinwritter could not send API request, aborting article spinner', 'wp-content-pilot' ), $campaign_id );
 
 		return $content;
 	}
 	$response = json_decode( $curl->getResponse() );
 
 	if ( isset( $response->status ) && $response->status == 'ERROR' ) {
-		wpcp_logger()->error( sprintf( __( 'Aborting article spinner Because [%s]', 'wp-content-pilot' ), $response->response ) );
+		wpcp_logger()->error( sprintf( __( 'Aborting article spinner Because [%s]', 'wp-content-pilot' ), $response->response ), $campaign_id );
 
 		return $content;
 	}

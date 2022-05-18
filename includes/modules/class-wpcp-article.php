@@ -294,11 +294,11 @@ EOT;
 
 		//check if links exist
 		if ( empty( $response ) || ! isset( $matches ) || ! isset( $matches ) || empty( $matches ) ) {
-			$message = __( 'Could not find any links from search engine, deactivating keyword for an hour.', 'wp-content-pilot' );
-			wpcp_logger()->error( $message, $campaign_id );
+			//$message = __( 'Could not find any links from search engine, deactivating keyword for an hour.', 'wp-content-pilot' );
+			wpcp_logger()->error( __( 'Could not find any links from search engine, deactivating keyword for an hour.', 'wp-content-pilot' ), $campaign_id );
 			$this->deactivate_key( $campaign_id, $keyword );
 
-			return new WP_Error( 'no-links-found', $message );
+			return new WP_Error( 'no-links-found', __( 'Could not find any links from search engine, deactivating keyword for an hour.', 'wp-content-pilot' ) );
 		}
 
 		$items = $matches;

@@ -104,7 +104,7 @@ class WPCP_Logger {
 	 * @return void
 	 */
 	public function error( $message, $campaign_id = 0 ) {
-		$this->writeLog( $message, 'ERROR', $campaign_id = 0 );
+		$this->writeLog( $message, 'ERROR', $campaign_id );
 	}
 
 	/**

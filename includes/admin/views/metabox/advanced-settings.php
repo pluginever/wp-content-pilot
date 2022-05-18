@@ -6,14 +6,14 @@ echo WPCP_HTML::text_input( array(
 	'label'   => __( 'Limit Title', 'wp-content-pilot' ),
 	'type'    => 'number',
 	'name'    => '_title_limit',
-	'tooltip' => 'Input the number of words to limit the title. Default full title.',
+	'tooltip' => __( 'Input the number of words to limit the title. Default full title.', 'wp-content-pilot' )
 ) );
 
 echo WPCP_HTML::text_input( array(
 	'label'   => __( 'Limit Content', 'wp-content-pilot' ),
 	'type'    => 'number',
 	'name'    => '_content_limit',
-	'tooltip' => 'Input the number of words to limit content. Default full content.',
+	'tooltip' => __( 'Input the number of words to limit content. Default full content.', 'wp-content-pilot' )
 ) );
 
 echo WPCP_HTML::text_input( array(
@@ -36,8 +36,8 @@ echo WPCP_HTML::select_input( array(
 	'wrapper_class' => 'pro',
 	'options'       => array(
 		''       => __( 'No Translation', 'wp-content-pilot' ),
-		'yandex' => 'Yandex',
-		'deepl'  => 'deepL',
+		'yandex' => __( 'Yandex', 'wp-content-pilot' ),
+		'deepl'  => __( 'deepL', 'wp-content-pilot' )
 	),
 	'attrs'         => array(
 		'disabled' => 'disabled',

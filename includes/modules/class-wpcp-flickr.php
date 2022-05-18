@@ -206,6 +206,8 @@ EOT;
 
 		$keywords = $this->get_campaign_meta( $campaign_id );
 		if ( empty( $keywords ) ) {
+			wpcp_logger()->error(  __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ), $campaign_id );
+
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}
 
