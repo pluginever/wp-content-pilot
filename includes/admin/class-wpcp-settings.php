@@ -130,10 +130,10 @@ class WPCP_Settings {
 					<div id="postbox-container-1" class="postbox-container" style="margin-top: 15px;">
 						<?php if ( ! defined( 'WPCP_PRO_VERSION' ) ): ?>
 							<div class="postbox" style="min-width: inherit;">
-								<h3 class="hndle"><label for="title"><?php _e( 'Upgrade to PRO', 'wp-content-pilot' ); ?></label></h3>
+								<h3 class="hndle"><label for="title"><?php _e( 'Upgrade to Pro', 'wp-content-pilot' ); ?></label></h3>
 								<div class="inside">
 									<?php
-									echo sprintf( __( 'Pro version support 15+ campaign sources with exclusive features, %supgrade to pro now%s.', 'wp-content-pilot' ), '<a href="https://pluginever.com/plugins/wp-content-pilot-pro/" target="_blank">', '</a>' )
+									echo sprintf( __( 'Pro version supports 25+ campaign sources with exclusive features. %sUpgrade to Pro.%s', 'wp-content-pilot' ), '<a href="https://pluginever.com/plugins/wp-content-pilot-pro/" target="_blank">', '</a>' )
 									?>
 								</div>
 							</div>
@@ -143,7 +143,7 @@ class WPCP_Settings {
 							<h3 class="hndle"><label for="title"><?php _e( 'Documentation', 'wp-content-pilot' ); ?></label></h3>
 							<div class="inside">
 								<?php
-								echo sprintf( __( 'Please visit the %s WP Content Pilot %s  plugin\'s documentation page to learn how to use this plugin', 'wp-content-pilot' ), '<a href="https://pluginever.com/docs/wp-content-pilot/" target="_blank">', '</a>' )
+								echo sprintf( __( 'We have detailed documentation on every aspects of %s WP Content Pilot %s', 'wp-content-pilot' ), '<a href="https://pluginever.com/docs/wp-content-pilot/" target="_blank">', '</a>' )
 								?>
 							</div>
 						</div>
@@ -152,7 +152,7 @@ class WPCP_Settings {
 							<h3 class="hndle"><label for="title"><?php _e( 'Support', 'wp-content-pilot' ); ?></label></h3>
 							<div class="inside">
 								<?php
-								echo sprintf( __( 'Having issues or difficulties? You can post your issue on the %s Support Forum.%s', 'wp-content-pilot' ), '<a href="https://pluginever.com/support/" target="_blank">', '</a>' )
+								echo sprintf( __( 'Our expert support team is always ready to help you out. %s support forum%s', 'wp-content-pilot' ), '<a href="https://pluginever.com/support/" target="_blank">', '</a>' )
 								?>
 
 							</div>
@@ -162,7 +162,7 @@ class WPCP_Settings {
 							<h3 class="hndle"><label for="title">Rate Us</label></h3>
 							<div class="inside">
 								<?php
-								echo sprintf( __( 'Like the plugin? Please give us a  %s rating.%s', 'wp-content-pilot' ), '<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/#new-post" target="_blank">', '</a>' )
+								echo sprintf( __( 'If you like WP Content Pilot, please leave us a  %s rating.%s It takes a minute and helps a lot. Thanks in advance!' , 'wp-content-pilot' ), '<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/#new-post" target="_blank">', '</a>' )
 								?>
 								<div class="ratings-stars-container">
 									<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/?filter=5"
