@@ -344,6 +344,16 @@ function wpcp_target_rel_field() {
 	) );
 }
 
+function wpcp_post_without_featured_image() {
+	echo WPCP_HTML::checkbox_input( array(
+		'label'         => __( 'Skip posts with no images', 'wp-content-pilot' ),
+		'name'          => '_skip_post_with_no_images',
+		'wrapper_class' => 'pro',
+		'attrs'         => array(
+			'disabled' => 'disabled',
+		)
+	) );
+}
 
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_featured_image_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_remove_images', 20 );
@@ -354,6 +364,7 @@ add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_clean_post_title', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_use_original_date_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_external_link_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_featured_image_random_field', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_post_without_featured_image', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_canonical_link_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_target_rel_field', 20 );
 
