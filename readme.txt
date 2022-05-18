@@ -24,7 +24,7 @@ The plugin keeps posting articles on your site at a predefined interval using yo
 = WP Content Pilot Features: =
 Here is the detailed breakdown of all the features that we ship with WP Content Content Pilot to make it suitable for various cases!
 
-* **[Content Spinner](https://pluginever.com/plugins/wp-content-pilot-pro)**: Integration of spinning software which makes it possible to create unique automatic content.
+* **[Content Spinner](https://pluginever.com/plugins/wp-content-pilot-pro)**: Integration of spinning software which makes it possible to create unique automatic content (3rd party paid tool).
 * **[Template Editor](https://pluginever.com/plugins/wp-content-pilot-pro)**:  Control how auto-published posts will look using the supported template tags of the module.
 * **[Post Categories](https://pluginever.com/plugins/wp-content-pilot-pro)**:  The plugin will automatically insert these categories with newly published posts.
 * **[Post Tags](https://pluginever.com/plugins/wp-content-pilot-pro)**:  The plugin will automatically insert these tags with newly published posts.

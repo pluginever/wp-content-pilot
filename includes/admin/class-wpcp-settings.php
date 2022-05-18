@@ -134,6 +134,7 @@ class WPCP_Settings {
 								<div class="inside">
 									<?php
 									echo sprintf( __( 'Pro version supports 25+ campaign sources with exclusive features. %sUpgrade to Pro.%s', 'wp-content-pilot' ), '<a href="https://pluginever.com/plugins/wp-content-pilot-pro/" target="_blank">', '</a>' )
+
 									?>
 								</div>
 							</div>
