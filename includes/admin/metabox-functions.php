@@ -222,7 +222,7 @@ function wpcp_keyword_field() {
 		'label'       => __( 'Keywords', 'wp-content-pilot' ),
 		'name'        => '_keywords',
 		'placeholder' => 'Bonsai tree care',
-		'desc'        => __( 'Separate keywords by comma.', 'wp-content-pilot' ),
+		'desc'        => __( 'Separate keywords with commas.', 'wp-content-pilot' ),
 		'attrs'       => array(
 			'rows'     => 3,
 			'required' => 'required'
@@ -257,7 +257,7 @@ function wpcp_external_link_field() {
 	echo WPCP_HTML::checkbox_input( array(
 		'label'         => __( 'Make permalink link directly to the source', 'wp-content-pilot' ),
 		'name'          => '_external_post',
-		'tooltip'       => __( 'Make post link directly to the source site, Posts will not load at your site.', 'wp-content-pilot' ),
+		'tooltip'       => __( 'Make post link directly to the source site, posts will not load at your site.', 'wp-content-pilot' ),
 		'wrapper_class' => 'pro',
 		'attrs'         => array(
 			'disabled' => 'disabled',
@@ -267,7 +267,7 @@ function wpcp_external_link_field() {
 
 function wpcp_canonical_link_field() {
 	echo WPCP_HTML::checkbox_input( array(
-		'label'         => __( 'Add Canonical Tag with the original post link ', 'wp-content-pilot' ),
+		'label'         => __( 'Add canonical tag with the original post link ', 'wp-content-pilot' ),
 		'name'          => '_canonical_tag',
 		'wrapper_class' => 'pro',
 		'attrs'         => array(
@@ -278,7 +278,7 @@ function wpcp_canonical_link_field() {
 
 function wpcp_featured_image_field() {
 	echo WPCP_HTML::checkbox_input( array(
-		'label' => __( 'Set First image as featured image', 'wp-content-pilot' ),
+		'label' => __( 'Set first image as featured image', 'wp-content-pilot' ),
 		'name'  => '_set_featured_image',
 	) );
 }

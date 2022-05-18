@@ -32,7 +32,7 @@ echo WPCP_HTML::select_input( array(
 	'label'         => __( 'Translator', 'wp-content-pilot' ),
 	'type'          => 'select',
 	'name'          => '_translator',
-	'default'       => 'dropl',
+	'default'       => 'deepl',
 	'wrapper_class' => 'pro',
 	'options'       => array(
 		''       => __( 'No Translation', 'wp-content-pilot' ),
