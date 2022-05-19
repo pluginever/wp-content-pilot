@@ -273,7 +273,7 @@ class WPCP_Admin_Notices {
 	 * @since 1.3.2
 	*/
    public static function article_notice() {
-	   $notice = sprintf( __( 'Article search options will be changed from version 1.3.3. The old bing search will be replaced with <b>Google Custom Search</b> will be introduced. Follow this %sblog%s and configure in the settings page.', 'wp-content-pilot' ), '<a href="https://pluginever.com/docs/wp-content-pilot/how-to-create-google-custom-search-api/" target="_blank">', '</a>' );
+	   $notice = __( 'Article search options will be changed in the next version of WP Content Pilot. Bing search will be replaced with Google Custom Search.', 'wp-content-pilot' );
 	   self::add_dismissible_notice( $notice, array( 'type' => 'native notice-info', 'dismiss_class' => 'article_notice' ) );
    }
 
