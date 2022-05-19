@@ -51,7 +51,7 @@ class WPCP_Admin {
 		$hook = 'edit.php?post_type=wp_content_pilot';
 		add_submenu_page( $hook, __( 'Status', 'wp-content-pilot' ), __( 'Status', 'wp-content-pilot' ), 'edit_others_posts', 'wpcp-status', array( $this, 'status_page' ) );
 		add_submenu_page( $hook, __( 'Logs', 'wp-content-pilot' ), __( 'Logs', 'wp-content-pilot' ), 'edit_others_posts', 'wpcp-logs', array( $this, 'logs_page' ) );
-		// add_submenu_page( 'edit.php?post_type=wp_content_pilot', 'Help', '<span style="color:orange;">Help</span>', 'edit_others_posts', 'wpcp-help', array( $this, 'help_page' ) );
+		//add_submenu_page( $hook, __('Help','wp-content-pilot'), '<span style="color:orange;">Help</span>', 'edit_others_posts', 'wpcp-help', array( $this, 'help_page' ) );
 	}
 
 	/**
@@ -74,9 +74,9 @@ class WPCP_Admin {
 	 * Help Page
 	 * @since 1.2.0
 	 */
-	public function help_page() {
-		wpcp_get_views( 'page/help-page.php' );
-	}
+//	public function help_page() {
+//		wpcp_get_views( 'page/help-page.php' );
+//	}
 
 	/**
 	 * @since 1.2.0
