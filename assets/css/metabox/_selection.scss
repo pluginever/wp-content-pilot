@@ -44,8 +44,12 @@
 		}
 
 		img {
-			width: 201px;
+			width: 150px;
 			height: auto;
+
+			@media (max-width: 767px) {
+				width: 130px;
+			}
 		}
 
 		input:checked + label {
@@ -77,3 +81,10 @@
 	}
 }
 
+.post-new-php.post-type-wp_content_pilot {
+	#poststuff {
+		#post-body.columns-2 {
+			margin-right: 0 !important;
+		}
+	}
+}

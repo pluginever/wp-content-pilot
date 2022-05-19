@@ -217,6 +217,6 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
     </div>
     <p class="submit">
         <input type="submit" name="submit" id="submit" class="button button-primary button-large"
-               value="<?php _e( 'Submit', 'wp-content-pilot' ); ?>">
+               value="<?php _e( 'Start Campaign', 'wp-content-pilot' ); ?>">
     </p>
 </div>
