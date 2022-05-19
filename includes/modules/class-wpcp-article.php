@@ -126,8 +126,8 @@ EOT;
 		$fields['wpcp_settings_article'] = [
 			array(
 				'name'        => 'banned_hosts',
-				'label'       => __( 'Banned Hosts', 'wp-content-pilot' ),
-				'desc'        => __( 'Articles from the above hosts will be rejected. put single url/host per line.', 'wp-content-pilot' ),
+				'label'       => __( 'Banned hosts', 'wp-content-pilot' ),
+				'desc'        => __( 'Articles from the above hosts will be rejected. Put single url/host per line.', 'wp-content-pilot' ),
 				'placeholder' => __( "example.com \n example1.com", 'wp-content-pilot' ),
 				'type'        => 'textarea',
 			),

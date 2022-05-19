@@ -30,6 +30,7 @@
 		}
 	}
 }
+
 ._wpcp_custom_meta_fields-field {
 		.widefat td {
 			@media screen and (max-width: 767px) {
@@ -40,3 +41,11 @@
 
 	}
 }
+.wp_content_pilot_page_wpcp-settings {
+	.postbox,.form-table {
+		a {
+			text-decoration: none;
+		}
+	}
+}
+

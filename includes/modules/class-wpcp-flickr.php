@@ -154,7 +154,7 @@ EOT;
 	public function get_setting_section( $sections ) {
 		$sections[] = [
 			'id'    => 'wpcp_settings_flickr',
-			'title' => __( 'Flickr Settings', 'wp-content-pilot' )
+			'title' => __( 'Flickr', 'wp-content-pilot' )
 		];
 
 		return $sections;
@@ -170,8 +170,8 @@ EOT;
 		$fields['wpcp_settings_flickr'] = [
 			array(
 				'name'    => 'api_key',
-				'label'   => __( 'Flickr API Key', 'wp-content-pilot' ),
-				'desc'    => sprintf( __( 'Get your Flickr API key by following this <a href="%s" target="_blank">link</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/flickr-campaign-settings/' ),
+				'label'   => __( 'Flickr API key', 'wp-content-pilot' ),
+				'desc'    => sprintf( __( 'Get your flickr API key by following this <a href="%s" target="_blank">link</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/flickr-campaign-settings/' ),
 				'type'    => 'password',
 				'default' => ''
 			),
