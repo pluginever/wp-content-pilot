@@ -168,13 +168,6 @@ $modules = apply_filters( 'wpcp_campaign_modules_list', array(
 		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/yelp.png' )
 	),
 	array(
-		'label'    => 'Eventful',
-		'name'     => 'eventful',
-		'keywords' => 'job',
-		'disabled' => true,
-		'image'    => esc_url( WPCP_ASSETS_URL . '/images/modules/eventful.png' )
-	),
-	array(
 		'label'    => 'Etsy',
 		'name'     => 'etsy',
 		'keywords' => 'job',
