@@ -20,6 +20,11 @@
 		box-sizing: border-box;
 		justify-content: space-between;
 
+		@media (max-width:767px) {
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+
 		.wpcp-campaign-statue-item {
 			flex-grow: 1;
 			position: relative;
@@ -32,9 +37,16 @@
 			border-left: 3px solid #007cba;
 			min-height: 56px;
 			box-sizing: border-box;
+			@media (max-width: 767px) {
+				width: 50%;
+				margin-bottom: 10px;
+			}
 
 			&:last-of-type {
 				margin-right: 0;
+				@media (max-width: 767px) {
+					margin-right: 15px;
+				}
 			}
 		}
 
@@ -45,9 +57,7 @@
 			line-height: 1;
 		}
 	}
-
 }
-
 
 @-webkit-keyframes blink {
 	from {
