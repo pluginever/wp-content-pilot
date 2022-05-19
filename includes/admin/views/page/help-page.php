@@ -310,7 +310,7 @@ $features = [
 </style>
 <div class="wrap">
 
-	<h2><?php echo esc_html__( 'WP Content Pilot - Help', 'wp-content-pilot' );?> </h2>
+	<h2><?php esc_html_e( 'WP Content Pilot - Help', 'wp-content-pilot' );?> </h2>
 
 	<div class="wpcp-help-page">
 		<?php foreach ( $blocks as $block ): ?>
