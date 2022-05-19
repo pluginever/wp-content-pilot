@@ -39,6 +39,7 @@ class WPCP_Settings {
 			$this,
 			'settings_page'
 		) );
+		add_submenu_page( 'edit.php?post_type=wp_content_pilot', __( 'Help', 'wp-content-pilot' ), __( 'Help', 'wp-content-pilot' ), 'edit_others_posts', 'wpcp-help', array( $this, 'help_page' ) );
 	}
 
 	/**
@@ -183,6 +184,14 @@ class WPCP_Settings {
 			</div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Help Page
+	 * @since 1.3.2
+	 */
+	public function help_page() {
+		wpcp_get_views( 'page/help-page.php' );
 	}
 
 	/**
