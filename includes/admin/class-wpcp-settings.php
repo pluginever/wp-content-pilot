@@ -49,7 +49,7 @@ class WPCP_Settings {
 		$sections = array(
 			array(
 				'id'    => 'wpcp_settings_misc',
-				'title' => __( 'Misc Settings', 'wp-content-pilot' )
+				'title' => __( 'General Settings', 'wp-content-pilot' )
 			),
 			array(
 				'id'    => 'wpcp_article_spinner',

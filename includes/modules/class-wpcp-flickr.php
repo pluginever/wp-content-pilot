@@ -154,7 +154,7 @@ EOT;
 	public function get_setting_section( $sections ) {
 		$sections[] = [
 			'id'    => 'wpcp_settings_flickr',
-			'title' => __( 'Flickr Settings', 'wp-content-pilot' )
+			'title' => __( 'Flickr', 'wp-content-pilot' )
 		];
 
 		return $sections;

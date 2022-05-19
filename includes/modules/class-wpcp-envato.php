@@ -170,7 +170,7 @@ EOT;
 	public function get_setting_section( $sections ) {
 		$sections[] = [
 			'id'    => 'wpcp_settings_envato',
-			'title' => __( 'Envato Settings', 'wp-content-pilot' )
+			'title' => __( 'Envato', 'wp-content-pilot' )
 		];
 
 		return $sections;
