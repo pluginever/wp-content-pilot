@@ -31,7 +31,7 @@ Here is the detailed breakdown of all the features that we ship with WP Content 
 
 === 💻 Find Out More: ===
 
-* **[See the Live Demo Site](https://pluginever.xyz/wp-content-pilot "See the Live Demo Site")**
+* **[See The Live Demo Site](http://pluginever.xyz/wp-content-pilot "See the Live Demo Site")**
 * **[Plugin Documentation](https://pluginever.com/docs/wp-content-pilot "Plugin Documentation")**
 * **[Need Help? Contact Our 24/7 Support](https://pluginever.com/support "Need Help? Contact Our 24/7 Support")**
 * **[WP Content Pilot PRO](https://pluginever.com/plugins/wp-content-pilot-pro "WP Content Pilot PRO")**
