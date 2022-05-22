@@ -254,7 +254,7 @@ final class ContentPilot {
 				'upgrade' => '<a href="'. esc_url( $upgrade_link ).'" style="color: red;font-weight: bold;" target="_blank">' . __( 'Go Pro', 'wp-content-pilot' ) . '</a>'
 			);
 
-			$links = array_merge_recursive( $links, $upgrade_links );
+			$links = array_merge( $links, $upgrade_links );
 		}
 
 		return $links;
