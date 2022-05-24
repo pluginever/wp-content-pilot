@@ -2,8 +2,8 @@
 Contributors: pluginever, b-07
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, feed import, content curation, feed to post, rss to post, rss feeds, auto post
 Requires at least: 4.9
-Tested up to: 5.9
-Requires PHP: 5.8.2
+Tested up to: 6.0
+Requires PHP: 5.8
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -76,7 +76,7 @@ https://www.youtube.com/watch?v=5A3gx0f6PJk
 
 === 💢 Have a WooCommerce Store? Superchange it With Our WooCommerce Plugins: === 
 
-* **[WooCommerce Serial Numbers](https://wordpress.org/plugins/wc-serial-numbers/ "WooCommerce Category Slider")**
+* **[WooCommerce Serial Numbers](https://wordpress.org/plugins/wc-serial-numbers/ "WooCommerce Serial Numbers")**
 * **[WooCommerce Category Slider](https://wordpress.org/plugins/woo-category-slider-by-pluginever "WooCommerce Category Slider")**
 * **[WooCommerce Category Showcase](https://wordpress.org/plugins/wc-category-showcase "WooCommerce Category Showcase")**
 * **[Min Max Quantities for WooCommerce](https://wordpress.org/plugins/wc-min-max-quantities "Min Max Quantities for WooCommerce")**
