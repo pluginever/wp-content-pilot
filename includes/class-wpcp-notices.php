@@ -28,6 +28,7 @@ class WPCP_Admin_Notices {
 	private static $predefined_notices = array(
 		'upgrade_notice' => 'upgrade_notice',
 		//'spinner_notice' => 'spinner_notice',
+		'article_notice' => 'article_notice'
 	);
 
 	/**
@@ -250,7 +251,7 @@ class WPCP_Admin_Notices {
 		if ( defined( 'WPCP_PRO_VERSION' ) ) {
 			return;
 		}
-		$notice = __( '<b>WP Content Pilot</b> is powering <b>4000+ companies</b> in generating automatic contents and affiliation with its <b>20+</b> types of campaign. Upgrade to Pro now & get 10% discount using coupon <strong>WPCPFREE2PRO</strong>', 'wp-content-pilot' );
+		$notice = __( '<b>WP Content Pilot</b> is powering <b>5000+ companies</b> in generating automatic contents and affiliation with its <b>25+</b> types of campaign. Upgrade to Pro now & get 10% discount using coupon <strong>WPCPFREE2PRO</strong>', 'wp-content-pilot' );
 		$notice .= '  <a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=admin-notice&utm_campaign=getpro&utm_medium=admin-dashboard" class="button button-pro promo-btn" target="_blank">Upgrade to Pro</a>';
 
 		self::add_dismissible_notice( $notice, array( 'type' => 'native notice-info', 'dismiss_class' => 'upgrade_notice' ) );
@@ -265,6 +266,18 @@ class WPCP_Admin_Notices {
 		$notice = sprintf( __( 'The most wanted feature <b>article spinner</b> is now available with <b>WP Content Pilot</b>. We have integrated spinrewriter support. If you do not have account %ssignup now%s and configure in settings page.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>' );
 		self::add_dismissible_notice( $notice, array( 'type' => 'native notice-info', 'dismiss_class' => 'spinner_notice' ) );
 	}
+
+	/**
+	 * Add 'article_notice' notice
+	 *
+	 * @since 1.3.2
+	*/
+   public static function article_notice() {
+	   $notice = __( 'Article search options will be changed in the next version of WP Content Pilot. Bing search will be replaced with Google Custom Search.', 'wp-content-pilot' );
+	   self::add_dismissible_notice( $notice, array( 'type' => 'native notice-info', 'dismiss_class' => 'article_notice' ) );
+   }
+
+
 
 
 }

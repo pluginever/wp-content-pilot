@@ -417,6 +417,15 @@ abstract class WPCP_Module {
 			pll_set_post_language( $post_id, $polylang_language_code );
 		}
 
+		// set fifu plugin
+		if ( function_exists('fifu_update_fake_attach_id' ) ) {
+			$enable_not_save_featured_image = ! empty( wpcp_get_post_meta( $campaign_id, '_not_save_featured_image', 0 ) ) ? wpcp_get_post_meta( $campaign_id, '_not_save_featured_image', 0 ) : 0;
+			if ( ! empty( $enable_not_save_featured_image ) && 'on' === $enable_not_save_featured_image ) {
+				wpcp_logger()->info( __( 'Setting featured image using external links', 'wp-content-pilot' ), $campaign_id );
+				update_post_meta ( $post_id, 'fifu_image_url', $article['image_url'] );
+				fifu_update_fake_attach_id ( $post_id );
+			}
+		}
 		//wpml internal cron patch
 
 		//wpml integration

@@ -209,6 +209,7 @@ function wpcp_update_campaign_settings( $post_id ) {
 
 	update_post_meta($post_id,'_enable_polylang',empty($posted['_enable_polylang']) ? '': sanitize_text_field($posted['_enable_polylang']));
 	update_post_meta($post_id,'_polylang_language_code',empty($posted['_polylang_language_code']) ? '': sanitize_text_field($posted['_polylang_language_code']));
+	update_post_meta($post_id,'_not_save_featured_image',empty($posted['_not_save_featured_image']) ? '': sanitize_text_field($posted['_not_save_featured_image']));
 
 	do_action( 'wpcp_update_campaign_settings', $post_id, $posted );
 	do_action( 'wpcp_' . sanitize_key( $posted['_campaign_type'] ) . '_update_campaign_settings', $post_id, $posted );
@@ -222,7 +223,7 @@ function wpcp_keyword_field() {
 		'label'       => __( 'Keywords', 'wp-content-pilot' ),
 		'name'        => '_keywords',
 		'placeholder' => 'Bonsai tree care',
-		'desc'        => __( 'Separate keywords by comma.', 'wp-content-pilot' ),
+		'desc'        => __( 'Separate keywords with commas.', 'wp-content-pilot' ),
 		'attrs'       => array(
 			'rows'     => 3,
 			'required' => 'required'
@@ -257,7 +258,7 @@ function wpcp_external_link_field() {
 	echo WPCP_HTML::checkbox_input( array(
 		'label'         => __( 'Make permalink link directly to the source', 'wp-content-pilot' ),
 		'name'          => '_external_post',
-		'tooltip'       => __( 'Make post link directly to the source site, Posts will not load at your site.', 'wp-content-pilot' ),
+		'tooltip'       => __( 'Make post link directly to the source site, posts will not load at your site.', 'wp-content-pilot' ),
 		'wrapper_class' => 'pro',
 		'attrs'         => array(
 			'disabled' => 'disabled',
@@ -267,7 +268,7 @@ function wpcp_external_link_field() {
 
 function wpcp_canonical_link_field() {
 	echo WPCP_HTML::checkbox_input( array(
-		'label'         => __( 'Add Canonical Tag with the original post link ', 'wp-content-pilot' ),
+		'label'         => __( 'Add canonical tag with the original post link ', 'wp-content-pilot' ),
 		'name'          => '_canonical_tag',
 		'wrapper_class' => 'pro',
 		'attrs'         => array(
@@ -278,7 +279,7 @@ function wpcp_canonical_link_field() {
 
 function wpcp_featured_image_field() {
 	echo WPCP_HTML::checkbox_input( array(
-		'label' => __( 'Set First image as featured image', 'wp-content-pilot' ),
+		'label' => __( 'Set first image as featured image', 'wp-content-pilot' ),
 		'name'  => '_set_featured_image',
 	) );
 }
@@ -344,6 +345,14 @@ function wpcp_target_rel_field() {
 	) );
 }
 
+function wpcp_not_save_featured_image_field() {
+	if( is_plugin_active('featured-image-from-url/featured-image-from-url.php' ) ) {
+		echo WPCP_HTML::checkbox_input( array(
+			'label'         => __( 'Don\'t save the featured image in server. Rather than use Featured Image from URL plugin', 'wp-content-pilot' ),
+			'name'          => '_not_save_featured_image',
+		) );
+	}
+}
 
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_featured_image_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_remove_images', 20 );
@@ -356,6 +365,7 @@ add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_external_link_field', 20 
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_featured_image_random_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_canonical_link_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_target_rel_field', 20 );
+add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_not_save_featured_image_field', 20 );
 
 
 function wpcp_search_replace_metafield( $post ) {

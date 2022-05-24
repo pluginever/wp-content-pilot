@@ -242,9 +242,19 @@ final class ContentPilot {
 	 * @return array
 	 */
 	public function plugin_action_links( $links ) {
-		$links[] = '<a href="' . admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-settings' ) . '">' . __( 'Settings', 'wp-content-pilot' ) . '</a>';
+		$action_links = array(
+			'settings' => '<a href="' . admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-settings' ) . '">' . __( 'Settings', 'wp-content-pilot' ) . '</a>',
+		);
+
+		$links = array_merge( $action_links, $links );
+
 		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
-			$links[] = '<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro" style="color: red;font-weight: bold;" target="_blank">' . __( 'Upgrade to PRO', 'wp-content-pilot' ) . '</a>';
+			$upgrade_link = 'https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro';
+			$upgrade_links = array(
+				'upgrade' => '<a href="'. esc_url( $upgrade_link ).'" style="color: red;font-weight: bold;" target="_blank">' . __( 'Go Pro', 'wp-content-pilot' ) . '</a>'
+			);
+
+			$links = array_merge( $links, $upgrade_links );
 		}
 
 		return $links;

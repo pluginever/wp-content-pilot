@@ -4,38 +4,38 @@ defined( 'ABSPATH') || exit();
 $blocks   = [
 	[
 		'image'       => WPCP_ASSETS_URL . '/images/help/docs.svg',
-		'title'       => __( 'Looking for Something?', 'wp-content-pilot' ),
+		'title'       => __( 'Looking for something?', 'wp-content-pilot' ),
 		'desc'        => __( 'We have detailed documentation on every aspects of WP Content Pilot.', 'wp-content-pilot' ),
 		'url'         => 'https://www.pluginever.com/docs/wp-content-pilot/',
-		'button_text' => __( 'Visit the Plugin Documentation', 'wp-content-pilot' ),
+		'button_text' => __( 'Documentation', 'wp-content-pilot' ),
 	],
 	[
 		'image'       => WPCP_ASSETS_URL . '/images/help/support.svg',
-		'title'       => __( 'Need Any Assistance?', 'wp-content-pilot' ),
-		'desc'        => __( 'Our EXPERT Support Team is always ready to Help you out.', 'wp-content-pilot' ),
+		'title'       => __( 'Need any assistance?', 'wp-content-pilot' ),
+		'desc'        => __( 'Our expert support team is always ready to help you out.', 'wp-content-pilot' ),
 		'url'         => 'https://www.pluginever.com/support/',
-		'button_text' => __( 'Contact Support', 'wp-content-pilot' ),
+		'button_text' => __( 'Contact support', 'wp-content-pilot' ),
 	],
 	[
 		'image'       => WPCP_ASSETS_URL . '/images/help/bugs.svg',
-		'title'       => __( 'Found Any Bugs?', 'wp-content-pilot' ),
-		'desc'        => __( 'OReport any Bug that you Discovered, Get Instant Solutions.', 'wp-content-pilot' ),
+		'title'       => __( 'Found a bug?', 'wp-content-pilot' ),
+		'desc'        => __( 'Report any bug that you discovered, get instant solutions.', 'wp-content-pilot' ),
 		'url'         => 'https://github.com/pluginever/wp-content-pilot',
-		'button_text' => __( 'Report to Github', 'wp-content-pilot' ),
+		'button_text' => __( 'Report to github', 'wp-content-pilot' ),
 	],
 	[
 		'image'       => WPCP_ASSETS_URL . '/images/help/customization.svg',
-		'title'       => __( 'Require Customization?', 'wp-content-pilot' ),
-		'desc'        => __( 'We would Love to hear your Integration and Customization Ideas.', 'wp-content-pilot' ),
-		'url'         => 'https://www.pluginever.com/contact-us/',
-		'button_text' => __( 'Contact Our Services', 'wp-content-pilot' ),
+		'title'       => __( 'Require customization?', 'wp-content-pilot' ),
+		'desc'        => __( 'We would love to hear your integration and customization ideas.', 'wp-content-pilot' ),
+		'url'         => 'https://www.pluginever.com/support/',
+		'button_text' => __( 'Contact us', 'wp-content-pilot' ),
 	],
 	[
 		'image'       => WPCP_ASSETS_URL . '/images/help/like.svg',
-		'title'       => __( 'Like The Plugin?', 'wp-content-pilot' ),
-		'desc'        => __( 'Your Review is very important to us as it helps us to grow more.', 'wp-content-pilot' ),
+		'title'       => __( 'Like the plugin?', 'wp-content-pilot' ),
+		'desc'        => __( 'Your review is very important to us. It takes a minute and helps a lot. Thanks in advance!', 'wp-content-pilot' ),
 		'url'         => 'https://wordpress.org/support/plugin/wp-content-pilot/reviews/?rate=5#new-post',
-		'button_text' => __( 'Review Us on WP.org', 'wp-content-pilot' ),
+		'button_text' => __( 'Leave a review', 'wp-content-pilot' ),
 	],
 ];
 $features = [
@@ -136,12 +136,6 @@ $features = [
 		'pro'   => true,
 	],
 	[
-		'title' => __( 'Quora', 'wp-content-pilot' ),
-		'desc'  => __( 'Quora module to import articles', 'wp-content-pilot' ),
-		'free'  => false,
-		'pro'   => true,
-	],
-	[
 		'title' => __( 'Reddit', 'wp-content-pilot' ),
 		'desc'  => __( 'Reddit module to import articles', 'wp-content-pilot' ),
 		'free'  => false,
@@ -235,6 +229,10 @@ $features = [
 		max-height: 70px;
 	}
 
+	.free-vs-pro h3 a {
+		text-decoration: none;
+		color: #ff7a03;
+	}
 	.free-vs-pro table {
 		background-color: #fff;
 		border: 1px solid #DDDDDD;
@@ -306,7 +304,7 @@ $features = [
 </style>
 <div class="wrap">
 
-	<h2>WP Content Pilot - Help </h2>
+	<h2><?php esc_html_e( 'WP Content Pilot - Help', 'wp-content-pilot' );?> </h2>
 
 	<div class="wpcp-help-page">
 		<?php foreach ( $blocks as $block ): ?>
@@ -323,12 +321,12 @@ $features = [
 	</div>
 	<?php if ( ! defined( 'WPCP_PRO_VERSION' ) ): ?>
 		<div class="free-vs-pro">
-			<h3>Are you looking for more? Checkout our Pro Version.</h3>
+			<h3>Are you looking for more? Checkout <a href="https://pluginever.com/plugins/wp-content-pilot-pro/" target="_blank"> WP Content Pilot Pro. </a> </h3>
 			<table class="widefat">
 				<tr>
-					<th>Features</th>
-					<th>Free</th>
-					<th>Pro</th>
+					<th><?php esc_html_e( 'Features', 'wp-content-pilot' ); ?></th>
+					<th><?php esc_html_e( 'Free', 'wp-content-pilot' ); ?></th>
+					<th><?php esc_html_e( 'Pro', 'wp-content-pilot' ); ?></th>
 				</tr>
 				<?php foreach ( $features as $feature ): ?>
 					<tr>
