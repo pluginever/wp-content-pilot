@@ -28,7 +28,7 @@ class WPCP_Admin_Notices {
 	private static $predefined_notices = array(
 		'upgrade_notice' => 'upgrade_notice',
 		//'spinner_notice' => 'spinner_notice',
-		'article_notice' => 'article_notice'
+		'article_notice' => 'article_notice',
 	);
 
 	/**
@@ -273,7 +273,7 @@ class WPCP_Admin_Notices {
 	 * @since 1.3.2
 	*/
    public static function article_notice() {
-	   $notice = __( 'Article search options will be changed in the next version of WP Content Pilot. Bing search will be replaced with Google Custom Search.', 'wp-content-pilot' );
+	   $notice = sprintf( __( 'Article bing search has been replaced with custom Google Search. Please create %scustom search api key%s and %ssearch engine id%s to run article campaigns.', 'wp-content-pilot' ), '<a href="https://pluginever.com/docs/wp-content-pilot/how-to-create-google-custom-search-api/" target="_blank">', '</a>', '<a href="https://pluginever.com/docs/wp-content-pilot/how-to-create-google-search-engine-id/" target="_blank">', '</a>' );
 	   self::add_dismissible_notice( $notice, array( 'type' => 'native notice-info', 'dismiss_class' => 'article_notice' ) );
    }
 

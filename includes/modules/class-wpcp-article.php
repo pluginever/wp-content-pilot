@@ -83,7 +83,7 @@ EOT;
 //			'name'          => '_article_language',
 //			'label'         => __( 'Select language to search article', 'wp-content-pilot' ),
 //			'options'       => $this->get_article_language(),
-//			'default'       => 'en',
+//			'default'       => 'lang_en',
 //			'wrapper_class' => 'pro',
 //			'attrs'         => array(
 //				'disabled' => 'disabled',
@@ -131,6 +131,22 @@ EOT;
 				'placeholder' => __( "example.com \n example1.com", 'wp-content-pilot' ),
 				'type'        => 'textarea',
 			),
+			array(
+				'name'              => 'google_search_api_key',
+				'label'             => __( 'Google search api key', 'wp-content-pilot' ),
+				'desc'              => sprintf( __( 'Learn to create your google custom search API key <a href="%s" target="_blank">here</a>.', 'wp-content-pilot' ), 'https://pluginever.com/docs/wp-content-pilot/how-to-create-google-custom-search-api/' ),
+				'type'              => 'password',
+				'default'           => '',
+				'sanitize_callback' => 'esc_html',
+			),
+			array(
+				'name'              => 'google_search_engine_id',
+				'label'             => __( 'Google search Engine ID', 'wp-content-pilot' ),
+				'desc'              => sprintf( __( 'Learn to create your custom search engine id <a href="%s" target="_blank">here</a>.', 'wp-content-pilot' ), 'https://pluginever.com/docs/wp-content-pilot/how-to-create-google-search-engine-id/' ),
+				'type'              => 'text',
+				'default'           => '',
+				'sanitize_callback' => 'esc_html'
+			),
 		];
 
 		return $fields;
@@ -145,6 +161,21 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_post( $campaign_id ) {
+		wpcp_logger()->info( __( 'Loaded Article campaign', 'wp-content-pilot' ), $campaign_id );
+
+		$api_key          = wpcp_get_settings( 'google_search_api_key', 'wpcp_settings_article' );
+		$search_engine_id = wpcp_get_settings( 'google_search_engine_id', 'wpcp_settings_article' );
+
+		wpcp_logger()->info( __( 'Checking google search api key and search engine id for authentication', 'wp-content-pilot' ), $campaign_id );
+		if ( empty( $api_key ) || empty( $search_engine_id ) ) {
+			wpcp_disable_campaign( $campaign_id );
+
+			$notice = __( 'Google custom search api or search engine id is not set.So, the campaign wont run, disabling campaign.', 'wp-content-pilot' );
+			wpcp_logger()->error( $notice, $campaign_id );
+
+			return new WP_Error( 'missing-data', $notice );
+		}
+
 		//before it was getting keywords but now we are changing to source instead of keywords
 		//it can be anything
 		$keywords = $this->get_campaign_meta( $campaign_id );
@@ -152,7 +183,6 @@ EOT;
 			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
 		}
 
-		wpcp_logger()->info( __( 'Loaded Article campaign', 'wp-content-pilot' ), $campaign_id );
 
 		//loop through keywords
 		foreach ( $keywords as $keyword ) {
@@ -247,7 +277,10 @@ EOT;
 	protected function discover_links( $campaign_id, $keyword ) {
 		$page_key    = $this->get_unique_key( $keyword );
 		$page_number = wpcp_get_post_meta( $campaign_id, $page_key, 0 );
+		$api_key = wpcp_get_settings( 'google_search_api_key', 'wpcp_settings_article' );
+		$search_engine_id = wpcp_get_settings( 'google_search_engine_id', 'wpcp_settings_article' );
 
+		/*
 		$args = apply_filters( 'wpcp_article_search_args', array(
 			'q'     => urlencode( $keyword ),
 			'count' => 10,
@@ -291,17 +324,47 @@ EOT;
 
 		// $response = json_encode( $response );
 		// $response = json_decode( $response, true );
+		*/
+
+		$args = apply_filters( 'wpcp_article_search_args', array(
+			'key'    => $api_key,
+			'cx'     => ! empty( $search_engine_id ) ? $search_engine_id : '359394892d6b9fe2c',
+			'q'      => urlencode( $keyword ),
+			'number' => 10,
+			'gl'     => 'us'
+		), $campaign_id );
+
+		if ( ! empty( $page_number ) ) {
+			$args['start'] = ( $page_number * 10 ) + 1;
+		}
+
+		$endpoint = add_query_arg( array(
+			$args,
+		), 'https://customsearch.googleapis.com/customsearch/v1' );
+
+		wpcp_logger()->info( sprintf( __( 'Searching page url [%s]', 'wp-content-pilot' ), preg_replace( array( '/key=([^&]+)/m', '/cx=([^&]+)/m' ), array( 'key=X', 'cx=X' ), $endpoint ), $campaign_id ) );
+
+		$curl = $this->setup_curl();
+		$request = $curl->get( $endpoint );
+
+		if ( $curl->isError() ) {
+			wpcp_logger()->error( $curl->errorMessage, $campaign_id );
+			$this->deactivate_key( $campaign_id, $keyword );
+
+			return $request;
+		}
+
+		wpcp_logger()->info( __( 'Extracting response from request', 'wp-content-pilot'), $campaign_id);
+		$items = $curl->getResponse()->items;
 
 		//check if links exist
-		if ( empty( $response ) || ! isset( $matches ) || ! isset( $matches ) || empty( $matches ) ) {
+		if ( empty( $items ) ) {
 			$message = __( 'Could not find any links from search engine, deactivating keyword for an hour.', 'wp-content-pilot' );
 			wpcp_logger()->error( $message, $campaign_id );
 			$this->deactivate_key( $campaign_id, $keyword );
 
 			return new WP_Error( 'no-links-found', $message );
 		}
-
-		$items = $matches;
 
 		wpcp_logger()->info( __( 'Getting banned hosts for skipping links', 'wp-content-pilot' ), $campaign_id );
 		$banned_hosts = wpcp_get_settings( 'banned_hosts', 'wpcp_settings_article' );
@@ -318,10 +381,9 @@ EOT;
 
 		wpcp_logger()->info( __( 'Finding links from response and inserting into database', 'wp-content-pilot' ), $campaign_id );
 		foreach ( $items as $item ) {
-			preg_match( '/href="([^"]*)"/i', $item, $link );
-			preg_match( '#<a[^>]*>([^<]*)<\/a>#i', $item, $title );
-			$link  = $link[1];
-			$title = ( isset( $title[1] ) && ! empty( $title[1] ) ) ? $title[1] : '';
+			$title = ! empty( $item->title ) ? $item->title : '';
+			$link  = ! empty( $item->pagemap->metatags[0]->{'og:url'} ) ? $item->pagemap->metatags[0]->{'og:url'} : '';
+
 			foreach ( $banned_hosts as $banned_host ) {
 				if ( stristr( $link, $banned_host ) ) {
 					continue;
@@ -367,46 +429,257 @@ EOT;
 	public function get_article_region() {
 		$regions = array(
 			'global' => 'Global Search',
-			'es-AR'  => 'Spanish Argentina',
-			'en-AU'  => 'English Australia',
-			'de-AT'  => 'German Austria',
-			'nl-BE'  => 'Dutch Belgium',
-			'fr-BE'  => 'French Belgium',
-			'pt-BR'  => 'Portuguese Brazil',
-			'en-CA'  => 'English Canada',
-			'fr-CA'  => 'French Canada',
-			'es-CL'  => 'Spanish Chile',
-			'da-DK'  => 'Danish Denmark',
-			'fi-FI'  => 'Finnish Finland',
-			'fr-FR'  => 'French France',
-			'de-DE'  => 'German Germany',
-			'zh-HK'  => 'Chinese Hong Kong',
-			'en-IN'  => 'English India',
-			'en-ID'  => 'English Indonesia',
-			'it-IT'  => 'Italian Italy',
-			'ja-JP'  => 'Japanese Japan',
-			'ko-KR'  => 'Korean Korea',
-			'en-MY'  => 'English Malaysia',
-			'es-MX'  => 'Spanish Mexico',
-			'nl-NL'  => 'Dutch Netherlands',
-			'en-NZ'  => 'English New Zealand',
-			'no-NO'  => 'Norwegian Norway',
-			'zh-CN'  => 'Chinese China',
-			'pl-PL'  => 'Polish Poland',
-			'en-PH'  => 'English Philippines',
-			'ru-RU'  => 'Russian Russia',
-			'en-ZA'  => 'English South Africa',
-			'es-ES'  => 'Spanish Spain',
-			'sv-SE'  => 'Swedish Sweden',
-			'fr-CH'  => 'French Switzerland',
-			'de-CH'  => 'German Switzerland',
-			'zh-TW'  => 'Chinese Taiwan',
-			'tr-TR'  => 'Turkish Turkey',
-			'en-GB'  => 'English United Kingdom',
-			'en-US'  => 'English United States',
-			'es-US'  => 'Spanish United States',
-
-
+			"af" => "Afghanistan",
+			"al" => "Albania",
+			"dz" => "Algeria",
+			"as" => "American Samoa",
+			"ad" => "Andorra",
+			"ao" => "Angola",
+			"ai" => "Anguilla",
+			"aq" => "Antarctica",
+			"ag" => "Antigua and Barbuda",
+			"ar" => "Argentina",
+			"am" => "Armenia",
+			"aw" => "Aruba",
+			"au" => "Australia",
+			"at" => "Austria",
+			"az" => "Azerbaijan",
+			"bs" => "Bahamas",
+			"bh" => "Bahrain",
+			"bd" => "Bangladesh",
+			"bb" => "Barbados",
+			"by" => "Belarus",
+			"be" => "Belgium",
+			"bz" => "Belize",
+			"bj" => "Benin",
+			"bm" => "Bermuda",
+			"bt" => "Bhutan",
+			"bo" => "Bolivia",
+			"bq" => "Bonaire, Sint Eustatius and Saba",
+			"ba" => "Bosnia and Herzegovina",
+			"bw" => "Botswana",
+			"bv" => "Bouvet Island",
+			"br" => "Brazil",
+			"io" => "British Indian Ocean Territory",
+			"bn" => "Brunei Darussalam",
+			"bg" => "Bulgaria",
+			"bf" => "Burkina Faso",
+			"bi" => "Burundi",
+			"kh" => "Cambodia",
+			"cm" => "Cameroon",
+			"ca" => "Canada",
+			"cv" => "Cape Verde",
+			"ky" => "Cayman Islands",
+			"cf" => "Central African Republic",
+			"td" => "Chad",
+			"cl" => "Chile",
+			"cn" => "China",
+			"cx" => "Christmas Island",
+			"cc" => "Cocos (Keeling) Islands",
+			"co" => "Colombia",
+			"km" => "Comoros",
+			"cg" => "Congo",
+			"cd" => "Congo, the Democratic Republic of the",
+			"ck" => "Cook Islands",
+			"cr" => "Costa Rica",
+			"ci" => "Cote D'Ivoire",
+			"hr" => "Croatia",
+			"cu" => "Cuba",
+			"cw" => "Curacao",
+			"cy" => "Cyprus",
+			"cz" => "Czech Republic",
+			"dk" => "Denmark",
+			"dj" => "Djibouti",
+			"dm" => "Dominica",
+			"do" => "Dominican Republic",
+			"ec" => "Ecuador",
+			"eg" => "Egypt",
+			"sv" => "El Salvador",
+			"gq" => "Equatorial Guinea",
+			"er" => "Eritrea",
+			"ee" => "Estonia",
+			"et" => "Ethiopia",
+			"fk" => "Falkland Islands (Malvinas)",
+			"fo" => "Faroe Islands",
+			"fj" => "Fiji",
+			"fi" => "Finland",
+			"fr" => "France",
+			"gf" => "French Guiana",
+			"pf" => "French Polynesia",
+			"tf" => "French Southern Territories",
+			"ga" => "Gabon",
+			"gm" => "Gambia",
+			"ge" => "Georgia",
+			"de" => "Germany",
+			"gh" => "Ghana",
+			"gi" => "Gibraltar",
+			"gr" => "Greece",
+			"gl" => "Greenland",
+			"gd" => "Grenada",
+			"gp" => "Guadeloupe",
+			"gu" => "Guam",
+			"gt" => "Guatemala",
+			"gg" => "Guernsey",
+			"gn" => "Guinea",
+			"gw" => "Guinea-Bissau",
+			"gy" => "Guyana",
+			"ht" => "Haiti",
+			"hm" => "Heard Island and Mcdonald Islands",
+			"va" => "Holy See (Vatican City State)",
+			"hn" => "Honduras",
+			"hk" => "Hong Kong",
+			"hu" => "Hungary",
+			"is" => "Iceland",
+			"in" => "India",
+			"id" => "Indonesia",
+			"ir" => "Iran, Islamic Republic of",
+			"iq" => "Iraq",
+			"ie" => "Ireland",
+			"im" => "Isle of Man",
+			"il" => "Israel",
+			"it" => "Italy",
+			"jm" => "Jamaica",
+			"jp" => "Japan",
+			"je" => "Jersey",
+			"jo" => "Jordan",
+			"kz" => "Kazakhstan",
+			"ke" => "Kenya",
+			"ki" => "Kiribati",
+			"kp" => "Korea, Democratic People's Republic of",
+			"kr" => "Korea, Republic of",
+			"xk" => "Kosovo",
+			"kw" => "Kuwait",
+			"kg" => "Kyrgyzstan",
+			"la" => "Lao People's Democratic Republic",
+			"lv" => "Latvia",
+			"lb" => "Lebanon",
+			"ls" => "Lesotho",
+			"lr" => "Liberia",
+			"ly" => "Libyan Arab Jamahiriya",
+			"li" => "Liechtenstein",
+			"lt" => "Lithuania",
+			"lu" => "Luxembourg",
+			"mo" => "Macao",
+			"mk" => "Macedonia, the Former Yugoslav Republic of",
+			"mg" => "Madagascar",
+			"mw" => "Malawi",
+			"my" => "Malaysia",
+			"mv" => "Maldives",
+			"ml" => "Mali",
+			"mt" => "Malta",
+			"mh" => "Marshall Islands",
+			"mq" => "Martinique",
+			"mr" => "Mauritania",
+			"mu" => "Mauritius",
+			"yt" => "Mayotte",
+			"mx" => "Mexico",
+			"fm" => "Micronesia, Federated States of",
+			"md" => "Moldova, Republic of",
+			"mc" => "Monaco",
+			"mn" => "Mongolia",
+			"me" => "Montenegro",
+			"ms" => "Montserrat",
+			"ma" => "Morocco",
+			"mz" => "Mozambique",
+			"mm" => "Myanmar",
+			"na" => "Namibia",
+			"nr" => "Nauru",
+			"np" => "Nepal",
+			"nl" => "Netherlands",
+			"an" => "Netherlands Antilles",
+			"nc" => "New Caledonia",
+			"nz" => "New Zealand",
+			"ni" => "Nicaragua",
+			"ne" => "Niger",
+			"ng" => "Nigeria",
+			"nu" => "Niue",
+			"nf" => "Norfolk Island",
+			"mp" => "Northern Mariana Islands",
+			"no" => "Norway",
+			"om" => "Oman",
+			"pk" => "Pakistan",
+			"pw" => "Palau",
+			"ps" => "Palestinian Territory, Occupied",
+			"pa" => "Panama",
+			"pg" => "Papua New Guinea",
+			"py" => "Paraguay",
+			"pe" => "Peru",
+			"ph" => "Philippines",
+			"pn" => "Pitcairn",
+			"pl" => "Poland",
+			"pt" => "Portugal",
+			"pr" => "Puerto Rico",
+			"qa" => "Qatar",
+			"re" => "Reunion",
+			"ro" => "Romania",
+			"ru" => "Russian Federation",
+			"rw" => "Rwanda",
+			"bl" => "Saint Barthelemy",
+			"sh" => "Saint Helena",
+			"kn" => "Saint Kitts and Nevis",
+			"lc" => "Saint Lucia",
+			"mf" => "Saint Martin",
+			"pm" => "Saint Pierre and Miquelon",
+			"vc" => "Saint Vincent and the Grenadines",
+			"ws" => "Samoa",
+			"sm" => "San Marino",
+			"st" => "Sao Tome and Principe",
+			"sa" => "Saudi Arabia",
+			"sn" => "Senegal",
+			"rs" => "Serbia",
+			"cs" => "Serbia and Montenegro",
+			"sc" => "Seychelles",
+			"sl" => "Sierra Leone",
+			"sg" => "Singapore",
+			"sx" => "Sint Maarten",
+			"sk" => "Slovakia",
+			"si" => "Slovenia",
+			"sb" => "Solomon Islands",
+			"so" => "Somalia",
+			"za" => "South Africa",
+			"gs" => "South Georgia and the South Sandwich Islands",
+			"ss" => "South Sudan",
+			"es" => "Spain",
+			"lk" => "Sri Lanka",
+			"sd" => "Sudan",
+			"sr" => "Suriname",
+			"sj" => "Svalbard and Jan Mayen",
+			"sz" => "Swaziland",
+			"se" => "Sweden",
+			"ch" => "Switzerland",
+			"sy" => "Syrian Arab Republic",
+			"tw" => "Taiwan, Province of China",
+			"tj" => "Tajikistan",
+			"tz" => "Tanzania, United Republic of",
+			"th" => "Thailand",
+			"tl" => "Timor-Leste",
+			"tg" => "Togo",
+			"tk" => "Tokelau",
+			"to" => "Tonga",
+			"tt" => "Trinidad and Tobago",
+			"tn" => "Tunisia",
+			"tr" => "Turkey",
+			"tm" => "Turkmenistan",
+			"tc" => "Turks and Caicos Islands",
+			"tv" => "Tuvalu",
+			"ug" => "Uganda",
+			"ua" => "Ukraine",
+			"ae" => "United Arab Emirates",
+			"gb" => "United Kingdom",
+			"us" => "United States",
+			"um" => "United States Minor Outlying Islands",
+			"uy" => "Uruguay",
+			"uz" => "Uzbekistan",
+			"vu" => "Vanuatu",
+			"ve" => "Venezuela",
+			"vn" => "Viet Nam",
+			"vg" => "Virgin Islands, British",
+			"vi" => "Virgin Islands, U.s.",
+			"wf" => "Wallis and Futuna",
+			"eh" => "Western Sahara",
+			"ye" => "Yemen",
+			"zm" => "Zambia",
+			"zw" => "Zimbabwe"
 		);
 
 		return $regions;
@@ -422,56 +695,39 @@ EOT;
 	public function get_article_language() {
 
 		$languages = array(
-			'ar'      => 'Arabic',
-			'eu'      => 'Basque',
-			'bn'      => "Bengali",
-			'bg'      => 'Bulgarian',
-			'ca'      => 'Catalan',
-			'zh-hans' => 'Simplified Chinese',
-			'zh-hant' => 'Traditional Chinese',
-			'hr'      => 'Croatian',
-			'cs'      => 'Czech',
-			'da'      => 'Danish',
-			'nl'      => 'Dutch',
-			'en'      => 'English',
-			'en-gb'   => 'English - United Kingdom',
-			'et'      => 'Estonian',
-			'fi'      => 'Finish',
-			'fr'      => 'French',
-			'gl'      => 'Galician',
-			'de'      => 'German',
-			'gu'      => 'Gujrati',
-			'he'      => 'Hebrew',
-			'hi'      => 'Hindi',
-			'hu'      => 'Hungarian',
-			'is'      => 'Icelandic',
-			'it'      => 'Italian',
-			'jp'      => 'Japanese',
-			'kn'      => 'Kannada',
-			'ko'      => 'Korean',
-			'lv'      => 'Latvian',
-			'lt'      => 'Lithunian',
-			'ms'      => 'Malay',
-			'ml'      => 'Malayalam',
-			'mr'      => 'Marathi',
-			'nb'      => 'Norwegian',
-			'pl'      => 'Polish',
-			'pt-br'   => 'Portugese Brazil',
-			'pt-pt'   => 'Portugese Portugal',
-			'pa'      => 'Punjabi',
-			'ro'      => 'Romanian',
-			'ru'      => 'Russian',
-			'sr'      => 'Serbian',
-			'sk'      => 'Slovak',
-			'sl'      => 'Slovenian',
-			'es'      => 'Spanish',
-			'sv'      => 'Swedish',
-			'ta'      => 'Tamil',
-			'te'      => 'Telegu',
-			'th'      => 'Thai',
-			'tr'      => 'Turkish',
-			'uk'      => 'Ukrainian',
-			'vi'      => 'Vietnamese',
+			'lang_ar'    => 'Arabic',
+			'lang_bg'    => 'Bulgarian',
+			'lang_ca'    => 'Catalan',
+			'lang_cs'    => 'Czech',
+			'lang_da'    => 'Danish',
+			'lang_de'    => 'German',
+			'lang_el'    => 'Greek',
+			'lang_en'    => 'English',
+			'lang_es'    => 'Spanish',
+			'lang_et'    => 'Estonian',
+			'lang_fi'    => 'Finish',
+			'lang_fr'    => 'French',
+			'lang_hu'    => 'Hungarian',
+			'lang_id'    => 'Indonesian',
+			'lang_is'    => 'Icelandic',
+			'lang_it'    => 'Italian',
+			'lang_iw'    => 'Hebrew',
+			'lang_ja'    => 'Japanese',
+			'lang_ko'    => 'Korean',
+			'lang_lv'    => 'Latvian',
+			'lang_nl'    => 'Dutch',
+			'lang_no'    => 'Norwegian',
+			'lang_pl'    => 'Polish',
+			'lang_pt'    => 'Portugese',
+			'lang_ro'    => 'Romanian',
+			'lang_ru'    => 'Russian',
+			'lang_sk'    => 'Slovak',
+			'lang_sl'    => 'Slovenian',
+			'lang_sr'    => 'Serbian',
+			'lang_sv'    => 'Swedish',
+			'lang_tr'    => 'Turkish',
+			'lang_zh-CN' => 'Chinese (Simplified)',
+			'lang_zh-TW' => 'Chinese (Traditional)',
 		);
 
 		return $languages;
