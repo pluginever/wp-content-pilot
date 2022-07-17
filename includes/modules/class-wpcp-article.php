@@ -134,7 +134,7 @@ EOT;
 			array(
 				'name'              => 'google_search_api_key',
 				'label'             => __( 'Google search api key', 'wp-content-pilot' ),
-				'desc'              => sprintf( __( 'Learn to create your google custom search API key <a href="%s" target="_blank">here</a>.', 'wp-content-pilot-pro' ), 'https://pluginever.com/docs/wp-content-pilot/how-to-create-google-custom-search-api/' ),
+				'desc'              => sprintf( __( 'Learn to create your google custom search API key <a href="%s" target="_blank">here</a>.', 'wp-content-pilot' ), 'https://pluginever.com/docs/wp-content-pilot/how-to-create-google-custom-search-api/' ),
 				'type'              => 'password',
 				'default'           => '',
 				'sanitize_callback' => 'esc_html',
@@ -142,7 +142,7 @@ EOT;
 			array(
 				'name'              => 'google_search_engine_id',
 				'label'             => __( 'Google search Engine ID', 'wp-content-pilot' ),
-				'desc'              => __( 'Search engine id for searching the links', 'wp-content-pilot' ),
+				'desc'              => sprintf( __( 'Learn to create your custom search engine id <a href="%s" target="_blank">here</a>.', 'wp-content-pilot' ), 'https://pluginever.com/docs/wp-content-pilot/how-to-create-google-search-engine-id/' ),
 				'type'              => 'text',
 				'default'           => '',
 				'sanitize_callback' => 'esc_html'
