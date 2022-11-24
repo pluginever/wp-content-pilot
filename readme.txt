@@ -2,7 +2,7 @@
 Contributors: pluginever, b-07
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, feed import, content curation, feed to post, rss to post, rss feeds, auto post
 Requires at least: 4.9
-Tested up to: 6.0
+Tested up to: 6.1
 Requires PHP: 5.8
 Stable tag: trunk
 License: GPLv2 or later
