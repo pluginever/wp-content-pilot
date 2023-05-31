@@ -1,9 +1,9 @@
 === WP Content Pilot - Autoblogging & Affiliate Marketing Plugin ===
-Contributors: pluginever, b-07
+Contributors: wpcontentpilot
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, feed import, content curation, feed to post, rss to post, rss feeds, auto post
-Requires at least: 4.9
-Tested up to: 6.1
-Requires PHP: 5.8
+Requires at least: 5.0
+Tested up to: 6.2
+Requires PHP: 7.0
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -23,18 +23,19 @@ Here is the detailed breakdown of all the features that we ship with WP Content 
 * **Content Spinner**: Integration of spinning software which makes it possible to create unique automatic content (3rd party paid tool).
 * **Template Editor**:  Control how auto-published posts will look using the supported template tags of the module.
 * **Post Categories**:  The plugin will automatically insert these categories with newly published posts.
-* *Post Tags**:  The plugin will automatically insert these tags with newly published posts.
+* **Post Tags**:  The plugin will automatically insert these tags with newly published posts.
 * **Post Translation (PRO)**:  Translate any article from any language to your selected language on the fly.
 * **Post Meta (PRO)**:  Make use of post meta to suit best with your theme and 3rd party plugins.
 * **Search Replace(PRO)**:  Run search-replace in the auto-publish post to better control your need.
 * **Automatic Affiliation (PRO)**:  Automatically insert your affiliate code to boost your affiliate commissions.
 
+https://www.youtube.com/watch?v=5A3gx0f6PJk
+
 === 💻 Find Out More: ===
 
-* **[See The Live Demo Site](http://pluginever.xyz/wp-content-pilot "See the Live Demo Site")**
-* **[Plugin Documentation](https://pluginever.com/docs/wp-content-pilot "Plugin Documentation")**
-* **[Need Help? Contact Our 24/7 Support](https://pluginever.com/support "Need Help? Contact Our 24/7 Support")**
-* **[WP Content Pilot PRO](https://pluginever.com/plugins/wp-content-pilot-pro "WP Content Pilot PRO")**
+* **[See The Live Demo Site](https://demo.wpcontentpilot.com "See the Live Demo Site")**
+* **[Plugin Documentation](https://wpcontentpilot.com/docs/ "Plugin Documentation")**
+* **[Need Help? Contact Our 24/7 Support](https://wpcontentpilot.com/support "Need Help? Contact Our 24/7 Support")**
 
 = 💥 All Autoblogging Modules =
 
@@ -60,27 +61,6 @@ Here is the detailed breakdown of all the features that we ship with WP Content 
 * **GearBest products (PRO)**: Automatically import products from GearBest by keyword and insert as posts injecting your affiliate code.
 
 
-https://www.youtube.com/watch?v=5A3gx0f6PJk
-
-
-=== 💝 WP Content Pilot has received lots of love from its users: === 
-
-**jeffinmass**
-> [I am not a programmer. I am not a WordPress programmer/user, I’m flying by the seat of my pants and learning every step of the way…. painfully but worth it. It’s a great piece of software. Now about WP-Content Pro – it does exactly what it states it does and makes my life with one less very important task to maintain. I need fresh content always for my site visits to see constant new ideas and fresh looks to entice new possibilities. I just received tech support. The chat went very well. My problem was quickly identified and provided a suggestion on how I could cure it. I made the first change and then evidentially with the new update there was a setting I needed to change and then poof! My blog was back up and generating new content. 👏👏](https://wordpress.org/support/topic/practically-maintenance-free-blog-makes-me-look-great/)
-
-**jeremycroes**
-> [The application does exactly what is promised! It automatically translates also.
-> Even though the info for setting everything up could be more up to date, the online help is great!
-> It’s a worthy experiment to see if it brings the results you are working towards.
-> I’d recommend it to my friends. 👏👏](https://wordpress.org/support/topic/great-solution-for-autoblogging-and-translating/)
-
-=== 💢 Have a WooCommerce Store? Superchange it With Our WooCommerce Plugins: === 
-
-* **[WooCommerce Serial Numbers](https://wordpress.org/plugins/wc-serial-numbers/ "WooCommerce Serial Numbers")**
-* **[WooCommerce Category Slider](https://wordpress.org/plugins/woo-category-slider-by-pluginever "WooCommerce Category Slider")**
-* **[WooCommerce Category Showcase](https://wordpress.org/plugins/wc-category-showcase "WooCommerce Category Showcase")**
-* **[Min Max Quantities for WooCommerce](https://wordpress.org/plugins/wc-min-max-quantities "Min Max Quantities for WooCommerce")**
-* **[WooCommerce Variation Swatches](https://wordpress.org/plugins/wc-variation-swatches "WooCommerce Variation Swatches")**
 
 == Screenshots ==
 1. Available campaign types
@@ -97,8 +77,8 @@ https://www.youtube.com/watch?v=5A3gx0f6PJk
 
 = Minimum requirements =
 
-* WordPress 4.9 or greater
-* PHP version 5.8 or greater
+* WordPress 5.0 or greater
+* PHP version 7.0 or greater
 * MySQL version 5.6 or greater
 * MariaDB version 10 or later
 
