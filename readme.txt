@@ -24,10 +24,7 @@ Here is the detailed breakdown of all the features that we ship with WP Content 
 * **Template Editor**:  Control how auto-published posts will look using the supported template tags of the module.
 * **Post Categories**:  The plugin will automatically insert these categories with newly published posts.
 * **Post Tags**:  The plugin will automatically insert these tags with newly published posts.
-* **Post Translation (PRO)**:  Translate any article from any language to your selected language on the fly.
-* **Post Meta (PRO)**:  Make use of post meta to suit best with your theme and 3rd party plugins.
-* **Search Replace(PRO)**:  Run search-replace in the auto-publish post to better control your need.
-* **Automatic Affiliation (PRO)**:  Automatically insert your affiliate code to boost your affiliate commissions.
+
 
 https://www.youtube.com/watch?v=5A3gx0f6PJk
 
