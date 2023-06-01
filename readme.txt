@@ -43,23 +43,6 @@ https://www.youtube.com/watch?v=5A3gx0f6PJk
 * **Envato Products**: Auto import from Envato markets ThemeForest, CodeCanyon, GraphicRiver, and PhotoDune products and insert as posts injecting your affiliate code.
 * **YouTube Videos**: Post videos from YouTube by keyword, username, or from a specific playlist to your website.
 * **Flickr Photos**: Automatically post Flickr photos in your website based on your predefined keywords.
-* **Amazon Products (PRO)**: Auto import amazon products and insert them as posts based on your predefined keywords and inject your affiliate code.
-* **Tweeter Tweets (PRO)**: Auto import Tweets from Twitter as WordPress posts based on your keywords or from any specific user.
-* **eBay Products (PRO)**: Auto import eBay deals and insert them as posts based on your predefined keywords and inject your affiliate code.
-* **Facebook Posts (PRO)**: Auto import Facebook posts from your timeline, page, or groups even that are private and post on your site.
-* **ClickBank Products](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**:  Fetch and post products as WordPress posts from the ClickBank site. The plugin will take care of the product description and affiliate links.
-* **Ezine Articles (PRO)**: WP Content Pilot can fetch and automatically post articles to your WordPress site from EzineArticles.
-* **Pinterest Pins (PRO)**: Import Pinterest pins and post them to your WordPress site. You can target specific pins by keyword, board, or from a particular user profile. You will also be able to apply custom filters to the result.
-* **Instagram Posts (PRO)**: Import Instagram posts and publish them to your WordPress site with WP Content Pilot. You can target posts with specific keywords, hashtags, and also a particular profile to generate desired posts.
-* **Reddit Posts (PRO)**: Auto post reddits or subreddit. Our plugin will also enable you to fetch comments with support for videos and GIFs..
-* **Quora Posts (PRO)**: Grab articles from Quora and auto-publish as post on your site. You can insert any keyword to get posts from Quora.
-* **CareerJet Posts (PRO)**: Auto import jobs from CareerJet and insert as posts injecting your affiliate code.
-* **Itunes Items (PRO)**: Automatically import products from Itunes by keyword and insert as posts injecting your affiliate code.
-* **Craigslist listings (PRO)**: Import listings from Craigslist and insert as posts keeping your site always up to date.
-* **Walmart products (PRO)**: Auto import products from Walmart and insert as posts injecting your affiliate code.
-* **BestBuy products (PRO)**: Import products from BestBuy and insert as posts injecting your affiliate code.
-* **GearBest products (PRO)**: Automatically import products from GearBest by keyword and insert as posts injecting your affiliate code.
-
 
 
 == Screenshots ==
