@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: WP Content Pilot
- * Plugin URI:  https://www.pluginever.com
+ * Plugin URI:  https://www.wpcontentpilot.co
  * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
  * Version:     1.3.3
- * Author:      pluginever
- * Author URI:  https://www.pluginever.com
- * Donate link: https://www.pluginever.com
+ * Author:      WP Content Pilot
+ * Author URI:  https://www.wpcontentpilot.co
+ * Donate link: https://www.wpcontentpilot.co
  * License:     GPLv2+
  * Text Domain: wp-content-pilot
  * Domain Path: /i18n/languages/
