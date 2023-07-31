@@ -10,15 +10,15 @@ class WPCP_Install {
 		$current_wpcp_version = get_option( 'wpcp_version', null );
 		self::create_tables();
 		self::populate();
-		//save db version
+		// save db version
 		if ( is_null( $current_wpcp_version ) ) {
 			update_option( 'wpcp_version', WPCP_VERSION );
 		}
-		//save db version
+		// save db version
 		if ( is_null( $current_db_version ) ) {
 			update_option( 'wpcp_db_version', WPCP_VERSION );
 		}
-		//save install date
+		// save install date
 		if ( false == get_option( 'wpcp_install_date' ) ) {
 			update_option( 'wpcp_install_date', current_time( 'timestamp' ) );
 		}
@@ -54,7 +54,7 @@ class WPCP_Install {
                 PRIMARY KEY (`id`)
             )  CHARACTER SET utf8 COLLATE utf8_general_ci;",
 		];
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		foreach ( $table_schema as $table ) {
 			dbDelta( $table );
 		}

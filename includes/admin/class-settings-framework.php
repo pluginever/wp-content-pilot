@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly
 
-if ( ! class_exists( 'Ever_Settings_Framework' ) ):
+if ( ! class_exists( 'Ever_Settings_Framework' ) ) :
 	class Ever_Settings_Framework {
 		/**
 		 * settings sections array
@@ -41,7 +41,6 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		 * @return $this
 		 *
 		 * @since 1.0.0
-		 *
 		 */
 		function set_sections( $sections ) {
 			$this->settings_sections = $sections;
@@ -57,7 +56,6 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		 * @return $this
 		 *
 		 * @since 1.0.0
-		 *
 		 */
 		function add_section( $section ) {
 			$this->settings_sections[] = $section;
@@ -73,7 +71,6 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		 * @return $this
 		 *
 		 * @since 1.0.0
-		 *
 		 */
 		function set_fields( $fields ) {
 			$this->settings_fields = $fields;
@@ -90,14 +87,13 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		 * @return $this
 		 *
 		 * @since 1.0.0
-		 *
 		 */
 		function add_field( $section, $field ) {
 			$defaults                            = array(
 				'name'  => '',
 				'label' => '',
 				'desc'  => '',
-				'type'  => 'text'
+				'type'  => 'text',
 			);
 			$arg                                 = wp_parse_args( $field, $defaults );
 			$this->settings_fields[ $section ][] = $arg;
@@ -114,7 +110,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		 * registers them to WordPress and ready for use.
 		 */
 		function admin_init() {
-			//register settings sections
+			// register settings sections
 			foreach ( $this->settings_sections as $section ) {
 				if ( false == get_option( $section['id'] ) ) {
 					add_option( $section['id'] );
@@ -122,14 +118,14 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 				if ( isset( $section['desc'] ) && ! empty( $section['desc'] ) ) {
 					$section['desc'] = '<div class="inside">' . $section['desc'] . '</div>';
 					$callback        = create_function( '', 'echo "' . str_replace( '"', '\"', $section['desc'] ) . '";' );
-				} else if ( isset( $section['callback'] ) ) {
+				} elseif ( isset( $section['callback'] ) ) {
 					$callback = $section['callback'];
 				} else {
 					$callback = null;
 				}
 				add_settings_section( $section['id'], $section['title'], $callback, $section['id'] );
 			}
-			//register settings fields
+			// register settings fields
 			foreach ( $this->settings_fields as $section => $field ) {
 				foreach ( $field as $option ) {
 					$name     = $option['name'];
@@ -137,7 +133,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 					$label    = isset( $option['label'] ) ? $option['label'] : '';
 					$callback = isset( $option['callback'] ) ? $option['callback'] : array(
 						$this,
-						'callback_' . $type
+						'callback_' . $type,
 					);
 					$args     = array(
 						'id'                => $name,
@@ -157,7 +153,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 						'step'              => isset( $option['step'] ) ? $option['step'] : '',
 					);
 					if ( isset( $option['disabled'] ) && $option['disabled'] == true ) {
-						$args['disabled'] = "disabled";
+						$args['disabled'] = 'disabled';
 					}
 					add_settings_field( "{$section}[{$name}]", $label, $callback, $section, $section, $args );
 				}
@@ -176,7 +172,6 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		 * @return string
 		 *
 		 * @since 1.0.0
-		 *
 		 */
 		public function get_field_description( $args ) {
 			if ( ! empty( $args['desc'] ) ) {
@@ -200,7 +195,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 			$disabled    = isset( $args['disabled'] ) ? $args['disabled'] : '';
 			$html        = sprintf( '<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s%7$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder, $disabled );
-			$html        .= $this->get_field_description( $args );
+			$html       .= $this->get_field_description( $args );
 			echo $html;
 		}
 
@@ -228,7 +223,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 			$max         = ( $args['max'] == '' ) ? '' : ' max="' . $args['max'] . '"';
 			$step        = ( $args['step'] == '' ) ? '' : ' step="' . $args['step'] . '"';
 			$html        = sprintf( '<input type="%1$s" class="%2$s-number" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s%7$s%8$s%9$s%10$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder, $min, $max, $step, $disabled );
-			$html        .= $this->get_field_description( $args );
+			$html       .= $this->get_field_description( $args );
 			echo $html;
 		}
 
@@ -240,7 +235,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		function callback_heading( $args ) {
 			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$html  = sprintf( '<h2 class="ever-settings-heading">%1$s</h2>', $value );
-			$html  .= $this->get_field_description( $args );
+			$html .= $this->get_field_description( $args );
 			echo $html;
 		}
 
@@ -253,11 +248,11 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 			$value    = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$disabled = isset( $args['disabled'] ) ? $args['disabled'] : '';
 			$html     = '<fieldset>';
-			$html     .= sprintf( '<label for="wpuf-%1$s[%2$s]">', $args['section'], $args['id'] );
-			$html     .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="off" />', $args['section'], $args['id'] );
-			$html     .= sprintf( '<input type="checkbox" class="checkbox" id="wpuf-%1$s[%2$s]" name="%1$s[%2$s]" value="on" %3$s %4$s />', $args['section'], $args['id'], checked( $value, 'on', false ), $disabled );
-			$html     .= sprintf( '%1$s</label>', $args['desc'] );
-			$html     .= '</fieldset>';
+			$html    .= sprintf( '<label for="wpuf-%1$s[%2$s]">', $args['section'], $args['id'] );
+			$html    .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="off" />', $args['section'], $args['id'] );
+			$html    .= sprintf( '<input type="checkbox" class="checkbox" id="wpuf-%1$s[%2$s]" name="%1$s[%2$s]" value="on" %3$s %4$s />', $args['section'], $args['id'], checked( $value, 'on', false ), $disabled );
+			$html    .= sprintf( '%1$s</label>', $args['desc'] );
+			$html    .= '</fieldset>';
 			echo $html;
 		}
 
@@ -269,12 +264,12 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		function callback_multicheck( $args ) {
 			$value = $this->get_option( $args['id'], $args['section'], $args['std'] );
 			$html  = '<fieldset>';
-			$html  .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="" />', $args['section'], $args['id'] );
+			$html .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="" />', $args['section'], $args['id'] );
 			foreach ( $args['options'] as $key => $label ) {
 				$checked = isset( $value[ $key ] ) ? $value[ $key ] : '0';
-				$html    .= sprintf( '<label for="wpuf-%1$s[%2$s][%3$s]">', $args['section'], $args['id'], $key );
-				$html    .= sprintf( '<input type="checkbox" class="checkbox" id="wpuf-%1$s[%2$s][%3$s]" name="%1$s[%2$s][%3$s]" value="%3$s" %4$s />', $args['section'], $args['id'], $key, checked( $checked, $key, false ) );
-				$html    .= sprintf( '%1$s</label><br>', $label );
+				$html   .= sprintf( '<label for="wpuf-%1$s[%2$s][%3$s]">', $args['section'], $args['id'], $key );
+				$html   .= sprintf( '<input type="checkbox" class="checkbox" id="wpuf-%1$s[%2$s][%3$s]" name="%1$s[%2$s][%3$s]" value="%3$s" %4$s />', $args['section'], $args['id'], $key, checked( $checked, $key, false ) );
+				$html   .= sprintf( '%1$s</label><br>', $label );
 			}
 			$html .= $this->get_field_description( $args );
 			$html .= '</fieldset>';
@@ -327,7 +322,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 			$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 			$html        = sprintf( '<textarea rows="5" cols="55" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]"%4$s>%5$s</textarea>', $size, $args['section'], $args['id'], $placeholder, $value );
-			$html        .= $this->get_field_description( $args );
+			$html       .= $this->get_field_description( $args );
 			echo $html;
 		}
 
@@ -354,7 +349,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 			$editor_settings = array(
 				'teeny'         => true,
 				'textarea_name' => $args['section'] . '[' . $args['id'] . ']',
-				'textarea_rows' => 10
+				'textarea_rows' => 10,
 			);
 			if ( isset( $args['options'] ) && is_array( $args['options'] ) ) {
 				$editor_settings = array_merge( $editor_settings, $args['options'] );
@@ -375,8 +370,8 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 			$id    = $args['section'] . '[' . $args['id'] . ']';
 			$label = isset( $args['options']['button_label'] ) ? $args['options']['button_label'] : __( 'Choose File', 'wp-content-pilot' );
 			$html  = sprintf( '<input type="text" class="%1$s-text wpsa-url" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
-			$html  .= '<input type="button" class="button wpsa-browse" value="' . $label . '" />';
-			$html  .= $this->get_field_description( $args );
+			$html .= '<input type="button" class="button wpsa-browse" value="' . $label . '" />';
+			$html .= $this->get_field_description( $args );
 			echo $html;
 		}
 
@@ -389,7 +384,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$html  = sprintf( '<input type="password" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
-			$html  .= $this->get_field_description( $args );
+			$html .= $this->get_field_description( $args );
 			echo $html;
 		}
 
@@ -403,7 +398,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 			$size     = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$disabled = isset( $args['disabled'] ) ? $args['disabled'] : '';
 			$html     = sprintf( '<input type="text" class="%1$s-text wp-color-picker-field" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s" data-default-color="%5$s" %6$s/>', $size, $args['section'], $args['id'], $value, $args['std'], $disabled );
-			$html     .= $this->get_field_description( $args );
+			$html    .= $this->get_field_description( $args );
 			echo $html;
 		}
 
@@ -417,7 +412,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 				'selected' => esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) ),
 				'name'     => $args['section'] . '[' . $args['id'] . ']',
 				'id'       => $args['section'] . '[' . $args['id'] . ']',
-				'echo'     => 0
+				'echo'     => 0,
 			);
 			$html          = wp_dropdown_pages( $dropdown_args );
 			echo $html;
@@ -524,7 +519,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 							settings_fields( $form['id'] );
 							do_settings_sections( $form['id'] );
 							do_action( 'wsa_form_bottom_' . $form['id'], $form );
-							if ( isset( $this->settings_fields[ $form['id'] ] ) ):
+							if ( isset( $this->settings_fields[ $form['id'] ] ) ) :
 								?>
 								<div style="padding-left: 10px">
 									<?php submit_button(); ?>
@@ -631,7 +626,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 			global $wp_version;
 			?>
 			<style type="text/css">
-				<?php  if (version_compare($wp_version, '3.8', '<=')):?>
+				<?php if ( version_compare( $wp_version, '3.8', '<=' ) ) : ?>
 				/** WordPress 3.8 Fix **/
 				.form-table th {
 					padding: 20px 10px;

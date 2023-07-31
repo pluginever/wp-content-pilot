@@ -18,6 +18,7 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 	/**
 	 *
 	 * Total number of discounts
+	 *
 	 * @var string
 	 * @since 1.0.0
 	 */
@@ -49,6 +50,7 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 
 	/**
 	 * Base URL
+	 *
 	 * @var string
 	 */
 	public $base_url;
@@ -57,11 +59,13 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 	 * EAccounting_Products_List_Table constructor.
 	 */
 	public function __construct() {
-		parent::__construct( array(
-			'singular' => 'log',
-			'plural'   => 'logs',
-			'ajax'     => false,
-		) );
+		parent::__construct(
+			array(
+				'singular' => 'log',
+				'plural'   => 'logs',
+				'ajax'     => false,
+			)
+		);
 		$this->base_url = admin_url( 'edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
 		$this->process_bulk_action();
 	}
@@ -98,11 +102,13 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 				break;
 		}
 		$this->items = $data;
-		$this->set_pagination_args( array(
-			'total_items' => $total_items,
-			'per_page'    => $per_page,
-			'total_pages' => ceil( $total_items / $per_page ),
-		) );
+		$this->set_pagination_args(
+			array(
+				'total_items' => $total_items,
+				'per_page'    => $per_page,
+				'total_pages' => ceil( $total_items / $per_page ),
+			)
+		);
 	}
 
 	/**
@@ -122,7 +128,6 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 	 *
 	 * @return void
 	 * @since 1.0.0
-	 *
 	 */
 	public function search_box( $text, $input_id ) {
 		if ( empty( $_REQUEST['s'] ) && ! $this->has_items() ) {
@@ -139,8 +144,8 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 		}
 		?>
 		<p class="search-box">
-			<label class="screen-reader-text" for="<?php echo $input_id ?>"><?php echo $text; ?>:</label>
-			<input type="search" id="<?php echo $input_id ?>" name="s" value="<?php _admin_search_query(); ?>"/>
+			<label class="screen-reader-text" for="<?php echo $input_id; ?>"><?php echo $text; ?>:</label>
+			<input type="search" id="<?php echo $input_id; ?>" name="s" value="<?php _admin_search_query(); ?>"/>
 			<?php submit_button( $text, 'button', false, false, array( 'ID' => 'search-submit' ) ); ?>
 		</p>
 		<?php
@@ -169,8 +174,8 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 	}
 
 	function extra_tablenav( $which ) {
-		if ( $which == "top" ){
-			echo sprintf( '<a href="#" class="button button-secondary" id="wpcp-clear-logs" data-nonce="%s">%s</a>',  wp_create_nonce('wpcp_clear_logs'), __('Clear Logs', 'wp-content-pilot'));
+		if ( $which == 'top' ) {
+			echo sprintf( '<a href="#" class="button button-secondary" id="wpcp-clear-logs" data-nonce="%s">%s</a>', wp_create_nonce( 'wpcp_clear_logs' ), __( 'Clear Logs', 'wp-content-pilot' ) );
 		}
 	}
 
@@ -203,7 +208,7 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 			'campaign' => array( 'camp_id', false ),
 			'level'    => array( 'level', false ),
 			'log'      => array( 'message', false ),
-			'date'     => array( 'created_at', false )
+			'date'     => array( 'created_at', false ),
 		);
 	}
 
@@ -227,7 +232,7 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 				return sprintf( '<a href="%s">#(%d) - %s</a>', $url, $campaign_id, $title );
 				break;
 			case 'level':
-				return $item->level ? sprintf( '<span class="%s">%s</span>', sanitize_html_class( strtolower( $item->level) ), $item->level ) : '&mdash;';
+				return $item->level ? sprintf( '<span class="%s">%s</span>', sanitize_html_class( strtolower( $item->level ) ), $item->level ) : '&mdash;';
 				break;
 			case 'log':
 				return $item->message ? strip_tags( $item->message ) : '&mdash;';
@@ -245,7 +250,6 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 	 *
 	 * @return void
 	 * @since 1.0.0
-	 *
 	 */
 	public function process_bulk_action() {
 
@@ -270,9 +274,8 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 			'orderby'  => $orderby,
 			'order'    => $order,
 			'level'    => $level,
-			'search'   => $search
+			'search'   => $search,
 		);
-
 
 		if ( array_key_exists( $orderby, $this->get_sortable_columns() ) && 'name' != $orderby ) {
 			$args['orderby'] = $orderby;

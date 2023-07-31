@@ -15,13 +15,13 @@ class WPCP_Youtube extends WPCP_Module {
 	 * WPCP_Module constructor.
 	 */
 	public function __construct() {
-		//option fields
+		// option fields
 		add_action( 'wpcp_youtube_campaign_options_meta_fields', 'wpcp_keyword_suggestion_field' );
 		add_action( 'wpcp_youtube_campaign_options_meta_fields', 'wpcp_keyword_field' );
 
 		parent::__construct( 'youtube' );
 
-		//admin notice
+		// admin notice
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
 	}
 
@@ -82,116 +82,140 @@ EOT;
 
 		echo WPCP_HTML::start_double_columns();
 
-		echo WPCP_HTML::select_input( array(
-			'name'    => '_youtube_search_type',
-			'label'   => __( 'Youtube Search Type', 'wp-content-pilot' ),
-			'tooltip' => __( 'Use global search for all result or use specific channel if you want to limit to that channel.', 'wp-content-pilot' ),
-			'options' => array(
-				'global'   => __( 'Global', 'wp-content-pilot' ),
-				'playlist' => __( 'From Playlist', 'wp-content-pilot' ),
-				'channel'  => __( 'From Channel', 'wp-content-pilot' ),
-			),
-			'default' => 'global',
-		) );
-
-		echo WPCP_HTML::text_input( array(
-			'name'        => '_youtube_playlist_id',
-			'placeholder' => __( 'Example: PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
-			'label'       => __( 'Youtube Playlist/Channel ID', 'wp-content-pilot' ),
-			'tooltip'     => __( 'eg. playlist id is PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
-		) );
-
-		echo WPCP_HTML::select_input( array(
-			'name'    => '_youtube_category',
-			'label'   => __( 'Youtube Category', 'wp-content-pilot' ),
-			'options' => $this->get_youtube_categories(),
-			'default' => 'all',
-		) );
-
-		echo WPCP_HTML::select_input( array(
-			'name'    => '_youtube_search_orderby',
-			'label'   => __( 'Youtube Search Order', 'wp-content-pilot' ),
-			'options' => array(
-				'relevance' => __( 'Relevance', 'wp-content-pilot' ),
-				'date'      => __( 'Date', 'wp-content-pilot' ),
-				'title'     => __( 'Title', 'wp-content-pilot' ),
-				'viewCount' => __( 'View Count', 'wp-content-pilot' ),
-				'rating'    => __( 'Rating', 'wp-content-pilot' ),
-			),
-		) );
-
-		echo WPCP_HTML::select_input( array(
-			'name'    => '_youtube_license',
-			'label'   => __( 'Video License', 'wp-content-pilot' ),
-			'default' => 'any',
-			'options' => array(
-				'any'            => __( 'Any', 'wp-content-pilot' ),
-				'creativeCommon' => __( 'Creative Common', 'wp-content-pilot' ),
-				'youtube'        => __( 'Standard', 'wp-content-pilot' ),
+		echo WPCP_HTML::select_input(
+			array(
+				'name'    => '_youtube_search_type',
+				'label'   => __( 'Youtube Search Type', 'wp-content-pilot' ),
+				'tooltip' => __( 'Use global search for all result or use specific channel if you want to limit to that channel.', 'wp-content-pilot' ),
+				'options' => array(
+					'global'   => __( 'Global', 'wp-content-pilot' ),
+					'playlist' => __( 'From Playlist', 'wp-content-pilot' ),
+					'channel'  => __( 'From Channel', 'wp-content-pilot' ),
+				),
+				'default' => 'global',
 			)
-		) );
+		);
 
-		echo WPCP_HTML::select_input( array(
-			'name'    => '_youtube_duration',
-			'label'   => __( 'Video Duration', 'wp-content-pilot' ),
-			'default' => 'any',
-			'options' => array(
-				'any'    => __( 'Any', 'wp-content-pilot' ),
-				'long'   => __( 'Long (longer than 20 minutes)', 'wp-content-pilot' ),
-				'medium' => __( 'Medium (between four and 20 minutes)', 'wp-content-pilot' ),
-				'short'  => __( 'Short (less than four minutes)', 'wp-content-pilot' ),
+		echo WPCP_HTML::text_input(
+			array(
+				'name'        => '_youtube_playlist_id',
+				'placeholder' => __( 'Example: PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
+				'label'       => __( 'Youtube Playlist/Channel ID', 'wp-content-pilot' ),
+				'tooltip'     => __( 'eg. playlist id is PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs', 'wp-content-pilot' ),
 			)
-		) );
+		);
 
-		echo WPCP_HTML::select_input( array(
-			'name'    => '_youtube_definition',
-			'label'   => __( 'Video Definition', 'wp-content-pilot' ),
-			'default' => 'any',
-			'options' => array(
-				'any'      => __( 'Any', 'wp-content-pilot' ),
-				'high'     => __( 'High', 'wp-content-pilot' ),
-				'standard' => __( 'Standard', 'wp-content-pilot' ),
+		echo WPCP_HTML::select_input(
+			array(
+				'name'    => '_youtube_category',
+				'label'   => __( 'Youtube Category', 'wp-content-pilot' ),
+				'options' => $this->get_youtube_categories(),
+				'default' => 'all',
 			)
-		) );
+		);
 
-		echo WPCP_HTML::select_input( array(
-			'name'    => '_youtube_video_type',
-			'label'   => __( 'Video Type', 'wp-content-pilot' ),
-			'default' => 'any',
-			'options' => array(
-				'any'     => __( 'Any', 'wp-content-pilot' ),
-				'episode' => __( 'Episode', 'wp-content-pilot' ),
-				'movie'   => __( 'Movie', 'wp-content-pilot' ),
+		echo WPCP_HTML::select_input(
+			array(
+				'name'    => '_youtube_search_orderby',
+				'label'   => __( 'Youtube Search Order', 'wp-content-pilot' ),
+				'options' => array(
+					'relevance' => __( 'Relevance', 'wp-content-pilot' ),
+					'date'      => __( 'Date', 'wp-content-pilot' ),
+					'title'     => __( 'Title', 'wp-content-pilot' ),
+					'viewCount' => __( 'View Count', 'wp-content-pilot' ),
+					'rating'    => __( 'Rating', 'wp-content-pilot' ),
+				),
 			)
-		) );
+		);
 
-		echo WPCP_HTML::select_input( array(
-			'name'    => '_youtube_safe_search',
-			'label'   => __( 'Safe Search', 'wp-content-pilot' ),
-			'default' => 'moderate',
-			'options' => array(
-				'moderate' => __( 'Moderate', 'wp-content-pilot' ),
-				'none'     => __( 'None (will not filter)', 'wp-content-pilot' ),
-				'strict'   => __( 'Strict (Exclude all restricted content)', 'wp-content-pilot' ),
+		echo WPCP_HTML::select_input(
+			array(
+				'name'    => '_youtube_license',
+				'label'   => __( 'Video License', 'wp-content-pilot' ),
+				'default' => 'any',
+				'options' => array(
+					'any'            => __( 'Any', 'wp-content-pilot' ),
+					'creativeCommon' => __( 'Creative Common', 'wp-content-pilot' ),
+					'youtube'        => __( 'Standard', 'wp-content-pilot' ),
+				),
 			)
-		) );
+		);
+
+		echo WPCP_HTML::select_input(
+			array(
+				'name'    => '_youtube_duration',
+				'label'   => __( 'Video Duration', 'wp-content-pilot' ),
+				'default' => 'any',
+				'options' => array(
+					'any'    => __( 'Any', 'wp-content-pilot' ),
+					'long'   => __( 'Long (longer than 20 minutes)', 'wp-content-pilot' ),
+					'medium' => __( 'Medium (between four and 20 minutes)', 'wp-content-pilot' ),
+					'short'  => __( 'Short (less than four minutes)', 'wp-content-pilot' ),
+				),
+			)
+		);
+
+		echo WPCP_HTML::select_input(
+			array(
+				'name'    => '_youtube_definition',
+				'label'   => __( 'Video Definition', 'wp-content-pilot' ),
+				'default' => 'any',
+				'options' => array(
+					'any'      => __( 'Any', 'wp-content-pilot' ),
+					'high'     => __( 'High', 'wp-content-pilot' ),
+					'standard' => __( 'Standard', 'wp-content-pilot' ),
+				),
+			)
+		);
+
+		echo WPCP_HTML::select_input(
+			array(
+				'name'    => '_youtube_video_type',
+				'label'   => __( 'Video Type', 'wp-content-pilot' ),
+				'default' => 'any',
+				'options' => array(
+					'any'     => __( 'Any', 'wp-content-pilot' ),
+					'episode' => __( 'Episode', 'wp-content-pilot' ),
+					'movie'   => __( 'Movie', 'wp-content-pilot' ),
+				),
+			)
+		);
+
+		echo WPCP_HTML::select_input(
+			array(
+				'name'    => '_youtube_safe_search',
+				'label'   => __( 'Safe Search', 'wp-content-pilot' ),
+				'default' => 'moderate',
+				'options' => array(
+					'moderate' => __( 'Moderate', 'wp-content-pilot' ),
+					'none'     => __( 'None (will not filter)', 'wp-content-pilot' ),
+					'strict'   => __( 'Strict (Exclude all restricted content)', 'wp-content-pilot' ),
+				),
+			)
+		);
 
 		echo WPCP_HTML::end_double_columns();
 
-		echo WPCP_HTML::checkbox_input( array(
-			'label' => __( 'Youtube - Auto hyperlink urls within the description', 'wp-content-pilot' ),
-			'name'  => '_youtube_description_hyperlink',
-		) );
+		echo WPCP_HTML::checkbox_input(
+			array(
+				'label' => __( 'Youtube - Auto hyperlink urls within the description', 'wp-content-pilot' ),
+				'name'  => '_youtube_description_hyperlink',
+			)
+		);
 
-		echo WPCP_HTML::checkbox_input( array(
-			'label' => __( 'Post only live videos only', 'wp-content-pilot' ),
-			'name'  => '_youtube_live_videos',
-		) );
+		echo WPCP_HTML::checkbox_input(
+			array(
+				'label' => __( 'Post only live videos only', 'wp-content-pilot' ),
+				'name'  => '_youtube_live_videos',
+			)
+		);
 
-		echo WPCP_HTML::checkbox_input( array(
-			'label' => __( 'Post videos only with closed captions', 'wp-content-pilot' ),
-			'name'  => '_youtube_closed_captions',
-		) );
+		echo WPCP_HTML::checkbox_input(
+			array(
+				'label' => __( 'Post videos only with closed captions', 'wp-content-pilot' ),
+				'name'  => '_youtube_closed_captions',
+			)
+		);
 	}
 
 	/**
@@ -222,7 +246,7 @@ EOT;
 	public function get_setting_section( $sections ) {
 		$sections[] = [
 			'id'    => 'wpcp_settings_youtube',
-			'title' => __( 'Youtube', 'wp-content-pilot' )
+			'title' => __( 'Youtube', 'wp-content-pilot' ),
 		];
 
 		return $sections;
@@ -241,7 +265,7 @@ EOT;
 				'label'   => __( 'Youtube API key', 'wp-content-pilot' ),
 				'desc'    => sprintf( __( 'Youtube campaigns won\'t run without API key. <a href="%s" target="_blank">Learn how to get one</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/set-up-youtube-api-key-for-wp-content-pilot/' ),
 				'type'    => 'password',
-				'default' => ''
+				'default' => '',
 			),
 		];
 
@@ -256,7 +280,7 @@ EOT;
 	 * @since 1.2.0
 	 */
 	public function get_post( $campaign_id ) {
-		//if api not set bail
+		// if api not set bail
 		$api_key = wpcp_get_settings( 'api_key', 'wpcp_settings_youtube', '' );
 		if ( empty( $api_key ) ) {
 			wpcp_disable_campaign( $campaign_id );
@@ -270,7 +294,7 @@ EOT;
 		wpcp_logger()->info( __( 'Checking youtube search type...', 'wp-content-pilot' ), $campaign_id );
 
 		$source_type = wpcp_get_post_meta( $campaign_id, '_youtube_search_type', 'global' );
-		if ( $source_type == "playlist" || $source_type == "channel" ) {
+		if ( $source_type == 'playlist' || $source_type == 'channel' ) {
 			$sources = $this->get_campaign_meta( $campaign_id, '_youtube_playlist_id' );
 			if ( empty( $sources ) ) {
 				return new WP_Error( 'missing-data', __( 'Campaign do not have playlist URL to proceed, please set playlist URL', 'wp-content-pilot' ) );
@@ -283,7 +307,7 @@ EOT;
 		}
 
 		foreach ( $sources as $source ) {
-			//get links from database
+			// get links from database
 			wpcp_logger()->info( __( 'Checking for links in store...', 'wp-content-pilot' ), $campaign_id );
 
 			if ( $this->is_deactivated_key( $campaign_id, $source ) ) {
@@ -441,7 +465,7 @@ EOT;
 			'videoDefinition'   => $definition,
 			'order'             => $orderby,
 			'pageToken'         => $next_page_token,
-			'safeSearch'        => $safe_search
+			'safeSearch'        => $safe_search,
 		);
 		if ( 'on' == $live_videos ) {
 			$query_args['eventType'] = 'live';
@@ -529,7 +553,7 @@ EOT;
 
 		wpcp_update_post_meta( $campaign_id, $token_key, @$response->nextPageToken );
 
-		wpcp_logger()->info( sprintf( __( 'Total found links [%d] and accepted [%d] and rejected [%d]', 'wp-content-pilot' ), count( $links ), $total_inserted, ( count( $links ) - $total_inserted ) ), $campaign_id );
+		wpcp_logger()->info( sprintf( __( 'Total found links [%1$d] and accepted [%2$d] and rejected [%3$d]', 'wp-content-pilot' ), count( $links ), $total_inserted, ( count( $links ) - $total_inserted ) ), $campaign_id );
 
 		return true;
 	}
@@ -546,9 +570,9 @@ EOT;
 
 		// Put in zeros if we have less than 3 numbers.
 		if ( count( $parts[0] ) == 1 ) {
-			array_unshift( $parts[0], "0", "0" );
+			array_unshift( $parts[0], '0', '0' );
 		} elseif ( count( $parts[0] ) == 2 ) {
-			array_unshift( $parts[0], "0" );
+			array_unshift( $parts[0], '0' );
 		}
 
 		$sec_init         = $parts[0][2];
@@ -573,7 +597,6 @@ EOT;
 	 *
 	 * @return array
 	 * @since 1.0.0
-	 *
 	 */
 	public function get_youtube_categories() {
 		$categories = array(
@@ -609,7 +632,7 @@ EOT;
 			'41'  => 'Thriller',
 			'42'  => 'Shorts',
 			'43'  => 'Shows',
-			'44'  => 'Trailers'
+			'44'  => 'Trailers',
 		);
 
 		return $categories;

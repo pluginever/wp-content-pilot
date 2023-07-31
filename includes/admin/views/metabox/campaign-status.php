@@ -2,11 +2,14 @@
 defined( 'ABSPATH' ) || exit();
 global $post;
 
-$run_campaign_url = add_query_arg( array(
-	'action'      => 'wpcp_run_campaign',
-	'campaign_id' => $post->ID,
-	'nonce'       => wp_create_nonce( 'wpcp_run_campaign' )
-), esc_url( admin_url( 'admin-post.php' ) ) );
+$run_campaign_url = add_query_arg(
+	array(
+		'action'      => 'wpcp_run_campaign',
+		'campaign_id' => $post->ID,
+		'nonce'       => wp_create_nonce( 'wpcp_run_campaign' ),
+	),
+	esc_url( admin_url( 'admin-post.php' ) )
+);
 $last_run         = wpcp_get_post_meta( $post->ID, '_last_run', 0 );
 if ( $last_run ) {
 	$last_run = date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $last_run ) );
@@ -21,7 +24,7 @@ if ( ! empty( $last_post ) && $last_post = get_post( $last_post ) ) {
 <div class="wpcp-campaign-status-wrap">
 	<div class="wpcp-campaign-statue-item">
 		<?php echo sprintf( '<h2 class="wpcp-campaign-statue-title">%s</h2>', __( 'Status', 'wp-content-pilot' ) ); ?>
-		<?php echo $status == 'active' ? 'Active' : 'Deactivated' ?>
+		<?php echo $status == 'active' ? 'Active' : 'Deactivated'; ?>
 	</div>
 
 	<div class="wpcp-campaign-statue-item">

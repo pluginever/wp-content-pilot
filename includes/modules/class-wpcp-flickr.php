@@ -103,34 +103,38 @@ EOT;
 				'class'   => 'wpcp-select2',
 			)
 		);
-		echo WPCP_HTML::text_input( array(
-			'name'  => '_user_id',
-			'label' => __( 'Specific User ID', 'wp-content-pilot' ),
-			'desc'  => 'Make flickr user id <a target="_blank" href="http://idgettr.com/">here</a>. Example id : 75866656@N00',
-		) );
-		echo WPCP_HTML::select_input( array(
-			'name'    => '_flickr_licenses[]',
-			'label'   => __( 'Choose License', 'wp-content-pilot' ),
-			'options' => array(
-				0  => __( 'All Rights Reserved', 'wp-content-pilot' ),
-				1  => __( 'Attribution-NonCommercial-ShareAlike License', 'wp-content-pilot' ),
-				2  => __( 'Attribution-NonCommercial License', 'wp-content-pilot' ),
-				3  => __( 'Attribution-NonCommercial-NoDerivs License', 'wp-content-pilot' ),
-				4  => __( 'Attribution License', 'wp-content-pilot' ),
-				5  => __( 'Attribution-ShareAlike License', 'wp-content-pilot' ),
-				6  => __( 'Attribution-NoDerivs License', 'wp-content-pilot' ),
-				7  => __( 'No known copyright restrictions', 'wp-content-pilot' ),
-				8  => __( 'United States Government Work', 'wp-content-pilot' ),
-				9  => __( 'Public Domain Dedication (CC0)', 'wp-content-pilot' ),
-				10 => __( 'Public Domain Mark', 'wp-content-pilot' ),
-			),
-			'desc'    => __( 'License Restrictions flickr', 'wp-content-pilot' ),
-			'default' => 7,
-			'class'   => 'wpcp-select2',
-			'attrs'   => array(
-				'multiple' => true
-			),
-		) );
+		echo WPCP_HTML::text_input(
+			array(
+				'name'  => '_user_id',
+				'label' => __( 'Specific User ID', 'wp-content-pilot' ),
+				'desc'  => 'Make flickr user id <a target="_blank" href="http://idgettr.com/">here</a>. Example id : 75866656@N00',
+			)
+		);
+		echo WPCP_HTML::select_input(
+			array(
+				'name'    => '_flickr_licenses[]',
+				'label'   => __( 'Choose License', 'wp-content-pilot' ),
+				'options' => array(
+					0  => __( 'All Rights Reserved', 'wp-content-pilot' ),
+					1  => __( 'Attribution-NonCommercial-ShareAlike License', 'wp-content-pilot' ),
+					2  => __( 'Attribution-NonCommercial License', 'wp-content-pilot' ),
+					3  => __( 'Attribution-NonCommercial-NoDerivs License', 'wp-content-pilot' ),
+					4  => __( 'Attribution License', 'wp-content-pilot' ),
+					5  => __( 'Attribution-ShareAlike License', 'wp-content-pilot' ),
+					6  => __( 'Attribution-NoDerivs License', 'wp-content-pilot' ),
+					7  => __( 'No known copyright restrictions', 'wp-content-pilot' ),
+					8  => __( 'United States Government Work', 'wp-content-pilot' ),
+					9  => __( 'Public Domain Dedication (CC0)', 'wp-content-pilot' ),
+					10 => __( 'Public Domain Mark', 'wp-content-pilot' ),
+				),
+				'desc'    => __( 'License Restrictions flickr', 'wp-content-pilot' ),
+				'default' => 7,
+				'class'   => 'wpcp-select2',
+				'attrs'   => array(
+					'multiple' => true,
+				),
+			)
+		);
 		echo WPCP_HTML::end_double_columns();
 	}
 
@@ -139,7 +143,7 @@ EOT;
 	 * @param $posted
 	 */
 	public function save_campaign_meta( $campaign_id, $posted ) {
-		$flickr_licenses = isset( $posted['_flickr_licenses'] )? sanitize_text_field( $posted['_flickr_licenses'] ): '';
+		$flickr_licenses = isset( $posted['_flickr_licenses'] ) ? sanitize_text_field( $posted['_flickr_licenses'] ) : '';
 		update_post_meta( $campaign_id, '_search_order', empty( $posted['_search_order'] ) ? 'relevance' : sanitize_key( $posted['_search_order'] ) );
 		update_post_meta( $campaign_id, '_user_id', empty( $posted['_user_id'] ) ? '' : $posted['_user_id'] );
 		update_post_meta( $campaign_id, '_flickr_licenses', empty( $posted['_flickr_licenses'] ) ? 7 : $flickr_licenses );
@@ -154,7 +158,7 @@ EOT;
 	public function get_setting_section( $sections ) {
 		$sections[] = [
 			'id'    => 'wpcp_settings_flickr',
-			'title' => __( 'Flickr', 'wp-content-pilot' )
+			'title' => __( 'Flickr', 'wp-content-pilot' ),
 		];
 
 		return $sections;
@@ -173,7 +177,7 @@ EOT;
 				'label'   => __( 'Flickr API key', 'wp-content-pilot' ),
 				'desc'    => sprintf( __( 'Get your flickr API key by following this <a href="%s" target="_blank">link</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/flickr-campaign-settings/' ),
 				'type'    => 'password',
-				'default' => ''
+				'default' => '',
 			),
 		];
 
@@ -236,7 +240,7 @@ EOT;
 				'format'         => 'json',
 				'nojsoncallback' => '1',
 				'method'         => 'flickr.photos.search',
-				'licenses'       => implode( ",", $licenses )
+				'licenses'       => implode( ',', $licenses ),
 			);
 
 			if ( $user_id != '' ) {
@@ -246,7 +250,6 @@ EOT;
 			wpcp_logger()->info( sprintf( __( 'Looking for data from [%s]', 'wp-content-pilot' ), preg_replace( '/api_key=([^&]+)/m', 'api_key=X', $endpoint ) ), $campaign_id );
 			$curl = $this->setup_curl();
 			$curl->get( $endpoint );
-
 
 			if ( $curl->isError() ) {
 				$message = sprintf( __( 'Flickr api request failed response [%s]', 'wp-content-pilot' ), $curl->getErrorMessage() );
@@ -292,11 +295,10 @@ EOT;
 			$large_image_url        = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_b.jpg";
 			$original_image_url     = "http://farm{$response->photo->farm}.staticflickr.com/{$response->photo->server}/{$response->photo->id}_{$response->photo->secret}_o.jpg";
 			$source_url             = $response->photo->urls->url[0]->_content;
-			//$tags        = wpcp_array_to_html( $tags );
+			// $tags        = wpcp_array_to_html( $tags );
 			$date = $response->photo->dates->taken;
 
-
-			//check if the clean title metabox is checked and perform title cleaning
+			// check if the clean title metabox is checked and perform title cleaning
 			$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
 
 			if ( 'on' == $check_clean_title ) {
@@ -305,7 +307,6 @@ EOT;
 			} else {
 				$title = html_entity_decode( $title, ENT_QUOTES );
 			}
-
 
 			wpcp_logger()->info( sprintf( __( 'Generating flickr article from [ %s ]', 'wp-content-pilot' ), $source_url ), $campaign_id );
 			$article = array(
@@ -332,13 +333,15 @@ EOT;
 			);
 
 			wpcp_logger()->info( __( 'Inserting links into store....', 'wp-content-pilot' ), $campaign_id );
-			$this->insert_link( array(
-				'for'     => $keyword,
-				'title'   => $title,
-				'url'     => $source_url,
-				'camp_id' => $campaign_id,
-				'status'  => 'success',
-			) );
+			$this->insert_link(
+				array(
+					'for'     => $keyword,
+					'title'   => $title,
+					'url'     => $source_url,
+					'camp_id' => $campaign_id,
+					'status'  => 'success',
+				)
+			);
 			wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 
 			wpcp_logger()->info( __( 'Article processed from campaign', 'wp-content-pilot' ), $campaign_id );

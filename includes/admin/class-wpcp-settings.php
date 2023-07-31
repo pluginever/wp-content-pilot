@@ -24,10 +24,10 @@ class WPCP_Settings {
 	 * @since 1.2.0
 	 */
 	function admin_init() {
-		//set the settings
+		// set the settings
 		$this->settings_api->set_sections( $this->get_settings_sections() );
 		$this->settings_api->set_fields( $this->get_settings_fields() );
-		//initialize settings
+		// initialize settings
 		$this->settings_api->admin_init();
 	}
 
@@ -35,10 +35,17 @@ class WPCP_Settings {
 	 * @since 1.2.0
 	 */
 	function admin_menu() {
-		add_submenu_page( 'edit.php?post_type=wp_content_pilot', __( 'Settings', 'wp-content-pilot' ), __( 'Settings', 'wp-content-pilot' ), 'edit_others_posts', 'wpcp-settings', array(
-			$this,
-			'settings_page'
-		) );
+		add_submenu_page(
+			'edit.php?post_type=wp_content_pilot',
+			__( 'Settings', 'wp-content-pilot' ),
+			__( 'Settings', 'wp-content-pilot' ),
+			'edit_others_posts',
+			'wpcp-settings',
+			array(
+				$this,
+				'settings_page',
+			)
+		);
 		add_submenu_page( 'edit.php?post_type=wp_content_pilot', __( 'Help', 'wp-content-pilot' ), __( 'Help', 'wp-content-pilot' ), 'edit_others_posts', 'wpcp-help', array( $this, 'help_page' ) );
 	}
 
@@ -50,12 +57,12 @@ class WPCP_Settings {
 		$sections = array(
 			array(
 				'id'    => 'wpcp_settings_misc',
-				'title' => __( 'General Settings', 'wp-content-pilot' )
+				'title' => __( 'General Settings', 'wp-content-pilot' ),
 			),
 			array(
 				'id'    => 'wpcp_article_spinner',
-				'title' => __( 'Article Spinner', 'wp-content-pilot' )
-			)
+				'title' => __( 'Article Spinner', 'wp-content-pilot' ),
+			),
 		);
 
 		return apply_filters( 'wpcp_settings_sections', $sections );
@@ -74,44 +81,44 @@ class WPCP_Settings {
 					'label'   => __( 'Remove data on uninstall?', 'wp-content-pilot' ),
 					'desc'    => __( 'Check this box if you would like to completely remove all of its data when the plugin is deleted.', 'wp-content-pilot' ),
 					'type'    => 'checkbox',
-					'default' => ''
+					'default' => '',
 				),
 				array(
 					'name'    => 'post_publish_mail',
 					'label'   => __( 'Post publish mail', 'wp-content-pilot' ),
 					'desc'    => __( 'Send mail after post publish', 'wp-content-pilot' ),
 					'type'    => 'checkbox',
-					'default' => ''
+					'default' => '',
 				),
-//				array(
-//					'name'    => 'skip_duplicate_url',
-//					'label'   => __( 'Never post duplicate title', 'wp-content-pilot' ),
-//					'desc'    => __( 'Skip post having duplicate url that are already in the database and already published posts.', 'wp-content-pilot' ),
-//					'type'    => 'checkbox',
-//					'default' => ''
-//				),
+			// array(
+			// 'name'    => 'skip_duplicate_url',
+			// 'label'   => __( 'Never post duplicate title', 'wp-content-pilot' ),
+			// 'desc'    => __( 'Skip post having duplicate url that are already in the database and already published posts.', 'wp-content-pilot' ),
+			// 'type'    => 'checkbox',
+			// 'default' => ''
+			// ),
 			),
 			'wpcp_article_spinner' => array(
 				array(
 					'name'    => 'spinrewriter_head',
 					'label'   => __( 'SpinreWriter', 'wp-content-pilot' ),
-					'desc'    => sprintf( __( 'Spin rewriter is one of the best Article Spinner, if you do not have account please %ssign up%s.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>' ),
+					'desc'    => sprintf( __( 'Spin rewriter is one of the best Article Spinner, if you do not have account please %1$ssign up%2$s.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>' ),
 					'type'    => 'html',
-					'default' => ''
+					'default' => '',
 				),
 				array(
 					'name'    => 'spinrewriter_email',
 					'label'   => __( 'Email', 'wp-content-pilot' ),
 					'desc'    => __( 'Input your email address of Spin rewriter.', 'wp-content-pilot' ),
 					'type'    => 'text',
-					'default' => ''
+					'default' => '',
 				),
 				array(
 					'name'    => 'spinrewriter_api_key',
 					'label'   => __( 'API Key', 'wp-content-pilot' ),
 					'desc'    => __( 'Input API key of Spin rewriter.', 'wp-content-pilot' ),
 					'type'    => 'text',
-					'default' => ''
+					'default' => '',
 				),
 			),
 		);
@@ -122,19 +129,19 @@ class WPCP_Settings {
 	function settings_page() {
 		?>
 		<div class="wrap">
-			<?php echo sprintf( "<h2>%s</h2>", __( 'WP Content Pilot Settings', 'wp-content-pilot' ) ); ?>
+			<?php echo sprintf( '<h2>%s</h2>', __( 'WP Content Pilot Settings', 'wp-content-pilot' ) ); ?>
 			<div id="poststuff">
 				<div id="post-body" class="columns-2">
 					<div id="post-body-content">
 						<?php $this->settings_api->show_settings(); ?>
 					</div>
 					<div id="postbox-container-1" class="postbox-container" style="margin-top: 15px;">
-						<?php if ( ! defined( 'WPCP_PRO_VERSION' ) ): ?>
+						<?php if ( ! defined( 'WPCP_PRO_VERSION' ) ) : ?>
 							<div class="postbox" style="min-width: inherit;">
 								<h3 class="hndle"><label for="title"><?php _e( 'Upgrade to Pro', 'wp-content-pilot' ); ?></label></h3>
 								<div class="inside">
 									<?php
-									echo sprintf( __( 'Pro version supports 25+ campaign sources with exclusive features. %sUpgrade to Pro.%s', 'wp-content-pilot' ), '<a href="https://pluginever.com/plugins/wp-content-pilot-pro/" target="_blank">', '</a>' )
+									echo sprintf( __( 'Pro version supports 25+ campaign sources with exclusive features. %1$sUpgrade to Pro.%2$s', 'wp-content-pilot' ), '<a href="https://pluginever.com/plugins/wp-content-pilot-pro/" target="_blank">', '</a>' )
 
 									?>
 								</div>
@@ -145,7 +152,7 @@ class WPCP_Settings {
 							<h3 class="hndle"><label for="title"><?php _e( 'Documentation', 'wp-content-pilot' ); ?></label></h3>
 							<div class="inside">
 								<?php
-								echo sprintf( __( 'We have detailed documentation on every aspects of %s WP Content Pilot %s', 'wp-content-pilot' ), '<a href="https://pluginever.com/docs/wp-content-pilot/" target="_blank">', '</a>' )
+								echo sprintf( __( 'We have detailed documentation on every aspects of %1$s WP Content Pilot %2$s', 'wp-content-pilot' ), '<a href="https://pluginever.com/docs/wp-content-pilot/" target="_blank">', '</a>' )
 								?>
 							</div>
 						</div>
@@ -154,7 +161,7 @@ class WPCP_Settings {
 							<h3 class="hndle"><label for="title"><?php _e( 'Support', 'wp-content-pilot' ); ?></label></h3>
 							<div class="inside">
 								<?php
-								echo sprintf( __( 'Our expert support team is always ready to help you out. %s support forum%s', 'wp-content-pilot' ), '<a href="https://pluginever.com/support/" target="_blank">', '</a>' )
+								echo sprintf( __( 'Our expert support team is always ready to help you out. %1$s support forum%2$s', 'wp-content-pilot' ), '<a href="https://pluginever.com/support/" target="_blank">', '</a>' )
 								?>
 
 							</div>
@@ -164,7 +171,7 @@ class WPCP_Settings {
 							<h3 class="hndle"><label for="title">Rate Us</label></h3>
 							<div class="inside">
 								<?php
-								echo sprintf( __( 'If you like WP Content Pilot, please leave us a  %s rating.%s It takes a minute and helps a lot. Thanks in advance!' , 'wp-content-pilot' ), '<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/#new-post" target="_blank">', '</a>' )
+								echo sprintf( __( 'If you like WP Content Pilot, please leave us a  %1$s rating.%2$s It takes a minute and helps a lot. Thanks in advance!', 'wp-content-pilot' ), '<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/#new-post" target="_blank">', '</a>' )
 								?>
 								<div class="ratings-stars-container">
 									<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/?filter=5"
@@ -188,6 +195,7 @@ class WPCP_Settings {
 
 	/**
 	 * Help Page
+	 *
 	 * @since 1.3.2
 	 */
 	public function help_page() {

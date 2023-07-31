@@ -1,5 +1,5 @@
 <?php
-defined( 'ABSPATH') || exit();
+defined( 'ABSPATH' ) || exit();
 
 $blocks   = [
 	[
@@ -159,12 +159,12 @@ $features = [
 		'free'  => false,
 		'pro'   => true,
 	],
-    [
-        'title' => __( 'Tiktok', 'wp-content-pilot' ),
-        'desc'  => __( 'Tiktok module to import videos', 'wp-content-pilot' ),
-        'free'  => false,
-        'pro'   => true,
-    ],
+	[
+		'title' => __( 'Tiktok', 'wp-content-pilot' ),
+		'desc'  => __( 'Tiktok module to import videos', 'wp-content-pilot' ),
+		'free'  => false,
+		'pro'   => true,
+	],
 	[
 		'title' => __( 'Search Replace', 'wp-content-pilot' ),
 		'desc'  => __( 'Automatic search replace with regex support', 'wp-content-pilot' ),
@@ -304,22 +304,22 @@ $features = [
 </style>
 <div class="wrap">
 
-	<h2><?php esc_html_e( 'WP Content Pilot - Help', 'wp-content-pilot' );?> </h2>
+	<h2><?php esc_html_e( 'WP Content Pilot - Help', 'wp-content-pilot' ); ?> </h2>
 
 	<div class="wpcp-help-page">
-		<?php foreach ( $blocks as $block ): ?>
+		<?php foreach ( $blocks as $block ) : ?>
 			<div class="help-block-wrap">
 				<div class="help-block">
 					<img src="<?php echo esc_url_raw( $block['image'] ); ?>" alt="Looking for Something?">
-					<h3><?php echo esc_html( $block['title'] ) ?></h3>
-					<p><?php echo esc_html( $block['desc'] ) ?></p>
+					<h3><?php echo esc_html( $block['title'] ); ?></h3>
+					<p><?php echo esc_html( $block['desc'] ); ?></p>
 					<a target="_blank" href="<?php echo esc_url_raw( $block['url'] ); ?>" class="button button-primary">
-						<?php echo esc_html( $block['button_text'] ) ?></a>
+						<?php echo esc_html( $block['button_text'] ); ?></a>
 				</div>
 			</div>
 		<?php endforeach; ?>
 	</div>
-	<?php if ( ! defined( 'WPCP_PRO_VERSION' ) ): ?>
+	<?php if ( ! defined( 'WPCP_PRO_VERSION' ) ) : ?>
 		<div class="free-vs-pro">
 			<h3>Are you looking for more? Checkout <a href="https://pluginever.com/plugins/wp-content-pilot-pro/" target="_blank"> WP Content Pilot Pro. </a> </h3>
 			<table class="widefat">
@@ -328,23 +328,23 @@ $features = [
 					<th><?php esc_html_e( 'Free', 'wp-content-pilot' ); ?></th>
 					<th><?php esc_html_e( 'Pro', 'wp-content-pilot' ); ?></th>
 				</tr>
-				<?php foreach ( $features as $feature ): ?>
+				<?php foreach ( $features as $feature ) : ?>
 					<tr>
 						<td>
-							<strong><?php echo esc_html( $feature['title'] ) ?></strong>
-							<p><?php echo esc_html( $feature['desc'] ) ?></p>
+							<strong><?php echo esc_html( $feature['title'] ); ?></strong>
+							<p><?php echo esc_html( $feature['desc'] ); ?></p>
 						</td>
 						<td>
-							<?php if ( isset( $feature['free'] ) && $feature['free'] ): ?>
+							<?php if ( isset( $feature['free'] ) && $feature['free'] ) : ?>
 								<span class="dashicons dashicons-yes"></span>
-							<?php else: ?>
+							<?php else : ?>
 								<span class="dashicons dashicons-no-alt"></span>
 							<?php endif; ?>
 						</td>
 						<td>
-							<?php if ( isset( $feature['pro'] ) && $feature['pro'] ): ?>
+							<?php if ( isset( $feature['pro'] ) && $feature['pro'] ) : ?>
 								<span class="dashicons dashicons-yes"></span>
-							<?php else: ?>
+							<?php else : ?>
 								<span class="dashicons dashicons-no-alt"></span>
 							<?php endif; ?>
 						</td>

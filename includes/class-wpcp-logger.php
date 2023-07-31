@@ -5,22 +5,25 @@ defined( 'ABSPATH' ) || exit();
 class WPCP_Logger {
 	/**
 	 * $log_file - path and log file name
+	 *
 	 * @var string
 	 */
 	protected $log_file;
 
 	/**
 	 * $file - file
+	 *
 	 * @var resource
 	 */
 	protected $file;
 
 	/**
 	 * $options - settable options - future use - passed through constructor
+	 *
 	 * @var array
 	 */
 	protected $options = array(
-		'dateFormat' => 'd-M-Y H:i:s'
+		'dateFormat' => 'd-M-Y H:i:s',
 	);
 
 	/**
@@ -35,7 +38,7 @@ class WPCP_Logger {
 
 	/**
 	 * @param string $log_file
-	 * @param array $params
+	 * @param array  $params
 	 *
 	 * @since 1.2.0
 	 * WPCP_Logger constructor.
@@ -47,15 +50,15 @@ class WPCP_Logger {
 
 		$this->log_file = trailingslashit( WP_CONTENT_DIR ) . ltrim( $log_file );
 		$this->params   = array_merge( $this->options, $params );
-		//Create log file if it doesn't exist.
+		// Create log file if it doesn't exist.
 		if ( $this->debug && ! file_exists( $this->log_file ) ) {
 			fopen( $this->log_file, 'w' ) or exit( "Can't create $log_file!" );
 		}
 
-		//Check permissions of file.
+		// Check permissions of file.
 		if ( $this->debug && ! is_writable( $this->log_file ) ) {
-			//throw exception if not writable
-			new WP_Error( 'write-protected', "ERROR: Unable to write to file!", 1 );
+			// throw exception if not writable
+			new WP_Error( 'write-protected', 'ERROR: Unable to write to file!', 1 );
 		}
 	}
 
@@ -63,7 +66,7 @@ class WPCP_Logger {
 	 * Debug method (write debug message)
 	 *
 	 * @param string $message
-	 * @param int $campaign_id
+	 * @param int    $campaign_id
 	 *
 	 * @return void
 	 */
@@ -75,7 +78,7 @@ class WPCP_Logger {
 	 * Info method (write info message)
 	 *
 	 * @param string $message
-	 * @param int $campaign_id
+	 * @param int    $campaign_id
 	 *
 	 * @return void
 	 */
@@ -87,7 +90,7 @@ class WPCP_Logger {
 	 * Warning method (write warning message)
 	 *
 	 * @param string $message
-	 * @param int $campaign_id
+	 * @param int    $campaign_id
 	 *
 	 * @return void
 	 */
@@ -99,7 +102,7 @@ class WPCP_Logger {
 	 * Error method (write error message)
 	 *
 	 * @param string $message
-	 * @param int $campaign_id
+	 * @param int    $campaign_id
 	 *
 	 * @return void
 	 */
@@ -112,7 +115,7 @@ class WPCP_Logger {
 	 *
 	 * @param string $message
 	 * @param string $severity
-	 * @param int $campaign_id
+	 * @param int    $campaign_id
 	 *
 	 * @return void
 	 */
@@ -123,10 +126,10 @@ class WPCP_Logger {
 		}
 
 		if ( $this->debug ) {
-			//Grab time - based on timezone in php.ini
+			// Grab time - based on timezone in php.ini
 			$time = date( $this->params['dateFormat'] );
 			// Write time, url, & message to end of file
-			fwrite( $this->file, strip_tags("[$time] : [$severity] - $message") . PHP_EOL );
+			fwrite( $this->file, strip_tags( "[$time] : [$severity] - $message" ) . PHP_EOL );
 		}
 
 		$severities = [ 'INFO', 'WARNING', 'ERROR' ];
@@ -138,11 +141,11 @@ class WPCP_Logger {
 			wpcp_insert_log( $message, $severity, $campaign_id );
 		}
 
-
 	}
 
 	/**
 	 * Open log file
+	 *
 	 * @return void
 	 */
 	private function openLog() {

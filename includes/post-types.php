@@ -76,9 +76,12 @@ function wpcp_post_types_messages( $messages ) {
 		6  => __( 'Campaign updated.', 'wp-content-pilot' ),
 		7  => __( 'Campaign saved.', 'wp-content-pilot' ),
 		8  => __( 'Campaign submitted.', 'wp-content-pilot' ),
-		9  => sprintf( __( 'Campaign scheduled for: <strong>%1$s</strong>.', 'wp-content-pilot' ),
+		9  => sprintf(
+			__( 'Campaign scheduled for: <strong>%1$s</strong>.', 'wp-content-pilot' ),
 			// translators: Publish box date format, see http://php.net/date.
-			date_i18n( __( 'M j, Y @ G:i', 'wp-content-pilot' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+			date_i18n( __( 'M j, Y @ G:i', 'wp-content-pilot' ), strtotime( $post->post_date ) ),
+			esc_url( get_permalink( $post_ID ) )
+		),
 		10 => __( 'Campaign draft updated.', 'wp-content-pilot' ),
 	);
 
@@ -92,7 +95,6 @@ add_filter( 'post_updated_messages', 'wpcp_post_types_messages' );
  *
  * @return string $title New placeholder text
  * @since 1.0.0
- *
  */
 function wpcp_change_default_title( $title ) {
 	$screen = get_current_screen();
@@ -108,6 +110,7 @@ add_filter( 'enter_title_here', 'wpcp_change_default_title' );
 /**
  * Admin column
  * since 1.0.0
+ *
  * @param $columns
  *
  * @return mixed
@@ -128,6 +131,7 @@ add_action( 'manage_wp_content_pilot_posts_columns', 'wp_content_pilot_columns',
 /**
  * Admin column content
  * since 1.0.0
+ *
  * @param $column_name
  * @param $post_ID
  */
@@ -143,7 +147,7 @@ function wp_content_pilot_column_content( $column_name, $post_ID ) {
 			break;
 		case 'type':
 			$campaign_type = wpcp_get_post_meta( $post_ID, '_campaign_type' );
-			echo ucfirst( str_replace('_', ' ', $campaign_type) );
+			echo ucfirst( str_replace( '_', ' ', $campaign_type ) );
 			break;
 		case 'target':
 			$target    = wpcp_get_post_meta( $post_ID, '_campaign_target', 0 );
@@ -167,7 +171,7 @@ function wp_content_pilot_column_content( $column_name, $post_ID ) {
 		case 'last_run':
 			$last_run = wpcp_get_post_meta( $post_ID, '_last_run', 0 );
 			if ( $last_run ) {
-				echo date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime($last_run) );
+				echo date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $last_run ) );
 			} else {
 				echo ' - ';
 			}
