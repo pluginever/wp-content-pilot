@@ -7,11 +7,10 @@ defined( 'ABSPATH' ) || exit();
  *
  * @param        $string
  * @param string $separator
- * @param array $callbacks
+ * @param array  $callbacks
  *
  * @return array
  * @since 1.0.0
- *
  */
 function wpcp_string_to_array( $string, $separator = ',', $callbacks = array() ) {
 	if ( is_array( $string ) ) {
@@ -49,7 +48,7 @@ function wpcp_get_host( $url, $base_domain = false ) {
 	} else {
 		$scheme = ! isset( $parseUrl['scheme'] ) ? 'http' : $parseUrl['scheme'];
 
-		return $scheme . "://" . $parseUrl['host'];
+		return $scheme . '://' . $parseUrl['host'];
 	}
 
 	return $host;
@@ -62,7 +61,6 @@ function wpcp_get_host( $url, $base_domain = false ) {
  * @return string
  *
  * @since 1.0.
- *
  */
 function wpcp_remove_unauthorized_html( $content ) {
 	$default_allowed_tags = [
@@ -142,7 +140,7 @@ function wpcp_remove_unauthorized_html( $content ) {
 			'height'      => true,
 			'width'       => true,
 			'src'         => true,
-		)
+		),
 	];
 
 	$allowed_tags = apply_filters( 'wpcp_allowed_html_tags', $default_allowed_tags );
@@ -163,22 +161,19 @@ function wpcp_remove_unauthorized_html( $content ) {
  * @return null|string|string[]
  */
 function wpcp_remove_empty_tags_recursive( $str, $replace_with = null ) {
-	//** Return if string not given or empty.
+	// ** Return if string not given or empty.
 	if ( ! is_string( $str )
-	     || trim( $str ) == '' ) {
+		 || trim( $str ) == '' ) {
 		return $str;
 	}
 
-	//** Recursive empty HTML tags.
+	// ** Recursive empty HTML tags.
 	return preg_replace(
-
-	//** Pattern written by Junaid Atari.
+	// ** Pattern written by Junaid Atari.
 		'/<([^<\/>]*)>([\s]*?|(?R))<\/\1>/imsU',
-
-		//** Replace with nothing if string empty.
+		// ** Replace with nothing if string empty.
 		! is_string( $replace_with ) ? '' : $replace_with,
-
-		//** Source string
+		// ** Source string
 		$str
 	);
 }
@@ -193,7 +188,7 @@ function wpcp_remove_empty_tags_recursive( $str, $replace_with = null ) {
  * @return string
  */
 function wpcp_remove_emoji( $content ) {
-	$clean_text = "";
+	$clean_text = '';
 
 	// Match Emoticons
 	$regexEmoticons = '/[\x{1F600}-\x{1F64F}]/u';
@@ -233,9 +228,9 @@ function wpcp_clean_title( $title ) {
 	$title = html_entity_decode( $title, ENT_QUOTES );
 
 	$title = str_replace( 'nospin', '', $title );
-	//$title = str_replace( ' ', '-', $title ); // Replaces all spaces with hyphens.
-	//$title = preg_replace( '/[^A-Za-z0-9\-\s\.\,]/', '', $title ); // Removes special chars.
-	//$title = preg_replace( '/[^A-Za-z0-9\-\s\'\"\.\,]/', '', $title ); // Removes special chars. allow öäüß ÖÄÜ
+	// $title = str_replace( ' ', '-', $title ); // Replaces all spaces with hyphens.
+	// $title = preg_replace( '/[^A-Za-z0-9\-\s\.\,]/', '', $title ); // Removes special chars.
+	// $title = preg_replace( '/[^A-Za-z0-9\-\s\'\"\.\,]/', '', $title ); // Removes special chars. allow öäüß ÖÄÜ
 
 	$title = preg_replace( '/-+/', '-', $title ); // Replaces multiple hyphens with single one.
 
@@ -254,7 +249,6 @@ function wpcp_clean_title( $title ) {
 	if ( count( preg_split( '/\s+/', $title ) ) < 3 ) {
 		$title = preg_replace( '/[^\|\-\\\\\/>»]*[\|\-\\\\\/>»](.*)/i', '$1', $title );
 	}
-
 
 	return $title;
 }
@@ -344,7 +338,6 @@ function wpcp_remove_continue_reading( $content ) {
  *
  * @return string
  * @since 1.0.0
- *
  */
 function wpcp_cent_to_usd( $cent ) {
 	return number_format( ( $cent / 100 ), 2, '.', ' ' );
@@ -355,7 +348,7 @@ function wpcp_cent_to_usd( $cent ) {
  * since 1.0.0
  *
  * @param     $content
- * @param int $length
+ * @param int     $length
  *
  * @return bool|null|string|string[]
  */
@@ -395,7 +388,7 @@ function wpcp_strip_urls( $content ) {
  * wpcp_get_numbers_from_string('Showing 20 of 200', true)
  *
  * @param $string
- * @param bool $multiple
+ * @param bool   $multiple
  *
  * @return array|float|integer
  * @since 1.2.5

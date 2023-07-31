@@ -22,18 +22,20 @@ class WPCP_Admin {
 
 	/**
 	 * Includes
+	 *
 	 * @since 1.2.0
 	 */
 	public function includes() {
-		require_once( dirname( __FILE__ ) . '/admin-functions.php' );
-		require_once ( dirname( __FILE__ ). '/class-wpcp-updater.php');
-		require_once( dirname( __FILE__ ) . '/class-settings-framework.php' );
-		require_once( dirname( __FILE__ ) . '/class-wpcp-settings.php' );
-		require_once( dirname( __FILE__ ) . '/metabox-functions.php' );
+		require_once dirname( __FILE__ ) . '/admin-functions.php';
+		require_once dirname( __FILE__ ) . '/class-wpcp-updater.php';
+		require_once dirname( __FILE__ ) . '/class-settings-framework.php';
+		require_once dirname( __FILE__ ) . '/class-wpcp-settings.php';
+		require_once dirname( __FILE__ ) . '/metabox-functions.php';
 	}
 
 	/**
 	 * Init hooks
+	 *
 	 * @since 1.2.0
 	 */
 	public function init_hooks() {
@@ -55,6 +57,7 @@ class WPCP_Admin {
 
 	/**
 	 * status page
+	 *
 	 * @since 1.2.0
 	 */
 	public function status_page() {
@@ -63,6 +66,7 @@ class WPCP_Admin {
 
 	/**
 	 * Logs page
+	 *
 	 * @since 1.2.0
 	 */
 	public function logs_page() {
@@ -100,7 +104,6 @@ class WPCP_Admin {
 	 *
 	 * @return void
 	 * @since 1.0.0
-	 *
 	 */
 	public function plugin_upgrades() {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -116,9 +119,10 @@ class WPCP_Admin {
 	 * 5 Star Rating banner.
 	 *
 	 * since 1.2.0
+	 *
 	 * @return string
 	 */
-	public function admin_footer_note(){
+	public function admin_footer_note() {
 		$screen = get_current_screen();
 
 		if ( 'wp_content_pilot' == $screen->post_type ) {

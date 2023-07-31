@@ -10,10 +10,17 @@ class WPCP_Help {
 	}
 
 	public function admin_menu() {
-		add_submenu_page( 'edit.php?post_type=wp_content_pilot', 'Help', '<span style="color:orange;">Help</span>', 'manage_options', 'wpcp-help', array(
-			$this,
-			'help_page'
-		) );
+		add_submenu_page(
+			'edit.php?post_type=wp_content_pilot',
+			'Help',
+			'<span style="color:orange;">Help</span>',
+			'manage_options',
+			'wpcp-help',
+			array(
+				$this,
+				'help_page',
+			)
+		);
 	}
 
 	public function help_page() {
@@ -126,19 +133,19 @@ class WPCP_Help {
 			<h2>WP Content Pilot - Help </h2>
 
 			<div class="ever-help-page">
-				<?php foreach ( $blocks as $block ): ?>
+				<?php foreach ( $blocks as $block ) : ?>
 					<div class="help-block-wrap">
 						<div class="help-block">
 							<img src="<?php echo esc_url_raw( $block['image'] ); ?>" alt="Looking for Something?">
-							<h3><?php echo esc_html( $block['title'] ) ?></h3>
-							<p><?php echo esc_html( $block['desc'] ) ?></p>
+							<h3><?php echo esc_html( $block['title'] ); ?></h3>
+							<p><?php echo esc_html( $block['desc'] ); ?></p>
 							<a target="_blank" href="<?php echo esc_url_raw( $block['url'] ); ?>" class="button button-primary">
-								<?php echo esc_html( $block['button_text'] ) ?></a>
+								<?php echo esc_html( $block['button_text'] ); ?></a>
 						</div>
 					</div>
 				<?php endforeach; ?>
 			</div>
-			<?php if ( ! defined( 'WPCP_PRO_VERSION' ) ): ?>
+			<?php if ( ! defined( 'WPCP_PRO_VERSION' ) ) : ?>
 				<div class="free-vs-pro">
 					<h3>Are you looking for more? Checkout our Pro Version.</h3>
 					<table class="widefat">
@@ -147,23 +154,23 @@ class WPCP_Help {
 							<th>Free</th>
 							<th>Pro</th>
 						</tr>
-						<?php foreach ( $features as $feature ): ?>
+						<?php foreach ( $features as $feature ) : ?>
 							<tr>
 								<td>
-									<strong><?php echo esc_html( $feature['title'] ) ?></strong>
-									<p><?php echo esc_html( $feature['desc'] ) ?></p>
+									<strong><?php echo esc_html( $feature['title'] ); ?></strong>
+									<p><?php echo esc_html( $feature['desc'] ); ?></p>
 								</td>
 								<td>
-									<?php if ( isset( $feature['free'] ) && $feature['free'] ): ?>
+									<?php if ( isset( $feature['free'] ) && $feature['free'] ) : ?>
 										<span class="dashicons dashicons-yes"></span>
-									<?php else: ?>
+									<?php else : ?>
 										<span class="dashicons dashicons-no-alt"></span>
 									<?php endif; ?>
 								</td>
 								<td>
-									<?php if ( isset( $feature['pro'] ) && $feature['pro'] ): ?>
+									<?php if ( isset( $feature['pro'] ) && $feature['pro'] ) : ?>
 										<span class="dashicons dashicons-yes"></span>
-									<?php else: ?>
+									<?php else : ?>
 										<span class="dashicons dashicons-no-alt"></span>
 									<?php endif; ?>
 								</td>

@@ -1,5 +1,5 @@
 <?php
-defined('ABSPATH')|| exit();
+defined( 'ABSPATH' ) || exit();
 /**
  * Plugin Upgrade Routine
  *
@@ -60,7 +60,6 @@ class ContentPilot_Upgrades {
 				update_option( 'wpcp_version', $version );
 			}
 		}
-
 
 	}
 }

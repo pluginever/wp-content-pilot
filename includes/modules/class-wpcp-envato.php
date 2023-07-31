@@ -49,7 +49,7 @@ class WPCP_Envato extends WPCP_Module {
 			'affiliate_url'          => __( 'Affiliate URL', 'wp-content-pilot' ),
 			'affiliate_live_preview' => __( 'Affiliate Live Preview URL', 'wp-content-pilot' ),
 			'preview'                => __( 'Audio/Video Preview.', 'wp-content-pilot' ),
-			'categories'               => __( 'Categories', 'wp-content-pilot' ),
+			'categories'             => __( 'Categories', 'wp-content-pilot' ),
 		);
 	}
 
@@ -79,67 +79,79 @@ EOT;
 
 		echo WPCP_HTML::start_double_columns();
 
-		echo WPCP_HTML::select_input( array(
-			'label'       => __( 'Platform', 'wp-content-pilot' ),
-			'name'        => '_platform',
-			'placeholder' => '',
-			'options'     => array(
-				'themeforest.net'  => 'ThemeForest',
-				'codecanyon.net'   => 'CodeCanyon',
-				'photodune.net'    => 'PhotoDune',
-				'videohive.net'    => 'VideoHive',
-				'graphicriver.net' => 'GraphicRiver',
-				'3docean.net'      => '3DOcean',
-				'audiojungle.net'  => 'AudioJungle',
-			),
-			'tooltip'     => __( 'Select envato platform', 'wp-content-pilot' ),
-		) );
+		echo WPCP_HTML::select_input(
+			array(
+				'label'       => __( 'Platform', 'wp-content-pilot' ),
+				'name'        => '_platform',
+				'placeholder' => '',
+				'options'     => array(
+					'themeforest.net'  => 'ThemeForest',
+					'codecanyon.net'   => 'CodeCanyon',
+					'photodune.net'    => 'PhotoDune',
+					'videohive.net'    => 'VideoHive',
+					'graphicriver.net' => 'GraphicRiver',
+					'3docean.net'      => '3DOcean',
+					'audiojungle.net'  => 'AudioJungle',
+				),
+				'tooltip'     => __( 'Select envato platform', 'wp-content-pilot' ),
+			)
+		);
 
-		echo WPCP_HTML::text_input( array(
-			'label'       => __( 'Price Range', 'wp-content-pilot' ),
-			'name'        => '_price_range',
-			'placeholder' => '20|100',
-			'desc'        => __( 'separate min max price with (|). e.g. 20|100', 'wp-content-pilot' ),
-		) );
+		echo WPCP_HTML::text_input(
+			array(
+				'label'       => __( 'Price Range', 'wp-content-pilot' ),
+				'name'        => '_price_range',
+				'placeholder' => '20|100',
+				'desc'        => __( 'separate min max price with (|). e.g. 20|100', 'wp-content-pilot' ),
+			)
+		);
 
-		echo WPCP_HTML::select_input( array(
-			'label'   => __( 'Sort By', 'wp-content-pilot' ),
-			'name'    => '_envato_sort_by',
-			'options' => array(
-				'relevance' => __( 'Relevance', 'wp-content-pilot' ),
-				'following' => __( 'Following', 'wp-content-pilot' ),
-				'rating'    => __( 'Rating', 'wp-content-pilot' ),
-				'sales'     => __( 'Sales', 'wp-content-pilot' ),
-				'price'     => __( 'Price', 'wp-content-pilot' ),
-				'date'      => __( 'Date', 'wp-content-pilot' ),
-				'updated'   => __( 'Updated', 'wp-content-pilot' ),
-				'name'      => __( 'Name', 'wp-content-pilot' ),
-				'Trending'  => __( 'Trending', 'wp-content-pilot' ),
-			),
-			'desc'    => __( 'Select how the result will be sorted', 'wp-content-pilot' ),
-		) );
+		echo WPCP_HTML::select_input(
+			array(
+				'label'   => __( 'Sort By', 'wp-content-pilot' ),
+				'name'    => '_envato_sort_by',
+				'options' => array(
+					'relevance' => __( 'Relevance', 'wp-content-pilot' ),
+					'following' => __( 'Following', 'wp-content-pilot' ),
+					'rating'    => __( 'Rating', 'wp-content-pilot' ),
+					'sales'     => __( 'Sales', 'wp-content-pilot' ),
+					'price'     => __( 'Price', 'wp-content-pilot' ),
+					'date'      => __( 'Date', 'wp-content-pilot' ),
+					'updated'   => __( 'Updated', 'wp-content-pilot' ),
+					'name'      => __( 'Name', 'wp-content-pilot' ),
+					'Trending'  => __( 'Trending', 'wp-content-pilot' ),
+				),
+				'desc'    => __( 'Select how the result will be sorted', 'wp-content-pilot' ),
+			)
+		);
 
-		echo WPCP_HTML::select_input( array(
-			'label'   => __( 'Sort Direction', 'wp-content-pilot' ),
-			'name'    => '_envato_sort_direction',
-			'options' => array(
-				'asc'  => __( 'ASC', 'wp-content-pilot' ),
-				'desc' => __( 'DESC', 'wp-content-pilot' ),
-			),
-			'desc'    => __( 'Select sort direction for the result set', 'wp-content-pilot' ),
-		) );
+		echo WPCP_HTML::select_input(
+			array(
+				'label'   => __( 'Sort Direction', 'wp-content-pilot' ),
+				'name'    => '_envato_sort_direction',
+				'options' => array(
+					'asc'  => __( 'ASC', 'wp-content-pilot' ),
+					'desc' => __( 'DESC', 'wp-content-pilot' ),
+				),
+				'desc'    => __( 'Select sort direction for the result set', 'wp-content-pilot' ),
+			)
+		);
 
-		echo WPCP_HTML::text_input( array(
-			'label' => __( 'Search in specific category', 'wp-content-pilot' ),
-			'name'  => '_envato_search_category',
-			'desc'  => sprintf( __( 'For example: Use <a href="%s" target="_blank">site-templates</a> for this category.', 'wp-content-pilot' ), 'https://themeforest.net/category/site-templates' ),
-		) );
+		echo WPCP_HTML::text_input(
+			array(
+				'label' => __( 'Search in specific category', 'wp-content-pilot' ),
+				'name'  => '_envato_search_category',
+				'desc'  => sprintf( __( 'For example: Use <a href="%s" target="_blank">site-templates</a> for this category.', 'wp-content-pilot' ), 'https://themeforest.net/category/site-templates' ),
+			)
+		);
 
-		echo WPCP_HTML::text_input( array(
-			'label' => __( 'Search in specific author', 'wp-content-pilot' ),
-			'name'  => '_envato_search_author',
-			'desc'  => sprintf( __( 'For example: Use <a href="%s" target="_blank">2codethemes</a> for this author.', 'wp-content-pilot' ), 'https://themeforest.net/user/2codethemes' ),
-		) );
+		echo WPCP_HTML::text_input(
+			array(
+				'label' => __( 'Search in specific author', 'wp-content-pilot' ),
+				'name'  => '_envato_search_author',
+				'desc'  => sprintf( __( 'For example: Use <a href="%s" target="_blank">2codethemes</a> for this author.', 'wp-content-pilot' ), 'https://themeforest.net/user/2codethemes' ),
+			)
+		);
 
 		echo WPCP_HTML::end_double_columns();
 
@@ -170,7 +182,7 @@ EOT;
 	public function get_setting_section( $sections ) {
 		$sections[] = [
 			'id'    => 'wpcp_settings_envato',
-			'title' => __( 'Envato', 'wp-content-pilot' )
+			'title' => __( 'Envato', 'wp-content-pilot' ),
 		];
 
 		return $sections;
@@ -189,14 +201,14 @@ EOT;
 				'label'   => __( 'Envato token', 'wp-content-pilot' ),
 				'desc'    => sprintf( __( 'Check this tutorial to get your <a href="%s" target="_blank">Envato token</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/how-to-create-envato-token/' ),
 				'type'    => 'password',
-				'default' => ''
+				'default' => '',
 			),
 			array(
 				'name'    => 'envato_impact_radius',
 				'label'   => __( 'Impact radius affiliate url', 'wp-content-pilot' ),
 				'desc'    => sprintf( __( 'Learn how to get your impact radius affiliate url <a href="%s">here</a>.', 'wp-content-pilot' ), 'https://www.pluginever.com/docs/wp-content-pilot/get-your-envato-impact-radius-affiliate-url/' ),
 				'type'    => 'text',
-				'default' => ''
+				'default' => '',
 			),
 		];
 
@@ -216,7 +228,7 @@ EOT;
 		$token                = wpcp_get_settings( 'token', 'wpcp_settings_envato', '' );
 		$envato_impact_radius = wpcp_get_settings( 'envato_impact_radius', 'wpcp_settings_envato', '' );
 
-		wpcp_logger()->info( __( "Checking envato api key and impact radius url for authentication..", 'wp-content-pilot' ), $campaign_id );
+		wpcp_logger()->info( __( 'Checking envato api key and impact radius url for authentication..', 'wp-content-pilot' ), $campaign_id );
 		if ( empty( $token ) ) {
 			$notice = __( 'The Envato api key is not set so the campaign won\'t run, disabling campaign.', 'wp-content-pilot' );
 
@@ -241,7 +253,6 @@ EOT;
 
 		foreach ( $keywords as $keyword ) {
 			wpcp_logger()->info( sprintf( __( 'Looping through keywords [ %s ]', 'wp-content-pilot' ), $keyword ), $campaign_id );
-
 
 			$total_page_key = $this->get_unique_key( "$keyword-total-page" );
 			$page_key       = $this->get_unique_key( $keyword );
@@ -346,30 +357,29 @@ EOT;
 				}
 
 				wpcp_logger()->info( __( 'Making affiliate url', 'wp-content-pilot' ), $campaign_id );
-//				$affiliate_url = add_query_arg( array(
-//					'u' => urlencode( $item->url )
-//				), $envato_impact_radius );
+				// $affiliate_url = add_query_arg( array(
+				// 'u' => urlencode( $item->url )
+				// ), $envato_impact_radius );
 
 				$affiliate_url         = $item->url;
 				$affiliate_preview_url = isset( $item->previews->live_site->url ) ? $item->previews->live_site->url : $affiliate_url;
 
-				//check if the envato impact radius is not empty and change the url with impact radius
+				// check if the envato impact radius is not empty and change the url with impact radius
 				if ( $envato_impact_radius != '' ) {
 					$affiliate_url         = add_query_arg( array( 'u' => urlencode( $item->url ) ), $envato_impact_radius );
 					$affiliate_preview_url = isset( $item->previews->live_site->url ) ? add_query_arg( array( 'u' => urlencode( $item->previews->live_site->url ) ), $envato_impact_radius ) : '';
 				}
 
-
 				wpcp_logger()->info( __( 'Extracting tags from item', 'wp-content-pilot' ), $campaign_id );
-//				$tags = [];
-//				if ( @$item->tags ) {
-//					$tags = $item->tags;
-//				}
-//				$tags  = wpcp_array_to_html( $tags );
+				// $tags = [];
+				// if ( @$item->tags ) {
+				// $tags = $item->tags;
+				// }
+				// $tags  = wpcp_array_to_html( $tags );
 				$price = wpcp_cent_to_usd( @$item->price_cents );
 				wpcp_logger()->info( sprintf( __( 'Generating envato article from [ %s ]', 'wp-content-pilot' ), $item->url ), $campaign_id );
 
-				//check if the clean title metabox is checked and perform title cleaning
+				// check if the clean title metabox is checked and perform title cleaning
 				$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
 
 				if ( 'on' == $check_clean_title ) {
@@ -413,20 +423,22 @@ EOT;
 					'affiliate_url'          => esc_url( $affiliate_url ),
 					'affiliate_live_preview' => esc_url( $affiliate_preview_url ),
 					'preview'                => esc_url( $preview_url ),
-					'categories'               => wpcp_array_to_html( $item_category ),
+					'categories'             => wpcp_array_to_html( $item_category ),
 				];
 				wpcp_logger()->info( __( 'Article processed from campaign', 'wp-content-pilot' ), $campaign_id );
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 
 				wpcp_logger()->info( __( 'Inserting link into store...', 'wp-content-pilot' ), $campaign_id );
-				$this->insert_link( array(
-					'for'     => $keyword,
-					'title'   => $item->name,
-					'url'     => $item->url,
-					'camp_id' => $campaign_id,
-					'status'  => 'success',
-					'meta'    => '',
-				) );
+				$this->insert_link(
+					array(
+						'for'     => $keyword,
+						'title'   => $item->name,
+						'url'     => $item->url,
+						'camp_id' => $campaign_id,
+						'status'  => 'success',
+						'meta'    => '',
+					)
+				);
 
 				return $article;
 			}

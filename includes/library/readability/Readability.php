@@ -45,7 +45,7 @@
  */
 
 // This class allows us to do JavaScript like assignements to innerHTML
-require_once( dirname( __FILE__ ) . '/JSLikeHTMLElement.php' );
+require_once dirname( __FILE__ ) . '/JSLikeHTMLElement.php';
 
 // Alternative usage (for testing only!)
 // uncomment the lines below and call wp_automatic_Readability.php in your browser
@@ -65,19 +65,19 @@ $r->init();
 */
 
 class Readability {
-	public $version = '1.7.1-without-multi-page';
-	public $convertLinksToFootnotes = false;
+	public $version                       = '1.7.1-without-multi-page';
+	public $convertLinksToFootnotes       = false;
 	public $revertForcedParagraphElements = true;
 	public $articleTitle;
 	public $articleContent;
 	public $dom;
-	public $url = null; // optional - URL where HTML was retrieved
-	public $debug = false;
-	public $lightClean = true; // preserves more content (experimental) added 2012-09-19
-	protected $body = null; //
+	public $url          = null; // optional - URL where HTML was retrieved
+	public $debug        = false;
+	public $lightClean   = true; // preserves more content (experimental) added 2012-09-19
+	protected $body      = null;
 	protected $bodyCache = null; // Cache the body HTML in case we need to re-use it later
-	protected $flags = 7; // 1 | 2 | 4;   // Start with all flags set.
-	protected $success = false; // indicates whether we were able to extract or not
+	protected $flags     = 7; // 1 | 2 | 4;   // Start with all flags set.
+	protected $success   = false; // indicates whether we were able to extract or not
 
 	/**
 	 * All of the regular expressions in use within wp_automatic_Readability.
@@ -95,12 +95,12 @@ class Readability {
 		'normalize'            => '/\s{2,}/',
 		'killBreaks'           => '/(<br\s*\/?>(\s|&nbsp;?)*){1,}/',
 		'video'                => '!//(player\.|www\.)?(youtube|youtube-nocookie|vimeo|viddler|w\.soundcloud)\.com!i',
-		'skipFootnoteLink'     => '/^\s*(\[?[a-z0-9]{1,2}\]?|^|edit|citation needed)\s*$/i'
+		'skipFootnoteLink'     => '/^\s*(\[?[a-z0-9]{1,2}\]?|^|edit|citation needed)\s*$/i',
 	);
 
 	/* constants */
-	const FLAG_STRIP_UNLIKELYS = 1;
-	const FLAG_WEIGHT_CLASSES = 2;
+	const FLAG_STRIP_UNLIKELYS     = 1;
+	const FLAG_WEIGHT_CLASSES      = 2;
 	const FLAG_CLEAN_CONDITIONALLY = 4;
 
 	/**
@@ -112,7 +112,6 @@ class Readability {
 	 */
 	function __construct( $html, $url = null, $parser = 'libxml' ) {
 
-
 		$this->url = $url;
 		/* Turn all double br's into p's */
 		$html = preg_replace( $this->regexps['replaceBrs'], '</p><p>', $html );
@@ -123,10 +122,9 @@ class Readability {
 			$enc = mb_detect_encoding( $html );
 
 			if ( trim( $enc ) != '' ) {
-				$html = mb_convert_encoding( $html, 'HTML-ENTITIES', "UTF-8" );
+				$html = mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' );
 			}
 		}
-
 
 		if ( trim( $html ) == '' ) {
 			$html = '<html></html>';
@@ -143,6 +141,7 @@ class Readability {
 
 	/**
 	 * Get article title element
+	 *
 	 * @return DOMElement
 	 */
 	public function getTitle() {
@@ -151,6 +150,7 @@ class Readability {
 
 	/**
 	 * Get article content element
+	 *
 	 * @return DOMElement
 	 */
 	public function getContent() {
@@ -174,8 +174,8 @@ class Readability {
 			return false;
 		}
 
-		//$this->removeScripts($this->dom);
-		//die($this->getInnerHTML($this->dom->documentElement));
+		// $this->removeScripts($this->dom);
+		// die($this->getInnerHTML($this->dom->documentElement));
 
 		// Assume successful outcome
 		$this->success = true;
@@ -192,9 +192,9 @@ class Readability {
 
 		$this->prepDocument();
 
-		//die($this->dom->documentElement->parentNode->nodeType);
-		//$this->setInnerHTML($this->dom->documentElement, $this->getInnerHTML($this->dom->documentElement));
-		//die($this->getInnerHTML($this->dom->documentElement));
+		// die($this->dom->documentElement->parentNode->nodeType);
+		// $this->setInnerHTML($this->dom->documentElement, $this->getInnerHTML($this->dom->documentElement));
+		// die($this->getInnerHTML($this->dom->documentElement));
 
 		/* Build wp_automatic_Readability's DOM tree */
 		$overlay        = $this->dom->createElement( 'div' );
@@ -209,7 +209,6 @@ class Readability {
 			$articleContent->innerHTML = '<p>Sorry, readability was unable to parse this page for content.</p>';
 		}
 
-
 		$overlay->setAttribute( 'id', 'readOverlay' );
 		$innerDiv->setAttribute( 'id', 'readInner' );
 
@@ -221,7 +220,7 @@ class Readability {
 		/* Clear the old HTML, insert the new content. */
 		$this->body->innerHTML = '';
 		$this->body->appendChild( $overlay );
-		//document.body.insertBefore(overlay, document.body.firstChild);
+		// document.body.insertBefore(overlay, document.body.firstChild);
 		$this->body->removeAttribute( 'style' );
 
 		$this->postProcessContent( $articleContent );
@@ -275,13 +274,13 @@ class Readability {
 			if ( count( explode( ' ', $curTitle ) ) < 3 ) {
 				$curTitle = preg_replace( '/[^\|\-]*[\|\-](.*)/i', '$1', $origTitle );
 			}
-		} else if ( strpos( $curTitle, ': ' ) !== false ) {
+		} elseif ( strpos( $curTitle, ': ' ) !== false ) {
 			$curTitle = preg_replace( '/.*:(.*)/i', '$1', $origTitle );
 
 			if ( count( explode( ' ', $curTitle ) ) < 3 ) {
 				$curTitle = preg_replace( '/[^:]*[:](.*)/i', '$1', $origTitle );
 			}
-		} else if ( strlen( $curTitle ) > 150 || strlen( $curTitle ) < 15 ) {
+		} elseif ( strlen( $curTitle ) > 150 || strlen( $curTitle ) < 15 ) {
 			$hOnes = $this->dom->getElementsByTagName( 'h1' );
 			if ( $hOnes->length == 1 ) {
 				$curTitle = $this->getInnerText( $hOnes->item( 0 ) );
@@ -323,15 +322,18 @@ class Readability {
 			$styleTags->item( $i )->parentNode->removeChild( $styleTags->item( $i ) );
 		}
 
-		/* Turn all double br's into p's */
-		/* Note, this is pretty costly as far as processing goes. Maybe optimize later. */
-		//document.body.innerHTML = document.body.innerHTML.replace(readability.regexps.replaceBrs, '</p><p>').replace(wp_automatic_Readability.regexps.replaceFonts, '<$1span>');
+		/*
+		 Turn all double br's into p's */
+		/*
+		 Note, this is pretty costly as far as processing goes. Maybe optimize later. */
+		// document.body.innerHTML = document.body.innerHTML.replace(readability.regexps.replaceBrs, '</p><p>').replace(wp_automatic_Readability.regexps.replaceFonts, '<$1span>');
 		// We do this in the constructor for PHP as that's when we have raw HTML - before parsing it into a DOM tree.
 		// Manipulating innerHTML as it's done in JS is not possible in PHP.
 	}
 
 	/**
 	 * For easier reading, convert this document to have footnotes at the bottom rather than inline links.
+	 *
 	 * @see http://www.roughtype.com/archives/2010/05/experiments_in.php
 	 *
 	 * @return void
@@ -357,7 +359,7 @@ class Readability {
 			if ( ! $linkDomain && isset( $this->url ) ) {
 				$linkDomain = @parse_url( $this->url, PHP_URL_HOST );
 			}
-			//linkDomain   = footnoteLink.host ? footnoteLink.host : document.location.host,
+			// linkDomain   = footnoteLink.host ? footnoteLink.host : document.location.host,
 			$linkText = $this->getInnerText( $articleLink );
 
 			if ( ( strpos( $articleLink->getAttribute( 'class' ), 'readability-DoNotFootnote' ) !== false ) || preg_match( $this->regexps['skipFootnoteLink'], $linkText ) ) {
@@ -372,7 +374,7 @@ class Readability {
 			$refLink->setAttribute( 'class', 'readability-DoNotFootnote' );
 			$refLink->setAttribute( 'style', 'color: inherit;' );
 
-			//TODO: does this work or should we use DOMNode.isSameNode()?
+			// TODO: does this work or should we use DOMNode.isSameNode()?
 			if ( $articleLink->parentNode->lastChild == $articleLink ) {
 				$articleLink->parentNode->appendChild( $refLink );
 			} else {
@@ -411,13 +413,13 @@ class Readability {
 	function revertReadabilityStyledElements( $articleContent ) {
 		$xpath = new DOMXPath( $articleContent->ownerDocument );
 		$elems = $xpath->query( './/p[@class="readability-styled"]', $articleContent );
-		//$elems = $articleContent->getElementsByTagName('p');
+		// $elems = $articleContent->getElementsByTagName('p');
 		for ( $i = $elems->length - 1; $i >= 0; $i -- ) {
 			$e = $elems->item( $i );
 			$e->parentNode->replaceChild( $articleContent->ownerDocument->createTextNode( $e->textContent ), $e );
-			//if ($e->hasAttribute('class') && $e->getAttribute('class') == 'wp_automatic_Readability-styled') {
-			//	$e->parentNode->replaceChild($this->dom->createTextNode($e->textContent), $e);
-			//}
+			// if ($e->hasAttribute('class') && $e->getAttribute('class') == 'wp_automatic_Readability-styled') {
+			// $e->parentNode->replaceChild($this->dom->createTextNode($e->textContent), $e);
+			// }
 		}
 	}
 
@@ -431,7 +433,7 @@ class Readability {
 	 */
 	function prepArticle( $articleContent ) {
 
-		//$this->cleanStyles($articleContent);
+		// $this->cleanStyles($articleContent);
 		$this->killBreaks( $articleContent );
 		if ( $this->revertForcedParagraphElements ) {
 			$this->revertReadabilityStyledElements( $articleContent );
@@ -445,13 +447,12 @@ class Readability {
 		/**
 		 * If there is only one h2, they are probably using it
 		 * as a header and not a subheader, so remove it since we already have a header.
-		 ***/
+		 */
 		if ( ! $this->lightClean && ( $articleContent->getElementsByTagName( 'h2' )->length == 1 ) ) {
 			$this->clean( $articleContent, 'h2' );
 		}
 
-
-		//$this->clean($articleContent, 'iframe');
+		// $this->clean($articleContent, 'iframe');
 
 		$this->cleanHeaders( $articleContent );
 
@@ -475,9 +476,9 @@ class Readability {
 
 		try {
 			$articleContent->innerHTML = preg_replace( '/<br[^>]*>\s*<p/i', '<p', $articleContent->innerHTML );
-			//articleContent.innerHTML = articleContent.innerHTML.replace(/<br[^>]*>\s*<p/gi, '<p');
+			// articleContent.innerHTML = articleContent.innerHTML.replace(/<br[^>]*>\s*<p/gi, '<p');
 		} catch ( Exception $e ) {
-			$this->dbg( "Cleaning innerHTML of breaks failed. This is an IE strict-block-elements bug. Ignoring.: " . $e );
+			$this->dbg( 'Cleaning innerHTML of breaks failed. This is an IE strict-block-elements bug. Ignoring.: ' . $e );
 		}
 	}
 
@@ -541,7 +542,6 @@ class Readability {
 			$page = $this->dom;
 		}
 
-
 		$allElements = $page->getElementsByTagName( '*' );
 		/**
 		 * First, node prepping. Trash nodes that look cruddy (like ones with the class name "comment", etc), and turn divs
@@ -549,12 +549,12 @@ class Readability {
 		 *
 		 * Note: Assignment from index for performance. See http://www.peachpit.com/articles/article.aspx?p=31567&seqNum=5
 		 * TODO: Shouldn't this be a reverse traversal?
-		 **/
+		 */
 		$node         = null;
 		$nodesToScore = array();
 		for ( $nodeIndex = 0; ( $node = $allElements->item( $nodeIndex ) ); $nodeIndex ++ ) {
-			//for ($nodeIndex=$targetList->length-1; $nodeIndex >= 0; $nodeIndex--) {
-			//$node = $targetList->item($nodeIndex);
+			// for ($nodeIndex=$targetList->length-1; $nodeIndex >= 0; $nodeIndex--) {
+			// $node = $targetList->item($nodeIndex);
 			$tagName = strtoupper( $node->tagName );
 			/* Remove unlikely candidates */
 			if ( $stripUnlikelyCandidates ) {
@@ -565,7 +565,7 @@ class Readability {
 					$tagName != 'BODY'
 				) {
 					$this->dbg( 'Removing unlikely candidate - ' . $unlikelyMatchString );
-					//$nodesToRemove[] = $node;
+					// $nodesToRemove[] = $node;
 					$node->parentNode->removeChild( $node );
 					$nodeIndex --;
 					continue;
@@ -579,11 +579,11 @@ class Readability {
 			/* Turn all divs that don't have children block level elements into p's */
 			if ( $tagName == 'DIV' ) {
 				if ( ! preg_match( $this->regexps['divToPElements'], $node->innerHTML ) ) {
-					//$this->dbg('Altering div to p');
+					// $this->dbg('Altering div to p');
 					$newNode = $this->dom->createElement( 'p' );
 					try {
 						$newNode->innerHTML = $node->innerHTML;
-						//$nodesToReplace[] = array('new'=>$newNode, 'old'=>$node);
+						// $nodesToReplace[] = array('new'=>$newNode, 'old'=>$node);
 						$node->parentNode->replaceChild( $newNode, $node );
 						$nodeIndex --;
 						$nodesToScore[] = $node; // or $newNode?
@@ -591,12 +591,13 @@ class Readability {
 						$this->dbg( 'Could not alter div to p, reverting back to div.: ' . $e );
 					}
 				} else {
-					/* EXPERIMENTAL */
+					/*
+					 EXPERIMENTAL */
 					// TODO: change these p elements back to text nodes after processing
 					for ( $i = 0, $il = $node->childNodes->length; $i < $il; $i ++ ) {
 						$childNode = $node->childNodes->item( $i );
 						if ( $childNode->nodeType == 3 ) { // XML_TEXT_NODE
-							//$this->dbg('replacing text node with a p tag with the same content.');
+							// $this->dbg('replacing text node with a p tag with the same content.');
 							$p            = $this->dom->createElement( 'p' );
 							$p->innerHTML = $childNode->nodeValue;
 							$p->setAttribute( 'style', 'display: inline;' );
@@ -613,7 +614,7 @@ class Readability {
 		 * Then add their score to their parent node.
 		 *
 		 * A score is determined by things like number of commas, class names, etc. Maybe eventually link density.
-		 **/
+		 */
 		$candidates = array();
 		for ( $pt = 0; $pt < count( $nodesToScore ); $pt ++ ) {
 			$parentNode = $nodesToScore[ $pt ]->parentNode;
@@ -621,11 +622,9 @@ class Readability {
 			$grandParentNode = ! $parentNode ? null : ( ( $parentNode->parentNode instanceof DOMElement ) ? $parentNode->parentNode : null );
 			$innerText       = $this->getInnerText( $nodesToScore[ $pt ] );
 
-
 			if ( ! $parentNode || ! isset( $parentNode->tagName ) ) {
 				continue;
 			}
-
 
 			/* If this paragraph is less than 25 characters, don't even count it. */
 			if ( strlen( $innerText ) < 25 ) {
@@ -666,13 +665,13 @@ class Readability {
 		/**
 		 * After we've calculated scores, loop through all of the possible candidate nodes we found
 		 * and find the one with the highest score.
-		 **/
+		 */
 		$topCandidate = null;
 		for ( $c = 0, $cl = count( $candidates ); $c < $cl; $c ++ ) {
 			/**
 			 * Scale the final candidates score based on link density. Good content should have a
 			 * relatively small link density (5% or less) and be mostly unaffected by this operation.
-			 **/
+			 */
 			$readability        = $candidates[ $c ]->getAttributeNode( 'readability' );
 			$readability->value = $readability->value * ( 1 - $this->getLinkDensity( $candidates[ $c ] ) );
 
@@ -686,7 +685,7 @@ class Readability {
 		/**
 		 * If we still have no top candidate, just use the body as a last resort.
 		 * We also have to copy the body node so it is something we can modify.
-		 **/
+		 */
 		if ( $topCandidate === null || strtoupper( $topCandidate->tagName ) == 'BODY' ) {
 			$topCandidate = $this->dom->createElement( 'div' );
 			if ( $page instanceof DOMDocument ) {
@@ -708,13 +707,13 @@ class Readability {
 		/**
 		 * Now that we have the top candidate, look through its siblings for content that might also be related.
 		 * Things like preambles, content split by ads that we removed, etc.
-		 **/
+		 */
 		$articleContent = $this->dom->createElement( 'div' );
 		@$articleContent->setAttribute( 'id', 'readability-content' );
 		$siblingScoreThreshold = max( 10, ( (int) $topCandidate->getAttribute( 'readability' ) ) * 0.2 );
 		$siblingNodes          = $topCandidate->parentNode->childNodes;
 		if ( ! isset( $siblingNodes ) ) {
-			$siblingNodes         = new stdClass;
+			$siblingNodes         = new stdClass();
 			$siblingNodes->length = 0;
 		}
 
@@ -724,10 +723,9 @@ class Readability {
 
 			$this->dbg( 'Looking at sibling node: ' . $siblingNode->nodeName . ( ( $siblingNode->nodeType === XML_ELEMENT_NODE && $siblingNode->hasAttribute( 'readability' ) ) ? ( ' with score ' . $siblingNode->getAttribute( 'readability' ) ) : '' ) );
 
-			//dbg('Sibling has score ' . ($siblingNode->readability ? siblingNode.readability.contentScore : 'Unknown'));
+			// dbg('Sibling has score ' . ($siblingNode->readability ? siblingNode.readability.contentScore : 'Unknown'));
 
-			if ( $siblingNode === $topCandidate ) // or if ($siblingNode->isSameNode($topCandidate))
-			{
+			if ( $siblingNode === $topCandidate ) {
 				$append = true;
 			}
 
@@ -748,7 +746,7 @@ class Readability {
 
 				if ( $nodeLength > 80 && $linkDensity < 0.25 ) {
 					$append = true;
-				} else if ( $nodeLength < 80 && $linkDensity === 0 && preg_match( '/\.( |$)/', $nodeContent ) ) {
+				} elseif ( $nodeLength < 80 && $linkDensity === 0 && preg_match( '/\.( |$)/', $nodeContent ) ) {
 					$append = true;
 				}
 			}
@@ -784,13 +782,12 @@ class Readability {
 				/* Append sibling and subtract from our list because it removes the node when you append to another node */
 				$articleContent->appendChild( $nodeToAppend );
 
-
 			}
 		}
 
 		/**
 		 * So we have all of the content that we need. Now we clean it up for presentation.
-		 **/
+		 */
 		$this->prepArticle( $articleContent );
 
 		/**
@@ -798,7 +795,7 @@ class Readability {
 		 * If we didn't, we may need to re-run grabArticle with different flags set. This gives us a higher
 		 * likelihood of finding the content, and the sieve approach gives us a higher likelihood of
 		 * finding the -right- content.
-		 **/
+		 */
 		if ( strlen( $this->getInnerText( $articleContent, false ) ) < 250 ) {
 			// TODO: find out why element disappears sometimes, e.g. for this URL http://www.businessinsider.com/6-hedge-fund-etfs-for-average-investors-2011-7
 			// in the meantime, we check and create an empty element if it's not there.
@@ -811,11 +808,11 @@ class Readability {
 				$this->removeFlag( self::FLAG_STRIP_UNLIKELYS );
 
 				return $this->grabArticle( $this->body );
-			} else if ( $this->flagIsActive( self::FLAG_WEIGHT_CLASSES ) ) {
+			} elseif ( $this->flagIsActive( self::FLAG_WEIGHT_CLASSES ) ) {
 				$this->removeFlag( self::FLAG_WEIGHT_CLASSES );
 
 				return $this->grabArticle( $this->body );
-			} else if ( $this->flagIsActive( self::FLAG_CLEAN_CONDITIONALLY ) ) {
+			} elseif ( $this->flagIsActive( self::FLAG_CLEAN_CONDITIONALLY ) ) {
 				$this->removeFlag( self::FLAG_CLEAN_CONDITIONALLY );
 
 				return $this->grabArticle( $this->body );
@@ -849,7 +846,7 @@ class Readability {
 	 * This also strips out any excess whitespace to be found.
 	 *
 	 * @param DOMElement $
-	 * @param boolean $normalizeSpaces (default: true)
+	 * @param boolean    $normalizeSpaces (default: true)
 	 *
 	 * @return string
 	 **/
@@ -872,7 +869,7 @@ class Readability {
 	/**
 	 * Get the number of times a string $s appears in the node $e.
 	 *
-	 * @param DOMElement $e
+	 * @param DOMElement             $e
 	 * @param string - what to count. Default is ","
 	 *
 	 * @return number (integer)
@@ -978,7 +975,7 @@ class Readability {
 	 * Updated 2012-09-18 to preserve youtube/vimeo iframes
 	 *
 	 * @param DOMElement $e
-	 * @param string $tag
+	 * @param string     $tag
 	 *
 	 * @return void
 	 */
@@ -1014,7 +1011,7 @@ class Readability {
 	 * link density, number of images & embeds, etc.
 	 *
 	 * @param DOMElement $e
-	 * @param string $tag
+	 * @param string     $tag
 	 *
 	 * @return void
 	 */
@@ -1040,11 +1037,11 @@ class Readability {
 
 			if ( $weight + $contentScore < 0 ) {
 				$tagsList->item( $i )->parentNode->removeChild( $tagsList->item( $i ) );
-			} else if ( $this->getCharCount( $tagsList->item( $i ), ',' ) < 10 ) {
+			} elseif ( $this->getCharCount( $tagsList->item( $i ), ',' ) < 10 ) {
 				/**
 				 * If there are not very many commas, and the number of
 				 * non-paragraph elements is more than paragraphs or other ominous signs, remove the element.
-				 **/
+				 */
 				$p     = $tagsList->item( $i )->getElementsByTagName( 'p' )->length;
 				$img   = $tagsList->item( $i )->getElementsByTagName( 'img' )->length;
 				$li    = $tagsList->item( $i )->getElementsByTagName( 'li' )->length - 100;
@@ -1074,22 +1071,22 @@ class Readability {
 					if ( ( $img > $p ) && ( $img > 4 ) ) {
 						$this->dbg( ' more than 4 images and more image elements than paragraph elements' );
 						$toRemove = true;
-					} else if ( $li > $p && $tag != 'ul' && $tag != 'ol' ) {
+					} elseif ( $li > $p && $tag != 'ul' && $tag != 'ol' ) {
 						$this->dbg( ' too many <li> elements, and parent is not <ul> or <ol>' );
 						$toRemove = true;
-					} else if ( $input > floor( $p / 3 ) ) {
+					} elseif ( $input > floor( $p / 3 ) ) {
 						$this->dbg( ' too many <input> elements' );
 						$toRemove = true;
-					} else if ( $contentLength < 25 && ( $embedCount === 0 && ( $img === 0 || $img > 2 ) ) ) {
+					} elseif ( $contentLength < 25 && ( $embedCount === 0 && ( $img === 0 || $img > 2 ) ) ) {
 						$this->dbg( ' content length less than 25 chars, 0 embeds and either 0 images or more than 2 images' );
 						$toRemove = true;
-					} else if ( $weight < 25 && $linkDensity > 0.2 ) {
+					} elseif ( $weight < 25 && $linkDensity > 0.2 ) {
 						$this->dbg( ' weight smaller than 25 and link density above 0.2' );
 						$toRemove = true;
-					} else if ( $a > 2 && ( $weight >= 25 && $linkDensity > 0.5 ) ) {
+					} elseif ( $a > 2 && ( $weight >= 25 && $linkDensity > 0.5 ) ) {
 						$this->dbg( ' more than 2 links and weight above 25 but link density greater than 0.5' );
 						$toRemove = true;
-					} else if ( $embedCount > 3 ) {
+					} elseif ( $embedCount > 3 ) {
 						$this->dbg( ' more than 3 embeds' );
 						$toRemove = true;
 					}
@@ -1098,29 +1095,29 @@ class Readability {
 					if ( $img > $p ) {
 						$this->dbg( ' more image elements than paragraph elements' );
 						$toRemove = true;
-					} else if ( $li > $p && $tag != 'ul' && $tag != 'ol' ) {
+					} elseif ( $li > $p && $tag != 'ul' && $tag != 'ol' ) {
 						$this->dbg( ' too many <li> elements, and parent is not <ul> or <ol>' );
 						$toRemove = true;
-					} else if ( $input > floor( $p / 3 ) ) {
+					} elseif ( $input > floor( $p / 3 ) ) {
 						$this->dbg( ' too many <input> elements' );
 						$toRemove = true;
-					} else if ( $contentLength < 25 && ( $img === 0 || $img > 2 ) ) {
+					} elseif ( $contentLength < 25 && ( $img === 0 || $img > 2 ) ) {
 						$this->dbg( ' content length less than 25 chars and 0 images, or more than 2 images' );
 						$toRemove = true;
-					} else if ( $weight < 25 && $linkDensity > 0.2 ) {
+					} elseif ( $weight < 25 && $linkDensity > 0.2 ) {
 						$this->dbg( ' weight smaller than 25 and link density above 0.2' );
 						$toRemove = true;
-					} else if ( $weight >= 25 && $linkDensity > 0.5 ) {
+					} elseif ( $weight >= 25 && $linkDensity > 0.5 ) {
 						$this->dbg( ' weight above 25 but link density greater than 0.5' );
 						$toRemove = true;
-					} else if ( ( $embedCount == 1 && $contentLength < 75 ) || $embedCount > 1 ) {
+					} elseif ( ( $embedCount == 1 && $contentLength < 75 ) || $embedCount > 1 ) {
 						$this->dbg( ' 1 embed and content length smaller than 75 chars, or more than one embed' );
 						$toRemove = true;
 					}
 				}
 
 				if ( $toRemove ) {
-					//$this->dbg('Removing: '.$tagsList->item($i)->innerHTML);
+					// $this->dbg('Removing: '.$tagsList->item($i)->innerHTML);
 					$tagsList->item( $i )->parentNode->removeChild( $tagsList->item( $i ) );
 				}
 			}

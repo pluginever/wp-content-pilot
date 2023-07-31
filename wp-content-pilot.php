@@ -143,39 +143,39 @@ final class ContentPilot {
 	 * @return void
 	 */
 	public function includes() {
-		//boot
-		require_once( WPCP_INCLUDES . '/class-wpcp-install.php' );
-		require_once( WPCP_PATH . '/vendor/autoload.php' );
+		// boot
+		require_once WPCP_INCLUDES . '/class-wpcp-install.php';
+		require_once WPCP_PATH . '/vendor/autoload.php';
 
-		//functions
+		// functions
 		require_once WPCP_INCLUDES . '/core-functions.php';
 		require_once WPCP_INCLUDES . '/action-functions.php';
-		require_once( WPCP_INCLUDES . '/formatting-functions.php' );
+		require_once WPCP_INCLUDES . '/formatting-functions.php';
 		require_once WPCP_INCLUDES . '/post-types.php';
 		require_once WPCP_INCLUDES . '/script-functions.php';
 		require_once WPCP_INCLUDES . '/class-wpcp-html.php';
 
-		//core files
-		//require_once( WPCP_LIBRARY . '/readability/Readability_OLD.php' );
-		require_once( WPCP_LIBRARY . '/readability/Readability.php' );
-		require_once( WPCP_INCLUDES . '/class-wpcp-readability.php' );
-		require_once( WPCP_INCLUDES . '/class-wpcp-logger.php' );
-		require_once( WPCP_INCLUDES . '/admin/class-wpcp-insight.php' );
-		require_once( WPCP_INCLUDES . '/admin/class-wpcp-tracker.php' );
-		require_once( WPCP_INCLUDES . '/class-wpcp-dom.php' );
-		require_once( WPCP_INCLUDES . '/class-wpcp-modules.php' );
-		require_once( WPCP_INCLUDES . '/class-wpcp-module.php' );
-		require_once( WPCP_INCLUDES . '/class-wpcp-notices.php' );
+		// core files
+		// require_once( WPCP_LIBRARY . '/readability/Readability_OLD.php' );
+		require_once WPCP_LIBRARY . '/readability/Readability.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-readability.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-logger.php';
+		require_once WPCP_INCLUDES . '/admin/class-wpcp-insight.php';
+		require_once WPCP_INCLUDES . '/admin/class-wpcp-tracker.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-dom.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-modules.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-module.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-notices.php';
 
-		//modules
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-article.php' );
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-feed.php' );
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-youtube.php' );
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-envato.php' );
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-flickr.php' );
+		// modules
+		require_once WPCP_INCLUDES . '/modules/class-wpcp-article.php';
+		require_once WPCP_INCLUDES . '/modules/class-wpcp-feed.php';
+		require_once WPCP_INCLUDES . '/modules/class-wpcp-youtube.php';
+		require_once WPCP_INCLUDES . '/modules/class-wpcp-envato.php';
+		require_once WPCP_INCLUDES . '/modules/class-wpcp-flickr.php';
 
 		if ( is_admin() ) {
-			require_once( WPCP_INCLUDES . '/admin/class-wpcp-admin.php' );
+			require_once WPCP_INCLUDES . '/admin/class-wpcp-admin.php';
 		}
 	}
 
@@ -216,7 +216,6 @@ final class ContentPilot {
 	 *
 	 * @return void
 	 * @since 1.0.0
-	 *
 	 */
 	public function localization_setup() {
 		load_plugin_textdomain( 'wp-content-pilot', false, dirname( plugin_basename( __FILE__ ) ) . '/i18n/languages/' );
@@ -249,9 +248,9 @@ final class ContentPilot {
 		$links = array_merge( $action_links, $links );
 
 		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
-			$upgrade_link = 'https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro';
+			$upgrade_link  = 'https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro';
 			$upgrade_links = array(
-				'upgrade' => '<a href="'. esc_url( $upgrade_link ).'" style="color: red;font-weight: bold;" target="_blank">' . __( 'Go Pro', 'wp-content-pilot' ) . '</a>'
+				'upgrade' => '<a href="' . esc_url( $upgrade_link ) . '" style="color: red;font-weight: bold;" target="_blank">' . __( 'Go Pro', 'wp-content-pilot' ) . '</a>',
 			);
 
 			$links = array_merge( $links, $upgrade_links );
@@ -292,7 +291,7 @@ final class ContentPilot {
 	public function custom_cron_schedules( $schedules ) {
 		$schedules ['once_a_minute'] = array(
 			'interval' => 60,
-			'display'  => __( 'Once a Minute', 'wp-content-pilot' )
+			'display'  => __( 'Once a Minute', 'wp-content-pilot' ),
 		);
 
 		return $schedules;
@@ -303,10 +302,10 @@ final class ContentPilot {
 	 */
 	public function check_if_cron_running() {
 		if ( current_user_can( 'manage_options' ) ) {
-//			$status = wpcp_check_cron_status();
-//			if ( is_wp_error( $status ) ) {
-//			$this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
-//			}
+			// $status = wpcp_check_cron_status();
+			// if ( is_wp_error( $status ) ) {
+			// $this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
+			// }
 		}
 	}
 
@@ -333,9 +332,9 @@ final class ContentPilot {
 
 	/**
 	 * Module class
+	 *
 	 * @return WPCP_Modules
 	 * @since 1.2.0
-	 *
 	 */
 	public function modules() {
 		return WPCP_Modules::instance();
@@ -349,5 +348,5 @@ function content_pilot() {
 	return ContentPilot::instance();
 }
 
-//fire off the plugin
+// fire off the plugin
 content_pilot();

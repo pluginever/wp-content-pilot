@@ -9,6 +9,7 @@
  * JavaScript.
  *
  * Example usage:
+ *
  * @code
  * require_once 'JSLikeHTMLElement.php';
  * header('Content-Type: text/plain');
@@ -33,7 +34,7 @@
  * @author Keyvan Minoukadeh - http://www.keyvan.net - keyvan@keyvan.net
  * @see http://fivefilters.org (the project this was written for)
  */
-if ( ! class_exists( 'JSLikeHTMLElement_OLD' ) ):
+if ( ! class_exists( 'JSLikeHTMLElement_OLD' ) ) :
 	class JSLikeHTMLElement_OLD extends DOMElement {
 		/**
 		 * Used for setting innerHTML like it's done in JavaScript:.

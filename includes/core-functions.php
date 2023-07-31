@@ -10,26 +10,26 @@ defined( 'ABSPATH' ) || exit();
  */
 function wpcp_get_random_user_agent() {
 	$agents = array(
-		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36",
-		"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8",
-		"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36",
-		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36",
-		"Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0",
-		"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0",
-		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36",
-		"Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko",
-		"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0",
-		"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0",
-		"Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063",
-		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0",
-		"Mozilla/5.0 (Windows NT 10.0; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0",
-		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-		"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36"
+		'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+		'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8',
+		'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+		'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0',
+		'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0',
+		'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
+		'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko',
+		'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0',
+		'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0',
+		'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063',
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0',
+		'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0',
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
 	);
 	$rand   = rand( 0, count( $agents ) - 1 );
 
@@ -42,12 +42,11 @@ function wpcp_get_random_user_agent() {
  *
  * @param        $section
  * @param        $field
- * @param bool $default
+ * @param bool    $default
  *
  * @return string|array|bool
  * @since 1.0.0
  * @since 1.0.1 section has been added
- *
  */
 function wpcp_get_settings( $field, $section = 'wpcp_settings', $default = false ) {
 	$settings = get_option( $section );
@@ -66,7 +65,6 @@ function wpcp_get_settings( $field, $section = 'wpcp_settings', $default = false
  * @param $data
  *
  * @since 1.0.0
- *
  */
 function wpcp_update_settings( $field, $data ) {
 	$settings           = get_option( 'wpcp_settings' );
@@ -114,7 +112,7 @@ function wpcp_disable_campaign( $campaign_id ) {
  *
  * @param      $campaign_id
  * @param      $key
- * @param null $default
+ * @param null        $default
  *
  * @return null|string|array
  */
@@ -138,7 +136,6 @@ function wpcp_get_post_meta( $campaign_id, $key, $default = null ) {
  * @param $value
  *
  * @since 1.0.0
- *
  */
 function wpcp_update_post_meta( $post_id, $key, $value ) {
 	update_post_meta( $post_id, $key, $value );
@@ -149,7 +146,7 @@ function wpcp_update_post_meta( $post_id, $key, $value ) {
  * since 1.0.0
  *
  * @param $template_name
- * @param array $args
+ * @param array         $args
  */
 function wpcp_get_views( $template_name, $args = [] ) {
 	if ( $args && is_array( $args ) ) {
@@ -172,7 +169,7 @@ function wpcp_get_post_categories() {
 
 	$args = [
 		'taxonomy'   => 'category',
-		'hide_empty' => false
+		'hide_empty' => false,
 	];
 
 	$categories = get_terms( $args );
@@ -190,7 +187,7 @@ function wpcp_get_post_tags() {
 
 	$args = [
 		'taxonomy'   => 'post_tag',
-		'hide_empty' => false
+		'hide_empty' => false,
 	];
 
 	$tags = get_terms( $args );
@@ -204,11 +201,10 @@ function wpcp_get_post_tags() {
  * @return array
  *
  * @since 1.0.0
- *
  */
 function wpcp_get_authors() {
 	$result = [];
-	$users  = get_users( [ 'capability__in' => array('publish_posts') ] );
+	$users  = get_users( [ 'capability__in' => array( 'publish_posts' ) ] );
 
 	foreach ( $users as $user ) {
 		$result[ $user->ID ] = "{$user->display_name} ({$user->user_email})";
@@ -226,14 +222,17 @@ function wpcp_get_authors() {
  */
 
 function wpcp_get_posts( $args ) {
-	$args = wp_parse_args( $args, array(
-		'post_type'      => 'post',
-		'post_status'    => 'publish',
-		'posts_per_page' => 10,
-		'paged'          => 1,
-		'orderby'        => 'date',
-		'order'          => 'DESC',
-	) );
+	$args = wp_parse_args(
+		$args,
+		array(
+			'post_type'      => 'post',
+			'post_status'    => 'publish',
+			'posts_per_page' => 10,
+			'paged'          => 1,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		)
+	);
 
 	$posts = get_posts( $args );
 
@@ -258,7 +257,7 @@ function wpcp_hyperlink_text( $text ) {
  *
  * @param $content
  * @param $length
- * @param bool $html
+ * @param bool    $html
  *
  * @return string
  */
@@ -268,7 +267,7 @@ function wpcp_truncate_content( $content, $length, $html = true ) {
 		if ( strlen( preg_replace( '/<.*?>/', '', $content ) ) <= $length ) {
 			return $content;
 		}
-		//Balances tags of string using a modified stack.
+		// Balances tags of string using a modified stack.
 		$content = force_balance_tags( html_entity_decode( wp_trim_words( htmlentities( $content ), $length, '...' ) ) );
 	} else {
 		$content = wp_trim_words( $content, $length );
@@ -326,7 +325,7 @@ function wpcp_download_image( $url, $description = '' ) {
 
 	$attach_id = wp_insert_attachment( $attachment, $mirror['file'] );
 
-	require_once( ABSPATH . 'wp-admin/includes/image.php' );
+	require_once ABSPATH . 'wp-admin/includes/image.php';
 
 	$attach_data = wp_generate_attachment_metadata( $attach_id, $mirror['file'] );
 	wp_update_attachment_metadata( $attach_id, $attach_data );
@@ -340,7 +339,7 @@ function wpcp_download_image( $url, $description = '' ) {
  *
  * @param $notice
  * @param string $type
- * @param bool $dismissible
+ * @param bool   $dismissible
  */
 function wpcp_admin_notice( $notice, $type = 'success' ) {
 	WPCP_Admin_Notices::add_notice( $notice, [ 'type' => $type ], true );
@@ -348,8 +347,8 @@ function wpcp_admin_notice( $notice, $type = 'success' ) {
 
 /**
  * @param $message
- * @param string $level
- * @param string $camp_id
+ * @param string  $level
+ * @param string  $camp_id
  *
  * @since 1.2.0
  */
@@ -394,15 +393,18 @@ function wpcp_check_cron_status() {
 	$sslverify     = version_compare( $wp_version, 4.0, '<' );
 	$doing_wp_cron = sprintf( '%.22F', microtime( true ) );
 
-	$cron_request = apply_filters( 'cron_request', array(
-		'url'  => site_url( 'wp-cron.php?doing_wp_cron=' . $doing_wp_cron ),
-		'key'  => $doing_wp_cron,
-		'args' => array(
-			'timeout'   => 3,
-			'blocking'  => true,
-			'sslverify' => apply_filters( 'https_local_ssl_verify', $sslverify ),
-		),
-	) );
+	$cron_request = apply_filters(
+		'cron_request',
+		array(
+			'url'  => site_url( 'wp-cron.php?doing_wp_cron=' . $doing_wp_cron ),
+			'key'  => $doing_wp_cron,
+			'args' => array(
+				'timeout'   => 3,
+				'blocking'  => true,
+				'sslverify' => apply_filters( 'https_local_ssl_verify', $sslverify ),
+			),
+		)
+	);
 
 	$cron_request['args']['blocking'] = true;
 
@@ -411,11 +413,14 @@ function wpcp_check_cron_status() {
 	if ( is_wp_error( $result ) ) {
 		return $result;
 	} elseif ( wp_remote_retrieve_response_code( $result ) >= 300 ) {
-		return new WP_Error( 'unexpected_http_response_code', sprintf(
-		/* translators: 1: The HTTP response code. */
-			__( 'Unexpected HTTP response code: %s', 'wp-content-pilot' ),
-			intval( wp_remote_retrieve_response_code( $result ) )
-		) );
+		return new WP_Error(
+			'unexpected_http_response_code',
+			sprintf(
+			/* translators: 1: The HTTP response code. */
+				__( 'Unexpected HTTP response code: %s', 'wp-content-pilot' ),
+				intval( wp_remote_retrieve_response_code( $result ) )
+			)
+		);
 	} else {
 		set_transient( 'wpcp-cron-test-ok', 1, 3600 );
 
@@ -464,7 +469,7 @@ function wpcp_get_terms( $terms, $taxonomy = 'category' ) {
  * @param $terms
  * @param $post_id
  * @param $taxonomy
- * @param bool $append
+ * @param bool     $append
  *
  * @return array|bool|false|WP_Error
  * @since 1.2.0
@@ -504,7 +509,6 @@ function wpcp_content_contains_word( $content, $word ) {
 
 /**
  * Trigger skip duplicate title campaigns
- *
  *
  * @param $skip
  * @param $title
@@ -553,7 +557,7 @@ function wpcp_setup_request( $referrer = 'http://www.bing.com/' ) {
  * Calculate discount percentage from sale price
  *
  * @param $original_price
- * @param null $sale_price
+ * @param null           $sale_price
  *
  * @return float|int
  * @since 1.2.5
@@ -580,21 +584,24 @@ function wpcp_calculate_discount_percent( $original_price, $sale_price = null ) 
  * @since 1.2.6
  */
 function wpcp_spin_article( $campaign_id, $content ) {
-	$args = apply_filters( 'wpcp_spinwritter_request_args', [
-		'email_address'        => wpcp_get_settings( 'spinrewriter_email', 'wpcp_article_spinner' ),
-		'api_key'              => wpcp_get_settings( 'spinrewriter_api_key', 'wpcp_article_spinner' ),
-		'action'               => wpcp_get_post_meta( $campaign_id, '_spinner_action', 'unique_variation' ),
-		'text'                 => $content,
-		'auto_protected_terms' => wpcp_get_post_meta( $campaign_id, '_spinner_auto_protected_terms', false ),
-		'confidence_level'     => wpcp_get_post_meta( $campaign_id, '_spinner_confidence_level', 'high' ),
-		'auto_sentences'       => wpcp_get_post_meta( $campaign_id, '_spinner_auto_sentences', false ),
-		'auto_paragraphs'      => wpcp_get_post_meta( $campaign_id, '_spinner_auto_paragraphs', false ),
-		'auto_new_paragraphs'  => wpcp_get_post_meta( $campaign_id, '_spinner_auto_new_paragraphs', false ),
-		'auto_sentence_trees'  => wpcp_get_post_meta( $campaign_id, '_spinner_auto_sentence_trees', false ),
-		'use_only_synonyms'    => wpcp_get_post_meta( $campaign_id, '_spinner_use_only_synonyms', false ),
-		'reorder_paragraphs'   => wpcp_get_post_meta( $campaign_id, '_spinner_reorder_paragraphs', false ),
-		'nested_spintax'       => wpcp_get_post_meta( $campaign_id, '_spinner_nested_spintax', false ),
-	] );
+	$args = apply_filters(
+		'wpcp_spinwritter_request_args',
+		[
+			'email_address'        => wpcp_get_settings( 'spinrewriter_email', 'wpcp_article_spinner' ),
+			'api_key'              => wpcp_get_settings( 'spinrewriter_api_key', 'wpcp_article_spinner' ),
+			'action'               => wpcp_get_post_meta( $campaign_id, '_spinner_action', 'unique_variation' ),
+			'text'                 => $content,
+			'auto_protected_terms' => wpcp_get_post_meta( $campaign_id, '_spinner_auto_protected_terms', false ),
+			'confidence_level'     => wpcp_get_post_meta( $campaign_id, '_spinner_confidence_level', 'high' ),
+			'auto_sentences'       => wpcp_get_post_meta( $campaign_id, '_spinner_auto_sentences', false ),
+			'auto_paragraphs'      => wpcp_get_post_meta( $campaign_id, '_spinner_auto_paragraphs', false ),
+			'auto_new_paragraphs'  => wpcp_get_post_meta( $campaign_id, '_spinner_auto_new_paragraphs', false ),
+			'auto_sentence_trees'  => wpcp_get_post_meta( $campaign_id, '_spinner_auto_sentence_trees', false ),
+			'use_only_synonyms'    => wpcp_get_post_meta( $campaign_id, '_spinner_use_only_synonyms', false ),
+			'reorder_paragraphs'   => wpcp_get_post_meta( $campaign_id, '_spinner_reorder_paragraphs', false ),
+			'nested_spintax'       => wpcp_get_post_meta( $campaign_id, '_spinner_nested_spintax', false ),
+		]
+	);
 
 	if ( empty( $args['email_address'] ) || empty( $args['api_key'] ) ) {
 		wpcp_logger()->error( __( 'spinwritter API details is not set, aborting article spinner', 'wp-content-pilot' ) );
@@ -619,14 +626,13 @@ function wpcp_spin_article( $campaign_id, $content ) {
 	}
 
 	if ( isset( $response->status ) && $response->status == 'OK' && ! empty( $response->response ) ) {
-		$pattern      = "#< iframe[^>]+>#is";
+		$pattern      = '#< iframe[^>]+>#is';
 		$iframeCheck  = preg_match( $pattern, $response->response );
-		$new_response = ( $iframeCheck == 1 ) ? preg_replace( $pattern, "", $response->response ) : $response->response;
+		$new_response = ( $iframeCheck == 1 ) ? preg_replace( $pattern, '', $response->response ) : $response->response;
 
 		return force_balance_tags( $new_response );
-		//return force_balance_tags($response->response);
+		// return force_balance_tags($response->response);
 	}
-
 
 	return $content;
 }
