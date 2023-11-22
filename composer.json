@@ -14,31 +14,20 @@
       "email": "support@pluginever.com"
     }
   ],
-  "config": {
-    "platform": {
-      "php": "5.6.1"
-    }
-  },
   "require": {
-    "php": ">=5.6.0",
+    "php": ">=8.0",
     "php-curl-class/php-curl-class": "^8.0"
   },
-  "extra": {
-    "cleaner-ignore": {
-    }
+  "require-dev": {
+    "byteever/byteever-sniffs": "dev-master"
   },
   "scripts": {
-    "test": [
-      "phpunit"
-    ],
-    "phpcs": [
-      "phpcs -s -p"
-    ],
-    "phpcs-pre-commit": [
-      "phpcs -s -p -n"
-    ],
-    "phpcbf": [
-      "phpcbf -p"
-    ]
+    "phpcs": "@php ./vendor/bin/phpcs --standard=phpcs.xml -s -v",
+    "phpcbf": "@php ./vendor/bin/phpcbf --standard=phpcs.xml -v"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }

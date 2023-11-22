@@ -160,8 +160,6 @@ final class ContentPilot {
 		require_once( WPCP_LIBRARY . '/readability/Readability.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-readability.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-logger.php' );
-		require_once( WPCP_INCLUDES . '/admin/class-wpcp-insight.php' );
-		require_once( WPCP_INCLUDES . '/admin/class-wpcp-tracker.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-dom.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-modules.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-module.php' );

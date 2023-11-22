@@ -568,7 +568,7 @@ msgstr ""
 msgid "Like the plugin? Please give us a  %s rating.%s"
 msgstr ""
 
-#: includes/admin/class-wpcp-tracker.php:7
+#:includes/admin/class-wpcp-tracker.php:7
 msgid ""
 "Want to help make <strong>WP Content Pilot</strong> even more awesome? "
 "Allow PluginEver to collect non-sensitive diagnostic data and usage "
