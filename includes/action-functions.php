@@ -274,77 +274,106 @@ function wpcp_campaign_reset_search_campaign() {
 
 add_action( 'admin_post_wpcp_campaign_reset_search', 'wpcp_campaign_reset_search_campaign' );
 
+/**
+ * Run the campaign manually.
+ *
+ * @since 1.0.0
+ * @return void
+ */
 function wpcp_ajax_run_manual_campaign() {
-	if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'ajax_action' ) ) {
-		wp_send_json( [
-			'message' => __( 'Cheating?', 'wp-content-pilot' ),
-			'level'   => 'ERROR',
-			'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
-		] );
+	if ( ! wp_verify_nonce( isset( $_REQUEST['nonce'] ), 'ajax_action' ) ) {
+		wp_send_json(
+			array(
+				'message' => __( 'Cheating?', 'wp-content-pilot' ),
+				'level'   => 'ERROR',
+				'time'    => gmdate( 'H:i:s', time() ),
+			),
+		);
 	}
 
-	$campaign_id = intval( $_REQUEST['campaign_id'] );
-	$instance    = intval( $_REQUEST['instance'] );
+	$campaign_id = intval( isset( $_REQUEST['campaign_id'] ) );
+	$instance    = intval( isset( $_REQUEST['instance'] ) );
 	if ( ! defined( 'WPCP_CAMPAIGN_INSTANCE' ) ) {
 		define( 'WPCP_CAMPAIGN_INSTANCE', $instance );
 	}
 
 	$campaign_post = get_post( $campaign_id );
 	if ( empty( $campaign_post ) || 'wp_content_pilot' !== $campaign_post->post_type ) {
-		wp_send_json( [
-			'message' => __( 'Invalid post action', 'wp-content-pilot' ),
-			'level'   => 'ERROR',
-			'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
-		] );
+		wp_send_json(
+			array(
+				'message' => __( 'Invalid post action', 'wp-content-pilot' ),
+				'level'   => 'ERROR',
+				'time'    => gmdate( 'H:i:s', time() ),
+			),
+		);
 	}
 
 	global $current_user;
-	wpcp_logger()->info( sprintf( __( 'Campaign <strong>%s</strong> manually initiated by <strong>%s</strong>', 'wp-content-pilot' ), get_the_title( $campaign_id ), $current_user->display_name ) );
+	wpcp_logger()->info( sprintf( /* translators: 1: The campaign title 2: Current user display name */ __( 'Campaign <strong>%1$s</strong> manually initiated by <strong>%2$s</strong>', 'wp-content-pilot' ), get_the_title( $campaign_id ), $current_user->display_name ) );
 
 	$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
 
 	$article_id = content_pilot()->modules()->load( $campaign_type )->process_campaign( $campaign_id, '', 'user' );
 	if ( is_wp_error( $article_id ) ) {
-		wp_send_json( [
-			'message' => $article_id->get_error_message(),
-			'level'   => 'ERROR',
-			'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
-		] );
+		wp_send_json(
+			array(
+				'message' => $article_id->get_error_message(),
+				'level'   => 'ERROR',
+				'time'    => gmdate( 'H:i:s', time() ),
+			),
+		);
 	}
 	$title         = empty( get_the_title( $article_id ) ) ? 'Untitled' : get_the_title( $article_id );
 	$article_title = '<a href="' . get_the_permalink( $article_id ) . '" target="_blank">' . $title . '</a>';
-	$message       = sprintf( __( 'A post successfully created by campaign %s titled %s', 'wp-content-pilot' ), '<strong>' . get_the_title( $campaign_id ) . '</strong>', $article_title );
-	wp_send_json( [
-		'message' => $message,
-		'link'    => $article_title,
-		'level'   => 'INFO',
-		'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
-	] );
+	$message       = sprintf(
+		/* translators: 1: Campaign title 2: Article title */
+		__( 'A post successfully created by campaign %1$s titled %2$s', 'wp-content-pilot' ),
+		'<strong>' . get_the_title( $campaign_id ) . '</strong>',
+		$article_title,
+	);
+	wp_send_json(
+		array(
+			'message' => $message,
+			'link'    => $article_title,
+			'level'   => 'INFO',
+			'time'    => gmdate( 'H:i:s', time() ),
+		),
+	);
 }
 
 add_action( 'wp_ajax_wpcp_run_manual_campaign', 'wpcp_ajax_run_manual_campaign' );
 
+/**
+ * Get campaign instance log.
+ *
+ * @since 1.0.0
+ * @return void
+ */
 function wpcp_get_campaign_instance_log() {
-	if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'ajax_action' ) ) {
-		wp_send_json( [
-			[
-				'message' => __( 'Cheating?', 'wp-content-pilot' ),
-				'level'   => 'ERROR',
-				'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
-			]
-		] );
+	if ( ! wp_verify_nonce( isset( $_REQUEST['nonce'] ), 'ajax_action' ) ) {
+		wp_send_json(
+			array(
+				array(
+					'message' => __( 'Cheating?', 'wp-content-pilot' ),
+					'level'   => 'ERROR',
+					'time'    => gmdate( 'H:i:s', time() ),
+				),
+			),
+		);
 	}
-	$campaign_id = absint( $_REQUEST['campaign_id'] );
-	$instance    = absint( $_REQUEST['instance'] );
-	$offset      = absint( $_REQUEST['offset'] );
+	$campaign_id = absint( isset( $_REQUEST['campaign_id'] ) );
+	$instance    = absint( isset( $_REQUEST['instance'] ) );
+	$offset      = absint( isset( $_REQUEST['offset'] ) );
 	if ( empty( $campaign_id ) || empty( $instance ) ) {
-		wp_send_json( [
-			[
-				'message' => __( 'Something wrong, please try again.', 'wp-content-pilot' ),
-				'level'   => 'ERROR',
-				'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
-			]
-		] );
+		wp_send_json(
+			array(
+				array(
+					'message' => __( 'Something wrong, please try again.', 'wp-content-pilot' ),
+					'level'   => 'ERROR',
+					'time'    => gmdate( 'H:i:s', time() ),
+				),
+			),
+		);
 	}
 
 	global $wpdb;
@@ -369,4 +398,5 @@ function remove_campaign_data_when_trash( $post_id ) {
 		$wpdb->prepare( 'DELETE FROM %s where camp_id=%d', array( $wpdb->wpcp_logs, $post_id ) );
 	}
 }
+
 add_action( 'wp_trash_post', 'remove_campaign_data_when_trash', 10, 1 );
