@@ -242,33 +242,28 @@ add_action( 'wpcp_after_post_publish', 'wpcp_post_publish_mail_notification', 10
  */
 function wpcp_wp_scheduled_delete() {
 	global $wpdb;
-	$date = date( 'Y-m-d H:i:s', strtotime( '2 days ago' ) );
+	$date = gmdate( 'Y-m-d H:i:s', strtotime( '2 days ago' ) );
 	$wpdb->query( $wpdb->prepare( "DELETE  FROM $wpdb->wpcp_logs WHERE created_at<=%s", $date ) );
 }
 
 add_action( 'wp_scheduled_delete', 'wpcp_wp_scheduled_delete' );
 
 /**
- * Trigger reset campaigns
- *
+ * Trigger reset campaigns.
  *
  * @since 1.2.0
+ * @return void
  */
-
 function wpcp_campaign_reset_search_campaign() {
 	global $wpdb;
-	if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_campaign_reset_search' ) ) {
-		wp_die( __( 'No Cheating', 'wp-content-pilot' ) );
+	if ( ! wp_verify_nonce( isset( $_REQUEST['nonce'] ), 'wpcp_campaign_reset_search' ) ) {
+		wp_die( esc_html__( 'No Cheating', 'wp-content-pilot' ) );
 	}
 
-	$campaign_id = intval( $_REQUEST['campaign_id'] );
+	$campaign_id = intval( isset( $_REQUEST['campaign_id'] ) );
 
-	$delete_query = "DELETE FROM {$wpdb->postmeta} where post_id=$campaign_id AND meta_key NOT IN ('_post_count','_campaign_type','_post_status','_campaign_target','_last_run','_last_post')";
-
-	$clear_query = "DELETE FROM {$wpdb->wpcp_links} where camp_id=$campaign_id";
-
-	$wpdb->query( $delete_query );
-	$wpdb->query( $clear_query );
+	$wpdb->prepare( "DELETE FROM %s where post_id=%d AND meta_key NOT IN ('_post_count','_campaign_type','_post_status','_campaign_target','_last_run','_last_post')", array( $wpdb->postmeta, $campaign_id ) );
+	$wpdb->prepare( 'DELETE FROM %s where camp_id=%d', array( $wpdb->wpcp_links, $campaign_id ) );
 	wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
 }
 
