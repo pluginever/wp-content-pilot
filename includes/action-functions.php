@@ -1,23 +1,25 @@
 <?php
 defined( 'ABSPATH' ) || exit();
 
-
+/**
+ * Handle the campaign manually.
+ *
+ * @since 1.0.0
+ * @return void
+ */
 function wpcp_handle_manual_campaign() {
-	if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_run_campaign' ) ) {
-		wp_die( __( 'No Cheating', 'wp-content-pilot' ) );
+	if ( isset( $_REQUEST['nonce'] ) && ! wp_verify_nonce( sanitize_key( wp_unslash( $_REQUEST['nonce'] ) ), 'wpcp_run_campaign' ) ) {
+		wp_die( esc_html__( 'No Cheating', 'wp-content-pilot' ) );
 	}
 
-	$campaign_id = intval( $_REQUEST['campaign_id'] );
-
-
-	$target    = wpcp_get_post_meta( $campaign_id, '_campaign_target', 0 );
-	$posted    = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
-	$edit_link = admin_url( sprintf( 'post.php?post=%d&action=edit', $campaign_id ) );
-
+	$campaign_id   = isset( $_REQUEST['campaign_id'] ) ? intval( $_REQUEST['campaign_id'] ) : '';
+	$target        = wpcp_get_post_meta( $campaign_id, '_campaign_target', 0 );
+	$posted        = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
+	$edit_link     = admin_url( sprintf( 'post.php?post=%d&action=edit', $campaign_id ) );
 	$campaign_post = get_post( $campaign_id );
 
 	if ( empty( $campaign_post ) || 'wp_content_pilot' !== $campaign_post->post_type ) {
-		wp_die( __( 'Invalid post action', 'wp-content-pilot' ) );
+		wp_die( esc_html__( 'Invalid post action', 'wp-content-pilot' ) );
 	}
 
 	$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
@@ -39,9 +41,8 @@ function wpcp_handle_manual_campaign() {
 
 	$title         = empty( get_the_title( $article_id ) ) ? 'Untitled' : get_the_title( $article_id );
 	$article_title = '<strong><a href="' . get_the_permalink( $article_id ) . '" target="_blank">' . $title . '</a></strong>';
-	$message       = sprintf( __( 'A post successfully created by %s titled %s', 'wp-content-pilot' ), '<strong>' . get_the_title( $campaign_id ) . '</strong>', $article_title );
+	$message       = sprintf( /* translators: 1: The campaign ID, 2: The post title. */ __( 'A post successfully created by %1$s titled %2$s', 'wp-content-pilot' ), '<strong>' . get_the_title( $campaign_id ) . '</strong>', $article_title );
 	wpcp_admin_notice( $message );
-
 
 	wp_safe_redirect( $edit_link );
 	exit();
@@ -49,23 +50,21 @@ function wpcp_handle_manual_campaign() {
 
 add_action( 'admin_post_wpcp_run_campaign', 'wpcp_handle_manual_campaign' );
 
-
 /**
- * Trigger automatic campaigns
+ * Trigger automatic campaigns.
  * This is the main function that handle all automatic
- * postings
+ * postings.
  *
  * @since 1.0.0
+ * @return void
  */
 function wpcp_run_automatic_campaign() {
 	global $wpdb;
-	$sql       = "select * from {$wpdb->posts} p  left join {$wpdb->postmeta} m on p.id = m.post_id having m.meta_key = '_campaign_status' AND m.meta_value = 'active' AND p.post_status <> 'trash'";
-	$campaigns = $wpdb->get_results( $sql );
+	$campaigns = $wpdb->get_results( "select * from {$wpdb->posts} p  left join {$wpdb->postmeta} m on p.id = m.post_id having m.meta_key = '_campaign_status' AND m.meta_value = 'active' AND p.post_status <> 'trash'" );
 
 	if ( empty( $campaigns ) ) {
 		return;
 	}
-
 
 	$campaigns = wp_list_pluck( $campaigns, 'ID' );
 
@@ -74,15 +73,13 @@ function wpcp_run_automatic_campaign() {
 		unset( $campaigns[ $last_campaign ] );
 	}
 
-
 	if ( ! empty( $campaigns ) ) {
-//		$automatic_campaign = new WPCP_Automatic_Campaign();
 		foreach ( $campaigns as $campaign_id ) {
 			$last_run     = wpcp_get_post_meta( $campaign_id, '_last_run', 0 );
 			$frequency    = wpcp_get_post_meta( $campaign_id, '_run_every', 0 );
 			$target       = wpcp_get_post_meta( $campaign_id, '_campaign_target', 0 );
 			$posted       = wpcp_get_post_meta( $campaign_id, '_post_count', 0 );
-			$current_time = current_time( 'timestamp' );
+			$current_time = time();
 			$diff         = $current_time - strtotime( $last_run );
 			if ( $diff < $frequency ) {
 				continue;
@@ -100,27 +97,31 @@ function wpcp_run_automatic_campaign() {
 			}
 		}
 	}
-
 }
 
 add_action( 'wpcp_per_minute_scheduled_events', 'wpcp_run_automatic_campaign' );
 add_action( 'wp_wpcp_automatic_campaign_cron', 'wpcp_run_automatic_campaign' );
 add_action( 'wp_privacy_delete_old_export_files', 'wpcp_run_automatic_campaign' );
 
-
+/**
+ * Delete all the campaign posts.
+ *
+ * @since 1.0.0
+ * @return void
+ */
 function wpcp_delete_all_campaign_posts() {
-	if ( ! isset( $_REQUEST['nonce'] ) || ! isset( $_REQUEST['camp_id'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_delete_posts' ) ) {
+	if ( ! isset( $_REQUEST['nonce'] ) || ! isset( $_REQUEST['camp_id'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_REQUEST['nonce'] ) ), 'wpcp_delete_posts' ) ) {
 		wp_send_json_error( 'Unauthorized!!!' );
 	}
 
-	$camp_id = isset( $_REQUEST['camp_id'] ) && ! empty( $_REQUEST['camp_id'] ) ? $_REQUEST['camp_id'] : false;
+	$camp_id = isset( $_REQUEST['camp_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['camp_id'] ) ) : false;
 	if ( ! $camp_id ) {
 		wp_send_json_error( 'Invalid campaign ID.' );
 	}
 
 	$args = array(
-		'meta_key'       => '_campaign_id',
-		'meta_value'     => $camp_id,
+		'meta_key'       => '_campaign_id', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+		'meta_value'     => $camp_id, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 		'posts_per_page' => - 1,
 		'post_type'      => wpcp_get_post_meta( $camp_id, '_post_type', 'post' ),
 
@@ -139,8 +140,14 @@ function wpcp_delete_all_campaign_posts() {
 
 add_action( 'wp_ajax_wpcp_delete_all_campaign_posts', 'wpcp_delete_all_campaign_posts' );
 
+/**
+ * Clear logs data from the database table.
+ *
+ * @since 1.0.0
+ * @return void
+ */
 function wpcp_clear_logs() {
-	if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_clear_logs' ) ) {
+	if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_REQUEST['nonce'] ) ), 'wpcp_clear_logs' ) ) {
 		wp_send_json_error( 'Unauthorized!!!' );
 	}
 
@@ -152,10 +159,17 @@ function wpcp_clear_logs() {
 add_action( 'wp_ajax_wpcp_clear_logs', 'wpcp_clear_logs' );
 
 
-// TODO: Keyword Suggestion https://www.google.com/complete/search?q=w&cp=1&client=psy-ab&xssi=t&gs_ri=gws-wiz&hl=en-BD&authuser=0&psi=4oO9XIj8ONm89QOY2LCgDA.1555923942084&ei=4oO9XIj8ONm89QOY2LCgDA
-if ( ! function_exists( 'wpcp_pro_get_keyword_suggestion' ) ):
+// TODO: Keyword Suggestion https://www.google.com/complete/search?q=w&cp=1&client=psy-ab&xssi=t&gs_ri=gws-wiz&hl=en-BD&authuser=0&psi=4oO9XIj8ONm89QOY2LCgDA.1555923942084&ei=4oO9XIj8ONm89QOY2LCgDA.
+if ( ! function_exists( 'wpcp_pro_get_keyword_suggestion' ) ) :
+
+	/**
+	 * Get keyword suggestions.
+	 *
+	 * @since 1.0.0
+	 * @return void
+	 */
 	function wpcp_pro_get_keyword_suggestion() {
-		$word = $_REQUEST['input'];
+		$word = isset( $_REQUEST['input'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['input'] ) ) : '';
 
 		$curl = new Curl\Curl();
 		$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
@@ -163,18 +177,21 @@ if ( ! function_exists( 'wpcp_pro_get_keyword_suggestion' ) ):
 		$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
 		$curl->setOpt( CURLOPT_REFERER, 'http://www.bing.com/' );
 		$curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );
-		$curl->get( 'http://suggestqueries.google.com/complete/search', array(
-			'output'         => 'toolbar',
-			'hl=en&q=sultan' => 'en',
-			'q'              => $word,
-			'client'         => 'firefox',
-		) );
+		$curl->get(
+			'http://suggestqueries.google.com/complete/search',
+			array(
+				'output'         => 'toolbar',
+				'hl=en&q=sultan' => 'en',
+				'q'              => $word,
+				'client'         => 'firefox',
+			)
+		);
 
 		if ( is_wp_error( $curl->isError() ) ) {
-			wp_send_json_success( [] );
+			wp_send_json_success( array() );
 		}
 		$response   = $curl->getResponse();
-		$suggestion = [];
+		$suggestion = array();
 		$list       = json_decode( $response );
 		if ( is_array( $list ) && isset( $list[1] ) ) {
 			$list = $list[1];
@@ -182,9 +199,9 @@ if ( ! function_exists( 'wpcp_pro_get_keyword_suggestion' ) ):
 		if ( is_array( $list ) && count( $list ) ) {
 			foreach ( $list as $item ) {
 				$str = preg_replace( '/[^a-z0-9.]+/i', '', $item );
-				// if(!empty($str)){
+				// TODO: need to fix the condition if(!empty($str)){.
 				$suggestion[] = $item;
-				// }
+				// }.
 			}
 		}
 
@@ -192,31 +209,31 @@ if ( ! function_exists( 'wpcp_pro_get_keyword_suggestion' ) ):
 		wp_send_json_success( $suggestion );
 	}
 endif;
+
 add_action( 'wp_ajax_wpcp_pro_get_keyword_suggestion', 'wpcp_pro_get_keyword_suggestion' );
 
 /**
- * Send notification mail after post insert
+ * Send notification mail after post insert.
  *
- * @param $post_id
- * @param $campaign_id
- * @param $article
- * @param $keyword
+ * @param int    $post_id The post ID.
+ * @param int    $campaign_id The campaign ID.
+ * @param Object $article The post object.
  *
  * @since 1.0.9
- *
+ * @return void
  */
 function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article ) {
 	$send_mail = wpcp_get_settings( 'post_publish_mail', 'wpcp_settings_misc', '' );
-	if ( $send_mail != 'on' ) {
+	if ( 'on' !== $send_mail ) {
 		return;
 	}
 	$author_id = get_post_field( 'post_author', $post_id );
 	$to        = get_the_author_meta( 'user_email', $author_id );
 	$title     = $article['title'];
-	//when excerpt is not available
+	// When excerpt is not available.
 	if ( empty( $article['excerpt'] ) ) {
 		$summary = wp_trim_words( $article['content'], 55 );
-		$summary = strip_tags( $summary );
+		$summary = wp_strip_all_tags( $summary );
 		$excerpt = strip_shortcodes( $summary );
 	} else {
 		$excerpt = $article['excerpt'];
@@ -224,10 +241,11 @@ function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article )
 
 	$post_link = get_the_permalink( $post_id );
 	$subject   = __( 'Post Publish', 'wp-content-pilot' );
-	$body      = sprintf( "<h4>Post Title: %s</h4>
-                    <h5>Post Excerpt</h5>
-                    <p>%s</p>
-                    <a href='%s'>View Post</a>", esc_html( $title ), $excerpt, esc_url( $post_link )
+	$body      = sprintf(
+		"<h4>Post Title: %s</h4><h5>Post Excerpt</h5><p>%s</p><a href='%s'>View Post</a>",
+		esc_html( $title ),
+		$excerpt,
+		esc_url( $post_link )
 	);
 	$headers   = array( 'Content-Type: text/html; charset=UTF-8' );
 
@@ -237,8 +255,10 @@ function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article )
 add_action( 'wpcp_after_post_publish', 'wpcp_post_publish_mail_notification', 10, 3 );
 
 /**
- * Delete old logs longer than 2 days
- * since 1.2.0
+ * Delete old logs longer than 2 days.
+ *
+ * @since 1.2.0
+ * @return void
  */
 function wpcp_wp_scheduled_delete() {
 	global $wpdb;
