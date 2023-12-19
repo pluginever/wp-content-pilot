@@ -1,6 +1,6 @@
 <?php
-defined( 'ABSPATH' ) || exit();
 
+defined( 'ABSPATH' ) || exit();
 
 /**
  * Convert a string to array
@@ -389,22 +389,22 @@ function wpcp_strip_urls( $content ) {
 
 
 /**
- * Find numbers from string
+ * Find numbers from string/content.
  *
  * wpcp_get_numbers_from_string('Renewed from $369.99')
  * wpcp_get_numbers_from_string('Showing 20 of 200', true)
  *
- * @param $string
+ * @param $content
  * @param bool $multiple
  *
  * @return array|float|integer
  * @since 1.2.5
  */
-function wpcp_get_numbers_from_string( $string, $multiple = false ) {
+function wpcp_get_numbers_from_string( $content, $multiple = false ) {
 	if ( ! $multiple ) {
-		return preg_replace( '/[^\\d.]+/', '', $string );
+		return preg_replace( '/[^\\d.]+/', '', $content );
 	}
-	preg_match_all( '!\d+!', $string, $matched );
+	preg_match_all( '!\d+!', $content, $matched );
 
-	return isset( $matched[0] ) ? $matched[0] : [];
+	return isset( $matched[0] ) ? $matched[0] : array();
 }
