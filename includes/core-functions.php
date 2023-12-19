@@ -1,11 +1,10 @@
 <?php
 defined( 'ABSPATH' ) || exit();
 
-
 /**
- * get random user agent
- * since 1.0.0
+ * Get random user agent.
  *
+ * @since 1.0.0
  * @return string
  */
 function wpcp_get_random_user_agent() {
