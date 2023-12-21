@@ -1,54 +1,64 @@
 <?php
 defined( 'ABSPATH' ) || die();
 
+/**
+ * Class WPCP_Modules.
+ *
+ * @since 1.0.0
+ */
 class WPCP_Modules {
 	/**
-	 * @var array
+	 * Modules.
+	 *
+	 * @var array $modules Modules.
+	 *
+	 * @since 1.0.0
 	 */
 	public $modules = array();
 
 	/**
-	 * The single instance of the class
+	 * The single instance of the class.
 	 *
-	 * @var WPCP_Modules
+	 * @var WPCP_Modules $instance Instance of WPCP_Modules.
 	 */
-	protected static $_instance = null;
+	protected static $instance = null;
 
 	/**
 	 * Main WPCP_Modules Instance.
-	 *
 	 * Ensures only one instance of WPCP_Modules is loaded or can be loaded.
 	 *
-	 * @return WPCP_Modules Main instance
 	 * @since 1.0.0
-	 * @static
+	 * @return WPCP_Modules Main instance
 	 */
 	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$instance;
 	}
 
 	/**
 	 * WPCP_Modules constructor.
+	 *
+	 * @since 1.0.0
+	 * @return void
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'init_modules' ) );
 	}
 
 	/**
-	 * init modules
-	 * This is the place where all modules
-	 * will hook and register
+	 * Init modules.
+	 * This is the place where all modules will hook and register.
 	 *
 	 * @since 1.0.0
+	 * @return void
 	 */
 	public function init_modules() {
 		$modules = apply_filters( 'wpcp_modules', array() );
 
-		/* @var $class WPCP_Module */
+		/* @var WPCP_Module $class WPCP_Module */
 		foreach ( $modules as $key => $class ) {
 			if ( class_exists( $class ) ) {
 				$this->modules[ $key ] = $class::instance();
@@ -57,10 +67,11 @@ class WPCP_Modules {
 	}
 
 	/**
-	 * check if module exist
+	 * Check if module exist.
 	 *
-	 * @param $module
+	 * @param mixed $module Module.
 	 *
+	 * @since 1.0.0
 	 * @return bool
 	 */
 	public function exist( $module ) {
@@ -72,8 +83,11 @@ class WPCP_Modules {
 	}
 
 	/**
-	 * @param $module
+	 * Load modules.
 	 *
+	 * @param mixed $module Module.
+	 *
+	 * @since 1.0.0
 	 * @return WPCP_Module|object
 	 */
 	public function load( $module ) {
@@ -83,9 +97,6 @@ class WPCP_Modules {
 
 		return new stdClass();
 	}
-
-
-
 }
 
 WPCP_Modules::instance();
