@@ -121,7 +121,11 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 				}
 				if ( isset( $section['desc'] ) && ! empty( $section['desc'] ) ) {
 					$section['desc'] = '<div class="inside">' . $section['desc'] . '</div>';
-					$callback        = create_function( '', 'echo "' . str_replace( '"', '\"', $section['desc'] ) . '";' );
+
+					// $callback = create_function( '', 'echo "' . str_replace( '"', '\"', $section['desc'] ) . '";' );
+					$callback        = function ( $section ) {
+						echo str_replace( '"', '\"', $section['desc'] );
+					};
 				} else if ( isset( $section['callback'] ) ) {
 					$callback = $section['callback'];
 				} else {

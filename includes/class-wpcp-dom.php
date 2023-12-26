@@ -384,7 +384,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 		}
 
 		function makeup() {
-			// text, comment, unknown
+			// Text, comment, unknown.
 			if ( isset( $this->_[ HDOM_INFO_TEXT ] ) ) {
 				return $this->dom->restore_noise( $this->_[ HDOM_INFO_TEXT ] );
 			}
@@ -395,14 +395,14 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			foreach ( $this->attr as $key => $val ) {
 				++ $i;
 
-				// skip removed attribute
+				// Skip removed attribute.
 				if ( $val === null || $val === false ) {
 					continue;
 				}
 
 				$ret .= $this->_[ HDOM_INFO_SPACE ][ $i ][0];
 
-				//no value attr: nowrap, checked selected...
+				// No value attr: nowrap, checked selected...
 				if ( $val === true ) {
 					$ret .= $key;
 				} else {
@@ -439,7 +439,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			}
 			$found_keys = array();
 
-			// find each selector
+			// Find each selector.
 			for ( $c = 0; $c < $count; ++ $c ) {
 				// The change on the below line was documented on the sourceforge
 				// code tracker id 2788009
@@ -454,18 +454,18 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				$head = array( $this->_[ HDOM_INFO_BEGIN ] => 1 );
 				$cmd  = ' '; // Combinator
 
-				// handle descendant selectors, no recursive!
+				// Handle descendant selectors, no recursive!
 				for ( $l = 0; $l < $levle; ++ $l ) {
 					$ret = array();
 
 					foreach ( $head as $k => $v ) {
 						$n = ( $k === - 1 ) ? $this->dom->root : $this->dom->nodes[ $k ];
-						//PaperG - Pass this optional parameter on to the seek function.
+						// PaperG - Pass this optional parameter on to the seek function.
 						$n->seek( $selectors[ $c ][ $l ], $ret, $cmd, $lowercase );
 					}
 
 					$head = $ret;
-					$cmd  = $selectors[ $c ][ $l ][4]; // Next Combinator
+					$cmd  = $selectors[ $c ][ $l ][4]; // Next Combinator.
 				}
 
 				foreach ( $head as $k => $v ) {
@@ -475,7 +475,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				}
 			}
 
-			// sort keys
+			// Sort keys.
 			ksort( $found_keys );
 
 			$found = array();
@@ -502,7 +502,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			list( $tag, $id, $class, $attributes, $cmb ) = $selector;
 			$nodes = array();
 
-			if ( $parent_cmd === ' ' ) { // Descendant Combinator
+			if ( $parent_cmd === ' ' ) { // Descendant Combinator.
 				// Find parent closing tag if the current element doesn't have a closing
 				// tag (i.e. void element)
 				$end = ( ! empty( $this->_[ HDOM_INFO_END ] ) ) ? $this->_[ HDOM_INFO_END ] : 0;
@@ -515,7 +515,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 					$end += $parent->_[ HDOM_INFO_END ];
 				}
 
-				// Get list of target nodes
+				// Get list of target nodes.
 				$nodes_start = $this->_[ HDOM_INFO_BEGIN ] + 1;
 				$nodes_count = $end - $nodes_start;
 				$nodes       = array_slice( $this->dom->nodes, $nodes_start, $nodes_count, true );
@@ -535,42 +535,41 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				$nodes = array_slice( $this->parent->children, $index );
 			}
 
-			// Go throgh each element starting at this element until the end tag
-			// Note: If this element is a void tag, any previous void element is
-			// skipped.
+			// Go throgh each element starting at this element until the end tag.
+			// Note: If this element is a void tag, any previous void element is skipped.
 			foreach ( $nodes as $node ) {
 				$pass = true;
 
-				// Skip root nodes
+				// Skip root nodes.
 				if ( ! $node->parent ) {
 					$pass = false;
 				}
 
-				// Handle 'text' selector
+				// Handle 'text' selector.
 				if ( $pass && $tag === 'text' && $node->tag === 'text' ) {
 					$ret[ array_search( $node, $this->dom->nodes, true ) ] = 1;
 					unset( $node );
 					continue;
 				}
 
-				// Skip if node isn't a child node (i.e. text nodes)
+				// Skip if node isn't a child node (i.e. text nodes).
 				if ( $pass && ! in_array( $node, $node->parent->children, true ) ) {
 					$pass = false;
 				}
 
-				// Skip if tag doesn't match
+				// Skip if tag doesn't match.
 				if ( $pass && $tag !== '' && $tag !== $node->tag && $tag !== '*' ) {
 					$pass = false;
 				}
 
-				// Skip if ID doesn't exist
+				// Skip if ID doesn't exist.
 				if ( $pass && $id !== '' && ! isset( $node->attr['id'] ) ) {
 					$pass = false;
 				}
 
-				// Check if ID matches
+				// Check if ID matches.
 				if ( $pass && $id !== '' && isset( $node->attr['id'] ) ) {
-					// Note: Only consider the first ID (as browsers do)
+					// Note: Only consider the first ID (as browsers do).
 					$node_id = explode( ' ', trim( $node->attr['id'] ) )[0];
 
 					if ( $id !== $node_id ) {
@@ -578,7 +577,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 					}
 				}
 
-				// Check if all class(es) exist
+				// Check if all class(es) exist.
 				if ( $pass && $class !== '' && is_array( $class ) && ! empty( $class ) ) {
 					if ( isset( $node->attr['class'] ) ) {
 						$node_classes = explode( ' ', $node->attr['class'] );
@@ -598,7 +597,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 					}
 				}
 
-				// Check attributes
+				// Check attributes.
 				if ( $pass
 				     && $attributes !== ''
 				     && is_array( $attributes )
@@ -612,7 +611,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 							$att_case_sensitivity
 							) = $a;
 
-						// Handle indexing attributes (i.e. "[2]")
+						// Handle indexing attributes (i.e. "[2]").
 						/**
 						 * Note: This is not supported by the CSS Standard but adds
 						 * the ability to select items compatible to XPath (i.e.
@@ -626,7 +625,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 						     && $att_val === '' ) {
 							$count = 0;
 
-							// Find index of current element in parent
+							// Find index of current element in parent.
 							foreach ( $node->parent->children as $c ) {
 								if ( $c->tag === $node->tag ) {
 									++ $count;
@@ -636,20 +635,19 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 								}
 							}
 
-							// If this is the correct node, continue with next
-							// attribute
+							// If this is the correct node, continue with next attribute
 							if ( $count === (int) $att_name ) {
 								continue;
 							}
 						}
 
-						// Check attribute availability
+						// Check attribute availability.
 						if ( $att_inv ) { // Attribute should NOT be set
 							if ( isset( $node->attr[ $att_name ] ) ) {
 								$pass = false;
 								break;
 							}
-						} else { // Attribute should be set
+						} else { // Attribute should be set.
 							// todo: "plaintext" is not a valid CSS selector!
 							if ( $att_name !== 'plaintext'
 							     && ! isset( $node->attr[ $att_name ] ) ) {
@@ -685,8 +683,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 							);
 						}
 
-						// If lowercase is set, do a case insensitive test of
-						// the value of the selector.
+						// If lowercase is set, do a case-insensitive test of the value of the selector.
 						if ( $lowercase ) {
 							$check = $this->match(
 								$att_expr,
@@ -717,7 +714,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 					}
 				}
 
-				// Found a match. Add to list and clear node
+				// Found a match. Add to list and clear node.
 				if ( $pass ) {
 					$ret[ $node->_[ HDOM_INFO_BEGIN ] ] = 1;
 				}
@@ -845,22 +842,22 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			foreach ( $matches as $m ) {
 				$m[0] = trim( $m[0] );
 
-				// Skip NoOps
+				// Skip NoOps.
 				if ( $m[0] === '' || $m[0] === '/' || $m[0] === '//' ) {
 					continue;
 				}
 
-				// Convert to lowercase
+				// Convert to lowercase.
 				if ( $this->dom->lowercase ) {
 					$m[1] = strtolower( $m[1] );
 				}
 
-				// Extract classes
+				// Extract classes.
 				if ( $m[3] !== '' ) {
 					$m[3] = explode( '.', $m[3] );
 				}
 
-				/* Extract attributes (pattern based on the pattern above!)
+				/* Extract attributes (pattern based on the pattern above!).
 
 				 * [0] - full match
 				 * [1] - attribute name
@@ -878,7 +875,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 						PREG_SET_ORDER
 					);
 
-					// Replace element by array
+					// Replace element by array.
 					$m[4] = array();
 
 					foreach ( $attributes as $att ) {
@@ -889,32 +886,32 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 
 						$inverted = ( isset( $att[1][0] ) && $att[1][0] === '!' );
 						$m[4][]   = array(
-							$inverted ? substr( $att[1], 1 ) : $att[1], // Name
-							( isset( $att[2] ) ) ? $att[2] : '', // Expression
-							( isset( $att[3] ) ) ? $att[3] : '', // Value
-							$inverted, // Inverted Flag
-							( isset( $att[4] ) ) ? strtolower( $att[4] ) : '', // Case-Sensitivity
+							$inverted ? substr( $att[1], 1 ) : $att[1], // Name.
+							( isset( $att[2] ) ) ? $att[2] : '', // Expression.
+							( isset( $att[3] ) ) ? $att[3] : '', // Value.
+							$inverted, // Inverted Flag.
+							( isset( $att[4] ) ) ? strtolower( $att[4] ) : '', // Case-Sensitivity.
 						);
 					}
 				}
 
-				// Sanitize Separator
-				if ( $m[5] !== '' && trim( $m[5] ) === '' ) { // Descendant Separator
+				// Sanitize Separator.
+				if ( $m[5] !== '' && trim( $m[5] ) === '' ) { // Descendant Separator.
 					$m[5] = ' ';
-				} else { // Other Separator
+				} else { // Other Separator.
 					$m[5] = trim( $m[5] );
 				}
 
-				// Clear Separator if it's a Selector List
+				// Clear Separator if it's a Selector List.
 				if ( $is_list = ( $m[5] === ',' ) ) {
 					$m[5] = '';
 				}
 
-				// Remove full match before adding to results
+				// Remove full match before adding to results.
 				array_shift( $m );
 				$result[] = $m;
 
-				if ( $is_list ) { // Selector List
+				if ( $is_list ) { // Selector List.
 					$selectors[] = $result;
 					$result      = array();
 				}
@@ -1027,7 +1024,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				}
 			}
 
-			// Lets make sure that we don't have that silly BOM issue with any of the utf-8 text we output.
+			// Let's make sure that we don't have that silly BOM issue with any of the utf-8 text we output.
 			if ( $targetCharset === 'UTF-8' ) {
 				if ( substr( $converted_text, 0, 3 ) === "\xef\xbb\xbf" ) {
 					$converted_text = substr( $converted_text, 3 );

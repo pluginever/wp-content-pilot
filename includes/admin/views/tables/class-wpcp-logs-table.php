@@ -230,7 +230,7 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 				return $item->level ? sprintf( '<span class="%s">%s</span>', sanitize_html_class( strtolower( $item->level) ), $item->level ) : '&mdash;';
 				break;
 			case 'log':
-				return $item->message ? strip_tags( $item->message ) : '&mdash;';
+				return $item->message ? wp_strip_all_tags( $item->message ) : '&mdash;';
 				break;
 			case 'date':
 				return $item->created_at;

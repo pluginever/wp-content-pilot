@@ -594,7 +594,7 @@ abstract class WPCP_Module {
 
 		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE `for`=%s AND camp_id=%d AND status=%s LIMIT %d", $link_for, $campaign_id, $status, $count ) );
 		foreach ( $results as $result ) {
-			$result->meta = maybe_unserialize( base64_decode( $result->meta ) );
+			$result->meta = maybe_unserialize( base64_decode( $result->meta ) ); // phpcs:ignore Generic.PHP.ForbiddenFunctions.Found
 		}
 
 		return $results;
@@ -622,7 +622,7 @@ abstract class WPCP_Module {
 		);
 		global $wpdb;
 
-		$data['meta'] = ! is_serialized( $data['meta'] ) && ! empty( $data['meta'] ) ? base64_encode( serialize( $data['meta'] ) ) : base64_encode( $data['meta'] );
+		$data['meta'] = ! is_serialized( $data['meta'] ) && ! empty( $data['meta'] ) ? base64_encode( serialize( $data['meta'] ) ) : base64_encode( $data['meta'] ); // phpcs:ignore Generic.PHP.ForbiddenFunctions.Found
 
 		if ( false !== $wpdb->insert( $wpdb->wpcp_links, $data ) ) {
 			return $wpdb->insert_id;

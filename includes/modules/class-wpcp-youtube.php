@@ -366,7 +366,7 @@ EOT;
 					'language'       => '',
 					'content'        => $description,
 					'source_url'     => $link->url,
-					'published_at'   => date( 'Y-m-d H:i:s', strtotime( @$item->snippet->publishedAt ) ),
+					'published_at'   => gmdate( 'Y-m-d H:i:s', strtotime( @$item->snippet->publishedAt ) ),
 					'video_id'       => sanitize_key( @$item->id ),
 					'channel_id'     => sanitize_key( @$item->snippet->channelId ),
 					'channel_title'  => sanitize_text_field( @$item->snippet->channelTitle ),

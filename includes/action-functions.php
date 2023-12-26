@@ -300,7 +300,7 @@ function wpcp_ajax_run_manual_campaign() {
 		wp_send_json( [
 			'message' => __( 'Cheating?', 'wp-content-pilot' ),
 			'level'   => 'ERROR',
-			'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
+			'time'    => gmdate( 'H:i:s', current_time( 'timestamp' ) )
 		] );
 	}
 
@@ -315,7 +315,7 @@ function wpcp_ajax_run_manual_campaign() {
 		wp_send_json( [
 			'message' => __( 'Invalid post action', 'wp-content-pilot' ),
 			'level'   => 'ERROR',
-			'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
+			'time'    => gmdate( 'H:i:s', current_time( 'timestamp' ) )
 		] );
 	}
 
@@ -329,7 +329,7 @@ function wpcp_ajax_run_manual_campaign() {
 		wp_send_json( [
 			'message' => $article_id->get_error_message(),
 			'level'   => 'ERROR',
-			'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
+			'time'    => gmdate( 'H:i:s', current_time( 'timestamp' ) )
 		] );
 	}
 	$title         = empty( get_the_title( $article_id ) ) ? 'Untitled' : get_the_title( $article_id );
@@ -339,7 +339,7 @@ function wpcp_ajax_run_manual_campaign() {
 		'message' => $message,
 		'link'    => $article_title,
 		'level'   => 'INFO',
-		'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
+		'time'    => gmdate( 'H:i:s', current_time( 'timestamp' ) )
 	] );
 }
 
@@ -357,7 +357,7 @@ function wpcp_get_campaign_instance_log() {
 			[
 				'message' => __( 'Cheating?', 'wp-content-pilot' ),
 				'level'   => 'ERROR',
-				'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
+				'time'    => gmdate( 'H:i:s', current_time( 'timestamp' ) )
 			]
 		] );
 	}
@@ -370,7 +370,7 @@ function wpcp_get_campaign_instance_log() {
 			[
 				'message' => __( 'Something wrong, please try again.', 'wp-content-pilot' ),
 				'level'   => 'ERROR',
-				'time'    => date( 'H:i:s', current_time( 'timestamp' ) )
+				'time'    => gmdate( 'H:i:s', current_time( 'timestamp' ) )
 			]
 		] );
 	}
