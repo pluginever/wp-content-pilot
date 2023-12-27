@@ -1421,11 +1421,11 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 		function __construct(
 			$str = null,
 			$lowercase = true,
-			$forceTagsClosed = true,
+			$force_tags_closed = true,
 			$target_charset = DEFAULT_TARGET_CHARSET,
-			$stripRN = true,
-			$defaultBRText = DEFAULT_BR_TEXT,
-			$defaultSpanText = DEFAULT_SPAN_TEXT,
+			$strip_rn = true,
+			$default_brtext = DEFAULT_BR_TEXT,
+			$default_spantext = DEFAULT_SPAN_TEXT,
 			$options = 0
 		) {
 			if ( $str ) {
@@ -1435,16 +1435,16 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 					$this->load(
 						$str,
 						$lowercase,
-						$stripRN,
-						$defaultBRText,
-						$defaultSpanText,
+						$strip_rn,
+						$default_brtext,
+						$default_spantext,
 						$options
 					);
 				}
 			}
 			// Forcing tags to be closed implies that we don't trust the html, but
 			// it can lead to parsing errors if we SHOULD trust the html.
-			if ( ! $forceTagsClosed ) {
+			if ( ! $force_tags_closed ) {
 				$this->optional_closing_array = array();
 			}
 
@@ -1458,15 +1458,15 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 		function load(
 			$str,
 			$lowercase = true,
-			$stripRN = true,
-			$defaultBRText = DEFAULT_BR_TEXT,
-			$defaultSpanText = DEFAULT_SPAN_TEXT,
+			$strip_rn = true,
+			$default_brtext = DEFAULT_BR_TEXT,
+			$default_spantext = DEFAULT_SPAN_TEXT,
 			$options = 0
 		) {
 			global $debug_object;
 
 			// prepare
-			$this->prepare( $str, $lowercase, $defaultBRText, $defaultSpanText );
+			$this->prepare( $str, $lowercase, $default_brtext, $default_spantext );
 
 			// Per sourceforge http://sourceforge.net/tracker/?func=detail&aid=2949097&group_id=218559&atid=1044037
 			// Script tags removal now preceeds style tag removal.
@@ -1475,7 +1475,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			$this->remove_noise( "'<\s*script\s*>(.*?)<\s*/\s*script\s*>'is" );
 
 			// strip out the \r \n's if we are told to.
-			if ( $stripRN ) {
+			if ( $strip_rn ) {
 				$this->doc = str_replace( "\r", ' ', $this->doc );
 				$this->doc = str_replace( "\n", ' ', $this->doc );
 
@@ -1578,8 +1578,8 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 
 		protected function prepare(
 			$str, $lowercase = true,
-			$defaultBRText = DEFAULT_BR_TEXT,
-			$defaultSpanText = DEFAULT_SPAN_TEXT
+			$default_brtext = DEFAULT_BR_TEXT,
+			$default_spantext = DEFAULT_SPAN_TEXT
 		) {
 			$this->clear();
 
@@ -1591,8 +1591,8 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			$this->noise                      = array();
 			$this->nodes                      = array();
 			$this->lowercase                  = $lowercase;
-			$this->default_br_text            = $defaultBRText;
-			$this->default_span_text          = $defaultSpanText;
+			$this->default_br_text            = $default_brtext;
+			$this->default_span_text          = $default_spantext;
 			$this->root                       = new simple_html_dom_node( $this );
 			$this->root->tag                  = 'root';
 			$this->root->_[ HDOM_INFO_BEGIN ] = - 1;
@@ -2331,11 +2331,11 @@ endif;
 /**
  * @param $str
  * @param bool $lowercase
- * @param bool $forceTagsClosed
+ * @param bool $force_tags_closed
  * @param string $target_charset
- * @param bool $stripRN
- * @param string $defaultBRText
- * @param string $defaultSpanText
+ * @param bool $strip_rn
+ * @param string $default_brtext
+ * @param string $default_spantext
  *
  * @return simple_html_dom
  * @since 1.2.0
@@ -2343,29 +2343,27 @@ endif;
 function wpcp_str_get_html(
 	$str,
 	$lowercase = true,
-	$forceTagsClosed = true,
+	$force_tags_closed = true,
 	$target_charset = DEFAULT_TARGET_CHARSET,
-	$stripRN = true,
-	$defaultBRText = DEFAULT_BR_TEXT,
-	$defaultSpanText = DEFAULT_SPAN_TEXT
+	$strip_rn = true,
+	$default_brtext = DEFAULT_BR_TEXT,
+	$default_spantext = DEFAULT_SPAN_TEXT
 ) {
 	$dom = new simple_html_dom(
 		null,
 		$lowercase,
-		$forceTagsClosed,
+		$force_tags_closed,
 		$target_charset,
-		$stripRN,
-		$defaultBRText,
-		$defaultSpanText
+		$strip_rn,
+		$default_brtext,
+		$default_spantext
 	);
+	// phpcs:disable
+	// if ( empty( $str ) || strlen( $str ) > MAX_FILE_SIZE ) {
+	//      $dom->clear();
+	//      return false;
+	// }
+	// phpcs:enable
 
-//		if ( empty( $str ) || strlen( $str ) > MAX_FILE_SIZE ) {
-//			$dom->clear();
-//			return false;
-//		}
-
-	return $dom->load( $str, $lowercase, $stripRN );
+	return $dom->load( $str, $lowercase, $strip_rn );
 }
-
-
-
