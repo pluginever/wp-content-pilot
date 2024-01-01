@@ -1,21 +1,30 @@
 <?php
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-} // Exit if accessed directly
+defined( 'ABSPATH' ) || exit(); // Exit if accessed directly.
 
 if ( ! class_exists( 'Ever_Settings_Framework' ) ):
+
+	/**
+	 * Class Ever_Settings_Framework.
+	 *
+	 * @since 1.0.0
+	 */
 	class Ever_Settings_Framework {
+
 		/**
-		 * settings sections array
+		 * Settings sections array.
 		 *
-		 * @var array
+		 * @var array $settings_sections Settings sections array.
+		 *
+		 * @since 1.0.0
 		 */
 		protected $settings_sections = array();
+
 		/**
-		 * Settings fields array
+		 * Settings fields array.
 		 *
-		 * @var array
+		 * @var array $settings_fields Settings fields array.
+		 *
+		 * @since 1.0.0
 		 */
 		protected $settings_fields = array();
 
