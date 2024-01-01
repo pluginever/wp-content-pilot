@@ -1,17 +1,18 @@
 <?php
-defined('ABSPATH')|| exit();
+defined( 'ABSPATH' ) || exit();
 global $wpdb;
 global $wp_version;
 
 $loaded_extensions      = get_loaded_extensions();
 $extensions             = array();
-$extensions['dom']      = in_array( 'dom', $loaded_extensions ) ? '<span style="color: green">dom</span>' : '<span style="color: red">dom</span>';
-$extensions['xml']      = in_array( 'xml', $loaded_extensions ) ? '<span style="color: green">xml</span>' : '<span style="color: red">xml</span>';
-$extensions['mbstring'] = in_array( 'mbstring', $loaded_extensions ) ? '<span style="color: green">mbstring</span>' : '<span style="color: red">mbstring</span>';
-$extensions['curl'] = in_array( 'curl', $loaded_extensions ) ? '<span style="color: green">curl</span>' : '<span style="color: red">curl</span>';
+$extensions['dom']      = in_array( 'dom', $loaded_extensions, true ) ? '<span style="color: green">dom</span>' : '<span style="color: red">dom</span>';
+$extensions['xml']      = in_array( 'xml', $loaded_extensions, true ) ? '<span style="color: green">xml</span>' : '<span style="color: red">xml</span>';
+$extensions['mbstring'] = in_array( 'mbstring', $loaded_extensions, true ) ? '<span style="color: green">mbstring</span>' : '<span style="color: red">mbstring</span>';
+$extensions['curl']     = in_array( 'curl', $loaded_extensions, true ) ? '<span style="color: green">curl</span>' : '<span style="color: red">curl</span>';
 
-
-// Test POST requests.
+/**
+ * Test POST requests.
+ */
 function wpcp_test_post_reponse() {
 
 	$post_response = wp_safe_remote_post(
@@ -25,7 +26,6 @@ function wpcp_test_post_reponse() {
 		)
 	);
 
-
 	if ( ! is_wp_error( $post_response ) && $post_response['response']['code'] >= 200 && $post_response['response']['code'] < 300 ) {
 		return true;
 	}
@@ -33,7 +33,9 @@ function wpcp_test_post_reponse() {
 	return false;
 }
 
-// Test GET requests.
+/**
+ * Test GET requests.
+ */
 function wpcp_test_get_reponse() {
 
 	$get_response = wp_safe_remote_get( 'https://woocommerce.com/wc-api/product-key-api?request=ping&network=' . ( is_multisite() ? '1' : '0' ) );
@@ -64,7 +66,7 @@ $information['php_version'] = array(
 
 $information['mysql_version'] = array(
 	'label' => __( 'MySQL version', 'wp-content-pilot' ),
-	'value' => $wpdb->get_var( "SELECT VERSION() AS version" ),
+	'value' => $wpdb->get_var( 'SELECT VERSION() AS version' ),
 );
 
 $information['curl_version'] = array(
@@ -84,12 +86,12 @@ $information['cron_url'] = array(
 
 $information['docroot'] = array(
 	'label' => __( 'Document root', 'wp-content-pilot' ),
-	'value' => $_SERVER['DOCUMENT_ROOT'],
+	'value' => isset( $_SERVER['DOCUMENT_ROOT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['DOCUMENT_ROOT'] ) ) : '',
 );
 
 $information['server'] = array(
 	'label' => __( 'SERVER', 'wp-content-pilot' ),
-	'value' => $_SERVER['SERVER_SOFTWARE'],
+	'value' => isset( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : '',
 );
 
 $information['os'] = array(
@@ -99,7 +101,7 @@ $information['os'] = array(
 
 $information['maxexectime'] = array(
 	'label' => __( 'Maximum execution time', 'wp-content-pilot' ),
-	'value' => sprintf( __( '%s seconds', 'wp-content-pilot' ), ini_get( 'max_execution_time' ) ),
+	'value' => sprintf( /* translators: 1: PHP max execution time. */ __( '%s seconds', 'wp-content-pilot' ), ini_get( 'max_execution_time' ) ),
 );
 
 $information['language'] = array(
@@ -130,22 +132,22 @@ global $wpdb;
 
 $information['links_table'] = array(
 	'label' => __( 'Links Table', 'wp-content-pilot' ),
-	'value' => !empty($wpdb->query("DESCRIBE {$wpdb->prefix}wpcp_links")) ? 'Yes' : 'No',
+	'value' => ! empty( $wpdb->query( "DESCRIBE {$wpdb->prefix}wpcp_links" ) ) ? 'Yes' : 'No',
 );
 
 $information['log_table'] = array(
 	'label' => __( 'Log Table', 'wp-content-pilot' ),
-	'value' => !empty($wpdb->query("DESCRIBE {$wpdb->prefix}wpcp_logs")) ? 'Yes' : 'No',
+	'value' => ! empty( $wpdb->query( "DESCRIBE {$wpdb->prefix}wpcp_logs" ) ) ? 'Yes' : 'No',
 );
 
 $information['per_minute_cron'] = array(
 	'label' => __( 'Per Minute Cron Installed', 'wp-content-pilot' ),
-	'value' => !empty(wp_get_scheduled_event('wpcp_per_minute_scheduled_events')) ? 'Yes' : 'No',
+	'value' => ! empty( wp_get_scheduled_event( 'wpcp_per_minute_scheduled_events' ) ) ? 'Yes' : 'No',
 );
-$cron_status = wpcp_check_cron_status();
-$information['cron_running'] = array(
+$cron_status                    = wpcp_check_cron_status();
+$information['cron_running']    = array(
 	'label' => __( 'Is CRON running', 'wp-content-pilot' ),
-	'value' => is_wp_error($cron_status)? 'No '.esc_html($cron_status->get_error_message()): 'Yes' ,
+	'value' => is_wp_error( $cron_status ) ? 'No ' . esc_html( $cron_status->get_error_message() ) : 'Yes',
 );
 
 
@@ -158,10 +160,10 @@ $information['required_extensions'] = array(
 	'value' => implode( ', ', $extensions ),
 );
 
-//todo check if wpcp_links and wpcp_logs table exists or not
+// TODO: check if wpcp_links and wpcp_logs table exists or not.
 
 /**
- * Campagin Information
+ * Campaign Information.
  */
 
 $campaigns_info['count'] = array(
@@ -184,40 +186,40 @@ $campaigns_info['count']['value'] = $total;
 
 <div class="wrap" id="wpcp-page">
 
-	<h1 class="wp-heading-inline"> <?php _e( 'Status > WP Content Pilot', 'wp-content-pilot' ) ?> </h1>
+	<h1 class="wp-heading-inline"> <?php esc_html_e( 'Status > WP Content Pilot', 'wp-content-pilot' ); ?> </h1>
 
 	<div class="notice notice-info">
-		<p><?php _e( 'Experiencing an issue and need to contact WP Content Pilot support? Click the link below to get debug information you can send to us.', 'wp-content-pilot' ) ?></p>
+		<p><?php esc_html_e( 'Experiencing an issue and need to contact WP Content Pilot support? Click the link below to get debug information you can send to us.', 'wp-content-pilot' ); ?></p>
 
-		<textarea id="system-info" class="widefat" readonly rows="15" style="display: none; color: #32373c; background-color: #eee; padding: 30px;">##System Information## &#013<?php
-			foreach ( $information as $info ) {
-				echo sprintf( '%s: %s &#013&#013', $info['label'], $info['value'] );
-			}
-
-			echo sprintf('##Campaigns Information## &#013 %s: %s', $campaigns_info['count']['label'], $campaigns_info['count']['value'])
-
-			?></textarea>
+		<textarea id="system-info" class="widefat" readonly rows="15" style="display: none; color: #32373c; background-color: #eee; padding: 30px;">##System Information## &#013
+		<?php
+		foreach ( $information as $info ) {
+			printf( '%s: %s &#013&#013', esc_html( $info['label'] ), esc_html( $info['value'] ) );
+		}
+			printf( '##Campaigns Information## &#013 %s: %s', esc_html( $campaigns_info['count']['label'] ), esc_html( $campaigns_info['count']['value'] ) );
+		?>
+			</textarea>
 
 		<p class="notice-links">
-			<a href="#" id="get-info" class="button button-primary show"> <?php _e( 'Get System Information', 'wp-content-pilot' ) ?> </a>
+			<a href="#" id="get-info" class="button button-primary show"> <?php esc_html_e( 'Get System Information', 'wp-content-pilot' ); ?> </a>
 		</p>
 	</div>
 
 	<table class="wp-list-table widefat fixed" cellspacing="0" style="width:100%;margin-left:auto;margin-right:auto;">
 		<thead>
 		<tr>
-			<th colspan="2"><h4 style="margin: 5px 0"><?php _e( 'System Information', 'wp-content-pilot' ) ?></h4></th>
+			<th colspan="2"><h4 style="margin: 5px 0"><?php esc_html_e( 'System Information', 'wp-content-pilot' ); ?></h4></th>
 		</tr>
 		<tr>
-			<th width="35%"><?php _e( 'Setting', 'wp-content-pilot' ) ?></th>
-			<th><?php _e( 'Value', 'wp-content-pilot' ) ?></th>
+			<th width="35%"><?php esc_html_e( 'Setting', 'wp-content-pilot' ); ?></th>
+			<th><?php esc_html_e( 'Value', 'wp-content-pilot' ); ?></th>
 		</tr>
 		</thead>
 
 		<tfoot>
 		<tr>
-			<th><?php _e( 'Setting', 'wp-content-pilot' ) ?></th>
-			<th><?php _e( 'Value', 'wp-content-pilot' ) ?></th>
+			<th><?php esc_html_e( 'Setting', 'wp-content-pilot' ); ?></th>
+			<th><?php esc_html_e( 'Value', 'wp-content-pilot' ); ?></th>
 		</tr>
 		</tfoot>
 
@@ -225,8 +227,8 @@ $campaigns_info['count']['value'] = $total;
 
 		<?php foreach ( $information as $info ) { ?>
 			<tr>
-				<td><?php echo $info['label'] ?></td>
-				<td><?php echo $info['value'] ?></td>
+				<td><?php echo esc_html( $info['label'] ); ?></td>
+				<td><?php echo wp_kses_post( $info['value'] ); ?></td>
 			</tr>
 		<?php } ?>
 
@@ -236,27 +238,27 @@ $campaigns_info['count']['value'] = $total;
 	<table class="wp-list-table widefat fixed" cellspacing="0" style="margin-top: 15px;width:100%;margin-left:auto;margin-right:auto;">
 		<thead>
 		<tr>
-			<th colspan="2"><h4 style="margin: 5px 0"><?php _e( 'Campaigns Information', 'wp-content-pilot' ) ?></h4></th>
+			<th colspan="2"><h4 style="margin: 5px 0"><?php esc_html_e( 'Campaigns Information', 'wp-content-pilot' ); ?></h4></th>
 		</tr>
 		<tr>
-			<th width="35%"><?php _e( 'Label', 'wp-content-pilot' ) ?></th>
-			<th><?php _e( 'Value', 'wp-content-pilot' ) ?></th>
+			<th width="35%"><?php esc_html_e( 'Label', 'wp-content-pilot' ); ?></th>
+			<th><?php esc_html_e( 'Value', 'wp-content-pilot' ); ?></th>
 		</tr>
 		</thead>
 
 		<tfoot>
 		<tr>
-			<th><?php _e( 'Label', 'wp-content-pilot' ) ?></th>
-			<th><?php _e( 'Value', 'wp-content-pilot' ) ?></th>
+			<th><?php esc_html_e( 'Label', 'wp-content-pilot' ); ?></th>
+			<th><?php esc_html_e( 'Value', 'wp-content-pilot' ); ?></th>
 		</tr>
 		</tfoot>
 
 		<tbody>
 
-		<?php foreach ($campaigns_info as $info){ ?>
+		<?php foreach ( $campaigns_info as $info ) { ?>
 			<tr>
-				<td><?php echo $info['label'] ?></td>
-				<td><?php echo $info['value'] ?></td>
+				<td><?php echo esc_html( $info['label'] ); ?></td>
+				<td><?php echo wp_kses_post( $info['value'] ); ?></td>
 			</tr>
 		<?php } ?>
 
@@ -273,7 +275,7 @@ $campaigns_info['count']['value'] = $total;
 		$('#get-info.show').click(function (e) {
 			e.preventDefault();
 			$info.show();
-			$(this).text('<?php _e( "Copy System Information", "wp-content-pilot" ) ?>');
+			$(this).text('<?php esc_html_e( 'Copy System Information', 'wp-content-pilot' ); ?>');
 			$(this).removeClass('show');
 			setTimeout(function () {
 				$('#get-info').addClass('copy')
@@ -284,7 +286,7 @@ $campaigns_info['count']['value'] = $total;
 			e.preventDefault();
 			$info.select();
 			document.execCommand("copy");
-			alert('<?php _e( 'Copied', 'wp-content-pilot' ) ?>');
+			alert('<?php esc_html_e( 'Copied', 'wp-content-pilot' ); ?>');
 		});
 
 	});
