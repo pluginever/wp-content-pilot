@@ -28,12 +28,21 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		 */
 		protected $settings_fields = array();
 
+		/**
+		 * Class constructor.
+		 *
+		 * @since 1.0.0
+		 * @return void
+		 */
 		public function __construct() {
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 		}
 
 		/**
-		 * Enqueue scripts and styles
+		 * Enqueue scripts and styles.
+		 *
+		 * @since 1.0.0
+		 * @return void
 		 */
 		function admin_enqueue_scripts() {
 			wp_enqueue_style( 'wp-color-picker' );
@@ -43,13 +52,12 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		}
 
 		/**
-		 * Set settings sections
+		 * Set settings sections.
 		 *
-		 * @param $sections
-		 *
-		 * @return $this
+		 * @param array $sections Sections.
 		 *
 		 * @since 1.0.0
+		 * @return $this Single instance.
 		 *
 		 */
 		function set_sections( $sections ) {
@@ -59,14 +67,12 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		}
 
 		/**
-		 * Add a single section
+		 * Add a single section.
 		 *
-		 * @param $section
-		 *
-		 * @return $this
+		 * @param string $section Section.
 		 *
 		 * @since 1.0.0
-		 *
+		 * @return $this Single instance.
 		 */
 		function add_section( $section ) {
 			$this->settings_sections[] = $section;
@@ -75,14 +81,12 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		}
 
 		/**
-		 * Set settings fields
+		 * Set settings fields.
 		 *
-		 * @param $fields
-		 *
-		 * @return $this
+		 * @param array $fields Fields
 		 *
 		 * @since 1.0.0
-		 *
+		 * @return $this Single instance.
 		 */
 		function set_fields( $fields ) {
 			$this->settings_fields = $fields;
@@ -91,15 +95,13 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		}
 
 		/**
-		 * Set fields
+		 * Set fields.
 		 *
-		 * @param $section
-		 * @param $field
-		 *
-		 * @return $this
+		 * @param string $section Section.
+		 * @param string $field Field.
 		 *
 		 * @since 1.0.0
-		 *
+		 * @return $this Single instance.
 		 */
 		function add_field( $section, $field ) {
 			$defaults                            = array(
@@ -115,15 +117,15 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		}
 
 		/**
-		 * Initialize and registers the settings sections and fileds to WordPress
-		 *
+		 * Initialize and registers the settings sections and field's to WordPress.
 		 * Usually this should be called at `admin_init` hook.
+		 * This function gets the initiated settings sections and fields. Then registers them to WordPress and ready for use.
 		 *
-		 * This function gets the initiated settings sections and fields. Then
-		 * registers them to WordPress and ready for use.
+		 * @since 1.0.0
+		 * @return void
 		 */
 		function admin_init() {
-			//register settings sections
+			// Register settings sections.
 			foreach ( $this->settings_sections as $section ) {
 				if ( false == get_option( $section['id'] ) ) {
 					add_option( $section['id'] );
@@ -131,7 +133,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 				if ( isset( $section['desc'] ) && ! empty( $section['desc'] ) ) {
 					$section['desc'] = '<div class="inside">' . $section['desc'] . '</div>';
 
-					// $callback = create_function( '', 'echo "' . str_replace( '"', '\"', $section['desc'] ) . '";' );
+					// phpcs:ignore $callback = create_function( '', 'echo "' . str_replace( '"', '\"', $section['desc'] ) . '";' );
 					$callback        = function ( $section ) {
 						echo str_replace( '"', '\"', $section['desc'] );
 					};
@@ -142,15 +144,15 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 				}
 				add_settings_section( $section['id'], $section['title'], $callback, $section['id'] );
 			}
-			//register settings fields
+			// Register settings fields.
 			foreach ( $this->settings_fields as $section => $field ) {
 				foreach ( $field as $option ) {
 					$name     = $option['name'];
 					$type     = isset( $option['type'] ) ? $option['type'] : 'text';
 					$label    = isset( $option['label'] ) ? $option['label'] : '';
-					$callback = isset( $option['callback'] ) ? $option['callback'] : array(
+					$callback = $option['callback'] ?? array(
 						$this,
-						'callback_' . $type
+						'callback_' . $type,
 					);
 					$args     = array(
 						'id'                => $name,
@@ -175,21 +177,19 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 					add_settings_field( "{$section}[{$name}]", $label, $callback, $section, $section, $args );
 				}
 			}
-			// creates our settings in the options table
+			// Creates our settings in the options table.
 			foreach ( $this->settings_sections as $section ) {
 				register_setting( $section['id'], $section['id'], array( $this, 'sanitize_options' ) );
 			}
 		}
 
 		/**
-		 * Get field description for display
+		 * Get field description for display.
 		 *
-		 * @param $args
-		 *
-		 * @return string
+		 * @param array $args Array of arguments.
 		 *
 		 * @since 1.0.0
-		 *
+		 * @return string
 		 */
 		public function get_field_description( $args ) {
 			if ( ! empty( $args['desc'] ) ) {
@@ -202,9 +202,12 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		}
 
 		/**
-		 * Displays a text field for a settings field
+		 * Displays a text field for a settings field.
 		 *
-		 * @param array $args settings field args
+		 * @param array $args settings field args.
+		 *
+		 * @since 1.0.0
+		 * @return void
 		 */
 		function callback_text( $args ) {
 			$value       = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
@@ -218,9 +221,9 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		}
 
 		/**
-		 * Displays a url field for a settings field
+		 * Displays a url field for a settings field.
 		 *
-		 * @param array $args settings field args
+		 * @param array $args settings field args.
 		 */
 		function callback_url( $args ) {
 			$this->callback_text( $args );
@@ -437,8 +440,9 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		}
 
 		/**
-		 * Sanitize callback for Settings API
+		 * Sanitize callback for Settings API.
 		 *
+		 * @since 1.0.0
 		 * @return mixed
 		 */
 		function sanitize_options( $options ) {
@@ -447,10 +451,9 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 			}
 			foreach ( $options as $option_slug => $option_value ) {
 				$sanitize_callback = $this->get_sanitize_callback( $option_slug );
-				// If callback is set, call it
+				// If callback is set, call it.
 				if ( $sanitize_callback ) {
 					$options[ $option_slug ] = call_user_func( $sanitize_callback, $option_value );
-					continue;
 				}
 			}
 
@@ -458,24 +461,25 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		}
 
 		/**
-		 * Get sanitization callback for given option slug
+		 * Get sanitization callback for given option slug.
 		 *
-		 * @param string $slug option slug
+		 * @param string $slug option slug.
 		 *
-		 * @return mixed string or bool false
+		 * @since 1.0.0
+		 * @return mixed string or bool false.
 		 */
-		function get_sanitize_callback( $slug = '' ) {
+		public function get_sanitize_callback( $slug = '' ) {
 			if ( empty( $slug ) ) {
 				return false;
 			}
-			// Iterate over registered fields and see if we can find proper callback
+			// Iterate over registered fields and see if we can find proper callback.
 			foreach ( $this->settings_fields as $section => $options ) {
 				foreach ( $options as $option ) {
-					if ( $option['name'] != $slug ) {
+					if ( $option['name'] !== $slug ) {
 						continue;
 					}
 
-					// Return the callback name
+					// Return the callback name.
 					return isset( $option['sanitize_callback'] ) && is_callable( $option['sanitize_callback'] ) ? $option['sanitize_callback'] : false;
 				}
 			}
@@ -484,60 +488,64 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		}
 
 		/**
-		 * Get the value of a settings field
+		 * Get the value of a settings field.
 		 *
-		 * @param string $option settings field name
-		 * @param string $section the section name this field belongs to
-		 * @param string $default default text if it's not found
+		 * @param string $option settings field name.
+		 * @param string $section the section name this field belongs to.
+		 * @param string $default_value default text if it's not found.
 		 *
 		 * @return string
 		 */
-		function get_option( $option, $section, $default = '' ) {
+		public function get_option( $option, $section, $default_value = '' ) {
 			$options = get_option( $section );
 			if ( isset( $options[ $option ] ) ) {
 				return $options[ $option ];
 			}
 
-			return $default;
+			return $default_value;
 		}
 
 		/**
-		 * Show navigations as tab
+		 * Show navigations as tab.
+		 * Shows all the settings section labels as tab.
 		 *
-		 * Shows all the settings section labels as tab
+		 * @since 1.0.0
+		 * @return void
 		 */
-		function show_navigation() {
+		public function show_navigation() {
 			$html  = '<div class="ever-settings-sidebar"><ul>';
 			$count = count( $this->settings_sections );
-			// don't show the navigation if only one section exists
-			if ( $count === 1 ) {
+			// Don't show the navigation if only one section exists.
+			if ( 1 === $count ) {
 				return;
 			}
 			foreach ( $this->settings_sections as $tab ) {
 				$html .= sprintf( '<li><a href="#%1$s" id="%1$s-tab">%2$s</a></li>', $tab['id'], $tab['title'] );
 			}
 			$html .= '</ul></div>';
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 
 		/**
-		 * Show the section settings forms
+		 * Show the section settings forms.
+		 * This function displays every section in a different form.
 		 *
-		 * This function displays every sections in a different form
+		 * @since 1.0.0
+		 * @return void
 		 */
-		function show_forms() {
-			$this->_style_fix();
+		public function show_forms() {
+			$this->style_fix();
 			?>
 			<div class="ever-settings-content">
 				<?php foreach ( $this->settings_sections as $form ) { ?>
-					<div id="<?php echo $form['id']; ?>" class="group" style="display: none;">
+					<div id="<?php echo esc_attr( $form['id'] ); ?>" class="group" style="display: none;">
 						<form method="post" action="options.php">
 							<?php
 							do_action( 'wsa_form_top_' . $form['id'], $form );
 							settings_fields( $form['id'] );
 							do_settings_sections( $form['id'] );
 							do_action( 'wsa_form_bottom_' . $form['id'], $form );
-							if ( isset( $this->settings_fields[ $form['id'] ] ) ):
+							if ( isset( $this->settings_fields[ $form['id'] ] ) ) :
 								?>
 								<div style="padding-left: 10px">
 									<?php submit_button(); ?>
@@ -551,7 +559,12 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 			$this->script();
 		}
 
-		function show_settings() {
+		/**
+		 * Display settings.
+		 *
+		 * @since 1.0.0
+		 */
+		public function show_settings() {
 			echo '<div class="ever-settings d-flex">';
 			$this->show_navigation();
 			$this->show_forms();
@@ -559,30 +572,32 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		}
 
 		/**
-		 * Tabbable JavaScript codes & Initiate Color Picker
+		 * Tabbable JavaScript codes & Initiate Color Picker.
 		 *
-		 * This code uses localstorage for displaying active tabs
+		 * This code uses localstorage for displaying active tabs.
+		 *
+		 * @since 1.0.0
 		 */
-		function script() {
+		public function script() {
 			?>
 			<script>
 				jQuery(document).ready(function ($) {
-					//Initiate Color Picker
+					// Initiate Color Picker.
 					$('.wp-color-picker-field').wpColorPicker();
-					// Switches option sections
+					// Switches option sections.
 					$('.group').hide();
 					var activetab = '';
 					if (typeof (localStorage) != 'undefined') {
 						activetab = localStorage.getItem("activetab");
 					}
-					//if url has section id as hash then set it as active or override the current local storage value
+					// if url has section id as hash then set it as active or override the current local storage value.
 					if (window.location.hash) {
 						activetab = window.location.hash;
 						if (typeof (localStorage) != 'undefined') {
 							localStorage.setItem("activetab", activetab);
 						}
 					}
-					if (activetab != '' && $(activetab).length) {
+					if (activetab !== '' && $(activetab).length) {
 						$(activetab).fadeIn();
 					} else {
 						$('.group:first').fadeIn();
@@ -598,7 +613,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 							});
 					});
 
-					if (activetab != '' && $(activetab + '-tab').length) {
+					if (activetab !== '' && $(activetab + '-tab').length) {
 						$(activetab + '-tab').closest('li').addClass('active');
 					} else {
 						$('.ever-settings-sidebar  li:first').addClass('active');
@@ -632,7 +647,7 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 							attachment = file_frame.state().get('selection').first().toJSON();
 							self.prev('.wpsa-url').val(attachment.url).change();
 						});
-						// Finally, open the modal
+						// Finally, open the modal.
 						file_frame.open();
 					});
 				});
@@ -640,30 +655,31 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 			<?php
 		}
 
-		function _style_fix() {
+		/**
+		 * Style.
+		 *
+		 * @since 1.0.0
+		 */
+		public function style_fix() {
 			global $wp_version;
 			?>
 			<style type="text/css">
-				<?php  if (version_compare($wp_version, '3.8', '<=')):?>
-				/** WordPress 3.8 Fix **/
+				<?php if ( version_compare( $wp_version, '3.8', '<=' ) ) : ?>
+				/** WordPress 3.8 Fix. **/
 				.form-table th {
 					padding: 20px 10px;
 				}
-
 				<?php endif; ?>
 				.ever-settings *, .ever-settings *::before, .ever-settings *::after {
 					box-sizing: border-box;
 				}
-
 				.ever-settings {
 					margin: 16px 0;
 				}
-
 				.ever-settings.d-flex {
 					display: -ms-flexbox !important;
 					display: flex !important;
 				}
-
 				.ever-settings-sidebar {
 					position: relative;
 					z-index: 1;
@@ -672,21 +688,15 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 					border-bottom: 1px solid #cccccc;
 					border-left: 1px solid #cccccc;
 				}
-
 				.ever-settings-sidebar > ul {
 					margin: 0;
-					/*overflow: hidden;*/
 				}
-
 				.ever-settings-sidebar > ul > li {
 					margin: 0;
-					/*overflow: hidden;*/
 				}
-
 				.ever-settings-sidebar > ul > li:first-child a {
 					border-top-color: #cccccc;
 				}
-
 				.ever-settings-sidebar > ul > li a {
 					display: block;
 					padding: 0 20px;
@@ -706,13 +716,11 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 					border-left: 0;
 					box-shadow: none !important;
 				}
-
 				.ever-settings-sidebar > ul > li.active a {
 					color: #23282d;
 					background-color: #fff;
 					border-right: 1px solid #fff !important;
 				}
-
 				.ever-settings-content {
 					position: relative;
 					width: 100%;
@@ -721,7 +729,6 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 					border: 1px solid #cccccc;
 					min-height: 500px;
 				}
-
 				.ever-settings-content h2 {
 					padding: 0 0 16px 0 !important;
 					margin: 8px 0 16px !important;
@@ -730,42 +737,34 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 					border-bottom: 1px solid #cccccc;
 
 				}
-
 				.ever-settings-heading {
 					position: relative;
 					left: -17%;
 				}
-
 				.ever-settings-container::after {
 					clear: both;
 				}
-
 				.ever-settings-container .ever-settings-main {
 					width: 80%;
 					display: inline-block;
 				}
-
 				.ever-settings-container .ever-settings-right-sidebar {
 					width: 19%;
 					float: right;
 					padding-top: 10px;
 					display: inline-block;
 				}
-
 				.ratings-stars-container {
 					text-align: center;
 					margin-top: 10px;
 				}
-
 				.ratings-stars-container span {
 					vertical-align: text-top;
 					color: #ffb900;
 				}
-
 				.ratings-stars-container a {
 					text-decoration: none;
 				}
-
 				.pro th label::after {
 					content: 'PRO';
 					font-size: 11px;
@@ -776,7 +775,6 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 					line-height: 1;
 					margin-left: 5px;
 				}
-
 			</style>
 			<?php
 		}
