@@ -322,130 +322,149 @@ if ( ! class_exists( 'Ever_Settings_Framework' ) ):
 		 */
 		function callback_select( $args ) {
 			$value    = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-			$size     = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
-			$disabled = isset( $args['disabled'] ) ? $args['disabled'] : '';
+			$size     = $args['size'] ?? 'regular';
+			$disabled = $args['disabled'] ?? '';
 			$html     = sprintf( '<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]" %4$s>', $size, $args['section'], $args['id'], $disabled );
 			foreach ( $args['options'] as $key => $label ) {
 				$html .= sprintf( '<option value="%s"%s>%s</option>', $key, selected( $value, $key, false ), $label );
 			}
 			$html .= sprintf( '</select>' );
 			$html .= $this->get_field_description( $args );
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 
 		/**
-		 * Displays a textarea for a settings field
+		 * Displays a textarea for a settings field.
 		 *
-		 * @param array $args settings field args
+		 * @param array $args settings field args.
+		 *
+		 * @since 1.0.0
+		 * @return void
 		 */
-		function callback_textarea( $args ) {
+		public function callback_textarea( $args ) {
 			$value       = esc_textarea( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 			$html        = sprintf( '<textarea rows="5" cols="55" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]"%4$s>%5$s</textarea>', $size, $args['section'], $args['id'], $placeholder, $value );
-			$html        .= $this->get_field_description( $args );
-			echo $html;
+			$html       .= $this->get_field_description( $args );
+			echo wp_kses_post( $html );
 		}
 
 		/**
-		 * Displays the html for a settings field
+		 * Displays the html for a settings field.
 		 *
-		 * @param array $args settings field args
+		 * @param array $args settings field args.
 		 *
-		 * @return string
+		 * @return void
 		 */
-		function callback_html( $args ) {
-			echo $this->get_field_description( $args );
+		public function callback_html( $args ) {
+			echo wp_kses_post( $this->get_field_description( $args ) );
 		}
 
 		/**
-		 * Displays a rich text textarea for a settings field
+		 * Displays a rich text textarea for a settings field.
 		 *
-		 * @param array $args settings field args
+		 * @param array $args settings field args.
+		 *
+		 * @since 1.0.0
+		 * @return void
 		 */
-		function callback_wysiwyg( $args ) {
+		public function callback_wysiwyg( $args ) {
 			$value = $this->get_option( $args['id'], $args['section'], $args['std'] );
 			$size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : '500px';
-			echo '<div style="max-width: ' . $size . ';">';
+			echo '<div style="max-width: ' . esc_attr( $size ) . ';">';
 			$editor_settings = array(
 				'teeny'         => true,
 				'textarea_name' => $args['section'] . '[' . $args['id'] . ']',
-				'textarea_rows' => 10
+				'textarea_rows' => 10,
 			);
 			if ( isset( $args['options'] ) && is_array( $args['options'] ) ) {
 				$editor_settings = array_merge( $editor_settings, $args['options'] );
 			}
 			wp_editor( $value, $args['section'] . '-' . $args['id'], $editor_settings );
 			echo '</div>';
-			echo $this->get_field_description( $args );
+			echo wp_kses_post( $this->get_field_description( $args ) );
 		}
 
 		/**
-		 * Displays a file upload field for a settings field
+		 * Displays a file upload field for a settings field.
 		 *
-		 * @param array $args settings field args
+		 * @param array $args settings field args.
+		 *
+		 * @since 1.0.0
+		 * @return void
 		 */
-		function callback_file( $args ) {
+		public function callback_file( $args ) {
 			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
-			$id    = $args['section'] . '[' . $args['id'] . ']';
+			// phpcs:ignore $id    = $args['section'] . '[' . $args['id'] . ']';
 			$label = isset( $args['options']['button_label'] ) ? $args['options']['button_label'] : __( 'Choose File', 'wp-content-pilot' );
 			$html  = sprintf( '<input type="text" class="%1$s-text wpsa-url" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
-			$html  .= '<input type="button" class="button wpsa-browse" value="' . $label . '" />';
-			$html  .= $this->get_field_description( $args );
-			echo $html;
+			$html .= '<input type="button" class="button wpsa-browse" value="' . $label . '" />';
+			$html .= $this->get_field_description( $args );
+			echo wp_kses_post( $html );
 		}
 
 		/**
-		 * Displays a password field for a settings field
+		 * Displays a password field for a settings field.
 		 *
-		 * @param array $args settings field args
+		 * @param array $args settings field args.
+		 *
+		 * @since 1.0.0
+		 * @return void
 		 */
-		function callback_password( $args ) {
+		public function callback_password( $args ) {
 			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$html  = sprintf( '<input type="password" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
-			$html  .= $this->get_field_description( $args );
-			echo $html;
+			$html .= $this->get_field_description( $args );
+			echo wp_kses_post( $html );
 		}
 
 		/**
-		 * Displays a color picker field for a settings field
+		 * Displays a color picker field for a settings field.
 		 *
-		 * @param array $args settings field args
+		 * @param array $args settings field args.
+		 *
+		 * @since 1.0.0
+		 * @return void
 		 */
-		function callback_color( $args ) {
+		public function callback_color( $args ) {
 			$value    = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$size     = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$disabled = isset( $args['disabled'] ) ? $args['disabled'] : '';
 			$html     = sprintf( '<input type="text" class="%1$s-text wp-color-picker-field" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s" data-default-color="%5$s" %6$s/>', $size, $args['section'], $args['id'], $value, $args['std'], $disabled );
-			$html     .= $this->get_field_description( $args );
-			echo $html;
+			$html    .= $this->get_field_description( $args );
+			echo wp_kses_post( $html );
 		}
 
 		/**
-		 * Displays a select box for creating the pages select box
+		 * Displays a select box for creating the pages select box.
 		 *
-		 * @param array $args settings field args
+		 * @param array $args settings field args.
+		 *
+		 * @since 1.0.0
+		 * @return void
 		 */
-		function callback_pages( $args ) {
+		public function callback_pages( $args ) {
 			$dropdown_args = array(
 				'selected' => esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) ),
 				'name'     => $args['section'] . '[' . $args['id'] . ']',
 				'id'       => $args['section'] . '[' . $args['id'] . ']',
-				'echo'     => 0
+				'echo'     => 0,
 			);
-			$html          = wp_dropdown_pages( $dropdown_args );
-			echo $html;
+			echo wp_kses_post( wp_dropdown_pages( $dropdown_args ) );
 		}
 
 		/**
 		 * Sanitize callback for Settings API.
 		 *
+		 * @param mixed $options Options.
+		 *
 		 * @since 1.0.0
 		 * @return mixed
 		 */
-		function sanitize_options( $options ) {
+		public function sanitize_options( $options ) {
 			if ( ! $options ) {
 				return $options;
 			}
