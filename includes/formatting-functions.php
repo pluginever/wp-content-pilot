@@ -1,27 +1,26 @@
 <?php
+
 defined( 'ABSPATH' ) || exit();
 
-
 /**
- * Convert a string to array
+ * Convert a string to array.
  *
- * @param        $string
- * @param string $separator
- * @param array $callbacks
+ * @param string $content The content.
+ * @param string $separator Separator.
+ * @param array  $callbacks Array of callback methods.
  *
- * @return array
  * @since 1.0.0
- *
+ * @return array
  */
-function wpcp_string_to_array( $string, $separator = ',', $callbacks = array() ) {
-	if ( is_array( $string ) ) {
-		return $string;
+function wpcp_string_to_array( $content, $separator = ',', $callbacks = array() ) {
+	if ( is_array( $content ) ) {
+		return $content;
 	}
 	$default   = array(
 		'trim',
 	);
 	$callbacks = wp_parse_args( $callbacks, $default );
-	$parts     = explode( $separator, $string );
+	$parts     = explode( $separator, $content );
 
 	if ( ! empty( $callbacks ) ) {
 		foreach ( $callbacks as $callback ) {
@@ -32,40 +31,40 @@ function wpcp_string_to_array( $string, $separator = ',', $callbacks = array() )
 	return $parts;
 }
 
-
 /**
- * Return main part of the url eg exmaple.com  from https://www.example.com
+ * Return main part of the url eg exmaple.com  from https://www.example.com.
  *
- * @param $url
+ * @param string  $url Url string.
+ * @param boolean $base_domain Weather true or false.
  *
+ * @since 1.0.0
  * @return mixed
  */
 function wpcp_get_host( $url, $base_domain = false ) {
-	$parseUrl = parse_url( trim( esc_url_raw( $url ) ) );
+	$parse_url = wp_parse_url( trim( esc_url_raw( $url ) ) );
 
 	if ( $base_domain ) {
-		$array = explode( '/', $parseUrl['path'], 2 );
-		$host  = trim( $parseUrl['host'] ? $parseUrl['host'] : array_shift( $array ) );
+		$array = explode( '/', $parse_url['path'], 2 );
+		$host  = trim( $parse_url['host'] ? $parse_url['host'] : array_shift( $array ) );
 	} else {
-		$scheme = ! isset( $parseUrl['scheme'] ) ? 'http' : $parseUrl['scheme'];
+		$scheme = ! isset( $parse_url['scheme'] ) ? 'http' : $parse_url['scheme'];
 
-		return $scheme . "://" . $parseUrl['host'];
+		return $scheme . '://' . $parse_url['host'];
 	}
 
 	return $host;
 }
 
-
 /**
- * @param $content
+ * Remove unauthorized HTML from content.
  *
+ * @param string $content The content.
+ *
+ * @since 1.0.0
  * @return string
- *
- * @since 1.0.
- *
  */
 function wpcp_remove_unauthorized_html( $content ) {
-	$default_allowed_tags = [
+	$default_allowed_tags = array(
 		'a'          => array(
 			'href'   => true,
 			'target' => true,
@@ -142,8 +141,8 @@ function wpcp_remove_unauthorized_html( $content ) {
 			'height'      => true,
 			'width'       => true,
 			'src'         => true,
-		)
-	];
+		),
+	);
 
 	$allowed_tags = apply_filters( 'wpcp_allowed_html_tags', $default_allowed_tags );
 	$content      = wp_kses( $content, $allowed_tags );
@@ -151,81 +150,73 @@ function wpcp_remove_unauthorized_html( $content ) {
 	return trim( $content );
 }
 
-
 /**
- * remove empty html tags
+ * Remove empty html tags.
  *
- * since 1.0.0
+ * @param string $str String.
+ * @param null   $replace_with Replace string.
  *
- * @param      $str
- * @param null $replace_with
- *
+ * @since 1.0.0
  * @return null|string|string[]
  */
 function wpcp_remove_empty_tags_recursive( $str, $replace_with = null ) {
-	//** Return if string not given or empty.
+	// Return if string not given or empty.
 	if ( ! is_string( $str )
-	     || trim( $str ) == '' ) {
+		|| trim( $str ) === '' ) {
 		return $str;
 	}
 
-	//** Recursive empty HTML tags.
+	// Recursive empty HTML tags.
 	return preg_replace(
-
-	//** Pattern written by Junaid Atari.
+		// Pattern written by Junaid Atari.
 		'/<([^<\/>]*)>([\s]*?|(?R))<\/\1>/imsU',
-
-		//** Replace with nothing if string empty.
+		// Replace with nothing if string empty.
 		! is_string( $replace_with ) ? '' : $replace_with,
-
-		//** Source string
+		// Source string.
 		$str
 	);
 }
 
-
 /**
- * clean emoji from content
- * since 1.0.0
+ * Clean emoji from content.
  *
- * @param $content
+ * @param string $content The content.
  *
+ * @since 1.0.0
  * @return string
  */
 function wpcp_remove_emoji( $content ) {
-	$clean_text = "";
+	$clean_text = '';
 
-	// Match Emoticons
-	$regexEmoticons = '/[\x{1F600}-\x{1F64F}]/u';
-	$clean_text     = preg_replace( $regexEmoticons, '', $content );
+	// Match Emoticons.
+	$regex_emoticons = '/[\x{1F600}-\x{1F64F}]/u';
+	$clean_text      = preg_replace( $regex_emoticons, '', $content );
 
-	// Match Miscellaneous Symbols and Pictographs
-	$regexSymbols = '/[\x{1F300}-\x{1F5FF}]/u';
-	$clean_text   = preg_replace( $regexSymbols, '', $clean_text );
+	// Match Miscellaneous Symbols and Pictographs.
+	$regex_symbols = '/[\x{1F300}-\x{1F5FF}]/u';
+	$clean_text    = preg_replace( $regex_symbols, '', $clean_text );
 
-	// Match Transport And Map Symbols
-	$regexTransport = '/[\x{1F680}-\x{1F6FF}]/u';
-	$clean_text     = preg_replace( $regexTransport, '', $clean_text );
+	// Match Transport And Map Symbols.
+	$regex_transport = '/[\x{1F680}-\x{1F6FF}]/u';
+	$clean_text      = preg_replace( $regex_transport, '', $clean_text );
 
-	// Match Miscellaneous Symbols
-	$regexMisc  = '/[\x{2600}-\x{26FF}]/u';
-	$clean_text = preg_replace( $regexMisc, '', $clean_text );
+	// Match Miscellaneous Symbols.
+	$regex_misc = '/[\x{2600}-\x{26FF}]/u';
+	$clean_text = preg_replace( $regex_misc, '', $clean_text );
 
-	// Match Dingbats
-	$regexDingbats = '/[\x{2700}-\x{27BF}]/u';
-	$clean_text    = preg_replace( $regexDingbats, '', $clean_text );
+	// Match Dingbats.
+	$regex_dingbats = '/[\x{2700}-\x{27BF}]/u';
+	$clean_text     = preg_replace( $regex_dingbats, '', $clean_text );
 
 	return $clean_text;
 }
 
-
 /**
- * clean title
+ * Clean title.
  *
- * since 1.0.0
+ * @param string $title The title.
  *
- * @param $title
- *
+ * @since 1.0.0
  * @return null|string|string[]
  */
 function wpcp_clean_title( $title ) {
@@ -233,9 +224,9 @@ function wpcp_clean_title( $title ) {
 	$title = html_entity_decode( $title, ENT_QUOTES );
 
 	$title = str_replace( 'nospin', '', $title );
-	//$title = str_replace( ' ', '-', $title ); // Replaces all spaces with hyphens.
-	//$title = preg_replace( '/[^A-Za-z0-9\-\s\.\,]/', '', $title ); // Removes special chars.
-	//$title = preg_replace( '/[^A-Za-z0-9\-\s\'\"\.\,]/', '', $title ); // Removes special chars. allow öäüß ÖÄÜ
+	// $title = str_replace( ' ', '-', $title ); // Replaces all spaces with hyphens.
+	// $title = preg_replace( '/[^A-Za-z0-9\-\s\.\,]/', '', $title ); // Removes special chars.
+	// $title = preg_replace( '/[^A-Za-z0-9\-\s\'\"\.\,]/', '', $title ); // Removes special chars. allow öäüß ÖÄÜ
 
 	$title = preg_replace( '/-+/', '-', $title ); // Replaces multiple hyphens with single one.
 
@@ -255,20 +246,19 @@ function wpcp_clean_title( $title ) {
 		$title = preg_replace( '/[^\|\-\\\\\/>»]*[\|\-\\\\\/>»](.*)/i', '$1', $title );
 	}
 
-
 	return $title;
 }
 
 /**
- * Fix utf8
+ * Fix utf8.
  *
- * @param $content
+ * @param string $content The content.
  *
- * @return string
  * @since 1.2.0
+ * @return string
  */
 function wpcp_fix_utf8( $content ) {
-	if ( 1 === @preg_match( '/^./us', $content ) ) {
+	if ( 1 === preg_match( '/^./us', $content ) ) {
 		return $content;
 	}
 	if ( function_exists( 'iconv' ) ) {
@@ -279,20 +269,22 @@ function wpcp_fix_utf8( $content ) {
 }
 
 /**
- * @param $list
+ * Array to html.
  *
- * @return string
+ * @param array $list_items Array of list items.
+ *
  * @since 1.2.0
+ * @return string
  */
-function wpcp_array_to_html( $list ) {
-	if ( ! is_array( $list ) || empty( $list ) ) {
+function wpcp_array_to_html( $list_items ) {
+	if ( ! is_array( $list_items ) || empty( $list_items ) ) {
 		return '';
 	}
 	$html = '';
-	foreach ( $list as $key => $item ) {
+	foreach ( $list_items as $key => $item ) {
 		$item_html = '';
 		if ( ! is_numeric( $key ) ) {
-			$item_html .= sprintf( '<strong>%s : </strong>', strip_tags( $key ) );
+			$item_html .= sprintf( '<strong>%s : </strong>', wp_strip_all_tags( $key ) );
 		}
 
 		if ( empty( $item ) ) {
@@ -301,34 +293,38 @@ function wpcp_array_to_html( $list ) {
 
 		$item_html .= $item;
 
-		$html .= sprintf( '<li>%s</li>', strip_tags( $item_html ) );
+		$html .= sprintf( '<li>%s</li>', wp_strip_all_tags( $item_html ) );
 	}
 
 	return sprintf( '<ul>%s</ul>', $html );
 }
 
 /**
- * @param $amount
- * @param string $currency
+ * The price.
  *
- * @return string
+ * @param float  $amount The amount.
+ * @param string $currency The currency.
+ *
  * @since 1.2.0
+ * @return string
  */
 function wpcp_price( $amount, $currency = '$' ) {
 	return sprintf( '%s%s', $currency, number_format_i18n( $amount, 2 ) );
 }
 
 /**
- * @param $content
+ * Remove continue reading text.
  *
- * @return mixed
+ * @param string $content The content.
+ *
  * @since 1.2.0
+ * @return mixed
  */
 function wpcp_remove_continue_reading( $content ) {
 	$dom = wpcp_str_get_html( $content );
-	/* @var $node simple_html_dom_node */
+	/* @var object $node simple_html_dom_node. */
 	foreach ( $dom->find( 'a' ) as $node ) {
-		if ( in_array( strtolower( trim( $node->text() ) ), [ 'continue reading', 'read more' ] ) ) {
+		if ( in_array( strtolower( trim( $node->text() ) ), array( 'continue reading', 'read more' ), true ) ) {
 			$node->remove();
 		}
 	}
@@ -336,75 +332,70 @@ function wpcp_remove_continue_reading( $content ) {
 	return $dom;
 }
 
-
 /**
- * convert cents into usd
+ * Convert cents into usd.
  *
- * @param $cent
+ * @param float $cent Cent.
  *
- * @return string
  * @since 1.0.0
- *
+ * @return string
  */
 function wpcp_cent_to_usd( $cent ) {
 	return number_format( ( $cent / 100 ), 2, '.', ' ' );
 }
 
 /**
+ * Generate the title form the content.
  *
- * since 1.0.0
+ * @param string $content The content.
+ * @param int    $length The content length.
  *
- * @param     $content
- * @param int $length
- *
+ * @since 1.0.0
  * @return bool|null|string|string[]
  */
 function wpcp_generate_title_from_content( $content, $length = 80 ) {
-	$cleanContent = wpcp_remove_emoji( wpcp_strip_urls( strip_tags( $content ) ) );
+	$clean_content = wpcp_remove_emoji( wpcp_strip_urls( wp_strip_all_tags( $content ) ) );
 
 	if ( function_exists( 'mb_substr' ) ) {
-		$newTitle = ( mb_substr( $cleanContent, 0, $length ) );
+		$new_title = ( mb_substr( $clean_content, 0, $length ) );
 	} else {
-		$newTitle = ( substr( $cleanContent, 0, $length ) );
+		$new_title = ( substr( $clean_content, 0, $length ) );
 	}
 
-	$newTitle = preg_replace( '{RT @.*?: }', '', $newTitle );
+	$new_title = preg_replace( '{RT @.*?: }', '', $new_title );
 
-	return wpcp_clean_title( $newTitle );
+	return wpcp_clean_title( $new_title );
 }
 
-
 /**
- * Remove url from content
- * since 1.0.0
+ * Remove url from content.
  *
- * @param $content
+ * @param string $content The content.
  *
+ * @since 1.0.0
  * @return string
  */
 function wpcp_strip_urls( $content ) {
 	return preg_replace( '{http[s]?://[^\s]*}', '', $content );
 }
 
-
-
 /**
- * Find numbers from string
+ * Find numbers from string/content.
  *
  * wpcp_get_numbers_from_string('Renewed from $369.99')
  * wpcp_get_numbers_from_string('Showing 20 of 200', true)
  *
- * @param $string
- * @param bool $multiple
+ * @param string $content The String.
+ * @param bool   $multiple Weather true or false.
  *
- * @return array|float|integer
  * @since 1.2.5
+ * @return array|float|integer
  */
-function wpcp_get_numbers_from_string( $string, $multiple = false ) {
+function wpcp_get_numbers_from_string( $content, $multiple = false ) {
 	if ( ! $multiple ) {
-		return preg_replace( '/[^\\d.]+/', '', $string );
+		return preg_replace( '/[^\\d.]+/', '', $content );
 	}
-	preg_match_all( '!\d+!', $string, $matched );
+	preg_match_all( '!\d+!', $content, $matched );
 
-	return isset( $matched[0] ) ? $matched[0] : [];
+	return isset( $matched[0] ) ? $matched[0] : array();
 }

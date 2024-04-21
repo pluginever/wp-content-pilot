@@ -13,6 +13,8 @@ defined( 'ABSPATH' ) || exit();
 /**
  * Register our content pilot post type.
  * since 1.0.0
+ *
+ * @return void
  */
 function wpcp_setup_wpcp_post_types() {
 	$campaign_labels = array(
@@ -56,13 +58,14 @@ add_action( 'init', 'wpcp_setup_wpcp_post_types', 1 );
 
 /**
  * Change default post types message.
- * since 1.0.0
  *
- * @param $messages array
+ * @param array $messages Array of messages.
  *
+ * @since 1.0.0
  * @return mixed
  */
 function wpcp_post_types_messages( $messages ) {
+	wp_verify_nonce( '_wpnonce' );
 	global $post, $post_ID;
 
 	$messages['wp_content_pilot'] = array(
@@ -72,32 +75,35 @@ function wpcp_post_types_messages( $messages ) {
 		3  => __( 'Custom field deleted.', 'wp-content-pilot' ),
 		4  => __( 'Campaign updated.', 'wp-content-pilot' ),
 		/* translators: %s: date and time of the revision */
-		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Campaign restored to revision from %s', 'wp-content-pilot' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		5  => isset( $_GET['revision'] ) ? sprintf( /* translators: Post revision title. */ __( 'Campaign restored to revision from %s', 'wp-content-pilot' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 		6  => __( 'Campaign updated.', 'wp-content-pilot' ),
 		7  => __( 'Campaign saved.', 'wp-content-pilot' ),
 		8  => __( 'Campaign submitted.', 'wp-content-pilot' ),
-		9  => sprintf( __( 'Campaign scheduled for: <strong>%1$s</strong>.', 'wp-content-pilot' ),
-			// translators: Publish box date format, see http://php.net/date.
-			date_i18n( __( 'M j, Y @ G:i', 'wp-content-pilot' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+		9  => sprintf(
+		/* translators: Publish box date format, see http://php.net/date. */
+			__( 'Campaign scheduled for: <strong>%1$s</strong>.', 'wp-content-pilot' ),
+			date_i18n( __( 'M j, Y @ G:i', 'wp-content-pilot' ), strtotime( $post->post_date ) ),
+			esc_url( get_permalink( $post_ID ) )
+		),
 		10 => __( 'Campaign draft updated.', 'wp-content-pilot' ),
 	);
 
 	return $messages;
 }
 add_filter( 'post_updated_messages', 'wpcp_post_types_messages' );
+
 /**
- * Change default "Enter title here" input
+ * Change default "Enter title here" input.
  *
- * @param string $title Default title placeholder text
+ * @param string $title Default title placeholder text.
  *
- * @return string $title New placeholder text
  * @since 1.0.0
- *
+ * @return string $title New placeholder text.
  */
 function wpcp_change_default_title( $title ) {
 	$screen = get_current_screen();
 
-	if ( 'wp_content_pilot' == $screen->post_type ) {
+	if ( 'wp_content_pilot' === $screen->post_type ) {
 		$title = __( 'Campaign Title', 'wp-content-pilot' );
 	}
 
@@ -106,11 +112,12 @@ function wpcp_change_default_title( $title ) {
 add_filter( 'enter_title_here', 'wpcp_change_default_title' );
 
 /**
- * Admin column
- * since 1.0.0
- * @param $columns
+ * Admin columns.
  *
- * @return mixed
+ * @param array $columns Array of columns.
+ *
+ * @since 1.0.0
+ * @return array Array of columns.
  */
 function wp_content_pilot_columns( $columns ) {
 	unset( $columns['date'] );
@@ -126,40 +133,53 @@ function wp_content_pilot_columns( $columns ) {
 add_action( 'manage_wp_content_pilot_posts_columns', 'wp_content_pilot_columns', 10 );
 
 /**
- * Admin column content
- * since 1.0.0
- * @param $column_name
- * @param $post_ID
+ * Admin column content.
+ *
+ * @param string $column_name Name of the column.
+ * @param int    $post_ID The post ID.
+ *
+ * @since 1.0.0
+ * @return void
  */
 function wp_content_pilot_column_content( $column_name, $post_ID ) {
 	switch ( $column_name ) {
 		case 'status':
 			$active = wpcp_get_post_meta( $post_ID, '_campaign_status', 0 );
-			if ( $active == 'active' ) {
-				echo '<span style="background: green;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">' . __( 'Active', 'wp-content-pilot' ) . '</span>';
+			if ( 'active' === $active ) {
+				printf(
+					'%1$s%2$s%3$s',
+					'<span style="background: green;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">',
+					esc_html__( 'Active', 'wp-content-pilot' ),
+					'</span>',
+				);
 			} else {
-				echo '<span style="background: red;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">' . __( 'Disabled', 'wp-content-pilot' ) . '</span>';
+				printf(
+					'%1$s%2$s%3$s',
+					'<span style="background: red;color: #fff;padding: 2px 10px;box-shadow: 2px 2px 2px;">',
+					esc_html__( 'Disabled', 'wp-content-pilot' ),
+					'</span>',
+				);
 			}
 			break;
 		case 'type':
 			$campaign_type = wpcp_get_post_meta( $post_ID, '_campaign_type' );
-			echo ucfirst( str_replace('_', ' ', $campaign_type) );
+			echo esc_html( ucfirst( str_replace( '_', ' ', $campaign_type ) ) );
 			break;
 		case 'target':
 			$target    = wpcp_get_post_meta( $post_ID, '_campaign_target', 0 );
 			$completed = wpcp_get_post_meta( $post_ID, '_post_count', 0 );
 			if ( $target && $completed ) {
-				echo $completed . '/' . $target;
+				echo esc_html( $completed . '/' . $target );
 			} else {
-				echo $target . '/ - ';
+				echo esc_html( $target . '/ - ' );
 			}
 			break;
 		case 'frequency':
-			$frenquency      = wpcp_get_post_meta( $post_ID, '_campaign_frequency', 0 );
-			$frenquency_unit = wpcp_get_post_meta( $post_ID, '_frequency_unit', 'hour' );
+			$frequency      = wpcp_get_post_meta( $post_ID, '_campaign_frequency', 0 );
+			$frequency_unit = wpcp_get_post_meta( $post_ID, '_frequency_unit', 'hour' );
 
-			if ( $frenquency ) {
-				echo sprintf( 'Every %d %s', $frenquency, $frenquency_unit );
+			if ( $frequency ) {
+				printf( /* translators: 1. Frequency, 2. Frequency unit. */ esc_html__( 'Every %1$d %2$s', 'wp-content-pilot' ), intval( $frequency ), esc_html( $frequency_unit ) );
 			} else {
 				echo ' - ';
 			}
@@ -167,9 +187,9 @@ function wp_content_pilot_column_content( $column_name, $post_ID ) {
 		case 'last_run':
 			$last_run = wpcp_get_post_meta( $post_ID, '_last_run', 0 );
 			if ( $last_run ) {
-				echo date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime($last_run) );
+				echo esc_html( date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), strtotime( $last_run ) ) );
 			} else {
-				echo ' - ';
+				echo esc_html( ' - ' );
 			}
 			break;
 	}

@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: WP Content Pilot
- * Plugin URI:  https://www.wpcontentpilot.co
+ * Plugin URI:  https://www.pluginever.com
  * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:     1.3.3
- * Author:      WP Content Pilot
- * Author URI:  https://www.wpcontentpilot.co
- * Donate link: https://www.wpcontentpilot.co
+ * Version:     1.3.5
+ * Author:      pluginever
+ * Author URI:  https://www.pluginever.com
+ * Donate link: https://www.pluginever.com
  * License:     GPLv2+
  * Text Domain: wp-content-pilot
  * Domain Path: /i18n/languages/
@@ -44,7 +44,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '1.3.3';
+	protected $version = '1.3.5';
 
 	/**
 	 * The single instance of the class.
@@ -160,8 +160,6 @@ final class ContentPilot {
 		require_once( WPCP_LIBRARY . '/readability/Readability.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-readability.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-logger.php' );
-		require_once( WPCP_INCLUDES . '/admin/class-wpcp-insight.php' );
-		require_once( WPCP_INCLUDES . '/admin/class-wpcp-tracker.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-dom.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-modules.php' );
 		require_once( WPCP_INCLUDES . '/class-wpcp-module.php' );

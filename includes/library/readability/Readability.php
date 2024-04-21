@@ -353,9 +353,9 @@ class Readability {
 			$footnoteLink = $articleLink->cloneNode( true );
 			$refLink      = $this->dom->createElement( 'a' );
 			$footnote     = $this->dom->createElement( 'li' );
-			$linkDomain   = @parse_url( $footnoteLink->getAttribute( 'href' ), PHP_URL_HOST );
+			$linkDomain   = @wp_parse_url( $footnoteLink->getAttribute( 'href' ), PHP_URL_HOST );
 			if ( ! $linkDomain && isset( $this->url ) ) {
-				$linkDomain = @parse_url( $this->url, PHP_URL_HOST );
+				$linkDomain = @wp_parse_url( $this->url, PHP_URL_HOST );
 			}
 			//linkDomain   = footnoteLink.host ? footnoteLink.host : document.location.host,
 			$linkText = $this->getInnerText( $articleLink );

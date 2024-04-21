@@ -339,9 +339,9 @@ if ( ! class_exists( 'Readability_OLD' ) ):
 				$footnoteLink = $articleLink->cloneNode( true );
 				$refLink      = $this->dom->createElement( 'a' );
 				$footnote     = $this->dom->createElement( 'li' );
-				$linkDomain   = @parse_url( $footnoteLink->getAttribute( 'href' ), PHP_URL_HOST );
+				$linkDomain   = @wp_parse_url( $footnoteLink->getAttribute( 'href' ), PHP_URL_HOST );
 				if ( ! $linkDomain && isset( $this->url ) ) {
-					$linkDomain = @parse_url( $this->url, PHP_URL_HOST );
+					$linkDomain = @wp_parse_url( $this->url, PHP_URL_HOST );
 				}
 
 				$linkText = $this->getInnerText( $articleLink );
@@ -1366,7 +1366,7 @@ if ( ! class_exists( 'Readability_OLD' ) ):
 //			error_log( 'Parsing URL: ' . $this->url );
 
 			if ( $this->url ) {
-				$this->domainRegExp = '/' . strtr( preg_replace( '/www\d*\./', '', parse_url( $this->url, PHP_URL_HOST ) ), [ '.' => '\.' ] ) . '/';
+				$this->domainRegExp = '/' . strtr( preg_replace( '/www\d*\./', '', wp_parse_url( $this->url, PHP_URL_HOST ) ), [ '.' => '\.' ] ) . '/';
 			}
 
 			mb_internal_encoding( 'UTF-8' );

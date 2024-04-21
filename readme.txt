@@ -1,10 +1,10 @@
 === WP Content Pilot - Autoblogging & Affiliate Marketing Plugin ===
-Contributors: wpcontentpilot
+Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, feed import, content curation, feed to post, rss to post, rss feeds, auto post
-Requires at least: 5.0
-Tested up to: 6.2
-Requires PHP: 7.0
-Stable tag: trunk
+Requires at least: 4.9
+Tested up to: 6.5
+Requires PHP: 5.8
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,14 +23,18 @@ Here is the detailed breakdown of all the features that we ship with WP Content 
 * **Content Spinner**: Integration of spinning software which makes it possible to create unique automatic content (3rd party paid tool).
 * **Template Editor**:  Control how auto-published posts will look using the supported template tags of the module.
 * **Post Categories**:  The plugin will automatically insert these categories with newly published posts.
-* **Post Tags**:  The plugin will automatically insert these tags with newly published posts.
+* *Post Tags**:  The plugin will automatically insert these tags with newly published posts.
+* **Post Translation (PRO)**:  Translate any article from any language to your selected language on the fly.
+* **Post Meta (PRO)**:  Make use of post meta to suit best with your theme and 3rd party plugins.
+* **Search Replace(PRO)**:  Run search-replace in the auto-publish post to better control your need.
+* **Automatic Affiliation (PRO)**:  Automatically insert your affiliate code to boost your affiliate commissions.
 
+=== 💻 Find Out More: ===
 
-https://www.youtube.com/watch?v=5A3gx0f6PJk
-
-
-* **[Plugin Documentation](https://github.com/wpcontentpilot/docs/ "Plugin Documentation")**
-
+* **[See The Live Demo Site](http://pluginever.xyz/wp-content-pilot "See the Live Demo Site")**
+* **[Plugin Documentation](https://pluginever.com/docs/wp-content-pilot "Plugin Documentation")**
+* **[Need Help? Contact Our 24/7 Support](https://pluginever.com/support "Need Help? Contact Our 24/7 Support")**
+* **[WP Content Pilot PRO](https://pluginever.com/plugins/wp-content-pilot-pro "WP Content Pilot PRO")**
 
 = 💥 All Autoblogging Modules =
 
@@ -38,7 +42,45 @@ https://www.youtube.com/watch?v=5A3gx0f6PJk
 * **Envato Products**: Auto import from Envato markets ThemeForest, CodeCanyon, GraphicRiver, and PhotoDune products and insert as posts injecting your affiliate code.
 * **YouTube Videos**: Post videos from YouTube by keyword, username, or from a specific playlist to your website.
 * **Flickr Photos**: Automatically post Flickr photos in your website based on your predefined keywords.
+* **Amazon Products (PRO)**: Auto import amazon products and insert them as posts based on your predefined keywords and inject your affiliate code.
+* **Tweeter Tweets (PRO)**: Auto import Tweets from Twitter as WordPress posts based on your keywords or from any specific user.
+* **eBay Products (PRO)**: Auto import eBay deals and insert them as posts based on your predefined keywords and inject your affiliate code.
+* **Facebook Posts (PRO)**: Auto import Facebook posts from your timeline, page, or groups even that are private and post on your site.
+* **ClickBank Products](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**:  Fetch and post products as WordPress posts from the ClickBank site. The plugin will take care of the product description and affiliate links.
+* **Ezine Articles (PRO)**: WP Content Pilot can fetch and automatically post articles to your WordPress site from EzineArticles.
+* **Pinterest Pins (PRO)**: Import Pinterest pins and post them to your WordPress site. You can target specific pins by keyword, board, or from a particular user profile. You will also be able to apply custom filters to the result.
+* **Instagram Posts (PRO)**: Import Instagram posts and publish them to your WordPress site with WP Content Pilot. You can target posts with specific keywords, hashtags, and also a particular profile to generate desired posts.
+* **Reddit Posts (PRO)**: Auto post reddits or subreddit. Our plugin will also enable you to fetch comments with support for videos and GIFs..
+* **Quora Posts (PRO)**: Grab articles from Quora and auto-publish as post on your site. You can insert any keyword to get posts from Quora.
+* **CareerJet Posts (PRO)**: Auto import jobs from CareerJet and insert as posts injecting your affiliate code.
+* **Itunes Items (PRO)**: Automatically import products from Itunes by keyword and insert as posts injecting your affiliate code.
+* **Craigslist listings (PRO)**: Import listings from Craigslist and insert as posts keeping your site always up to date.
+* **Walmart products (PRO)**: Auto import products from Walmart and insert as posts injecting your affiliate code.
+* **BestBuy products (PRO)**: Import products from BestBuy and insert as posts injecting your affiliate code.
+* **GearBest products (PRO)**: Automatically import products from GearBest by keyword and insert as posts injecting your affiliate code.
 
+
+https://www.youtube.com/watch?v=5A3gx0f6PJk
+
+
+=== 💝 WP Content Pilot has received lots of love from its users: === 
+
+**jeffinmass**
+> [I am not a programmer. I am not a WordPress programmer/user, I’m flying by the seat of my pants and learning every step of the way…. painfully but worth it. It’s a great piece of software. Now about WP-Content Pro – it does exactly what it states it does and makes my life with one less very important task to maintain. I need fresh content always for my site visits to see constant new ideas and fresh looks to entice new possibilities. I just received tech support. The chat went very well. My problem was quickly identified and provided a suggestion on how I could cure it. I made the first change and then evidentially with the new update there was a setting I needed to change and then poof! My blog was back up and generating new content. 👏👏](https://wordpress.org/support/topic/practically-maintenance-free-blog-makes-me-look-great/)
+
+**jeremycroes**
+> [The application does exactly what is promised! It automatically translates also.
+> Even though the info for setting everything up could be more up to date, the online help is great!
+> It’s a worthy experiment to see if it brings the results you are working towards.
+> I’d recommend it to my friends. 👏👏](https://wordpress.org/support/topic/great-solution-for-autoblogging-and-translating/)
+
+=== 💢 Have a WooCommerce Store? Superchange it With Our WooCommerce Plugins: === 
+
+* **[WooCommerce Serial Numbers](https://wordpress.org/plugins/wc-serial-numbers/ "WooCommerce Serial Numbers")**
+* **[WooCommerce Category Slider](https://wordpress.org/plugins/woo-category-slider-by-pluginever "WooCommerce Category Slider")**
+* **[WooCommerce Category Showcase](https://wordpress.org/plugins/wc-category-showcase "WooCommerce Category Showcase")**
+* **[Min Max Quantities for WooCommerce](https://wordpress.org/plugins/wc-min-max-quantities "Min Max Quantities for WooCommerce")**
+* **[WooCommerce Variation Swatches](https://wordpress.org/plugins/wc-variation-swatches "WooCommerce Variation Swatches")**
 
 == Screenshots ==
 1. Available campaign types
@@ -55,8 +97,8 @@ https://www.youtube.com/watch?v=5A3gx0f6PJk
 
 = Minimum requirements =
 
-* WordPress 5.0 or greater
-* PHP version 7.0 or greater
+* WordPress 4.9 or greater
+* PHP version 5.8 or greater
 * MySQL version 5.6 or greater
 * MariaDB version 10 or later
 
@@ -87,6 +129,11 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= 1.3.5 (April 21, 2024) =
+* Fix - Fix the issue with the Article module
+* Fix - Fix the issue with the YouTube module
+* Fix - Fix compatibility with WP v6.5
+
 = 1.3.3 (Nov 24, 2022) =
 * Fix: Compatability with WP v6.1
 

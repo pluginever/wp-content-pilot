@@ -1,72 +1,70 @@
 <?php
 defined( 'ABSPATH' ) || exit();
 
-
 /**
- * get random user agent
- * since 1.0.0
+ * Get random user agent.
  *
+ * @since 1.0.0
  * @return string
  */
 function wpcp_get_random_user_agent() {
 	$agents = array(
-		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36",
-		"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8",
-		"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36",
-		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36",
-		"Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0",
-		"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0",
-		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36",
-		"Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko",
-		"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0",
-		"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0",
-		"Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063",
-		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0",
-		"Mozilla/5.0 (Windows NT 10.0; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0",
-		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-		"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
-		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36"
+		'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+		'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8',
+		'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
+		'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0',
+		'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0',
+		'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
+		'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko',
+		'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0',
+		'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0',
+		'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063',
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0',
+		'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0',
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36',
 	);
-	$rand   = rand( 0, count( $agents ) - 1 );
+	$rand   = wp_rand( 0, count( $agents ) - 1 );
 
 	return trim( $agents[ $rand ] );
 }
 
 
 /**
- * Get plugin settings
+ * Get plugin settings.
  *
- * @param        $section
- * @param        $field
- * @param bool $default
+ * @param string     $field Field key.
+ * @param string     $section Settings section.
+ * @param bool|array $default_settings Default settings.
  *
- * @return string|array|bool
  * @since 1.0.0
  * @since 1.0.1 section has been added
- *
+ * @return string|array|bool
  */
-function wpcp_get_settings( $field, $section = 'wpcp_settings', $default = false ) {
+function wpcp_get_settings( $field, $section = 'wpcp_settings', $default_settings = false ) {
 	$settings = get_option( $section );
 
 	if ( isset( $settings[ $field ] ) && ! empty( $settings[ $field ] ) ) {
 		return is_array( $settings[ $field ] ) ? array_map( 'trim', $settings[ $field ] ) : trim( $settings[ $field ] );
 	}
 
-	return $default;
+	return $default_settings;
 }
 
 /**
- * Update settings
+ * Update settings.
  *
- * @param $field
- * @param $data
+ * @param string $field Field key.
+ * @param array  $data array of settings data.
  *
  * @since 1.0.0
- *
+ * @return void
  */
 function wpcp_update_settings( $field, $data ) {
 	$settings           = get_option( 'wpcp_settings' );
@@ -75,9 +73,11 @@ function wpcp_update_settings( $field, $data ) {
 }
 
 /**
- * @param $title
+ * Whether the title is duplicate or not.
  *
- * @return string|null
+ * @param string $title The title.
+ *
+ * @return bool
  * @since 1.2.0
  */
 function wpcp_is_duplicate_title( $title ) {
@@ -87,10 +87,12 @@ function wpcp_is_duplicate_title( $title ) {
 }
 
 /**
- * @param $url
+ * Whether the URL is duplicate or not.
  *
- * @return string|null
+ * @param string $url URL.
+ *
  * @since 1.2.0
+ * @return array|object|stdClass|null
  */
 function wpcp_is_duplicate_url( $url ) {
 	global $wpdb;
@@ -98,11 +100,13 @@ function wpcp_is_duplicate_url( $url ) {
 	return $wpdb->get_row( $wpdb->prepare( "SELECT id from $wpdb->wpcp_links WHERE url=%s", $url ) );
 }
 
-
 /**
- * @param $camp_id
+ * Disable campaign.
+ *
+ * @param int $campaign_id Campaign ID.
  *
  * @since 1.2.0
+ * @return void
  */
 function wpcp_disable_campaign( $campaign_id ) {
 	wpcp_update_post_meta( $campaign_id, '_campaign_status', 'inactive' );
@@ -110,19 +114,19 @@ function wpcp_disable_campaign( $campaign_id ) {
 }
 
 /**
- * Returns wpcp meta values
+ * Returns wpcp meta values.
  *
- * @param      $campaign_id
- * @param      $key
- * @param null $default
+ * @param int        $campaign_id The campaign ID.
+ * @param string     $key Key.
+ * @param null|mixed $default_value Default meta value.
  *
  * @return null|string|array
  */
-function wpcp_get_post_meta( $campaign_id, $key, $default = null ) {
+function wpcp_get_post_meta( $campaign_id, $key, $default_value = null ) {
 	$meta_value = get_post_meta( $campaign_id, $key, true );
 
-	if ( $meta_value === false || $meta_value === '' ) {
-		$value = $default;
+	if ( false === $meta_value || '' === $meta_value ) {
+		$value = $default_value;
 	} else {
 		$value = get_post_meta( $campaign_id, $key, true );
 	}
@@ -131,27 +135,29 @@ function wpcp_get_post_meta( $campaign_id, $key, $default = null ) {
 }
 
 /**
- * Save post meta
+ * Save post meta.
  *
- * @param $post_id
- * @param $key
- * @param $value
+ * @param int    $post_id The post ID.
+ * @param string $key Meta key.
+ * @param mixed  $value Meta value.
  *
  * @since 1.0.0
- *
+ * @return void
  */
 function wpcp_update_post_meta( $post_id, $key, $value ) {
 	update_post_meta( $post_id, $key, $value );
 }
 
 /**
- * Get admin view
- * since 1.0.0
+ * Get admin view.
  *
- * @param $template_name
- * @param array $args
+ * @param string $template_name Template name.
+ * @param array  $args Array of arguments.
+ *
+ * @since 1.0.0
+ * @return void
  */
-function wpcp_get_views( $template_name, $args = [] ) {
+function wpcp_get_views( $template_name, $args = array() ) {
 	if ( $args && is_array( $args ) ) {
 		extract( $args );
 	}
@@ -161,19 +167,18 @@ function wpcp_get_views( $template_name, $args = [] ) {
 	}
 }
 
-
 /**
- * Get post categories
+ * Get post categories.
  *
- * @return array
  * @since 1.0.3
+ * @return array
  */
 function wpcp_get_post_categories() {
 
-	$args = [
+	$args = array(
 		'taxonomy'   => 'category',
-		'hide_empty' => false
-	];
+		'hide_empty' => false,
+	);
 
 	$categories = get_terms( $args );
 
@@ -181,17 +186,17 @@ function wpcp_get_post_categories() {
 }
 
 /**
- * Get post categories
+ * Get post categories.
  *
- * @return array
  * @since 1.0.3
+ * @return array
  */
 function wpcp_get_post_tags() {
 
-	$args = [
+	$args = array(
 		'taxonomy'   => 'post_tag',
-		'hide_empty' => false
-	];
+		'hide_empty' => false,
+	);
 
 	$tags = get_terms( $args );
 
@@ -199,16 +204,14 @@ function wpcp_get_post_tags() {
 }
 
 /**
- * Get all the authors
- *
- * @return array
+ * Get all the authors.
  *
  * @since 1.0.0
- *
+ * @return array
  */
 function wpcp_get_authors() {
-	$result = [];
-	$users  = get_users( [ 'capability__in' => array('publish_posts') ] );
+	$result = array();
+	$users  = get_users( array( 'capability__in' => array( 'publish_posts' ) ) );
 
 	foreach ( $users as $user ) {
 		$result[ $user->ID ] = "{$user->display_name} ({$user->user_email})";
@@ -218,22 +221,25 @@ function wpcp_get_authors() {
 }
 
 /**
- * Get posts
+ * Get posts.
  *
- * @param $args
+ * @param array $args Array of query arguments.
  *
+ * @since 1.0.0
  * @return array
  */
-
 function wpcp_get_posts( $args ) {
-	$args = wp_parse_args( $args, array(
-		'post_type'      => 'post',
-		'post_status'    => 'publish',
-		'posts_per_page' => 10,
-		'paged'          => 1,
-		'orderby'        => 'date',
-		'order'          => 'DESC',
-	) );
+	$args = wp_parse_args(
+		$args,
+		array(
+			'post_type'      => 'post',
+			'post_status'    => 'publish',
+			'posts_per_page' => 10,
+			'paged'          => 1,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		)
+	);
 
 	$posts = get_posts( $args );
 
@@ -241,12 +247,11 @@ function wpcp_get_posts( $args ) {
 }
 
 /**
- * hyperlink any text
+ * Hyperlink any text.
  *
- * since 1.0.0
+ * @param string $text Text.
  *
- * @param $text
- *
+ * @since 1.0.0
  * @return string
  */
 function wpcp_hyperlink_text( $text ) {
@@ -254,21 +259,22 @@ function wpcp_hyperlink_text( $text ) {
 }
 
 /**
- * allow html tag when string from content
+ * Allow html tag when string from content.
  *
- * @param $content
- * @param $length
- * @param bool $html
+ * @param string $content The content.
+ * @param int    $length Content length.
+ * @param bool   $html Weather true or false.
  *
+ * @since 1.0.0
  * @return string
  */
 function wpcp_truncate_content( $content, $length, $html = true ) {
 	if ( $html ) {
-		// if the plain text is shorter than the maximum length, return the whole text
+		// if the plain text is shorter than the maximum length, return the whole text.
 		if ( strlen( preg_replace( '/<.*?>/', '', $content ) ) <= $length ) {
 			return $content;
 		}
-		//Balances tags of string using a modified stack.
+		// Balances tags of string using a modified stack.
 		$content = force_balance_tags( html_entity_decode( wp_trim_words( htmlentities( $content ), $length, '...' ) ) );
 	} else {
 		$content = wp_trim_words( $content, $length );
@@ -277,13 +283,13 @@ function wpcp_truncate_content( $content, $length, $html = true ) {
 	return $content;
 }
 
-
 /**
- * Download image from url
- * since 1.0.0
+ * Download image from url.
  *
- * @param $url
+ * @param string $url URL.
+ * @param string $description Description text.
  *
+ * @since 1.0.0
  * @return bool|int
  */
 function wpcp_download_image( $url, $description = '' ) {
@@ -303,17 +309,17 @@ function wpcp_download_image( $url, $description = '' ) {
 		'image/jpeg' => '.jpg',
 		'image/gif'  => '.gif',
 	);
-	if ( is_wp_error( $get ) || ! isset( $type ) || ( ! in_array( $type, $types ) ) ) {
+	if ( is_wp_error( $get ) || ! isset( $type ) || ( ! in_array( $type, $types, true ) ) ) {
 		return false;
 	}
 	$file_name = basename( $url );
 	$ext       = pathinfo( basename( $file_name ), PATHINFO_EXTENSION );
 
-	if ( $ext === '' ) {
+	if ( '' === $ext ) {
 		$file_name .= $file_ext[ $type ];
 	}
 
-	$mirror     = wp_upload_bits( $file_name, '', wp_remote_retrieve_body( $get ) );
+	$mirror     = wp_upload_bits( $file_name, null, wp_remote_retrieve_body( $get ) );
 	$attachment = array(
 		'post_title'     => $file_name,
 		'post_mime_type' => $type,
@@ -326,7 +332,7 @@ function wpcp_download_image( $url, $description = '' ) {
 
 	$attach_id = wp_insert_attachment( $attachment, $mirror['file'] );
 
-	require_once( ABSPATH . 'wp-admin/includes/image.php' );
+	require_once ABSPATH . 'wp-admin/includes/image.php';
 
 	$attach_data = wp_generate_attachment_metadata( $attach_id, $mirror['file'] );
 	wp_update_attachment_metadata( $attach_id, $attach_data );
@@ -335,23 +341,27 @@ function wpcp_download_image( $url, $description = '' ) {
 }
 
 /**
- * Add admin notice
- * since 1.2.0
+ * Add admin notice.
  *
- * @param $notice
- * @param string $type
- * @param bool $dismissible
+ * @param string $notice Notice text.
+ * @param string $type Notice type.
+ *
+ * @since 1.2.0
+ * @return void
  */
 function wpcp_admin_notice( $notice, $type = 'success' ) {
-	WPCP_Admin_Notices::add_notice( $notice, [ 'type' => $type ], true );
+	WPCP_Admin_Notices::add_notice( $notice, array( 'type' => $type ), true );
 }
 
 /**
- * @param $message
- * @param string $level
- * @param string $camp_id
+ * Insert logs.
+ *
+ * @param string $message Message text.
+ * @param string $level Level string.
+ * @param string $camp_id the campaign ID.
  *
  * @since 1.2.0
+ * @return void
  */
 function wpcp_insert_log( $message, $level = 'info', $camp_id = '0' ) {
 	global $wpdb;
@@ -360,17 +370,18 @@ function wpcp_insert_log( $message, $level = 'info', $camp_id = '0' ) {
 		array(
 			'camp_id'     => $camp_id,
 			'level'       => $level,
-			'message'     => strip_tags( $message ),
+			'message'     => wp_strip_all_tags( $message ),
 			'instance_id' => defined( 'WPCP_CAMPAIGN_INSTANCE' ) && WPCP_CAMPAIGN_INSTANCE ? WPCP_CAMPAIGN_INSTANCE : null,
 			'created_at'  => current_time( 'mysql' ),
 		)
 	);
 }
 
-
 /**
- * @return array|bool|WP_Error
+ * Check the cron status.
+ *
  * @since 1.2.0
+ * @return array|bool|WP_Error
  */
 function wpcp_check_cron_status() {
 	global $wp_version;
@@ -394,15 +405,18 @@ function wpcp_check_cron_status() {
 	$sslverify     = version_compare( $wp_version, 4.0, '<' );
 	$doing_wp_cron = sprintf( '%.22F', microtime( true ) );
 
-	$cron_request = apply_filters( 'cron_request', array(
-		'url'  => site_url( 'wp-cron.php?doing_wp_cron=' . $doing_wp_cron ),
-		'key'  => $doing_wp_cron,
-		'args' => array(
-			'timeout'   => 3,
-			'blocking'  => true,
-			'sslverify' => apply_filters( 'https_local_ssl_verify', $sslverify ),
-		),
-	) );
+	$cron_request = apply_filters(
+		'cron_request',
+		array(
+			'url'  => site_url( 'wp-cron.php?doing_wp_cron=' . $doing_wp_cron ),
+			'key'  => $doing_wp_cron,
+			'args' => array(
+				'timeout'   => 3,
+				'blocking'  => true,
+				'sslverify' => apply_filters( 'https_local_ssl_verify', $sslverify ),
+			),
+		)
+	);
 
 	$cron_request['args']['blocking'] = true;
 
@@ -411,36 +425,38 @@ function wpcp_check_cron_status() {
 	if ( is_wp_error( $result ) ) {
 		return $result;
 	} elseif ( wp_remote_retrieve_response_code( $result ) >= 300 ) {
-		return new WP_Error( 'unexpected_http_response_code', sprintf(
-		/* translators: 1: The HTTP response code. */
-			__( 'Unexpected HTTP response code: %s', 'wp-content-pilot' ),
-			intval( wp_remote_retrieve_response_code( $result ) )
-		) );
+		return new WP_Error(
+			'unexpected_http_response_code',
+			sprintf(
+			/* translators: 1: The HTTP response code. */
+				__( 'Unexpected HTTP response code: %s', 'wp-content-pilot' ),
+				intval( wp_remote_retrieve_response_code( $result ) )
+			)
+		);
 	} else {
 		set_transient( 'wpcp-cron-test-ok', 1, 3600 );
 
 		return true;
 	}
-
 }
 
 /**
- * create & return terms
+ * Create & return terms.
  *
- * @param $terms
- * @param string $taxonomy
+ * @param array|string $terms Array of terms.
+ * @param string       $taxonomy The taxonomy.
  *
- * @return array
  * @since 1.2.0
+ * @return array
  */
 function wpcp_get_terms( $terms, $taxonomy = 'category' ) {
-	$term_ids = [];
+	$term_ids = array();
 	if ( ! is_array( $terms ) ) {
 		$terms = wpcp_string_to_array( $terms );
 	}
 	foreach ( $terms as $term ) {
 		$t = get_term_by( 'name', $term, $taxonomy );
-		if ( false == $t ) {
+		if ( false === $t ) {
 			$t = wp_insert_term( $term, $taxonomy );
 		}
 
@@ -461,13 +477,15 @@ function wpcp_get_terms( $terms, $taxonomy = 'category' ) {
 }
 
 /**
- * @param $terms
- * @param $post_id
- * @param $taxonomy
- * @param bool $append
+ * Set the post term.
  *
- * @return array|bool|false|WP_Error
+ * @param array|string $terms Array of terms.
+ * @param int          $post_id The post ID.
+ * @param string       $taxonomy The taxonomy.
+ * @param bool         $append Weather true or false.
+ *
  * @since 1.2.0
+ * @return array|bool|false|WP_Error
  */
 function wpcp_set_post_terms( $terms, $post_id, $taxonomy, $append = true ) {
 	if ( ! is_array( $terms ) ) {
@@ -484,17 +502,19 @@ function wpcp_set_post_terms( $terms, $post_id, $taxonomy, $append = true ) {
 }
 
 /**
- * @param $content
- * @param $word
+ * Check whether content has words.
  *
- * @return bool
+ * @param string $content The content.
+ * @param string $word The words.
+ *
  * @since 1.2.0
+ * @return bool
  */
 function wpcp_content_contains_word( $content, $word ) {
 	if ( empty( $word ) ) {
 		return false;
 	}
-	$content = strip_tags( $content );
+	$content = wp_strip_all_tags( $content );
 	if ( strpos( $content, $word ) !== false ) {
 		return true;
 	}
@@ -505,15 +525,15 @@ function wpcp_content_contains_word( $content, $word ) {
 /**
  * Trigger skip duplicate title campaigns
  *
+ * @param mixed  $skip Maybe skip.
+ * @param string $title The title.
+ * @param int    $campaign_id The campaign ID.
  *
- * @param $skip
- * @param $title
- *
- * @return bool
  * @since 1.2.0
+ * @return bool
  */
 function wpcp_maybe_skip_duplicate_title( $skip, $title, $campaign_id ) {
-	if ( 'on' == wpcp_get_post_meta( $campaign_id, '_enable_duplicate_title' ) ) {
+	if ( 'on' === wpcp_get_post_meta( $campaign_id, '_enable_duplicate_title' ) ) {
 		return false;
 	}
 
@@ -523,10 +543,12 @@ function wpcp_maybe_skip_duplicate_title( $skip, $title, $campaign_id ) {
 add_filter( 'wpcp_skip_duplicate_title', 'wpcp_maybe_skip_duplicate_title', 10, 3 );
 
 /**
- * Setup curl request
+ * Setup curl request.
  *
- * @return \Curl\Curl
+ * @param string $referrer Curl referrer.
+ *
  * @since 1.2.5
+ * @return \Curl\Curl
  */
 function wpcp_setup_request( $referrer = 'http://www.bing.com/' ) {
 	$jar = get_option( 'wpcp_cookie_jar' );
@@ -550,10 +572,10 @@ function wpcp_setup_request( $referrer = 'http://www.bing.com/' ) {
 }
 
 /**
- * Calculate discount percentage from sale price
+ * Calculate discount percentage from sale price.
  *
- * @param $original_price
- * @param null $sale_price
+ * @param float      $original_price Original price.
+ * @param float|null $sale_price Sale price.
  *
  * @return float|int
  * @since 1.2.5
@@ -572,36 +594,42 @@ function wpcp_calculate_discount_percent( $original_price, $sale_price = null ) 
 	return ( 100 - ( ( 100 / $original_price ) * $sale_price ) );
 }
 
-
 /**
- * @param $content
+ * Spin the article.
  *
- * @return mixed
+ * @param int    $campaign_id The campaign ID.
+ * @param string $content The content.
+ *
  * @since 1.2.6
+ * @return mixed
  */
 function wpcp_spin_article( $campaign_id, $content ) {
-	$args = apply_filters( 'wpcp_spinwritter_request_args', [
-		'email_address'        => wpcp_get_settings( 'spinrewriter_email', 'wpcp_article_spinner' ),
-		'api_key'              => wpcp_get_settings( 'spinrewriter_api_key', 'wpcp_article_spinner' ),
-		'action'               => wpcp_get_post_meta( $campaign_id, '_spinner_action', 'unique_variation' ),
-		'text'                 => $content,
-		'auto_protected_terms' => wpcp_get_post_meta( $campaign_id, '_spinner_auto_protected_terms', false ),
-		'confidence_level'     => wpcp_get_post_meta( $campaign_id, '_spinner_confidence_level', 'high' ),
-		'auto_sentences'       => wpcp_get_post_meta( $campaign_id, '_spinner_auto_sentences', false ),
-		'auto_paragraphs'      => wpcp_get_post_meta( $campaign_id, '_spinner_auto_paragraphs', false ),
-		'auto_new_paragraphs'  => wpcp_get_post_meta( $campaign_id, '_spinner_auto_new_paragraphs', false ),
-		'auto_sentence_trees'  => wpcp_get_post_meta( $campaign_id, '_spinner_auto_sentence_trees', false ),
-		'use_only_synonyms'    => wpcp_get_post_meta( $campaign_id, '_spinner_use_only_synonyms', false ),
-		'reorder_paragraphs'   => wpcp_get_post_meta( $campaign_id, '_spinner_reorder_paragraphs', false ),
-		'nested_spintax'       => wpcp_get_post_meta( $campaign_id, '_spinner_nested_spintax', false ),
-	] );
+	$args = apply_filters(
+		'wpcp_spinwritter_request_args',
+		array(
+			'email_address'        => wpcp_get_settings( 'spinrewriter_email', 'wpcp_article_spinner' ),
+			'api_key'              => wpcp_get_settings( 'spinrewriter_api_key', 'wpcp_article_spinner' ),
+			'action'               => wpcp_get_post_meta( $campaign_id, '_spinner_action', 'unique_variation' ),
+			'text'                 => $content,
+			'auto_protected_terms' => wpcp_get_post_meta( $campaign_id, '_spinner_auto_protected_terms', false ),
+			'confidence_level'     => wpcp_get_post_meta( $campaign_id, '_spinner_confidence_level', 'high' ),
+			'auto_sentences'       => wpcp_get_post_meta( $campaign_id, '_spinner_auto_sentences', false ),
+			'auto_paragraphs'      => wpcp_get_post_meta( $campaign_id, '_spinner_auto_paragraphs', false ),
+			'auto_new_paragraphs'  => wpcp_get_post_meta( $campaign_id, '_spinner_auto_new_paragraphs', false ),
+			'auto_sentence_trees'  => wpcp_get_post_meta( $campaign_id, '_spinner_auto_sentence_trees', false ),
+			'use_only_synonyms'    => wpcp_get_post_meta( $campaign_id, '_spinner_use_only_synonyms', false ),
+			'reorder_paragraphs'   => wpcp_get_post_meta( $campaign_id, '_spinner_reorder_paragraphs', false ),
+			'nested_spintax'       => wpcp_get_post_meta( $campaign_id, '_spinner_nested_spintax', false ),
+		)
+	);
 
 	if ( empty( $args['email_address'] ) || empty( $args['api_key'] ) ) {
 		wpcp_logger()->error( __( 'spinwritter API details is not set, aborting article spinner', 'wp-content-pilot' ) );
 
 		return $content;
 	}
-	@set_time_limit( 150 );
+
+	set_time_limit( 150 );
 	$curl     = wpcp_setup_request();
 	$endpoint = 'http://www.spinrewriter.com/action/api';
 	$curl->post( $endpoint, $args );
@@ -612,21 +640,19 @@ function wpcp_spin_article( $campaign_id, $content ) {
 	}
 	$response = json_decode( $curl->getResponse() );
 
-	if ( isset( $response->status ) && $response->status == 'ERROR' ) {
-		wpcp_logger()->error( sprintf( __( 'Aborting article spinner Because [%s]', 'wp-content-pilot' ), $response->response ) );
+	if ( isset( $response->status ) && 'ERROR' === $response->status ) {
+		wpcp_logger()->error( sprintf( /* translators: ERROR message */ __( 'Aborting article spinner Because [%s]', 'wp-content-pilot' ), $response->response ) );
 
 		return $content;
 	}
 
-	if ( isset( $response->status ) && $response->status == 'OK' && ! empty( $response->response ) ) {
-		$pattern      = "#< iframe[^>]+>#is";
-		$iframeCheck  = preg_match( $pattern, $response->response );
-		$new_response = ( $iframeCheck == 1 ) ? preg_replace( $pattern, "", $response->response ) : $response->response;
+	if ( isset( $response->status ) && 'OK' === $response->status && ! empty( $response->response ) ) {
+		$pattern      = '#< iframe[^>]+>#is';
+		$iframe_check = preg_match( $pattern, $response->response );
+		$new_response = ( 1 === $iframe_check ) ? preg_replace( $pattern, '', $response->response ) : $response->response;
 
 		return force_balance_tags( $new_response );
-		//return force_balance_tags($response->response);
 	}
-
 
 	return $content;
 }

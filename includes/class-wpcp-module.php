@@ -1,48 +1,75 @@
 <?php
 /**
- * WPCP_Module Class
+ * WPCP_Module Class.
  *
  * @package     WP Content Pilot
  * @subpackage  Module
  * @copyright   Copyright (c) 2019, MD Sultan Nasir Uddin(manikdrmc@gmail.com)
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License.
  * @since       1.2.0
  */
 
-// Exit if accessed directly
+// Exit if accessed directly.
 defined( 'ABSPATH' ) || exit();
 
+/**
+ * WPCP_Module Class.
+ *
+ * @package WP Content Pilot
+ * @since 1.2.0
+ */
 abstract class WPCP_Module {
 	/**
-	 * @var int
+	 * Modules.
+	 *
+	 * @var int $campaign_id Campaign ID.
+	 *
+	 * @since 1.0.0
 	 */
 	protected $campaign_id;
 
 	/**
-	 * @var string
+	 * Modules.
+	 *
+	 * @var string $campaign_type Campaign type.
+	 *
+	 * @since 1.0.0
 	 */
 	protected $campaign_type;
 
 	/**
-	 * @var string
+	 * Modules.
+	 *
+	 * @var string $initiator Initiator.
+	 *
+	 * @since 1.0.0
 	 */
 	protected $initiator;
 
 	/**
-	 * @var int
+	 * Modules.
+	 *
+	 * @var int $max_try Max try counter.
+	 *
+	 * @since 1.0.0
 	 */
 	protected $max_try = 3;
 
 	/**
-	 * @var int
+	 * Modules.
+	 *
+	 * @var int $try_count Default try counter.
+	 *
+	 * @since 1.0.0
 	 */
 	protected $try_count = 0;
 
 	/**
-	 * @param $campaign_type
+	 * WPCP_Module constructor.
+	 *
+	 * @param string $campaign_type Campaign type.
 	 *
 	 * @since 1.2.0
-	 * WPCP_Module constructor.
 	 */
 	public function __construct( $campaign_type ) {
 
@@ -55,16 +82,18 @@ abstract class WPCP_Module {
 		add_action( $hook_name . '_campaign_options_meta_fields', array( $this, 'add_campaign_option_fields' ) );
 		add_action( $hook_name . '_update_campaign_settings', array( $this, 'save_campaign_meta' ), 10, 2 );
 
-		//setting
+		// Setting.
 		add_filter( 'wpcp_settings_sections', array( $this, 'get_setting_section' ), 10 );
 		add_filter( 'wpcp_settings_fields', array( $this, 'get_setting_fields' ), 10 );
 	}
 
 	/**
-	 * @param $modules
+	 * Register module.
 	 *
-	 * @return array
+	 * @param array $modules Modules.
+	 *
 	 * @since 1.2.0
+	 * @return array
 	 */
 	public function register_module( $modules ) {
 		$modules[ $this->campaign_type ] = get_called_class();
@@ -73,70 +102,89 @@ abstract class WPCP_Module {
 	}
 
 	/**
+	 * Get module icon.
+	 *
+	 * @since 1.0.0
 	 * @return string
 	 */
 	abstract public function get_module_icon();
 
 	/**
+	 * Get template tags.
+	 *
+	 * @since 1.0.0
 	 * @return array
 	 */
 	abstract public function get_template_tags();
 
-	/**
+	/** Get default template.
+	 *
+	 * @since 1.0.0
 	 * @return string
 	 */
 	abstract public function get_default_template();
 
 	/**
-	 * @param $post
+	 * Add campaign options fields.
 	 *
+	 * @param object $post The post.
+	 *
+	 * @since 1.0.0
 	 * @return void
 	 */
 	abstract public function add_campaign_option_fields( $post );
 
 	/**
-	 * Save campaign meta
+	 * Save campaign meta.
 	 *
-	 * @param $campaign_id
-	 * @param $posted
+	 * @param int    $campaign_id The campaign ID.
+	 * @param string $posted Post status.
 	 *
+	 * @since 1.0.0
 	 * @return void
 	 */
 	abstract public function save_campaign_meta( $campaign_id, $posted );
 
 	/**
-	 * get setting section
+	 * Get setting section.
 	 *
-	 * @param $section
+	 * @param string $section Section name.
 	 *
+	 * @since 1.0.0
 	 * @return array
 	 */
 	abstract public function get_setting_section( $section );
 
 	/**
-	 * Get setting fields
+	 * Get setting fields.
 	 *
-	 * @param $fields
+	 * @param array $fields Setting fields.
 	 *
+	 * @since 1.0.0
 	 * @return array
 	 */
 	abstract public function get_setting_fields( $fields );
 
 
 	/**
-	 * @param int $campaign_id
+	 * Get post.
 	 *
-	 * @return mixed
+	 * @param int $campaign_id The campaign ID.
+	 *
 	 * @since 1.2.0
+	 * @return mixed
 	 */
 	abstract public function get_post( $campaign_id );
 
 	/**
-	 * @param        $campaign_id
-	 * @param string $user
+	 * Process the campaign.
 	 *
-	 * @return int|WP_Error
+	 * @param int    $campaign_id The campaign ID.
+	 * @param string $source The source.
+	 * @param string $user The user.
+	 *
 	 * @since 1.2.0
+	 * @return int|WP_Error
 	 */
 	public function process_campaign( $campaign_id, $source = null, $user = 'cron' ) {
 		$wp_post = get_post( $campaign_id );
@@ -163,25 +211,29 @@ abstract class WPCP_Module {
 		$this->campaign_id = absint( $campaign_id );
 		$this->initiator   = sanitize_text_field( $user );
 
-//		if ( empty( $keywords ) ) {
-//			$keywords = $this->get_keywords( $this->campaign_id );
-//			if ( empty( $keywords ) ) {
-//				$message = __( 'Campaign do not have keywords to proceed, please set keyword', 'wp-content-pilot' );
-//				wpcp_logger()->error( $message, $campaign_id );
-//
-//				return new WP_Error( 'missing-data', $message );
-//			}
-//		}
-//
-//		$keywords = wpcp_string_to_array( $keywords );
-//		shuffle( $keywords );
-//		if ( empty( $keywords ) ) {
-//			return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
-//		}
+		// phpcs:disable
+
+		// if ( empty( $keywords ) ) {
+		// $keywords = $this->get_keywords( $this->campaign_id );
+		// if ( empty( $keywords ) ) {
+		// $message = __( 'Campaign do not have keywords to proceed, please set keyword', 'wp-content-pilot' );
+		// wpcp_logger()->error( $message, $campaign_id );
+		//
+		// return new WP_Error( 'missing-data', $message );
+		// }
+		// }
+		//
+		// $keywords = wpcp_string_to_array( $keywords );
+		// shuffle( $keywords );
+		// if ( empty( $keywords ) ) {
+		// return new WP_Error( 'missing-data', __( 'Campaign do not have keyword to proceed, please set keyword', 'wp-content-pilot' ) );
+		// }
+
+		// phpcs:enable
 
 		$article = $this->get_post( $campaign_id );
 		if ( is_wp_error( $article ) ) {
-			//wpcp_logger()->error( $article->get_error_message(), $campaign_id);
+			// phpcs:ignore wpcp_logger()->error( $article->get_error_message(), $campaign_id);
 			return $article;
 		}
 
@@ -189,16 +241,24 @@ abstract class WPCP_Module {
 			return new WP_Error( 'no-response', __( 'Content Pilot did not responded for the action', 'wp-content-pilot' ) );
 		}
 
-		$article = apply_filters( 'wpcp_article', wp_parse_args( $article, array(
-			'title'      => '',
-			'author'     => '',
-			'image_url'  => '',
-			'excerpt'    => '',
-			'content'    => '',
-			'source_url' => '',
-		) ), $campaign_id, $campaign_type );
+		$article = apply_filters(
+			'wpcp_article',
+			wp_parse_args(
+				$article,
+				array(
+					'title'      => '',
+					'author'     => '',
+					'image_url'  => '',
+					'excerpt'    => '',
+					'content'    => '',
+					'source_url' => '',
+				)
+			),
+			$campaign_id,
+			$campaign_type
+		);
 
-//		fix utf chars & emoji
+		// Fix utf chars & emoji.
 		foreach ( $article as $tag => $tag_content ) {
 			$article[ $tag ] = wpcp_fix_utf8( $tag_content );
 			$article[ $tag ] = wpcp_remove_emoji( $tag_content );
@@ -208,22 +268,20 @@ abstract class WPCP_Module {
 		$post_status   = wpcp_get_post_meta( $this->campaign_id, '_post_status', '' );
 		$post_excerpt  = '';
 		$post_author   = get_post_field( 'post_author', $campaign_id, 'edit' );
-		$post_meta     = [];
-		$post_taxonomy = [];
+		$post_meta     = array();
+		$post_taxonomy = array();
 		$post_time     = current_time( 'mysql' );
 
-
-		//check if acceptance passed if not then return this method again
+		// Check if acceptance passed, if not then return this method again.
 		$accepted = apply_filters( 'wpcp_acceptance_check', true, $article, $campaign_id, $this );
 		if ( ! $accepted ) {
 			wpcp_logger()->error( __( 'Article failed in acceptance test', 'wp-content-pilot' ), $campaign_id );
-			$this->try_count ++;
+			++$this->try_count;
 
 			return $this->process_campaign( $campaign_id, '', $user );
 		}
 
-
-		//truncate content
+		// Truncate content.
 		$limit_title = wpcp_get_post_meta( $this->campaign_id, '_title_limit', 0 );
 		if ( ! empty( $limit_title ) && $limit_title > 0 ) {
 			wpcp_logger()->info( __( 'Limiting title', 'wp-content-pilot' ), $campaign_id );
@@ -232,28 +290,19 @@ abstract class WPCP_Module {
 
 		$limit_content = wpcp_get_post_meta( $this->campaign_id, '_content_limit', 0 );
 		if ( ! empty( $limit_content ) && $limit_content > 0 ) {
-			//previously use wp_trim_words but it remove all html tag from content
-			//that's why use custom function wpcp_truncate_content from allow html in content
+			// Previously use wp_trim_words, but it removes all html tag from content that's why use custom function wpcp_truncate_content from allow html in content.
 			wpcp_logger()->info( __( 'Limiting content', 'wp-content-pilot' ), $campaign_id );
 			$article['content'] = wpcp_truncate_content( $article['content'], $limit_content );
 		}
 
-		//strip links
+		// Strip links.
 		$remove_hyper_links = wpcp_get_post_meta( $this->campaign_id, '_strip_links', 0 );
 		if ( 'on' === $remove_hyper_links ) {
 			wpcp_logger()->info( __( 'Stripping links', 'wp-content-pilot' ), $campaign_id );
-			//keep text
 			$article['content'] = preg_replace( '#<a.*?>(.*?)</a>#i', '\1', html_entity_decode( $article['content'] ) );
-			//remove text
-			/*$content =  preg_replace( '#<a.*?>(.*?)</a>#i', '', $content );*/
 		}
 
-
-		//translate
-
-		//make template of title,content,meta
-
-		//translate template
+		// Translate template.
 		$post_content = wpcp_get_post_meta( $this->campaign_id, '_post_template', '' );
 		$post_title   = wpcp_get_post_meta( $this->campaign_id, '_post_title', '' );
 		$tags         = array_keys( $this->get_template_tags() );
@@ -267,74 +316,65 @@ abstract class WPCP_Module {
 			$post_title   = html_entity_decode( $post_title );
 		}
 
-		// replacing the keywords with affiliate links
-
-		//replacing patterns
-
-		//spin
+		// Spin the article.
 		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
-		if ( 'on' == $spin_article ) {
+		if ( 'on' === $spin_article ) {
 			wpcp_logger()->debug( 'Spinning article ...', $campaign_id );
-			$separator    = str_repeat( '#', ceil( rand( 10, 20 ) ) );
+			$separator    = str_repeat( '#', ceil( wp_rand( 10, 20 ) ) );
 			$spinable     = $post_title . $separator . $post_content;
 			$spinned      = explode( $separator, wpcp_spin_article( $campaign_id, $spinable ), 2 );
 			$post_title   = $spinned[0];
 			$post_content = $spinned[1];
 		}
 
-		//category handles
-		$categories = wpcp_get_post_meta( $this->campaign_id, '_categories', [] );
+		// Category handles.
+		$categories = wpcp_get_post_meta( $this->campaign_id, '_categories', array() );
 		if ( ! empty( $categories ) ) {
 			$post_taxonomy['category'] = array_map( 'intval', $categories );
 		}
 
-		//tags handles
-		$tags = wpcp_get_post_meta( $this->campaign_id, '_tags', [] );
+		// Tags handles.
+		$tags = wpcp_get_post_meta( $this->campaign_id, '_tags', array() );
 		if ( ! empty( $tags ) ) {
 			$post_taxonomy['post_tag'] = array_map( 'intval', $tags );
 		}
 
-		//Pending for transation fail
-
-		//prepare author
+		// Prepare author.
 		$custom_author = wpcp_get_post_meta( $campaign_id, '_author', 1 );
 		if ( ! empty( $custom_author ) ) {
 			$post_author = intval( $custom_author );
 		}
 
-		//delete first image from content
-
-		//if image not found set pending
-
-		//amazon woocommerce integration
-
-
-		//remove images  from content
+		// Remove images from the content.
 		$remove_images = wpcp_get_post_meta( $this->campaign_id, '_remove_images', 'off' );
 
-		if ( 'on' == $remove_images ) {
+		if ( 'on' === $remove_images ) {
 			wpcp_logger()->info( __( 'Removing images from content', 'wp-content-pilot' ), $campaign_id );
 			$post_content = preg_replace( '/<img[^>]+\>/mi', '', $post_content );
 		}
 
-		//summery
+		// Campaign summery.
 		$insert_excerpt = wpcp_get_post_meta( $campaign_id, '_excerpt', '' );
-		if ( 'on' == $insert_excerpt ) {
+		if ( 'on' === $insert_excerpt ) {
 			$excerpt_length = wpcp_get_post_meta( $campaign_id, '_excerpt_length', 55 );
 			$post_excerpt   = empty( $post_excerpt ) ? $post_content : $post_excerpt;
-			$post_excerpt   = strip_tags( $post_excerpt );
+			$post_excerpt   = wp_strip_all_tags( $post_excerpt );
 			$post_excerpt   = strip_shortcodes( $post_excerpt );
 			$post_excerpt   = wp_trim_words( $post_excerpt, $excerpt_length );
 		}
 
-		//spin
-//		$spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
-//		if ( 'on' == $spin_article ) {
-//			wpcp_logger()->info( __( 'Spinning article content...', 'wp-content-pilot' ), $campaign_id );
-//			$post_content = wpcp_spin_article( $post_content );
-//		}
+		// phpcs:disable
 
-		//post
+		// spin
+		// $spin_article = wpcp_get_post_meta( $campaign_id, '_spin_article', '' );
+		// if ( 'on' == $spin_article ) {
+		// wpcp_logger()->info( __( 'Spinning article content...', 'wp-content-pilot' ), $campaign_id );
+		// $post_content = wpcp_spin_article( $post_content );
+		// }
+
+		// phpcs:enable
+
+		// Before post insert.
 		do_action( 'wpcp_before_post_insert', $campaign_id, $article );
 
 		$title          = apply_filters( 'wpcp_post_title', $post_title, $campaign_id, $article );
@@ -350,32 +390,33 @@ abstract class WPCP_Module {
 		$ping_status    = apply_filters( 'wpcp_post_ping_status', get_default_comment_status( $post_type, 'pingback' ), $campaign_id, $article );
 
 		/**
-		 * Filter to manipulate postarr param before insert a post
+		 * Filter to manipulate post attributes param before insert a post.
 		 *
-		 * @param array
+		 * @param array $postarr Post attributes.
 		 *
 		 * @since 1.0.3
-		 *
 		 */
-		$postarr = apply_filters( 'wpcp_insert_post_postarr', [
-			'post_title'     => $title,
-			'post_author'    => $post_author,
-			'post_excerpt'   => $post_excerpt,
-			'post_type'      => $post_type,
-			'post_status'    => $post_status,
-			'post_date'      => $post_time,
-			'post_date_gmt'  => get_gmt_from_date( $post_time ),
-			'post_content'   => $post_content,
-			'meta_input'     => $post_meta,
-			'tax_input'      => $post_tax,
-			'comment_status' => $comment_status,
-			'ping_status'    => $ping_status,
-		], $campaign_id, $article );
+		$postarr = apply_filters(
+			'wpcp_insert_post_postarr',
+			array(
+				'post_title'     => $title,
+				'post_author'    => $post_author,
+				'post_excerpt'   => $post_excerpt,
+				'post_type'      => $post_type,
+				'post_status'    => $post_status,
+				'post_date'      => $post_time,
+				'post_date_gmt'  => get_gmt_from_date( $post_time ),
+				'post_content'   => $post_content,
+				'meta_input'     => $post_meta,
+				'tax_input'      => $post_tax,
+				'comment_status' => $comment_status,
+				'ping_status'    => $ping_status,
+			),
+			$campaign_id,
+			$article
+		);
 
-		/**
-		 * @since 1.0.8
-		 * set user when insert post using background process
-		 */
+		// Set user when insert post using background process.
 		$user = get_user_by( 'ID', $post_author );
 		if ( $user ) {
 			wp_set_current_user( $post_author, $user->user_login );
@@ -389,11 +430,11 @@ abstract class WPCP_Module {
 			return $post_id;
 		}
 
-		//set featured image
+		// Set featured image.
 		$is_set_featured_image = wpcp_get_post_meta( $campaign_id, '_set_featured_image', 0 );
 		if ( 'on' === $is_set_featured_image && ! empty( $article['image_url'] ) ) {
 			wpcp_logger()->info( __( 'Setting featured image', 'wp-content-pilot' ), $campaign_id );
-			if ( 'clickbank' == $campaign_type || 'instagram' == $campaign_type || 'soundcloud' == $campaign_type ) {
+			if ( 'clickbank' === $campaign_type || 'instagram' === $campaign_type || 'soundcloud' === $campaign_type ) {
 				$attachment_id = $article['attachment_id'];
 			} else {
 				$attachment_id = wpcp_download_image( html_entity_decode( $article['image_url'] ) );
@@ -408,31 +449,25 @@ abstract class WPCP_Module {
 			do_action( 'wpcp_woo_product_gallery', $post_id, $article['gallery_images'] );
 		}
 
-		// set polylang plugin
-
-		$enable_polylang        = !empty( wpcp_get_post_meta( $campaign_id, '_enable_polylang', 0 ) ) ? wpcp_get_post_meta( $campaign_id, '_enable_polylang', 0 ) : 0;
+		// Set polylang plugin.
+		$enable_polylang        = ! empty( wpcp_get_post_meta( $campaign_id, '_enable_polylang', 0 ) ) ? wpcp_get_post_meta( $campaign_id, '_enable_polylang', 0 ) : 0;
 		$polylang_language_code = wpcp_get_post_meta( $campaign_id, '_polylang_language_code', '' );
 		if ( 'on' === $enable_polylang && ! empty( $polylang_language_code ) ) {
-			wpcp_logger()->info( __( "Settings up polylang language", 'wp-content-pilot' ), $campaign_id );
+			wpcp_logger()->info( __( 'Settings up polylang language', 'wp-content-pilot' ), $campaign_id );
 			pll_set_post_language( $post_id, $polylang_language_code );
 		}
 
-		// set fifu plugin
-		if ( function_exists('fifu_update_fake_attach_id' ) ) {
+		// Set fifu plugin.
+		if ( function_exists( 'fifu_update_fake_attach_id' ) ) {
 			$enable_not_save_featured_image = ! empty( wpcp_get_post_meta( $campaign_id, '_not_save_featured_image', 0 ) ) ? wpcp_get_post_meta( $campaign_id, '_not_save_featured_image', 0 ) : 0;
 			if ( ! empty( $enable_not_save_featured_image ) && 'on' === $enable_not_save_featured_image ) {
 				wpcp_logger()->info( __( 'Setting featured image using external links', 'wp-content-pilot' ), $campaign_id );
-				update_post_meta ( $post_id, 'fifu_image_url', $article['image_url'] );
-				fifu_update_fake_attach_id ( $post_id );
+				update_post_meta( $post_id, 'fifu_image_url', $article['image_url'] );
+				fifu_update_fake_attach_id( $post_id );
 			}
 		}
-		//wpml internal cron patch
 
-		//wpml integration
-
-		//setting categories for custom post types
-
-		//save campaign data
+		// Save campaign data.
 		update_post_meta( $post_id, '_campaign_id', $campaign_id );
 		update_post_meta( $campaign_id, '_last_post', $post_id );
 		update_post_meta( $campaign_id, '_last_run', current_time( 'mysql' ) );
@@ -447,20 +482,21 @@ abstract class WPCP_Module {
 	}
 
 	/**
-	 * @return \Curl\Curl
+	 * Setup Curl.
+	 *
 	 * @since 1.2.0
+	 * @return \Curl\Curl
 	 */
 	protected function setup_curl() {
 		return wpcp_setup_request();
 	}
 
-
 	/**
-	 * Deactivate key for hours
+	 * Deactivate key for hours.
 	 *
-	 * @param     $campaign_id
-	 * @param     $key
-	 * @param int $hours
+	 * @param    int    $campaign_id The campaign ID.
+	 * @param    string $key The meta key.
+	 * @param int    $hours Time limit.
 	 *
 	 * @since 1.2.0
 	 */
@@ -471,13 +507,13 @@ abstract class WPCP_Module {
 	}
 
 	/**
-	 * Check if the source is deactivated
+	 * Check if the source is deactivated.
 	 *
-	 * @param $campaign_id
-	 * @param $source
+	 * @param int    $campaign_id The campaign ID.
+	 * @param string $key Key.
 	 *
-	 * @return bool
 	 * @since 1.2.0
+	 * @return bool
 	 */
 	protected function is_deactivated_key( $campaign_id, $key ) {
 		$deactivated_until = wpcp_get_post_meta( $campaign_id, '_' . md5( $key ), '' );
@@ -489,12 +525,12 @@ abstract class WPCP_Module {
 	}
 
 	/**
-	 * Get unique string for the campaign
+	 * Get unique string for the campaign.
 	 *
-	 * @param string $key
+	 * @param string $key Key.
 	 *
-	 * @return string
 	 * @since 1.2.0
+	 * @return string
 	 */
 	protected function get_unique_key( $key = 'page' ) {
 		$key = '_wpcp_' . $key . '_' . md5( $key );
@@ -503,75 +539,90 @@ abstract class WPCP_Module {
 	}
 
 	/**
-	 * @param $campaign_id
+	 * Get the last keyword.
 	 *
-	 * @return array|string|null
+	 * @param int $campaign_id The campaign ID.
+	 *
 	 * @since 1.2.0
+	 * @return array|string|null
 	 */
 	protected function get_last_keyword( $campaign_id ) {
 		return wpcp_get_post_meta( $this->campaign_id, '_last_keyword', '' );
 	}
 
 	/**
-	 * @param $campaign_id
-	 * @param $keyword
+	 * Set the last keyword.
+	 *
+	 * @param int    $campaign_id The campaign ID.
+	 * @param string $keyword Meta key.
 	 *
 	 * @since 1.2.0
+	 * @return void
 	 */
 	protected function set_last_keyword( $campaign_id, $keyword ) {
 		wpcp_update_post_meta( $campaign_id, '_last_keyword', $keyword );
 	}
 
 	/**
-	 * @param $campaign_id
-	 * @param $keyword
-	 * @param $default
+	 * Get the page number.
+	 *
+	 * @param int    $campaign_id The campaign ID.
+	 * @param string $keyword Meta key.
+	 * @param string $default_value Default meta value.
 	 *
 	 * @since 1.2.0
+	 * @return void
 	 */
-	protected function get_page_number( $campaign_id, $keyword, $default ) {
+	protected function get_page_number( $campaign_id, $keyword, $default_value ) {
 		$key = '_wpcp_' . sanitize_key( $keyword ) . '_' . md5( $keyword );
-		wpcp_get_post_meta( $campaign_id, $key, $default );
+		wpcp_get_post_meta( $campaign_id, $key, $default_value );
 	}
 
 	/**
-	 * @param        $source
-	 * @param        $campaign_id
-	 * @param string $status
-	 * @param int $count
+	 * Get links.
 	 *
-	 * @return array|object|null
+	 * @param string   $link_for Link for.
+	 * @param null|int $campaign_id The campaign ID.
+	 * @param string   $status Status.
+	 * @param int      $count Count.
+	 *
 	 * @since 1.2.0
+	 * @return array|object|null
 	 */
-	protected function get_links( $for, $campaign_id = null, $status = 'new', $count = 5 ) {
+	protected function get_links( $link_for, $campaign_id = null, $status = 'new', $count = 5 ) {
 		global $wpdb;
 
-		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE `for`=%s AND camp_id=%d AND status=%s LIMIT %d", $for, $campaign_id, $status, $count ) );
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->wpcp_links WHERE `for`=%s AND camp_id=%d AND status=%s LIMIT %d", $link_for, $campaign_id, $status, $count ) );
 		foreach ( $results as $result ) {
-			$result->meta = maybe_unserialize( base64_decode( $result->meta ) );
+			$result->meta = maybe_unserialize( base64_decode( $result->meta ) ); // phpcs:ignore Generic.PHP.ForbiddenFunctions.Found
 		}
 
 		return $results;
 	}
 
 	/**
-	 * @param $data
+	 * Insert link.
 	 *
-	 * @return false|int
+	 * @param array $data Array of data.
+	 *
 	 * @since 1.2.0
+	 * @return false|int
 	 */
 	protected function insert_link( $data ) {
-		$data = wp_parse_args( $data, array(
-			'camp_id' => '',
-			'url'     => '',
-			'title'   => '',
-			'for'     => '',
-			'meta'    => '',
-			'status'  => 'new',
-		) );
+		$data = wp_parse_args(
+			$data,
+			array(
+				'camp_id' => '',
+				'url'     => '',
+				'title'   => '',
+				'for'     => '',
+				'meta'    => '',
+				'status'  => 'new',
+			)
+		);
 		global $wpdb;
 
-		$data['meta'] = ! is_serialized( $data['meta'] ) && ! empty( $data['meta'] ) ? base64_encode( serialize( $data['meta'] ) ) : base64_encode( $data['meta'] );
+		$data['meta'] = ! is_serialized( $data['meta'] ) && ! empty( $data['meta'] ) ? base64_encode( serialize( $data['meta'] ) ) : base64_encode( $data['meta'] ); // phpcs:ignore Generic.PHP.ForbiddenFunctions.Found
 
 		if ( false !== $wpdb->insert( $wpdb->wpcp_links, $data ) ) {
 			return $wpdb->insert_id;
@@ -581,20 +632,18 @@ abstract class WPCP_Module {
 	}
 
 	/**
-	 * Insert links
+	 * Insert links.
 	 *
-	 * @param array $links
-	 *
-	 * @return int
+	 * @param array $links Array of links.
 	 *
 	 * @since 1.0.0
-	 *
+	 * @return int
 	 */
 	protected function inset_links( $links ) {
 		$counter = 0;
 		foreach ( $links as $link ) {
 			if ( $this->insert_link( $link ) ) {
-				$counter ++;
+				++$counter;
 			}
 		}
 
@@ -602,33 +651,33 @@ abstract class WPCP_Module {
 	}
 
 	/**
-	 * @param int $id
-	 * @param array $data
+	 * Update the link.
 	 *
-	 * @return false|int
+	 * @param int   $id ID.
+	 * @param array $data Array of data.
+	 *
 	 * @since 1.2.0
+	 * @return false|int
 	 */
 	protected function update_link( $id, $data = array() ) {
 		global $wpdb;
 
-		return $wpdb->update( $wpdb->wpcp_links, $data, [ 'id' => absint( $id ) ] );
+		return $wpdb->update( $wpdb->wpcp_links, $data, array( 'id' => absint( $id ) ) );
 	}
 
 	/**
-	 * Returns campaign meta mainly built for getting campaign keywords/links
+	 * Returns campaign meta mainly built for getting campaign keywords/links.
 	 *
-	 * @param int $campaign_id
-	 * @param string $key
-	 * @param bool $shuffle
+	 * @param int    $campaign_id The campaign ID.
+	 * @param string $key Campaign meta key.
+	 * @param string $default_value Default meta value.
+	 * @param bool   $shuffle Whether true opr false.
 	 *
-	 * @return string|array
 	 * @since 1.2.0
-	 * @since 1.2.4 $key added
-	 * @since 1.2.4 $default added
-	 * @since 1.2.4 $shuffle added
+	 * @return string|array
 	 */
-	protected function get_campaign_meta( $campaign_id, $key = '_keywords', $default = '', $shuffle = true ) {
-		$meta = wpcp_get_post_meta( $campaign_id, $key, $default );
+	protected function get_campaign_meta( $campaign_id, $key = '_keywords', $default_value = '', $shuffle = true ) {
+		$meta = wpcp_get_post_meta( $campaign_id, $key, $default_value );
 		if ( empty( $meta ) ) {
 			return $meta;
 		}

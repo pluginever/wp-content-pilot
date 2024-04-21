@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Content Pilot 1.3.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-content-pilot\n"
-"POT-Creation-Date: 2022-11-24 14:01:11+00:00\n"
+"POT-Creation-Date: 2022-05-24 06:44:02+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -65,11 +65,11 @@ msgstr ""
 msgid "Logs"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:80 wp-content-pilot.php:254
+#: includes/admin/class-wpcp-admin.php:89
 msgid "Go Pro"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:126
+#: includes/admin/class-wpcp-admin.php:135
 msgid ""
 "If you like <strong>WP Content Pilot</strong> please leave us a <a "
 "href=\"%s\" target=\"_blank\">&#9733;&#9733;&#9733;&#9733;&#9733;</a> "
@@ -77,6 +77,7 @@ msgid ""
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:194
+#: includes/admin/views/page/help-page.php:7
 msgid "Looking for Something?"
 msgstr ""
 
@@ -86,54 +87,67 @@ msgid "We have detailed documentation on every aspects of WP Content Pilot."
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:197
+#: includes/admin/views/page/help-page.php:10
 msgid "Visit the Plugin Documentation"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:201
+#: includes/admin/views/page/help-page.php:14
 msgid "Need Any Assistance?"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:202
+#: includes/admin/views/page/help-page.php:15
 msgid "Our EXPERT Support Team is always ready to Help you out."
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:204
+#: includes/admin/views/page/help-page.php:17
 msgid "Contact Support"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:208
+#: includes/admin/views/page/help-page.php:21
 msgid "Found Any Bugs?"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:209
+#: includes/admin/views/page/help-page.php:22
 msgid "OReport any Bug that you Discovered, Get Instant Solutions."
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:211
+#: includes/admin/views/page/help-page.php:24
 msgid "Report to Github"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:215
+#: includes/admin/views/page/help-page.php:28
 msgid "Require Customization?"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:216
+#: includes/admin/views/page/help-page.php:29
 msgid "We would Love to hear your Integration and Customization Ideas."
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:218
+#: includes/admin/views/page/help-page.php:31
 msgid "Contact Our Services"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:222
+#: includes/admin/views/page/help-page.php:35
 msgid "Like The Plugin?"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:223
+#: includes/admin/views/page/help-page.php:36
 msgid "Your Review is very important to us as it helps us to grow more."
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:225
+#: includes/admin/views/page/help-page.php:38
 msgid "Review Us on WP.org"
 msgstr ""
 
@@ -149,7 +163,6 @@ msgstr ""
 
 #: includes/admin/class-wpcp-help.php:239
 #: includes/admin/views/page/help-page.php:49
-#: includes/modules/class-wpcp-envato.php:173
 msgid "Envato"
 msgstr ""
 
@@ -160,7 +173,6 @@ msgstr ""
 
 #: includes/admin/class-wpcp-help.php:245
 #: includes/admin/views/page/help-page.php:55
-#: includes/modules/class-wpcp-youtube.php:225
 msgid "Youtube"
 msgstr ""
 
@@ -181,7 +193,6 @@ msgstr ""
 
 #: includes/admin/class-wpcp-help.php:257
 #: includes/admin/views/page/help-page.php:67
-#: includes/modules/class-wpcp-flickr.php:157
 msgid "Flickr"
 msgstr ""
 
@@ -300,118 +311,126 @@ msgstr ""
 msgid "EzineArticles module to import articles"
 msgstr ""
 
-#: includes/admin/class-wpcp-help.php:329
-#: includes/admin/views/page/help-page.php:139
-msgid "Reddit"
-msgstr ""
-
-#: includes/admin/class-wpcp-help.php:330
-#: includes/admin/views/page/help-page.php:140
-msgid "Reddit module to import articles"
-msgstr ""
-
 #: includes/admin/class-wpcp-help.php:335
 #: includes/admin/views/page/help-page.php:145
-msgid "SoundCloud"
+msgid "Reddit"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:336
 #: includes/admin/views/page/help-page.php:146
-msgid "SoundCloud module to import audios"
+msgid "Reddit module to import articles"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:341
 #: includes/admin/views/page/help-page.php:151
-msgid "Instagram"
+msgid "SoundCloud"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:342
 #: includes/admin/views/page/help-page.php:152
-msgid "Instagram module to import photos"
+msgid "SoundCloud module to import audios"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:347
 #: includes/admin/views/page/help-page.php:157
-msgid "Pinterest"
+msgid "Instagram"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:348
 #: includes/admin/views/page/help-page.php:158
-msgid "Pinterest module to import photos"
+msgid "Instagram module to import photos"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:353
-msgid "Vimeo"
+#: includes/admin/views/page/help-page.php:163
+msgid "Pinterest"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:354
-msgid "Vimeo module to import videos"
+#: includes/admin/views/page/help-page.php:164
+msgid "Pinterest module to import photos"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:359
-msgid "Yelp"
+msgid "Vimeo"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:360
-msgid "Yelp module to import business and reviews"
+msgid "Vimeo module to import videos"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:365
-msgid "Etsy"
+msgid "Yelp"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:366
-msgid "Etsy module to import products"
+msgid "Yelp module to import business and reviews"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:371
-#: includes/admin/views/page/help-page.php:169
-msgid "Search Replace"
+msgid "Eventful"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:372
-#: includes/admin/views/page/help-page.php:170
-msgid "Automatic search replace with regex support"
+msgid "Eventful module to import events"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:377
-#: includes/admin/views/page/help-page.php:175
-msgid "Custom Post Meta"
+msgid "Etsy"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:378
-#: includes/admin/views/page/help-page.php:176
-msgid "Insert custom post meta"
+msgid "Etsy module to import products"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:383
-#: includes/admin/views/page/help-page.php:181
-msgid "Readability"
+#: includes/admin/views/page/help-page.php:175
+msgid "Search Replace"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:384
-#: includes/admin/views/page/help-page.php:182
-msgid "Readability score controlled posts for clean articles"
+#: includes/admin/views/page/help-page.php:176
+msgid "Automatic search replace with regex support"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:389
-#: includes/admin/metabox-functions.php:236
-#: includes/admin/views/page/help-page.php:187
-msgid "Keyword Suggestion"
+#: includes/admin/views/page/help-page.php:181
+msgid "Custom Post Meta"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:390
-#: includes/admin/views/page/help-page.php:188
-msgid "A tool to find a good keyword"
+#: includes/admin/views/page/help-page.php:182
+msgid "Insert custom post meta"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:395
-#: includes/admin/views/page/help-page.php:193
-msgid "Translation Support"
+#: includes/admin/views/page/help-page.php:187
+msgid "Readability"
 msgstr ""
 
 #: includes/admin/class-wpcp-help.php:396
+#: includes/admin/views/page/help-page.php:188
+msgid "Readability score controlled posts for clean articles"
+msgstr ""
+
+#: includes/admin/class-wpcp-help.php:401
+#: includes/admin/metabox-functions.php:235
+#: includes/admin/views/page/help-page.php:193
+msgid "Keyword Suggestion"
+msgstr ""
+
+#: includes/admin/class-wpcp-help.php:402
 #: includes/admin/views/page/help-page.php:194
+msgid "A tool to find a good keyword"
+msgstr ""
+
+#: includes/admin/class-wpcp-help.php:407
+#: includes/admin/views/page/help-page.php:199
+msgid "Translation Support"
+msgstr ""
+
+#: includes/admin/class-wpcp-help.php:408
+#: includes/admin/views/page/help-page.php:200
 msgid "Translate articles in other language"
 msgstr ""
 
@@ -455,104 +474,101 @@ msgstr ""
 
 #: includes/admin/class-wpcp-settings.php:38
 #: includes/admin/views/metabox/spinner-settings.php:10
-#: wp-content-pilot.php:246
+#: wp-content-pilot.php:245
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:42
-msgid "Help"
+#: includes/admin/class-wpcp-settings.php:52
+msgid "Misc Settings"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:53
-msgid "General Settings"
-msgstr ""
-
-#: includes/admin/class-wpcp-settings.php:57
+#: includes/admin/class-wpcp-settings.php:56
 msgid "Article Spinner"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:74
-msgid "Remove data on uninstall?"
+#: includes/admin/class-wpcp-settings.php:73
+msgid "Remove Data on Uninstall?"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:75
+#: includes/admin/class-wpcp-settings.php:74
 msgid ""
 "Check this box if you would like to completely remove all of its data when "
 "the plugin is deleted."
 msgstr ""
 
+#: includes/admin/class-wpcp-settings.php:80
+msgid "Post Publish mail"
+msgstr ""
+
 #: includes/admin/class-wpcp-settings.php:81
-msgid "Post publish mail"
+msgid "Send mail After post publish"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:82
-msgid "Send mail after post publish"
-msgstr ""
-
-#: includes/admin/class-wpcp-settings.php:97
+#: includes/admin/class-wpcp-settings.php:96
 msgid "SpinreWriter"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:98
+#: includes/admin/class-wpcp-settings.php:97
 msgid ""
-"Spin rewriter is one of the best Article Spinner, if you do not have "
-"account please %ssign up%s."
+"SpinreWriter is one of the best Article Spinner, if you do not have account "
+"please %ssign up%s."
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:104
+#: includes/admin/class-wpcp-settings.php:103
 msgid "Email"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:105
-msgid "Input your email address of Spin rewriter."
+#: includes/admin/class-wpcp-settings.php:104
+msgid "Input your email address of SpinreWriter."
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:111
+#: includes/admin/class-wpcp-settings.php:110
 msgid "API Key"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:112
-msgid "Input API key of Spin rewriter."
+#: includes/admin/class-wpcp-settings.php:111
+msgid "Input API key of SpinreWriter."
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:125
+#: includes/admin/class-wpcp-settings.php:124
 msgid "WP Content Pilot Settings"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:134
-msgid "Upgrade to Pro"
+#: includes/admin/class-wpcp-settings.php:133 wp-content-pilot.php:247
+msgid "Upgrade to PRO"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:137
+#: includes/admin/class-wpcp-settings.php:136
 msgid ""
-"Pro version supports 25+ campaign sources with exclusive features. "
-"%sUpgrade to Pro.%s"
+"Pro version support 15+ campaign sources with exclusive features, %supgrade "
+"to pro now%s."
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:145
-#: includes/admin/views/page/help-page.php:10
+#: includes/admin/class-wpcp-settings.php:143
 msgid "Documentation"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:148
-msgid "We have detailed documentation on every aspects of %s WP Content Pilot %s"
+#: includes/admin/class-wpcp-settings.php:146
+msgid ""
+"Please visit the %s WP Content Pilot %s  plugin's documentation page to "
+"learn how to use this plugin"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:154
+#: includes/admin/class-wpcp-settings.php:152
 msgid "Support"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:157
-msgid "Our expert support team is always ready to help you out. %s support forum%s"
-msgstr ""
-
-#: includes/admin/class-wpcp-settings.php:167
+#: includes/admin/class-wpcp-settings.php:155
 msgid ""
-"If you like WP Content Pilot, please leave us a  %s rating.%s It takes a "
-"minute and helps a lot. Thanks in advance!"
+"Having issues or difficulties? You can post your issue on the %s Support "
+"Forum.%s"
 msgstr ""
 
-#: includes/admin/class-wpcp-tracker.php:7
+#: includes/admin/class-wpcp-settings.php:165
+msgid "Like the plugin? Please give us a  %s rating.%s"
+msgstr ""
+
+#:includes/admin/class-wpcp-tracker.php:7
 msgid ""
 "Want to help make <strong>WP Content Pilot</strong> even more awesome? "
 "Allow PluginEver to collect non-sensitive diagnostic data and usage "
@@ -609,72 +625,66 @@ msgstr ""
 msgid "Spinner Settings"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:223
+#: includes/admin/metabox-functions.php:222
 msgid "Keywords"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:226
-msgid "Separate keywords with commas."
+#: includes/admin/metabox-functions.php:225
+msgid "Separate keywords by comma."
 msgstr ""
 
-#: includes/admin/metabox-functions.php:251
+#: includes/admin/metabox-functions.php:250
 msgid "Strip original links from the post"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:253
+#: includes/admin/metabox-functions.php:252
 msgid "Remove hyperlinks found in the article"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:259
+#: includes/admin/metabox-functions.php:258
 msgid "Make permalink link directly to the source"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:261
+#: includes/admin/metabox-functions.php:260
 msgid ""
-"Make post link directly to the source site, posts will not load at your "
+"Make post link directly to the source site, Posts will not load at your "
 "site."
 msgstr ""
 
-#: includes/admin/metabox-functions.php:271
-msgid "Add canonical tag with the original post link "
+#: includes/admin/metabox-functions.php:270
+msgid "Add Canonical Tag with the original post link "
 msgstr ""
 
-#: includes/admin/metabox-functions.php:282
-msgid "Set first image as featured image"
+#: includes/admin/metabox-functions.php:281
+msgid "Set First image as featured image"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:289
+#: includes/admin/metabox-functions.php:288
 msgid "Remove images from content"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:296
+#: includes/admin/metabox-functions.php:295
 msgid "Set random featured image if no image exists"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:307
+#: includes/admin/metabox-functions.php:306
 msgid "Use original date if possible"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:318
+#: includes/admin/metabox-functions.php:317
 msgid "Use summary as excerpt"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:325
+#: includes/admin/metabox-functions.php:324
 msgid "Enable post with duplicate title"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:332
+#: includes/admin/metabox-functions.php:331
 msgid "Clean title"
 msgstr ""
 
-#: includes/admin/metabox-functions.php:339
+#: includes/admin/metabox-functions.php:338
 msgid "Add rel nofollow & set target blank for all links"
-msgstr ""
-
-#: includes/admin/metabox-functions.php:351
-msgid ""
-"Don't save the featured image in server. Rather than use Featured Image "
-"from URL plugin"
 msgstr ""
 
 #: includes/admin/views/metabox/action-metabox.php:24
@@ -1151,8 +1161,8 @@ msgstr ""
 msgid "No posts generated yet"
 msgstr ""
 
-#: includes/admin/views/metabox/campaign-selection.php:220
-msgid "Start Campaign"
+#: includes/admin/views/metabox/campaign-selection.php:227
+msgid "Submit"
 msgstr ""
 
 #: includes/admin/views/metabox/campaign-status.php:28
@@ -1181,7 +1191,7 @@ msgid "Min Words"
 msgstr ""
 
 #: includes/admin/views/metabox/post-filter.php:10
-msgid "Min required words, otherwise posts will be rejected."
+msgid "Min required words, otherwise posts will be rejected. (PRO)"
 msgstr ""
 
 #: includes/admin/views/metabox/post-filter.php:18
@@ -1193,7 +1203,7 @@ msgid "Fashion, Secret, Awesome"
 msgstr ""
 
 #: includes/admin/views/metabox/post-filter.php:21
-msgid "Must contain words, otherwise posts will be rejected."
+msgid "Must contain words, otherwise posts will be rejected. (PRO)"
 msgstr ""
 
 #: includes/admin/views/metabox/post-filter.php:29
@@ -1205,7 +1215,7 @@ msgid "YouTube, Wikipedia, Google"
 msgstr ""
 
 #: includes/admin/views/metabox/post-filter.php:32
-msgid "If a post contains the above words it will be rejected."
+msgid "If a post contains the above words it will be rejected. (PRO)"
 msgstr ""
 
 #: includes/admin/views/metabox/post-settings.php:6
@@ -1316,23 +1326,23 @@ msgid "Action"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:20
-msgid "API quota"
+msgid "Api Quota"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:21
-msgid "Text with spintax"
+msgid "Text with Spintax"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:22
-msgid "Unique variation"
+msgid "Unique Variation"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:23
-msgid "Unique variation from spintax"
+msgid "Unique Variation from Spintax"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:27
-msgid "The action that you're requesting from the spin rewriter server."
+msgid "The action that you're requesting from the Spin Rewriter server."
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:30
@@ -1363,7 +1373,7 @@ msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:37
 msgid ""
-"Should spin rewriter automatically protect all capitalized words except for "
+"Should Spin Rewriter automatically protect all Capitalized Words except for "
 "those in the title of your original text?"
 msgstr ""
 
@@ -1385,7 +1395,7 @@ msgid "High"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:49
-msgid "The confidence level of the one-click rewrite process."
+msgid "The confidence level of the One-Click Rewrite process."
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:53
@@ -1393,7 +1403,7 @@ msgid "Nested spintax"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:61
-msgid "Should spin rewriter also spin single words inside already spun phrases?"
+msgid "Should Spin Rewriter also spin single words inside already spun phrases?"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:65
@@ -1401,7 +1411,7 @@ msgid "Auto sentences"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:73
-msgid "Should spin rewriter spin complete sentences?"
+msgid "Should Spin Rewriter spin complete sentences?"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:77
@@ -1409,7 +1419,7 @@ msgid "Auto paragraphs"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:85
-msgid "Should spin rewriter spin entire paragraphs?"
+msgid "Should Spin Rewriter spin entire paragraphs?"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:88
@@ -1417,7 +1427,7 @@ msgid "Auto new paragraphs"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:96
-msgid "Should spin rewriter automatically write additional paragraphs on its own?"
+msgid "Should Spin Rewriter automatically write additional paragraphs on its own?"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:99
@@ -1426,7 +1436,7 @@ msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:107
 msgid ""
-"Should spin rewriter automatically change the entire structure of phrases "
+"Should Spin Rewriter automatically change the entire structure of phrases "
 "and sentences?"
 msgstr ""
 
@@ -1436,8 +1446,8 @@ msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:118
 msgid ""
-"Should spin rewriter use only synonyms of the original words instead of the "
-"original words themselves? They work along side with action values \"unique "
+"Should Spin Rewriter use only synonyms of the original words instead of the "
+"original words themselves?They work along side with action values \"unique "
 "variation and unique variation from spintax\""
 msgstr ""
 
@@ -1447,87 +1457,25 @@ msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:129
 msgid ""
-"Should spin rewriter intelligently randomize the order of paragraphs and "
+"Should Spin Rewriter intelligently randomize the order of paragraphs and "
 "unordered lists when generating spun text? They work along side with action "
 "values \"unique variation and unique variation from spintax\""
 msgstr ""
 
-#: includes/admin/views/page/help-page.php:7
-msgid "Looking for something?"
+#: includes/admin/views/page/help-page.php:139
+msgid "Quora"
 msgstr ""
 
-#: includes/admin/views/page/help-page.php:14
-msgid "Need any assistance?"
+#: includes/admin/views/page/help-page.php:140
+msgid "Quora module to import articles"
 msgstr ""
 
-#: includes/admin/views/page/help-page.php:15
-msgid "Our expert support team is always ready to help you out."
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:17
-msgid "Contact support"
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:21
-msgid "Found a bug?"
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:22
-msgid "Report any bug that you discovered, get instant solutions."
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:24
-msgid "Report to github"
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:28
-msgid "Require customization?"
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:29
-msgid "We would love to hear your integration and customization ideas."
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:31
-msgid "Contact us"
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:35
-msgid "Like the plugin?"
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:36
-msgid ""
-"Your review is very important to us. It takes a minute and helps a lot. "
-"Thanks in advance!"
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:38
-msgid "Leave a review"
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:163
+#: includes/admin/views/page/help-page.php:169
 msgid "Tiktok"
 msgstr ""
 
-#: includes/admin/views/page/help-page.php:164
+#: includes/admin/views/page/help-page.php:170
 msgid "Tiktok module to import videos"
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:307
-msgid "WP Content Pilot - Help"
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:327
-msgid "Features"
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:328
-msgid "Free"
-msgstr ""
-
-#: includes/admin/views/page/help-page.php:329
-msgid "Pro"
 msgstr ""
 
 #: includes/admin/views/page/status-page.php:51
@@ -1763,29 +1711,19 @@ msgstr ""
 msgid "Settings up polylang language"
 msgstr ""
 
-#: includes/class-wpcp-module.php:424
-msgid "Setting featured image using external links"
-msgstr ""
-
-#: includes/class-wpcp-notices.php:254
+#: includes/class-wpcp-notices.php:253
 msgid ""
-"<b>WP Content Pilot</b> is powering <b>5000+ companies</b> in generating "
-"automatic contents and affiliation with its <b>25+</b> types of campaign. "
+"<b>WP Content Pilot</b> is powering <b>4000+ companies</b> in generating "
+"automatic contents and affiliation with its <b>20+</b> types of campaign. "
 "Upgrade to Pro now & get 10% discount using coupon "
 "<strong>WPCPFREE2PRO</strong>"
 msgstr ""
 
-#: includes/class-wpcp-notices.php:266
+#: includes/class-wpcp-notices.php:265
 msgid ""
 "The most wanted feature <b>article spinner</b> is now available with <b>WP "
 "Content Pilot</b>. We have integrated spinrewriter support. If you do not "
 "have account %ssignup now%s and configure in settings page."
-msgstr ""
-
-#: includes/class-wpcp-notices.php:276
-msgid ""
-"Article search options will be changed in the next version of WP Content "
-"Pilot. Bing search will be replaced with Google Custom Search."
 msgstr ""
 
 #: includes/class-wpcp-readability.php:55
@@ -1796,30 +1734,30 @@ msgstr ""
 msgid "Content is not readable"
 msgstr ""
 
-#: includes/core-functions.php:380
+#: includes/core-functions.php:379
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true. WP-Cron spawning is disabled."
 msgstr ""
 
-#: includes/core-functions.php:385
+#: includes/core-functions.php:384
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true."
 msgstr ""
 
-#: includes/core-functions.php:416
+#: includes/core-functions.php:415
 #. translators: 1: The HTTP response code.
 msgid "Unexpected HTTP response code: %s"
 msgstr ""
 
-#: includes/core-functions.php:600
+#: includes/core-functions.php:599
 msgid "spinwritter API details is not set, aborting article spinner"
 msgstr ""
 
-#: includes/core-functions.php:609
+#: includes/core-functions.php:608
 msgid "Spinwritter could not send API request, aborting article spinner"
 msgstr ""
 
-#: includes/core-functions.php:616
+#: includes/core-functions.php:615
 msgid "Aborting article spinner Because [%s]"
 msgstr ""
 
@@ -1871,12 +1809,12 @@ msgid "Article Settings"
 msgstr ""
 
 #: includes/modules/class-wpcp-article.php:129
-msgid "Banned hosts"
+msgid "Banned Hosts"
 msgstr ""
 
 #: includes/modules/class-wpcp-article.php:130
 msgid ""
-"Articles from the above hosts will be rejected. Put single url/host per "
+"Articles from the above hosts will be rejected. put single url/host per "
 "line."
 msgstr ""
 
@@ -2135,8 +2073,12 @@ msgid ""
 "author."
 msgstr ""
 
+#: includes/modules/class-wpcp-envato.php:173
+msgid "Envato Settings"
+msgstr ""
+
 #: includes/modules/class-wpcp-envato.php:189
-msgid "Envato token"
+msgid "Envato Token"
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:190
@@ -2146,11 +2088,11 @@ msgid ""
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:196
-msgid "Impact radius affiliate url"
+msgid "Impact Radius affiliate URL"
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:197
-msgid "Learn how to get your impact radius affiliate url <a href=\"%s\">here</a>."
+msgid "Learn how to get your Impact Radius affiliate URL <a href=\"%s\">here</a>."
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:214
@@ -2459,13 +2401,17 @@ msgstr ""
 msgid "License Restrictions flickr"
 msgstr ""
 
+#: includes/modules/class-wpcp-flickr.php:157
+msgid "Flickr Settings"
+msgstr ""
+
 #: includes/modules/class-wpcp-flickr.php:173
-msgid "Flickr API key"
+msgid "Flickr API Key"
 msgstr ""
 
 #: includes/modules/class-wpcp-flickr.php:174
 msgid ""
-"Get your flickr API key by following this <a href=\"%s\" "
+"Get your Flickr API key by following this <a href=\"%s\" "
 "target=\"_blank\">link</a>."
 msgstr ""
 
@@ -2694,8 +2640,12 @@ msgstr ""
 msgid "Post videos only with closed captions"
 msgstr ""
 
+#: includes/modules/class-wpcp-youtube.php:225
+msgid "Youtube Settings"
+msgstr ""
+
 #: includes/modules/class-wpcp-youtube.php:241
-msgid "Youtube API key"
+msgid "Youtube API Key"
 msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:242
@@ -2919,19 +2869,19 @@ msgstr ""
 msgid "Universalizing instances of this class is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:276
+#: wp-content-pilot.php:266
 msgid "View documentation"
 msgstr ""
 
-#: wp-content-pilot.php:276
+#: wp-content-pilot.php:266
 msgid "Docs"
 msgstr ""
 
-#: wp-content-pilot.php:295
+#: wp-content-pilot.php:285
 msgid "Once a Minute"
 msgstr ""
 
-#: wp-content-pilot.php:321
+#: wp-content-pilot.php:311
 msgid "%1$s in %2$s on line %3$s"
 msgstr ""
 
@@ -2965,5 +2915,5 @@ msgstr ""
 
 #: includes/post-types.php:31
 msgctxt "wp content pilot post type menu name"
-msgid "Content Pilot"
+msgid "WP Content Pilot"
 msgstr ""
