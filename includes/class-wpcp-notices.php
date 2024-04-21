@@ -171,7 +171,7 @@ class WPCP_Admin_Notices {
 				}
 
 				echo '<div class="' . esc_html( implode( ' ', $notice_classes ) ) . '"' . esc_html( $dismiss_attr ) . '>';
-				echo esc_html( wpautop( wp_kses_post( $notice['content'] ) ) );
+				echo wp_kses_post( wpautop( $notice['content'] ) );
 				echo '</div>';
 			}
 
