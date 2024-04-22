@@ -90,7 +90,7 @@ class WPCP_Admin {
 	 */
 	public function go_pro_redirect() {
 		if ( isset( $_GET['page'] ) && 'go_wpcp_pro' === $_GET['page'] ) {
-			wp_redirect( 'https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
+			wp_redirect( 'https://pluginever.com/plugins/wp-content-pilot-pro/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
 			die;
 		}
 	}
