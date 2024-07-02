@@ -1,10 +1,10 @@
 === WP Content Pilot - Autoblogging & Affiliate Marketing Plugin ===
 Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, feed import, content curation, feed to post, rss to post, rss feeds, auto post
-Requires at least: 4.9
+Requires at least: 5.2
 Tested up to: 6.5
-Requires PHP: 5.8
-Stable tag: 1.3.5
+Requires PHP: 7.2
+Stable tag: 1.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,13 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= 1.3.6 (July 02, 2024) =
+* Fix - Fix the issue with the Campaign module
+* Fix - Fix compatibility with WP v6.5.5
+* Fix - Fix compatibility with WooCommerce v9.0.2
+* Fix - Fix not updating WooCommerce product price options.
+* Fix - Fix few known issues.
+
 = 1.3.5 (April 21, 2024) =
 * Fix - Fix the issue with the Article module
 * Fix - Fix the issue with the YouTube module
