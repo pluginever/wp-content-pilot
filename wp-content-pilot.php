@@ -1,19 +1,22 @@
 <?php
 /**
- * Plugin Name: WP Content Pilot
- * Plugin URI:  https://www.pluginever.com
- * Description: WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version: 1.3.5
- * Author:      pluginever
- * Author URI:  https://www.pluginever.com
- * Donate link: https://www.pluginever.com
- * License:     GPLv2+
- * Text Domain: wp-content-pilot
- * Domain Path: /i18n/languages/
+ * Plugin Name:  WP Content Pilot
+ * Plugin URI:   https://www.pluginever.com
+ * Description:  WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
+ * Version:      1.3.6
+ * Author:       PluginEver
+ * Author URI:   https://www.pluginever.com
+ * Donate link:  https://www.pluginever.com
+ * License:      GPL v2 or later
+ * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:  wp-content-pilot
+ * Domain Path:  /i18n/languages/
+ * Requires PHP: 7.2
+ * Requires at least: 5.2
  */
 
 /**
- * Copyright (c) 2019 pluginever (email : support@pluginever.com)
+ * Copyright (c) 2019 PluginEver (email : support@pluginever.com)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at

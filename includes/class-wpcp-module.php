@@ -467,6 +467,14 @@ abstract class WPCP_Module {
 			}
 		}
 
+		// Updating post meta if the campaign post type selected as product.
+		if( 'product' === $post_type ) {
+			wpcp_logger()->info( __( 'Updating product price, regular price & sale price.', 'wp-content-pilot' ), $campaign_id );
+			update_post_meta( $post_id, '_price', floatval( $article['_regular_price'] ) );
+			update_post_meta( $post_id, '_regular_price', floatval( $article['_regular_price'] ) );
+			update_post_meta( $post_id, '_sale_price', floatval( $article['_sale_price'] ) );
+		}
+
 		// Save campaign data.
 		update_post_meta( $post_id, '_campaign_id', $campaign_id );
 		update_post_meta( $campaign_id, '_last_post', $post_id );
