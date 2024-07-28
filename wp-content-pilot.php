@@ -1,22 +1,21 @@
 <?php
 /**
- * Plugin Name:  WP Content Pilot
- * Plugin URI:   https://www.pluginever.com
- * Description:  WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:      1.3.6
- * Author:       PluginEver
- * Author URI:   https://www.pluginever.com
- * Donate link:  https://www.pluginever.com
- * License:      GPL v2 or later
- * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:  wp-content-pilot
- * Domain Path:  /i18n/languages/
- * Requires PHP: 7.2
+ * Plugin Name:       WP Content Pilot
+ * Plugin URI:        https://www.pluginever.com
+ * Description:       WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
+ * Version:           1.3.6
  * Requires at least: 5.2
+ * Requires PHP:      7.2
+ * Author:            PluginEver
+ * Author URI:        https://www.pluginever.com
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       wp-content-pilot
+ * Domain Path:       /i18n/languages/
  */
 
 /**
- * Copyright (c) 2019 PluginEver (email : support@pluginever.com)
+ * Copyright (c) 2024 PluginEver (email : support@pluginever.com)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at
@@ -33,7 +32,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-// don't call the file directly
+// Don't call the file directly
 defined( 'ABSPATH' ) || exit();
 
 /**
@@ -47,7 +46,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '1.3.5';
+	protected $version = '1.3.6';
 
 	/**
 	 * The single instance of the class.
