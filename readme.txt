@@ -129,10 +129,10 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
-= 1.3.6 (July 02, 2024) =
+= 1.3.6 (July 28, 2024) =
 * Fix - Fix the issue with the Campaign module
-* Fix - Fix compatibility with WP v6.5.5
-* Fix - Fix compatibility with WooCommerce v9.0.2
+* Fix - Fix compatibility with the WordPress latest version
+* Fix - Fix compatibility with the ooCommerce latest version
 * Fix - Fix not updating WooCommerce product price options.
 * Fix - Fix few known issues.
 
