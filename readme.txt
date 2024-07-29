@@ -2,9 +2,9 @@
 Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, feed import, content curation, feed to post, rss to post, rss feeds, auto post
 Requires at least: 5.2
-Tested up to: 6.5
-Requires PHP: 7.2
+Tested up to: 6.6
 Stable tag: 1.3.6
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,7 +31,7 @@ Here is the detailed breakdown of all the features that we ship with WP Content 
 
 === 💻 Find Out More: ===
 
-* **[See The Live Demo Site](http://pluginever.xyz/wp-content-pilot "See the Live Demo Site")**
+* **[See The Live Demo Site](http://pluginever.com/wp-content-pilot "See the Live Demo Site")**
 * **[Plugin Documentation](https://pluginever.com/docs/wp-content-pilot "Plugin Documentation")**
 * **[Need Help? Contact Our 24/7 Support](https://pluginever.com/support "Need Help? Contact Our 24/7 Support")**
 * **[WP Content Pilot PRO](https://pluginever.com/plugins/wp-content-pilot-pro "WP Content Pilot PRO")**
@@ -97,8 +97,8 @@ https://www.youtube.com/watch?v=5A3gx0f6PJk
 
 = Minimum requirements =
 
-* WordPress 4.9 or greater
-* PHP version 5.8 or greater
+* WordPress 5.2 or greater
+* PHP version 7.4 or greater
 * MySQL version 5.6 or greater
 * MariaDB version 10 or later
 
@@ -129,10 +129,10 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
-= 1.3.6 (July 02, 2024) =
+= 1.3.6 (July 28, 2024) =
 * Fix - Fix the issue with the Campaign module
-* Fix - Fix compatibility with WP v6.5.5
-* Fix - Fix compatibility with WooCommerce v9.0.2
+* Fix - Fix compatibility with the WordPress latest version
+* Fix - Fix compatibility with the ooCommerce latest version
 * Fix - Fix not updating WooCommerce product price options.
 * Fix - Fix few known issues.
 
