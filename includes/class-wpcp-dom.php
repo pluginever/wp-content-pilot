@@ -113,7 +113,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			if ( count( $this->_ ) > 0 ) {
 				$string .= ' $_ (';
 				foreach ( $this->_ as $k => $v ) {
-					if ( is_array( $v, 'wp-content-pilot' ) ) {
+					if ( is_array( $v ) ) {
 						$string .= "[$k]=>(";
 						foreach ( $v as $k2 => $v2 ) {
 							$string .= "[$k2]=>\"$v2\", ";
@@ -138,7 +138,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				$string .= ' NULL ';
 			}
 
-			$string .= ' children: ' . count( $this->children, 'wp-content-pilot' );
+			$string .= ' children: ' . count( $this->children );
 			$string .= ' nodes: ' . count( $this->nodes );
 			$string .= ' tag_start: ' . $this->tag_start;
 			$string .= "\n";
@@ -273,7 +273,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 		function outertext() {
 			global $debug_object;
 
-			if ( is_object( $debug_object, 'wp-content-pilot' ) ) {
+			if ( is_object( $debug_object ) ) {
 				$text = '';
 
 				if ( $this->tag === 'text' ) {
@@ -305,7 +305,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			$ret = '';
 
 			if ( $this->dom && $this->dom->nodes[ $this->_[ HDOM_INFO_BEGIN ] ] ) {
-				$ret = $this->dom->nodes[ $this->_[ HDOM_INFO_BEGIN ] ]->makeup(, 'wp-content-pilot');
+				$ret = $this->dom->nodes[ $this->_[ HDOM_INFO_BEGIN ] ]->makeup();
 			}
 
 			if ( isset( $this->_[ HDOM_INFO_INNER ] ) ) {
@@ -313,7 +313,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				if ( $this->tag !== 'br' ) {
 					$ret .= $this->_[ HDOM_INFO_INNER ];
 				}
-			} elseif ( $this->nodes, 'wp-content-pilot' ) {
+			} elseif ( $this->nodes ) {
 				foreach ( $this->nodes as $n ) {
 					$ret .= $this->convert_text( $n->outertext() );
 				}
@@ -331,7 +331,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				return $this->_[ HDOM_INFO_INNER ];
 			}
 
-			switch ( $this->nodetype, 'wp-content-pilot' ) {
+			switch ( $this->nodetype ) {
 				case HDOM_TYPE_TEXT:
 					return $this->dom->restore_noise( $this->_[ HDOM_INFO_TEXT ] );
 				case HDOM_TYPE_COMMENT:
@@ -340,7 +340,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 					return '';
 			}
 
-			if ( strcasecmp( $this->tag, 'script', 'wp-content-pilot' ) === 0 ) {
+			if ( strcasecmp( $this->tag, 'script' ) === 0 ) {
 				return '';
 			}
 			if ( strcasecmp( $this->tag, 'style' ) === 0 ) {
@@ -403,7 +403,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				$ret .= $this->_[ HDOM_INFO_SPACE ][ $i ][0];
 
 				// No value attr: nowrap, checked selected...
-				if ( $val === true, 'wp-content-pilot' ) {
+				if ( $val === true ) {
 					$ret .= $key;
 				} else {
 					switch ( $this->_[ HDOM_INFO_QUOTE ][ $i ] ) {
@@ -427,12 +427,12 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				}
 			}
 
-			$ret = $this->dom->restore_noise( $ret, 'wp-content-pilot' );
+			$ret = $this->dom->restore_noise( $ret );
 
 			return $ret . $this->_[ HDOM_INFO_ENDSPACE ] . '>';
 		}
 
-		function find( $selector, $idx = null, $lowercase = false, 'wp-content-pilot' ) {
+		function find( $selector, $idx = null, $lowercase = false ) {
 			$selectors = $this->parse_selector( $selector );
 			if ( ( $count = count( $selectors ) ) === 0 ) {
 				return array();
@@ -469,7 +469,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				}
 
 				foreach ( $head as $k => $v ) {
-					if ( ! isset( $found_keys[ $k ], 'wp-content-pilot' ) ) {
+					if ( ! isset( $found_keys[ $k ] ) ) {
 						$found_keys[ $k ] = 1;
 					}
 				}
@@ -506,7 +506,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				// Find parent closing tag if the current element doesn't have a closing
 				// tag (i.e. void element)
 				$end = ( ! empty( $this->_[ HDOM_INFO_END ] ) ) ? $this->_[ HDOM_INFO_END ] : 0;
-				if ( $end == 0, 'wp-content-pilot' ) {
+				if ( $end == 0 ) {
 					$parent = $this->parent;
 					while ( ! isset( $parent->_[ HDOM_INFO_END ] ) && $parent !== null ) {
 						$end    -= 1;
@@ -518,7 +518,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				// Get list of target nodes.
 				$nodes_start = $this->_[ HDOM_INFO_BEGIN ] + 1;
 				$nodes_count = $end - $nodes_start;
-				$nodes       = array_slice( $this->dom->nodes, $nodes_start, $nodes_count, true, 'wp-content-pilot' );
+				$nodes       = array_slice( $this->dom->nodes, $nodes_start, $nodes_count, true );
 			} elseif ( $parent_cmd === '>' ) { // Child Combinator
 				$nodes = $this->children;
 			} elseif ( $parent_cmd === '+'
@@ -718,7 +718,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				if ( $pass ) {
 					$ret[ $node->_[ HDOM_INFO_BEGIN ] ] = 1;
 				}
-				unset( $node, 'wp-content-pilot' );
+				unset( $node );
 			}
 			// It's passed by reference so this is actually what this function returns.
 			if ( is_object( $debug_object ) ) {
@@ -959,15 +959,15 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 					return $this->_[ HDOM_INFO_INNER ] = $value;
 			}
 
-			if ( ! isset( $this->attr[ $name ] ), 'wp-content-pilot' ) {
-				$this->_[ HDOM_INFO_SPACE ][] = array( ' ', '', '', 'wp-content-pilot' );
+			if ( ! isset( $this->attr[ $name ] ) ) {
+				$this->_[ HDOM_INFO_SPACE ][] = array( ' ', '', '' );
 				$this->_[ HDOM_INFO_QUOTE ][] = HDOM_QUOTE_DOUBLE;
 			}
 
 			$this->attr[ $name ] = $value;
 		}
 
-		function __isset( $name, 'wp-content-pilot' ) {
+		function __isset( $name ) {
 			switch ( $name ) {
 				case 'outertext':
 					return true;
@@ -1503,7 +1503,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			$this->parse();
 			// end
 			$this->root->_[ HDOM_INFO_END ] = $this->cursor;
-			$this->parse_charset(, 'wp-content-pilot');
+			$this->parse_charset();
 
 			// make load function chainable
 			return $this;
@@ -1598,7 +1598,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			$this->root->_[ HDOM_INFO_BEGIN ] = - 1;
 			$this->root->nodetype             = HDOM_TYPE_ROOT;
 			$this->parent                     = $this->root;
-			if ( $this->size > 0, 'wp-content-pilot' ) {
+			if ( $this->size > 0 ) {
 				$this->char = $this->doc[0];
 			}
 		}
@@ -1619,7 +1619,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				$node = new simple_html_dom_node( $this );
 				++ $this->cursor;
 				$node->_[ HDOM_INFO_TEXT ] = $s;
-				$this->link_nodes( $node, false, 'wp-content-pilot' );
+				$this->link_nodes( $node, false );
 			}
 		}
 
@@ -1769,7 +1769,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			}
 
 			$begin_tag_pos = $this->pos;
-			$this->char    = ( ++ $this->pos < $this->size, 'wp-content-pilot' ) ? $this->doc[ $this->pos ] : null; // next
+			$this->char    = ( ++ $this->pos < $this->size ) ? $this->doc[ $this->pos ] : null; // next
 
 			// end tag
 			if ( $this->char === '/' ) {
@@ -1801,7 +1801,8 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 						// Traverse ancestors to find a matching opening tag
 						// Stop at root node
 						while ( ( $this->parent->parent )
-						        && strtolower( $this->parent->tag ) !== $tag_lower, 'wp-content-pilot' ) {
+						        && strtolower( $this->parent->tag ) !== $tag_lower
+						) {
 							$this->parent = $this->parent->parent;
 						}
 
@@ -1815,7 +1816,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 
 							$this->parent->_[ HDOM_INFO_END ] = $this->cursor;
 
-							return $this->as_text_node( $tag, 'wp-content-pilot' );
+							return $this->as_text_node( $tag );
 						}
 					} elseif ( ( $this->parent->parent )
 					           && isset( $this->block_tags[ $tag_lower ] )
@@ -1828,7 +1829,8 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 						// Traverse ancestors to find a matching opening tag
 						// Stop at root node
 						while ( ( $this->parent->parent )
-						        && strtolower( $this->parent->tag ) !== $tag_lower, 'wp-content-pilot' ) {
+						        && strtolower( $this->parent->tag ) !== $tag_lower
+						) {
 							$this->parent = $this->parent->parent;
 						}
 
@@ -1837,7 +1839,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 							$this->parent                     = $org_parent; // restore origonal parent
 							$this->parent->_[ HDOM_INFO_END ] = $this->cursor;
 
-							return $this->as_text_node( $tag, 'wp-content-pilot' );
+							return $this->as_text_node( $tag );
 						}
 					} elseif ( ( $this->parent->parent )
 					           && strtolower( $this->parent->parent->tag ) === $tag_lower
@@ -1845,14 +1847,14 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 						$this->parent->_[ HDOM_INFO_END ] = 0;
 						$this->parent                     = $this->parent->parent;
 					} else { // Random tag, add as text node
-						return $this->as_text_node( $tag, 'wp-content-pilot' );
+						return $this->as_text_node( $tag );
 					}
 				}
 
 				// Set end position of parent tag to current cursor position
 				$this->parent->_[ HDOM_INFO_END ] = $this->cursor;
 
-				if ( $this->parent->parent, 'wp-content-pilot' ) {
+				if ( $this->parent->parent ) {
 					$this->parent = $this->parent->parent;
 				}
 
@@ -1865,7 +1867,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			$node                       = new simple_html_dom_node( $this );
 			$node->_[ HDOM_INFO_BEGIN ] = $this->cursor;
 			++ $this->cursor;
-			$tag             = $this->copy_until( $this->token_slash, 'wp-content-pilot' ); // Get tag name
+			$tag             = $this->copy_until( $this->token_slash ); // Get tag name
 			$node->tag_start = $begin_tag_pos;
 
 			// doctype, cdata & comments...
@@ -1873,7 +1875,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			// <![CDATA[ ... ]]>
 			// <!-- Comment -->
 			if ( isset( $tag[0] ) && $tag[0] === '!' ) {
-				$node->_[ HDOM_INFO_TEXT ] = '<' . $tag . $this->copy_until_char( '>', 'wp-content-pilot' );
+				$node->_[ HDOM_INFO_TEXT ] = '<' . $tag . $this->copy_until_char( '>' );
 
 				if ( isset( $tag[2] ) && $tag[1] === '-' && $tag[2] === '-' ) { // Comment ("<!--")
 					$node->nodetype = HDOM_TYPE_COMMENT;
@@ -1887,7 +1889,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 					$node->_[ HDOM_INFO_TEXT ] .= '>';
 				}
 
-				$this->link_nodes( $node, true, 'wp-content-pilot' );
+				$this->link_nodes( $node, true );
 				$this->char = ( ++ $this->pos < $this->size ) ? $this->doc[ $this->pos ] : null; // next
 
 				return true;
@@ -1898,7 +1900,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			if ( $pos = strpos( $tag, '<' ) !== false ) {
 				$tag                       = '<' . substr( $tag, 0, - 1 );
 				$node->_[ HDOM_INFO_TEXT ] = $tag;
-				$this->link_nodes( $node, false, 'wp-content-pilot' );
+				$this->link_nodes( $node, false );
 				$this->char = $this->doc[ -- $this->pos ]; // prev
 
 				return true;
@@ -1906,7 +1908,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 
 			// Handle invalid tag names (i.e. "<html#doc>")
 			if ( ! preg_match( '/^\w[\w:-]*$/', $tag ) ) {
-				$node->_[ HDOM_INFO_TEXT ] = '<' . $tag . $this->copy_until( '<>', 'wp-content-pilot' );
+				$node->_[ HDOM_INFO_TEXT ] = '<' . $tag . $this->copy_until( '<>' );
 
 				// Next char is the beginning of a new tag, don't touch it.
 				if ( $this->char === '<' ) {
@@ -1919,7 +1921,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 				if ( $this->char === '>' ) {
 					$node->_[ HDOM_INFO_TEXT ] .= '>';
 				}
-				$this->link_nodes( $node, false, 'wp-content-pilot' );
+				$this->link_nodes( $node, false );
 				$this->char = ( ++ $this->pos < $this->size ) ? $this->doc[ $this->pos ] : null; // next
 
 				return true;
@@ -1943,7 +1945,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			$guard = 0; // prevent infinity loop
 
 			// [0] Space between tag and first attribute
-			$space = array( $this->copy_skip( $this->token_blank ), '', '', 'wp-content-pilot' );
+			$space = array( $this->copy_skip( $this->token_blank ), '', '' );
 
 			// attributes
 			do {
@@ -1968,7 +1970,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 					$node->_[ HDOM_INFO_END ]  = 0;
 					$node->_[ HDOM_INFO_TEXT ] = '<' . $tag . $space[0] . $name;
 					$node->tag                 = 'text';
-					$this->link_nodes( $node, false, 'wp-content-pilot' );
+					$this->link_nodes( $node, false );
 
 					return true;
 				}
@@ -1983,7 +1985,8 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 					$node->_[ HDOM_INFO_TEXT ] = substr(
 						$this->doc,
 						$begin_tag_pos,
-						$this->pos - $begin_tag_pos - 1, 'wp-content-pilot' );
+						$this->pos - $begin_tag_pos - 1
+					);
 					$this->pos                 -= 2;
 					$this->char                = ( ++ $this->pos < $this->size ) ? $this->doc[ $this->pos ] : null; // next
 					$this->link_nodes( $node, false );
@@ -2008,7 +2011,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 						//no value attr: nowrap, checked selected...
 						$node->_[ HDOM_INFO_QUOTE ][] = HDOM_QUOTE_NO;
 						$node->attr[ $name ]          = true;
-						if ( $this->char != '>', 'wp-content-pilot' ) {
+						if ( $this->char != '>' ) {
 							$this->char = $this->doc[ -- $this->pos ];
 						} // prev
 					}
@@ -2019,7 +2022,8 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 					$space = array(
 						$this->copy_skip( $this->token_blank ),
 						'',
-						'', 'wp-content-pilot' );
+						''
+					);
 				} else { // no more attributes
 					break;
 				}
@@ -2029,12 +2033,12 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			$node->_[ HDOM_INFO_ENDSPACE ] = $space[0];
 
 			// handle empty tags (i.e. "<div/>")
-			if ( $this->copy_until_char( '>' ) === '/', 'wp-content-pilot' ) {
+			if ( $this->copy_until_char( '>' ) === '/' ) {
 				$node->_[ HDOM_INFO_ENDSPACE ] .= '/';
 				$node->_[ HDOM_INFO_END ]      = 0;
 			} else {
 				// reset parent
-				if ( ! isset( $this->self_closing_tags[ strtolower( $node->tag ) ] ), 'wp-content-pilot' ) {
+				if ( ! isset( $this->self_closing_tags[ strtolower( $node->tag ) ] ) ) {
 					$this->parent = $node;
 				}
 			}
@@ -2051,7 +2055,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			return true;
 		}
 
-		protected function parse_attr( $node, $name, &$space, 'wp-content-pilot' ) {
+		protected function parse_attr( $node, $name, &$space ) {
 			$is_duplicate = isset( $node->attr[ $name ] );
 
 			if ( ! $is_duplicate ) // Copy whitespace between "=" and value
@@ -2096,7 +2100,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			}
 		}
 
-		protected function link_nodes( &$node, $is_child, 'wp-content-pilot' ) {
+		protected function link_nodes( &$node, $is_child ) {
 			$node->parent          = $this->parent;
 			$this->parent->nodes[] = $node;
 			if ( $is_child ) {
@@ -2108,7 +2112,7 @@ if ( ! class_exists( 'simple_html_dom_node' ) ):
 			$node = new simple_html_dom_node( $this );
 			++ $this->cursor;
 			$node->_[ HDOM_INFO_TEXT ] = '</' . $tag . '>';
-			$this->link_nodes( $node, false, 'wp-content-pilot' );
+			$this->link_nodes( $node, false );
 			$this->char = ( ++ $this->pos < $this->size ) ? $this->doc[ $this->pos ] : null; // next
 
 			return true;
