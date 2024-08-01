@@ -9,25 +9,6 @@ module.exports = function (grunt) {
 	grunt.initConfig(
 		{
 			package: grunt.file.readJSON( 'package.json' ),
-			addtextdomain: {
-				options: {
-					expand: true,
-					text_domain: 'wp-content-pilot',
-					updateDomains: [ 'framework-text-domain' ],
-				},
-				plugin: {
-					files: {
-						src: [
-							'*.php',
-							'**/*.php',
-							'!node_modules/**',
-							'!tests/**',
-							'!vendor/**',
-						],
-					},
-				},
-			},
-
 			// Check textdomain errors.
 			checktextdomain: {
 				options: {
@@ -84,6 +65,6 @@ module.exports = function (grunt) {
 	);
 
 	// Register tasks.
-	grunt.registerTask( 'i18n', [ 'addtextdomain', 'checktextdomain', 'makepot' ] );
+	grunt.registerTask( 'i18n', [ 'checktextdomain', 'makepot' ] );
 	grunt.registerTask( 'build', [ 'i18n' ] );
 };
