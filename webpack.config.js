@@ -8,8 +8,16 @@ module.exports = [
 		...defaultConfig,
 		entry: {
 			...defaultConfig.entry(),
-			// 'css/admin': './_assets/css/admin.scss',
-			// 'js/admin': './_assets/js/admin.js',
+			'css/wp-content-pilot': './src/css/wp-content-pilot.scss',
+			'js/wp-content-pilot': './src/js/wp-content-pilot.js',
+			// Vendor -> ion slider assets.
+			'vendor/ionslider/css/ion.rangeSlider': './src/vendor/ionslider/ion.rangeSlider.css',
+			'vendor/ionslider/js/ion.rangeSlider': './src/vendor/ionslider/ion.rangeSlider.js',
+			// Vendor -> Select2 assets.
+			'vendor/select2/css/select2': './src/vendor/select2/select2.css',
+			'vendor/select2/js/select2': './src/vendor/select2/select2.js',
+			// Vendor -> tiptip assets.
+			'vendor/tiptip/jquery.tiptip.min': './src/vendor/tiptip/jquery.tiptip.min.js',
 		},
 		output: {
 			...defaultConfig.output,
