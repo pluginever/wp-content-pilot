@@ -1,4 +1,3 @@
-/* jshint node:true */
 module.exports = function (grunt) {
 	'use strict';
 	// Load multiple grunt tasks using globbing patterns
@@ -12,48 +11,6 @@ module.exports = function (grunt) {
 			fonts: 'assets/fonts',
 			images: 'assets/images',
 			js: 'assets/js'
-		},
-
-		// JavaScript linting with JSHint.
-		jshint: {
-			options: {
-				jshintrc: '.jshintrc'
-			},
-			all: [
-				'Gruntfile.js',
-				'<%= dirs.js %>/*.js',
-				'!<%= dirs.js %>/*.min.js'
-			]
-		},
-
-		// Minify .js files.
-		uglify: {
-			options: {
-				ie8: true,
-				parse: {
-					strict: false
-				},
-				output: {
-					comments: /@license|@preserve|^!/
-				}
-			},
-			dist: {
-				files: [{
-					expand: true,
-					cwd: '<%= dirs.js %>/',
-					src: [
-						'*.js',
-						'!*.min.js'
-					],
-					dest: '<%= dirs.js %>/',
-					ext: '.min.js'
-				}]
-			},
-			vendor: {
-				files: {
-					// '<%= dirs.js %>/file.min.js': ['<%= dirs.js %>/file.js'],
-				}
-			}
 		},
 
 		// Compile all .scss files.
@@ -74,20 +31,6 @@ module.exports = function (grunt) {
 			}
 		},
 
-		// Autoprefixer.
-		postcss: {
-			options: {
-				processors: [
-					require('autoprefixer')()
-				]
-			},
-			dist: {
-				src: [
-					'<%= dirs.css %>/*.css'
-				]
-			}
-		},
-
 		// Minify all .css files.
 		cssmin: {
 			minify: {
@@ -96,16 +39,6 @@ module.exports = function (grunt) {
 				src: ['*.css'],
 				dest: '<%= dirs.css %>/',
 				ext: '.css'
-			}
-		},
-
-		// Concatenate files.
-		concat: {
-			admin: {
-				files: {
-					// '<%= dirs.css %>/admin.css' : ['<%= dirs.css %>/select2.css', '<%= dirs.css %>/admin.css'],
-					// '<%= dirs.css %>/admin-rtl.css' : ['<%= dirs.css %>/select2.css', '<%= dirs.css %>/admin-rtl.css']
-				}
 			}
 		},
 
@@ -163,22 +96,6 @@ module.exports = function (grunt) {
 			}
 		},
 
-		// Watch changes for assets.
-		watch: {
-			css: {
-				files: ['<%= dirs.css %>/**/*.scss'],
-				tasks: ['sass', 'postcss', 'cssmin', 'concat']
-			},
-			js: {
-				files: [
-					'<%= dirs.js %>/*js',
-					'<%= dirs.js %>/*js',
-					'!<%= dirs.js %>/*.min.js'
-				],
-				tasks: ['jshint', 'uglify']
-			}
-		},
-
 		// Verify build
 		shell: {
 			command: [ 'rm -rf @next', 'npm install', 'npm run build', 'composer install --no-dev', 'rsync -rc --exclude-from="./.distignore" "." "./@next/" --delete --delete-excluded', 'echo ', 'echo === NOW COMPARE WITH ORG/GIT VERSION===' ].join(' && ')
@@ -187,5 +104,5 @@ module.exports = function (grunt) {
 	});
 
 	// Register tasks.
-	grunt.registerTask('build', ['jshint', 'uglify', 'sass', 'postcss', 'cssmin', 'concat', 'checktextdomain', 'makepot']);
+	grunt.registerTask('build', ['sass', 'cssmin', 'checktextdomain', 'makepot']);
 };

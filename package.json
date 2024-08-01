@@ -8,7 +8,7 @@
   "author": {
     "name": "pluginever",
     "email": "support@pluginever.com",
-    "url": "https://www.pluginever.com"
+    "url": "https://pluginever.com"
   },
   "scripts": {
     "build": "grunt build",
