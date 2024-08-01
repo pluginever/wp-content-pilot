@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name:       WP Content Pilot
- * Plugin URI:        https://www.pluginever.com
+ * Plugin URI:        https://pluginever.com
  * Description:       WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
  * Version:           1.3.6
  * Requires at least: 5.2
  * Requires PHP:      7.4
  * Author:            PluginEver
- * Author URI:        https://www.pluginever.com
+ * Author URI:        https://pluginever.com
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wp-content-pilot
