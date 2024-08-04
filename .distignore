@@ -97,5 +97,6 @@ gulpfile.js
 vendor
 
 # Build related files
+build
 src
 /src/
