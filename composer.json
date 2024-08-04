@@ -1,33 +1,49 @@
 {
   "name": "pluginever/wp-content-pilot",
   "description": "WP Content Pilot automatically posts contents from various sources based on the predefined keywords.",
-  "keywords": [
-    "wordpress",
-    "plugin"
-  ],
-  "homepage": "https://www.pluginever.com",
+  "homepage": "https://pluginever.com/plugins/wp-content-pilot/",
   "type": "wordpress-plugin",
-  "license": "GPL-3.0",
-  "authors": [
-    {
-      "name": "pluginever",
-      "email": "support@pluginever.com"
-    }
-  ],
-  "require": {
-    "php": ">=8.0",
-    "php-curl-class/php-curl-class": "^8.0"
-  },
+  "license": "GPL-3.0-or-later",
+  "prefer-stable": true,
+  "minimum-stability": "dev",
+  "repositories": [],
   "require-dev": {
-    "byteever/byteever-sniffs": "dev-master"
+    "byteever/byteever-sniffs": "dev-master",
+    "coenjacobs/mozart": "^0.7.1"
+  },
+  "autoload": {},
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true,
+    "allow-plugins": {
+      "composer/*": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   },
   "scripts": {
+    "post-install-cmd": [
+      "\"vendor/bin/mozart\" compose",
+      "composer dump-autoload"
+    ],
+    "post-update-cmd": [
+      "\"vendor/bin/mozart\" compose",
+      "composer dump-autoload"
+    ],
     "phpcs": "@php ./vendor/bin/phpcs --standard=phpcs.xml -s -v",
     "phpcbf": "@php ./vendor/bin/phpcbf --standard=phpcs.xml -v"
   },
-  "config": {
-    "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true
+  "extra": {
+    "mozart": {
+      "dep_namespace": "WPContentPilot\\",
+      "dep_directory": "/lib/",
+      "classmap_directory": "/lib/classes/",
+      "classmap_prefix": "WPContentPilot_",
+      "delete_vendor_directories": true,
+      "packages": []
     }
+  },
+  "require": {
+    "php": ">=8.0",
+    "php-curl-class/php-curl-class": "^8.0"
   }
 }
