@@ -96,3 +96,4 @@ composer.lock
 gulpfile.js
 
 # Build related files
+build
