@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Content Pilot 1.3.6\n"
 "Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
-"POT-Creation-Date: 2024-08-01 09:28:12+00:00\n"
+"POT-Creation-Date: 2024-08-14 09:56:38+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -77,7 +77,7 @@ msgstr ""
 msgid "Logs"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:80 wp-content-pilot.php:254
+#: includes/admin/class-wpcp-admin.php:80 wp-content-pilot.php:255
 msgid "Go Pro"
 msgstr ""
 
@@ -429,7 +429,7 @@ msgstr ""
 
 #: includes/admin/class-wpcp-settings.php:38
 #: includes/admin/views/metabox/spinner-settings.php:10
-#: wp-content-pilot.php:246
+#: wp-content-pilot.php:247
 msgid "Settings"
 msgstr ""
 
@@ -2924,27 +2924,27 @@ msgstr ""
 msgid "Every %1$d %2$s"
 msgstr ""
 
-#: wp-content-pilot.php:82
+#: wp-content-pilot.php:83
 msgid "Cloning is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:91
+#: wp-content-pilot.php:92
 msgid "Universalizing instances of this class is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:276
+#: wp-content-pilot.php:277
 msgid "View documentation"
 msgstr ""
 
-#: wp-content-pilot.php:276
+#: wp-content-pilot.php:277
 msgid "Docs"
 msgstr ""
 
-#: wp-content-pilot.php:295
+#: wp-content-pilot.php:296
 msgid "Once a Minute"
 msgstr ""
 
-#: wp-content-pilot.php:321
+#: wp-content-pilot.php:322
 msgid "%1$s in %2$s on line %3$s"
 msgstr ""
 

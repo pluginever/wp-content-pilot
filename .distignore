@@ -94,9 +94,6 @@ release-test.sh
 composer.json
 composer.lock
 gulpfile.js
-/vendor
 
 # Build related files
 build
-src
-/src/
