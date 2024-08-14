@@ -6,14 +6,14 @@ $blocks   = array(
 		'image'       => WPCP_ASSETS_URL . '/images/help/docs.svg',
 		'title'       => __( 'Looking for something?', 'wp-content-pilot' ),
 		'desc'        => __( 'We have detailed documentation on every aspects of WP Content Pilot.', 'wp-content-pilot' ),
-		'url'         => 'https://www.pluginever.com/docs/wp-content-pilot/',
+		'url'         => 'https://pluginever.com/docs/wp-content-pilot/',
 		'button_text' => __( 'Documentation', 'wp-content-pilot' ),
 	),
 	array(
 		'image'       => WPCP_ASSETS_URL . '/images/help/support.svg',
 		'title'       => __( 'Need any assistance?', 'wp-content-pilot' ),
 		'desc'        => __( 'Our expert support team is always ready to help you out.', 'wp-content-pilot' ),
-		'url'         => 'https://www.pluginever.com/support/',
+		'url'         => 'https://pluginever.com/support/',
 		'button_text' => __( 'Contact support', 'wp-content-pilot' ),
 	),
 	array(
@@ -27,7 +27,7 @@ $blocks   = array(
 		'image'       => WPCP_ASSETS_URL . '/images/help/customization.svg',
 		'title'       => __( 'Require customization?', 'wp-content-pilot' ),
 		'desc'        => __( 'We would love to hear your integration and customization ideas.', 'wp-content-pilot' ),
-		'url'         => 'https://www.pluginever.com/support/',
+		'url'         => 'https://pluginever.com/support/',
 		'button_text' => __( 'Contact us', 'wp-content-pilot' ),
 	),
 	array(
@@ -354,7 +354,7 @@ $features = array(
 					<td></td>
 					<td></td>
 					<td>
-						<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro?utm_source=comparision-chart&utm_medium=button&utm_campaign=content-pilot&utm_content=Go%20Pro" class="button button-pro" target="_blank">Get Pro</a>
+						<a href="https://pluginever.com/plugins/wp-content-pilot-pro?utm_source=comparision-chart&utm_medium=button&utm_campaign=content-pilot&utm_content=Go%20Pro" class="button button-pro" target="_blank">Get Pro</a>
 					</td>
 				</tr>
 			</table>

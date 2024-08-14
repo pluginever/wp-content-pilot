@@ -298,7 +298,7 @@ class WPCP_Admin_Notices {
 			return;
 		}
 		$notice  = __( '<b>WP Content Pilot</b> is powering <b>5000+ companies</b> in generating automatic contents and affiliation with its <b>25+</b> types of campaign. Upgrade to Pro now & get 10% discount using coupon <strong>WPCPFREE2PRO</strong>', 'wp-content-pilot' );
-		$notice .= '  <a href="https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=admin-notice&utm_campaign=getpro&utm_medium=admin-dashboard" class="button button-pro promo-btn" target="_blank">Upgrade to Pro</a>';
+		$notice .= '  <a href="https://pluginever.com/plugins/wp-content-pilot-pro/?utm_source=admin-notice&utm_campaign=getpro&utm_medium=admin-dashboard" class="button button-pro promo-btn" target="_blank">Upgrade to Pro</a>';
 
 		self::add_dismissible_notice(
 			$notice,

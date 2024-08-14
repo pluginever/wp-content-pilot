@@ -1,6 +1,6 @@
 /**
  * WP Content Pilot Admin
- * https://www.pluginever.com
+ * https://pluginever.com
  *
  * Copyright (c) 2019 pluginever
  * Licensed under the GPLv2+ license.

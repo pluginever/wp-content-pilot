@@ -2953,7 +2953,7 @@ msgid "WP Content Pilot"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "https://www.pluginever.com"
+msgid "https://pluginever.com"
 msgstr ""
 
 #. Description of the plugin/theme

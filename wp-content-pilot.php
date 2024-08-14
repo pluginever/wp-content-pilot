@@ -1,20 +1,21 @@
 <?php
 /**
  * Plugin Name:       WP Content Pilot
- * Plugin URI:        https://www.pluginever.com
+ * Plugin URI:        https://pluginever.com
  * Description:       WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
  * Version:           1.3.6
  * Requires at least: 5.2
- * Requires PHP:      7.2
+ * Requires PHP:      7.4
  * Author:            PluginEver
- * Author URI:        https://www.pluginever.com
+ * Author URI:        https://pluginever.com
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wp-content-pilot
- * Domain Path:       /i18n/languages/
- */
-
-/**
+ * Domain Path:       /i18n/languages
+ * Tested up to:      6.6
+ *
+ * @package WPContentPilot
+ *
  * Copyright (c) 2024 PluginEver (email : support@pluginever.com)
  *
  * This program is free software; you can redistribute it and/or modify
@@ -249,7 +250,7 @@ final class ContentPilot {
 		$links = array_merge( $action_links, $links );
 
 		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
-			$upgrade_link = 'https://www.pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro';
+			$upgrade_link = 'https://pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro';
 			$upgrade_links = array(
 				'upgrade' => '<a href="'. esc_url( $upgrade_link ).'" style="color: red;font-weight: bold;" target="_blank">' . __( 'Go Pro', 'wp-content-pilot' ) . '</a>'
 			);

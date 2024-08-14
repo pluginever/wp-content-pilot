@@ -173,7 +173,7 @@ class WPCP_Help {
 							<td></td>
 							<td></td>
 							<td>
-								<a href="https://www.pluginever.com/plugins/wp-content-pilot-pro?utm_source=comparision-chart&utm_medium=button&utm_campaign=content-pilot&utm_content=Go%20Pro" class="button button-pro" target="_blank">Get Pro</a>
+								<a href="https://pluginever.com/plugins/wp-content-pilot-pro?utm_source=comparision-chart&utm_medium=button&utm_campaign=content-pilot&utm_content=Go%20Pro" class="button button-pro" target="_blank">Get Pro</a>
 							</td>
 						</tr>
 					</table>
@@ -193,14 +193,14 @@ class WPCP_Help {
 				'image'       => WPCP_ASSETS_URL . '/images/help/docs.svg',
 				'title'       => __( 'Looking for Something?', 'wp-content-pilot' ),
 				'desc'        => __( 'We have detailed documentation on every aspects of WP Content Pilot.', 'wp-content-pilot' ),
-				'url'         => 'https://www.pluginever.com/docs/wp-content-pilot/',
+				'url'         => 'https://pluginever.com/docs/wp-content-pilot/',
 				'button_text' => __( 'Visit the Plugin Documentation', 'wp-content-pilot' ),
 			],
 			[
 				'image'       => WPCP_ASSETS_URL . '/images/help/support.svg',
 				'title'       => __( 'Need Any Assistance?', 'wp-content-pilot' ),
 				'desc'        => __( 'Our EXPERT Support Team is always ready to Help you out.', 'wp-content-pilot' ),
-				'url'         => 'https://www.pluginever.com/support/',
+				'url'         => 'https://pluginever.com/support/',
 				'button_text' => __( 'Contact Support', 'wp-content-pilot' ),
 			],
 			[
@@ -214,7 +214,7 @@ class WPCP_Help {
 				'image'       => WPCP_ASSETS_URL . '/images/help/customization.svg',
 				'title'       => __( 'Require Customization?', 'wp-content-pilot' ),
 				'desc'        => __( 'We would Love to hear your Integration and Customization Ideas.', 'wp-content-pilot' ),
-				'url'         => 'https://www.pluginever.com/contact-us/',
+				'url'         => 'https://pluginever.com/contact-us/',
 				'button_text' => __( 'Contact Our Services', 'wp-content-pilot' ),
 			],
 			[
