@@ -1,12 +1,87 @@
-/.wordpress-org
-/.git
-/.github
+# Default dist ignore list
+# Git related files
+.git
+.github
+.gitignore
 .gitattributes
 .gitkeep
 .gitmodules
-
 .distignore
-.gitignore
+.husky
+readme.md
+README.md
+
+# Composer related files
+composer.*
+
+# NPM related files
+npm-debug.log
+/node_modules/
+postcss.config.js
+babel.config.js
+package.json
+package-lock.json
+gruntfile.js
+Gruntfile.js
+webpack.config.js
+yarn.lock
+bower.json
+bower_components
+.*
+
+# Test related files
+phpunit.xml
+phpunit.xml.dist
+tests
+.dist
+codeception.yml
+*.yml
+
+# PHPCS related files
+phpcs.xml
+phpcs.xml.dist
+
+# IDE related files
+.idea
+*.iml
+*.sublime-project
+*.sublime-workspace
+*.project
+*.tmproj
+*.vscode
+
+# Misc files
+.*
+.*/
+*.lock
+*.log
+*.sh
+*.zip
+/bin/
+
+# OS related files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Action related files
+.wordpress-org
+
+#Assets
+*.scss
+*.*.map
+
+#COMMON
+CONTRIBUTING.md
+release-test.sh
+*.sql
+*.tar.gz
+
+#Plugin specific
 .babelrc
 .editorconfig
 .eslintignore
@@ -15,40 +90,13 @@
 .svnignore
 .travis.yml
 .jshintrc
-.phpcs.xml.dist
 .stylelintrc
-package.json
-package-lock.json
-yarn.lock
-Gruntfile.js
 composer.json
 composer.lock
-/node_modules
-/bin
 gulpfile.js
-gruntfile.js
+/vendor
 
-#COMMON
-CONTRIBUTING.md
-release-test.sh
-phpunit.xml.dist
-phpunit.xml
-phpcs.xml
-phpcs.xml.dist
-tests
-*.sql
-*.tar.gz
-*.zip
-*.sh
-
-#OS
-.DS_Store
-Thumbs.db
-
-#WP
-.wordpress-org
-
-#Assets
-*.scss
-
-#Plugin specific
+# Build related files
+build
+src
+/src/

@@ -1,28 +1,69 @@
+# IDEs
+/.settings
+/.project
+/.idea
+*.esproj
+*.tmproj
+*.tmproject
+tmtags
+.*.sw[a-z]
+*.un~
+Session.vim
+*.swp
+
+# Mac OSX
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# NPM packages used by Grunt.js
+node_modules
+bower_components
+*.log
+npm-debug.log
+
+# Composer
+/vendor
+
+# PHPUnit
+/tmp
+
+# Misc
+*.zip
+.cache
+.sass-cache*
+.husky
+*.lock
+
+# Tests
+codeception.yml
+.env
+/tests/_data/dump.sql
+.env.testing
+
+# Framework
+lib
+
+# Build
+assets/
+
 # Editors
 project.xml
 project.properties
 /nbproject/private/
 .buildpath
-.project
-.settings*
-.idea
 .vscode
 *.sublime-project
 *.sublime-workspace
 .sublimelinterrc
 
 # Grunt
-/node_modules/
 none
-
-# Sass
-.sass-cache/
-
-# OS X metadata
-.DS_Store
-
-# Windows junk
-Thumbs.db
 
 # ApiGen
 /wc-apidocs/
@@ -35,7 +76,6 @@ tests/cli/composer.json
 tests/cli/vendor
 
 # Unit tests
-/tmp
 /tests/bin/tmp
 /tests/e2e-tests/config/local-*.json
 /tests/e2e-tests/config/local.json
@@ -44,7 +84,6 @@ tests/cli/vendor
 /logs
 
 # Composer
-/vendor/
 contributors.md
 
 # Screenshots for e2e tests failures
