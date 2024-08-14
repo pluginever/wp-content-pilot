@@ -100,3 +100,4 @@ gulpfile.js
 build
 src
 /src/
+lib
