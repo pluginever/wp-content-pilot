@@ -76,6 +76,7 @@ https://www.youtube.com/watch?v=5A3gx0f6PJk
 
 === 💢 Have a WooCommerce Store? Superchange it With Our WooCommerce Plugins: === 
 
+* **[WC Key Manager – Effortlessly Sell and Manage any code and software license keys with WooCommerce.](https://wordpress.org/plugins/wc-key-manager/ "WC Key Manager – Effortlessly Sell and Manage any code and software license keys with WooCommerce.")**
 * **[WooCommerce Serial Numbers](https://wordpress.org/plugins/wc-serial-numbers/ "WooCommerce Serial Numbers")**
 * **[WooCommerce Category Slider](https://wordpress.org/plugins/woo-category-slider-by-pluginever "WooCommerce Category Slider")**
 * **[WooCommerce Category Showcase](https://wordpress.org/plugins/wc-category-showcase "WooCommerce Category Showcase")**
@@ -97,7 +98,7 @@ https://www.youtube.com/watch?v=5A3gx0f6PJk
 
 = Minimum requirements =
 
-* WordPress 5.2 or greater
+* WordPress 5.0 or greater
 * PHP version 7.4 or greater
 * MySQL version 5.6 or greater
 * MariaDB version 10 or later
@@ -129,6 +130,12 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= 2.0.0 (August 21, 2024) =
+* Enhance - Update the plugin UI.
+* Fix - Compatibility with the latest WordPress version.
+* Fix - Few broken links are fixed.
+* Fix - Few known issues fixed.
+
 = 1.3.6 (July 28, 2024) =
 * Fix - Fix the issue with the Campaign module
 * Fix - Fix compatibility with the WordPress latest version
