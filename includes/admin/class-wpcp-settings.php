@@ -145,7 +145,7 @@ class WPCP_Settings {
 							<h3 class="hndle"><label for="title"><?php _e( 'Documentation', 'wp-content-pilot' ); ?></label></h3>
 							<div class="inside">
 								<?php
-								echo sprintf( __( 'We have detailed documentation on every aspects of %s WP Content Pilot %s', 'wp-content-pilot' ), '<a href="https://pluginever.com/docs/wp-content-pilot/" target="_blank">', '</a>' )
+								echo sprintf( __( 'We have detailed documentation on every aspects of %s WP Content Pilot %s', 'wp-content-pilot' ), '<a href="https://wpcontentpilot.com/docs/" target="_blank">', '</a>' )
 								?>
 							</div>
 						</div>
