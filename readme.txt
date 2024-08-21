@@ -1,9 +1,9 @@
 === WP Content Pilot - Autoblogging & Affiliate Marketing Plugin ===
 Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, feed import, content curation, feed to post, rss to post, rss feeds, auto post
-Requires at least: 5.2
+Requires at least: 5.0
 Tested up to: 6.6
-Stable tag: 1.3.6
+Stable tag: 2.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -31,8 +31,8 @@ Here is the detailed breakdown of all the features that we ship with WP Content 
 
 === 💻 Find Out More: ===
 
-* **[See The Live Demo Site](http://pluginever.com/wp-content-pilot "See the Live Demo Site")**
-* **[Plugin Documentation](https://pluginever.com/docs/wp-content-pilot "Plugin Documentation")**
+* **[See The Live Demo Site](http://demo.pluginever.com/wp-content-pilot "See the Live Demo Site")**
+* **[Plugin Documentation](https://wpcontentpilot.com/docs/ "Plugin Documentation")**
 * **[Need Help? Contact Our 24/7 Support](https://pluginever.com/support "Need Help? Contact Our 24/7 Support")**
 * **[WP Content Pilot PRO](https://pluginever.com/plugins/wp-content-pilot-pro "WP Content Pilot PRO")**
 
