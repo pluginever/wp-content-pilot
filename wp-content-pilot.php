@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name:       WP Content Pilot
- * Plugin URI:        https://pluginever.com
+ * Plugin URI:        https://wpcontentpilot.com
  * Description:       WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:           1.3.6
+ * Version:           2.0.0
  * Requires at least: 5.2
  * Requires PHP:      7.4
  * Author:            PluginEver
@@ -47,7 +47,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '1.3.6';
+	protected $version = '2.0.0';
 
 	/**
 	 * The single instance of the class.
@@ -274,7 +274,7 @@ final class ContentPilot {
 		if ( plugin_basename( __FILE__ ) === $file ) {
 
 			$row_meta = array(
-				'docs' => '<a href="' . esc_url( apply_filters( 'wpcp_docs_url', 'https://pluginever.com/docs/wp-content-pilot/' ) ) . '" aria-label="' . esc_attr__( 'View documentation', 'wp-content-pilot' ) . '">' . esc_html__( 'Docs', 'wp-content-pilot' ) . '</a>',
+				'docs' => '<a href="' . esc_url( apply_filters( 'wpcp_docs_url', 'https://wpcontentpilot.com/docs/' ) ) . '" aria-label="' . esc_attr__( 'View documentation', 'wp-content-pilot' ) . '">' . esc_html__( 'Docs', 'wp-content-pilot' ) . '</a>',
 			);
 
 			return array_merge( $links, $row_meta );

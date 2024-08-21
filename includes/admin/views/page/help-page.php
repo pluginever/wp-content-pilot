@@ -6,7 +6,7 @@ $blocks   = array(
 		'image'       => WPCP_ASSETS_URL . '/images/help/docs.svg',
 		'title'       => __( 'Looking for something?', 'wp-content-pilot' ),
 		'desc'        => __( 'We have detailed documentation on every aspects of WP Content Pilot.', 'wp-content-pilot' ),
-		'url'         => 'https://pluginever.com/docs/wp-content-pilot/',
+		'url'         => 'https://wpcontentpilot.com/docs/',
 		'button_text' => __( 'Documentation', 'wp-content-pilot' ),
 	),
 	array(

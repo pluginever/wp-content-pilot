@@ -193,7 +193,7 @@ class WPCP_Help {
 				'image'       => WPCP_ASSETS_URL . '/images/help/docs.svg',
 				'title'       => __( 'Looking for Something?', 'wp-content-pilot' ),
 				'desc'        => __( 'We have detailed documentation on every aspects of WP Content Pilot.', 'wp-content-pilot' ),
-				'url'         => 'https://pluginever.com/docs/wp-content-pilot/',
+				'url'         => 'https://wpcontentpilot.com/docs/',
 				'button_text' => __( 'Visit the Plugin Documentation', 'wp-content-pilot' ),
 			],
 			[
