@@ -1,6 +1,12 @@
 <?php
 defined( 'ABSPATH' ) || exit();
 
+/**
+ * Class WPCP_Admin
+ *
+ * @since 1.0.0
+ * @package WPContentPilot
+ */
 class WPCP_Admin {
 
 	/**
@@ -9,9 +15,11 @@ class WPCP_Admin {
 	 * @var WPCP_Admin
 	 * @since 1.0.0
 	 */
-	protected static $_instance = null;
+	protected static $instance = null;
 
 	/**
+	 * WPCP_Admin constructor.
+	 *
 	 * @since 1.2.0
 	 * WPCP_Admin constructor.
 	 */
@@ -21,20 +29,24 @@ class WPCP_Admin {
 	}
 
 	/**
-	 * Includes
+	 * Includes.
+	 *
 	 * @since 1.2.0
+	 * @return void
 	 */
 	public function includes() {
-		require_once( dirname( __FILE__ ) . '/admin-functions.php' );
-		require_once ( dirname( __FILE__ ). '/class-wpcp-updater.php');
-		require_once( dirname( __FILE__ ) . '/class-settings-framework.php' );
-		require_once( dirname( __FILE__ ) . '/class-wpcp-settings.php' );
-		require_once( dirname( __FILE__ ) . '/metabox-functions.php' );
+		require_once __DIR__ . '/admin-functions.php';
+		require_once __DIR__ . '/class-wpcp-updater.php';
+		require_once __DIR__ . '/class-settings-framework.php';
+		require_once __DIR__ . '/class-wpcp-settings.php';
+		require_once __DIR__ . '/metabox-functions.php';
 	}
 
 	/**
-	 * Init hooks
+	 * Init hooks.
+	 *
 	 * @since 1.2.0
+	 * @return void
 	 */
 	public function init_hooks() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
@@ -45,7 +57,10 @@ class WPCP_Admin {
 	}
 
 	/**
+	 * Admin menu.
+	 *
 	 * @since 1.2.0
+	 * @return void
 	 */
 	function admin_menu() {
 		$hook = 'edit.php?post_type=wp_content_pilot';
@@ -89,8 +104,10 @@ class WPCP_Admin {
 	 * @since 1.2.0
 	 */
 	public function go_pro_redirect() {
+		wp_verify_nonce( '_nonce' );
+
 		if ( isset( $_GET['page'] ) && 'go_wpcp_pro' === $_GET['page'] ) {
-			wp_redirect( 'https://pluginever.com/plugins/wp-content-pilot-pro/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
+			wp_safe_redirect( 'https://pluginever.com/plugins/wp-content-pilot-pro/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
 			die;
 		}
 	}
@@ -121,7 +138,7 @@ class WPCP_Admin {
 	public function admin_footer_note(){
 		$screen = get_current_screen();
 
-		if ( 'wp_content_pilot' == $screen->post_type ) {
+		if ( 'wp_content_pilot' === $screen->post_type ) {
 			$star_url = 'https://wordpress.org/support/plugin/wp-content-pilot/reviews/?filter=5#new-post';
 			$text     = sprintf( __( 'If you like <strong>WP Content Pilot</strong> please leave us a <a href="%s" target="_blank">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. Your Review is very important to us as it helps us to grow more.', 'wp-content-pilot' ), $star_url );
 			return $text;
@@ -139,11 +156,11 @@ class WPCP_Admin {
 	 * @static
 	 */
 	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$instance;
 	}
 }
 
