@@ -144,7 +144,7 @@ class WPCP_Admin {
 	 * @since 1.2.0
 	 * @return string
 	 */
-	public function admin_footer_note(){
+	public function admin_footer_note() {
 		$screen = get_current_screen();
 
 		if ( 'wp_content_pilot' === $screen->post_type ) {
@@ -153,6 +153,7 @@ class WPCP_Admin {
 			return $text;
 		}
 
+		return '';
 	}
 
 	/**
