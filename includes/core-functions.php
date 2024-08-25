@@ -304,12 +304,21 @@ function wpcp_download_image( $url, $description = '' ) {
 		'image/jpeg',
 		'image/gif',
 	);
+
+	// If the image type is equal to : image/jpeg;charset=ISO-8859-1 the only take image/jpeg
+	if ( ! in_array( $type, $types, true ) && strpos( $type, ';' ) !== false ) {
+		$type = explode( ';', $type );
+		$type = $type[0];
+	}
+
 	$file_ext = array(
 		'image/png'  => '.png',
 		'image/jpeg' => '.jpg',
 		'image/gif'  => '.gif',
 	);
+
 	if ( is_wp_error( $get ) || ! isset( $type ) || ( ! in_array( $type, $types, true ) ) ) {
+		wpcp_logger()->error( __( 'Failed to download image', 'wp-content-pilot' ) );
 		return false;
 	}
 	$file_name = basename( $url );
