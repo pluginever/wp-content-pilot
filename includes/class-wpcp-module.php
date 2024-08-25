@@ -437,6 +437,7 @@ abstract class WPCP_Module {
 			if ( 'clickbank' === $campaign_type || 'instagram' === $campaign_type || 'soundcloud' === $campaign_type ) {
 				$attachment_id = $article['attachment_id'];
 			} else {
+				wpcp_logger()->info( __( 'Downloading image', 'wp-content-pilot' ), $campaign_id );
 				$attachment_id = wpcp_download_image( html_entity_decode( $article['image_url'] ) );
 			}
 			if ( $attachment_id ) {
