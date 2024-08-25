@@ -2,9 +2,9 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 2.0.0\n"
+"Project-Id-Version: WP Content Pilot 2.0.1\n"
 "Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
-"POT-Creation-Date: 2024-08-21 09:50:06+00:00\n"
+"POT-Creation-Date: 2024-08-25 08:55:17+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -65,23 +65,24 @@ msgstr ""
 msgid "Choose File"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:52
+#: includes/admin/class-wpcp-admin.php:67
 #: includes/admin/views/metabox/campaign-status.php:26
 #: includes/admin/views/metabox/post-settings.php:23
 #: includes/post-types.php:124
 msgid "Status"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:53
+#: includes/admin/class-wpcp-admin.php:68
 #: includes/admin/views/page/logs-page.php:10
 msgid "Logs"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:80 wp-content-pilot.php:255
+#: includes/admin/class-wpcp-admin.php:102 wp-content-pilot.php:255
 msgid "Go Pro"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:126
+#: includes/admin/class-wpcp-admin.php:152
+#. translators: %s: 5 star rating url
 msgid ""
 "If you like <strong>WP Content Pilot</strong> please leave us a <a "
 "href=\"%s\" target=\"_blank\">&#9733;&#9733;&#9733;&#9733;&#9733;</a> "
@@ -1749,15 +1750,19 @@ msgstr ""
 msgid "Setting featured image"
 msgstr ""
 
-#: includes/class-wpcp-module.php:456
+#: includes/class-wpcp-module.php:440
+msgid "Downloading image"
+msgstr ""
+
+#: includes/class-wpcp-module.php:457
 msgid "Settings up polylang language"
 msgstr ""
 
-#: includes/class-wpcp-module.php:464
+#: includes/class-wpcp-module.php:465
 msgid "Setting featured image using external links"
 msgstr ""
 
-#: includes/class-wpcp-module.php:472
+#: includes/class-wpcp-module.php:473
 msgid "Updating product price, regular price & sale price."
 msgstr ""
 
@@ -1792,30 +1797,34 @@ msgstr ""
 msgid "Content is not readable"
 msgstr ""
 
-#: includes/core-functions.php:391
+#: includes/core-functions.php:321
+msgid "Failed to download image"
+msgstr ""
+
+#: includes/core-functions.php:400
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true. WP-Cron spawning is disabled."
 msgstr ""
 
-#: includes/core-functions.php:396
+#: includes/core-functions.php:405
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true."
 msgstr ""
 
-#: includes/core-functions.php:432
+#: includes/core-functions.php:441
 #. translators: 1: The HTTP response code.
 msgid "Unexpected HTTP response code: %s"
 msgstr ""
 
-#: includes/core-functions.php:627
+#: includes/core-functions.php:636
 msgid "spinwritter API details is not set, aborting article spinner"
 msgstr ""
 
-#: includes/core-functions.php:637
+#: includes/core-functions.php:646
 msgid "Spinwritter could not send API request, aborting article spinner"
 msgstr ""
 
-#: includes/core-functions.php:644
+#: includes/core-functions.php:653
 #. translators: ERROR message
 msgid "Aborting article spinner Because [%s]"
 msgstr ""
