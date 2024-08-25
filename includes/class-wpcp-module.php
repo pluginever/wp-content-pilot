@@ -470,9 +470,17 @@ abstract class WPCP_Module {
 		// Updating post meta if the campaign post type selected as product.
 		if( 'product' === $post_type ) {
 			wpcp_logger()->info( __( 'Updating product price, regular price & sale price.', 'wp-content-pilot' ), $campaign_id );
-			update_post_meta( $post_id, '_price', floatval( $article['_regular_price'] ) );
-			update_post_meta( $post_id, '_regular_price', floatval( $article['_regular_price'] ) );
-			update_post_meta( $post_id, '_sale_price', floatval( $article['_sale_price'] ) );
+
+			// Update product price & regular price & sale price if the campaign post type selected as product.
+			// Check if _sale_price is empty then set _price & _regular_price only otherwise set _price, _regular_price & _sale_price.
+			if( empty( $article['_sale_price'] ) ) {
+				update_post_meta( $post_id, '_price', floatval( $article['_regular_price'] ) );
+				update_post_meta( $post_id, '_regular_price', floatval( $article['_regular_price'] ) );
+			} else {
+				update_post_meta( $post_id, '_price', floatval( $article['_sale_price'] ) );
+				update_post_meta( $post_id, '_regular_price', floatval( $article['_regular_price'] ) );
+				update_post_meta( $post_id, '_sale_price', floatval( $article['_sale_price'] ) );
+			}
 		}
 
 		// Save campaign data.
