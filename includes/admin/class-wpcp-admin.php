@@ -62,30 +62,37 @@ class WPCP_Admin {
 	 * @since 1.2.0
 	 * @return void
 	 */
-	function admin_menu() {
+	public function admin_menu() {
 		$hook = 'edit.php?post_type=wp_content_pilot';
 		add_submenu_page( $hook, __( 'Status', 'wp-content-pilot' ), __( 'Status', 'wp-content-pilot' ), 'edit_others_posts', 'wpcp-status', array( $this, 'status_page' ) );
 		add_submenu_page( $hook, __( 'Logs', 'wp-content-pilot' ), __( 'Logs', 'wp-content-pilot' ), 'edit_others_posts', 'wpcp-logs', array( $this, 'logs_page' ) );
 	}
 
 	/**
-	 * status page
+	 * Status page.
+	 *
 	 * @since 1.2.0
+	 * @return void
 	 */
 	public function status_page() {
 		wpcp_get_views( 'page/status-page.php' );
 	}
 
 	/**
-	 * Logs page
+	 * Logs page.
+	 *
 	 * @since 1.2.0
+	 * @return void
 	 */
 	public function logs_page() {
 		wpcp_get_views( 'page/logs-page.php' );
 	}
 
 	/**
+	 * Get pro link.
+	 *
 	 * @since 1.2.0
+	 * @return void
 	 */
 	public function get_pro_link() {
 		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
@@ -101,7 +108,10 @@ class WPCP_Admin {
 	}
 
 	/**
+	 * Redirect to pro page.
+	 *
 	 * @since 1.2.0
+	 * @return void
 	 */
 	public function go_pro_redirect() {
 		wp_verify_nonce( '_nonce' );
@@ -113,11 +123,10 @@ class WPCP_Admin {
 	}
 
 	/**
-	 * Do plugin upgrades
+	 * Do plugin upgrades.
 	 *
-	 * @return void
 	 * @since 1.0.0
-	 *
+	 * @return void
 	 */
 	public function plugin_upgrades() {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -130,9 +139,9 @@ class WPCP_Admin {
 	}
 
 	/**
-	 * 5 Star Rating banner.
+	 * 5-Star Rating banner.
 	 *
-	 * since 1.2.0
+	 * @since 1.2.0
 	 * @return string
 	 */
 	public function admin_footer_note(){
@@ -140,7 +149,7 @@ class WPCP_Admin {
 
 		if ( 'wp_content_pilot' === $screen->post_type ) {
 			$star_url = 'https://wordpress.org/support/plugin/wp-content-pilot/reviews/?filter=5#new-post';
-			$text     = sprintf( __( 'If you like <strong>WP Content Pilot</strong> please leave us a <a href="%s" target="_blank">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. Your Review is very important to us as it helps us to grow more.', 'wp-content-pilot' ), $star_url );
+			$text     = sprintf( /* translators: %s: 5 star rating url */ __( 'If you like <strong>WP Content Pilot</strong> please leave us a <a href="%s" target="_blank">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. Your Review is very important to us as it helps us to grow more.', 'wp-content-pilot' ), $star_url );
 			return $text;
 		}
 
