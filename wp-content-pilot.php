@@ -150,6 +150,7 @@ final class ContentPilot {
 		require_once( WPCP_INCLUDES . '/class-wpcp-install.php' );
 		require_once( WPCP_PATH . '/vendor/autoload.php' );
 
+
 		//functions
 		require_once WPCP_INCLUDES . '/core-functions.php';
 		require_once WPCP_INCLUDES . '/action-functions.php';
@@ -157,6 +158,10 @@ final class ContentPilot {
 		require_once WPCP_INCLUDES . '/post-types.php';
 		require_once WPCP_INCLUDES . '/script-functions.php';
 		require_once WPCP_INCLUDES . '/class-wpcp-html.php';
+
+		// Models.
+		require_once( WPCP_INCLUDES . '/class-campaign.php' );
+		require_once( WPCP_INCLUDES . '/class-module.php' );
 
 		//core files
 		//require_once( WPCP_LIBRARY . '/readability/Readability_OLD.php' );
@@ -174,6 +179,16 @@ final class ContentPilot {
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-youtube.php' );
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-envato.php' );
 		require_once( WPCP_INCLUDES . '/modules/class-wpcp-flickr.php' );
+
+		// Load modules.
+		foreach ( glob( WPCP_PATH . '/modules/*/*.php' ) as $file ) {
+			$classname = basename( $file, '.php' );
+			$module    = basename( dirname( $file ) );
+			$class     = '\WPContentPilot\\Modules\\' . $module . '\\' . $classname;
+			if ( class_exists( $class ) && ( new ReflectionClass( $class ) )->isInstantiable() ) {
+				new $class();
+			}
+		}
 
 		if ( is_admin() ) {
 			require_once( WPCP_INCLUDES . '/admin/class-wpcp-admin.php' );

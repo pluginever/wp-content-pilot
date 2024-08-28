@@ -1,0 +1,107 @@
+#wpcp-campaign-settings {
+	.inside {
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		display: flex;
+		position: relative;
+	}
+
+	.wpcp-campaign-settings-tabs {
+		position: relative;
+		width: 25%;
+		line-height: 1em;
+		margin: 0 -1px 0 0;
+		padding: 0;
+		background-color: #f5f5f5;
+		border-right: 1px solid #e5e5e5;
+		box-sizing: border-box;
+		max-width: 250px;
+
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		li {
+			display: block;
+			position: relative;
+			margin: 0;
+			padding: 0;
+			background-color: #fcfcfc;
+			min-height: 39px;
+
+			&:last-of-type {
+				margin-bottom: 24px;
+			}
+
+			a {
+				display: flex;
+				margin: 0;
+				padding: 9px;
+				text-decoration: none;
+				border-bottom: 1px solid #e5e5e5;
+				box-shadow: none;
+				position: relative;
+				align-items: center;
+				line-height: 20px;
+
+				&:focus,
+				&:hover {
+					outline: 0;
+					transition: all .25s;
+					box-shadow: inset 5px 0 #0073aa;
+				}
+
+				& > .dashicons,
+				& > span {
+					display: inline-block
+				}
+
+				& > span {
+					max-width: 76%
+				}
+
+				.dashicons {
+					line-height: 20px;
+					margin-right: 3px;
+					color: #888
+				}
+			}
+
+			&.active a {
+				font-weight: 700;
+				color: #555;
+				background-color: #fff;
+				border-right: none;
+				margin-right: -1px;
+				box-shadow: inset 5px 0 #0073aa;
+
+				&:after {
+					content: "";
+					width: 1px;
+					height: 100%;
+					background: #fff;
+					position: absolute;
+					right: 0;
+					top: 0;
+					bottom: 0;
+					z-index: 3
+				}
+			}
+		}
+	}
+
+	.wpcp-campaign-settings-panels {
+		width: 100%;
+	}
+
+	.wpcp-campaign-settings-panel {
+		box-sizing: border-box;
+		color: #555;
+		min-height: 500px;
+		height: 100%;
+		padding: 20px;
+	}
+}

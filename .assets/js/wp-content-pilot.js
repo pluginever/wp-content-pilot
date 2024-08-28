@@ -216,3 +216,5 @@ jQuery(document).ready(function ($) {
 	$('#wpcp-run-campaign').on('click', $.wp_content_pilot.handle_manual_campaign);
 	$.wp_content_pilot.polylang();
 });
+
+import './admin/metabox';

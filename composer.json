@@ -10,7 +10,14 @@
   "require-dev": {
     "byteever/byteever-sniffs": "dev-master"
   },
-  "autoload": {},
+  "autoload": {
+    "psr-4": {
+      "WPContentPilot\\Modules\\": "modules/"
+    },
+    "files": [
+      "modules/functions.php"
+    ]
+  },
   "config": {
     "optimize-autoloader": true,
     "sort-packages": true,

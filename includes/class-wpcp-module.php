@@ -165,7 +165,6 @@ abstract class WPCP_Module {
 	 */
 	abstract public function get_setting_fields( $fields );
 
-
 	/**
 	 * Get post.
 	 *
