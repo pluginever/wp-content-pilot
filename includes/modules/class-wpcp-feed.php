@@ -282,7 +282,7 @@ EOT;
                 continue;
             }
 
-			// Check if the title is already in database.
+			// Check if the title is already in database or not.
             $skip = apply_filters( 'wpcp_skip_duplicate_title', false, $title, $campaign_id );
             if ( $skip ) {
 				wpcp_logger()->info( sprintf( __( 'The title [%s] is already in used, skipping', 'wp-content-pilot' ), $title ), $campaign_id );
