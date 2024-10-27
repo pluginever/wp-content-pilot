@@ -3,7 +3,7 @@
   "description": "WP Content Pilot automatically posts contents from various sources based on the predefined keywords.",
   "homepage": "https://pluginever.com/plugins/wp-content-pilot/",
   "type": "wordpress-plugin",
-  "license": "GPL-3.0-or-later",
+  "license": "GPL-2.0-or-later",
   "prefer-stable": true,
   "minimum-stability": "dev",
   "repositories": [],
