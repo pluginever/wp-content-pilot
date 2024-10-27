@@ -103,8 +103,6 @@ class WPCP_Admin_Notices {
 								security: '" . wp_create_nonce( 'wpcp_dismiss_notice_nonce' ) . "'
 							};
 
-							console.log( data );
-
 							jQuery.post( '" . admin_url( 'admin-ajax.php' ) . "', data );
 						} );
 					} );
