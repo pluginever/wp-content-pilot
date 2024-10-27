@@ -52,8 +52,9 @@ class WPCP_Admin_Notices {
 	 * @since 1.0.0
 	 */
 	private static $predefined_notices = array(
-		'upgrade_notice' => 'upgrade_notice',
-		'article_notice' => 'article_notice',
+		'halloween_notice' => 'halloween_notice',
+		'upgrade_notice'   => 'upgrade_notice',
+		'article_notice'   => 'article_notice',
 	);
 
 	/**
@@ -153,17 +154,17 @@ class WPCP_Admin_Notices {
 	 * @return void
 	 */
 	public static function output_notices() {
-
 		$saved_notices       = get_option( 'wpcp_admin_notices', array() );
 		$dismissible_notices = get_option( 'wpcp_dismissible_notices', array() );
 		$notices             = $saved_notices + $dismissible_notices + self::$notices;
 
+		// Output the notices.
 		if ( ! empty( $notices ) ) {
 
 			foreach ( $notices as $notice ) {
 
 				$notice_classes = array( 'wpcp_notice', 'notice', 'notice-' . $notice['type'] );
-				$dismiss_attr   = $notice['dismiss_class'] ? 'data-dismiss_class="' . $notice['dismiss_class'] . '"' : '';
+				$dismiss_attr   = $notice['dismiss_class'] ? 'data-dismiss_class=' . $notice['dismiss_class'] : '';
 
 				if ( $notice['dismiss_class'] ) {
 					$notice_classes[] = $notice['dismiss_class'];
@@ -339,6 +340,30 @@ class WPCP_Admin_Notices {
 			array(
 				'type'          => 'native notice-info',
 				'dismiss_class' => 'article_notice',
+			)
+		);
+	}
+
+	/**
+	 * Add 'halloween_notice' notice.
+	 *
+	 * @since 2.0.3
+	 * @return void
+	 */
+	public static function halloween_notice() {
+		// Notice content.
+		$notice = sprintf(
+			/* translators: 1. HTML anchor tag, 2. HTML anchor end tag */
+			__( '👻 Happy Halloween! Get 30% discount on all our plugins. Use coupon code <strong>BIGTREAT30</strong> at checkout. Hurry, this deal won’t last long! %1$sClaim your discount now!%2$s', 'wp-content-pilot' ),
+			'<a href="https://pluginever.com/plugins/?utm_source=plugin&utm_medium=notice&utm_campaign=halloween-2024&discount=bigtreat30" target="_blank">',
+			'</a>',
+		);
+
+		self::add_dismissible_notice(
+			$notice,
+			array(
+				'type'          => 'native notice-info',
+				'dismiss_class' => 'halloween_notice',
 			)
 		);
 	}

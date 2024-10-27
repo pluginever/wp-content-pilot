@@ -3,7 +3,7 @@ Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, feed import, content curation, feed to post, rss to post, rss feeds, auto post
 Requires at least: 5.0
 Tested up to: 6.6
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -130,6 +130,10 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= 2.0.3 (October 27, 2024) =
+* Fix - Admin Notice dismissible issue fixed.
+* Fix - Few known issues fixed.
+
 = 2.0.2 (September 04, 2024) =
 * Fix - Fix the issue with the Feed Campaign module.
 
