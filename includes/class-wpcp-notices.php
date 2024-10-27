@@ -280,7 +280,6 @@ class WPCP_Admin_Notices {
 		// Remove if not already removed.
 		if ( ! self::is_dismissible_notice_dismissed( $notice_name ) ) {
 			self::$dismissed_notices = array_merge( self::$dismissed_notices, array( $notice_name ) );
-
 			update_user_meta( get_current_user_id(), 'wpcp_dismissed_notices', self::$dismissed_notices );
 
 			return true;
@@ -348,7 +347,7 @@ class WPCP_Admin_Notices {
 	/**
 	 * Add 'halloween_notice' notice.
 	 *
-	 * @since 1.3.2
+	 * @since 2.0.3
 	 * @return void
 	 */
 	public static function halloween_notice() {
