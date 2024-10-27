@@ -171,7 +171,7 @@ class WPCP_Admin_Notices {
 					$notice_classes[] = 'is-dismissible';
 				}
 
-				echo '<div class="' . esc_html( implode( ' ', $notice_classes ) ) . '" ' . esc_html( $dismiss_attr ) . '>';
+				echo '<div class="' . esc_html( implode( ' ', $notice_classes ) ) . '"' . esc_html( $dismiss_attr ) . '>';
 				echo wp_kses_post( wpautop( $notice['content'] ) );
 				echo '</div>';
 			}
