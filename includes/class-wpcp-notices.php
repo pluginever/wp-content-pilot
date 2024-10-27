@@ -52,9 +52,9 @@ class WPCP_Admin_Notices {
 	 * @since 1.0.0
 	 */
 	private static $predefined_notices = array(
-		'upgrade_notice' => 'upgrade_notice',
-		'article_notice' => 'article_notice',
 		'halloween_notice' => 'halloween_notice',
+		'upgrade_notice'   => 'upgrade_notice',
+		'article_notice'   => 'article_notice',
 	);
 
 	/**
