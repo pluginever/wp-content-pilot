@@ -52,7 +52,6 @@ class WPCP_Admin_Notices {
 	 * @since 1.0.0
 	 */
 	private static $predefined_notices = array(
-		'halloween_notice' => 'halloween_notice',
 		'upgrade_notice'   => 'upgrade_notice',
 		'article_notice'   => 'article_notice',
 	);
@@ -340,30 +339,6 @@ class WPCP_Admin_Notices {
 			array(
 				'type'          => 'native notice-info',
 				'dismiss_class' => 'article_notice',
-			)
-		);
-	}
-
-	/**
-	 * Add 'halloween_notice' notice.
-	 *
-	 * @since 2.0.3
-	 * @return void
-	 */
-	public static function halloween_notice() {
-		// Notice content.
-		$notice = sprintf(
-			/* translators: 1. HTML anchor tag, 2. HTML anchor end tag */
-			__( '👻 Happy Halloween! Get 30% discount on all our plugins. Use coupon code <strong>BIGTREAT30</strong> at checkout. Hurry, this deal won’t last long! %1$sClaim your discount now!%2$s', 'wp-content-pilot' ),
-			'<a href="https://pluginever.com/plugins/?utm_source=plugin&utm_medium=notice&utm_campaign=halloween-2024&discount=bigtreat30" target="_blank">',
-			'</a>',
-		);
-
-		self::add_dismissible_notice(
-			$notice,
-			array(
-				'type'          => 'native notice-info',
-				'dismiss_class' => 'halloween_notice',
 			)
 		);
 	}
