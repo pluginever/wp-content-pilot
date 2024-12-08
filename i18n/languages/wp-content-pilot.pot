@@ -2,9 +2,9 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 2.0.3\n"
+"Project-Id-Version: WP Content Pilot 2.0.4\n"
 "Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
-"POT-Creation-Date: 2024-10-27 06:51:48+00:00\n"
+"POT-Creation-Date: 2024-12-08 11:42:39+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1766,7 +1766,7 @@ msgstr ""
 msgid "Updating product price, regular price & sale price."
 msgstr ""
 
-#: includes/class-wpcp-notices.php:301
+#: includes/class-wpcp-notices.php:300
 msgid ""
 "<b>WP Content Pilot</b> is powering <b>5000+ companies</b> in generating "
 "automatic contents and affiliation with its <b>25+</b> types of campaign. "
@@ -1774,7 +1774,7 @@ msgid ""
 "<strong>WPCPFREE2PRO</strong>"
 msgstr ""
 
-#: includes/class-wpcp-notices.php:320
+#: includes/class-wpcp-notices.php:319
 #. translators: 1. HTML anchor tag, 2. HTML anchor end tag
 msgid ""
 "The most wanted feature <b>article spinner</b> is now available with <b>WP "
@@ -1782,18 +1782,10 @@ msgid ""
 "have account %1$ssignup now%2$s and configure in settings page."
 msgstr ""
 
-#: includes/class-wpcp-notices.php:337
+#: includes/class-wpcp-notices.php:336
 msgid ""
 "Article search options will be changed in the next version of WP Content "
 "Pilot. Bing search will be replaced with Google Custom Search."
-msgstr ""
-
-#: includes/class-wpcp-notices.php:357
-#. translators: 1. HTML anchor tag, 2. HTML anchor end tag
-msgid ""
-"👻 Happy Halloween! Get 30% discount on all our plugins. Use coupon code "
-"<strong>BIGTREAT30</strong> at checkout. Hurry, this deal won’t last long! "
-"%1$sClaim your discount now!%2$s"
 msgstr ""
 
 #: includes/class-wpcp-readability.php:139
