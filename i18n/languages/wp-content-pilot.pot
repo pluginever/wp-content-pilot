@@ -2,9 +2,9 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 2.0.4\n"
+"Project-Id-Version: WP Content Pilot 2.0.5\n"
 "Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
-"POT-Creation-Date: 2024-12-08 11:42:39+00:00\n"
+"POT-Creation-Date: 2024-12-30 09:59:48+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -77,7 +77,7 @@ msgstr ""
 msgid "Logs"
 msgstr ""
 
-#: includes/admin/class-wpcp-admin.php:102 wp-content-pilot.php:255
+#: includes/admin/class-wpcp-admin.php:102 wp-content-pilot.php:254
 msgid "Go Pro"
 msgstr ""
 
@@ -430,7 +430,7 @@ msgstr ""
 
 #: includes/admin/class-wpcp-settings.php:38
 #: includes/admin/views/metabox/spinner-settings.php:10
-#: wp-content-pilot.php:247
+#: wp-content-pilot.php:246
 msgid "Settings"
 msgstr ""
 
@@ -2945,27 +2945,27 @@ msgstr ""
 msgid "Every %1$d %2$s"
 msgstr ""
 
-#: wp-content-pilot.php:83
+#: wp-content-pilot.php:82
 msgid "Cloning is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:92
+#: wp-content-pilot.php:91
 msgid "Universalizing instances of this class is forbidden."
 msgstr ""
 
-#: wp-content-pilot.php:277
+#: wp-content-pilot.php:276
 msgid "View documentation"
 msgstr ""
 
-#: wp-content-pilot.php:277
+#: wp-content-pilot.php:276
 msgid "Docs"
 msgstr ""
 
-#: wp-content-pilot.php:296
+#: wp-content-pilot.php:295
 msgid "Once a Minute"
 msgstr ""
 
-#: wp-content-pilot.php:322
+#: wp-content-pilot.php:321
 msgid "%1$s in %2$s on line %3$s"
 msgstr ""
 
