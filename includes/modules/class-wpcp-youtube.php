@@ -239,7 +239,7 @@ EOT;
 			array(
 				'name'    => 'api_key',
 				'label'   => __( 'Youtube API key', 'wp-content-pilot' ),
-				'desc'    => sprintf( __( 'Youtube campaigns won\'t run without API key. <a href="%s" target="_blank">Learn how to get one</a>.', 'wp-content-pilot' ), 'https://pluginever.com/docs/wp-content-pilot/set-up-youtube-api-key-for-wp-content-pilot/' ),
+				'desc'    => sprintf( __( 'Youtube campaigns won\'t run without API key. <a href="%s" target="_blank">Learn how to get one</a>.', 'wp-content-pilot' ), 'https://wpcontentpilot.com/docs/how-to-set-up-youtube-api-key-for-wp-content-pilot/' ),
 				'type'    => 'password',
 				'default' => ''
 			),

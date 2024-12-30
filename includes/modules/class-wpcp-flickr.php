@@ -171,7 +171,7 @@ EOT;
 			array(
 				'name'    => 'api_key',
 				'label'   => __( 'Flickr API key', 'wp-content-pilot' ),
-				'desc'    => sprintf( __( 'Get your flickr API key by following this <a href="%s" target="_blank">link</a>.', 'wp-content-pilot' ), 'https://pluginever.com/docs/wp-content-pilot/flickr-campaign-settings/' ),
+				'desc'    => sprintf( __( 'Get your flickr API key by following this <a href="%s" target="_blank">link</a>.', 'wp-content-pilot' ), 'https://wpcontentpilot.com/docs/flickr-campaign-settings/' ),
 				'type'    => 'password',
 				'default' => ''
 			),

@@ -187,14 +187,14 @@ EOT;
 			array(
 				'name'    => 'token',
 				'label'   => __( 'Envato token', 'wp-content-pilot' ),
-				'desc'    => sprintf( __( 'Check this tutorial to get your <a href="%s" target="_blank">Envato token</a>.', 'wp-content-pilot' ), 'https://pluginever.com/docs/wp-content-pilot/how-to-create-envato-token/' ),
+				'desc'    => sprintf( __( 'Check this tutorial to get your <a href="%s" target="_blank">Envato token</a>.', 'wp-content-pilot' ), 'https://wpcontentpilot.com/docs/how-to-create-envato-token/' ),
 				'type'    => 'password',
 				'default' => ''
 			),
 			array(
 				'name'    => 'envato_impact_radius',
 				'label'   => __( 'Impact radius affiliate url', 'wp-content-pilot' ),
-				'desc'    => sprintf( __( 'Learn how to get your impact radius affiliate url <a href="%s">here</a>.', 'wp-content-pilot' ), 'https://pluginever.com/docs/wp-content-pilot/get-your-envato-impact-radius-affiliate-url/' ),
+				'desc'    => sprintf( __( 'Learn how to get your impact radius affiliate url <a href="%s">here</a>.', 'wp-content-pilot' ), 'https://wpcontentpilot.com/docs/get-your-envato-impact-radius-affiliate-url/' ),
 				'type'    => 'text',
 				'default' => ''
 			),
