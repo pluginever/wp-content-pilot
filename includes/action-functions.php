@@ -175,7 +175,12 @@ function wpcp_remove_cached_link() {
 	}
 
 	global $wpdb;
-	$wpdb->delete( $wpdb->wpcp_links, array( 'url' => $link ) );
+	$link_deleted = $wpdb->delete( $wpdb->wpcp_links, array( 'url' => $link ) );
+
+	if ( ! $link_deleted ) {
+		wp_send_json_error( 'Maybe link is not found in the database' );
+	}
+
 	wp_send_json_success( 'success' );
 	exit();
 }

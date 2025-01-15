@@ -310,6 +310,18 @@ EOT;
 				wpcp_logger()->info( __( 'Checking duplicate links in store...', 'wp-content-pilot' ), $campaign_id );
 				if ( wpcp_is_duplicate_url( $item->url ) ) {
 					wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
+
+					wpcp_logger()->info(
+						sprintf(
+						/* translators: %s URL, %s URL, %s Remove */
+							__( 'The link [%s] is already in database, skipping. Remove it from database: <a href="#remove-cached-link" class="wpcp_remove_cached_link" data-link="%s">%s</a>', 'wp-content-pilot' ),
+							esc_url( $item->url ),
+							esc_url( $item->url ),
+							__( 'Remove', 'wp-content-pilot' )
+						),
+						$campaign_id
+					);
+
 					continue;
 				}
 

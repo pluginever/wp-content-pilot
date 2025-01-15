@@ -509,6 +509,17 @@ EOT;
 			}
 
 			if ( wpcp_is_duplicate_url( $url ) ) {
+				wpcp_logger()->info(
+					sprintf(
+					/* translators: %s URL, %s URL, %s Remove */
+						__( 'The link [%s] is already in database, skipping. Remove it from database: <a href="#remove-cached-link" class="wpcp_remove_cached_link" data-link="%s">%s</a>', 'wp-content-pilot' ),
+						esc_url( $url ),
+						esc_url( $url ),
+						__( 'Remove', 'wp-content-pilot' )
+					),
+					$campaign_id
+				);
+
 				continue;
 			}
 
