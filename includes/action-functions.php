@@ -158,6 +158,29 @@ function wpcp_clear_logs() {
 
 add_action( 'wp_ajax_wpcp_clear_logs', 'wpcp_clear_logs' );
 
+/**
+ * Remove cached link.
+ *
+ * @since 2.0.6
+ * @return void
+ */
+function wpcp_remove_cached_link() {
+	if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], 'ajax_action' ) ) {
+		wp_send_json_error( 'Unauthorized!!!' );
+	}
+
+	$link = isset( $_REQUEST['link'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['link'] ) ) : '';
+	if ( empty( $link ) ) {
+		wp_send_json_error( 'Invalid link to process' );
+	}
+
+	global $wpdb;
+	$wpdb->delete( $wpdb->wpcp_links, array( 'url' => $link ) );
+	wp_send_json_success( 'success' );
+}
+
+add_action( 'wp_ajax_wpcp_remove_cached_link', 'wpcp_remove_cached_link' );
+
 
 // TODO: Keyword Suggestion https://www.google.com/complete/search?q=w&cp=1&client=psy-ab&xssi=t&gs_ri=gws-wiz&hl=en-BD&authuser=0&psi=4oO9XIj8ONm89QOY2LCgDA.1555923942084&ei=4oO9XIj8ONm89QOY2LCgDA.
 if ( ! function_exists( 'wpcp_pro_get_keyword_suggestion' ) ) :

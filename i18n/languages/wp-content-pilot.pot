@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Content Pilot 2.0.5\n"
 "Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
-"POT-Creation-Date: 2025-01-15 05:15:43+00:00\n"
+"POT-Creation-Date: 2025-01-15 07:48:13+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,11 +24,11 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/action-functions.php:12 includes/action-functions.php:280
+#: includes/action-functions.php:12 includes/action-functions.php:303
 msgid "No Cheating"
 msgstr ""
 
-#: includes/action-functions.php:22 includes/action-functions.php:320
+#: includes/action-functions.php:22 includes/action-functions.php:343
 msgid "Invalid post action"
 msgstr ""
 
@@ -41,23 +41,23 @@ msgstr ""
 msgid "Reached campaign post limit. So campaign stopping publish new post"
 msgstr ""
 
-#: includes/action-functions.php:243
+#: includes/action-functions.php:266
 msgid "Post Publish"
 msgstr ""
 
-#: includes/action-functions.php:305 includes/action-functions.php:362
+#: includes/action-functions.php:328 includes/action-functions.php:385
 msgid "Cheating?"
 msgstr ""
 
-#: includes/action-functions.php:327
+#: includes/action-functions.php:350
 msgid "Campaign <strong>%s</strong> manually initiated by <strong>%s</strong>"
 msgstr ""
 
-#: includes/action-functions.php:341
+#: includes/action-functions.php:364
 msgid "A post successfully created by campaign %s titled %s"
 msgstr ""
 
-#: includes/action-functions.php:375
+#: includes/action-functions.php:398
 msgid "Something wrong, please try again."
 msgstr ""
 
@@ -1706,7 +1706,7 @@ msgstr ""
 msgid "ERROR: Unable to write to file!"
 msgstr ""
 
-#: includes/class-wpcp-logger.php:198
+#: includes/class-wpcp-logger.php:199
 msgid "Can't open file!"
 msgstr ""
 
@@ -1801,30 +1801,30 @@ msgstr ""
 msgid "Failed to download image"
 msgstr ""
 
-#: includes/core-functions.php:400
+#: includes/core-functions.php:401
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true. WP-Cron spawning is disabled."
 msgstr ""
 
-#: includes/core-functions.php:405
+#: includes/core-functions.php:406
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true."
 msgstr ""
 
-#: includes/core-functions.php:441
+#: includes/core-functions.php:442
 #. translators: 1: The HTTP response code.
 msgid "Unexpected HTTP response code: %s"
 msgstr ""
 
-#: includes/core-functions.php:636
+#: includes/core-functions.php:637
 msgid "spinwritter API details is not set, aborting article spinner"
 msgstr ""
 
-#: includes/core-functions.php:646
+#: includes/core-functions.php:647
 msgid "Spinwritter could not send API request, aborting article spinner"
 msgstr ""
 
-#: includes/core-functions.php:653
+#: includes/core-functions.php:654
 #. translators: ERROR message
 msgid "Aborting article spinner Because [%s]"
 msgstr ""
@@ -2316,15 +2316,22 @@ msgstr ""
 msgid "Checking the duplicate status: [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:281
-msgid "The link [%s] is already in database, skipping"
+#: includes/modules/class-wpcp-feed.php:283
+msgid ""
+"The link [%s] is already in database, skipping. Remove it from database: <a "
+"href=\"#remove-cached-link\" class=\"wpcp_remove_cached_link\" "
+"data-link=\"%s\">%s</a>"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:288
+#: includes/modules/class-wpcp-feed.php:286
+msgid "Remove"
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:296
 msgid "The title [%s] is already in used, skipping"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:303
+#: includes/modules/class-wpcp-feed.php:311
 msgid "Total found links [%d] and accepted [%d] and reject [%d]"
 msgstr ""
 
