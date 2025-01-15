@@ -118,18 +118,18 @@ EOT;
 			)
 		);
 
-// phpcs:disable
-//		echo WPCP_HTML::select_input( array(
-//			'name'          => '_article_language',
-//			'label'         => __( 'Select language to search article', 'wp-content-pilot' ),
-//			'options'       => $this->get_article_language(),
-//			'default'       => 'en',
-//			'wrapper_class' => 'pro',
-//			'attrs'         => array(
-//				'disabled' => 'disabled',
-//			)
-//		) );
-// phpcs:enable
+		//phpcs:disable
+		//echo WPCP_HTML::select_input( array(
+		//	'name'          => '_article_language',
+		//	'label'         => __( 'Select language to search article', 'wp-content-pilot' ),
+		//	'options'       => $this->get_article_language(),
+		//	'default'       => 'en',
+		//	'wrapper_class' => 'pro',
+		//	'attrs'         => array(
+		//		'disabled' => 'disabled',
+		//	)
+		//) );
+		//phpcs:enable
 
 		echo WPCP_HTML::end_double_columns();
 	}
@@ -400,6 +400,17 @@ EOT;
 			}
 
 			if ( wpcp_is_duplicate_url( $link ) ) {
+				wpcp_logger()->info(
+					sprintf(
+					/* translators: %s URL, %s URL, %s Remove */
+						__( 'The link [%s] is already in database, skipping. Remove it from database: <a href="#remove-cached-link" class="wpcp_remove_cached_link" data-link="%s">%s</a>', 'wp-content-pilot' ),
+						esc_url( $link ),
+						esc_url( $link ),
+						__( 'Remove', 'wp-content-pilot' )
+					),
+					$campaign_id
+				);
+
 				continue;
 			}
 

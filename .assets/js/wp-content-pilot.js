@@ -6,11 +6,11 @@
  * Licensed under the GPLv2+ license.
  */
 
-/*jslint browser: true */
-/*global jQuery:false */
-/*global confirm:false */
-/*global wpcp_logger_offset:false */
-/*global wp_content_pilot_i10n:false */
+/* jslint browser: true */
+/* global jQuery:false */
+/* global confirm:false */
+/* global wpcp_logger_offset:false */
+/* global wp_content_pilot_i10n:false */
 jQuery(document).ready(function ($) {
 	'use strict';
 	$.wp_content_pilot = {
@@ -206,8 +206,7 @@ jQuery(document).ready(function ($) {
 					polylang_language_code_field.hide();
 				}
 			}).change();
-		}
-
+		},
 	};
 	$.wp_content_pilot.init();
 	$.wp_content_pilot.youtube();
@@ -215,4 +214,41 @@ jQuery(document).ready(function ($) {
 	$('#wpcp-clear-logs').on('click', $.wp_content_pilot.clearLogs);
 	$('#wpcp-run-campaign').on('click', $.wp_content_pilot.handle_manual_campaign);
 	$.wp_content_pilot.polylang();
+
+	// Remove cached link.
+	$(document).on('click', '.wpcp_remove_cached_link', function (e) {
+		e.preventDefault();
+
+		var $el = $(this);
+		var link = $el.data('link');
+
+		// Disable the button and update its text immediately to indicate processing.
+		$el.prop('disabled', true).text('Removing...');
+
+		$el.prop('disabled', true)
+			.text('Removing...')
+			.css({
+				'pointer-events': 'none',
+				'opacity': '0.6',
+				'cursor': 'not-allowed'
+			});
+
+		// Send the AJAX request.
+		wp.ajax.send('wpcp_remove_cached_link', {
+			data: {
+				link: link,
+				nonce: wp_content_pilot_i10n.nonce
+			},
+			success: function (response) {
+				// Update the button text to 'Removed'
+				$el.text('Removed');
+				alert('The link has been successfully removed from the database.');
+			},
+			error: function (error) {
+				// Revert its text if the request fails
+				$el.text('Error occurred');
+				alert('Failed to remove the link. ' + (error || 'An unknown error occurred.'));
+			}
+		});
+	});
 });

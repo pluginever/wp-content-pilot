@@ -379,7 +379,7 @@ function wpcp_insert_log( $message, $level = 'info', $camp_id = '0' ) {
 		array(
 			'camp_id'     => $camp_id,
 			'level'       => $level,
-			'message'     => wp_strip_all_tags( $message ),
+			'message'     => wp_kses_post( $message ),
 			'instance_id' => defined( 'WPCP_CAMPAIGN_INSTANCE' ) && WPCP_CAMPAIGN_INSTANCE ? WPCP_CAMPAIGN_INSTANCE : null,
 			'created_at'  => current_time( 'mysql' ),
 		)

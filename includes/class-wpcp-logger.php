@@ -173,7 +173,7 @@ class WPCP_Logger {
 			// Grab time.
 			$time = gmdate( $this->params['dateFormat'] );
 			// Write time, url, & message to end of file.
-			fwrite( $this->file, wp_strip_all_tags( "[$time] : [$severity] - $message" ) . PHP_EOL );
+			fwrite( $this->file, wp_kses_post( "[$time] : [$severity] - $message" ) . PHP_EOL );
 		}
 
 		$severities = array( 'INFO', 'WARNING', 'ERROR' );

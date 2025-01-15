@@ -1,14 +1,14 @@
-# Copyright (C) 2024 PluginEver
+# Copyright (C) 2025 PluginEver
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 2.0.5\n"
+"Project-Id-Version: WP Content Pilot 2.0.6\n"
 "Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
-"POT-Creation-Date: 2024-12-30 09:59:48+00:00\n"
+"POT-Creation-Date: 2025-01-15 09:14:06+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: en\n"
@@ -24,11 +24,11 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/action-functions.php:12 includes/action-functions.php:280
+#: includes/action-functions.php:12 includes/action-functions.php:309
 msgid "No Cheating"
 msgstr ""
 
-#: includes/action-functions.php:22 includes/action-functions.php:320
+#: includes/action-functions.php:22 includes/action-functions.php:349
 msgid "Invalid post action"
 msgstr ""
 
@@ -41,23 +41,23 @@ msgstr ""
 msgid "Reached campaign post limit. So campaign stopping publish new post"
 msgstr ""
 
-#: includes/action-functions.php:243
+#: includes/action-functions.php:272
 msgid "Post Publish"
 msgstr ""
 
-#: includes/action-functions.php:305 includes/action-functions.php:362
+#: includes/action-functions.php:334 includes/action-functions.php:391
 msgid "Cheating?"
 msgstr ""
 
-#: includes/action-functions.php:327
+#: includes/action-functions.php:356
 msgid "Campaign <strong>%s</strong> manually initiated by <strong>%s</strong>"
 msgstr ""
 
-#: includes/action-functions.php:341
+#: includes/action-functions.php:370
 msgid "A post successfully created by campaign %s titled %s"
 msgstr ""
 
-#: includes/action-functions.php:375
+#: includes/action-functions.php:404
 msgid "Something wrong, please try again."
 msgstr ""
 
@@ -1950,7 +1950,7 @@ msgid "Failed readability reason [%s] changing to different link"
 msgstr ""
 
 #: includes/modules/class-wpcp-article.php:259
-#: includes/modules/class-wpcp-envato.php:376
+#: includes/modules/class-wpcp-envato.php:388
 #: includes/modules/class-wpcp-flickr.php:303
 #: includes/modules/class-wpcp-youtube.php:353
 msgid "Cleaning title"
@@ -1962,7 +1962,7 @@ msgid "Making article content from response"
 msgstr ""
 
 #: includes/modules/class-wpcp-article.php:276
-#: includes/modules/class-wpcp-envato.php:418
+#: includes/modules/class-wpcp-envato.php:430
 #: includes/modules/class-wpcp-feed.php:203
 #: includes/modules/class-wpcp-flickr.php:344
 #: includes/modules/class-wpcp-youtube.php:392
@@ -1996,8 +1996,26 @@ msgid "Getting banned hosts for skipping links"
 msgstr ""
 
 #: includes/modules/class-wpcp-article.php:386
-#: includes/modules/class-wpcp-feed.php:252
+#: includes/modules/class-wpcp-feed.php:254
 msgid "Finding links from response and inserting into database"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:406
+#: includes/modules/class-wpcp-envato.php:317
+#: includes/modules/class-wpcp-feed.php:286
+#: includes/modules/class-wpcp-youtube.php:515
+#. translators: %s URL, %s URL, %s Remove
+msgid ""
+"The link [%s] is already in database, skipping. Remove it from database: <a "
+"href=\"#remove-cached-link\" class=\"wpcp_remove_cached_link\" "
+"data-link=\"%s\">%s</a>"
+msgstr ""
+
+#: includes/modules/class-wpcp-article.php:409
+#: includes/modules/class-wpcp-envato.php:320
+#: includes/modules/class-wpcp-feed.php:289
+#: includes/modules/class-wpcp-youtube.php:518
+msgid "Remove"
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:38
@@ -2208,35 +2226,35 @@ msgstr ""
 msgid "Checking duplicate links in store..."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:322
+#: includes/modules/class-wpcp-envato.php:334
 msgid "Finding images from item preview"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:348
+#: includes/modules/class-wpcp-envato.php:360
 msgid "Making affiliate url"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:363
+#: includes/modules/class-wpcp-envato.php:375
 msgid "Extracting tags from item"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:370
+#: includes/modules/class-wpcp-envato.php:382
 msgid "Generating envato article from [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:384
+#: includes/modules/class-wpcp-envato.php:396
 msgid "Extracting categories from response"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:390
+#: includes/modules/class-wpcp-envato.php:402
 msgid "Extracting tags from response"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:396
+#: includes/modules/class-wpcp-envato.php:408
 msgid "Combining all parts for article"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:421
+#: includes/modules/class-wpcp-envato.php:433
 msgid "Inserting link into store..."
 msgstr ""
 
@@ -2299,32 +2317,28 @@ msgstr ""
 msgid "Cleaning post title"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:229
+#: includes/modules/class-wpcp-feed.php:231
 msgid "Failed fetching feeds [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:231
+#: includes/modules/class-wpcp-feed.php:233
 msgid "Checking for force feed and initiating force feed"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:245
 #: includes/modules/class-wpcp-feed.php:247
+#: includes/modules/class-wpcp-feed.php:249
 msgid "Could not find any article, waiting..."
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:279
+#: includes/modules/class-wpcp-feed.php:281
 msgid "Checking the duplicate status: [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:281
-msgid "The link [%s] is already in database, skipping"
-msgstr ""
-
-#: includes/modules/class-wpcp-feed.php:288
+#: includes/modules/class-wpcp-feed.php:300
 msgid "The title [%s] is already in used, skipping"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:303
+#: includes/modules/class-wpcp-feed.php:315
 msgid "Total found links [%d] and accepted [%d] and reject [%d]"
 msgstr ""
 
@@ -2813,11 +2827,11 @@ msgstr ""
 msgid "Finding links from response and storing....."
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:532
+#: includes/modules/class-wpcp-youtube.php:543
 msgid "Total found links [%d] and accepted [%d] and rejected [%d]"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:629
+#: includes/modules/class-wpcp-youtube.php:640
 msgid "Youtube campaign wont run because you did not set the API details yet."
 msgstr ""
 
