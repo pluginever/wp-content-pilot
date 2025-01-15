@@ -177,6 +177,7 @@ function wpcp_remove_cached_link() {
 	global $wpdb;
 	$wpdb->delete( $wpdb->wpcp_links, array( 'url' => $link ) );
 	wp_send_json_success( 'success' );
+	exit();
 }
 
 add_action( 'wp_ajax_wpcp_remove_cached_link', 'wpcp_remove_cached_link' );
