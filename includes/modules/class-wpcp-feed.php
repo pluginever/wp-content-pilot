@@ -278,7 +278,7 @@ EOT;
 	        $is_duplicate_url = apply_filters( 'wpcp_is_duplicate_url', empty( wpcp_is_duplicate_url( $url ) ) ? false : true, $url, $campaign_id );
 			wpcp_logger()->info( sprintf( __( 'Checking the duplicate status: [%s]', 'wp-content-pilot' ), $is_duplicate_url ), $campaign_id );
             if ( $is_duplicate_url ) {
-				wpcp_logger()->info( sprintf( __( 'The link [%s] is already in database, skipping', 'wp-content-pilot' ), $url ), $campaign_id );
+				wpcp_logger()->info( sprintf( __( 'The link [%s] is already in database, skipping %s', 'wp-content-pilot' ), $url ), $campaign_id );
                 continue;
             }
 

@@ -364,9 +364,8 @@ add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_use_original_date_field',
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_external_link_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_featured_image_random_field', 20 );
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_canonical_link_field', 20 );
-add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_target_rel_field', 20 );
+// add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_target_rel_field', 20 ); // not used this, because of not working properly.
 add_action( 'wpcp_campaign_options_meta_fields', 'wpcp_not_save_featured_image_field', 20 );
-
 
 function wpcp_search_replace_metafield( $post ) {
 	?>
@@ -395,7 +394,6 @@ function wpcp_search_replace_metafield( $post ) {
 }
 
 add_action( 'wpcp_advanced_settings_metabox', 'wpcp_search_replace_metafield' );
-
 
 function wpcp_post_meta_metafield( $post ) {
 	?>
