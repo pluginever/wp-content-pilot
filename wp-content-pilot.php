@@ -38,6 +38,7 @@ defined( 'ABSPATH' ) || exit(); // Exit if accessed directly.
 /**
  * Main ContentPilot Class.
  *
+ * @since 1.0.0
  * @class ContentPilot
  */
 final class ContentPilot {
