@@ -133,6 +133,7 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 = 2.0.6 (January 15, 2025) =
 * New - Feature to remove cached links if in case needed.
 * Fix - Few known issues fixed.
+* Remove - Removed the unused code.
 
 = 2.0.5 (December 30, 2024) =
 * Fix - Few broken links are fixed.
