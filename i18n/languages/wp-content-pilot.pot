@@ -2,9 +2,9 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 2.0.5\n"
+"Project-Id-Version: WP Content Pilot 2.0.6\n"
 "Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
-"POT-Creation-Date: 2025-01-15 09:00:04+00:00\n"
+"POT-Creation-Date: 2025-01-15 09:14:06+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1706,7 +1706,7 @@ msgstr ""
 msgid "ERROR: Unable to write to file!"
 msgstr ""
 
-#: includes/class-wpcp-logger.php:199
+#: includes/class-wpcp-logger.php:198
 msgid "Can't open file!"
 msgstr ""
 
@@ -1801,30 +1801,30 @@ msgstr ""
 msgid "Failed to download image"
 msgstr ""
 
-#: includes/core-functions.php:401
+#: includes/core-functions.php:400
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true. WP-Cron spawning is disabled."
 msgstr ""
 
-#: includes/core-functions.php:406
+#: includes/core-functions.php:405
 #. translators: 1: The name of the PHP constant that is set.
 msgid "The %s constant is set to true."
 msgstr ""
 
-#: includes/core-functions.php:442
+#: includes/core-functions.php:441
 #. translators: 1: The HTTP response code.
 msgid "Unexpected HTTP response code: %s"
 msgstr ""
 
-#: includes/core-functions.php:637
+#: includes/core-functions.php:636
 msgid "spinwritter API details is not set, aborting article spinner"
 msgstr ""
 
-#: includes/core-functions.php:647
+#: includes/core-functions.php:646
 msgid "Spinwritter could not send API request, aborting article spinner"
 msgstr ""
 
-#: includes/core-functions.php:654
+#: includes/core-functions.php:653
 #. translators: ERROR message
 msgid "Aborting article spinner Because [%s]"
 msgstr ""
