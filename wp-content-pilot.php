@@ -3,7 +3,7 @@
  * Plugin Name:       WP Content Pilot
  * Plugin URI:        https://wpcontentpilot.com
  * Description:       WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:           2.0.6
+ * Version:           2.0.7
  * Requires at least: 5.0
  * Requires PHP:      7.4
  * Author:            PluginEver
@@ -47,7 +47,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '2.0.6';
+	protected $version = '2.0.7';
 
 	/**
 	 * The single instance of the class.
@@ -178,6 +178,31 @@ final class ContentPilot {
 		if ( is_admin() ) {
 			require_once( WPCP_INCLUDES . '/admin/class-wpcp-admin.php' );
 		}
+
+		// Update helper for pro version. This will be removed in the future.
+		if ( defined( 'WPCP_PRO_VERSION' ) ) {
+			add_filter( 'http_request_args', array( $this, 'pro_updater' ), 10, 2 );
+		}
+	}
+
+	/**
+	 * Pro Updater.
+	 *
+	 * This is a temporary solution to update the pro version.
+	 * This will be removed in the future.
+	 *
+	 * @param array  $args HTTP request arguments.
+	 * @param string $url Request URL.
+	 *
+	 * @since 2.0.7
+	 * @return array $args HTTP request arguments.
+	 */
+	public function pro_updater( $args, $url ) {
+		if ( str_contains( $url, 'pluginever.com' ) && empty( $args['body']['item_id'] ) && 'wp-content-pilot-pro' === $args['body']['slug'] ) {
+			$args['body']['item_id'] = absint( '59161' );
+		}
+
+		return $args;
 	}
 
 	/**
