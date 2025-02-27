@@ -47,7 +47,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '2.0.7';
+	protected $version = '2.0.8';
 
 	/**
 	 * The single instance of the class.
