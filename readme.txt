@@ -1,6 +1,6 @@
 === WP Content Pilot - Autoblogging & Affiliate Marketing Plugin ===
 Contributors: pluginever,manikmist09
-Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, feed import, content curation, feed to post, rss to post, rss feeds, auto post
+Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, rss to post, rss feeds
 Requires at least: 5.0
 Tested up to: 6.7
 Stable tag: 2.0.8
