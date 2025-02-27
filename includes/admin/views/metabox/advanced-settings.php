@@ -43,7 +43,7 @@ echo WPCP_HTML::select_input(
 		'wrapper_class' => 'pro',
 		'options'       => array(
 			''       => esc_html__( 'No Translation', 'wp-content-pilot' ),
-			'yandex' => 'Yandex',
+			// 'yandex' => 'Yandex', // TODO: Remove this option, as it is not used due to the removal of the Yandex API key setting.
 			'deepl'  => 'deepL',
 		),
 		'attrs'         => array(
