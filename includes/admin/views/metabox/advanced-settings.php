@@ -43,7 +43,6 @@ echo WPCP_HTML::select_input(
 		'wrapper_class' => 'pro',
 		'options'       => array(
 			''       => esc_html__( 'No Translation', 'wp-content-pilot' ),
-			'yandex' => 'Yandex',
 			'deepl'  => 'deepL',
 		),
 		'attrs'         => array(
