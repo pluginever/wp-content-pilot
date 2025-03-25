@@ -3,7 +3,7 @@ Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, rss to post, rss feeds
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,7 +15,6 @@ Automatically post contents, create news feeds, import and display unlimited RSS
 **[WP Content Pilot](https://pluginever.com/plugins/wp-content-pilot-pro/)** is the best autoblogging and content curation plugin. It helps you to create high-quality WordPress blog posts and inject your affiliate link automatically.
 
 The plugin keeps posting articles on your site at a predefined interval using your chosen keywords and sources and maintaining your website fresh and updated. WP Content Pilot also inserts your affiliate links automatically, so you get your commission from the vendors.
-
 
 = ✨ WP Content Pilot Features: =
 Here is the detailed breakdown of all the features that we ship with WP Content Content Pilot to make it suitable for various cases!
@@ -130,6 +129,10 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= 2.0.9 (March 25, 2025) =
+* Fix - Few known issues are fixed.
+* Compatibility - Check compatibility with the latest version of WordPress.
+
 = 2.0.8 (February 27, 2025) =
 * Fix - Few known issues are fixed.
 
