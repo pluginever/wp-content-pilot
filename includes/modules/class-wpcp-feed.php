@@ -272,19 +272,19 @@ EOT;
                 preg_match( '{url\=(.*?)[&]}', $url, $urlMatches );
                 $correctUrl = $urlMatches[1];
 
-                if ( trim( $correctUrl ) != '' ) {
+                if ( trim( $correctUrl ) !== '' ) {
                     $url = $correctUrl;
                 }
             }
 
             $title = $rss_item->get_title();
             $meta  = array(
-                'description' => '' != $rss_item->get_content() ? $rss_item->get_content() : '',
+                'description' => '' !== $rss_item->get_content() ? $rss_item->get_content() : '',
             );
 
 			// Check if the link is already in database.
 	        $is_duplicate_url = apply_filters( 'wpcp_is_duplicate_url', empty( wpcp_is_duplicate_url( $url ) ) ? false : true, $url, $campaign_id );
-			wpcp_logger()->info( sprintf( __( 'Checking the duplicate status: [%s]', 'wp-content-pilot' ), $is_duplicate_url ), $campaign_id );
+			wpcp_logger()->info( sprintf( /* translators: %s Whether the URL is duplicate or not */ __( 'Checking the duplicate status: [%s]', 'wp-content-pilot' ), $is_duplicate_url ), $campaign_id );
             if ( $is_duplicate_url ) {
 				wpcp_logger()->info(
 					sprintf(
@@ -303,7 +303,7 @@ EOT;
 			// Check if the title is already in database or not.
             $skip = apply_filters( 'wpcp_skip_duplicate_title', false, $title, $campaign_id );
             if ( $skip ) {
-				wpcp_logger()->info( sprintf( __( 'The title [%s] is already in used, skipping', 'wp-content-pilot' ), $title ), $campaign_id );
+				wpcp_logger()->info( sprintf( /* translators: %s The title */ __( 'The title [%s] is already in used, skipping', 'wp-content-pilot' ), $title ), $campaign_id );
                 continue;
             }
             $data = array(
