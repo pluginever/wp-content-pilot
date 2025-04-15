@@ -3,7 +3,7 @@ Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, rss to post, rss feeds
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 2.0.9
+Stable tag: 2.1.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -129,6 +129,9 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= 2.1.0 (April 15, 2025) =
+* Fix - Few known issues are fixed.
+
 = 2.0.9 (March 25, 2025) =
 * Fix - Few known issues are fixed.
 * Compatibility - Check compatibility with the latest version of WordPress.

@@ -78,6 +78,8 @@ EOT;
     }
 
     /**
+     * Save campaign meta
+     *
      * @param $campaign_id
      * @param $posted
      */
@@ -95,20 +97,24 @@ EOT;
     }
 
     /**
-     * @param $sections
+     * Get campaign setting sections.
      *
-     * @return array
+     * @param $section
+     *
      * @since 1.2.0
+     * @return array|string
      */
-    public function get_setting_section( $sections ) {
-        return $sections;
+    public function get_setting_section( $section ) {
+        return $section;
     }
 
     /**
+     * Get campaign setting fields.
+     *
      * @param $fields
      *
-     * @return array
      * @since 1.2.0
+     * @return array
      */
     public function get_setting_fields( $fields ) {
         return $fields;
@@ -129,10 +135,10 @@ EOT;
         wpcp_logger()->info( 'Loaded Feed Campaign', $campaign_id );
 
         foreach ( $sources as $source ) {
-            wpcp_logger()->info( sprintf( __( 'Looping through feed link now trying with [ %s ]', 'wp-content-pilot' ), $source ), $campaign_id );
+            wpcp_logger()->info( sprintf( /* translators: %s The source */ __( 'Looping through feed link now trying with [ %s ]', 'wp-content-pilot' ), $source ), $campaign_id );
 
             if ( $this->is_deactivated_key( $campaign_id, $source ) ) {
-                $message = sprintf( __( 'The feed url is deactivated for 1 hr because last time could not find any article with url [%s]', 'wp-content-pilot' ), $source );
+                $message = sprintf( /* translators: %s The source */ __( 'The feed url is deactivated for 1 hr because last time could not find any article with url [%s]', 'wp-content-pilot' ), $source );
                 wpcp_logger()->info( $message, $campaign_id );
                 continue;
             }
@@ -152,7 +158,7 @@ EOT;
 
             wpcp_logger()->info( __( 'Looping through cached links for publishing article', 'wp-content-pilot' ), $campaign_id );
             foreach ( $links as $link ) {
-                wpcp_logger()->info( sprintf( __( 'Grabbing feed from [%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
+                wpcp_logger()->info( sprintf( /* translators: %s The URL */ __( 'Grabbing feed from [%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
 
                 $this->update_link( $link->id, [ 'status' => 'failed' ] );
 
@@ -161,8 +167,8 @@ EOT;
                 $curl->setOpt( CURLOPT_ENCODING, '' );
                 $curl->get( $link->url );
 
-                if ( $curl->isError() && $this->initiator != 'cron' ) {
-                    wpcp_logger()->error( sprintf( __( "Failed processing link reason [%s]", 'wp-content-pilot' ), $curl->getErrorMessage() ), $campaign_id );
+                if ( $curl->isError() && $this->initiator !== 'cron' ) {
+                    wpcp_logger()->error( sprintf( /* translators: %s The error message */ __( "Failed processing link reason [%s]", 'wp-content-pilot' ), $curl->getErrorMessage() ), $campaign_id );
                     continue;
                 }
                 wpcp_logger()->info( __( "Extracting post response from request", 'wp-content-pilot' ), $campaign_id );
@@ -172,14 +178,14 @@ EOT;
 
                 $readable = $readability->parse( $html, $link->url );
                 if ( is_wp_error( $readable ) ) {
-                    wpcp_logger()->error( sprintf( __( "Failed readability reason [%s]", 'wp-content-pilot' ), $readable->get_error_message() ), $campaign_id );
+                    wpcp_logger()->error( sprintf( /* translators: %s The error message */ __( "Failed readability reason [%s]", 'wp-content-pilot' ), $readable->get_error_message() ), $campaign_id );
                     continue;
                 }
 
                 //check if the clean title metabox is checked and perform title cleaning
                 $check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
 
-                if ( 'on' == $check_clean_title ) {
+                if ( 'on' === $check_clean_title ) {
                     wpcp_logger()->info( __( 'Cleaning post title', 'wp-content-pilot' ), $campaign_id );
                     $title = wpcp_clean_title( $readability->get_title() );
                 } else {
@@ -228,7 +234,7 @@ EOT;
         $rss = fetch_feed( $source );
 
         if ( is_wp_error( $rss ) ) {
-            wpcp_logger()->error( sprintf( __( 'Failed fetching feeds [%s]', 'wp-content-pilot' ), $rss->get_error_message() ), $campaign_id );
+            wpcp_logger()->error( sprintf( /* translators: %s The error Message */ __( 'Failed fetching feeds [%s]', 'wp-content-pilot' ), $rss->get_error_message() ), $campaign_id );
 
             wpcp_logger()->info( __( 'Checking for force feed and initiating force feed', 'wp-content-pilot' ), $campaign_id );
             if ( ! function_exists( 'wpcp_force_feed' ) ) {
@@ -243,7 +249,7 @@ EOT;
 
         $max_items = $rss->get_item_quantity();
         $rss_items = $rss->get_items( 0, $max_items );
-        if ( ! isset( $max_items ) || $max_items == 0 ) {
+        if ( ! isset( $max_items ) || $max_items === 0 ) {
             wpcp_logger()->error( __( 'Could not find any article, waiting...', 'wp-content-pilot' ), $campaign_id );
 
             return new WP_Error( 'feed-error', __( 'Could not find any article, waiting...', 'wp-content-pilot' ) );
@@ -266,19 +272,19 @@ EOT;
                 preg_match( '{url\=(.*?)[&]}', $url, $urlMatches );
                 $correctUrl = $urlMatches[1];
 
-                if ( trim( $correctUrl ) != '' ) {
+                if ( trim( $correctUrl ) !== '' ) {
                     $url = $correctUrl;
                 }
             }
 
             $title = $rss_item->get_title();
             $meta  = array(
-                'description' => '' != $rss_item->get_content() ? $rss_item->get_content() : '',
+                'description' => '' !== $rss_item->get_content() ? $rss_item->get_content() : '',
             );
 
 			// Check if the link is already in database.
 	        $is_duplicate_url = apply_filters( 'wpcp_is_duplicate_url', empty( wpcp_is_duplicate_url( $url ) ) ? false : true, $url, $campaign_id );
-			wpcp_logger()->info( sprintf( __( 'Checking the duplicate status: [%s]', 'wp-content-pilot' ), $is_duplicate_url ), $campaign_id );
+			wpcp_logger()->info( sprintf( /* translators: %s Whether the URL is duplicate or not */ __( 'Checking the duplicate status: [%s]', 'wp-content-pilot' ), $is_duplicate_url ), $campaign_id );
             if ( $is_duplicate_url ) {
 				wpcp_logger()->info(
 					sprintf(
@@ -297,7 +303,7 @@ EOT;
 			// Check if the title is already in database or not.
             $skip = apply_filters( 'wpcp_skip_duplicate_title', false, $title, $campaign_id );
             if ( $skip ) {
-				wpcp_logger()->info( sprintf( __( 'The title [%s] is already in used, skipping', 'wp-content-pilot' ), $title ), $campaign_id );
+				wpcp_logger()->info( sprintf( /* translators: %s The title */ __( 'The title [%s] is already in used, skipping', 'wp-content-pilot' ), $title ), $campaign_id );
                 continue;
             }
             $data = array(
