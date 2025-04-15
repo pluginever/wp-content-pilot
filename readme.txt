@@ -130,7 +130,7 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 
 == Changelog ==
 = 2.1.0 (April 15, 2025) =
-* Fix: Few known issues are fixed.
+* Fix - Few known issues are fixed.
 
 = 2.0.9 (March 25, 2025) =
 * Fix - Few known issues are fixed.
