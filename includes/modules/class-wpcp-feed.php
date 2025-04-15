@@ -78,6 +78,8 @@ EOT;
     }
 
     /**
+     * Save campaign meta
+     *
      * @param $campaign_id
      * @param $posted
      */
@@ -95,20 +97,24 @@ EOT;
     }
 
     /**
-     * @param $sections
+     * Get campaign setting sections.
      *
-     * @return array
+     * @param $section
+     *
      * @since 1.2.0
+     * @return array|string
      */
-    public function get_setting_section( $sections ) {
-        return $sections;
+    public function get_setting_section( $section ) {
+        return $section;
     }
 
     /**
+     * Get campaign setting fields.
+     *
      * @param $fields
      *
-     * @return array
      * @since 1.2.0
+     * @return array
      */
     public function get_setting_fields( $fields ) {
         return $fields;
@@ -161,7 +167,7 @@ EOT;
                 $curl->setOpt( CURLOPT_ENCODING, '' );
                 $curl->get( $link->url );
 
-                if ( $curl->isError() && $this->initiator != 'cron' ) {
+                if ( $curl->isError() && $this->initiator !== 'cron' ) {
                     wpcp_logger()->error( sprintf( /* translators: %s The error message */ __( "Failed processing link reason [%s]", 'wp-content-pilot' ), $curl->getErrorMessage() ), $campaign_id );
                     continue;
                 }
@@ -179,7 +185,7 @@ EOT;
                 //check if the clean title metabox is checked and perform title cleaning
                 $check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
 
-                if ( 'on' == $check_clean_title ) {
+                if ( 'on' === $check_clean_title ) {
                     wpcp_logger()->info( __( 'Cleaning post title', 'wp-content-pilot' ), $campaign_id );
                     $title = wpcp_clean_title( $readability->get_title() );
                 } else {
@@ -228,7 +234,7 @@ EOT;
         $rss = fetch_feed( $source );
 
         if ( is_wp_error( $rss ) ) {
-            wpcp_logger()->error( sprintf( __( 'Failed fetching feeds [%s]', 'wp-content-pilot' ), $rss->get_error_message() ), $campaign_id );
+            wpcp_logger()->error( sprintf( /* translators: %s The error Message */ __( 'Failed fetching feeds [%s]', 'wp-content-pilot' ), $rss->get_error_message() ), $campaign_id );
 
             wpcp_logger()->info( __( 'Checking for force feed and initiating force feed', 'wp-content-pilot' ), $campaign_id );
             if ( ! function_exists( 'wpcp_force_feed' ) ) {
@@ -243,7 +249,7 @@ EOT;
 
         $max_items = $rss->get_item_quantity();
         $rss_items = $rss->get_items( 0, $max_items );
-        if ( ! isset( $max_items ) || $max_items == 0 ) {
+        if ( ! isset( $max_items ) || $max_items === 0 ) {
             wpcp_logger()->error( __( 'Could not find any article, waiting...', 'wp-content-pilot' ), $campaign_id );
 
             return new WP_Error( 'feed-error', __( 'Could not find any article, waiting...', 'wp-content-pilot' ) );
