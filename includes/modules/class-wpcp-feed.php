@@ -129,10 +129,10 @@ EOT;
         wpcp_logger()->info( 'Loaded Feed Campaign', $campaign_id );
 
         foreach ( $sources as $source ) {
-            wpcp_logger()->info( sprintf( __( 'Looping through feed link now trying with [ %s ]', 'wp-content-pilot' ), $source ), $campaign_id );
+            wpcp_logger()->info( sprintf( /* translators: %s The source */ __( 'Looping through feed link now trying with [ %s ]', 'wp-content-pilot' ), $source ), $campaign_id );
 
             if ( $this->is_deactivated_key( $campaign_id, $source ) ) {
-                $message = sprintf( __( 'The feed url is deactivated for 1 hr because last time could not find any article with url [%s]', 'wp-content-pilot' ), $source );
+                $message = sprintf( /* translators: %s The source */ __( 'The feed url is deactivated for 1 hr because last time could not find any article with url [%s]', 'wp-content-pilot' ), $source );
                 wpcp_logger()->info( $message, $campaign_id );
                 continue;
             }
@@ -152,7 +152,7 @@ EOT;
 
             wpcp_logger()->info( __( 'Looping through cached links for publishing article', 'wp-content-pilot' ), $campaign_id );
             foreach ( $links as $link ) {
-                wpcp_logger()->info( sprintf( __( 'Grabbing feed from [%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
+                wpcp_logger()->info( sprintf( /* translators: %s The URL */ __( 'Grabbing feed from [%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
 
                 $this->update_link( $link->id, [ 'status' => 'failed' ] );
 
@@ -162,7 +162,7 @@ EOT;
                 $curl->get( $link->url );
 
                 if ( $curl->isError() && $this->initiator != 'cron' ) {
-                    wpcp_logger()->error( sprintf( __( "Failed processing link reason [%s]", 'wp-content-pilot' ), $curl->getErrorMessage() ), $campaign_id );
+                    wpcp_logger()->error( sprintf( /* translators: %s The error message */ __( "Failed processing link reason [%s]", 'wp-content-pilot' ), $curl->getErrorMessage() ), $campaign_id );
                     continue;
                 }
                 wpcp_logger()->info( __( "Extracting post response from request", 'wp-content-pilot' ), $campaign_id );
@@ -172,7 +172,7 @@ EOT;
 
                 $readable = $readability->parse( $html, $link->url );
                 if ( is_wp_error( $readable ) ) {
-                    wpcp_logger()->error( sprintf( __( "Failed readability reason [%s]", 'wp-content-pilot' ), $readable->get_error_message() ), $campaign_id );
+                    wpcp_logger()->error( sprintf( /* translators: %s The error message */ __( "Failed readability reason [%s]", 'wp-content-pilot' ), $readable->get_error_message() ), $campaign_id );
                     continue;
                 }
 
