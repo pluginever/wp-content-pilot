@@ -293,13 +293,13 @@ function wpcp_truncate_content( $content, $length, $html = true ) {
  * @return bool|int
  */
 function wpcp_download_image( $url, $description = '' ) {
-	$raw_url  = $url;
-	$url      = explode( '?', esc_url_raw( $url ) );
-	$url      = $url[0];
-	$get      = wp_remote_get( $raw_url );
-	$headers  = wp_remote_retrieve_headers( $get );
-	$type     = isset( $headers['content-type'] ) ? $headers['content-type'] : null;
-	$types    = array(
+	$raw_url = $url;
+	$url     = explode( '?', esc_url_raw( $url ) );
+	$url     = $url[0];
+	$get     = wp_remote_get( $raw_url );
+	$headers = wp_remote_retrieve_headers( $get );
+	$type    = isset( $headers['content-type'] ) ? $headers['content-type'] : null;
+	$types   = array(
 		'image/png',
 		'image/jpeg',
 		'image/gif',
