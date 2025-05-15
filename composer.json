@@ -8,7 +8,7 @@
   "minimum-stability": "dev",
   "repositories": [],
   "require-dev": {
-    "byteever/byteever-sniffs": "dev-master"
+    "byteever/byteever-sniffs": "^1.1"
   },
   "autoload": {},
   "config": {
