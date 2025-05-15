@@ -8,6 +8,7 @@
  * JavaScript.
  *
  * Example usage:
+ *
  * @code
  * require_once 'JSLikeHTMLElement.php';
  * header('Content-Type: text/plain');
@@ -32,30 +33,33 @@
  * @author Keyvan Minoukadeh - http://www.keyvan.net - keyvan@keyvan.net
  * @see http://fivefilters.org (the project this was written for)
  */
-class JSLikeHTMLElement extends DOMElement
-{
+class JSLikeHTMLElement extends DOMElement {
 	/**
 	 * Used for setting innerHTML like it's done in JavaScript:
+	 *
+	 * @param string $name  The name of the property to set.
+	 * @param string $value The value to set the property to.
+	 *
 	 * @code
 	 * $div->innerHTML = '<h2>Chapter 2</h2><p>The story begins...</p>';
 	 * @endcode
 	 */
-	public function __set($name, $value) {
-		if ($name == 'innerHTML') {
-			// first, empty the element
+	public function __set( $name, $value ) {
+		if ( 'innerHTML' === $name ) {
+			// first, empty the element.
 			for ($x=$this->childNodes->length-1; $x>=0; $x--) {
 				$this->removeChild($this->childNodes->item($x));
 			}
-			// $value holds our new inner HTML
-			if ($value != '') {
+			// $value holds our new inner HTML.
+			if ( '' !== $value ) {
 				$f = $this->ownerDocument->createDocumentFragment();
-				// appendXML() expects well-formed markup (XHTML)
-				$result = @$f->appendXML($value); // @ to suppress PHP warnings
+				// appendXML() expects well-formed markup (XHTML).
+				$result = @$f->appendXML($value); // @ to suppress PHP warnings.
 				if ($result) {
 					if ($f->hasChildNodes()) $this->appendChild($f);
 				} else {
-					// $value is probably ill-formed
-					$f = new DOMDocument();
+					// $value is probably ill-formed.
+					$f     = new DOMDocument();
 					$value = mb_convert_encoding($value, 'HTML-ENTITIES', 'UTF-8');
 					// Using <htmlfragment> will generate a warning, but so will bad HTML
 					// (and by this point, bad HTML is what we've got).
@@ -89,7 +93,7 @@ class JSLikeHTMLElement extends DOMElement
 	 */
 	public function __get($name)
 	{
-		if ($name == 'innerHTML') {
+		if ( 'innerHTML' === $name ) {
 			$inner = '';
 			foreach ($this->childNodes as $child) {
 				$inner .= $this->ownerDocument->saveXML($child);
