@@ -2,9 +2,9 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Content Pilot 2.1.1\n"
+"Project-Id-Version: WP Content Pilot 2.1.2\n"
 "Report-Msgid-Bugs-To: https://pluginever.com/support/\n"
-"POT-Creation-Date: 2025-05-15 09:48:51+00:00\n"
+"POT-Creation-Date: 2025-05-28 06:56:30+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1651,44 +1651,44 @@ msgstr ""
 msgid "Copied"
 msgstr ""
 
-#: includes/admin/views/tables/class-wpcp-logs-table.php:132
+#: includes/admin/views/tables/class-wpcp-logs-table.php:133
 #. translators: 1: Plural of log or logs string
 msgid "No %s found."
 msgstr ""
 
-#: includes/admin/views/tables/class-wpcp-logs-table.php:179
+#: includes/admin/views/tables/class-wpcp-logs-table.php:182
 msgid "All"
 msgstr ""
 
-#: includes/admin/views/tables/class-wpcp-logs-table.php:180
+#: includes/admin/views/tables/class-wpcp-logs-table.php:183
 msgid "Info"
 msgstr ""
 
-#: includes/admin/views/tables/class-wpcp-logs-table.php:181
+#: includes/admin/views/tables/class-wpcp-logs-table.php:184
 msgid "Warning"
 msgstr ""
 
-#: includes/admin/views/tables/class-wpcp-logs-table.php:182
+#: includes/admin/views/tables/class-wpcp-logs-table.php:185
 msgid "Error"
 msgstr ""
 
-#: includes/admin/views/tables/class-wpcp-logs-table.php:198
+#: includes/admin/views/tables/class-wpcp-logs-table.php:201
 msgid "Clear Logs"
 msgstr ""
 
-#: includes/admin/views/tables/class-wpcp-logs-table.php:210
+#: includes/admin/views/tables/class-wpcp-logs-table.php:213
 msgid "Campaign"
 msgstr ""
 
-#: includes/admin/views/tables/class-wpcp-logs-table.php:211
+#: includes/admin/views/tables/class-wpcp-logs-table.php:214
 msgid "Level"
 msgstr ""
 
-#: includes/admin/views/tables/class-wpcp-logs-table.php:212
+#: includes/admin/views/tables/class-wpcp-logs-table.php:215
 msgid "Log"
 msgstr ""
 
-#: includes/admin/views/tables/class-wpcp-logs-table.php:213
+#: includes/admin/views/tables/class-wpcp-logs-table.php:216
 #: includes/modules/class-wpcp-envato.php:114
 #: includes/modules/class-wpcp-youtube.php:116
 msgid "Date"

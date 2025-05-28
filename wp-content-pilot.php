@@ -3,9 +3,9 @@
  * Plugin Name:       WP Content Pilot
  * Plugin URI:        https://wpcontentpilot.com
  * Description:       WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:           2.1.1
- * Requires at least: 5.0
- * Requires PHP:      7.4
+ * Version:           2.1.2
+ * Requires at least: 5.2
+ * Requires PHP:      8.0
  * Author:            PluginEver
  * Author URI:        https://pluginever.com
  * License:           GPL v2 or later
@@ -47,7 +47,7 @@ final class ContentPilot {
 	 *
 	 * @var string
 	 */
-	protected $version = '2.1.1';
+	protected $version = '2.1.2';
 
 	/**
 	 * The single instance of the class.

@@ -23,7 +23,7 @@ jobs:
       - name: Setup PHP version
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.0
+          php-version: 8.2
           coverage: none
           tools: composer, cs2pr
 
@@ -37,7 +37,7 @@ jobs:
           echo "{files}={$FILES}" >> $GITHUB_OUTPUT
 
       - name: Test changed files
-        run: ./vendor/bin/phpcs ${{ steps.changes.outputs.files }} --report-full --report-checkstyle=./.github/phpcs-report.xml --runtime-set testVersion 8.0
+        run: ./vendor/bin/phpcs ${{ steps.changes.outputs.files }} --ignore=*/vendor/*,*/includes/library/* --report-full --report-checkstyle=./.github/phpcs-report.xml --runtime-set testVersion 8.0
 
       - name: Upload PHPCS report
         if: ${{ always() }}
