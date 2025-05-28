@@ -88,6 +88,7 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 	 * @return void
 	 */
 	public function prepare_items() {
+		wp_verify_nonce( '_nonce' );
 		$per_page              = $this->per_page;
 		$columns               = $this->get_columns();
 		$hidden                = array();
@@ -142,6 +143,8 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 	 * @return void
 	 */
 	public function search_box( $text, $input_id ) {
+		wp_verify_nonce( '_nonce' );
+
 		if ( empty( $_REQUEST['s'] ) && ! $this->has_items() ) {
 			return;
 		}
