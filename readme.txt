@@ -1,10 +1,10 @@
 === WP Content Pilot - Autoblogging & Affiliate Marketing Plugin ===
 Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, rss to post, rss feeds
-Requires at least: 5.0
+Requires at least: 5.2
 Tested up to: 6.8
-Stable tag: 2.1.1
-Requires PHP: 7.4
+Stable tag: 2.1.2
+Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -97,8 +97,8 @@ https://www.youtube.com/watch?v=5A3gx0f6PJk
 
 = Minimum requirements =
 
-* WordPress 5.0 or greater
-* PHP version 7.4 or greater
+* WordPress 5.2 or greater
+* PHP version 8.0 or greater
 * MySQL version 5.6 or greater
 * MariaDB version 10 or later
 
@@ -129,6 +129,10 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= 2.1.2 (May 28, 2025) =
+* Compatibility - Check PHP compatibility and update the plugin to support PHP 8.0 or above.
+* Fix - Few known issues are fixed.
+
 = 2.1.1 (May 15, 2025) =
 * Fix - Few minor issues are fixed.
 
