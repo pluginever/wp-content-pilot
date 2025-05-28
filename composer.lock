@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a6d8dfce569447390e0325d2ab638f4",
+    "content-hash": "5d838dfd857a20aa73cfca7a970bf10b",
     "packages": [
         {
             "name": "php-curl-class/php-curl-class",
-            "version": "8.10.0",
+            "version": "7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-curl-class/php-curl-class.git",
-                "reference": "c97c96d5d422b4085aba32ace096c3e404dde607"
+                "reference": "c15f23ce5d52a4c68b69640ed6510a9d2a98ec6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/c97c96d5d422b4085aba32ace096c3e404dde607",
-                "reference": "c97c96d5d422b4085aba32ace096c3e404dde607",
+                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/c15f23ce5d52a4c68b69640ed6510a9d2a98ec6f",
+                "reference": "c15f23ce5d52a4c68b69640ed6510a9d2a98ec6f",
                 "shasum": ""
             },
             "require": {
@@ -25,12 +25,8 @@
                 "php": ">=5.3"
             },
             "require-dev": {
-                "ext-gd": "*",
                 "phpunit/phpunit": "*",
                 "squizlabs/php_codesniffer": "*"
-            },
-            "suggest": {
-                "ext-mbstring": "*"
             },
             "type": "library",
             "autoload": {
@@ -50,31 +46,26 @@
             "description": "PHP Curl Class makes it easy to send HTTP requests and integrate with web APIs.",
             "homepage": "https://github.com/php-curl-class/php-curl-class",
             "keywords": [
-                "API-Client",
                 "api",
                 "class",
                 "client",
                 "curl",
                 "framework",
                 "http",
-                "http-client",
-                "http-proxy",
+                "http client",
                 "json",
                 "php",
-                "php-curl",
-                "php-curl-library",
-                "proxy",
                 "requests",
+                "rest",
                 "restful",
-                "web-scraper",
-                "web-service",
+                "web service",
                 "xml"
             ],
             "support": {
                 "issues": "https://github.com/php-curl-class/php-curl-class/issues",
-                "source": "https://github.com/php-curl-class/php-curl-class/tree/8.10.0"
+                "source": "https://github.com/php-curl-class/php-curl-class/tree/7.4.0"
             },
-            "time": "2021-06-23T14:34:00+00:00"
+            "time": "2017-09-04T21:38:09+00:00"
         }
     ],
     "packages-dev": [
@@ -735,7 +726,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.0"
+        "php": ">=7.4"
     },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
