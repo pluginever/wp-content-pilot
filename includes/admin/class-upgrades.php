@@ -1,5 +1,14 @@
 <?php
-defined('ABSPATH')|| exit();
+/**
+ * Content Pilot Upgrades
+ * This file is responsible for handling the plugin upgrades.
+ *
+ * @since   1.0.0
+ * @package WPContentPilot
+ */
+
+defined( 'ABSPATH' ) || exit();
+
 /**
  * Plugin Upgrade Routine
  *
@@ -10,6 +19,7 @@ class ContentPilot_Upgrades {
 	/**
 	 * The upgrades
 	 *
+	 * @since 1.0.0
 	 * @var array
 	 */
 	private static $upgrades = array(
@@ -20,6 +30,7 @@ class ContentPilot_Upgrades {
 	/**
 	 * Get the plugin version
 	 *
+	 * @since 1.0.0
 	 * @return string
 	 */
 	public function get_version() {
@@ -29,11 +40,11 @@ class ContentPilot_Upgrades {
 	/**
 	 * Check if the plugin needs any update
 	 *
+	 * @since 1.0.0
 	 * @return boolean
 	 */
 	public function needs_update() {
-
-		// may be it's the first install
+		// Maybe it's the first install.
 		if ( ! $this->get_version() ) {
 			return false;
 		}
@@ -48,11 +59,12 @@ class ContentPilot_Upgrades {
 	/**
 	 * Perform all the necessary upgrade routines
 	 *
+	 * @since 1.0.0
 	 * @return void
 	 */
-	function perform_updates() {
+	public function perform_updates() {
 		$installed_version = $this->get_version();
-		$path              = trailingslashit( dirname( __FILE__ ) );
+		$path              = trailingslashit( __DIR__ );
 
 		foreach ( self::$upgrades as $version => $file ) {
 			if ( version_compare( $installed_version, $version, '<' ) ) {
@@ -60,7 +72,5 @@ class ContentPilot_Upgrades {
 				update_option( 'wpcp_version', $version );
 			}
 		}
-
-
 	}
 }
