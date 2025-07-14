@@ -53,7 +53,6 @@ class WPCP_Admin_Notices {
 	 */
 	private static $predefined_notices = array(
 		'upgrade_notice' => 'upgrade_notice',
-		'article_notice' => 'article_notice',
 	);
 
 	/**
@@ -322,23 +321,6 @@ class WPCP_Admin_Notices {
 			array(
 				'type'          => 'native notice-info',
 				'dismiss_class' => 'spinner_notice',
-			)
-		);
-	}
-
-	/**
-	 * Add 'article_notice' notice.
-	 *
-	 * @since 1.3.2
-	 * @return void
-	 */
-	public static function article_notice() {
-		$notice = __( 'Article search options will be changed in the next version of WP Content Pilot. Bing search will be replaced with Google Custom Search.', 'wp-content-pilot' );
-		self::add_dismissible_notice(
-			$notice,
-			array(
-				'type'          => 'native notice-info',
-				'dismiss_class' => 'article_notice',
 			)
 		);
 	}
