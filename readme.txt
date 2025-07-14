@@ -1,4 +1,4 @@
-=== WP Content Pilot - Autoblogging & Affiliate Marketing Plugin ===
+=== WP Content Pilot - Autoblogging & Affiliate Marketing Suite ===
 Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, rss to post, rss feeds
 Requires at least: 5.2
@@ -22,7 +22,7 @@ Here is the detailed breakdown of all the features that we ship with WP Content 
 * **Content Spinner**: Integration of spinning software which makes it possible to create unique automatic content (3rd party paid tool).
 * **Template Editor**:  Control how auto-published posts will look using the supported template tags of the module.
 * **Post Categories**:  The plugin will automatically insert these categories with newly published posts.
-* *Post Tags**:  The plugin will automatically insert these tags with newly published posts.
+* **Post Tags**:  The plugin will automatically insert these tags with newly published posts.
 * **Post Translation (PRO)**:  Translate any article from any language to your selected language on the fly.
 * **Post Meta (PRO)**:  Make use of post meta to suit best with your theme and 3rd party plugins.
 * **Search Replace(PRO)**:  Run search-replace in the auto-publish post to better control your need.
