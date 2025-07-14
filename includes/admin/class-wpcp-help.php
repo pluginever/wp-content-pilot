@@ -173,7 +173,7 @@ class WPCP_Help {
 							<td></td>
 							<td></td>
 							<td>
-								<a href="https://pluginever.com/plugins/wp-content-pilot-pro?utm_source=comparision-chart&utm_medium=button&utm_campaign=content-pilot&utm_content=Go%20Pro" class="button button-pro" target="_blank">Get Pro</a>
+								<a href="https://wpcontentpilot.com/?utm_source=comparision-chart&utm_medium=button&utm_campaign=content-pilot&utm_content=Go%20Pro" class="button button-pro" target="_blank">Get Pro</a>
 							</td>
 						</tr>
 					</table>
@@ -200,7 +200,7 @@ class WPCP_Help {
 				'image'       => WPCP_ASSETS_URL . '/images/help/support.svg',
 				'title'       => __( 'Need Any Assistance?', 'wp-content-pilot' ),
 				'desc'        => __( 'Our EXPERT Support Team is always ready to Help you out.', 'wp-content-pilot' ),
-				'url'         => 'https://pluginever.com/support/',
+				'url'         => 'https://wpcontentpilot.com/support/',
 				'button_text' => __( 'Contact Support', 'wp-content-pilot' ),
 			],
 			[

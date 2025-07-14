@@ -1,9 +1,9 @@
-=== WP Content Pilot - Autoblogging & Affiliate Marketing Plugin ===
+=== WP Content Pilot - Autoblogging & Affiliate Marketing Suite ===
 Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, rss to post, rss feeds
 Requires at least: 5.2
 Tested up to: 6.8
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,7 +12,7 @@ Automatically post contents, create news feeds, import and display unlimited RSS
 
 == Description ==
 
-**[WP Content Pilot](https://pluginever.com/plugins/wp-content-pilot-pro/)** is the best autoblogging and content curation plugin. It helps you to create high-quality WordPress blog posts and inject your affiliate link automatically.
+**[WP Content Pilot](https://wpcontentpilot.com/)** is the best autoblogging and content curation plugin. It helps you to create high-quality WordPress blog posts and inject your affiliate link automatically.
 
 The plugin keeps posting articles on your site at a predefined interval using your chosen keywords and sources and maintaining your website fresh and updated. WP Content Pilot also inserts your affiliate links automatically, so you get your commission from the vendors.
 
@@ -22,7 +22,7 @@ Here is the detailed breakdown of all the features that we ship with WP Content 
 * **Content Spinner**: Integration of spinning software which makes it possible to create unique automatic content (3rd party paid tool).
 * **Template Editor**:  Control how auto-published posts will look using the supported template tags of the module.
 * **Post Categories**:  The plugin will automatically insert these categories with newly published posts.
-* *Post Tags**:  The plugin will automatically insert these tags with newly published posts.
+* **Post Tags**:  The plugin will automatically insert these tags with newly published posts.
 * **Post Translation (PRO)**:  Translate any article from any language to your selected language on the fly.
 * **Post Meta (PRO)**:  Make use of post meta to suit best with your theme and 3rd party plugins.
 * **Search Replace(PRO)**:  Run search-replace in the auto-publish post to better control your need.
@@ -32,8 +32,8 @@ Here is the detailed breakdown of all the features that we ship with WP Content 
 
 * **[See The Live Demo Site](http://demo.pluginever.com/wp-content-pilot "See the Live Demo Site")**
 * **[Plugin Documentation](https://wpcontentpilot.com/docs/ "Plugin Documentation")**
-* **[Need Help? Contact Our 24/7 Support](https://pluginever.com/support "Need Help? Contact Our 24/7 Support")**
-* **[WP Content Pilot PRO](https://pluginever.com/plugins/wp-content-pilot-pro "WP Content Pilot PRO")**
+* **[Need Help? Contact Our 24/7 Support](https://wpcontentpilot.com/support/ "Need Help? Contact Our 24/7 Support")**
+* **[WP Content Pilot PRO](https://wpcontentpilot.com/ "WP Content Pilot PRO")**
 
 = 💥 All Autoblogging Modules =
 
@@ -45,7 +45,7 @@ Here is the detailed breakdown of all the features that we ship with WP Content 
 * **Tweeter Tweets (PRO)**: Auto import Tweets from Twitter as WordPress posts based on your keywords or from any specific user.
 * **eBay Products (PRO)**: Auto import eBay deals and insert them as posts based on your predefined keywords and inject your affiliate code.
 * **Facebook Posts (PRO)**: Auto import Facebook posts from your timeline, page, or groups even that are private and post on your site.
-* **ClickBank Products](https://pluginever.com/plugins/wp-content-pilot-pro) PRO**:  Fetch and post products as WordPress posts from the ClickBank site. The plugin will take care of the product description and affiliate links.
+* **ClickBank Products](https://wpcontentpilot.com/) PRO**:  Fetch and post products as WordPress posts from the ClickBank site. The plugin will take care of the product description and affiliate links.
 * **Ezine Articles (PRO)**: WP Content Pilot can fetch and automatically post articles to your WordPress site from EzineArticles.
 * **Pinterest Pins (PRO)**: Import Pinterest pins and post them to your WordPress site. You can target specific pins by keyword, board, or from a particular user profile. You will also be able to apply custom filters to the result.
 * **Instagram Posts (PRO)**: Import Instagram posts and publish them to your WordPress site with WP Content Pilot. You can target posts with specific keywords, hashtags, and also a particular profile to generate desired posts.
@@ -129,6 +129,10 @@ No, WP Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= 2.1.3 (July 14, 2025) =
+* Fix - Few known issues are fixed.
+* Compatibility - Check compatibility with the latest version of WordPress.
+
 = 2.1.2 (May 28, 2025) =
 * Compatibility - Check PHP compatibility and update the plugin to support PHP 8.0 or above.
 * Fix - Few known issues are fixed.

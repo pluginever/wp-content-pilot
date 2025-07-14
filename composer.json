@@ -1,7 +1,7 @@
 {
   "name": "pluginever/wp-content-pilot",
   "description": "WP Content Pilot automatically posts contents from various sources based on the predefined keywords.",
-  "homepage": "https://pluginever.com/plugins/wp-content-pilot/",
+  "homepage": "https://wpcontentpilot.com/",
   "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
   "prefer-stable": true,

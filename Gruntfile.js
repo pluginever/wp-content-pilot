@@ -52,7 +52,7 @@ module.exports = function (grunt) {
 						mainFile: 'wp-content-pilot.php',
 						potFilename: 'wp-content-pilot.pot',
 						potHeaders: {
-							'report-msgid-bugs-to': 'https://pluginever.com/support/',
+							'report-msgid-bugs-to': 'https://wpcontentpilot.com/support/',
 							poedit: true,
 							'x-poedit-keywordslist': true,
 						},

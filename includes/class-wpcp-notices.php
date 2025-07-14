@@ -53,7 +53,6 @@ class WPCP_Admin_Notices {
 	 */
 	private static $predefined_notices = array(
 		'upgrade_notice' => 'upgrade_notice',
-		'article_notice' => 'article_notice',
 	);
 
 	/**
@@ -298,7 +297,7 @@ class WPCP_Admin_Notices {
 			return;
 		}
 		$notice  = __( '<b>WP Content Pilot</b> is powering <b>5000+ companies</b> in generating automatic contents and affiliation with its <b>25+</b> types of campaign. Upgrade to Pro now & get 10% discount using coupon <strong>WPCPFREE2PRO</strong>', 'wp-content-pilot' );
-		$notice .= '  <a href="https://pluginever.com/plugins/wp-content-pilot-pro/?utm_source=admin-notice&utm_campaign=getpro&utm_medium=admin-dashboard" class="button button-pro promo-btn" target="_blank">Upgrade to Pro</a>';
+		$notice .= '  <a href="https://wpcontentpilot.com/?utm_source=admin-notice&utm_campaign=getpro&utm_medium=admin-dashboard" class="button button-pro promo-btn" target="_blank">Upgrade to Pro</a>';
 
 		self::add_dismissible_notice(
 			$notice,
@@ -322,23 +321,6 @@ class WPCP_Admin_Notices {
 			array(
 				'type'          => 'native notice-info',
 				'dismiss_class' => 'spinner_notice',
-			)
-		);
-	}
-
-	/**
-	 * Add 'article_notice' notice.
-	 *
-	 * @since 1.3.2
-	 * @return void
-	 */
-	public static function article_notice() {
-		$notice = __( 'Article search options will be changed in the next version of WP Content Pilot. Bing search will be replaced with Google Custom Search.', 'wp-content-pilot' );
-		self::add_dismissible_notice(
-			$notice,
-			array(
-				'type'          => 'native notice-info',
-				'dismiss_class' => 'article_notice',
 			)
 		);
 	}
