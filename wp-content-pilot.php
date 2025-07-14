@@ -275,7 +275,7 @@ final class ContentPilot {
 		$links = array_merge( $action_links, $links );
 
 		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
-			$upgrade_link = 'https://pluginever.com/plugins/wp-content-pilot-pro/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro';
+			$upgrade_link = 'https://wpcontentpilot.com/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro';
 			$upgrade_links = array(
 				'upgrade' => '<a href="'. esc_url( $upgrade_link ).'" style="color: red;font-weight: bold;" target="_blank">' . __( 'Go Pro', 'wp-content-pilot' ) . '</a>'
 			);

@@ -117,7 +117,7 @@ class WPCP_Admin {
 		wp_verify_nonce( '_nonce' );
 
 		if ( isset( $_GET['page'] ) && 'go_wpcp_pro' === $_GET['page'] ) {
-			wp_safe_redirect( 'https://pluginever.com/plugins/wp-content-pilot-pro/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
+			wp_redirect( 'https://wpcontentpilot.com/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash' );
 			die;
 		}
 	}
