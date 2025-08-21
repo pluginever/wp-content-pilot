@@ -128,7 +128,7 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 == Changelog ==
 = 2.1.4 (August 21, 2025) =
 * Fix - Few known issues are fixed.
-* Compatibility - Check compatibility with the WordPress latest version 
+* Compatibility - Check compatibility with the WordPress latest version and update the plugin to support PHP 8.0 or above.
 
 = 2.1.3 (July 14, 2025) =
 * Fix - Few known issues are fixed.
