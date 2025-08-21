@@ -1,16 +1,11 @@
 {
   "name": "wp-content-pilot",
   "title": "WP Content Pilot",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "WP Content Pilot automatically posts contents from various sources based on the predefined keywords.",
   "homepage": "https://pluginever.com",
   "license": "GPL-v2.0-or-later",
   "prettier": "@wordpress/prettier-config",
-  "author": {
-    "name": "pluginever",
-    "email": "support@pluginever.com",
-    "url": "https://pluginever.com"
-  },
   "scripts": {
     "build": "wp-scripts build && grunt build",
     "check-engines": "wp-scripts check-engines",
@@ -28,7 +23,7 @@
   },
   "devDependencies": {
     "@lodder/time-grunt": "^4.0.0",
-    "@wordpress/scripts": "^30.15.0",
+    "@wordpress/scripts": "^30.22.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "grunt": "^1.6.1",
