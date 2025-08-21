@@ -13,7 +13,7 @@ jobs:
       - name: Setup PHP version
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.0
+          php-version: 8.2
           coverage: none
           tools: composer
 
@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: |
           composer install
-          composer update --no-dev --no-scripts
+          composer install --no-dev --no-scripts
           npm install && npm run build
 
       - name: Release
