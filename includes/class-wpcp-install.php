@@ -1,21 +1,15 @@
 <?php
-/**
- * WPCP Install.
- *
- * @package WP Content Pilot
- * @since 1.0.0
- */
 
-// Exit if accessed directly.
-defined( 'ABSPATH' ) || exit();
+defined( 'ABSPATH' ) || exit(); // Exit if accessed directly.
 
 /**
  * WPCP_Install Class.
  *
- * @package WP Content Pilot
  * @since 1.0.0
+ * @package WPContentPilot
  */
 class WPCP_Install {
+
 	/**
 	 * Activate.
 	 *
@@ -37,7 +31,7 @@ class WPCP_Install {
 		}
 		// Save install date.
 		if ( false === get_option( 'wpcp_install_date' ) ) {
-			update_option( 'wpcp_install_date', current_time( 'timestamp' ) );
+			update_option( 'wpcp_install_date', current_time( 'mysql' ) );
 		}
 	}
 

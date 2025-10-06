@@ -129,6 +129,7 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 = 2.1.5 (October 6, 2025) =
 * Fix - Few known issues are fixed.
 * Compatibility - Check compatibility with the latest version (v6.8) of WordPress
+* Enhance - Improved code quality by fixing some phpcs issues.
 
 = 2.1.4 (August 21, 2025) =
 * Fix - Few known issues are fixed.

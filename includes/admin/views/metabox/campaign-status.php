@@ -51,6 +51,6 @@ if ( ! empty( $last_post ) && get_post( $last_post ) ) {
 	<div class="wpcp-campaign-statue-item">
 		<?php printf( '<h2 class="wpcp-campaign-statue-title">%s</h2>', esc_html__( 'Run Campaign', 'wp-content-pilot' ) ); ?>
 		<span class="spinner" style="float: none;margin-left: 0;display: none;"></span>
-		<?php printf( '<a id="wpcp-run-campaign" class="button button-secondary" href="%s" data-campaign_id="%d" data-instance="%d">%s</a>', esc_url( $run_campaign_url ), intval( $post->ID ), intval( current_time( 'timestamp' ) ), esc_html__( 'Run Now', 'wp-content-pilot' ) ); ?>
+		<?php printf( '<a id="wpcp-run-campaign" class="button button-secondary" href="%s" data-campaign_id="%d" data-instance="%d">%s</a>', esc_url( $run_campaign_url ), intval( $post->ID ), intval( current_time( 'mysql' ) ), esc_html__( 'Run Now', 'wp-content-pilot' ) ); ?>
 	</div>
 </div>
