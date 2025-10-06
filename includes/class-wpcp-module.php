@@ -519,7 +519,7 @@ abstract class WPCP_Module {
 	 */
 	protected function deactivate_key( $campaign_id, $key, $hours = 1 ) {
 		wpcp_logger()->warning( sprintf( 'Deactivating key [%s] for [%d] hour', $key, $hours ), $campaign_id );
-		$deactivated_until = current_time( 'timestamp' ) + ( $hours * HOUR_IN_SECONDS );
+		$deactivated_until = current_time( 'mysql' ) + ( $hours * HOUR_IN_SECONDS );
 		update_post_meta( $campaign_id, '_' . md5( $key ), $deactivated_until );
 	}
 
@@ -534,7 +534,7 @@ abstract class WPCP_Module {
 	 */
 	protected function is_deactivated_key( $campaign_id, $key ) {
 		$deactivated_until = wpcp_get_post_meta( $campaign_id, '_' . md5( $key ), '' );
-		if ( empty( $deactivated_until ) || $deactivated_until < current_time( 'timestamp' ) ) {
+		if ( empty( $deactivated_until ) || $deactivated_until < current_time( 'mysql' ) ) {
 			return false;
 		}
 

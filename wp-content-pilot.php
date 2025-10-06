@@ -3,7 +3,7 @@
  * Plugin Name:       WP Content Pilot
  * Plugin URI:        https://wpcontentpilot.com
  * Description:       WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:           2.1.4
+ * Version:           2.1.5
  * Requires at least: 5.2
  * Requires PHP:      8.0
  * Author:            PluginEver
@@ -46,32 +46,35 @@ final class ContentPilot {
 	 * ContentPilot_Pro version.
 	 *
 	 * @var string
+	 *
+	 * @since 1.0.0
 	 */
-	protected $version = '2.1.4';
+	protected $version = '2.1.5';
 
 	/**
 	 * The single instance of the class.
 	 *
 	 * @var ContentPilot
+	 *
 	 * @since 1.0.0
 	 */
-	protected static $_instance = null;
+	protected static $instance = null;
 
 	/**
 	 * Main ContentPilot Instance.
 	 *
 	 * Ensures only one instance of ContentPilot is loaded or can be loaded.
 	 *
-	 * @return ContentPilot - Main instance.
-	 * @since 1.0.0
 	 * @static
+	 * @since 1.0.0
+	 * @return ContentPilot - Main instance.
 	 */
 	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$instance;
 	}
 
 	/**
@@ -80,7 +83,7 @@ final class ContentPilot {
 	 * @since 1.0.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cloning is forbidden.', 'wp-content-pilot' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cloning is forbidden.', 'wp-content-pilot' ), '1.0.0' );
 	}
 
 	/**
@@ -89,12 +92,14 @@ final class ContentPilot {
 	 * @since 1.0.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Universalizing instances of this class is forbidden.', 'wp-content-pilot' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Universalizing instances of this class is forbidden.', 'wp-content-pilot' ), '1.0.0' );
 	}
 
 
 	/**
 	 * ContentPilot constructor.
+	 *
+	 * @since 1.0.0
 	 */
 	public function __construct() {
 		$this->define_constants();
@@ -106,8 +111,8 @@ final class ContentPilot {
 	/**
 	 * Define ContentPilot Constants.
 	 *
-	 * @return void
 	 * @since 1.0.0
+	 * @return void
 	 */
 	private function define_constants() {
 		define( 'WPCP_VERSION', $this->version );
@@ -124,6 +129,8 @@ final class ContentPilot {
 
 	/**
 	 * Register custom tables within $wpdb object.
+	 *
+	 * @since 1.0.0
 	 */
 	private function define_tables() {
 		global $wpdb;
@@ -141,42 +148,43 @@ final class ContentPilot {
 	/**
 	 * Include all required files
 	 *
-	 * since 1.0.0
-	 *
+	 * @since 1.0.0
 	 * @return void
 	 */
 	public function includes() {
-		//boot
-		require_once( WPCP_INCLUDES . '/class-wpcp-install.php' );
-		require_once( WPCP_PATH . '/vendor/autoload.php' );
+		// Required classes.
+		require_once WPCP_INCLUDES . '/class-wpcp-install.php';
+		require_once WPCP_PATH . '/vendor/autoload.php';
 
-		//functions
+		// Required functions.
 		require_once WPCP_INCLUDES . '/core-functions.php';
 		require_once WPCP_INCLUDES . '/action-functions.php';
-		require_once( WPCP_INCLUDES . '/formatting-functions.php' );
+		require_once WPCP_INCLUDES . '/formatting-functions.php';
 		require_once WPCP_INCLUDES . '/post-types.php';
 		require_once WPCP_INCLUDES . '/script-functions.php';
 		require_once WPCP_INCLUDES . '/class-wpcp-html.php';
 
-		//core files
-		//require_once( WPCP_LIBRARY . '/readability/Readability_OLD.php' );
-		require_once( WPCP_LIBRARY . '/readability/Readability.php' );
-		require_once( WPCP_INCLUDES . '/class-wpcp-readability.php' );
-		require_once( WPCP_INCLUDES . '/class-wpcp-logger.php' );
-		require_once( WPCP_INCLUDES . '/class-wpcp-dom.php' );
-		require_once( WPCP_INCLUDES . '/class-wpcp-modules.php' );
-		require_once( WPCP_INCLUDES . '/class-wpcp-module.php' );
-		require_once( WPCP_INCLUDES . '/class-wpcp-notices.php' );
+		// Required core files.
+		// phpcs:disable
+		// require_once( WPCP_LIBRARY . '/readability/Readability_OLD.php' );
+		// phpcs:enable
+		require_once WPCP_LIBRARY . '/readability/Readability.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-readability.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-logger.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-dom.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-modules.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-module.php';
+		require_once WPCP_INCLUDES . '/class-wpcp-notices.php';
 
-		//modules
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-article.php' );
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-feed.php' );
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-youtube.php' );
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-envato.php' );
-		require_once( WPCP_INCLUDES . '/modules/class-wpcp-flickr.php' );
+		// Required modules.
+		require_once WPCP_INCLUDES . '/modules/class-wpcp-article.php';
+		require_once WPCP_INCLUDES . '/modules/class-wpcp-feed.php';
+		require_once WPCP_INCLUDES . '/modules/class-wpcp-youtube.php';
+		require_once WPCP_INCLUDES . '/modules/class-wpcp-envato.php';
+		require_once WPCP_INCLUDES . '/modules/class-wpcp-flickr.php';
 
 		if ( is_admin() ) {
-			require_once( WPCP_INCLUDES . '/admin/class-wpcp-admin.php' );
+			require_once WPCP_INCLUDES . '/admin/class-wpcp-admin.php';
 		}
 
 		// Update helper for pro version. This will be removed in the future.
@@ -216,9 +224,8 @@ final class ContentPilot {
 		register_activation_hook( __FILE__, array( $this, 'activate_cron' ) );
 		register_shutdown_function( array( $this, 'log_errors' ) );
 		add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ), - 1 );
-
 		add_action( 'init', array( $this, 'localization_setup' ) );
-		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ), 20 );
+		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ), 20 ); // phpcs:ignore WordPress.WP.CronInterval.CronSchedulesInterval
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
 		add_action( 'admin_init', array( $this, 'check_if_cron_running' ) );
@@ -240,9 +247,8 @@ final class ContentPilot {
 	/**
 	 * Initialize plugin for localization
 	 *
-	 * @return void
 	 * @since 1.0.0
-	 *
+	 * @return void
 	 */
 	public function localization_setup() {
 		load_plugin_textdomain( 'wp-content-pilot', false, dirname( plugin_basename( __FILE__ ) ) . '/i18n/languages/' );
@@ -261,10 +267,11 @@ final class ContentPilot {
 	}
 
 	/**
-	 * Plugin action links
+	 * Plugin action links.
 	 *
-	 * @param array $links
+	 * @param array $links Links.
 	 *
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function plugin_action_links( $links ) {
@@ -275,9 +282,9 @@ final class ContentPilot {
 		$links = array_merge( $action_links, $links );
 
 		if ( ! defined( 'WPCP_PRO_VERSION' ) ) {
-			$upgrade_link = 'https://wpcontentpilot.com/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro';
+			$upgrade_link  = 'https://wpcontentpilot.com/?utm_source=plugin_action_link&utm_medium=link&utm_campaign=wp-content-pilot-pro&utm_content=Upgrade%20to%20Pro';
 			$upgrade_links = array(
-				'upgrade' => '<a href="'. esc_url( $upgrade_link ).'" style="color: red;font-weight: bold;" target="_blank">' . __( 'Go Pro', 'wp-content-pilot' ) . '</a>'
+				'upgrade' => '<a href="' . esc_url( $upgrade_link ) . '" style="color: red;font-weight: bold;" target="_blank">' . __( 'Go Pro', 'wp-content-pilot' ) . '</a>',
 			);
 
 			$links = array_merge( $links, $upgrade_links );
@@ -289,11 +296,11 @@ final class ContentPilot {
 	/**
 	 * Add plugin docs links in plugin row links
 	 *
-	 * @param mixed $links Links
-	 * @param mixed $file File
+	 * @param mixed $links Links.
+	 * @param mixed $file File.
 	 *
-	 * @return array
 	 * @since 1.2.8
+	 * @return array
 	 */
 	public function plugin_row_meta( $links, $file ) {
 		if ( plugin_basename( __FILE__ ) === $file ) {
@@ -309,31 +316,37 @@ final class ContentPilot {
 	}
 
 	/**
+	 * Check if cron is running
+	 *
+	 * @since 1.0.7
+	 * @return void
+	 */
+	public function check_if_cron_running() {
+		// phpcs:disable
+		// if ( current_user_can( 'manage_options' ) ) {
+		// $status = wpcp_check_cron_status();
+		// if ( is_wp_error( $status ) ) {
+		// $this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
+		// }
+		// }
+		// phpcs:enable
+	}
+
+	/**
 	 * Add custom cron schedule
 	 *
-	 * @param $schedules
+	 * @param array $schedules Array of Existing schedules.
 	 *
+	 * @since 1.0.7
 	 * @return mixed
 	 */
 	public function custom_cron_schedules( $schedules ) {
 		$schedules ['once_a_minute'] = array(
 			'interval' => 60,
-			'display'  => __( 'Once a Minute', 'wp-content-pilot' )
+			'display'  => __( 'Once a Minute', 'wp-content-pilot' ),
 		);
 
 		return $schedules;
-	}
-
-	/**
-	 * @return void
-	 */
-	public function check_if_cron_running() {
-		if ( current_user_can( 'manage_options' ) ) {
-//			$status = wpcp_check_cron_status();
-//			if ( is_wp_error( $status ) ) {
-//			$this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
-//			}
-		}
 	}
 
 	/**
@@ -344,14 +357,16 @@ final class ContentPilot {
 	public function log_errors() {
 		$error = error_get_last();
 		if ( $error && in_array( $error['type'], array( E_ERROR, E_PARSE, E_COMPILE_ERROR, E_USER_ERROR, E_RECOVERABLE_ERROR ), true ) ) {
-			wpcp_logger()->error( sprintf( __( '%1$s in %2$s on line %3$s', 'wp-content-pilot' ), $error['message'], $error['file'], $error['line'] ) . PHP_EOL );
+			wpcp_logger()->error( sprintf( /* translators: 1. message, 2. File, 3. Line number */ __( '%1$s in %2$s on line %3$s', 'wp-content-pilot' ), $error['message'], $error['file'], $error['line'] ) . PHP_EOL );
 			do_action( 'wpcp_shutdown_error', $error );
 		}
 	}
 
 	/**
-	 * @return string
+	 * Get version
+	 *
 	 * @since 1.2.3
+	 * @return string Version.
 	 */
 	public function get_version() {
 		return $this->version;
@@ -359,9 +374,9 @@ final class ContentPilot {
 
 	/**
 	 * Module class
-	 * @return WPCP_Modules
-	 * @since 1.2.0
 	 *
+	 * @since 1.2.0
+	 * @return WPCP_Modules Module instance
 	 */
 	public function modules() {
 		return WPCP_Modules::instance();
@@ -369,11 +384,15 @@ final class ContentPilot {
 }
 
 /**
- * @return ContentPilot
+ * Returns the main instance of ContentPilot to prevent the need to use globals.
+ *
+ * @return ContentPilot The main instance.
+ *
+ * @since 1.0.0
  */
-function content_pilot() {
+function content_pilot() { // phpcs:ignore Universal.Files.SeparateFunctionsFromOO.Mixed
 	return ContentPilot::instance();
 }
 
-//fire off the plugin
+// Fire off the plugin.
 content_pilot();
