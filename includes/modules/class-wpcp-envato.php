@@ -9,7 +9,7 @@ class WPCP_Envato extends WPCP_Module {
 	 *
 	 * @var $this ;
 	 */
-	protected static $_instance = null;
+	protected static $instance = null;
 
 	/**
 	 * WPCP_Module constructor.
@@ -49,7 +49,7 @@ class WPCP_Envato extends WPCP_Module {
 			'affiliate_url'          => __( 'Affiliate URL', 'wp-content-pilot' ),
 			'affiliate_live_preview' => __( 'Affiliate Live Preview URL', 'wp-content-pilot' ),
 			'preview'                => __( 'Audio/Video Preview.', 'wp-content-pilot' ),
-			'categories'               => __( 'Categories', 'wp-content-pilot' ),
+			'categories'             => __( 'Categories', 'wp-content-pilot' ),
 		);
 	}
 
@@ -132,13 +132,13 @@ EOT;
 		echo WPCP_HTML::text_input( array(
 			'label' => __( 'Search in specific category', 'wp-content-pilot' ),
 			'name'  => '_envato_search_category',
-			'desc'  => sprintf( __( 'For example: Use <a href="%s" target="_blank">site-templates</a> for this category.', 'wp-content-pilot' ), 'https://themeforest.net/category/site-templates' ),
+			'desc'  => sprintf( /* translators: example url */ __( 'For example: Use <a href="%s" target="_blank">site-templates</a> for this category.', 'wp-content-pilot' ), 'https://themeforest.net/category/site-templates' ),
 		) );
 
 		echo WPCP_HTML::text_input( array(
 			'label' => __( 'Search in specific author', 'wp-content-pilot' ),
 			'name'  => '_envato_search_author',
-			'desc'  => sprintf( __( 'For example: Use <a href="%s" target="_blank">2codethemes</a> for this author.', 'wp-content-pilot' ), 'https://themeforest.net/user/2codethemes' ),
+			'desc'  => sprintf( /* translators: example url */ __( 'For example: Use <a href="%s" target="_blank">2codethemes</a> for this author.', 'wp-content-pilot' ), 'https://themeforest.net/user/2codethemes' ),
 		) );
 
 		echo WPCP_HTML::end_double_columns();
@@ -162,10 +162,12 @@ EOT;
 	}
 
 	/**
-	 * @param $section
+	 * Get setting section.
 	 *
-	 * @return array
+	 * @param array $section Sections.
+	 *
 	 * @since 1.2.0
+	 * @return array Array of sections.
 	 */
 	public function get_setting_section( $sections ) {
 		$sections[] = [
@@ -187,14 +189,14 @@ EOT;
 			array(
 				'name'    => 'token',
 				'label'   => __( 'Envato token', 'wp-content-pilot' ),
-				'desc'    => sprintf( __( 'Check this tutorial to get your <a href="%s" target="_blank">Envato token</a>.', 'wp-content-pilot' ), 'https://wpcontentpilot.com/docs/how-to-create-envato-token/' ),
+				'desc'    => sprintf( /* translators: Doc url */ __( 'Check this tutorial to get your <a href="%s" target="_blank">Envato token</a>.', 'wp-content-pilot' ), 'https://wpcontentpilot.com/docs/how-to-create-envato-token/' ),
 				'type'    => 'password',
 				'default' => ''
 			),
 			array(
 				'name'    => 'envato_impact_radius',
 				'label'   => __( 'Impact radius affiliate url', 'wp-content-pilot' ),
-				'desc'    => sprintf( __( 'Learn how to get your impact radius affiliate url <a href="%s">here</a>.', 'wp-content-pilot' ), 'https://wpcontentpilot.com/docs/get-your-envato-impact-radius-affiliate-url/' ),
+				'desc'    => sprintf( /* translators: Doc url */ __( 'Learn how to get your impact radius affiliate url <a href="%s">here</a>.', 'wp-content-pilot' ), 'https://wpcontentpilot.com/docs/get-your-envato-impact-radius-affiliate-url/' ),
 				'type'    => 'text',
 				'default' => ''
 			),
@@ -459,11 +461,11 @@ EOT;
 	 * @static
 	 */
 	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$instance;
 	}
 }
 

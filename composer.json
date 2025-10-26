@@ -23,8 +23,7 @@
     "phpcs": "@php ./vendor/bin/phpcs --standard=phpcs.xml -s -v",
     "phpcbf": "@php ./vendor/bin/phpcbf --standard=phpcs.xml -v"
   },
-  "extra": {
-  },
+  "extra": {},
   "require": {
     "php": ">=8.0",
     "php-curl-class/php-curl-class": "^12.0"
