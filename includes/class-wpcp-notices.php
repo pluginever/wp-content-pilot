@@ -53,6 +53,7 @@ class WPCP_Admin_Notices {
 	 */
 	private static $predefined_notices = array(
 		'upgrade_notice' => 'upgrade_notice',
+		'halloween_offer_2025' => 'halloween_offer_2025',
 	);
 
 	/**
@@ -304,6 +305,28 @@ class WPCP_Admin_Notices {
 			array(
 				'type'          => 'native notice-info',
 				'dismiss_class' => 'upgrade_notice',
+			)
+		);
+	}
+
+	/**
+	 * Add 'halloween_offer_2025' notice.
+	 *
+	 * @since  2.1.6
+	 * @return void
+	 */
+	public static function halloween_offer_2025() {
+		if ( defined( 'WPCP_PRO_VERSION' ) ) {
+			return;
+		}
+
+		$notice  = __( '<b>🎃 Halloween Special Offer!</b> Get 30% OFF on all WP Content Pilot Pro plans. Use coupon code <strong>EVERSAVE30</strong> at checkout. Hurry, offer ends soon! 👻 &nbsp;&nbsp;', 'wp-content-pilot' );
+		$notice .= '&nbsp;<a href="https://wpcontentpilot.com/pricing/?utm_source=admin-notice&utm_campaign=halloween_offer_2025&utm_medium=admin-dashboard&discount=EVERSAVE30" class="button button-pro promo-btn" target="_blank">Grab the Deal</a>';
+		self::add_dismissible_notice(
+			$notice,
+			array(
+				'type'          => 'native notice-info',
+				'dismiss_class' => 'halloween_offer_2025',
 			)
 		);
 	}
