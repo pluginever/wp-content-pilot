@@ -52,8 +52,8 @@ class WPCP_Admin_Notices {
 	 * @since 1.0.0
 	 */
 	private static $predefined_notices = array(
-		'upgrade_notice' => 'upgrade_notice',
 		'halloween_offer_2025' => 'halloween_offer_2025',
+		//'upgrade_notice' => 'upgrade_notice',
 	);
 
 	/**
@@ -317,6 +317,13 @@ class WPCP_Admin_Notices {
 	 */
 	public static function halloween_offer_2025() {
 		if ( defined( 'WPCP_PRO_VERSION' ) ) {
+			return;
+		}
+
+		// Halloween offer notice.
+		$current_time   = absint( wp_date( 'U' ) );
+		$halloween_end_time = strtotime( '2025-11-08 00:00:00' );
+		if ( $current_time > $halloween_end_time ) {
 			return;
 		}
 
