@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Content Pilot 2.1.6\n"
 "Report-Msgid-Bugs-To: https://wpcontentpilot.com/support/\n"
-"POT-Creation-Date: 2025-10-26 11:38:15+00:00\n"
+"POT-Creation-Date: 2025-10-26 11:52:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1774,14 +1774,14 @@ msgid ""
 "<strong>WPCPFREE2PRO</strong>"
 msgstr ""
 
-#: includes/class-wpcp-notices.php:323
+#: includes/class-wpcp-notices.php:330
 msgid ""
-"<b>Halloween Special Offer!</b> Get 30% OFF on all WP Content Pilot Pro "
+"<b>🎃 Halloween Special Offer!</b> Get 30% OFF on all WP Content Pilot Pro "
 "plans. Use coupon code <strong>EVERSAVE30</strong> at checkout. Hurry, "
-"offer ends soon!"
+"offer ends soon! 👻 &nbsp;&nbsp;"
 msgstr ""
 
-#: includes/class-wpcp-notices.php:341
+#: includes/class-wpcp-notices.php:348
 #. translators: 1. HTML anchor tag, 2. HTML anchor end tag
 msgid ""
 "The most wanted feature <b>article spinner</b> is now available with <b>WP "
