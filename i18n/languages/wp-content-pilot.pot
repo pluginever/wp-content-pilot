@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Content Pilot 2.1.6\n"
 "Report-Msgid-Bugs-To: https://wpcontentpilot.com/support/\n"
-"POT-Creation-Date: 2025-10-26 11:52:11+00:00\n"
+"POT-Creation-Date: 2025-10-26 12:02:42+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -162,7 +162,7 @@ msgstr ""
 
 #: includes/admin/class-wpcp-help.php:239
 #: includes/admin/views/page/help-page.php:49
-#: includes/modules/class-wpcp-envato.php:173
+#: includes/modules/class-wpcp-envato.php:175
 msgid "Envato"
 msgstr ""
 
@@ -1894,7 +1894,7 @@ msgid ""
 msgstr ""
 
 #: includes/modules/class-wpcp-article.php:200
-#: includes/modules/class-wpcp-envato.php:239
+#: includes/modules/class-wpcp-envato.php:241
 #: includes/modules/class-wpcp-flickr.php:209
 #: includes/modules/class-wpcp-youtube.php:281
 msgid "Campaign do not have keyword to proceed, please set keyword"
@@ -1952,7 +1952,7 @@ msgid "Failed readability reason [%s] changing to different link"
 msgstr ""
 
 #: includes/modules/class-wpcp-article.php:259
-#: includes/modules/class-wpcp-envato.php:388
+#: includes/modules/class-wpcp-envato.php:390
 #: includes/modules/class-wpcp-flickr.php:303
 #: includes/modules/class-wpcp-youtube.php:353
 msgid "Cleaning title"
@@ -1964,7 +1964,7 @@ msgid "Making article content from response"
 msgstr ""
 
 #: includes/modules/class-wpcp-article.php:276
-#: includes/modules/class-wpcp-envato.php:430
+#: includes/modules/class-wpcp-envato.php:432
 #: includes/modules/class-wpcp-feed.php:209
 #: includes/modules/class-wpcp-flickr.php:344
 #: includes/modules/class-wpcp-youtube.php:392
@@ -2003,7 +2003,7 @@ msgid "Finding links from response and inserting into database"
 msgstr ""
 
 #: includes/modules/class-wpcp-article.php:406
-#: includes/modules/class-wpcp-envato.php:317
+#: includes/modules/class-wpcp-envato.php:319
 #: includes/modules/class-wpcp-feed.php:292
 #: includes/modules/class-wpcp-youtube.php:515
 #. translators: %s URL, %s URL, %s Remove
@@ -2014,7 +2014,7 @@ msgid ""
 msgstr ""
 
 #: includes/modules/class-wpcp-article.php:409
-#: includes/modules/class-wpcp-envato.php:320
+#: includes/modules/class-wpcp-envato.php:322
 #: includes/modules/class-wpcp-feed.php:295
 #: includes/modules/class-wpcp-youtube.php:518
 msgid "Remove"
@@ -2157,6 +2157,7 @@ msgid "Search in specific category"
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:135
+#. translators: example url
 msgid ""
 "For example: Use <a href=\"%s\" target=\"_blank\">site-templates</a> for "
 "this category."
@@ -2167,96 +2168,99 @@ msgid "Search in specific author"
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:141
+#. translators: example url
 msgid ""
 "For example: Use <a href=\"%s\" target=\"_blank\">2codethemes</a> for this "
 "author."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:189
+#: includes/modules/class-wpcp-envato.php:191
 msgid "Envato token"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:190
+#: includes/modules/class-wpcp-envato.php:192
+#. translators: Doc url
 msgid ""
 "Check this tutorial to get your <a href=\"%s\" target=\"_blank\">Envato "
 "token</a>."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:196
+#: includes/modules/class-wpcp-envato.php:198
 msgid "Impact radius affiliate url"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:197
+#: includes/modules/class-wpcp-envato.php:199
+#. translators: Doc url
 msgid "Learn how to get your impact radius affiliate url <a href=\"%s\">here</a>."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:214
+#: includes/modules/class-wpcp-envato.php:216
 msgid "Loaded Envato Campaign"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:219
+#: includes/modules/class-wpcp-envato.php:221
 msgid "Checking envato api key and impact radius url for authentication.."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:221
+#: includes/modules/class-wpcp-envato.php:223
 msgid "The Envato api key is not set so the campaign won't run, disabling campaign."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:231
+#: includes/modules/class-wpcp-envato.php:233
 msgid ""
 "The Impact  Radius affiliate url is not set. Set it from <a "
 "href='%s'>here</a>"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:243
+#: includes/modules/class-wpcp-envato.php:245
 msgid "Looping through keywords [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:286
+#: includes/modules/class-wpcp-envato.php:288
 msgid "Searching for items url [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:293
+#: includes/modules/class-wpcp-envato.php:295
 msgid "Envato api request failed response [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:303
+#: includes/modules/class-wpcp-envato.php:305
 msgid "No matching data found from api disabling the keyword for 1 hour"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:310
+#: includes/modules/class-wpcp-envato.php:312
 msgid "Checking duplicate links in store..."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:334
+#: includes/modules/class-wpcp-envato.php:336
 msgid "Finding images from item preview"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:360
+#: includes/modules/class-wpcp-envato.php:362
 msgid "Making affiliate url"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:375
+#: includes/modules/class-wpcp-envato.php:377
 msgid "Extracting tags from item"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:382
+#: includes/modules/class-wpcp-envato.php:384
 msgid "Generating envato article from [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:396
+#: includes/modules/class-wpcp-envato.php:398
 msgid "Extracting categories from response"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:402
+#: includes/modules/class-wpcp-envato.php:404
 msgid "Extracting tags from response"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:408
+#: includes/modules/class-wpcp-envato.php:410
 msgid "Combining all parts for article"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:433
+#: includes/modules/class-wpcp-envato.php:435
 msgid "Inserting link into store..."
 msgstr ""
 
