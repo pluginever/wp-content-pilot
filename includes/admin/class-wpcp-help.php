@@ -123,7 +123,7 @@ class WPCP_Help {
 		</style>
 		<div class="wrap">
 
-			<h2>WP Content Pilot - Help </h2>
+			<h2>Content Pilot - Help </h2>
 
 			<div class="ever-help-page">
 				<?php foreach ( $blocks as $block ): ?>
@@ -192,7 +192,7 @@ class WPCP_Help {
 			[
 				'image'       => WPCP_ASSETS_URL . '/images/help/docs.svg',
 				'title'       => __( 'Looking for Something?', 'wp-content-pilot' ),
-				'desc'        => __( 'We have detailed documentation on every aspects of WP Content Pilot.', 'wp-content-pilot' ),
+				'desc'        => __( 'We have detailed documentation on every aspects of Content Pilot.', 'wp-content-pilot' ),
 				'url'         => 'https://wpcontentpilot.com/docs/',
 				'button_text' => __( 'Visit the Plugin Documentation', 'wp-content-pilot' ),
 			],

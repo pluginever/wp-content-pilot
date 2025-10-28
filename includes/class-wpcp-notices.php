@@ -297,7 +297,7 @@ class WPCP_Admin_Notices {
 		if ( defined( 'WPCP_PRO_VERSION' ) ) {
 			return;
 		}
-		$notice  = __( '<b>WP Content Pilot</b> is powering <b>5000+ companies</b> in generating automatic contents and affiliation with its <b>25+</b> types of campaign. Upgrade to Pro now & get 10% discount using coupon <strong>WPCPFREE2PRO</strong>', 'wp-content-pilot' );
+		$notice  = __( '<b>Content Pilot</b> is powering <b>5000+ companies</b> in generating automatic contents and affiliation with its <b>25+</b> types of campaign. Upgrade to Pro now & get 10% discount using coupon <strong>WPCPFREE2PRO</strong>', 'wp-content-pilot' );
 		$notice .= '  <a href="https://wpcontentpilot.com/?utm_source=admin-notice&utm_campaign=getpro&utm_medium=admin-dashboard" class="button button-pro promo-btn" target="_blank">Upgrade to Pro</a>';
 
 		self::add_dismissible_notice(
@@ -327,7 +327,7 @@ class WPCP_Admin_Notices {
 			return;
 		}
 
-		$notice  = __( '<b>🎃 Halloween Special Offer!</b> Get 30% OFF on all WP Content Pilot Pro plans. Use coupon code <strong>EVERSAVE30</strong> at checkout. Hurry, offer ends soon! 👻 &nbsp;&nbsp;', 'wp-content-pilot' );
+		$notice  = __( '<b>🎃 Halloween Special Offer!</b> Get 30% OFF on all Content Pilot Pro plans. Use coupon code <strong>EVERSAVE30</strong> at checkout. Hurry, offer ends soon! 👻 &nbsp;&nbsp;', 'wp-content-pilot' );
 		$notice .= '&nbsp;<a href="https://wpcontentpilot.com/pricing/?utm_source=admin-notice&utm_campaign=halloween_offer_2025&utm_medium=admin-dashboard&discount=EVERSAVE30" class="button button-pro promo-btn" target="_blank">Grab the Deal</a>';
 		self::add_dismissible_notice(
 			$notice,
@@ -345,7 +345,7 @@ class WPCP_Admin_Notices {
 	 * @return void
 	 */
 	public static function spinner_notice() {
-		$notice = sprintf( /* translators: 1. HTML anchor tag, 2. HTML anchor end tag */ __( 'The most wanted feature <b>article spinner</b> is now available with <b>WP Content Pilot</b>. We have integrated spinrewriter support. If you do not have account %1$ssignup now%2$s and configure in settings page.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>' );
+		$notice = sprintf( /* translators: 1. HTML anchor tag, 2. HTML anchor end tag */ __( 'The most wanted feature <b>article spinner</b> is now available with <b>Content Pilot</b>. We have integrated spinrewriter support. If you do not have account %1$ssignup now%2$s and configure in settings page.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>' );
 		self::add_dismissible_notice(
 			$notice,
 			array(

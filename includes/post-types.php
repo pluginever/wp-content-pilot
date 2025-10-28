@@ -2,7 +2,7 @@
 /**
  * Post Type Functions
  *
- * @package     WP Content Pilot
+ * @package     Content Pilot
  * @subpackage  Functions
  * @copyright   Copyright (c) 2019, MD Sultan Nasir Uddin(manikdrmc@gmail.com)
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
@@ -30,7 +30,7 @@ function wpcp_setup_wpcp_post_types() {
 		'not_found'             => __( 'No Campaigns found', 'wp-content-pilot' ),
 		'not_found_in_trash'    => __( 'No Campaigns found in Trash', 'wp-content-pilot' ),
 		'parent_item_colon'     => '',
-		'menu_name'             => _x( 'Content Pilot', 'wp content pilot post type menu name', 'wp-content-pilot' ),
+		'menu_name'             => _x( 'Content Pilot', 'content pilot post type menu name', 'wp-content-pilot' ),
 		'attributes'            => __( 'Campaign Attributes', 'wp-content-pilot' ),
 		'filter_items_list'     => __( 'Filter Campaigns list', 'wp-content-pilot' ),
 		'items_list_navigation' => __( 'Campaigns list navigation', 'wp-content-pilot' ),

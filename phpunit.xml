@@ -9,7 +9,7 @@
 	verbose="true"
 >
 	<testsuites>
-		<testsuite name="WP Content Pilot Test Suite">
+		<testsuite name="Content Pilot Test Suite">
 			<directory suffix=".php">./tests/</directory>
 		</testsuite>
 	</testsuites>

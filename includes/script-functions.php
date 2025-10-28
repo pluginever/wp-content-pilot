@@ -2,7 +2,7 @@
 /**
  * Post Type Functions
  *
- * @package     WP Content Pilot
+ * @package     Content Pilot
  * @subpackage  Scripts
  * @copyright   Copyright (c) 2019, MD Sultan Nasir Uddin(manikdrmc@gmail.com)
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License

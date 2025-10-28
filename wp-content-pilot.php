@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name:       WP Content Pilot
+ * Plugin Name:       Content Pilot
  * Plugin URI:        https://wpcontentpilot.com
- * Description:       WP Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:           2.1.6
+ * Description:       Content Pilot automatically posts contents from various sources based on the predefined keywords.
+ * Version:           2.1.7
  * Requires at least: 5.2
  * Requires PHP:      8.0
  * Author:            PluginEver
@@ -49,7 +49,7 @@ final class ContentPilot {
 	 *
 	 * @since 1.0.0
 	 */
-	protected $version = '2.1.6';
+	protected $version = '2.1.7';
 
 	/**
 	 * The single instance of the class.
@@ -326,7 +326,7 @@ final class ContentPilot {
 		// if ( current_user_can( 'manage_options' ) ) {
 		// $status = wpcp_check_cron_status();
 		// if ( is_wp_error( $status ) ) {
-		// $this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means WP Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
+		// $this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
 		// }
 		// }
 		// phpcs:enable

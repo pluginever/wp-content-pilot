@@ -92,7 +92,9 @@ function wpcp_run_automatic_campaign() {
 			}
 
 			$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', '' );
-			if ( ! empty( $campaign_type ) ) {
+			$module = content_pilot()->modules()->load( $campaign_type );
+
+			if ( ! empty( $campaign_type ) && method_exists( $module, 'process_campaign' ) ) {
 				content_pilot()->modules()->load( $campaign_type )->process_campaign( $campaign_id, '', 'cron' );
 			}
 		}
