@@ -127,6 +127,7 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 
 == Changelog ==
 = 2.1.7 (October 28, 2025) =
+* Fix - Few known issues are fixed.
 * Enhance - Update the plugin name and description to align with the WordPress repository guidelines.
 
 = 2.1.6 (October 26, 2025) =
