@@ -10,20 +10,20 @@ Automatically post contents, create news feeds, import and display unlimited RSS
 
 == Description ==
 
-**[Content Pilot - Autoblogging & Affiliate Marketing Suite](https://wpcontentpilot.com/)** automatically posts contents from various sources based on the predefined keywords. It helps you to create high-quality WordPress blog posts and inject your affiliate link automatically.
+**[Content Pilot - Autoblogging & Affiliate Marketing Suite](https://wpcontentpilot.com/)** automatically posts content from various sources based on predefined keywords. It helps you to create high-quality WordPress blog posts and automatically inject your affiliate link.
 
-The plugin keeps posting articles on your site at a predefined interval using your chosen keywords and sources and maintaining your website fresh and updated. Content Pilot also inserts your affiliate links automatically, so you get your commission from the vendors.
+The plugin keeps posting articles on your site at a predefined interval using your chosen keywords and sources, keeping your website fresh and up to date. Content Pilot also automatically inserts your affiliate links, so you get your commission from the vendors.
 
 = ✨ Content Pilot Features: =
 Here is the detailed breakdown of all the features that we ship with Content Pilot to make it suitable for various cases!
 
-* **Content Spinner**: Integration of spinning software which makes it possible to create unique automatic content (3rd party paid tool).
+* **Content Spinner**: Integration of spinning software, which makes it possible to create unique automatic content (3rd-party paid tool).
 * **Template Editor**:  Control how auto-published posts will look using the supported template tags of the module.
 * **Post Categories**:  The plugin will automatically insert these categories with newly published posts.
 * **Post Tags**:  The plugin will automatically insert these tags with newly published posts.
 * **Post Translation (PRO)**:  Translate any article from any language to your selected language on the fly.
 * **Post Meta (PRO)**:  Make use of post meta to suit best with your theme and 3rd party plugins.
-* **Search Replace(PRO)**:  Run search-replace in the auto-publish post to better control your need.
+* **Search Replace(PRO)**:  Run search-replace in the auto-publish post to better control your needs.
 * **Automatic Affiliation (PRO)**:  Automatically insert your affiliate code to boost your affiliate commissions.
 
 === 💻 Find Out More: ===
