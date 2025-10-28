@@ -2,7 +2,7 @@
 /**
  * WPCP Article Class.
  *
- * @package     WP Content Pilot
+ * @package     Content Pilot
  * @subpackage  Module
  *
  * @since       1.2.0
@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit();
 /**
  * WPCP_Article Class.
  *
- * @package     WP Content Pilot
+ * @package     Content Pilot
  * @since       1.2.0
  */
 class WPCP_Article extends WPCP_Module {

@@ -1,5 +1,5 @@
 /**
- * WP Content Pilot Admin
+ * Content Pilot Admin
  * https://pluginever.com
  *
  * Copyright (c) 2025 PluginEver

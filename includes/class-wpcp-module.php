@@ -2,7 +2,7 @@
 /**
  * WPCP_Module Class.
  *
- * @package     WP Content Pilot
+ * @package     Content Pilot
  * @subpackage  Module
  * @copyright   Copyright (c) 2019, MD Sultan Nasir Uddin(manikdrmc@gmail.com)
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License.
@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit();
 /**
  * WPCP_Module Class.
  *
- * @package WP Content Pilot
+ * @package Content Pilot
  * @since 1.2.0
  */
 abstract class WPCP_Module {

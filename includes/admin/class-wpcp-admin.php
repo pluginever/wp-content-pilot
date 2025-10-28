@@ -149,7 +149,7 @@ class WPCP_Admin {
 
 		if ( 'wp_content_pilot' === $screen->post_type ) {
 			$star_url = 'https://wordpress.org/support/plugin/wp-content-pilot/reviews/?filter=5#new-post';
-			$text     = sprintf( /* translators: %s: 5 star rating url */ __( 'If you like <strong>WP Content Pilot</strong> please leave us a <a href="%s" target="_blank">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. Your Review is very important to us as it helps us to grow more.', 'wp-content-pilot' ), $star_url );
+			$text     = sprintf( /* translators: %s: 5 star rating url */ __( 'If you like <strong>Content Pilot</strong> please leave us a <a href="%s" target="_blank">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. Your Review is very important to us as it helps us to grow more.', 'wp-content-pilot' ), $star_url );
 			return $text;
 		}
 

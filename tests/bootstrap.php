@@ -86,7 +86,7 @@ class WPCP_Unit_Tests_Bootstrap {
 	 */
 	function install_wpcp() {
 
-		echo "Installing WP Content Pilot..." . PHP_EOL;
+		echo "Installing Content Pilot..." . PHP_EOL;
 
 		define( 'WP_UNINSTALL_PLUGIN', true );
 
@@ -96,7 +96,7 @@ class WPCP_Unit_Tests_Bootstrap {
 
 		content_pilot();
 
-		echo "WP Content Pilot Finished Installing..." . PHP_EOL;
+		echo "Content Pilot Finished Installing..." . PHP_EOL;
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * WPCP generate HTML.
  *
- * @package WP Content Pilot
+ * @package Content Pilot
  * @since 1.0.0
  */
 
@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || die();
 /**
  * WPCP_HTML class.
  *
- * @package WP Content Pilot
+ * @package Content Pilot
  * @since 1.0.0
  */
 class WPCP_HTML {

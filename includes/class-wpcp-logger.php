@@ -2,7 +2,7 @@
 /**
  * WPCP Logger.
  *
- * @package WP Content Pilot
+ * @package Content Pilot
  *
  * @since 1.0.0
  */
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit();
 /**
  * WPCP_Logger Class.
  *
- * @package WP Content Pilot
+ * @package Content Pilot
  * @since 1.0.0
  */
 class WPCP_Logger {

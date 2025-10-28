@@ -55,7 +55,7 @@ $information['wordpress_version'] = array(
 );
 
 $information['wpcp_version'] = array(
-	'label' => __( 'WP Content Pilot version', 'wp-content-pilot' ),
+	'label' => __( 'Content Pilot version', 'wp-content-pilot' ),
 	'value' => WPCP_VERSION,
 );
 
@@ -186,10 +186,10 @@ $campaigns_info['count']['value'] = $total;
 
 <div class="wrap" id="wpcp-page">
 
-	<h1 class="wp-heading-inline"> <?php esc_html_e( 'Status > WP Content Pilot', 'wp-content-pilot' ); ?> </h1>
+	<h1 class="wp-heading-inline"> <?php esc_html_e( 'Status > Content Pilot', 'wp-content-pilot' ); ?> </h1>
 
 	<div class="notice notice-info">
-		<p><?php esc_html_e( 'Experiencing an issue and need to contact WP Content Pilot support? Click the link below to get debug information you can send to us.', 'wp-content-pilot' ); ?></p>
+		<p><?php esc_html_e( 'Experiencing an issue and need to contact Content Pilot support? Click the link below to get debug information you can send to us.', 'wp-content-pilot' ); ?></p>
 
 		<textarea id="system-info" class="widefat" readonly rows="15" style="display: none; color: #32373c; background-color: #eee; padding: 30px;">##System Information## &#013
 		<?php

@@ -5,7 +5,7 @@ $blocks   = array(
 	array(
 		'image'       => WPCP_ASSETS_URL . '/images/help/docs.svg',
 		'title'       => __( 'Looking for something?', 'wp-content-pilot' ),
-		'desc'        => __( 'We have detailed documentation on every aspects of WP Content Pilot.', 'wp-content-pilot' ),
+		'desc'        => __( 'We have detailed documentation on every aspects of Content Pilot.', 'wp-content-pilot' ),
 		'url'         => 'https://wpcontentpilot.com/docs/',
 		'button_text' => __( 'Documentation', 'wp-content-pilot' ),
 	),
@@ -304,7 +304,7 @@ $features = array(
 </style>
 <div class="wrap">
 
-	<h2><?php esc_html_e( 'WP Content Pilot - Help', 'wp-content-pilot' ); ?> </h2>
+	<h2><?php esc_html_e( 'Content Pilot - Help', 'wp-content-pilot' ); ?> </h2>
 
 	<div class="wpcp-help-page">
 		<?php foreach ( $blocks as $block ) : ?>
@@ -321,7 +321,7 @@ $features = array(
 	</div>
 	<?php if ( ! defined( 'WPCP_PRO_VERSION' ) ) : ?>
 		<div class="free-vs-pro">
-			<h3>Are you looking for more? Checkout <a href="https://wpcontentpilot.com/" target="_blank"> WP Content Pilot Pro. </a> </h3>
+			<h3>Are you looking for more? Checkout <a href="https://wpcontentpilot.com/" target="_blank"> Content Pilot Pro. </a> </h3>
 			<table class="widefat">
 				<tr>
 					<th><?php esc_html_e( 'Features', 'wp-content-pilot' ); ?></th>
