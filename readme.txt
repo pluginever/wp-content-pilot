@@ -10,7 +10,7 @@ Automatically post contents, create news feeds, import and display unlimited RSS
 
 == Description ==
 
-**[Content Pilot](https://wpcontentpilot.com/)** is the best autoblogging and content curation plugin. It helps you to create high-quality WordPress blog posts and inject your affiliate link automatically.
+**[Content Pilot - Autoblogging & Affiliate Marketing Suite](https://wpcontentpilot.com/)** automatically posts contents from various sources based on the predefined keywords. It helps you to create high-quality WordPress blog posts and inject your affiliate link automatically.
 
 The plugin keeps posting articles on your site at a predefined interval using your chosen keywords and sources and maintaining your website fresh and updated. Content Pilot also inserts your affiliate links automatically, so you get your commission from the vendors.
 
@@ -42,7 +42,7 @@ Here is the detailed breakdown of all the features that we ship with Content Pil
 * **Amazon Products (PRO)**: Auto import amazon products and insert them as posts based on your predefined keywords and inject your affiliate code.
 * **Tweeter Tweets (PRO)**: Auto import Tweets from Twitter as WordPress posts based on your keywords or from any specific user.
 * **eBay Products (PRO)**: Auto import eBay deals and insert them as posts based on your predefined keywords and inject your affiliate code.
-* **Facebook Posts (PRO)**: Auto import Facebook posts from your timeline, page, or groups even that are private and post on your site.
+* **Facebook Posts (PRO)**: Automatically import posts from your Facebook timeline, pages, or groups and publish them on your WordPress site.
 * **ClickBank Products](https://wpcontentpilot.com/) PRO**:  Fetch and post products as WordPress posts from the ClickBank site. The plugin will take care of the product description and affiliate links.
 * **Ezine Articles (PRO)**: Content Pilot can fetch and automatically post articles to your WordPress site from EzineArticles.
 * **Pinterest Pins (PRO)**: Import Pinterest pins and post them to your WordPress site. You can target specific pins by keyword, board, or from a particular user profile. You will also be able to apply custom filters to the result.
