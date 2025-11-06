@@ -40,17 +40,17 @@ Here is the detailed breakdown of all the features that we ship with Content Pil
 * **YouTube Videos**: Post videos from YouTube by keyword, username, or from a specific playlist to your website.
 * **Flickr Photos**: Automatically post Flickr photos in your website based on your predefined keywords.
 * **Amazon Products (PRO)**: Auto import amazon products and insert them as posts based on your predefined keywords and inject your affiliate code.
-* **Tweeter Tweets (PRO)**: Auto import Tweets from Twitter as WordPress posts based on your keywords or from any specific user.
+* **Twitter Tweets (PRO)**: Auto import Tweets from Twitter as WordPress posts based on your keywords or from any specific user.
 * **eBay Products (PRO)**: Auto import eBay deals and insert them as posts based on your predefined keywords and inject your affiliate code.
 * **Facebook Posts (PRO)**: Automatically import posts from your Facebook timeline, pages, or groups and publish them on your WordPress site.
-* **ClickBank Products](https://wpcontentpilot.com/) PRO**:  Fetch and post products as WordPress posts from the ClickBank site. The plugin will take care of the product description and affiliate links.
+* **ClickBank Products (PRO)**:  Fetch and post products as WordPress posts from the ClickBank site. The plugin will take care of the product description and affiliate links.
 * **Ezine Articles (PRO)**: Content Pilot can fetch and automatically post articles to your WordPress site from EzineArticles.
 * **Pinterest Pins (PRO)**: Import Pinterest pins and post them to your WordPress site. You can target specific pins by keyword, board, or from a particular user profile. You will also be able to apply custom filters to the result.
 * **Instagram Posts (PRO)**: Import Instagram posts and publish them to your WordPress site with Content Pilot. You can target posts with specific keywords, hashtags, and also a particular profile to generate desired posts.
 * **Reddit Posts (PRO)**: Auto post reddits or subreddit. Our plugin will also enable you to fetch comments with support for videos and GIFs..
 * **Quora Posts (PRO)**: Grab articles from Quora and auto-publish as post on your site. You can insert any keyword to get posts from Quora.
 * **CareerJet Posts (PRO)**: Auto import jobs from CareerJet and insert as posts injecting your affiliate code.
-* **Itunes Items (PRO)**: Automatically import products from Itunes by keyword and insert as posts injecting your affiliate code.
+* **iTunes Items (PRO)**: Automatically import products from iTunes by keyword and insert as posts injecting your affiliate code.
 * **Craigslist listings (PRO)**: Import listings from Craigslist and insert as posts keeping your site always up to date.
 * **Walmart products (PRO)**: Auto import products from Walmart and insert as posts injecting your affiliate code.
 * **BestBuy products (PRO)**: Import products from BestBuy and insert as posts injecting your affiliate code.
@@ -73,12 +73,12 @@ https://www.youtube.com/watch?v=5A3gx0f6PJk
 
 === 💢 Have a WooCommerce Store? Superchange it With Our WooCommerce Plugins: === 
 
-* **[WC Key Manager – Effortlessly Sell and Manage any code and software license keys with WooCommerce.](https://wordpress.org/plugins/wc-key-manager/ "WC Key Manager – Effortlessly Sell and Manage any code and software license keys with WooCommerce.")**
-* **[WooCommerce Serial Numbers](https://wordpress.org/plugins/wc-serial-numbers/ "WooCommerce Serial Numbers")**
-* **[WooCommerce Category Slider](https://wordpress.org/plugins/woo-category-slider-by-pluginever "WooCommerce Category Slider")**
-* **[WooCommerce Category Showcase](https://wordpress.org/plugins/wc-category-showcase "WooCommerce Category Showcase")**
+* **[Key Manager – Effortlessly Sell and Manage any code and software license keys with WooCommerce.](https://wordpress.org/plugins/wc-key-manager/ "Key Manager – Effortlessly Sell and Manage any code and software license keys with WooCommerce.")**
+* **[Serial Numbers for WooCommerce](https://wordpress.org/plugins/wc-serial-numbers/ "Serial Numbers for WooCommerce")**
+* **[Product Category Slider for WooCommerce](https://wordpress.org/plugins/woo-category-slider-by-pluginever "Product Category Slider for WooCommerce")**
+* **[Category Showcase for WooCommerce](https://wordpress.org/plugins/wc-category-showcase "Category Showcase for WooCommerce")**
 * **[Min Max Quantities for WooCommerce](https://wordpress.org/plugins/wc-min-max-quantities "Min Max Quantities for WooCommerce")**
-* **[WooCommerce Variation Swatches](https://wordpress.org/plugins/wc-variation-swatches "WooCommerce Variation Swatches")**
+* **[Product Variation Swatches for WooCommerce](https://wordpress.org/plugins/wc-variation-swatches "Product Variation Swatches for WooCommerce")**
 
 == Screenshots ==
 1. Available campaign types
