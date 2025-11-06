@@ -296,7 +296,7 @@ function wpcp_ajax_run_manual_campaign() {
 		wp_send_json( array(
 			'message' => __( 'Unauthorized user', 'wp-content-pilot' ),
 			'level'   => 'ERROR',
-			'time'    => gmdate( 'H:i:s', current_time( 'mysql' ) )
+			'time'    => gmdate( 'H:i:s', strtotime( current_time( 'mysql' ) ) ),
 		) );
 	}
 
@@ -305,7 +305,7 @@ function wpcp_ajax_run_manual_campaign() {
 		wp_send_json( array(
 			'message' => __( 'Invalid campaign ID', 'wp-content-pilot' ),
 			'level'   => 'ERROR',
-			'time'    => gmdate( 'H:i:s', current_time( 'mysql' ) )
+			'time'    => gmdate( 'H:i:s', strtotime( current_time( 'mysql' ) ) ),
 		) );
 	}
 
@@ -314,7 +314,7 @@ function wpcp_ajax_run_manual_campaign() {
 		wp_send_json( array(
 			'message' => __( 'Invalid instance', 'wp-content-pilot' ),
 			'level'   => 'ERROR',
-			'time'    => gmdate( 'H:i:s', current_time( 'mysql' ) )
+			'time'    => gmdate( 'H:i:s', strtotime( current_time( 'mysql' ) ) ),
 		) );
 	}
 
@@ -327,7 +327,7 @@ function wpcp_ajax_run_manual_campaign() {
 		wp_send_json( [
 			'message' => __( 'Invalid post action', 'wp-content-pilot' ),
 			'level'   => 'ERROR',
-			'time'    => gmdate( 'H:i:s', current_time( 'mysql' ) )
+			'time'    => gmdate( 'H:i:s', strtotime( current_time( 'mysql' ) ) ),
 		] );
 	}
 
@@ -341,7 +341,7 @@ function wpcp_ajax_run_manual_campaign() {
 		wp_send_json( [
 			'message' => $article_id->get_error_message(),
 			'level'   => 'ERROR',
-			'time'    => gmdate( 'H:i:s', current_time( 'mysql' ) )
+			'time'    => gmdate( 'H:i:s', strtotime( current_time( 'mysql' ) ) ),
 		] );
 	}
 	$title         = empty( get_the_title( $article_id ) ) ? 'Untitled' : get_the_title( $article_id );
@@ -379,7 +379,7 @@ function wpcp_get_campaign_instance_log() {
 			array(
 				'message' => __( 'Unauthorized user', 'wp-content-pilot' ),
 				'level'   => 'ERROR',
-				'time'    => gmdate( 'H:i:s', current_time( 'mysql' ) )
+				'time'    => gmdate( 'H:i:s', strtotime( current_time( 'mysql' ) ) ),
 			)
 		) );
 	}
@@ -393,7 +393,7 @@ function wpcp_get_campaign_instance_log() {
 			array(
 				'message' => __( 'Something wrong, please try again.', 'wp-content-pilot' ),
 				'level'   => 'ERROR',
-				'time'    => gmdate( 'H:i:s', current_time( 'mysql' ) )
+				'time'    => gmdate( 'H:i:s', strtotime( current_time( 'mysql' ) ) ),
 			)
 		) );
 	}
