@@ -1,7 +1,7 @@
 {
   "name": "wp-content-pilot",
   "title": "Content Pilot",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "Content Pilot automatically posts contents from various sources based on the predefined keywords.",
   "homepage": "https://wpcontentpilot.com/",
   "license": "GPL-v2.0-or-later",

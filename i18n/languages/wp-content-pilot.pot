@@ -2,9 +2,9 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Content Pilot 2.1.7\n"
+"Project-Id-Version: Content Pilot 2.1.8\n"
 "Report-Msgid-Bugs-To: https://wpcontentpilot.com/support/\n"
-"POT-Creation-Date: 2025-10-28 07:22:57+00:00\n"
+"POT-Creation-Date: 2025-11-06 11:24:34+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,40 +24,40 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: includes/action-functions.php:12 includes/action-functions.php:311
+#: includes/action-functions.php:15 includes/action-functions.php:314
 msgid "No Cheating"
 msgstr ""
 
-#: includes/action-functions.php:22 includes/action-functions.php:351
+#: includes/action-functions.php:25 includes/action-functions.php:354
 msgid "Invalid post action"
 msgstr ""
 
-#: includes/action-functions.php:44
+#: includes/action-functions.php:47
 #. translators: 1: The campaign ID, 2: The post title.
 msgid "A post successfully created by %1$s titled %2$s"
 msgstr ""
 
-#: includes/action-functions.php:89
+#: includes/action-functions.php:92
 msgid "Reached campaign post limit. So campaign stopping publish new post"
 msgstr ""
 
-#: includes/action-functions.php:274
+#: includes/action-functions.php:277
 msgid "Post Publish"
 msgstr ""
 
-#: includes/action-functions.php:336 includes/action-functions.php:393
+#: includes/action-functions.php:339 includes/action-functions.php:396
 msgid "Cheating?"
 msgstr ""
 
-#: includes/action-functions.php:358
+#: includes/action-functions.php:361
 msgid "Campaign <strong>%s</strong> manually initiated by <strong>%s</strong>"
 msgstr ""
 
-#: includes/action-functions.php:372
+#: includes/action-functions.php:375
 msgid "A post successfully created by campaign %s titled %s"
 msgstr ""
 
-#: includes/action-functions.php:406
+#: includes/action-functions.php:409
 msgid "Something wrong, please try again."
 msgstr ""
 

@@ -8,6 +8,9 @@ defined( 'ABSPATH' ) || exit();
  * @return void
  */
 function wpcp_handle_manual_campaign() {
+
+	echo 'Executed';
+
 	if ( isset( $_REQUEST['nonce'] ) && ! wp_verify_nonce( sanitize_key( wp_unslash( $_REQUEST['nonce'] ) ), 'wpcp_run_campaign' ) ) {
 		wp_die( esc_html__( 'No Cheating', 'wp-content-pilot' ) );
 	}
@@ -374,7 +377,7 @@ function wpcp_ajax_run_manual_campaign() {
 		'message' => $message,
 		'link'    => $article_title,
 		'level'   => 'INFO',
-		'time'    => gmdate( 'H:i:s', current_time( 'mysql' ) )
+		'time'    => gmdate( 'H:i:s', strtotime( current_time( 'mysql' ) ) ),
 	] );
 }
 
