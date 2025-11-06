@@ -2,7 +2,7 @@
 Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, rss to post, rss feeds
 Tested up to: 6.8
-Stable tag: 2.1.7
+Stable tag: 2.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,10 @@ No, Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= 2.1.8 (November 06, 2025) =
+* Fix - Vulnerable to Broken Access Control issue fixed.
+* Fix - Few other known issues are fixed.
+
 = 2.1.7 (October 28, 2025) =
 * Fix - Few known issues are fixed.
 * Enhance - Update the plugin name and description to align with the WordPress repository guidelines.
