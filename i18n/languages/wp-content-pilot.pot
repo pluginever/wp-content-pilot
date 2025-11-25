@@ -2,9 +2,9 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Content Pilot 2.1.8\n"
+"Project-Id-Version: Content Pilot 2.1.9\n"
 "Report-Msgid-Bugs-To: https://wpcontentpilot.com/support/\n"
-"POT-Creation-Date: 2025-11-06 12:28:38+00:00\n"
+"POT-Creation-Date: 2025-11-25 09:28:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -726,403 +726,403 @@ msgid "Translator"
 msgstr ""
 
 #: includes/admin/views/metabox/advanced-settings.php:45
-#: includes/admin/views/metabox/advanced-settings.php:61
+#: includes/admin/views/metabox/advanced-settings.php:60
 msgid "No Translation"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:57
+#: includes/admin/views/metabox/advanced-settings.php:56
 msgid "Translate To"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:62
+#: includes/admin/views/metabox/advanced-settings.php:61
 msgid "Afrikaans"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:63
+#: includes/admin/views/metabox/advanced-settings.php:62
 msgid "Albanian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:64
+#: includes/admin/views/metabox/advanced-settings.php:63
 msgid "Amharic"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:65
+#: includes/admin/views/metabox/advanced-settings.php:64
 msgid "Arabic"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:66
+#: includes/admin/views/metabox/advanced-settings.php:65
 msgid "Armenian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:67
+#: includes/admin/views/metabox/advanced-settings.php:66
 msgid "Azerbaijani"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:68
+#: includes/admin/views/metabox/advanced-settings.php:67
 msgid "Bashkir"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:69
+#: includes/admin/views/metabox/advanced-settings.php:68
 msgid "Basque"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:70
+#: includes/admin/views/metabox/advanced-settings.php:69
 msgid "Belarusian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:71
+#: includes/admin/views/metabox/advanced-settings.php:70
 msgid "Bengali"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:72
+#: includes/admin/views/metabox/advanced-settings.php:71
 msgid "Bosnian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:73
+#: includes/admin/views/metabox/advanced-settings.php:72
 msgid "Bulgarian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:74
+#: includes/admin/views/metabox/advanced-settings.php:73
 msgid "Burmese"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:75
+#: includes/admin/views/metabox/advanced-settings.php:74
 msgid "Catalan"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:76
+#: includes/admin/views/metabox/advanced-settings.php:75
 msgid "Cebuano"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:77
+#: includes/admin/views/metabox/advanced-settings.php:76
 msgid "Chinese"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:78
+#: includes/admin/views/metabox/advanced-settings.php:77
 msgid "Croatian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:79
+#: includes/admin/views/metabox/advanced-settings.php:78
 msgid "Czech"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:80
+#: includes/admin/views/metabox/advanced-settings.php:79
 msgid "Danish"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:81
+#: includes/admin/views/metabox/advanced-settings.php:80
 msgid "Dutch"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:82
+#: includes/admin/views/metabox/advanced-settings.php:81
 msgid "English"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:83
+#: includes/admin/views/metabox/advanced-settings.php:82
 msgid "Esperanto"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:84
+#: includes/admin/views/metabox/advanced-settings.php:83
 msgid "Estonian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:85
+#: includes/admin/views/metabox/advanced-settings.php:84
 msgid "Finnish"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:86
+#: includes/admin/views/metabox/advanced-settings.php:85
 msgid "French"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:87
+#: includes/admin/views/metabox/advanced-settings.php:86
 msgid "Galician"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:88
+#: includes/admin/views/metabox/advanced-settings.php:87
 msgid "Georgian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:89
+#: includes/admin/views/metabox/advanced-settings.php:88
 msgid "German"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:90
+#: includes/admin/views/metabox/advanced-settings.php:89
 msgid "Greek"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:91
+#: includes/admin/views/metabox/advanced-settings.php:90
 msgid "Gujarati"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:92
+#: includes/admin/views/metabox/advanced-settings.php:91
 msgid "Haitian Creole"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:93
+#: includes/admin/views/metabox/advanced-settings.php:92
 msgid "Hebrew"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:94
+#: includes/admin/views/metabox/advanced-settings.php:93
 msgid "Hill Mari"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:95
+#: includes/admin/views/metabox/advanced-settings.php:94
 msgid "Hindi"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:96
+#: includes/admin/views/metabox/advanced-settings.php:95
 msgid "Hungarian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:97
+#: includes/admin/views/metabox/advanced-settings.php:96
 msgid "Icelandic"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:98
+#: includes/admin/views/metabox/advanced-settings.php:97
 msgid "Indonesian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:99
+#: includes/admin/views/metabox/advanced-settings.php:98
 msgid "Irish"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:100
+#: includes/admin/views/metabox/advanced-settings.php:99
 msgid "Italian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:101
+#: includes/admin/views/metabox/advanced-settings.php:100
 msgid "Japanese"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:102
+#: includes/admin/views/metabox/advanced-settings.php:101
 msgid "Javanese"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:103
+#: includes/admin/views/metabox/advanced-settings.php:102
 msgid "Kannada"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:104
+#: includes/admin/views/metabox/advanced-settings.php:103
 msgid "Kazakh"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:105
+#: includes/admin/views/metabox/advanced-settings.php:104
 msgid "Khmer"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:106
+#: includes/admin/views/metabox/advanced-settings.php:105
 msgid "Korean"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:107
+#: includes/admin/views/metabox/advanced-settings.php:106
 msgid "Kyrgyz"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:108
+#: includes/admin/views/metabox/advanced-settings.php:107
 msgid "Lao"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:109
+#: includes/admin/views/metabox/advanced-settings.php:108
 msgid "Latin"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:110
+#: includes/admin/views/metabox/advanced-settings.php:109
 msgid "Latvian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:111
+#: includes/admin/views/metabox/advanced-settings.php:110
 msgid "Lithuanian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:112
+#: includes/admin/views/metabox/advanced-settings.php:111
 msgid "Luxembourgish"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:113
+#: includes/admin/views/metabox/advanced-settings.php:112
 msgid "Macedonian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:114
+#: includes/admin/views/metabox/advanced-settings.php:113
 msgid "Malagasy"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:115
+#: includes/admin/views/metabox/advanced-settings.php:114
 msgid "Malay"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:116
+#: includes/admin/views/metabox/advanced-settings.php:115
 msgid "Malayalam"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:117
+#: includes/admin/views/metabox/advanced-settings.php:116
 msgid "Maltese"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:118
+#: includes/admin/views/metabox/advanced-settings.php:117
 msgid "Maori"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:119
+#: includes/admin/views/metabox/advanced-settings.php:118
 msgid "Marathi"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:120
+#: includes/admin/views/metabox/advanced-settings.php:119
 msgid "Mari"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:121
+#: includes/admin/views/metabox/advanced-settings.php:120
 msgid "Mongolian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:122
+#: includes/admin/views/metabox/advanced-settings.php:121
 msgid "Nepali"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:123
+#: includes/admin/views/metabox/advanced-settings.php:122
 msgid "Norwegian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:124
+#: includes/admin/views/metabox/advanced-settings.php:123
 msgid "Papiamento"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:125
+#: includes/admin/views/metabox/advanced-settings.php:124
 msgid "Persian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:126
+#: includes/admin/views/metabox/advanced-settings.php:125
 msgid "Polish"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:127
+#: includes/admin/views/metabox/advanced-settings.php:126
 msgid "Portuguese"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:128
+#: includes/admin/views/metabox/advanced-settings.php:127
 msgid "Portuguese (Brazilian)"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:129
+#: includes/admin/views/metabox/advanced-settings.php:128
 msgid "Punjabi"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:130
+#: includes/admin/views/metabox/advanced-settings.php:129
 msgid "Romanian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:131
+#: includes/admin/views/metabox/advanced-settings.php:130
 msgid "Russian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:132
+#: includes/admin/views/metabox/advanced-settings.php:131
 msgid "Scottish Gaelic"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:133
+#: includes/admin/views/metabox/advanced-settings.php:132
 msgid "Serbian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:134
+#: includes/admin/views/metabox/advanced-settings.php:133
 msgid "Sinhala"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:135
+#: includes/admin/views/metabox/advanced-settings.php:134
 msgid "Slovak"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:136
+#: includes/admin/views/metabox/advanced-settings.php:135
 msgid "Slovenian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:137
+#: includes/admin/views/metabox/advanced-settings.php:136
 msgid "Spanish"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:138
+#: includes/admin/views/metabox/advanced-settings.php:137
 msgid "Sundanese"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:139
+#: includes/admin/views/metabox/advanced-settings.php:138
 msgid "Swahili"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:140
+#: includes/admin/views/metabox/advanced-settings.php:139
 msgid "Swedish"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:141
+#: includes/admin/views/metabox/advanced-settings.php:140
 msgid "Tagalog"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:142
+#: includes/admin/views/metabox/advanced-settings.php:141
 msgid "Tajik"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:143
+#: includes/admin/views/metabox/advanced-settings.php:142
 msgid "Tamil"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:144
+#: includes/admin/views/metabox/advanced-settings.php:143
 msgid "Tatar"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:145
+#: includes/admin/views/metabox/advanced-settings.php:144
 msgid "Telugu"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:146
+#: includes/admin/views/metabox/advanced-settings.php:145
 msgid "Thai"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:147
+#: includes/admin/views/metabox/advanced-settings.php:146
 msgid "Turkish"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:148
+#: includes/admin/views/metabox/advanced-settings.php:147
 msgid "Udmurt"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:149
+#: includes/admin/views/metabox/advanced-settings.php:148
 msgid "Ukrainian"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:150
+#: includes/admin/views/metabox/advanced-settings.php:149
 msgid "Urdu"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:151
+#: includes/admin/views/metabox/advanced-settings.php:150
 msgid "Uzbek"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:152
+#: includes/admin/views/metabox/advanced-settings.php:151
 msgid "Vietnamese"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:153
+#: includes/admin/views/metabox/advanced-settings.php:152
 msgid "Welsh"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:154
+#: includes/admin/views/metabox/advanced-settings.php:153
 msgid "Xhosa"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:155
+#: includes/admin/views/metabox/advanced-settings.php:154
 msgid "Yiddish"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:157
+#: includes/admin/views/metabox/advanced-settings.php:156
 msgid "Select a language to translate."
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:168
+#: includes/admin/views/metabox/advanced-settings.php:167
 msgid "Enable Polylang for published posts"
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:174
+#: includes/admin/views/metabox/advanced-settings.php:173
 msgid "Two letter language codes."
 msgstr ""
 
-#: includes/admin/views/metabox/advanced-settings.php:176
+#: includes/admin/views/metabox/advanced-settings.php:175
 msgid "Just give 2 letter language code. Like \"de\" for german, \"bn\" for bangla"
 msgstr ""
 
@@ -1781,14 +1781,14 @@ msgid ""
 "<strong>WPCPFREE2PRO</strong>"
 msgstr ""
 
-#: includes/class-wpcp-notices.php:330
+#: includes/class-wpcp-notices.php:329
 msgid ""
-"<b>🎃 Halloween Special Offer!</b> Get 30% OFF on all Content Pilot Pro "
-"plans. Use coupon code <strong>EVERSAVE30</strong> at checkout. Hurry, "
-"offer ends soon! 👻 &nbsp;&nbsp;"
+"<b>🖤 Black Friday Mega Sale!</b> Enjoy 40% OFF on all Content Pilot Pro "
+"plans. Use coupon code <strong>BFCM25</strong> at checkout. Don't miss out "
+"on this limited-time offer! 🛍️ &nbsp;&nbsp;"
 msgstr ""
 
-#: includes/class-wpcp-notices.php:348
+#: includes/class-wpcp-notices.php:347
 #. translators: 1. HTML anchor tag, 2. HTML anchor end tag
 msgid ""
 "The most wanted feature <b>article spinner</b> is now available with "

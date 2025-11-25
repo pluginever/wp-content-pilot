@@ -173,7 +173,7 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 	 * @return array $views All the views available.
 	 */
 	public function get_views() {
-		$current       = isset( $_GET['level'] ) ? sanitize_key( $_GET['level'] ) : '';
+		$current       = isset( $_GET['level'] ) ? sanitize_key( wp_unslash( $_GET['level'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- This is read-only.
 		$total_count   = '&nbsp;<span class="count">(' . $this->total_count . ')</span>';
 		$info_count    = '&nbsp;<span class="count">(' . $this->info_count . ')</span>';
 		$warning_count = '&nbsp;<span class="count">(' . $this->warning_count . ')</span>';
@@ -281,10 +281,10 @@ class WPCP_Logs_List_Table extends WP_List_Table {
 	 */
 	public function get_results() {
 		$per_page = $this->per_page;
-		$orderby  = isset( $_GET['orderby'] ) ? sanitize_key( $_GET['orderby'] ) : 'created_at';
-		$order    = isset( $_GET['order'] ) ? sanitize_key( $_GET['order'] ) : 'DESC';
-		$level    = isset( $_GET['level'] ) ? sanitize_key( $_GET['level'] ) : '';
-		$search   = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : null;
+		$orderby  = isset( $_GET['orderby'] ) ? sanitize_key( wp_unslash( $_GET['orderby'] ) ) : 'created_at'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- This is read-only.
+		$order    = isset( $_GET['order'] ) ? sanitize_key( wp_unslash( $_GET['order'] ) ) : 'DESC'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- This is read-only.
+		$level    = isset( $_GET['level'] ) ? sanitize_key( wp_unslash( $_GET['level'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- This is read-only.
+		$search   = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- This is read-only.
 
 		$args = array(
 			'per_page' => $per_page,
