@@ -126,6 +126,10 @@ No, Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= 2.1.9 (November 25, 2025) =
+* Fix - Few known issues are fixed.
+* Enhance -  Improved code quality & update the plugin notices.
+
 = 2.1.8 (November 06, 2025) =
 * Fix - Vulnerable to Broken Access Control issue fixed.
 * Fix - Few other known issues are fixed.
