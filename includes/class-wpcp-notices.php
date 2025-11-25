@@ -321,7 +321,7 @@ class WPCP_Admin_Notices {
 		}
 
 		// Black Friday offer notice.
-		$current_time   = absint( wp_date( 'U' ) );
+		$current_time          = absint( wp_date( 'U' ) );
 		$black_friday_end_time = strtotime( '2025-12-05 00:00:00' );
 		if ( $current_time > $black_friday_end_time ) {
 			return;
