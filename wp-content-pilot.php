@@ -3,7 +3,7 @@
  * Plugin Name:       Content Pilot
  * Plugin URI:        https://wpcontentpilot.com
  * Description:       Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:           2.1.9
+ * Version:           2.2.0
  * Requires at least: 5.2
  * Requires PHP:      8.0
  * Author:            PluginEver
@@ -12,11 +12,11 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wp-content-pilot
  * Domain Path:       /i18n/languages
- * Tested up to:      6.8
+ * Tested up to:      6.9
  *
  * @package WPContentPilot
  *
- * Copyright (c) 2025 PluginEver (email : support@pluginever.com)
+ * Copyright (c) 2026 PluginEver (email : support@pluginever.com)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at
@@ -49,7 +49,7 @@ final class ContentPilot {
 	 *
 	 * @since 1.0.0
 	 */
-	protected $version = '2.1.9';
+	protected $version = '2.2.0';
 
 	/**
 	 * The single instance of the class.
