@@ -52,8 +52,8 @@ class WPCP_Admin_Notices {
 	 * @since 1.0.0
 	 */
 	private static $predefined_notices = array(
-		'black_friday_2025' => 'black_friday_2025',
-		// 'upgrade_notice' => 'upgrade_notice',
+		'upgrade_notice' => 'upgrade_notice',
+		// 'black_friday_2025' => 'black_friday_2025',
 	);
 
 	/**
