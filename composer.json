@@ -6,11 +6,9 @@
   "license": "GPL-2.0-or-later",
   "prefer-stable": true,
   "minimum-stability": "dev",
-  "repositories": [],
   "require-dev": {
-    "byteever/byteever-sniffs": "^1.1"
+    "byteever/byteever-sniffs": "^1.1.3"
   },
-  "autoload": {},
   "config": {
     "optimize-autoloader": true,
     "sort-packages": true,
@@ -23,7 +21,6 @@
     "phpcs": "@php ./vendor/bin/phpcs --standard=phpcs.xml -s -v",
     "phpcbf": "@php ./vendor/bin/phpcbf --standard=phpcs.xml -v"
   },
-  "extra": {},
   "require": {
     "php": ">=8.0",
     "php-curl-class/php-curl-class": "^12.0"

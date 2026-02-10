@@ -1,14 +1,14 @@
-# Copyright (C) 2025 PluginEver
+# Copyright (C) 2026 PluginEver
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Content Pilot 2.1.9\n"
+"Project-Id-Version: Content Pilot 2.2.0\n"
 "Report-Msgid-Bugs-To: https://wpcontentpilot.com/support/\n"
-"POT-Creation-Date: 2025-11-25 09:28:00+00:00\n"
+"POT-Creation-Date: 2026-02-10 05:18:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2025-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: en\n"
@@ -2271,6 +2271,10 @@ msgstr ""
 msgid "Inserting link into store..."
 msgstr ""
 
+#: includes/modules/class-wpcp-envato.php:451
+msgid "No envato article generated check <a href=\"%s\">log</a> for details."
+msgstr ""
+
 #: includes/modules/class-wpcp-feed.php:65
 msgid "Feed Links"
 msgstr ""
@@ -2332,6 +2336,10 @@ msgstr ""
 
 #: includes/modules/class-wpcp-feed.php:189
 msgid "Cleaning post title"
+msgstr ""
+
+#: includes/modules/class-wpcp-feed.php:218
+msgid "No feed article generated check <a href=\"%s\">log</a> for details."
 msgstr ""
 
 #: includes/modules/class-wpcp-feed.php:237
@@ -2576,6 +2584,10 @@ msgstr ""
 
 #: includes/modules/class-wpcp-flickr.php:334
 msgid "Inserting links into store...."
+msgstr ""
+
+#: includes/modules/class-wpcp-flickr.php:351
+msgid "No flickr article generated check <a href=\"%s\">log</a> for details."
 msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:46
@@ -2833,6 +2845,10 @@ msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:359
 msgid "Preparing different parts for article"
+msgstr ""
+
+#: includes/modules/class-wpcp-youtube.php:400
+msgid "No youtube article generated check <a href=\"%s\">log</a> for details."
 msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:465
