@@ -3,7 +3,7 @@
  * Plugin Name:       Content Pilot
  * Plugin URI:        https://wpcontentpilot.com
  * Description:       Content Pilot automatically posts contents from various sources based on the predefined keywords.
- * Version:           2.2.0
+ * Version:           2.2.1
  * Requires at least: 5.2
  * Requires PHP:      8.0
  * Author:            PluginEver
@@ -49,7 +49,7 @@ final class ContentPilot {
 	 *
 	 * @since 1.0.0
 	 */
-	protected $version = '2.2.0';
+	protected $version = '2.2.1';
 
 	/**
 	 * The single instance of the class.
@@ -94,7 +94,6 @@ final class ContentPilot {
 	public function __wakeup() {
 		_doing_it_wrong( __FUNCTION__, esc_html__( 'Universalizing instances of this class is forbidden.', 'wp-content-pilot' ), '1.0.0' );
 	}
-
 
 	/**
 	 * ContentPilot constructor.
@@ -228,7 +227,6 @@ final class ContentPilot {
 		add_filter( 'cron_schedules', array( $this, 'custom_cron_schedules' ), 20 ); // phpcs:ignore WordPress.WP.CronInterval.CronSchedulesInterval
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
-		add_action( 'admin_init', array( $this, 'check_if_cron_running' ) );
 	}
 
 	/**
@@ -242,7 +240,6 @@ final class ContentPilot {
 	public function on_plugins_loaded() {
 		do_action( 'content__pilot__loaded' );
 	}
-
 
 	/**
 	 * Initialize plugin for localization
@@ -313,23 +310,6 @@ final class ContentPilot {
 		}
 
 		return $links;
-	}
-
-	/**
-	 * Check if cron is running
-	 *
-	 * @since 1.0.7
-	 * @return void
-	 */
-	public function check_if_cron_running() {
-		// phpcs:disable
-		// if ( current_user_can( 'manage_options' ) ) {
-		// $status = wpcp_check_cron_status();
-		// if ( is_wp_error( $status ) ) {
-		// $this->add_admin_notice( 'db-cron-error', 'notice-error', sprintf( __( 'There was a problem spawning a call to the WP-Cron system on your site. This means Content Pilot on your site may not work. The problem was: %s', 'wp-content-pilot' ), '<strong>' . esc_html( $status->get_error_message() ) . '</strong>' ) );
-		// }
-		// }
-		// phpcs:enable
 	}
 
 	/**
