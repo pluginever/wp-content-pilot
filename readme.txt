@@ -127,7 +127,7 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 
 == Changelog ==
 = 2.2.1 (March 15, 2026) =
-* Fix - Few known issues are fixed.
+* Enhance - Remove the unused code.
 * Compatibility - Check compatibility with the latest version of WordPress (v6.9).
 
 = 2.2.0 (February 10, 2026) =

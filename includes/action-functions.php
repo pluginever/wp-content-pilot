@@ -209,10 +209,10 @@ function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article )
 	if ( 'on' !== $send_mail ) {
 		return;
 	}
+
 	$author_id = get_post_field( 'post_author', $post_id );
 	$to        = get_the_author_meta( 'user_email', $author_id );
 	$title     = $article['title'];
-	// When excerpt is not available.
 	if ( empty( $article['excerpt'] ) ) {
 		$summary = wp_trim_words( $article['content'], 55 );
 		$summary = wp_strip_all_tags( $summary );
@@ -282,7 +282,6 @@ add_action( 'admin_post_wpcp_campaign_reset_search', 'wpcp_campaign_reset_search
  * @return void
  */
 function wpcp_ajax_run_manual_campaign() {
-	// Check nonce.
 	if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) ), 'ajax_action' ) ) {
 		wp_send_json( array(
 			'message' => __( 'Cheating?', 'wp-content-pilot' ),
@@ -291,7 +290,6 @@ function wpcp_ajax_run_manual_campaign() {
 		) );
 	}
 
-	// Check the user capability.
 	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_send_json( array(
 			'message' => __( 'Unauthorized user', 'wp-content-pilot' ),
@@ -364,7 +362,6 @@ add_action( 'wp_ajax_wpcp_run_manual_campaign', 'wpcp_ajax_run_manual_campaign' 
  * @return void
  */
 function wpcp_get_campaign_instance_log() {
-	// Check nonce.
 	if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) ), 'ajax_action' ) ) {
 		wp_send_json( array(
 			'message' => __( 'Cheating?', 'wp-content-pilot' ),
@@ -373,7 +370,6 @@ function wpcp_get_campaign_instance_log() {
 		) );
 	}
 
-	// Check the user capability.
 	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_send_json( array(
 			array(

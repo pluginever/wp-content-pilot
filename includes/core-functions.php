@@ -35,7 +35,6 @@ function wpcp_get_random_user_agent() {
 	return trim( $agents[ $rand ] );
 }
 
-
 /**
  * Get plugin settings.
  *
@@ -259,7 +258,7 @@ function wpcp_hyperlink_text( $text ) {
 }
 
 /**
- * Allow html tag when string from content.
+ * Allow HTML tag when string from content.
  *
  * @param string $content The content.
  * @param int    $length Content length.
@@ -270,11 +269,10 @@ function wpcp_hyperlink_text( $text ) {
  */
 function wpcp_truncate_content( $content, $length, $html = true ) {
 	if ( $html ) {
-		// if the plain text is shorter than the maximum length, return the whole text.
 		if ( strlen( preg_replace( '/<.*?>/', '', $content ) ) <= $length ) {
 			return $content;
 		}
-		// Balances tags of string using a modified stack.
+
 		$content = force_balance_tags( html_entity_decode( wp_trim_words( htmlentities( $content ), $length, '...' ) ) );
 	} else {
 		$content = wp_trim_words( $content, $length );
