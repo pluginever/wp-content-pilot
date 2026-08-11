@@ -1,8 +1,8 @@
 === Content Pilot - Autoblogging & Affiliate Marketing Suite ===
 Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, rss to post, rss feeds
-Tested up to: 6.9
-Stable tag: 2.2.2
+Tested up to: 7.0
+Stable tag: 2.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,7 +102,7 @@ https://www.youtube.com/watch?v=5A3gx0f6PJk
 
 = Automatic installation =
 
-Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of Content Pilot, log in to your WordPress dashboard, navigate to the Plugins menu and click "Add New".
+Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic installation of Content Pilot, log in to your WordPress dashboard, navigate to the Plugins menu and click "Add New".
 
 In the search field type "Content Pilot" and click Search Plugins. Once you have found the plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking "Install Now".
 
@@ -126,6 +126,10 @@ No, Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= 2.2.3 (August 11, 2026) =
+* Minor maintenance update.
+* Compatibility - Check compatibility with the latest version of WordPress.
+
 = 2.2.2 (April 30, 2026) =
 * Minor maintenance update.
 
@@ -363,7 +367,7 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 * Fix - Author not saving
 * Fix - Searching post links
 
-= 1.0.2 -> April 12, 2018 =
+= 1.0.2 (April 12, 2018) =
 * Enhance - Keywords searching system updated
 * Enhance - Keywords type exact or anyword add
 * Fix - Post status change does not update campaign status
