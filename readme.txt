@@ -1,8 +1,8 @@
 === Content Pilot - Autoblogging & Affiliate Marketing Suite ===
 Contributors: pluginever,manikmist09
 Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, rss to post, rss feeds
-Tested up to: 7.0
-Stable tag: 2.2.3
+Tested up to: 7.1
+Stable tag: 2.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,10 @@ No, Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
+= 2.2.4 (August 23, 2026) =
+* Minor maintenance update.
+* Compatibility - Check compatibility with the latest version of WordPress.
+
 = 2.2.3 (August 11, 2026) =
 * Minor maintenance update.
 * Compatibility - Check compatibility with the latest version of WordPress.
