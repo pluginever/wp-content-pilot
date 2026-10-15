@@ -2,9 +2,9 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Content Pilot 2.2.4\n"
+"Project-Id-Version: Content Pilot 2.2.5\n"
 "Report-Msgid-Bugs-To: https://wpcontentpilot.com/support/\n"
-"POT-Creation-Date: 2026-08-23 08:26:09+00:00\n"
+"POT-Creation-Date: 2026-10-15 21:05:28+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -28,43 +28,47 @@ msgstr ""
 msgid "Reached campaign post limit. So campaign stopping publish new post"
 msgstr ""
 
-#: includes/action-functions.php:225
+#: includes/action-functions.php:241
 msgid "Post Publish"
 msgstr ""
 
-#: includes/action-functions.php:262
+#: includes/action-functions.php:278
 msgid "No Cheating"
 msgstr ""
 
-#: includes/action-functions.php:287 includes/action-functions.php:367
+#: includes/action-functions.php:282
+msgid "You are not allowed to reset this campaign."
+msgstr ""
+
+#: includes/action-functions.php:303 includes/action-functions.php:383
 msgid "Cheating?"
 msgstr ""
 
-#: includes/action-functions.php:295 includes/action-functions.php:376
+#: includes/action-functions.php:311 includes/action-functions.php:392
 msgid "Unauthorized user"
 msgstr ""
 
-#: includes/action-functions.php:304
+#: includes/action-functions.php:320
 msgid "Invalid campaign ID"
 msgstr ""
 
-#: includes/action-functions.php:313
+#: includes/action-functions.php:329
 msgid "Invalid instance"
 msgstr ""
 
-#: includes/action-functions.php:326
+#: includes/action-functions.php:342
 msgid "Invalid post action"
 msgstr ""
 
-#: includes/action-functions.php:333
+#: includes/action-functions.php:349
 msgid "Campaign <strong>%s</strong> manually initiated by <strong>%s</strong>"
 msgstr ""
 
-#: includes/action-functions.php:347
+#: includes/action-functions.php:363
 msgid "A post successfully created by campaign %s titled %s"
 msgstr ""
 
-#: includes/action-functions.php:390
+#: includes/action-functions.php:406
 msgid "Something wrong, please try again."
 msgstr ""
 
@@ -1753,23 +1757,23 @@ msgstr ""
 msgid "Removing images from content"
 msgstr ""
 
-#: includes/class-wpcp-module.php:436
+#: includes/class-wpcp-module.php:453
 msgid "Setting featured image"
 msgstr ""
 
-#: includes/class-wpcp-module.php:440
+#: includes/class-wpcp-module.php:457
 msgid "Downloading image"
 msgstr ""
 
-#: includes/class-wpcp-module.php:457
+#: includes/class-wpcp-module.php:474
 msgid "Settings up polylang language"
 msgstr ""
 
-#: includes/class-wpcp-module.php:465
+#: includes/class-wpcp-module.php:482
 msgid "Setting featured image using external links"
 msgstr ""
 
-#: includes/class-wpcp-module.php:473
+#: includes/class-wpcp-module.php:490
 msgid "Updating product price, regular price & sale price."
 msgstr ""
 
