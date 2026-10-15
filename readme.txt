@@ -130,6 +130,8 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 * Fix - Sanitized imported post title, content and excerpt to prevent stored cross-site scripting from remote sources.
 * Fix - Added capability checks to campaign AJAX and admin actions.
 * Fix - Escaped the excerpt in the post publish notification email.
+* Fix - Hardened remote article fetching and featured image downloads.
+* Fix - Restricted campaign settings to administrators.
 
 = 2.2.4 (August 23, 2026) =
 * Minor maintenance update.
