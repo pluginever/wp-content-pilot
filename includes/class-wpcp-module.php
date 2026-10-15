@@ -434,12 +434,14 @@ abstract class WPCP_Module {
 		$postarr['post_excerpt'] = wp_kses_post( $postarr['post_excerpt'] );
 
 		// Set user when insert post using background process.
-		$user = get_user_by( 'ID', $post_author );
+		$current_user_id = get_current_user_id();
+		$user            = get_user_by( 'ID', $post_author );
 		if ( $user ) {
 			wp_set_current_user( $post_author, $user->user_login );
 		}
 
 		$post_id = wp_insert_post( $postarr, true );
+		wp_set_current_user( $current_user_id );
 
 		if ( is_wp_error( $post_id ) ) {
 			do_action( 'wpcp_post_insertion_failed', $campaign_id );
@@ -480,7 +482,7 @@ abstract class WPCP_Module {
 			$enable_not_save_featured_image = ! empty( wpcp_get_post_meta( $campaign_id, '_not_save_featured_image', 0 ) ) ? wpcp_get_post_meta( $campaign_id, '_not_save_featured_image', 0 ) : 0;
 			if ( ! empty( $enable_not_save_featured_image ) && 'on' === $enable_not_save_featured_image ) {
 				wpcp_logger()->info( __( 'Setting featured image using external links', 'wp-content-pilot' ), $campaign_id );
-				update_post_meta( $post_id, 'fifu_image_url', $article['image_url'] );
+				update_post_meta( $post_id, 'fifu_image_url', esc_url_raw( $article['image_url'] ) );
 				fifu_update_fake_attach_id( $post_id );
 			}
 		}
