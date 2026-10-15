@@ -416,6 +416,23 @@ abstract class WPCP_Module {
 			$article
 		);
 
+		// The post is inserted as the campaign author, who usually has unfiltered_html, so remote content is sanitized here.
+		$allowed_html           = wp_kses_allowed_html( 'post' );
+		$allowed_html['iframe'] = array(
+			'src'             => true,
+			'width'           => true,
+			'height'          => true,
+			'title'           => true,
+			'frameborder'     => true,
+			'allow'           => true,
+			'allowfullscreen' => true,
+			'referrerpolicy'  => true,
+		);
+
+		$postarr['post_title']   = wp_strip_all_tags( $postarr['post_title'] );
+		$postarr['post_content'] = wp_kses( $postarr['post_content'], $allowed_html );
+		$postarr['post_excerpt'] = wp_kses_post( $postarr['post_excerpt'] );
+
 		// Set user when insert post using background process.
 		$user = get_user_by( 'ID', $post_author );
 		if ( $user ) {
