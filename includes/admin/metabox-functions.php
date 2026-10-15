@@ -125,7 +125,7 @@ function wpcp_campaign_posts_metabox_callback( $post ) {
 }
 
 function wpcp_update_campaign_settings( $post_id ) {
-	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+	if ( ! current_user_can( 'manage_options' ) ) {
 		return false;
 	}
 
