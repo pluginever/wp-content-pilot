@@ -162,10 +162,20 @@ EOT;
 
                 $this->update_link( $link->id, [ 'status' => 'failed' ] );
 
+                if ( ! wp_http_validate_url( $link->url ) ) {
+                    wpcp_logger()->error( sprintf( /* translators: %s The URL */ __( 'Skipping unsafe link [%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
+                    continue;
+                }
+
                 $curl = $this->setup_curl();
                 $curl->setHeader( 'accept-encoding', 'utf-8' );
                 $curl->setOpt( CURLOPT_ENCODING, '' );
                 $curl->get( $link->url );
+
+                if ( ! wp_http_validate_url( $curl->getInfo( CURLINFO_EFFECTIVE_URL ) ) ) {
+                    wpcp_logger()->error( sprintf( /* translators: %s The URL */ __( 'Skipping unsafe link [%s]', 'wp-content-pilot' ), $curl->getInfo( CURLINFO_EFFECTIVE_URL ) ), $campaign_id );
+                    continue;
+                }
 
                 if ( $curl->isError() && $this->initiator !== 'cron' ) {
                     wpcp_logger()->error( sprintf( /* translators: %s The error message */ __( "Failed processing link reason [%s]", 'wp-content-pilot' ), $curl->getErrorMessage() ), $campaign_id );
