@@ -428,10 +428,8 @@ add_action( 'wp_ajax_wpcp_get_campaign_instance_log', 'wpcp_get_campaign_instanc
 function remove_campaign_data_when_trash( $post_id ) {
 	global $wpdb;
 	if ( 'wp_content_pilot' == get_post_type( $post_id ) ) {
-		$links_query = "DELETE FROM {$wpdb->wpcp_links} where camp_id=$post_id";
-		$logs_query  = "DELETE FROM {$wpdb->wpcp_logs} where camp_id=$post_id";
-		$wpdb->query( $links_query );
-		$wpdb->query( $logs_query );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->wpcp_links} WHERE camp_id=%d", $post_id ) );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->wpcp_logs} WHERE camp_id=%d", $post_id ) );
 	}
 }
 
