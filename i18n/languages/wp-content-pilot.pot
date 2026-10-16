@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Content Pilot 2.2.5\n"
 "Report-Msgid-Bugs-To: https://wpcontentpilot.com/support/\n"
-"POT-Creation-Date: 2026-10-15 21:14:22+00:00\n"
+"POT-Creation-Date: 2026-10-16 09:42:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -40,11 +40,11 @@ msgstr ""
 msgid "You are not allowed to reset this campaign."
 msgstr ""
 
-#: includes/action-functions.php:303 includes/action-functions.php:383
+#: includes/action-functions.php:303 includes/action-functions.php:385
 msgid "Cheating?"
 msgstr ""
 
-#: includes/action-functions.php:311 includes/action-functions.php:392
+#: includes/action-functions.php:311 includes/action-functions.php:394
 msgid "Unauthorized user"
 msgstr ""
 
@@ -60,15 +60,17 @@ msgstr ""
 msgid "Invalid post action"
 msgstr ""
 
-#: includes/action-functions.php:349
-msgid "Campaign <strong>%s</strong> manually initiated by <strong>%s</strong>"
+#: includes/action-functions.php:350
+#. translators: 1: Campaign title, 2: User display name.
+msgid "Campaign <strong>%1$s</strong> manually initiated by <strong>%2$s</strong>"
 msgstr ""
 
-#: includes/action-functions.php:363
-msgid "A post successfully created by campaign %s titled %s"
+#: includes/action-functions.php:365
+#. translators: 1: Campaign title, 2: Post link.
+msgid "A post successfully created by campaign %1$s titled %2$s"
 msgstr ""
 
-#: includes/action-functions.php:406
+#: includes/action-functions.php:408
 msgid "Something wrong, please try again."
 msgstr ""
 
@@ -173,7 +175,7 @@ msgstr ""
 
 #: includes/admin/class-wpcp-help.php:239
 #: includes/admin/views/page/help-page.php:49
-#: includes/modules/class-wpcp-envato.php:175
+#: includes/modules/class-wpcp-envato.php:177
 msgid "Envato"
 msgstr ""
 
@@ -184,7 +186,7 @@ msgstr ""
 
 #: includes/admin/class-wpcp-help.php:245
 #: includes/admin/views/page/help-page.php:55
-#: includes/modules/class-wpcp-youtube.php:225
+#: includes/modules/class-wpcp-youtube.php:227
 msgid "Youtube"
 msgstr ""
 
@@ -205,7 +207,7 @@ msgstr ""
 
 #: includes/admin/class-wpcp-help.php:257
 #: includes/admin/views/page/help-page.php:67
-#: includes/modules/class-wpcp-flickr.php:157
+#: includes/modules/class-wpcp-flickr.php:159
 msgid "Flickr"
 msgstr ""
 
@@ -479,62 +481,69 @@ msgstr ""
 msgid "SpinreWriter"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:98
+#: includes/admin/class-wpcp-settings.php:99
+#. translators: 1: Opening link tag, 2: Closing link tag.
 msgid ""
 "Spin rewriter is one of the best Article Spinner, if you do not have "
-"account please %ssign up%s."
-msgstr ""
-
-#: includes/admin/class-wpcp-settings.php:104
-msgid "Email"
+"account please %1$ssign up%2$s."
 msgstr ""
 
 #: includes/admin/class-wpcp-settings.php:105
+msgid "Email"
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:106
 msgid "Input your email address of Spin rewriter."
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:111
+#: includes/admin/class-wpcp-settings.php:112
 msgid "API Key"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:112
+#: includes/admin/class-wpcp-settings.php:113
 msgid "Input API key of Spin rewriter."
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:125
+#: includes/admin/class-wpcp-settings.php:126
 msgid "Content Pilot Settings"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:134
+#: includes/admin/class-wpcp-settings.php:135
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:137
+#: includes/admin/class-wpcp-settings.php:139
+#. translators: 1: Opening link tag, 2: Closing link tag.
 msgid ""
 "Pro version supports 25+ campaign sources with exclusive features. "
-"%sUpgrade to Pro.%s"
+"%1$sUpgrade to Pro.%2$s"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:145
+#: includes/admin/class-wpcp-settings.php:147
 #: includes/admin/views/page/help-page.php:10
 msgid "Documentation"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:148
-msgid "We have detailed documentation on every aspects of %s Content Pilot %s"
-msgstr ""
-
-#: includes/admin/class-wpcp-settings.php:154
-msgid "Support"
+#: includes/admin/class-wpcp-settings.php:151
+#. translators: 1: Opening link tag, 2: Closing link tag.
+msgid "We have detailed documentation on every aspects of %1$s Content Pilot %2$s"
 msgstr ""
 
 #: includes/admin/class-wpcp-settings.php:157
-msgid "Our expert support team is always ready to help you out. %s support forum%s"
+msgid "Support"
 msgstr ""
 
-#: includes/admin/class-wpcp-settings.php:167
+#: includes/admin/class-wpcp-settings.php:161
+#. translators: 1: Opening link tag, 2: Closing link tag.
 msgid ""
-"If you like Content Pilot, please leave us a  %s rating.%s It takes a "
+"Our expert support team is always ready to help you out. %1$s support "
+"forum%2$s"
+msgstr ""
+
+#: includes/admin/class-wpcp-settings.php:172
+#. translators: 1: Opening link tag, 2: Closing link tag.
+msgid ""
+"If you like Content Pilot, please leave us a  %1$s rating.%2$s It takes a "
 "minute and helps a lot. Thanks in advance!"
 msgstr ""
 
@@ -1130,15 +1139,15 @@ msgstr ""
 msgid "Just give 2 letter language code. Like \"de\" for german, \"bn\" for bangla"
 msgstr ""
 
-#: includes/admin/views/metabox/campaign-miscellaneous.php:2
+#: includes/admin/views/metabox/campaign-miscellaneous.php:3
 msgid "Delete all posts by this campaign"
 msgstr ""
 
-#: includes/admin/views/metabox/campaign-posts.php:13
+#: includes/admin/views/metabox/campaign-posts.php:14
 msgid "No posts generated yet"
 msgstr ""
 
-#: includes/admin/views/metabox/campaign-selection.php:223
+#: includes/admin/views/metabox/campaign-selection.php:224
 msgid "Start Campaign"
 msgstr ""
 
@@ -1368,7 +1377,7 @@ msgid "Medium"
 msgstr ""
 
 #: includes/admin/views/metabox/spinner-settings.php:53
-#: includes/modules/class-wpcp-youtube.php:152
+#: includes/modules/class-wpcp-youtube.php:154
 msgid "High"
 msgstr ""
 
@@ -1700,8 +1709,8 @@ msgid "Log"
 msgstr ""
 
 #: includes/admin/views/tables/class-wpcp-logs-table.php:216
-#: includes/modules/class-wpcp-envato.php:114
-#: includes/modules/class-wpcp-youtube.php:116
+#: includes/modules/class-wpcp-envato.php:116
+#: includes/modules/class-wpcp-youtube.php:118
 msgid "Date"
 msgstr ""
 
@@ -1846,7 +1855,7 @@ msgstr ""
 #: includes/modules/class-wpcp-feed.php:36
 #: includes/modules/class-wpcp-flickr.php:36
 #: includes/modules/class-wpcp-youtube.php:41
-#: includes/modules/class-wpcp-youtube.php:117
+#: includes/modules/class-wpcp-youtube.php:119
 msgid "Title"
 msgstr ""
 
@@ -1880,163 +1889,163 @@ msgstr ""
 msgid "Source link"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:110
+#: includes/modules/class-wpcp-article.php:112
 msgid "Select region to search article"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:159
+#: includes/modules/class-wpcp-article.php:161
 msgid "Article Settings"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:177
+#: includes/modules/class-wpcp-article.php:179
 msgid "Banned hosts"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:178
+#: includes/modules/class-wpcp-article.php:180
 msgid ""
 "Articles from the above hosts will be rejected. Put single url/host per "
 "line."
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:179
+#: includes/modules/class-wpcp-article.php:181
 msgid ""
 "example.com \n"
 " example1.com"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:200
-#: includes/modules/class-wpcp-envato.php:241
-#: includes/modules/class-wpcp-flickr.php:209
-#: includes/modules/class-wpcp-youtube.php:281
+#: includes/modules/class-wpcp-article.php:202
+#: includes/modules/class-wpcp-envato.php:243
+#: includes/modules/class-wpcp-flickr.php:211
+#: includes/modules/class-wpcp-youtube.php:283
 msgid "Campaign do not have keyword to proceed, please set keyword"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:203
+#: includes/modules/class-wpcp-article.php:205
 msgid "Loaded Article campaign"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:207
+#: includes/modules/class-wpcp-article.php:209
 #. translators: The article search keywords.
 msgid "Looking for article for the keyword [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:218
+#: includes/modules/class-wpcp-article.php:220
 #. translators: The article search keywords.
 msgid ""
 "The keyword is deactivated for 1 hr because last time could not find any "
 "article with keyword [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:223
+#: includes/modules/class-wpcp-article.php:225
 msgid "Checking for cached links in store"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:226
-#: includes/modules/class-wpcp-youtube.php:299
+#: includes/modules/class-wpcp-article.php:228
+#: includes/modules/class-wpcp-youtube.php:301
 msgid "No cached links in store. Generating new links..."
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:231
-#: includes/modules/class-wpcp-feed.php:159
+#: includes/modules/class-wpcp-article.php:233
+#: includes/modules/class-wpcp-feed.php:161
 msgid "Looping through cached links for publishing article"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:233
+#: includes/modules/class-wpcp-article.php:235
 #. translators: Article source URL.
 msgid "Generating article from [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:238
-#: includes/modules/class-wpcp-article.php:246
-#: includes/modules/class-wpcp-feed.php:166
-#: includes/modules/class-wpcp-feed.php:176
+#: includes/modules/class-wpcp-article.php:240
+#: includes/modules/class-wpcp-article.php:248
+#: includes/modules/class-wpcp-feed.php:168
+#: includes/modules/class-wpcp-feed.php:178
 #. translators: Article source URL.
 #. translators: %s The URL
 msgid "Skipping unsafe link [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:251
-#: includes/modules/class-wpcp-feed.php:181
+#: includes/modules/class-wpcp-article.php:253
+#: includes/modules/class-wpcp-feed.php:183
 #. translators: Error message.
 #. translators: %s The error message
 msgid "Failed processing link reason [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:255
+#: includes/modules/class-wpcp-article.php:257
 msgid "Extracting post content from request"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:261
+#: includes/modules/class-wpcp-article.php:263
 #. translators: The error message.
 msgid "Failed readability reason [%s] changing to different link"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:269
-#: includes/modules/class-wpcp-envato.php:390
-#: includes/modules/class-wpcp-flickr.php:303
-#: includes/modules/class-wpcp-youtube.php:353
+#: includes/modules/class-wpcp-article.php:271
+#: includes/modules/class-wpcp-envato.php:392
+#: includes/modules/class-wpcp-flickr.php:305
+#: includes/modules/class-wpcp-youtube.php:355
 msgid "Cleaning title"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:275
-#: includes/modules/class-wpcp-feed.php:205
+#: includes/modules/class-wpcp-article.php:277
+#: includes/modules/class-wpcp-feed.php:207
 msgid "Making article content from response"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:286
-#: includes/modules/class-wpcp-envato.php:432
-#: includes/modules/class-wpcp-feed.php:219
-#: includes/modules/class-wpcp-flickr.php:344
-#: includes/modules/class-wpcp-youtube.php:392
+#: includes/modules/class-wpcp-article.php:288
+#: includes/modules/class-wpcp-envato.php:434
+#: includes/modules/class-wpcp-feed.php:221
+#: includes/modules/class-wpcp-flickr.php:346
+#: includes/modules/class-wpcp-youtube.php:394
 msgid "Article processed from campaign"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:301
+#: includes/modules/class-wpcp-article.php:303
 #. translators:
 msgid "No article generated check %1$slog%2$s for details."
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:339
+#: includes/modules/class-wpcp-article.php:341
 #. translators: 1: Endpoint.
 msgid "Searching page url [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:354
-#: includes/modules/class-wpcp-flickr.php:258
-#: includes/modules/class-wpcp-youtube.php:479
+#: includes/modules/class-wpcp-article.php:356
+#: includes/modules/class-wpcp-flickr.php:260
+#: includes/modules/class-wpcp-youtube.php:481
 msgid "Extracting response from request"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:371
+#: includes/modules/class-wpcp-article.php:373
 msgid ""
 "Could not find any links from search engine, deactivating keyword for an "
 "hour."
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:380
+#: includes/modules/class-wpcp-article.php:382
 msgid "Getting banned hosts for skipping links"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:396
-#: includes/modules/class-wpcp-feed.php:270
+#: includes/modules/class-wpcp-article.php:398
+#: includes/modules/class-wpcp-feed.php:272
 msgid "Finding links from response and inserting into database"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:416
-#: includes/modules/class-wpcp-envato.php:319
-#: includes/modules/class-wpcp-feed.php:302
-#: includes/modules/class-wpcp-youtube.php:515
-#. translators: %s URL, %s URL, %s Remove
+#: includes/modules/class-wpcp-article.php:418
+#: includes/modules/class-wpcp-envato.php:321
+#: includes/modules/class-wpcp-feed.php:304
+#: includes/modules/class-wpcp-youtube.php:517
+#. translators: 1: URL, 2: URL, 3: Remove label.
 msgid ""
-"The link [%s] is already in database, skipping. Remove it from database: <a "
-"href=\"#remove-cached-link\" class=\"wpcp_remove_cached_link\" "
-"data-link=\"%s\">%s</a>"
+"The link [%1$s] is already in database, skipping. Remove it from database: "
+"<a href=\"#remove-cached-link\" class=\"wpcp_remove_cached_link\" "
+"data-link=\"%2$s\">%3$s</a>"
 msgstr ""
 
-#: includes/modules/class-wpcp-article.php:419
-#: includes/modules/class-wpcp-envato.php:322
-#: includes/modules/class-wpcp-feed.php:305
-#: includes/modules/class-wpcp-youtube.php:518
+#: includes/modules/class-wpcp-article.php:421
+#: includes/modules/class-wpcp-envato.php:324
+#: includes/modules/class-wpcp-feed.php:307
+#: includes/modules/class-wpcp-youtube.php:520
 msgid "Remove"
 msgstr ""
 
@@ -2057,8 +2066,8 @@ msgid "Number of sales"
 msgstr ""
 
 #: includes/modules/class-wpcp-envato.php:42
-#: includes/modules/class-wpcp-envato.php:111
-#: includes/modules/class-wpcp-youtube.php:119
+#: includes/modules/class-wpcp-envato.php:113
+#: includes/modules/class-wpcp-youtube.php:121
 msgid "Rating"
 msgstr ""
 
@@ -2102,285 +2111,293 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:83
+#: includes/modules/class-wpcp-envato.php:85
 msgid "Platform"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:95
+#: includes/modules/class-wpcp-envato.php:97
 msgid "Select envato platform"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:99
+#: includes/modules/class-wpcp-envato.php:101
 msgid "Price Range"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:102
+#: includes/modules/class-wpcp-envato.php:104
 msgid "separate min max price with (|). e.g. 20|100"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:106
+#: includes/modules/class-wpcp-envato.php:108
 msgid "Sort By"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:109
-#: includes/modules/class-wpcp-flickr.php:93
-#: includes/modules/class-wpcp-youtube.php:115
+#: includes/modules/class-wpcp-envato.php:111
+#: includes/modules/class-wpcp-flickr.php:95
+#: includes/modules/class-wpcp-youtube.php:117
 msgid "Relevance"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:110
+#: includes/modules/class-wpcp-envato.php:112
 msgid "Following"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:112
+#: includes/modules/class-wpcp-envato.php:114
 msgid "Sales"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:113
+#: includes/modules/class-wpcp-envato.php:115
 msgid "Price"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:115
+#: includes/modules/class-wpcp-envato.php:117
 msgid "Updated"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:116
+#: includes/modules/class-wpcp-envato.php:118
 msgid "Name"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:117
+#: includes/modules/class-wpcp-envato.php:119
 msgid "Trending"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:119
+#: includes/modules/class-wpcp-envato.php:121
 msgid "Select how the result will be sorted"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:123
+#: includes/modules/class-wpcp-envato.php:125
 msgid "Sort Direction"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:126
+#: includes/modules/class-wpcp-envato.php:128
 msgid "ASC"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:127
+#: includes/modules/class-wpcp-envato.php:129
 msgid "DESC"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:129
+#: includes/modules/class-wpcp-envato.php:131
 msgid "Select sort direction for the result set"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:133
+#: includes/modules/class-wpcp-envato.php:135
 msgid "Search in specific category"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:135
+#: includes/modules/class-wpcp-envato.php:137
 #. translators: example url
 msgid ""
 "For example: Use <a href=\"%s\" target=\"_blank\">site-templates</a> for "
 "this category."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:139
+#: includes/modules/class-wpcp-envato.php:141
 msgid "Search in specific author"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:141
+#: includes/modules/class-wpcp-envato.php:143
 #. translators: example url
 msgid ""
 "For example: Use <a href=\"%s\" target=\"_blank\">2codethemes</a> for this "
 "author."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:191
+#: includes/modules/class-wpcp-envato.php:193
 msgid "Envato token"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:192
+#: includes/modules/class-wpcp-envato.php:194
 #. translators: Doc url
 msgid ""
 "Check this tutorial to get your <a href=\"%s\" target=\"_blank\">Envato "
 "token</a>."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:198
+#: includes/modules/class-wpcp-envato.php:200
 msgid "Impact radius affiliate url"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:199
+#: includes/modules/class-wpcp-envato.php:201
 #. translators: Doc url
 msgid "Learn how to get your impact radius affiliate url <a href=\"%s\">here</a>."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:216
+#: includes/modules/class-wpcp-envato.php:218
 msgid "Loaded Envato Campaign"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:221
+#: includes/modules/class-wpcp-envato.php:223
 msgid "Checking envato api key and impact radius url for authentication.."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:223
+#: includes/modules/class-wpcp-envato.php:225
 msgid "The Envato api key is not set so the campaign won't run, disabling campaign."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:233
+#: includes/modules/class-wpcp-envato.php:235
+#. translators: %s Settings URL
 msgid ""
 "The Impact  Radius affiliate url is not set. Set it from <a "
 "href='%s'>here</a>"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:245
+#: includes/modules/class-wpcp-envato.php:247
+#. translators: %s The keyword
 msgid "Looping through keywords [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:288
+#: includes/modules/class-wpcp-envato.php:290
+#. translators: %s The endpoint URL
 msgid "Searching for items url [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:295
+#: includes/modules/class-wpcp-envato.php:297
+#. translators: %s The error message
 msgid "Envato api request failed response [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:305
+#: includes/modules/class-wpcp-envato.php:307
 msgid "No matching data found from api disabling the keyword for 1 hour"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:312
+#: includes/modules/class-wpcp-envato.php:314
 msgid "Checking duplicate links in store..."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:336
+#: includes/modules/class-wpcp-envato.php:338
 msgid "Finding images from item preview"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:362
+#: includes/modules/class-wpcp-envato.php:364
 msgid "Making affiliate url"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:377
+#: includes/modules/class-wpcp-envato.php:379
 msgid "Extracting tags from item"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:384
+#: includes/modules/class-wpcp-envato.php:386
+#. translators: %s The item URL
 msgid "Generating envato article from [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:398
+#: includes/modules/class-wpcp-envato.php:400
 msgid "Extracting categories from response"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:404
+#: includes/modules/class-wpcp-envato.php:406
 msgid "Extracting tags from response"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:410
+#: includes/modules/class-wpcp-envato.php:412
 msgid "Combining all parts for article"
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:435
+#: includes/modules/class-wpcp-envato.php:437
 msgid "Inserting link into store..."
 msgstr ""
 
-#: includes/modules/class-wpcp-envato.php:451
+#: includes/modules/class-wpcp-envato.php:453
+#. translators: %s The log page URL
 msgid "No envato article generated check <a href=\"%s\">log</a> for details."
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:65
+#: includes/modules/class-wpcp-feed.php:67
 msgid "Feed Links"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:66
+#: includes/modules/class-wpcp-feed.php:68
 msgid "Example: http://example.com/feed"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:67
+#: includes/modules/class-wpcp-feed.php:69
 msgid "Input feed links, Separate links with a comma (,)"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:72
+#: includes/modules/class-wpcp-feed.php:74
 msgid "Feed fetch full content"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:132
+#: includes/modules/class-wpcp-feed.php:134
 msgid "Campaign do not have feed link to proceed, please set link"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:138
+#: includes/modules/class-wpcp-feed.php:140
 #. translators: %s The source
 msgid "Looping through feed link now trying with [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:141
+#: includes/modules/class-wpcp-feed.php:143
 #. translators: %s The source
 msgid ""
 "The feed url is deactivated for 1 hr because last time could not find any "
 "article with url [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:147
-#: includes/modules/class-wpcp-youtube.php:295
+#: includes/modules/class-wpcp-feed.php:149
+#: includes/modules/class-wpcp-youtube.php:297
 msgid "Checking cached links in store"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:150
+#: includes/modules/class-wpcp-feed.php:152
 msgid "No cached links in store.Generating new links...."
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:156
+#: includes/modules/class-wpcp-feed.php:158
 msgid "Could not find any new link, lets try later."
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:161
+#: includes/modules/class-wpcp-feed.php:163
 #. translators: %s The URL
 msgid "Grabbing feed from [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:184
+#: includes/modules/class-wpcp-feed.php:186
 msgid "Extracting post response from request"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:191
+#: includes/modules/class-wpcp-feed.php:193
 #. translators: %s The error message
 msgid "Failed readability reason [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:199
+#: includes/modules/class-wpcp-feed.php:201
 msgid "Cleaning post title"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:228
+#: includes/modules/class-wpcp-feed.php:230
+#. translators: %s The log page URL
 msgid "No feed article generated check <a href=\"%s\">log</a> for details."
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:247
+#: includes/modules/class-wpcp-feed.php:249
 #. translators: %s The error Message
 msgid "Failed fetching feeds [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:249
+#: includes/modules/class-wpcp-feed.php:251
 msgid "Checking for force feed and initiating force feed"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:263
 #: includes/modules/class-wpcp-feed.php:265
+#: includes/modules/class-wpcp-feed.php:267
 msgid "Could not find any article, waiting..."
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:297
+#: includes/modules/class-wpcp-feed.php:299
 #. translators: %s Whether the URL is duplicate or not
 msgid "Checking the duplicate status: [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:316
+#: includes/modules/class-wpcp-feed.php:318
 #. translators: %s The title
 msgid "The title [%s] is already in used, skipping"
 msgstr ""
 
-#: includes/modules/class-wpcp-feed.php:331
-msgid "Total found links [%d] and accepted [%d] and reject [%d]"
+#: includes/modules/class-wpcp-feed.php:333
+#. translators: 1: Found links, 2: Accepted links, 3: Rejected links
+msgid "Total found links [%1$d] and accepted [%2$d] and reject [%3$d]"
 msgstr ""
 
 #: includes/modules/class-wpcp-flickr.php:38
@@ -2455,151 +2472,158 @@ msgstr ""
 msgid "Original Image Url"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:91
+#: includes/modules/class-wpcp-flickr.php:93
 msgid "Sort Order"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:94
+#: includes/modules/class-wpcp-flickr.php:96
 msgid "Date Posted ASC"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:95
+#: includes/modules/class-wpcp-flickr.php:97
 msgid "Date Posted DESC"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:96
+#: includes/modules/class-wpcp-flickr.php:98
 msgid "Date Taken ASC"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:97
+#: includes/modules/class-wpcp-flickr.php:99
 msgid "Date Taken DESC"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:98
+#: includes/modules/class-wpcp-flickr.php:100
 msgid "Interestingness DESC"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:99
+#: includes/modules/class-wpcp-flickr.php:101
 msgid "Interestingness ASC"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:101
+#: includes/modules/class-wpcp-flickr.php:103
 msgid "Sort order for flickr"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:108
+#: includes/modules/class-wpcp-flickr.php:110
 msgid "Specific User ID"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:113
+#: includes/modules/class-wpcp-flickr.php:115
 msgid "Choose License"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:115
+#: includes/modules/class-wpcp-flickr.php:117
 msgid "All Rights Reserved"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:116
+#: includes/modules/class-wpcp-flickr.php:118
 msgid "Attribution-NonCommercial-ShareAlike License"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:117
+#: includes/modules/class-wpcp-flickr.php:119
 msgid "Attribution-NonCommercial License"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:118
+#: includes/modules/class-wpcp-flickr.php:120
 msgid "Attribution-NonCommercial-NoDerivs License"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:119
+#: includes/modules/class-wpcp-flickr.php:121
 msgid "Attribution License"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:120
+#: includes/modules/class-wpcp-flickr.php:122
 msgid "Attribution-ShareAlike License"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:121
+#: includes/modules/class-wpcp-flickr.php:123
 msgid "Attribution-NoDerivs License"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:122
+#: includes/modules/class-wpcp-flickr.php:124
 msgid "No known copyright restrictions"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:123
+#: includes/modules/class-wpcp-flickr.php:125
 msgid "United States Government Work"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:124
+#: includes/modules/class-wpcp-flickr.php:126
 msgid "Public Domain Dedication (CC0)"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:125
+#: includes/modules/class-wpcp-flickr.php:127
 msgid "Public Domain Mark"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:127
+#: includes/modules/class-wpcp-flickr.php:129
 msgid "License Restrictions flickr"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:173
+#: includes/modules/class-wpcp-flickr.php:175
 msgid "Flickr API key"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:174
+#: includes/modules/class-wpcp-flickr.php:176
+#. translators: %s Documentation URL
 msgid ""
 "Get your flickr API key by following this <a href=\"%s\" "
 "target=\"_blank\">link</a>."
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:190
+#: includes/modules/class-wpcp-flickr.php:192
 msgid "Loaded Flickr Campaign"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:192
+#: includes/modules/class-wpcp-flickr.php:194
 msgid "Checking flick api key for authentication"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:201
+#: includes/modules/class-wpcp-flickr.php:203
 msgid "The Flickr api key is not set so the campaign won't run, disabling campaign."
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:221
+#: includes/modules/class-wpcp-flickr.php:223
+#. translators: %s The keyword
 msgid ""
 "Maximum page number reached for the keyword [%s] deactivating the keyword "
 "for a week"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:246
+#: includes/modules/class-wpcp-flickr.php:248
+#. translators: %s The endpoint URL
 msgid "Looking for data from [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:252
+#: includes/modules/class-wpcp-flickr.php:254
+#. translators: %s The error message
 msgid "Flickr api request failed response [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:266
+#: includes/modules/class-wpcp-flickr.php:268
+#. translators: %s The keywords
 msgid "Could not find any result for the keyword %s"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:274
+#: includes/modules/class-wpcp-flickr.php:276
 msgid "Requesting for images from flickr by title"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:280
+#: includes/modules/class-wpcp-flickr.php:282
 msgid "Extracting content from response"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:310
+#: includes/modules/class-wpcp-flickr.php:312
+#. translators: %s The source URL
 msgid "Generating flickr article from [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:334
+#: includes/modules/class-wpcp-flickr.php:336
 msgid "Inserting links into store...."
 msgstr ""
 
-#: includes/modules/class-wpcp-flickr.php:351
+#: includes/modules/class-wpcp-flickr.php:353
+#. translators: %s The log page URL
 msgid "No flickr article generated check <a href=\"%s\">log</a> for details."
 msgstr ""
 
@@ -2620,7 +2644,7 @@ msgid "Video Tags"
 msgstr ""
 
 #: includes/modules/class-wpcp-youtube.php:50
-#: includes/modules/class-wpcp-youtube.php:136
+#: includes/modules/class-wpcp-youtube.php:138
 msgid "Video Duration"
 msgstr ""
 
@@ -2660,227 +2684,235 @@ msgstr ""
 msgid "Video transcript available in PRO"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:87
+#: includes/modules/class-wpcp-youtube.php:89
 msgid "Youtube Search Type"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:88
+#: includes/modules/class-wpcp-youtube.php:90
 msgid ""
 "Use global search for all result or use specific channel if you want to "
 "limit to that channel."
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:90
+#: includes/modules/class-wpcp-youtube.php:92
 msgid "Global"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:91
+#: includes/modules/class-wpcp-youtube.php:93
 msgid "From Playlist"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:92
+#: includes/modules/class-wpcp-youtube.php:94
 msgid "From Channel"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:99
+#: includes/modules/class-wpcp-youtube.php:101
 msgid "Example: PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:100
+#: includes/modules/class-wpcp-youtube.php:102
 msgid "Youtube Playlist/Channel ID"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:101
+#: includes/modules/class-wpcp-youtube.php:103
 msgid "eg. playlist id is PLiMD4qj5M_C2DLLi00-D2jnHt9eGPNqgs"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:106
+#: includes/modules/class-wpcp-youtube.php:108
 msgid "Youtube Category"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:113
+#: includes/modules/class-wpcp-youtube.php:115
 msgid "Youtube Search Order"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:118
+#: includes/modules/class-wpcp-youtube.php:120
 msgid "View Count"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:125
+#: includes/modules/class-wpcp-youtube.php:127
 msgid "Video License"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:128
-#: includes/modules/class-wpcp-youtube.php:139
-#: includes/modules/class-wpcp-youtube.php:151
-#: includes/modules/class-wpcp-youtube.php:162
+#: includes/modules/class-wpcp-youtube.php:130
+#: includes/modules/class-wpcp-youtube.php:141
+#: includes/modules/class-wpcp-youtube.php:153
+#: includes/modules/class-wpcp-youtube.php:164
 msgid "Any"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:129
+#: includes/modules/class-wpcp-youtube.php:131
 msgid "Creative Common"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:130
-#: includes/modules/class-wpcp-youtube.php:153
+#: includes/modules/class-wpcp-youtube.php:132
+#: includes/modules/class-wpcp-youtube.php:155
 msgid "Standard"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:140
+#: includes/modules/class-wpcp-youtube.php:142
 msgid "Long (longer than 20 minutes)"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:141
+#: includes/modules/class-wpcp-youtube.php:143
 msgid "Medium (between four and 20 minutes)"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:142
+#: includes/modules/class-wpcp-youtube.php:144
 msgid "Short (less than four minutes)"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:148
+#: includes/modules/class-wpcp-youtube.php:150
 msgid "Video Definition"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:159
+#: includes/modules/class-wpcp-youtube.php:161
 msgid "Video Type"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:163
+#: includes/modules/class-wpcp-youtube.php:165
 msgid "Episode"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:164
+#: includes/modules/class-wpcp-youtube.php:166
 msgid "Movie"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:170
+#: includes/modules/class-wpcp-youtube.php:172
 msgid "Safe Search"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:173
+#: includes/modules/class-wpcp-youtube.php:175
 msgid "Moderate"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:174
+#: includes/modules/class-wpcp-youtube.php:176
 msgid "None (will not filter)"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:175
+#: includes/modules/class-wpcp-youtube.php:177
 msgid "Strict (Exclude all restricted content)"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:182
+#: includes/modules/class-wpcp-youtube.php:184
 msgid "Youtube - Auto hyperlink urls within the description"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:187
+#: includes/modules/class-wpcp-youtube.php:189
 msgid "Post only live videos only"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:192
+#: includes/modules/class-wpcp-youtube.php:194
 msgid "Post videos only with closed captions"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:241
+#: includes/modules/class-wpcp-youtube.php:243
 msgid "Youtube API key"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:242
+#: includes/modules/class-wpcp-youtube.php:244
+#. translators: %s Documentation URL
 msgid ""
 "Youtube campaigns won't run without API key. <a href=\"%s\" "
 "target=\"_blank\">Learn how to get one</a>."
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:263
+#: includes/modules/class-wpcp-youtube.php:265
 msgid ""
 "The YouTube api key is not set so the campaign won't run, disabling "
 "campaign."
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:268
+#: includes/modules/class-wpcp-youtube.php:270
 msgid "Loaded Youtube campaign"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:270
+#: includes/modules/class-wpcp-youtube.php:272
 msgid "Checking youtube search type..."
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:276
+#: includes/modules/class-wpcp-youtube.php:278
 msgid "Campaign do not have playlist URL to proceed, please set playlist URL"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:287
+#: includes/modules/class-wpcp-youtube.php:289
 msgid "Checking for links in store..."
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:290
+#: includes/modules/class-wpcp-youtube.php:292
+#. translators: %s The source
 msgid ""
 "This keyword deactivated for 1 hr because last time could not find any "
 "article with url [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:305
+#: includes/modules/class-wpcp-youtube.php:307
 msgid "Looping through cached links for article"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:308
+#: includes/modules/class-wpcp-youtube.php:310
+#. translators: %s The video URL
 msgid "Youtube link#[%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:314
+#: includes/modules/class-wpcp-youtube.php:316
 msgid "Making request for getting youtube video content"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:320
+#: includes/modules/class-wpcp-youtube.php:322
+#. translators: %s The error message
 msgid "Request error in grabbing video details error [ %s ]"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:324
+#: includes/modules/class-wpcp-youtube.php:326
 msgid "Extracting article content from response"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:328
+#: includes/modules/class-wpcp-youtube.php:330
 msgid "Removing unauthorized html content from description"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:331
+#: includes/modules/class-wpcp-youtube.php:333
 msgid "Extracting thumbnail"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:338
+#: includes/modules/class-wpcp-youtube.php:340
 msgid "Extracting transcript"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:344
+#: includes/modules/class-wpcp-youtube.php:346
 msgid "Extracting hyperlink description"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:359
+#: includes/modules/class-wpcp-youtube.php:361
 msgid "Preparing different parts for article"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:400
+#: includes/modules/class-wpcp-youtube.php:402
+#. translators: %s The log page URL
 msgid "No youtube article generated check <a href=\"%s\">log</a> for details."
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:465
+#: includes/modules/class-wpcp-youtube.php:467
+#. translators: %s The endpoint URL
 msgid "Requesting urls from Youtube [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:473
+#: includes/modules/class-wpcp-youtube.php:475
+#. translators: %s The error message
 msgid "Youtube api request failed response [%s]"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:496
+#: includes/modules/class-wpcp-youtube.php:498
 msgid "Finding links from response and storing....."
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:543
-msgid "Total found links [%d] and accepted [%d] and rejected [%d]"
+#: includes/modules/class-wpcp-youtube.php:545
+#. translators: 1: Found links, 2: Accepted links, 3: Rejected links
+msgid "Total found links [%1$d] and accepted [%2$d] and rejected [%3$d]"
 msgstr ""
 
-#: includes/modules/class-wpcp-youtube.php:640
+#: includes/modules/class-wpcp-youtube.php:642
 msgid "Youtube campaign wont run because you did not set the API details yet."
 msgstr ""
 

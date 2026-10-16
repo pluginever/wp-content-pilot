@@ -4,7 +4,7 @@
  * Plugin URI:        https://wpcontentpilot.com
  * Description:       Content Pilot automatically posts contents from various sources based on the predefined keywords.
  * Version:           2.2.5
- * Requires at least: 5.2
+ * Requires at least: 5.9
  * Requires PHP:      8.0
  * Author:            PluginEver
  * Author URI:        https://pluginever.com

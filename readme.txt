@@ -1,6 +1,6 @@
 === Content Pilot - Autoblogging & Affiliate Marketing Suite ===
 Contributors: pluginever,manikmist09
-Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed, rss to post, rss feeds
+Tags: autoblog, rss aggregator, news aggregator, rss import, youtube feed
 Tested up to: 7.1
 Stable tag: 2.2.5
 License: GPLv2 or later
@@ -132,6 +132,8 @@ We would love to hear your suggestions! Feel free to open a new issue [here](htt
 * Fix - Escaped the excerpt in the post publish notification email.
 * Fix - Hardened remote article fetching and featured image downloads.
 * Fix - Restricted campaign settings to administrators.
+* Enhance - Improved translatable strings and WordPress.org coding standards compliance.
+* Compatibility - Raised the minimum required WordPress version to 5.9.
 
 = 2.2.4 (August 23, 2026) =
 * Minor maintenance update.
