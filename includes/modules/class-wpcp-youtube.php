@@ -65,12 +65,14 @@ class WPCP_Youtube extends WPCP_Module {
 	 * @since 1.2.0
 	 */
 	public function get_default_template() {
-		$template
-			= <<<EOT
-{embed_html}
-<br>{content}
-<br> <a href="{source_url}" target="_blank">Source</a>
-EOT;
+		$template = implode(
+			"\n",
+			array(
+				'{embed_html}',
+				'<br>{content}',
+				'<br> <a href="{source_url}" target="_blank">Source</a>',
+			)
+		);
 
 		return $template;
 	}
@@ -239,7 +241,7 @@ EOT;
 			array(
 				'name'    => 'api_key',
 				'label'   => __( 'Youtube API key', 'wp-content-pilot' ),
-				'desc'    => sprintf( __( 'Youtube campaigns won\'t run without API key. <a href="%s" target="_blank">Learn how to get one</a>.', 'wp-content-pilot' ), 'https://wpcontentpilot.com/docs/how-to-set-up-youtube-api-key-for-wp-content-pilot/' ),
+				'desc'    => sprintf( /* translators: %s Documentation URL */ __( 'Youtube campaigns won\'t run without API key. <a href="%s" target="_blank">Learn how to get one</a>.', 'wp-content-pilot' ), 'https://wpcontentpilot.com/docs/how-to-set-up-youtube-api-key-for-wp-content-pilot/' ),
 				'type'    => 'password',
 				'default' => ''
 			),
@@ -287,7 +289,7 @@ EOT;
 			wpcp_logger()->info( __( 'Checking for links in store...', 'wp-content-pilot' ), $campaign_id );
 
 			if ( $this->is_deactivated_key( $campaign_id, $source ) ) {
-				$message = sprintf( __( 'This keyword deactivated for 1 hr because last time could not find any article with url [%s]', 'wp-content-pilot' ), $source );
+				$message = sprintf( /* translators: %s The source */ __( 'This keyword deactivated for 1 hr because last time could not find any article with url [%s]', 'wp-content-pilot' ), $source );
 				wpcp_logger()->info( $message, $campaign_id );
 				continue;
 			}
@@ -305,7 +307,7 @@ EOT;
 			wpcp_logger()->info( __( 'Looping through cached links for article', 'wp-content-pilot' ), $campaign_id );
 
 			foreach ( $links as $link ) {
-				wpcp_logger()->info( sprintf( __( 'Youtube link#[%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
+				wpcp_logger()->info( sprintf( /* translators: %s The video URL */ __( 'Youtube link#[%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
 				$link_parts = explode( 'v=', $link->url );
 				$video_id   = $link_parts[1];
 
@@ -317,7 +319,7 @@ EOT;
 				$curl->get( $endpoint );
 
 				if ( $curl->error ) {
-					wpcp_logger()->error( sprintf( __( 'Request error in grabbing video details error [ %s ]', 'wp-content-pilot' ), $curl->errorMessage ), $campaign_id );
+					wpcp_logger()->error( sprintf( /* translators: %s The error message */ __( 'Request error in grabbing video details error [ %s ]', 'wp-content-pilot' ), $curl->errorMessage ), $campaign_id );
 					continue;
 				}
 
@@ -397,7 +399,7 @@ EOT;
 
 		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
 
-		return new WP_Error( 'campaign-error', sprintf( __( 'No youtube article generated check <a href="%s">log</a> for details.', 'wp-content-pilot' ), $log_url ) );
+		return new WP_Error( 'campaign-error', sprintf( /* translators: %s The log page URL */ __( 'No youtube article generated check <a href="%s">log</a> for details.', 'wp-content-pilot' ), $log_url ) );
 	}
 
 	/**
@@ -462,7 +464,7 @@ EOT;
 		}
 
 		$endpoint = add_query_arg( $query_args, $endpoint );
-		wpcp_logger()->info( sprintf( __( 'Requesting urls from Youtube [%s]', 'wp-content-pilot' ), preg_replace( '/key=([^&]+)/m', 'key=X', $endpoint ) ) );
+		wpcp_logger()->info( sprintf( /* translators: %s The endpoint URL */ __( 'Requesting urls from Youtube [%s]', 'wp-content-pilot' ), preg_replace( '/key=([^&]+)/m', 'key=X', $endpoint ) ) );
 
 		$curl = $this->setup_curl();
 		$curl->get( $endpoint );
@@ -470,7 +472,7 @@ EOT;
 		if ( $curl->isError() ) {
 			$response      = json_decode( $curl->getRawResponse() );
 			$error_message = array_pop( $response->error->errors );
-			$message       = sprintf( __( 'Youtube api request failed response [%s]', 'wp-content-pilot' ), $error_message->message );
+			$message       = sprintf( /* translators: %s The error message */ __( 'Youtube api request failed response [%s]', 'wp-content-pilot' ), $error_message->message );
 			wpcp_logger()->error( $message, $campaign_id );
 
 			return false;
@@ -511,8 +513,8 @@ EOT;
 			if ( wpcp_is_duplicate_url( $url ) ) {
 				wpcp_logger()->info(
 					sprintf(
-					/* translators: %s URL, %s URL, %s Remove */
-						__( 'The link [%s] is already in database, skipping. Remove it from database: <a href="#remove-cached-link" class="wpcp_remove_cached_link" data-link="%s">%s</a>', 'wp-content-pilot' ),
+					/* translators: 1: URL, 2: URL, 3: Remove label. */
+						__( 'The link [%1$s] is already in database, skipping. Remove it from database: <a href="#remove-cached-link" class="wpcp_remove_cached_link" data-link="%2$s">%3$s</a>', 'wp-content-pilot' ),
 						esc_url( $url ),
 						esc_url( $url ),
 						__( 'Remove', 'wp-content-pilot' )
@@ -540,7 +542,7 @@ EOT;
 
 		wpcp_update_post_meta( $campaign_id, $token_key, @$response->nextPageToken );
 
-		wpcp_logger()->info( sprintf( __( 'Total found links [%d] and accepted [%d] and rejected [%d]', 'wp-content-pilot' ), count( $links ), $total_inserted, ( count( $links ) - $total_inserted ) ), $campaign_id );
+		wpcp_logger()->info( sprintf( /* translators: 1: Found links, 2: Accepted links, 3: Rejected links */ __( 'Total found links [%1$d] and accepted [%2$d] and rejected [%3$d]', 'wp-content-pilot' ), count( $links ), $total_inserted, ( count( $links ) - $total_inserted ) ), $campaign_id );
 
 		return true;
 	}

@@ -63,19 +63,21 @@ class WPCP_Flickr extends WPCP_Module {
 	 * @since 1.2.0
 	 */
 	public function get_default_template() {
-		$template
-			= <<<EOT
-<img src="{image_url}" alt="">
-<br>
-<a href="{image_url}">Posted</a> by <a href="{author_url}">{author}</a>
-<br>
-{content}
-<br>
-<strong>Tags:</strong><br>
-{tags}
-<br>
-<a href="{source_url}">Source</a>
-EOT;
+		$template = implode(
+			"\n",
+			array(
+				'<img src="{image_url}" alt="">',
+				'<br>',
+				'<a href="{image_url}">Posted</a> by <a href="{author_url}">{author}</a>',
+				'<br>',
+				'{content}',
+				'<br>',
+				'<strong>Tags:</strong><br>',
+				'{tags}',
+				'<br>',
+				'<a href="{source_url}">Source</a>',
+			)
+		);
 
 		return $template;
 	}
@@ -171,7 +173,7 @@ EOT;
 			array(
 				'name'    => 'api_key',
 				'label'   => __( 'Flickr API key', 'wp-content-pilot' ),
-				'desc'    => sprintf( __( 'Get your flickr API key by following this <a href="%s" target="_blank">link</a>.', 'wp-content-pilot' ), 'https://wpcontentpilot.com/docs/flickr-campaign-settings/' ),
+				'desc'    => sprintf( /* translators: %s Documentation URL */ __( 'Get your flickr API key by following this <a href="%s" target="_blank">link</a>.', 'wp-content-pilot' ), 'https://wpcontentpilot.com/docs/flickr-campaign-settings/' ),
 				'type'    => 'password',
 				'default' => ''
 			),
@@ -218,7 +220,7 @@ EOT;
 			$page_number    = wpcp_get_post_meta( $campaign_id, $page_key, 1 );
 
 			if ( $page_number >= $total_page && ! empty( $total_page ) ) {
-				$msg = sprintf( __( 'Maximum page number reached for the keyword [%s] deactivating the keyword for a week', 'wp-content-pilot' ), $keyword );
+				$msg = sprintf( /* translators: %s The keyword */ __( 'Maximum page number reached for the keyword [%s] deactivating the keyword for a week', 'wp-content-pilot' ), $keyword );
 				wpcp_logger()->error( $msg, $campaign_id );
 				$this->deactivate_key( $campaign_id, $keyword, 7 * 24 * 60 * 60 );
 
@@ -243,13 +245,13 @@ EOT;
 				$query_args['user_id'] = $user_id;
 			}
 			$endpoint = add_query_arg( $query_args, 'https://api.flickr.com/services/rest/' );
-			wpcp_logger()->info( sprintf( __( 'Looking for data from [%s]', 'wp-content-pilot' ), preg_replace( '/api_key=([^&]+)/m', 'api_key=X', $endpoint ) ), $campaign_id );
+			wpcp_logger()->info( sprintf( /* translators: %s The endpoint URL */ __( 'Looking for data from [%s]', 'wp-content-pilot' ), preg_replace( '/api_key=([^&]+)/m', 'api_key=X', $endpoint ) ), $campaign_id );
 			$curl = $this->setup_curl();
 			$curl->get( $endpoint );
 
 
 			if ( $curl->isError() ) {
-				$message = sprintf( __( 'Flickr api request failed response [%s]', 'wp-content-pilot' ), $curl->getErrorMessage() );
+				$message = sprintf( /* translators: %s The error message */ __( 'Flickr api request failed response [%s]', 'wp-content-pilot' ), $curl->getErrorMessage() );
 				wpcp_logger()->error( $message, $campaign_id );
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 				continue;
@@ -263,7 +265,7 @@ EOT;
 			}
 
 			if ( empty( $response->photos->photo ) ) {
-				$msg = sprintf( __( 'Could not find any result for the keyword %s', 'wp-content-pilot' ), $keywords );
+				$msg = sprintf( /* translators: %s The keywords */ __( 'Could not find any result for the keyword %s', 'wp-content-pilot' ), $keywords );
 				wpcp_logger()->error( $msg, $campaign_id );
 				wpcp_update_post_meta( $campaign_id, $page_key, $page_number + 1 );
 				continue;
@@ -307,7 +309,7 @@ EOT;
 			}
 
 
-			wpcp_logger()->info( sprintf( __( 'Generating flickr article from [ %s ]', 'wp-content-pilot' ), $source_url ), $campaign_id );
+			wpcp_logger()->info( sprintf( /* translators: %s The source URL */ __( 'Generating flickr article from [ %s ]', 'wp-content-pilot' ), $source_url ), $campaign_id );
 			$article = array(
 				'title'            => $title,
 				'content'          => $description,
@@ -348,7 +350,7 @@ EOT;
 
 		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
 
-		return new WP_Error( 'campaign-error', sprintf( __( 'No flickr article generated check <a href="%s">log</a> for details.', 'wp-content-pilot' ), $log_url ) );
+		return new WP_Error( 'campaign-error', sprintf( /* translators: %s The log page URL */ __( 'No flickr article generated check <a href="%s">log</a> for details.', 'wp-content-pilot' ), $log_url ) );
 	}
 
 

@@ -1,4 +1,5 @@
 <?php
+defined( 'ABSPATH' ) || exit();
 $posts = get_posts(
 	array(
 		'post_type'   => wpcp_get_post_meta( $campaign_id, '_post_type', 'post' ),

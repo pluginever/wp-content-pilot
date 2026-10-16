@@ -260,7 +260,7 @@ add_action( 'wpcp_after_post_publish', 'wpcp_post_publish_mail_notification', 10
  */
 function wpcp_wp_scheduled_delete() {
 	global $wpdb;
-	$date = date( 'Y-m-d H:i:s', strtotime( '2 days ago' ) );
+	$date = gmdate( 'Y-m-d H:i:s', strtotime( '2 days ago' ) );
 	$wpdb->query( $wpdb->prepare( "DELETE  FROM $wpdb->wpcp_logs WHERE created_at<=%s", $date ) );
 }
 
@@ -346,7 +346,8 @@ function wpcp_ajax_run_manual_campaign() {
 	}
 
 	global $current_user;
-	wpcp_logger()->info( sprintf( __( 'Campaign <strong>%s</strong> manually initiated by <strong>%s</strong>', 'wp-content-pilot' ), get_the_title( $campaign_id ), $current_user->display_name ) );
+	/* translators: 1: Campaign title, 2: User display name. */
+	wpcp_logger()->info( sprintf( __( 'Campaign <strong>%1$s</strong> manually initiated by <strong>%2$s</strong>', 'wp-content-pilot' ), get_the_title( $campaign_id ), $current_user->display_name ) );
 
 	$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
 
@@ -360,7 +361,8 @@ function wpcp_ajax_run_manual_campaign() {
 	}
 	$title         = empty( get_the_title( $article_id ) ) ? 'Untitled' : get_the_title( $article_id );
 	$article_title = '<a href="' . esc_url( get_the_permalink( $article_id ) ) . '" target="_blank">' . esc_html( $title ) . '</a>';
-	$message       = sprintf( __( 'A post successfully created by campaign %s titled %s', 'wp-content-pilot' ), '<strong>' . esc_html( get_the_title( $campaign_id ) ) . '</strong>', $article_title );
+	/* translators: 1: Campaign title, 2: Post link. */
+	$message       = sprintf( __( 'A post successfully created by campaign %1$s titled %2$s', 'wp-content-pilot' ), '<strong>' . esc_html( get_the_title( $campaign_id ) ) . '</strong>', $article_title );
 	wp_send_json( [
 		'message' => $message,
 		'link'    => $article_title,

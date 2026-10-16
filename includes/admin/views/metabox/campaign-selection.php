@@ -1,4 +1,5 @@
 <?php
+defined( 'ABSPATH' ) || exit();
 $modules = apply_filters(
 	'wpcp_campaign_modules_list',
 	array(

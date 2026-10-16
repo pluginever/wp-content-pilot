@@ -95,7 +95,8 @@ class WPCP_Settings {
 				array(
 					'name'    => 'spinrewriter_head',
 					'label'   => __( 'SpinreWriter', 'wp-content-pilot' ),
-					'desc'    => sprintf( __( 'Spin rewriter is one of the best Article Spinner, if you do not have account please %ssign up%s.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>' ),
+					/* translators: 1: Opening link tag, 2: Closing link tag. */
+					'desc'    => sprintf( __( 'Spin rewriter is one of the best Article Spinner, if you do not have account please %1$ssign up%2$s.', 'wp-content-pilot' ), '<a href="https://bit.ly/spinrewriterpluginever" target="_blank">', '</a>' ),
 					'type'    => 'html',
 					'default' => ''
 				),
@@ -131,10 +132,11 @@ class WPCP_Settings {
 					<div id="postbox-container-1" class="postbox-container" style="margin-top: 15px;">
 						<?php if ( ! defined( 'WPCP_PRO_VERSION' ) ): ?>
 							<div class="postbox" style="min-width: inherit;">
-								<h3 class="hndle"><label for="title"><?php _e( 'Upgrade to Pro', 'wp-content-pilot' ); ?></label></h3>
+								<h3 class="hndle"><label for="title"><?php esc_html_e( 'Upgrade to Pro', 'wp-content-pilot' ); ?></label></h3>
 								<div class="inside">
 									<?php
-									echo sprintf( __( 'Pro version supports 25+ campaign sources with exclusive features. %sUpgrade to Pro.%s', 'wp-content-pilot' ), '<a href="https://wpcontentpilot.com/" target="_blank">', '</a>' )
+									/* translators: 1: Opening link tag, 2: Closing link tag. */
+									echo sprintf( __( 'Pro version supports 25+ campaign sources with exclusive features. %1$sUpgrade to Pro.%2$s', 'wp-content-pilot' ), '<a href="https://wpcontentpilot.com/" target="_blank">', '</a>' )
 
 									?>
 								</div>
@@ -142,19 +144,21 @@ class WPCP_Settings {
 						<?php endif; ?>
 
 						<div class="postbox" style="min-width: inherit;">
-							<h3 class="hndle"><label for="title"><?php _e( 'Documentation', 'wp-content-pilot' ); ?></label></h3>
+							<h3 class="hndle"><label for="title"><?php esc_html_e( 'Documentation', 'wp-content-pilot' ); ?></label></h3>
 							<div class="inside">
 								<?php
-								echo sprintf( __( 'We have detailed documentation on every aspects of %s Content Pilot %s', 'wp-content-pilot' ), '<a href="https://wpcontentpilot.com/docs/" target="_blank">', '</a>' )
+								/* translators: 1: Opening link tag, 2: Closing link tag. */
+								echo sprintf( __( 'We have detailed documentation on every aspects of %1$s Content Pilot %2$s', 'wp-content-pilot' ), '<a href="https://wpcontentpilot.com/docs/" target="_blank">', '</a>' )
 								?>
 							</div>
 						</div>
 
 						<div class="postbox" style="min-width: inherit;">
-							<h3 class="hndle"><label for="title"><?php _e( 'Support', 'wp-content-pilot' ); ?></label></h3>
+							<h3 class="hndle"><label for="title"><?php esc_html_e( 'Support', 'wp-content-pilot' ); ?></label></h3>
 							<div class="inside">
 								<?php
-								echo sprintf( __( 'Our expert support team is always ready to help you out. %s support forum%s', 'wp-content-pilot' ), '<a href="https://wpcontentpilot.com/support/" target="_blank">', '</a>' )
+								/* translators: 1: Opening link tag, 2: Closing link tag. */
+								echo sprintf( __( 'Our expert support team is always ready to help you out. %1$s support forum%2$s', 'wp-content-pilot' ), '<a href="https://wpcontentpilot.com/support/" target="_blank">', '</a>' )
 								?>
 
 							</div>
@@ -164,10 +168,11 @@ class WPCP_Settings {
 							<h3 class="hndle"><label for="title">Rate Us</label></h3>
 							<div class="inside">
 								<?php
-								echo sprintf( __( 'If you like Content Pilot, please leave us a  %s rating.%s It takes a minute and helps a lot. Thanks in advance!' , 'wp-content-pilot' ), '<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/#new-post" target="_blank">', '</a>' )
+								/* translators: 1: Opening link tag, 2: Closing link tag. */
+								echo sprintf( __( 'If you like Content Pilot, please leave us a  %1$s rating.%2$s It takes a minute and helps a lot. Thanks in advance!' , 'wp-content-pilot' ), '<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/#new-post" target="_blank">', '</a>' )
 								?>
 								<div class="ratings-stars-container">
-									<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/?filter=5"
+									<a href="https://wordpress.org/support/plugin/wp-content-pilot/reviews/#new-post"
 									   target="_blank"><span class="dashicons dashicons-star-filled"></span><span
 											class="dashicons dashicons-star-filled"></span><span
 											class="dashicons dashicons-star-filled"></span><span
