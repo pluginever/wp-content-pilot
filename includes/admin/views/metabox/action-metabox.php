@@ -79,7 +79,7 @@ $can_publish = true;
 		<?php if ( ! empty( $_REQUEST['post'] ) ) { ?>
 			<div id="delete-action">
 				<a class="submitdelete deletion"
-					href="<?php echo get_delete_post_link( esc_attr( wp_unslash( $_REQUEST['post'] ) ) ); ?>"
+					href="<?php echo esc_url( get_delete_post_link( absint( $_REQUEST['post'] ) ) ); ?>"
 					title="<?php esc_attr_e( 'Move to Trash', 'wp-content-pilot' ); ?>">
 					<button type="button" class="button-link button-link-delete">
 						<?php esc_html_e( 'Trash', 'wp-content-pilot' ); ?>

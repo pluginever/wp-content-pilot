@@ -29,8 +29,8 @@ function wpcp_get_logs( $args = array(), $count = false ) {
 		$query_where .= $wpdb->prepare( ' AND level=%s ', $level );
 	}
 	// Ordering.
-	$order         = isset( $args['order'] ) ? esc_sql( strtoupper( $args['order'] ) ) : 'ASC';
-	$order_by      = esc_sql( $args['orderby'] );
+	$order         = 'ASC' === strtoupper( $args['order'] ) ? 'ASC' : 'DESC';
+	$order_by      = in_array( $args['orderby'], array( 'id', 'camp_id', 'level', 'message', 'instance_id', 'created_at' ), true ) ? $args['orderby'] : 'created_at';
 	$query_orderby = sprintf( ' ORDER BY %s %s', $order_by, $order );
 	if ( 'id' !== $args['orderby'] ) {
 		$query_orderby .= ' , id DESC ';

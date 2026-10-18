@@ -1,4 +1,5 @@
 <?php
+defined( 'ABSPATH' ) || exit();
 /**
  * Arc90's Readability ported to PHP for FiveFilters.org
  * Based on readability.js version 1.7.1 (without multi-page support)

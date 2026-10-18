@@ -294,7 +294,7 @@ function wpcp_download_image( $url, $description = '' ) {
 	$raw_url = $url;
 	$url     = explode( '?', esc_url_raw( $url ) );
 	$url     = $url[0];
-	$get     = wp_remote_get( $raw_url );
+	$get     = wp_safe_remote_get( $raw_url );
 	$headers = wp_remote_retrieve_headers( $get );
 	$type    = isset( $headers['content-type'] ) ? $headers['content-type'] : null;
 	$types   = array(
@@ -319,12 +319,8 @@ function wpcp_download_image( $url, $description = '' ) {
 		wpcp_logger()->error( __( 'Failed to download image', 'wp-content-pilot' ) );
 		return false;
 	}
-	$file_name = basename( $url );
-	$ext       = pathinfo( basename( $file_name ), PATHINFO_EXTENSION );
-
-	if ( '' === $ext ) {
-		$file_name .= $file_ext[ $type ];
-	}
+	$file_name = sanitize_file_name( pathinfo( basename( $url ), PATHINFO_FILENAME ) );
+	$file_name = ( '' === $file_name ? 'image' : $file_name ) . $file_ext[ $type ];
 
 	$mirror     = wp_upload_bits( $file_name, null, wp_remote_retrieve_body( $get ) );
 	$attachment = array(
@@ -568,6 +564,8 @@ function wpcp_setup_request( $referrer = 'http://www.bing.com/' ) {
 	$curl->setOpt( CURLOPT_FOLLOWLOCATION, true );
 	$curl->setOpt( CURLOPT_TIMEOUT, 30 );
 	$curl->setOpt( CURLOPT_MAXREDIRS, 3 );
+	$curl->setOpt( CURLOPT_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS );
+	$curl->setOpt( CURLOPT_REDIR_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS );
 	$curl->setOpt( CURLOPT_RETURNTRANSFER, true );
 	$curl->setOpt( CURLOPT_REFERER, $referrer );
 	$curl->setOpt( CURLOPT_USERAGENT, wpcp_get_random_user_agent() );

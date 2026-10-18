@@ -67,7 +67,11 @@ function wpcp_delete_all_campaign_posts() {
 		wp_send_json_error( 'Unauthorized!!!' );
 	}
 
-	$camp_id = isset( $_REQUEST['camp_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['camp_id'] ) ) : false;
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_send_json_error( 'Unauthorized!!!' );
+	}
+
+	$camp_id = isset( $_REQUEST['camp_id'] ) ? absint( $_REQUEST['camp_id'] ) : false;
 	if ( ! $camp_id ) {
 		wp_send_json_error( 'Invalid campaign ID.' );
 	}
@@ -100,7 +104,11 @@ add_action( 'wp_ajax_wpcp_delete_all_campaign_posts', 'wpcp_delete_all_campaign_
  * @return void
  */
 function wpcp_clear_logs() {
-	if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_clear_logs' ) ) {
+	if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_REQUEST['nonce'] ) ), 'wpcp_clear_logs' ) ) {
+		wp_send_json_error( 'Unauthorized!!!' );
+	}
+
+	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_send_json_error( 'Unauthorized!!!' );
 	}
 
@@ -118,7 +126,11 @@ add_action( 'wp_ajax_wpcp_clear_logs', 'wpcp_clear_logs' );
  * @return void
  */
 function wpcp_remove_cached_link() {
-	if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], 'ajax_action' ) ) {
+	if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_REQUEST['nonce'] ) ), 'ajax_action' ) ) {
+		wp_send_json_error( 'Unauthorized!!!' );
+	}
+
+	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_send_json_error( 'Unauthorized!!!' );
 	}
 
@@ -151,6 +163,10 @@ if ( ! function_exists( 'wpcp_pro_get_keyword_suggestion' ) ) :
 	 * @return void
 	 */
 	function wpcp_pro_get_keyword_suggestion() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( 'Unauthorized!!!' );
+		}
+
 		$word = isset( $_REQUEST['input'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['input'] ) ) : '';
 
 		$curl = new Curl\Curl();
@@ -226,7 +242,7 @@ function wpcp_post_publish_mail_notification( $post_id, $campaign_id, $article )
 	$body      = sprintf(
 		"<h4>Post Title: %s</h4><h5>Post Excerpt</h5><p>%s</p><a href='%s'>View Post</a>",
 		esc_html( $title ),
-		$excerpt,
+		esc_html( $excerpt ),
 		esc_url( $post_link )
 	);
 	$headers   = array( 'Content-Type: text/html; charset=UTF-8' );
@@ -244,7 +260,7 @@ add_action( 'wpcp_after_post_publish', 'wpcp_post_publish_mail_notification', 10
  */
 function wpcp_wp_scheduled_delete() {
 	global $wpdb;
-	$date = date( 'Y-m-d H:i:s', strtotime( '2 days ago' ) );
+	$date = gmdate( 'Y-m-d H:i:s', strtotime( '2 days ago' ) );
 	$wpdb->query( $wpdb->prepare( "DELETE  FROM $wpdb->wpcp_logs WHERE created_at<=%s", $date ) );
 }
 
@@ -258,18 +274,18 @@ add_action( 'wp_scheduled_delete', 'wpcp_wp_scheduled_delete' );
  */
 function wpcp_campaign_reset_search_campaign() {
 	global $wpdb;
-	if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'wpcp_campaign_reset_search' ) ) {
-		wp_die( __( 'No Cheating', 'wp-content-pilot' ) );
+	if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_REQUEST['nonce'] ) ), 'wpcp_campaign_reset_search' ) ) {
+		wp_die( esc_html__( 'No Cheating', 'wp-content-pilot' ) );
 	}
 
-	$campaign_id = intval( $_REQUEST['campaign_id'] );
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( esc_html__( 'You are not allowed to reset this campaign.', 'wp-content-pilot' ) );
+	}
 
-	$delete_query = "DELETE FROM {$wpdb->postmeta} where post_id=$campaign_id AND meta_key NOT IN ('_post_count','_campaign_type','_post_status','_campaign_target','_last_run','_last_post')";
+	$campaign_id = isset( $_REQUEST['campaign_id'] ) ? absint( $_REQUEST['campaign_id'] ) : 0;
 
-	$clear_query = "DELETE FROM {$wpdb->wpcp_links} where camp_id=$campaign_id";
-
-	$wpdb->query( $delete_query );
-	$wpdb->query( $clear_query );
+	$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->postmeta} WHERE post_id=%d AND meta_key NOT IN ('_post_count','_campaign_type','_post_status','_campaign_target','_last_run','_last_post')", $campaign_id ) );
+	$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->wpcp_links} WHERE camp_id=%d", $campaign_id ) );
 	wp_safe_redirect( get_edit_post_link( $campaign_id, 'edit' ) );
 }
 
@@ -330,7 +346,8 @@ function wpcp_ajax_run_manual_campaign() {
 	}
 
 	global $current_user;
-	wpcp_logger()->info( sprintf( __( 'Campaign <strong>%s</strong> manually initiated by <strong>%s</strong>', 'wp-content-pilot' ), get_the_title( $campaign_id ), $current_user->display_name ) );
+	/* translators: 1: Campaign title, 2: User display name. */
+	wpcp_logger()->info( sprintf( __( 'Campaign <strong>%1$s</strong> manually initiated by <strong>%2$s</strong>', 'wp-content-pilot' ), get_the_title( $campaign_id ), $current_user->display_name ) );
 
 	$campaign_type = wpcp_get_post_meta( $campaign_id, '_campaign_type', 'feed' );
 
@@ -343,8 +360,9 @@ function wpcp_ajax_run_manual_campaign() {
 		] );
 	}
 	$title         = empty( get_the_title( $article_id ) ) ? 'Untitled' : get_the_title( $article_id );
-	$article_title = '<a href="' . get_the_permalink( $article_id ) . '" target="_blank">' . $title . '</a>';
-	$message       = sprintf( __( 'A post successfully created by campaign %s titled %s', 'wp-content-pilot' ), '<strong>' . get_the_title( $campaign_id ) . '</strong>', $article_title );
+	$article_title = '<a href="' . esc_url( get_the_permalink( $article_id ) ) . '" target="_blank">' . esc_html( $title ) . '</a>';
+	/* translators: 1: Campaign title, 2: Post link. */
+	$message       = sprintf( __( 'A post successfully created by campaign %1$s titled %2$s', 'wp-content-pilot' ), '<strong>' . esc_html( get_the_title( $campaign_id ) ) . '</strong>', $article_title );
 	wp_send_json( [
 		'message' => $message,
 		'link'    => $article_title,
@@ -395,7 +413,7 @@ function wpcp_get_campaign_instance_log() {
 	}
 
 	global $wpdb;
-	$data = $wpdb->get_results( "select `level`, message, DATE_FORMAT(created_at, '%H:%i:%s') as time from {$wpdb->prefix}wpcp_logs where instance_id={$instance} order by id ASC limit 9999 offset {$offset}" );
+	$data = $wpdb->get_results( $wpdb->prepare( "select `level`, message, DATE_FORMAT(created_at, '%%H:%%i:%%s') as time from {$wpdb->prefix}wpcp_logs where instance_id=%d order by id ASC limit 9999 offset %d", $instance, $offset ) );
 	wp_send_json( $data );
 }
 
@@ -412,10 +430,8 @@ add_action( 'wp_ajax_wpcp_get_campaign_instance_log', 'wpcp_get_campaign_instanc
 function remove_campaign_data_when_trash( $post_id ) {
 	global $wpdb;
 	if ( 'wp_content_pilot' == get_post_type( $post_id ) ) {
-		$links_query = "DELETE FROM {$wpdb->wpcp_links} where camp_id=$post_id";
-		$logs_query  = "DELETE FROM {$wpdb->wpcp_logs} where camp_id=$post_id";
-		$wpdb->query( $links_query );
-		$wpdb->query( $logs_query );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->wpcp_links} WHERE camp_id=%d", $post_id ) );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->wpcp_logs} WHERE camp_id=%d", $post_id ) );
 	}
 }
 

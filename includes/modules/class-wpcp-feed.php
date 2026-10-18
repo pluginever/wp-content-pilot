@@ -45,12 +45,14 @@ class WPCP_Feed extends WPCP_Module {
      * @return string
      */
     public function get_default_template() {
-        $template
-            = <<<EOT
-<img src="{image_url}" alt="">
-{content}
-<br> <a href="{source_url}" target="_blank">Source</a>
-EOT;
+        $template = implode(
+            "\n",
+            array(
+                '<img src="{image_url}" alt="">',
+                '{content}',
+                '<br> <a href="{source_url}" target="_blank">Source</a>',
+            )
+        );
 
         return $template;
     }
@@ -162,10 +164,20 @@ EOT;
 
                 $this->update_link( $link->id, [ 'status' => 'failed' ] );
 
+                if ( ! wp_http_validate_url( $link->url ) ) {
+                    wpcp_logger()->error( sprintf( /* translators: %s The URL */ __( 'Skipping unsafe link [%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
+                    continue;
+                }
+
                 $curl = $this->setup_curl();
                 $curl->setHeader( 'accept-encoding', 'utf-8' );
                 $curl->setOpt( CURLOPT_ENCODING, '' );
                 $curl->get( $link->url );
+
+                if ( ! wp_http_validate_url( $curl->getInfo( CURLINFO_EFFECTIVE_URL ) ) ) {
+                    wpcp_logger()->error( sprintf( /* translators: %s The URL */ __( 'Skipping unsafe link [%s]', 'wp-content-pilot' ), $curl->getInfo( CURLINFO_EFFECTIVE_URL ) ), $campaign_id );
+                    continue;
+                }
 
                 if ( $curl->isError() && $this->initiator !== 'cron' ) {
                     wpcp_logger()->error( sprintf( /* translators: %s The error message */ __( "Failed processing link reason [%s]", 'wp-content-pilot' ), $curl->getErrorMessage() ), $campaign_id );
@@ -215,7 +227,7 @@ EOT;
 
         $log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
 
-        return new WP_Error( 'campaign-error', sprintf( __( 'No feed article generated check <a href="%s">log</a> for details.', 'wp-content-pilot' ), $log_url ) );
+        return new WP_Error( 'campaign-error', sprintf( /* translators: %s The log page URL */ __( 'No feed article generated check <a href="%s">log</a> for details.', 'wp-content-pilot' ), $log_url ) );
     }
 
     /**
@@ -288,8 +300,8 @@ EOT;
             if ( $is_duplicate_url ) {
 				wpcp_logger()->info(
 					sprintf(
-					/* translators: %s URL, %s URL, %s Remove */
-						__( 'The link [%s] is already in database, skipping. Remove it from database: <a href="#remove-cached-link" class="wpcp_remove_cached_link" data-link="%s">%s</a>', 'wp-content-pilot' ),
+					/* translators: 1: URL, 2: URL, 3: Remove label. */
+						__( 'The link [%1$s] is already in database, skipping. Remove it from database: <a href="#remove-cached-link" class="wpcp_remove_cached_link" data-link="%2$s">%3$s</a>', 'wp-content-pilot' ),
 						esc_url( $url ),
 						esc_url( $url ),
 						__( 'Remove', 'wp-content-pilot' )
@@ -318,7 +330,7 @@ EOT;
             }
         }
 
-        wpcp_logger()->info( sprintf( __( 'Total found links [%d] and accepted [%d] and reject [%d]', 'wp-content-pilot' ), count( $rss_items ), $inserted, ( count( $rss_items ) - $inserted ) ), $campaign_id );
+        wpcp_logger()->info( sprintf( /* translators: 1: Found links, 2: Accepted links, 3: Rejected links */ __( 'Total found links [%1$d] and accepted [%2$d] and reject [%3$d]', 'wp-content-pilot' ), count( $rss_items ), $inserted, ( count( $rss_items ) - $inserted ) ), $campaign_id );
 
         return true;
     }

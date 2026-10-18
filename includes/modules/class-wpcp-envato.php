@@ -58,16 +58,18 @@ class WPCP_Envato extends WPCP_Module {
 	 * @since 1.2.0
 	 */
 	public function get_default_template() {
-		$template
-			= <<<EOT
-<img src="{image_url}" alt="">
-<br>
-<a target="_blank" href="{affiliate_live_preview}">LIVE PREVIEW</a>
-<a target="_blank" href="{affiliate_url}">BUY FOR {price}</a>
-{content}
-<br>
-<a href="{source_url}" target="_blank">Source</a>
-EOT;
+		$template = implode(
+			"\n",
+			array(
+				'<img src="{image_url}" alt="">',
+				'<br>',
+				'<a target="_blank" href="{affiliate_live_preview}">LIVE PREVIEW</a>',
+				'<a target="_blank" href="{affiliate_url}">BUY FOR {price}</a>',
+				'{content}',
+				'<br>',
+				'<a href="{source_url}" target="_blank">Source</a>',
+			)
+		);
 
 		return $template;
 	}
@@ -230,7 +232,7 @@ EOT;
 
 		if ( empty( $envato_impact_radius ) ) {
 			$affiliate_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-settings#wpcp_settings_envato' );
-			$warning       = sprintf( __( "The Impact  Radius affiliate url is not set. Set it from <a href='%s'>here</a>", 'wp-content-pilot' ), $affiliate_url );
+			$warning       = sprintf( /* translators: %s Settings URL */ __( "The Impact  Radius affiliate url is not set. Set it from <a href='%s'>here</a>", 'wp-content-pilot' ), $affiliate_url );
 			wpcp_logger()->error( $warning, $campaign_id );
 
 			wpcp_admin_notice( $warning );
@@ -242,7 +244,7 @@ EOT;
 		}
 
 		foreach ( $keywords as $keyword ) {
-			wpcp_logger()->info( sprintf( __( 'Looping through keywords [ %s ]', 'wp-content-pilot' ), $keyword ), $campaign_id );
+			wpcp_logger()->info( sprintf( /* translators: %s The keyword */ __( 'Looping through keywords [ %s ]', 'wp-content-pilot' ), $keyword ), $campaign_id );
 
 
 			$total_page_key = $this->get_unique_key( "$keyword-total-page" );
@@ -285,14 +287,14 @@ EOT;
 			}
 			$api_url  = 'https://api.envato.com/v1/discovery/search/search/item';
 			$endpoint = add_query_arg( $query_args, $api_url );
-			wpcp_logger()->info( sprintf( __( 'Searching for items url [ %s ]', 'wp-content-pilot' ), $endpoint ), $campaign_id );
+			wpcp_logger()->info( sprintf( /* translators: %s The endpoint URL */ __( 'Searching for items url [ %s ]', 'wp-content-pilot' ), $endpoint ), $campaign_id );
 
 			$curl = $this->setup_curl();
 			$curl->setHeader( 'Authorization', sprintf( 'bearer %s', trim( $token ) ) );
 			$curl->get( $endpoint );
 
 			if ( $curl->isError() ) {
-				$message = sprintf( __( 'Envato api request failed response [ %s ]', 'wp-content-pilot' ), $curl->getResponse()->error );
+				$message = sprintf( /* translators: %s The error message */ __( 'Envato api request failed response [ %s ]', 'wp-content-pilot' ), $curl->getResponse()->error );
 				wpcp_logger()->error( $message, $campaign_id );
 				wpcp_disable_campaign( $campaign_id );
 
@@ -315,8 +317,8 @@ EOT;
 
 					wpcp_logger()->info(
 						sprintf(
-						/* translators: %s URL, %s URL, %s Remove */
-							__( 'The link [%s] is already in database, skipping. Remove it from database: <a href="#remove-cached-link" class="wpcp_remove_cached_link" data-link="%s">%s</a>', 'wp-content-pilot' ),
+						/* translators: 1: URL, 2: URL, 3: Remove label. */
+							__( 'The link [%1$s] is already in database, skipping. Remove it from database: <a href="#remove-cached-link" class="wpcp_remove_cached_link" data-link="%2$s">%3$s</a>', 'wp-content-pilot' ),
 							esc_url( $item->url ),
 							esc_url( $item->url ),
 							__( 'Remove', 'wp-content-pilot' )
@@ -381,7 +383,7 @@ EOT;
 //				}
 //				$tags  = wpcp_array_to_html( $tags );
 				$price = wpcp_cent_to_usd( @$item->price_cents );
-				wpcp_logger()->info( sprintf( __( 'Generating envato article from [ %s ]', 'wp-content-pilot' ), $item->url ), $campaign_id );
+				wpcp_logger()->info( sprintf( /* translators: %s The item URL */ __( 'Generating envato article from [ %s ]', 'wp-content-pilot' ), $item->url ), $campaign_id );
 
 				//check if the clean title metabox is checked and perform title cleaning
 				$check_clean_title = wpcp_get_post_meta( $campaign_id, '_clean_title', 'off' );
@@ -448,7 +450,7 @@ EOT;
 
 		$log_url = admin_url( '/edit.php?post_type=wp_content_pilot&page=wpcp-logs' );
 
-		return new WP_Error( 'campaign-error', sprintf( __( 'No envato article generated check <a href="%s">log</a> for details.', 'wp-content-pilot' ), $log_url ) );
+		return new WP_Error( 'campaign-error', sprintf( /* translators: %s The log page URL */ __( 'No envato article generated check <a href="%s">log</a> for details.', 'wp-content-pilot' ), $log_url ) );
 	}
 
 	/**

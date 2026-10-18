@@ -83,12 +83,14 @@ class WPCP_Article extends WPCP_Module {
 	 * @return string
 	 */
 	public function get_default_template() {
-		$template
-			= <<<EOT
-<img src="{image_url}">
-{content}
-<br> <a href="{source_url}" target="_blank">Source</a>
-EOT;
+		$template = implode(
+			"\n",
+			array(
+				'<img src="{image_url}">',
+				'{content}',
+				'<br> <a href="{source_url}" target="_blank">Source</a>',
+			)
+		);
 
 		return $template;
 	}
@@ -234,8 +236,18 @@ EOT;
 
 				$this->update_link( $link->id, array( 'status' => 'failed' ) );
 
+				if ( ! wp_http_validate_url( $link->url ) ) {
+					wpcp_logger()->error( sprintf( /* translators: Article source URL. */ __( 'Skipping unsafe link [%s]', 'wp-content-pilot' ), $link->url ), $campaign_id );
+					continue;
+				}
+
 				$curl = $this->setup_curl();
 				$curl->get( $link->url );
+
+				if ( ! wp_http_validate_url( $curl->getInfo( CURLINFO_EFFECTIVE_URL ) ) ) {
+					wpcp_logger()->error( sprintf( /* translators: Article source URL. */ __( 'Skipping unsafe link [%s]', 'wp-content-pilot' ), $curl->getInfo( CURLINFO_EFFECTIVE_URL ) ), $campaign_id );
+					continue;
+				}
 
 				if ( $curl->isError() && 'cron' !== $this->initiator ) {
 					wpcp_logger()->error( sprintf( /* translators: Error message. */ __( 'Failed processing link reason [%s]', 'wp-content-pilot' ), $curl->getErrorMessage() ), $campaign_id );
@@ -402,8 +414,8 @@ EOT;
 			if ( wpcp_is_duplicate_url( $link ) ) {
 				wpcp_logger()->info(
 					sprintf(
-					/* translators: %s URL, %s URL, %s Remove */
-						__( 'The link [%s] is already in database, skipping. Remove it from database: <a href="#remove-cached-link" class="wpcp_remove_cached_link" data-link="%s">%s</a>', 'wp-content-pilot' ),
+					/* translators: 1: URL, 2: URL, 3: Remove label. */
+						__( 'The link [%1$s] is already in database, skipping. Remove it from database: <a href="#remove-cached-link" class="wpcp_remove_cached_link" data-link="%2$s">%3$s</a>', 'wp-content-pilot' ),
 						esc_url( $link ),
 						esc_url( $link ),
 						__( 'Remove', 'wp-content-pilot' )
