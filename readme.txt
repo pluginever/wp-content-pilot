@@ -126,7 +126,7 @@ No, Content Pilot does not support multisite WordPress installation.
 We would love to hear your suggestions! Feel free to open a new issue [here](https://github.com/pluginever/wp-content-pilot/issues) as the feature request.
 
 == Changelog ==
-= 2.2.5 (October 16, 2026) =
+= 2.2.5 (October 18, 2026) =
 * Fix - Sanitized imported post title, content and excerpt to prevent stored cross-site scripting from remote sources.
 * Fix - Added capability checks to campaign AJAX and admin actions.
 * Fix - Escaped the excerpt in the post publish notification email.
